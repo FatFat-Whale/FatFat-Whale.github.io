@@ -18,17 +18,81 @@
   a:focus-visible,button:focus-visible{outline:2px solid var(--biolum);outline-offset:3px;border-radius:2px}
 
   /* 阳光光柱：从水面斜射向下，整体横向流动 */
-  @keyframes rayDriftR{
-    0%{transform:translateX(0);opacity:0}
-    10%{opacity:1}
-    88%{opacity:1}
-    100%{transform:translateX(58vw);opacity:0}
+
+  /* ===== 点光源光锥（左1/4高远太阳 · 全幅光场） ===== */
+  .surface-flow{
+    position:absolute;top:0;left:0;height:13vh;width:100%;
+    background-repeat:repeat-x;
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent);
   }
-  @keyframes rayDriftL{
-    0%{transform:translateX(0);opacity:0}
-    10%{opacity:1}
-    88%{opacity:1}
-    100%{transform:translateX(-58vw);opacity:0}
+  .sf1{
+    background-image:radial-gradient(ellipse 240px 22px at 12% 32%,rgba(255,255,255,.2),transparent 70%),
+                     radial-gradient(ellipse 320px 26px at 52% 62%,rgba(216,246,255,.15),transparent 70%),
+                     radial-gradient(ellipse 190px 18px at 84% 42%,rgba(255,255,255,.13),transparent 70%);
+    background-size:1100px 13vh;
+    animation:surfaceFlow 34s linear infinite;
+  }
+  .sf2{
+    background-image:radial-gradient(ellipse 300px 24px at 30% 50%,rgba(230,250,255,.14),transparent 70%),
+                     radial-gradient(ellipse 210px 18px at 70% 30%,rgba(255,255,255,.16),transparent 70%);
+    background-size:1500px 13vh;
+    animation:surfaceFlow 52s linear reverse infinite;
+  }
+  @keyframes surfaceFlow{
+    from{background-position-x:0}
+    to{background-position-x:1100px}
+  }
+  .sf2{animation-name:surfaceFlow2}
+  @keyframes surfaceFlow2{
+    from{background-position-x:0}
+    to{background-position-x:1500px}
+  }
+  .sea-sheen{
+    position:absolute;top:0;left:0;right:0;height:26vh;
+    background:
+      radial-gradient(ellipse 95% 130% at 17% -10%,rgba(255,250,230,.26),transparent 70%),
+      linear-gradient(180deg,rgba(214,242,255,.22),rgba(190,232,252,.08) 50%,transparent);
+    animation:breathe-soft 15s ease-in-out infinite alternate;
+  }
+  .sun-glow{
+    position:absolute;top:-52vh;left:16.7%;
+    width:min(92vw,1200px);aspect-ratio:1;
+    transform:translate(-50%,-40%);
+    background:radial-gradient(circle,rgba(255,248,225,.62),rgba(175,230,252,.26) 46%,transparent 74%);
+    filter:blur(14px);
+    animation:breathe-soft 12s ease-in-out infinite alternate;
+  }
+  .scatter-haze{
+    position:absolute;top:-52vh;left:16.7%;
+    width:190vw;height:110vh;
+    transform:translateX(-42%);
+    background:radial-gradient(ellipse 62% 76% at 36% 0%,rgba(195,238,255,.2),rgba(145,205,242,.08) 52%,transparent 74%);
+    filter:blur(28px);
+  }
+  .beam{
+    position:absolute;top:-50vh;left:calc(16.7% + var(--x,0vw));height:var(--h,100vh);
+    transform-origin:50% 0;
+    transform:rotate(var(--a,0deg));
+    clip-path:polygon(46% 0,54% 0,100% 100%,0 100%);
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.5) 46%,transparent 88%);
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.5) 46%,transparent 88%);
+    filter:blur(var(--b,8px));
+    animation:raySway var(--t,22s) ease-in-out var(--d,0s) infinite alternate,
+              glimmer var(--g,16s) ease-in-out var(--gd,0s) infinite alternate;
+  }
+  @keyframes raySway{
+    from{transform:rotate(calc(var(--a,0deg) - 1.8deg))}
+    to{transform:rotate(calc(var(--a,0deg) + 1.8deg))}
+  }
+  /* 呼吸：两帧往返 + 全程缓动 = 无断点正弦 */
+  @keyframes glimmer{
+    from{opacity:calc(var(--o,.4)*.5)}
+    to  {opacity:var(--o,.4)}
+  }
+  @keyframes breathe-soft{
+    from{opacity:.78}
+    to  {opacity:1}
   }
 
   /* 深海雪：缓慢下落的微粒 */
@@ -43,7 +107,45 @@
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    [data-snow] i,[data-rays] div{animation:none !important}
+    [data-snow] i,[data-rays] div,.sun-glow,.sea-sheen,.surface-flow,.bio,.mote{animation:none !important}
+  }
+
+
+  /* ===== 内容卡片：显式列数，避免 auto-fit 在视口切换时卡死 ===== */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:2.6rem}
+  .cards>.card{min-width:0}
+  @media (max-width:1020px){
+    .cards{grid-template-columns:1fr 1fr}
+    .cards>.card:last-child{grid-column:1 / -1}  /* 第三张有意通栏 */
+  }
+  @media (max-width:730px){
+    .cards{grid-template-columns:1fr}
+    .cards>.card:last-child{grid-column:auto}
+  }
+
+  /* ===== 分层氛围特效 ===== */
+  .zone-fx{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .bio{
+    position:absolute;border-radius:50%;
+    background:radial-gradient(circle,rgba(111,227,207,.95),rgba(111,227,207,0) 70%);
+    box-shadow:0 0 10px rgba(111,227,207,.5);
+    animation:bioGlow var(--g,7s) ease-in-out var(--gd,0s) infinite alternate;
+  }
+  @keyframes bioGlow{
+    from{opacity:0;transform:scale(.5)}
+    to{opacity:.95;transform:scale(1.2)}
+  }
+  .mote{
+    position:absolute;bottom:-4%;width:3px;height:3px;border-radius:50%;
+    background:rgba(160,220,235,.5);
+    box-shadow:0 0 8px rgba(160,220,235,.35);
+    animation-name:moteRise;animation-timing-function:linear;animation-iteration-count:infinite;
+  }
+  @keyframes moteRise{
+    0%{transform:translateY(0);opacity:0}
+    12%{opacity:.5}
+    82%{opacity:.3}
+    100%{transform:translateY(-115vh);opacity:0}
   }
 
   /* ===== 深度轴（原生） ===== */
@@ -99,69 +201,37 @@
 
     <!-- 阳光光柱：约 20 道细光束，长短不一，横向流动（左→右 / 右→左） -->
     <div data-rays="1" aria-hidden="true" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden">
-      <div style="position:absolute;top:-8%;left:-4%;width:15px;height:66%;animation:rayDriftR 20s linear infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.07) 55%,transparent 85%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:3%;width:10px;height:44%;animation:rayDriftR 26s linear 8s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.05) 50%,transparent 80%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:9%;width:13px;height:74%;animation:rayDriftR 23s linear 4s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-14deg);transform-origin:50% 0;filter:blur(7px);background:linear-gradient(180deg,rgba(255,255,255,.36),rgba(255,255,255,.06) 55%,transparent 86%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:15%;width:12px;height:38%;animation:rayDriftR 31s linear 13s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:21%;width:15px;height:70%;animation:rayDriftR 25s linear 10s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-15deg);transform-origin:50% 0;filter:blur(9px);background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,.05) 55%,transparent 85%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:27%;width:14px;height:52%;animation:rayDriftR 29s linear 2s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 50%,transparent 80%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:33%;width:13px;height:60%;animation:rayDriftR 21s linear 15s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(7px);background:linear-gradient(180deg,rgba(255,255,255,.33),rgba(255,255,255,.05) 52%,transparent 82%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:39%;width:11px;height:46%;animation:rayDriftR 27s linear 6s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:45%;width:14px;height:78%;animation:rayDriftR 24s linear 17s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-14deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 56%,transparent 86%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:50%;width:12px;height:40%;animation:rayDriftR 33s linear 11s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.04) 48%,transparent 76%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:52%;width:13px;height:64%;animation:rayDriftR 22s linear infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-10deg);transform-origin:50% 0;filter:blur(7px);background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,.06) 52%,transparent 84%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:-9%;width:14px;height:42%;animation:rayDriftR 28s linear 7s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:6%;width:15px;height:72%;animation:rayDriftR 24s linear 12s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-14deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,.05) 55%,transparent 85%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:18%;width:11px;height:50%;animation:rayDriftR 30s linear 3s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 50%,transparent 80%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:24%;width:12px;height:58%;animation:rayDriftR 26s linear 9s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,.05) 52%,transparent 82%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:30%;width:12px;height:36%;animation:rayDriftR 32s linear 15s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.04) 46%,transparent 76%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:36%;width:14px;height:68%;animation:rayDriftR 23s linear 5s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-15deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 54%,transparent 84%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:42%;width:14px;height:48%;animation:rayDriftR 29s linear 18s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:12%;width:10px;height:30%;animation:rayDriftR 35s linear 20s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(4px);background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.04) 45%,transparent 74%)"></div>
-      </div>
-      <div style="position:absolute;top:-8%;left:48%;width:10px;height:32%;animation:rayDriftR 34s linear 21s infinite">
-        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(4px);background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.04) 45%,transparent 74%)"></div>
-      </div>
-      <div style="position:absolute;top:0;left:0;right:0;height:30%;background:radial-gradient(120% 100% at 50% 0%,rgba(255,255,255,.22),transparent 70%)"></div>
+      <!-- 水面流光：两层错速横向漂移 -->
+      <div class="surface-flow sf1"></div>
+      <div class="surface-flow sf2"></div>
+      <!-- 海面亮带 -->
+      <div class="sea-sheen"></div>
+      <!-- 点光源：左 1/4 处高远的太阳 -->
+      <div class="sun-glow"></div>
+      <!-- 散射雾 -->
+      <div class="scatter-haze"></div>
+      <!-- 20 束光 -->
+      <div class="beam" style="--x:-10.0vw;--a:18deg;--o:0.26;--t:7s;--d:-6.3s;--g:1.9s;--gd:-0.7s;--b:7px;--h:109vh;width:68px;background:linear-gradient(90deg,transparent,rgba(111,227,207,.44) 30%,rgba(236,251,255,.52) 52%,rgba(130,182,255,.34) 74%,transparent)"></div>
+      <div class="beam" style="--x:-8.7vw;--a:15deg;--o:0.42;--t:8s;--d:-4.4s;--g:1.9s;--gd:-1.07s;--b:6px;--h:108vh;width:68px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:-6.2vw;--a:9deg;--o:0.27;--t:6s;--d:-2.6s;--g:1.5s;--gd:-0.93s;--b:8px;--h:105vh;width:92px;background:linear-gradient(90deg,transparent,rgba(111,227,207,.44) 30%,rgba(236,251,255,.52) 52%,rgba(130,182,255,.34) 74%,transparent)"></div>
+      <div class="beam" style="--x:-4.9vw;--a:6deg;--o:0.54;--t:8s;--d:-1.3s;--g:1.5s;--gd:-1.29s;--b:6px;--h:105vh;width:68px;background:linear-gradient(90deg,transparent,rgba(255,234,185,.45) 30%,rgba(255,253,242,.66) 50%,rgba(162,226,251,.4) 72%,transparent)"></div>
+      <div class="beam" style="--x:-3.6vw;--a:3deg;--o:0.5;--t:10s;--d:-0.6s;--g:2.3s;--gd:-1.51s;--b:9px;--h:104vh;width:68px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:-1.0vw;--a:-3deg;--o:0.47;--t:8s;--d:-5.9s;--g:1.5s;--gd:-0.28s;--b:8px;--h:104vh;width:80px;background:linear-gradient(90deg,transparent,rgba(111,227,207,.44) 30%,rgba(236,251,255,.52) 52%,rgba(130,182,255,.34) 74%,transparent)"></div>
+      <div class="beam" style="--x:0.2vw;--a:-7deg;--o:0.35;--t:6s;--d:-0.7s;--g:1.5s;--gd:-0.81s;--b:8px;--h:105vh;width:74px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:1.5vw;--a:-11deg;--o:0.54;--t:7s;--d:-0.4s;--g:1.5s;--gd:-0.96s;--b:8px;--h:106vh;width:68px;background:linear-gradient(90deg,transparent,rgba(255,234,185,.45) 30%,rgba(255,253,242,.66) 50%,rgba(162,226,251,.4) 72%,transparent)"></div>
+      <div class="beam" style="--x:4.1vw;--a:-19deg;--o:0.34;--t:6s;--d:-1.8s;--g:1.5s;--gd:-0.68s;--b:7px;--h:110vh;width:80px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:5.4vw;--a:-23deg;--o:0.39;--t:6s;--d:-2.4s;--g:1.5s;--gd:-0.32s;--b:6px;--h:113vh;width:74px;background:linear-gradient(90deg,transparent,rgba(255,234,185,.45) 30%,rgba(255,253,242,.66) 50%,rgba(162,226,251,.4) 72%,transparent)"></div>
+      <div class="beam" style="--x:6.6vw;--a:-27deg;--o:0.32;--t:9s;--d:-2.1s;--g:2.3s;--gd:-1.45s;--b:9px;--h:117vh;width:92px;background:linear-gradient(90deg,transparent,rgba(111,227,207,.44) 30%,rgba(236,251,255,.52) 52%,rgba(130,182,255,.34) 74%,transparent)"></div>
+      <div class="beam" style="--x:7.9vw;--a:-31deg;--o:0.49;--t:9s;--d:-8.5s;--g:1.3s;--gd:-0.32s;--b:6px;--h:121vh;width:68px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:10.5vw;--a:-39deg;--o:0.4;--t:8s;--d:-1.4s;--g:1.3s;--gd:-0.79s;--b:8px;--h:134vh;width:86px;background:linear-gradient(90deg,transparent,rgba(111,227,207,.44) 30%,rgba(236,251,255,.52) 52%,rgba(130,182,255,.34) 74%,transparent)"></div>
+      <div class="beam" style="--x:11.8vw;--a:-43deg;--o:0.31;--t:6s;--d:-5.9s;--g:1.3s;--gd:-0.84s;--b:6px;--h:142vh;width:92px;background:linear-gradient(90deg,transparent,rgba(255,234,185,.45) 30%,rgba(255,253,242,.66) 50%,rgba(162,226,251,.4) 72%,transparent)"></div>
+      <div class="beam" style="--x:13.0vw;--a:-47deg;--o:0.52;--t:9s;--d:-5.9s;--g:2.3s;--gd:-0.44s;--b:9px;--h:152vh;width:92px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:15.6vw;--a:-53deg;--o:0.39;--t:7s;--d:-1.5s;--g:1.3s;--gd:-1.07s;--b:6px;--h:173vh;width:92px;background:linear-gradient(90deg,transparent,rgba(111,227,207,.44) 30%,rgba(236,251,255,.52) 52%,rgba(130,182,255,.34) 74%,transparent)"></div>
+      <div class="beam" style="--x:16.9vw;--a:-56deg;--o:0.49;--t:9s;--d:-7.1s;--g:1.7s;--gd:-1.15s;--b:7px;--h:186vh;width:68px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:18.2vw;--a:-58deg;--o:0.51;--t:8s;--d:-4.3s;--g:1.3s;--gd:-1.07s;--b:9px;--h:196vh;width:80px;background:linear-gradient(90deg,transparent,rgba(255,234,185,.45) 30%,rgba(255,253,242,.66) 50%,rgba(162,226,251,.4) 72%,transparent)"></div>
+      <div class="beam" style="--x:20.7vw;--a:-61deg;--o:0.27;--t:10s;--d:-3.8s;--g:1.7s;--gd:-1.25s;--b:7px;--h:215vh;width:86px;background:linear-gradient(90deg,transparent,rgba(182,240,255,.42) 28%,rgba(255,255,255,.58) 50%,rgba(150,190,255,.36) 72%,transparent)"></div>
+      <div class="beam" style="--x:22.0vw;--a:-62deg;--o:0.5;--t:6s;--d:-1.3s;--g:1.7s;--gd:-1.18s;--b:9px;--h:222vh;width:74px;background:linear-gradient(90deg,transparent,rgba(255,234,185,.45) 30%,rgba(255,253,242,.66) 50%,rgba(162,226,251,.4) 72%,transparent)"></div>
     </div>
-
     <div class="hero-inner" style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem);min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
       <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#dcf1fa;text-transform:uppercase;margin-bottom:2rem">
         <span style="width:2.6rem;height:1px;background:#fff;opacity:.85"></span>
@@ -180,8 +250,9 @@
 </div>
 
 <!-- ========== 暮光层 · 关于我 ========== -->
-<div data-screen-label="关于我 · 暮光层" style="width:100%;background:linear-gradient(180deg,#176695 0%,#0f4a7c 26%,#0b3a66 100%)">
-  <section id="about" style="padding:7.5rem 0 6rem">
+<div data-screen-label="关于我 · 暮光层" style="width:100%;background:linear-gradient(180deg,#176695 0%,#0f4a7c 26%,#0b3a66 100%);position:relative;overflow:hidden">
+  <div class="zone-fx" aria-hidden="true"><i style="position:absolute;left:62%;top:0;width:4px;height:4px;border-radius:50%;background:rgba(234,246,251,0.21);animation:snowfall 25s linear -8s infinite"></i><i style="position:absolute;left:89%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,0.28);animation:snowfall 24s linear -16s infinite"></i><i style="position:absolute;left:80%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,0.39);animation:snowfall 24s linear -17s infinite"></i><i style="position:absolute;left:92%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,0.33);animation:snowfall 26s linear -5s infinite"></i><i style="position:absolute;left:60%;top:0;width:3px;height:3px;border-radius:50%;background:rgba(234,246,251,0.23);animation:snowfall 19s linear -5s infinite"></i><i style="position:absolute;left:17%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,0.19);animation:snowfall 30s linear -18s infinite"></i><i style="position:absolute;left:91%;top:0;width:3px;height:3px;border-radius:50%;background:rgba(234,246,251,0.23);animation:snowfall 17s linear -9s infinite"></i><i style="position:absolute;left:31%;top:0;width:3px;height:3px;border-radius:50%;background:rgba(234,246,251,0.24);animation:snowfall 16s linear -24s infinite"></i><i style="position:absolute;left:29%;top:0;width:3px;height:3px;border-radius:50%;background:rgba(234,246,251,0.36);animation:snowfall 22s linear -10s infinite"></i><i style="position:absolute;left:28%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,0.38);animation:snowfall 27s linear -1s infinite"></i><i style="position:absolute;left:65%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,0.27);animation:snowfall 14s linear -7s infinite"></i><i style="position:absolute;left:17%;top:0;width:4px;height:4px;border-radius:50%;background:rgba(234,246,251,0.35);animation:snowfall 14s linear -3s infinite"></i></div>
+  <section id="about" style="position:relative;z-index:1;padding:7.5rem 0 6rem">
     <div style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem)">
       <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#a9cddd;text-transform:uppercase;margin-bottom:1.4rem">
         <span style="width:2.6rem;height:1px;background:var(--biolum);opacity:.75"></span>
@@ -206,6 +277,8 @@
 
 <!-- ========== 午夜层 · 内容板块 ========== -->
 <div data-screen-label="内容板块 · 午夜层" style="width:100%;background:linear-gradient(180deg,#0b3a66 0%,#08304f 30%,#051f3b 100%);position:relative;overflow:hidden">
+  <div class="zone-fx" aria-hidden="true"><span class="bio" style="left:14%;top:25%;width:6px;height:6px;--g:8.6s;--gd:-4.6s"></span><span class="bio" style="left:77%;top:71%;width:6px;height:6px;--g:8.6s;--gd:-3.9s"></span><span class="bio" style="left:54%;top:32%;width:3px;height:3px;--g:7.5s;--gd:-1.5s"></span><span class="bio" style="left:81%;top:13%;width:3px;height:3px;--g:5.3s;--gd:-3.8s"></span><span class="bio" style="left:23%;top:42%;width:6px;height:6px;--g:9.0s;--gd:-1.5s"></span><span class="bio" style="left:94%;top:59%;width:4px;height:4px;--g:4.8s;--gd:-2.7s"></span><span class="bio" style="left:50%;top:74%;width:6px;height:6px;--g:6.8s;--gd:-4.8s"></span><span class="bio" style="left:48%;top:22%;width:6px;height:6px;--g:5.8s;--gd:-1.6s"></span><span class="bio" style="left:29%;top:81%;width:3px;height:3px;--g:5.9s;--gd:-3.8s"></span></div>
+    
   <div data-snow="1" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none">
     <i style="position:absolute;left:12%;top:0;width:3px;height:3px;border-radius:50%;background:rgba(234,246,251,.4);animation:snowfall 16s linear infinite"></i>
     <i style="position:absolute;left:34%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,.35);animation:snowfall 21s linear 4s infinite"></i>
@@ -213,7 +286,7 @@
     <i style="position:absolute;left:76%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,.4);animation:snowfall 24s linear 2s infinite"></i>
     <i style="position:absolute;left:90%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,.3);animation:snowfall 20s linear 12s infinite"></i>
   </div>
-  <section id="work" style="padding:7.5rem 0 6rem;position:relative">
+  <section id="work" style="padding:7.5rem 0 6rem;position:relative;z-index:1">
     <div style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem)">
       <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#a9cddd;text-transform:uppercase;margin-bottom:1.4rem">
         <span style="width:2.6rem;height:1px;background:var(--biolum);opacity:.75"></span>
@@ -222,7 +295,7 @@
       <h2 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-weight:600;letter-spacing:.02em;font-size:clamp(1.6rem,3.4vw,2.2rem);margin-bottom:1.6rem">内容板块</h2>
       <p style="color:#a9cddd;max-width:44em">三条洋流，各自流向不同的方向。板块的链接以后可以指向站内子页面或外部平台。</p>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6rem;margin-top:2.6rem">
+      <div class="cards">
         <div class="card" style="border:1px solid rgba(234,246,251,.18);border-radius:14px;padding:2rem 1.8rem;background:rgba(234,246,251,.035);transition:border-color .3s,transform .3s,background .3s,box-shadow .3s">
           <h3 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-size:1.12rem;color:#eaf6fb;margin-bottom:.7rem;font-weight:600">研究笔记</h3>
           <p style="font-size:.9rem;line-height:1.75;color:#a9cddd">医疗服务市场、支付方与商保创新的观察与拆解，偏行业分析与数据。</p>
@@ -233,7 +306,6 @@
           <h3 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-size:1.12rem;color:#eaf6fb;margin-bottom:.7rem;font-weight:600">精算之路</h3>
           <p style="font-size:.9rem;line-height:1.75;color:#a9cddd">SOA 考试的备考记录、学习方法与心得，写给同路人，也写给未来的自己。</p>
           <a href="soa-exam-p-导学.html" target="_blank" rel="noopener" style="display:inline-block;margin-top:1rem;font-size:.84rem;letter-spacing:.06em;color:var(--biolum);text-decoration:none" class="lnk">进入板块 →</a>
-        </div>
         </div>
         <div class="card" style="border:1px solid rgba(234,246,251,.18);border-radius:14px;padding:2rem 1.8rem;background:rgba(234,246,251,.035);transition:border-color .3s,transform .3s,background .3s,box-shadow .3s">
           <h3 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-size:1.12rem;color:#eaf6fb;margin-bottom:.7rem;font-weight:600">收藏架</h3>
@@ -246,8 +318,9 @@
 </div>
 
 <!-- ========== 深渊 · 联系 ========== -->
-<div data-screen-label="联系 · 深渊层" style="width:100%;background:linear-gradient(180deg,#051f3b 0%,#03121f 45%,#02090f 100%)">
-  <section id="contact" style="padding:7.5rem 0 6rem">
+<div data-screen-label="联系 · 深渊层" style="width:100%;background:linear-gradient(180deg,#051f3b 0%,#03121f 45%,#02090f 100%);position:relative;overflow:hidden">
+  <div class="zone-fx" aria-hidden="true"><span class="mote" style="left:18%;animation-duration:46s;animation-delay:-10s"></span><span class="mote" style="left:55%;animation-duration:58s;animation-delay:-30s"></span><span class="mote" style="left:83%;animation-duration:52s;animation-delay:-45s"></span></div>
+  <section id="contact" style="position:relative;z-index:1;padding:7.5rem 0 6rem">
     <div style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem)">
       <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#a9cddd;text-transform:uppercase;margin-bottom:1.4rem">
         <span style="width:2.6rem;height:1px;background:var(--biolum);opacity:.75"></span>
