@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L16 导学 · Double Expectation Formulas 双重期望公式</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#4f46e5; --accent-deep:#3730a3; --accent-soft:#e8e7fc; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#tower">全期望</a>
+      <a href="#rv">条件是随机变量</a>
+      <a href="#evve">全方差</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第十六章 · <em>Double Expectation Formulas 双重期望公式</em></h1>
+    <p class="lead">"整体平均 = 各组平均的再平均"。当直接算 \(E[X]\) 或 \(\operatorname{Var}(X)\) 很难,而"给定某个 \(Y\) 后"却好算时,就先分组条件、再对 \(Y\) 求平均。两把利器:<b>全期望(塔式)</b>与<b>全方差(EVVE)</b>——精算最爱的"分而治之"。对照课本 Lesson&nbsp;16 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch16 Double Expectation <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.257–258</b>(理论)</span>
+      <span class="pill">高频考点 <b>★★★</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li><b>全期望</b>:\(E[X]=E\big[E[X\mid Y]\big]\)——先分组算组内平均,再按组概率加权:"平均的平均 = 总平均"。</li>
+        <li><b>全方差 EVVE</b>:\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)——<b>组内 + 组间</b>,第二项最易漏。</li>
+        <li>一切的地基:\(E[X\mid Y]\)、\(\operatorname{Var}(X\mid Y)\) 都是<b>关于 \(Y\) 的随机变量</b>,才能被再求期望 / 方差。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l14-conditional-moments.html">L14 条件矩</a>
+    <span class="arr">→</span>
+    <span class="here">L16 双重期望</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l24-joint-continuous.html">L24 连续链</a>
+    <a href="soa-exam-p-l00-panorama.html">复合 · 分层题型(全景串联线)</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#tower">全期望</a>
+  <a href="#rv">条件是随机变量</a>
+  <a href="#evve">全方差</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完双重期望你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>全期望公式</b> \(E[X]=E\big[E[X\mid Y]\big]\) 把难算的期望拆成"先对 X、后对 Y"两步。</p>
+        <p style="margin-bottom:0">✅ 对分段/混合/免赔额场景,按 \(Y\) 分情形条件求 \(E[X]\)。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>全方差公式(EVVE)</b> \(\operatorname{Var}(X)=E\big[\operatorname{Var}(X\mid Y)\big]+\operatorname{Var}\big(E[X\mid Y]\big)\) 拆方差。</p>
+        <p style="margin-bottom:0">✅ 认清 \(E[X\mid Y]\)、\(\operatorname{Var}(X\mid Y)\) <b>是关于 \(Y\) 的随机变量</b>,能再对它们求期望/方差。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tower" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch16 · Lesson 16 · 课本 p.257</span><h2 class="sec-title">全期望公式(塔式法则)</h2></div></div>
+    <p class="sec-sub">一个随机变量的期望,可以"先分组、再平均"来算:把总体按 \(Y\) 的取值分成若干组,每组内先求条件期望 \(E[X\mid Y=y]\),再按各组出现的概率把这些条件期望加权平均——加权平均的结果,恰好等于总期望。这就是"平均的平均 = 总平均"。</p>
+
+    <div class="card accent">
+      <h3>全期望公式(Double Expectation / Tower Rule)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.257 · 式 (16.1)</div>
+      <p class="lede">先分组算组内平均,再按各组概率加权平均——结果恰好等于总期望。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Double Expectation Formula</span>
+        $$E[g(X)]=E_Y\!\big[\,E_X[g(X)\mid Y]\,\big]$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>先分班算平均,再按班大小加权</b> — 全校平均分 = 各班平均分的加权平均;内层先算,外层后算,顺序不能反。</span></div>
+      <p class="dim">对任意函数 \(g(X)\) 都成立(不只是 \(X\) 本身);特例(取 \(g(X)=X\)):\(\;E[X]=E\big[E[X\mid Y]\big]\)。下标 \(E_X\) 提醒"内层只对 \(X\) 的随机性求平均、\(Y\) 视为给定";\(E_Y\) 提醒"外层再对 \(Y\) 的随机性求平均"。<b>先内后外,顺序不能反。</b></p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 190" role="img" aria-label="条件期望树:按 Y 分组求条件期望再加权平均">
+          <line x1="30" y1="95" x2="96" y2="35" stroke="#46566f" stroke-width="1.4"/>
+          <line x1="30" y1="95" x2="96" y2="95" stroke="#46566f" stroke-width="1.4"/>
+          <line x1="30" y1="95" x2="96" y2="155" stroke="#46566f" stroke-width="1.4"/>
+          <circle cx="30" cy="95" r="7" fill="var(--accent)"/>
+          <text x="8" y="118" font-size="11" fill="#16243d" font-style="italic">Y</text>
+          <text x="52" y="55" font-size="9.5" fill="#7a8699">p₁</text>
+          <text x="52" y="90" font-size="9.5" fill="#7a8699">p₂</text>
+          <text x="52" y="145" font-size="9.5" fill="#7a8699">p₃</text>
+          <rect x="98" y="24" width="90" height="24" rx="5" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="103" y="40" font-size="10.5" fill="#3730a3" font-style="italic">E[X|Y=y₁]</text>
+          <rect x="98" y="83" width="90" height="24" rx="5" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="103" y="99" font-size="10.5" fill="#3730a3" font-style="italic">E[X|Y=y₂]</text>
+          <rect x="98" y="143" width="90" height="24" rx="5" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="103" y="159" font-size="10.5" fill="#3730a3" font-style="italic">E[X|Y=y₃]</text>
+          <line x1="188" y1="36" x2="214" y2="90" stroke="#ffca28" stroke-width="1.4"/>
+          <line x1="188" y1="95" x2="214" y2="95" stroke="#ffca28" stroke-width="1.4"/>
+          <line x1="188" y1="155" x2="214" y2="100" stroke="#ffca28" stroke-width="1.4"/>
+          <circle cx="220" cy="95" r="9" fill="var(--hi)"/>
+          <text x="212" y="99" font-size="10" fill="#3a2e00" font-weight="bold">E[X]</text>
+        </svg>
+        <div class="cap"><b>分组求条件期望 → 按 \(p_i\) 加权 → 总期望</b></div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 190" role="img" aria-label="缩放:内层对X外层对Y">
+          <rect x="14" y="20" width="212" height="150" rx="8" fill="#fff" stroke="var(--line)"/>
+          <text x="24" y="42" font-size="11" fill="#3730a3" font-weight="bold">内层 E_X[ · | Y]</text>
+          <text x="24" y="60" font-size="10.5" fill="#46566f">把 Y 当常数,只对 X 求平均</text>
+          <text x="24" y="76" font-size="10.5" fill="#46566f">→ 得到一个"关于 Y 的函数"</text>
+          <rect x="24" y="86" width="188" height="26" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="34" y="103" font-size="11" fill="#3730a3" font-style="italic">h(Y) = E[X | Y]</text>
+          <text x="24" y="134" font-size="11" fill="#8a6d00" font-weight="bold">外层 E_Y[ h(Y) ]</text>
+          <text x="24" y="151" font-size="10.5" fill="#46566f">再对 Y 求平均 → 数 E[X]</text>
+          <rect x="150" y="120" width="62" height="40" rx="6" fill="var(--hi)" fill-opacity="0.5" stroke="#e0a900"/>
+          <text x="167" y="145" font-size="12" fill="#3a2e00" font-weight="bold">E[X]</text>
+        </svg>
+        <div class="cap"><b>先内层对 X、再外层对 Y</b>——两层缩放</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 16A</span><span class="src" style="margin:0">课本 p.257 · 免赔额</span></div>
+      <p class="q">保险损失 \(X\sim U[0,10000]\),保单含 <b>1000 免赔额</b>,即赔付 \(Y=\max(0,\,X-1000)\)。求每次损失的<b>平均赔付</b> \(E[Y]\)。</p>
+      <p>按"损失是否超过免赔额"分两组条件:</p>
+      <p>• 若 \(X\le 1000\):赔付为 0,故 \(E[Y\mid X\le 1000]=0\);</p>
+      <p>• 若 \(X>1000\):此时 \(X\) 在 \((1000,10000]\) 上仍均匀,赔付 \(X-1000\) 均匀落在 \([0,9000]\),故 \(E[Y\mid X>1000]=4500\)。</p>
+      <p>再对"分组"取期望(全期望):\(\;\Pr(X>1000)=1-\dfrac{1000}{10000}=0.9\),于是
+      $$E[Y]=\underbrace{\Pr(X\le1000)}_{0.1}\cdot 0+\underbrace{\Pr(X>1000)}_{0.9}\cdot 4500=0.9\times4500.$$</p>
+      <span class="ans">E[Y] = 0.9 × 4500 = 4050</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>套路:</b>遇到<b>分段函数 / 免赔额 / 混合分布</b>,先找一个"分情形的开关" \(Y\),在每种情形下 \(E[X\mid Y]\) 都简单,再按各情形概率加权——比直接积分省事得多。</span></div>
+  </div>
+</section>
+
+<section id="rv">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">概念核心</span><h2 class="sec-title">\(E[X\mid Y]\) 和 \(\operatorname{Var}(X\mid Y)\) 是<em>随机变量</em></h2></div></div>
+    <p class="sec-sub">最关键、也最反直觉的一点:一旦不固定 \(Y\) 的具体值,\(E[X\mid Y]\) 就<b>不是一个数,而是一个随机变量</b>——它是"关于 \(Y\) 的函数"。\(Y\) 随机地取不同值,它就随机地取不同的条件期望。既然是随机变量,就能再对它求期望、求方差,全期望和全方差公式正建立在这一点上。</p>
+
+    <div class="grid2">
+      <div class="card accent">
+        <h3>固定 \(Y=y\):是一个数</h3>
+        <p style="margin-top:0">\(E[X\mid Y=y]\) 是"在 \(Y\) 恰好等于 \(y\) 这一组里 \(X\) 的平均",是<b>确定的数值</b>,随 \(y\) 变化。</p>
+        <p style="margin-bottom:0">例:例 16A 里 \(E[Y\mid X\le1000]=0\)、\(E[Y\mid X>1000]=4500\),都是数。</p>
+      </div>
+      <div class="card accent">
+        <h3>不固定 \(Y\):是随机变量 <span class="freq">考频 ★★★</span></h3>
+        <p style="margin-top:0">把上式看成 \(y\mapsto E[X\mid Y=y]\) 的函数,再让 \(Y\) 随机变化,\(E[X\mid Y]\) 就<b>继承了 \(Y\) 的随机性</b>。</p>
+        <p style="margin-bottom:0">正因如此才能写 \(E\big[E[X\mid Y]\big]\)(对它求期望)、\(\operatorname{Var}\big(E[X\mid Y]\big)\)(对它求方差)。</p>
+      </div>
+    </div>
+
+    <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>带小 y 是数,带大 Y 是随机变量</b> — 全期望 / 全方差公式里出现的都是后者,外层的 \(E[\cdot]\)、\(\operatorname{Var}(\cdot)\) 才有意义。</span></div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 160" role="img" aria-label="E[X|Y]是Y的函数取不同值">
+          <line x1="34" y1="130" x2="240" y2="130" stroke="#46566f" stroke-width="1.2"/>
+          <line x1="34" y1="130" x2="34" y2="18" stroke="#46566f" stroke-width="1.2"/>
+          <text x="228" y="148" font-size="10" fill="#7a8699" font-style="italic">Y</text>
+          <text x="6" y="24" font-size="10" fill="#3730a3" font-style="italic">E[X|Y]</text>
+          <circle cx="80" cy="96" r="5" fill="var(--accent)"/>
+          <line x1="80" y1="96" x2="80" y2="130" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="72" y="144" font-size="9" fill="#7a8699">y₁</text>
+          <circle cx="145" cy="60" r="5" fill="var(--accent)"/>
+          <line x1="145" y1="60" x2="145" y2="130" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="137" y="144" font-size="9" fill="#7a8699">y₂</text>
+          <circle cx="205" cy="40" r="5" fill="var(--accent)"/>
+          <line x1="205" y1="40" x2="205" y2="130" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="197" y="144" font-size="9" fill="#7a8699">y₃</text>
+        </svg>
+        <div class="cap"><b>\(Y\) 每取一值,\(E[X\mid Y]\) 就取一值</b> → 是随机变量</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 160" role="img" aria-label="对随机变量再求期望和方差">
+          <rect x="18" y="30" width="120" height="100" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="30" y="52" font-size="11" fill="#3730a3" font-weight="bold">随机变量</text>
+          <text x="30" y="72" font-size="11" fill="#3730a3" font-style="italic">E[X | Y]</text>
+          <text x="30" y="96" font-size="9.5" fill="#46566f">分布来自 Y</text>
+          <line x1="138" y1="60" x2="176" y2="52" stroke="#e0a900" stroke-width="1.4"/>
+          <line x1="138" y1="100" x2="176" y2="110" stroke="#e0a900" stroke-width="1.4"/>
+          <rect x="178" y="36" width="76" height="32" rx="6" fill="#fff" stroke="var(--line)"/>
+          <text x="186" y="56" font-size="10.5" fill="#16243d">求期望 E[·]</text>
+          <rect x="178" y="94" width="76" height="32" rx="6" fill="#fff" stroke="var(--line)"/>
+          <text x="186" y="114" font-size="10.5" fill="#16243d">求方差 Var(·)</text>
+        </svg>
+        <div class="cap">既是随机变量,便能 <b>再求 \(E[\cdot]\) 与 \(\operatorname{Var}(\cdot)\)</b></div>
+      </div>
+    </div>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>符号别混:</b>\(E[X\mid Y=y]\)(带具体 \(y\))是<b>数</b>;\(E[X\mid Y]\)(不带值)是<b>随机变量</b>。全期望/全方差公式里出现的都是后者——只有它是随机变量,外层的 \(E[\cdot]\) / \(\operatorname{Var}(\cdot)\) 才有意义。</span></div>
+  </div>
+</section>
+
+<section id="evve" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch16 · 核心公式</span><h2 class="sec-title">全方差公式(EVVE)</h2></div></div>
+    <p class="sec-sub">方差也能"分组算",但比期望多一项。总的波动来自两处:①<b>每组内部</b>本身的波动(组内方差的平均);②<b>各组均值之间</b>的差异(组间均值的方差)。两项相加才是总方差——少任何一项都错。</p>
+
+    <div class="card accent">
+      <h3>条件方差公式(Conditional Variance Formula, EVVE)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.257 · 式 (16.2)</div>
+      <p class="lede">总波动 = <b>组内</b>方差的平均 + <b>组间</b>均值的方差——两项相加,缺一不可。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Total / Conditional Variance Formula</span>
+        $$\operatorname{Var}(X)=\underbrace{E\big[\operatorname{Var}(X\mid Y)\big]}_{\text{组内方差的平均}}+\underbrace{\operatorname{Var}\big(E[X\mid Y]\big)}_{\text{组均值的方差}}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>EVVE:E of V 加 V of E</b> — <b>方差的期望</b>加<b>期望的方差</b>;第一项"平均而言组内有多散",第二项"各组中心彼此差多远"。</span></div>
+      <p class="dim">最常见的丢分:<b>漏掉第二项 \(\operatorname{Var}(E[X\mid Y])\)</b>,只写了 \(E[\operatorname{Var}(X\mid Y)]\)。二者缺一不可。</p>
+      <details class="more"><summary>展开 · 推导:为什么会多出一项(课本 p.258 Proof)</summary>
+        <p class="dim">对 \(X\) 和 \(X^2\) 分别用全期望公式:\(\;E[X]=E\big[E[X\mid Y]\big]\),\(\;E[X^2]=E\big[E[X^2\mid Y]\big]\)。对内层用"\(E[X^2\mid Y]=\operatorname{Var}(X\mid Y)+E[X\mid Y]^2\)"展开:</p>
+        <div class="formula">
+        $$\begin{aligned}
+        E[X^2]&=E\big[\operatorname{Var}(X\mid Y)+E[X\mid Y]^2\big]=E\big[\operatorname{Var}(X\mid Y)\big]+E\big[E[X\mid Y]^2\big]\\[2pt]
+        \operatorname{Var}(X)&=E[X^2]-E[X]^2=E\big[\operatorname{Var}(X\mid Y)\big]+E\big[E[X\mid Y]^2\big]-\big(E\big[E[X\mid Y]\big]\big)^2\\[2pt]
+        &=E\big[\operatorname{Var}(X\mid Y)\big]+\operatorname{Var}\big(E[X\mid Y]\big).
+        \end{aligned}$$
+        </div>
+        <p class="dim">末行用了 \(\operatorname{Var}(Z)=E[Z^2]-E[Z]^2\),这里 \(Z=E[X\mid Y]\)——正是"把条件期望当随机变量"的用法。第二项就这么冒出来。</p>
+      </details>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:20%"></th><th>\(E\big[\operatorname{Var}(X\mid Y)\big]\)</th><th>\(\operatorname{Var}\big(E[X\mid Y]\big)\)</th></tr></thead>
+      <tbody>
+        <tr><td>念法</td><td>方差的期望(E of V)</td><td>期望的方差(V of E)</td></tr>
+        <tr><td>度量什么</td><td>平均而言,<b>组内</b>有多散</td><td>各组<b>中心</b>彼此差多远(组间)</td></tr>
+        <tr><td>怎么算</td><td>先求每组条件方差,再对 \(Y\) 加权平均</td><td>先求每组条件均值,再对它算方差</td></tr>
+        <tr><td>常用配套</td><td>含 \(Y^2\) 时用 \(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\)</td><td>\(\operatorname{Var}(aY)=a^2\operatorname{Var}(Y)\)(系数平方)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 175" role="img" aria-label="总方差分解为组内加组间">
+          <line x1="20" y1="150" x2="248" y2="150" stroke="#46566f" stroke-width="1.2"/>
+          <text x="228" y="167" font-size="10" fill="#7a8699" font-style="italic">X</text>
+          <!-- group 1 -->
+          <circle cx="55" cy="120" r="3.2" fill="var(--accent)"/><circle cx="68" cy="120" r="3.2" fill="var(--accent)"/><circle cx="80" cy="120" r="3.2" fill="var(--accent)"/><circle cx="93" cy="120" r="3.2" fill="var(--accent)"/>
+          <line x1="55" y1="105" x2="93" y2="105" stroke="var(--accent-deep)" stroke-width="1.6"/>
+          <text x="60" y="100" font-size="9" fill="#3730a3">μ₁</text>
+          <!-- group 2 -->
+          <circle cx="120" cy="120" r="3.2" fill="#e0a900"/><circle cx="134" cy="120" r="3.2" fill="#e0a900"/><circle cx="148" cy="120" r="3.2" fill="#e0a900"/><circle cx="162" cy="120" r="3.2" fill="#e0a900"/>
+          <line x1="120" y1="105" x2="162" y2="105" stroke="#a97b00" stroke-width="1.6"/>
+          <text x="128" y="100" font-size="9" fill="#8a6d00">μ₂</text>
+          <!-- group 3 -->
+          <circle cx="188" cy="120" r="3.2" fill="#2f9e6f"/><circle cx="202" cy="120" r="3.2" fill="#2f9e6f"/><circle cx="216" cy="120" r="3.2" fill="#2f9e6f"/><circle cx="230" cy="120" r="3.2" fill="#2f9e6f"/>
+          <line x1="188" y1="105" x2="230" y2="105" stroke="#1c6b49" stroke-width="1.6"/>
+          <text x="196" y="100" font-size="9" fill="#1c6b49">μ₃</text>
+          <!-- within arrows -->
+          <line x1="55" y1="135" x2="93" y2="135" stroke="#3730a3" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="30" y="139" font-size="8.5" fill="#3730a3">组内</text>
+          <!-- between arrows -->
+          <line x1="74" y1="70" x2="209" y2="70" stroke="#c6492f" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="112" y="64" font-size="9" fill="#c6492f">组间(各 μ 相差)</text>
+          <line x1="74" y1="70" x2="74" y2="105" stroke="#c6492f" stroke-width="0.8" stroke-dasharray="2 2"/>
+          <line x1="141" y1="70" x2="141" y2="105" stroke="#c6492f" stroke-width="0.8" stroke-dasharray="2 2"/>
+          <line x1="209" y1="70" x2="209" y2="105" stroke="#c6492f" stroke-width="0.8" stroke-dasharray="2 2"/>
+        </svg>
+        <div class="cap"><b>组内散布</b>(点绕各自 μ)+ <b>组间散布</b>(μ 彼此相差)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 175" role="img" aria-label="总方差条形分解">
+          <text x="14" y="24" font-size="10.5" fill="#16243d" font-weight="bold">Var(X)</text>
+          <rect x="14" y="32" width="232" height="26" rx="4" fill="var(--hi)" fill-opacity="0.55" stroke="#e0a900"/>
+          <text x="90" y="49" font-size="11" fill="#3a2e00" font-weight="bold">总方差</text>
+          <text x="126" y="82" font-size="16" fill="#46566f">=</text>
+          <rect x="14" y="96" width="132" height="26" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/>
+          <text x="24" y="113" font-size="10" fill="#3730a3" font-weight="bold">E[ Var(X|Y) ]</text>
+          <text x="150" y="115" font-size="15" fill="#46566f">+</text>
+          <rect x="166" y="96" width="80" height="26" rx="4" fill="#fdeae4" stroke="var(--warn)"/>
+          <text x="172" y="113" font-size="9.5" fill="#c6492f" font-weight="bold">Var( E[X|Y] )</text>
+          <text x="24" y="140" font-size="9.5" fill="#3730a3">组内方差的平均</text>
+          <text x="168" y="140" font-size="9.5" fill="#c6492f">组均值的方差</text>
+          <text x="14" y="164" font-size="9.5" fill="#7a8699" font-style="italic">EVVE = E-of-V  +  V-of-E</text>
+        </svg>
+        <div class="cap"><b>两块拼成总方差</b>——红色那块最易漏</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 16B</span><span class="src" style="margin:0">课本 p.257–258 · 产品设计天数</span></div>
+      <p class="q">设计新产品所需<b>天数 \(X\)</b> 取决于产品复杂度指标 \(Y\)。已知 \(E[Y]=5\)、\(\operatorname{Var}(Y)=12\);且给定 \(Y=y\) 时,\(X\) 的<b>均值为 \(10y\)、方差为 \(3y^2\)</b>,即 \(E[X\mid Y]=10Y\)、\(\operatorname{Var}(X\mid Y)=3Y^2\)。求 \(\operatorname{Var}(X)\)。</p>
+      <p>两项分别算。<b>组内方差的平均</b>(用 \(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2=12+25=37\)):
+      $$E\big[\operatorname{Var}(X\mid Y)\big]=E[3Y^2]=3E[Y^2]=3(12+5^2)=3\times37=111.$$</p>
+      <p><b>组均值的方差</b>:
+      $$\operatorname{Var}\big(E[X\mid Y]\big)=\operatorname{Var}(10Y)=10^2\operatorname{Var}(Y)=100\times12=1200.$$</p>
+      <p>相加(EVVE):\(\;\operatorname{Var}(X)=111+1200\)。</p>
+      <span class="ans">Var(X) = 111 + 1200 = 1311</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>算 \(E[\operatorname{Var}(X\mid Y)]\) 的常见配套:</b>条件方差往往含 \(Y^2\)(如 \(3Y^2\)),对它求期望要用 \(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\),别直接写成 \(3\,E[Y]^2\)——那样漏了 \(\operatorname{Var}(Y)\)。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:先分班,再算全校</h3>
+      <p>一班 40 人平均 80 分,二班 60 人平均 90 分。全校平均 = \(0.4\times80+0.6\times90=86\)——这就是<b>全期望</b>:各班平均分(条件期望)按班级人数占比(组概率)加权。</p>
+      <p class="dim">全校分数为什么散?两个来源:<b>各班内部</b>本来就有高低(组内波动,对应 \(E[\operatorname{Var}]\));<b>两个班的平均分</b>又彼此差 10 分(组间差异,对应 \(\operatorname{Var}(E)\))。把两块加起来才是全校的总方差——这就是 EVVE。只记组内、忘了班与班的差,方差必然偏小,这正是考题最爱挖的坑。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① 句式信号:"given \(Y=y\), \(X\) has mean \(10y\) and variance \(3y^2\)" → 直接抄成 \(E[X\mid Y]=10Y\)、\(\operatorname{Var}(X\mid Y)=3Y^2\) 套 EVVE(例 16B 模板)。② <b>分层 / 复合</b>:先抽组、组内再出结果——掷硬币定掷几颗骰、好/坏司机再出事故数、按风险类出损失;期望用塔式,方差用 EVVE。③ 免赔额 / 分段:找"分情形开关" \(Y\)(例 16A)。④ 陷阱:漏 \(\operatorname{Var}(E[X\mid Y])\)、\(E[3Y^2]\) 写成 \(3E[Y]^2\)(丢 \(\operatorname{Var}(Y)\))、\(\operatorname{Var}(aY)\) 忘平方系数。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Law_of_total_expectation">Wikipedia · Law of total expectation</a></div><div class="z">塔式法则的严格陈述、证明与分组例子,和本章符号一一对应。</div><div class="u">en.wikipedia.org/wiki/Law_of_total_expectation</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Law_of_total_variance">Wikipedia · Law of total variance</a></div><div class="z">EVVE 的完整推导 + "组内/组间"解读,顺带看它与方差分析(ANOVA)的同源关系。</div><div class="u">en.wikipedia.org/wiki/Law_of_total_variance</div></div>
+        <div class="xr"><div class="e"><a href="https://online.stat.psu.edu/stat414/">PSU STAT 414 · 概率论开放课程</a></div><div class="z">条件分布一节把塔式 / EVVE 用到保险风格的例题上,免费全公开,可当第二本参考书。</div><div class="u">online.stat.psu.edu/stat414</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>全方差漏第二项</b>:只写 \(E[\operatorname{Var}(X\mid Y)]\)、忘了 \(\operatorname{Var}(E[X\mid Y])\)——最常见的失分点。</li>
+          <li><b>内外层顺序反</b>:必须<b>内层先对 \(X\)</b>(把 \(Y\) 当常数)、<b>外层再对 \(Y\)</b>;写成先对 \(Y\) 就错。</li>
+          <li><b>把 \(E[X\mid Y]\) 当成数</b>:不带具体值时它是随机变量,才能再求期望/方差。</li>
+          <li><b>\(E[\operatorname{Var}(X\mid Y)]\) 里 \(Y^2\) 直接平方</b>:要用 \(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\),别丢 \(\operatorname{Var}(Y)\)。</li>
+          <li><b>\(\operatorname{Var}(aY)=a^2\operatorname{Var}(Y)\)</b>:算 \(\operatorname{Var}(E[X\mid Y])\) 时系数要平方,别忘。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 16.1</span>32 个独立风险,索赔概率 1/6、赔额密度 \(2(1-y)\),求期望总赔付。<b>答 16/9 (A)</b></li>
+          <li><span class="ref">练 16.3</span>抛硬币:正面掷 1 骰、反面掷 2 骰,求点数和 \(E[Y]\)。<b>答 21/4 (C)</b></li>
+          <li><span class="ref">练 16.4</span>反复掷骰,\(X\)=首现 5 的次数,\(Y\)=首现 6,求 \(E[X\mid Y=2]\)。</li>
+          <li><span class="ref">练 16.9</span>免赔额 \(d\)、损失 \(U[0,450]\),给定未赔付部分期望 56 求 \(d\)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>已知 \(E[X\mid Y]=2Y\),\(E[Y]=3\),求 \(E[X]\)。</li>
+        <li>\(\operatorname{Var}(X\mid Y)=Y\)(即恒等于 \(Y\)),\(E[Y]=4\),求 \(E[\operatorname{Var}(X\mid Y)]\)。</li>
+        <li>\(E[X\mid Y]=5Y\),\(\operatorname{Var}(Y)=2\),求 \(\operatorname{Var}(E[X\mid Y])\)。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(E[X]=E[2Y]=2\times3=6\);② \(E[\operatorname{Var}(X\mid Y)]=E[Y]=4\);③ \(\operatorname{Var}(5Y)=25\times2=50\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 双重期望</h2></div></div>
+    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>全期望(塔式)</h4>
+        <p>\(E[g(X)]=E_Y\big[E_X[g(X)\mid Y]\big]\)</p>
+        <p>\(E[X]=E\big[E[X\mid Y]\big]\)</p>
+        <p>先内层对 \(X\)、后外层对 \(Y\)</p>
+        <p>用途:分段 / 免赔额 / 混合分布</p>
+      </div>
+      <div class="cc t">
+        <h4>全方差(EVVE)</h4>
+        <p>\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
+        <p>E-of-V + <b>V-of-E</b>(勿漏第二项)</p>
+        <p>\(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\)</p>
+        <p>\(\operatorname{Var}(aY)=a^2\operatorname{Var}(Y)\)</p>
+      </div>
+    </div>
+    <div class="note"><span class="ic">🧠</span><span class="t"><b>一句话:</b>\(E[X\mid Y]\) 与 \(\operatorname{Var}(X\mid Y)\) 都是<b>关于 \(Y\) 的随机变量</b>;塔式对第一个再求期望,EVVE 对第一个求方差、对第二个求期望。</span></div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 16 原文用词</span><h2 class="sec-title">双重期望 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"条件"与"分组"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 16</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">double expectation</td><td class="ipa">/ˌdʌbl ˌɛkspɛkˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>双重期望</td><td class="root">期望套期望 \(E[E[X\mid Y]]\),又叫 tower rule</td></tr>
+          <tr><td class="en">tower rule</td><td class="ipa">/ˈtaʊər ruːl/</td><td><span class="pos n">n.</span></td><td>塔式法则</td><td class="root">tower(塔)→ 一层套一层求期望</td></tr>
+          <tr><td class="en">conditional expectation</td><td class="ipa">/kənˈdɪʃənəl ˌɛkspɛkˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>条件期望</td><td class="root">\(E[X\mid Y]\);不带值时是<b>随机变量</b></td></tr>
+          <tr><td class="en">conditional variance</td><td class="ipa">/kənˈdɪʃənəl ˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>条件方差</td><td class="root">\(\operatorname{Var}(X\mid Y)\);EVVE 第一项对它求期望</td></tr>
+          <tr><td class="en">by conditioning</td><td class="ipa">/baɪ kənˈdɪʃənɪŋ/</td><td><span class="pos v">v.</span></td><td>通过取条件</td><td class="root">condition(条件)→ "先分组再合"的手法</td></tr>
+          <tr><td class="en">deductible</td><td class="ipa">/dɪˈdʌktəbl/</td><td><span class="pos n">n.</span></td><td>免赔额</td><td class="root">deduct(扣除)→ 损失里先扣掉、超出才赔</td></tr>
+          <tr><td class="en">uniformly distributed</td><td class="ipa">/ˈjuːnɪfɔːmli/</td><td><span class="pos adj">adj.</span></td><td>均匀分布的</td><td class="root">uniform(一致)→ 区间上等概率</td></tr>
+          <tr><td class="en">indicator variable</td><td class="ipa">/ˈɪndɪkeɪtər/</td><td><span class="pos n">n.</span></td><td>示性变量</td><td class="root">只取 0/1 的开关变量,常用作条件 \(Y\)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">by conditioning on Y</div><div class="z">通过对 Y 取条件</div></div>
+        <div class="ph"><div class="e">given Y = y</div><div class="z">在给定 Y=y 下</div></div>
+        <div class="ph"><div class="e">the conditional mean / variance</div><div class="z">条件均值 / 条件方差</div></div>
+        <div class="ph"><div class="e">the mean of X, given Y = y, is …</div><div class="z">给定 Y=y 时 X 的均值是……</div></div>
+        <div class="ph"><div class="e">has a mean of 10y and a variance of 3y²</div><div class="z">均值为 10y、方差为 3y²</div></div>
+        <div class="ph"><div class="e">calculate the variance of X</div><div class="z">求 X 的方差(提示用 EVVE)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 16</b> · 第十六章 Double Expectation Formulas 双重期望公式</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 16(p.257–258 理论,例 16A/16B;习题 p.259–262,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

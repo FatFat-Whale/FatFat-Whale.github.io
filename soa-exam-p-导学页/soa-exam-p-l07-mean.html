@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L07 导学 · Mean 均值</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#059669; --accent-deep:#047857; --accent-soft:#ddf3ea; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#def">期望定义</a>
+      <a href="#lotus">LOTUS·线性</a>
+      <a href="#surv">生存函数</a>
+      <a href="#exist">存在性</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第七章 · <em>Mean 均值</em></h1>
+    <p class="lead">分布最核心的一个数:<b>期望 \(E[X]=\mu\)</b>——所有取值按概率加权的"平衡点"。本章学离散/连续两版定义、<b>LOTUS</b>(求 \(E[g(X)]\) 不必先求 \(g(X)\) 的分布)、<b>期望的线性</b>,以及高频考点<b>生存函数求期望</b> \(E[X]=\int_0^\infty S(x)\,dx\)。对照课本 Lesson&nbsp;7 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch7 Mean <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.119–122</b>(理论)</span>
+      <span class="pill">习题 <b>p.123–</b> · 7.1–7.11</span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>期望 = <b>概率加权平均</b>,是分布的重心:\(E[X]=\sum x\,p(x)\)(离散)或 \(\int x f(x)\,dx\)(连续)。</li>
+        <li>求 \(g(X)\) 的期望用 <b>LOTUS</b> 换头不换权;线性 \(E[X+Y]=E[X]+E[Y]\) <b>不需独立</b>,但 \(E[g(X)]\neq g(E[X])\)。</li>
+        <li>非负变量走<b>生存函数捷径</b> \(E[X]=\int_0^\infty S(x)\,dx\)——免赔额 / 限额题的主武器。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l05-random-variables.html">L05 随机变量</a>
+    <span class="arr">→</span>
+    <span class="here">L07 均值</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l08-variance-moments.html">L08 方差与矩</a>
+    <a href="soa-exam-p-l12-joint-moments.html">L12 联合矩</a>
+    <a href="soa-exam-p-l16-double-expectation.html">L16 双重期望</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">期望定义</a>
+  <a href="#lotus">LOTUS·线性</a>
+  <a href="#surv">生存函数</a>
+  <a href="#exist">存在性</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完均值你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 用 \(E[X]=\sum_x x\,p(x)\)(离散)/ \(\int x f(x)\,dx\)(连续)算期望。</p>
+        <p style="margin-bottom:0">✅ 用 <b>LOTUS</b> 直接求 \(E[g(X)]\),不先求 \(g(X)\) 的分布。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>生存函数</b> \(E[X]=\int_0^\infty S(x)\,dx\) 走捷径(非负变量)。</p>
+        <p style="margin-bottom:0">✅ 分清 \(E[g(X)]\neq g(E[X])\),并判断期望是否<b>存在</b>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#f1faf5,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch7 · Lesson 7 · 课本 p.119</span><h2 class="sec-title">期望 / 均值 — 定义</h2></div></div>
+    <p class="sec-sub">期望是分布的"中心",是所有可能取值以概率为权重的<b>加权平均</b>,记作 \(E[X]=\mu\)。几何上它是密度曲线所围面积的<b>质心(平衡点)</b>——把概率想成质量,\(\mu\) 就是那根支起整片面积不倾倒的支点。</p>
+
+    <div class="card accent">
+      <h3>定义:概率加权平均 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.119</div>
+      <p class="lede">把每个取值 \(x\) 乘上它的"权重"(概率 / 密度),再累加——期望就是分布的重心。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Expected value — discrete / continuous</span>
+        $$E[X]=\sum_x x\,p(x)\qquad\qquad E[X]=\int_{-\infty}^{\infty} x\,f(x)\,dx$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>值乘权重加起来:概率是权,期望是重心</b> — 离散逐点加,连续换积分,同一思想。</span></div>
+      <p class="dim">离散对所有 \(p(x)\neq0\) 的 \(x\) 求和;连续对全轴积分。两式同一思想:权重之和为 1,故 \(E[X]\) 落在取值范围内。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 155" role="img" aria-label="连续密度曲线,均值为质心平衡点">
+          <line x1="18" y1="120" x2="226" y2="120" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M28,120 C52,120 62,44 104,50 C150,56 176,112 222,119 L222,120 L28,120 Z" fill="#059669" fill-opacity="0.20"/>
+          <path d="M28,120 C52,120 62,44 104,50 C150,56 176,112 222,119" fill="none" stroke="#047857" stroke-width="2"/>
+          <line x1="120" y1="120" x2="120" y2="52" stroke="#c6492f" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <polygon points="120,120 112,136 128,136" fill="#c6492f"/>
+          <text x="124" y="48" font-size="12" fill="#c6492f" font-style="italic">μ = E[X]</text>
+          <text x="204" y="134" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <text x="70" y="40" font-size="11" fill="#047857">f(x)</text>
+        </svg>
+        <div class="cap">连续:\(\mu\) 是密度面积的 <b>质心(支点)</b>,右偏时 \(\mu\) 落在峰的右侧</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 155" role="img" aria-label="离散概率柱状图与均值线">
+          <line x1="18" y1="120" x2="226" y2="120" stroke="#16243d" stroke-width="1.3"/>
+          <rect x="40" y="86" width="26" height="34" fill="#059669" fill-opacity="0.28" stroke="#047857"/>
+          <rect x="82" y="58" width="26" height="62" fill="#059669" fill-opacity="0.28" stroke="#047857"/>
+          <rect x="124" y="72" width="26" height="48" fill="#059669" fill-opacity="0.28" stroke="#047857"/>
+          <rect x="166" y="102" width="26" height="18" fill="#059669" fill-opacity="0.28" stroke="#047857"/>
+          <line x1="108" y1="120" x2="108" y2="44" stroke="#c6492f" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <polygon points="108,120 100,136 116,136" fill="#c6492f"/>
+          <text x="112" y="42" font-size="12" fill="#c6492f" font-style="italic">μ</text>
+          <text x="49" y="134" font-size="11" fill="#16243d">x₁</text>
+          <text x="91" y="134" font-size="11" fill="#16243d">x₂</text>
+          <text x="133" y="134" font-size="11" fill="#16243d">x₃</text>
+          <text x="175" y="134" font-size="11" fill="#16243d">x₄</text>
+        </svg>
+        <div class="cap">离散:每根柱高 \(=p(x)\),\(\mu=\sum x\,p(x)\) 是柱群的<b>平衡位置</b></div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 7A</span><span class="src" style="margin:0">课本 p.119 · 离散</span></div>
+      <p class="q">\(X\) 为离散变量,\(p(x)=\dfrac{x}{15}\)(\(x=1,2,3,4,5\)),其余为 0。求 \(E[X]\)。</p>
+      <p>直接套定义:\(E[X]=\displaystyle\sum_{x=1}^{5} x\cdot\frac{x}{15}=\sum_{x=1}^{5}\frac{x^2}{15}=\frac{1+4+9+16+25}{15}=\frac{55}{15}=\frac{11}{3}\)。</p>
+      <span class="ans">E[X] = 11/3 ≈ 3.667</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>\(E[X]\) 不一定是某个"可能取到"的值(这里 \(11/3\) 就取不到)。它是长期重复试验结果的<b>平均</b>,是分布的重心而非某个观测。</span></div>
+  </div>
+</section>
+
+<section id="lotus">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">通用工具</span><h2 class="sec-title">LOTUS + 期望的线性</h2></div></div>
+    <p class="sec-sub">要算 \(g(X)\)(如 \(X^2\)、\(e^{X}\))的期望,不必先求出 \(g(X)\) 的分布——"无意识统计学家定律"让你直接对 \(g(x)\) 加权求和/积分。</p>
+    <div class="card accent">
+      <h3>LOTUS(Law of the Unconscious Statistician)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 Lesson 7 · 求随机变量函数的期望</div>
+      <p class="lede">求 \(g(X)\) 的期望不必先求 \(g(X)\) 的分布:把 \(x\) 换成 \(g(x)\),权重 \(p(x)\)/\(f(x)\) 原地不动。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>E[g(X)] — 不必先求 g(X) 的分布</span>
+        $$E[g(X)]=\sum_x g(x)\,p(x)\qquad\text{或}\qquad E[g(X)]=\int_{-\infty}^{\infty} g(x)\,f(x)\,dx$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>换头不换权</b> — 头(\(x\))换成 \(g(x)\),权(\(p\) / \(f\))一动不动。</span></div>
+      <p class="dim">方差、矩、矩母函数全靠它:\(E[X^2]=\int x^2 f(x)\,dx\)、\(E[e^{tX}]=\int e^{tx}f(x)\,dx\)。名字是玩笑:人人不假思索地当定义用,其实它是一条需要证明的定理。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>期望的线性(Linearity)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 Lesson 7 · 常用性质</div>
+      <p class="lede">常数可提出、加法可拆开——且 \(E[X+Y]=E[X]+E[Y]\) 对任意 \(X,Y\) 恒成立,<b>不要求独立</b>。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Linearity of expectation</span>
+        $$E[aX+b]=a\,E[X]+b\qquad E[X+Y]=E[X]+E[Y]$$</div>
+      <p class="dim">独立性只在乘积 \(E[XY]\) 时才用得上。推论:线性组合 \(E\!\left[\sum a_i X_i\right]=\sum a_i E[X_i]\)——这是保险里"总赔付期望 = 各笔期望之和"的根据。</p>
+    </div>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最大陷阱 — \(E[g(X)]\neq g(E[X])\):</b>期望只对<b>线性</b>函数可以"穿进去"。非线性时不成立:一般 \(E[X^2]\neq (E[X])^2\)(两者之差正是方差 \(\ge 0\)),\(E\!\left[\tfrac1X\right]\neq\tfrac1{E[X]}\)。凸函数由 Jensen 不等式有 \(E[g(X)]\ge g(E[X])\)。</span></div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>\(E[X^2]\) — 平方的平均</th><th>\((E[X])^2\) — 平均的平方</th></tr></thead>
+      <tbody>
+        <tr><td>算法</td><td>LOTUS:\(\sum x^2\,p(x)\) 或 \(\int x^2 f(x)\,dx\)</td><td>先算 \(E[X]\),再整体平方</td></tr>
+        <tr><td>一句话</td><td>先平方、后加权平均</td><td>先加权平均、后平方</td></tr>
+        <tr><td>大小关系</td><td colspan="2">恒有 \(E[X^2]\ge (E[X])^2\),两者之差就是方差 \(\operatorname{Var}(X)\)(下一章主角)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="surv" style="background:linear-gradient(180deg,#f1faf5,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch7 · 高频考点</span><h2 class="sec-title">生存函数求期望(捷径)</h2></div></div>
+    <p class="sec-sub">对<b>非负</b>随机变量,期望还能对生存函数 \(S(x)=1-F(x)\) 积分/求和得到。分布函数 \(F\) 已知、密度不好求时,这条捷径能省下大量积分——考试极爱考。</p>
+    <div class="card accent">
+      <h3>生存函数公式(Survival-function formula)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.120 · 式 (7.1) · 分部积分证得</div>
+      <p class="lede">非负变量的期望 = 生存函数下的面积:对 \(1-F\) 积分,不必先求密度再乘 \(x\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>E[X] via survival function — continuous</span>
+        $$E[X]=\int_0^\infty \big(1-F(x)\big)\,dx=\int_0^\infty S(x)\,dx$$</div>
+      <p><b>离散</b>非负整数值变量的对应式:</p>
+      <div class="formula"><span class="name">E[X] via survival — discrete (nonneg integer)</span>
+        $$E[X]=\sum_{k\ge 0} P[X>k]=\sum_{k\ge 0}\big(1-F(k)\big)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>按层切蛋糕</b> — 把期望横着切:每层 \(dx\) 的贡献是"还活着"的概率 \(S(x)\),层层叠起来就是 \(E[X]\)。</span></div>
+      <p class="dim">前提:变量<b>非负</b>(连续要求 \(f(x)=0\) 当 \(x&lt;0\))。题目给分段常数 \(F\) 时,只需对 \(1-F\) 分段"数长度"求和,免去先微分求密度再乘 \(x\) 积分。</p>
+      <details class="more"><summary>展开 · 分部积分的证明梗概</summary>
+        <p class="dim">对 \(\int_0^\infty x f(x)\,dx\) 分部积分,令 \(u=x,\ dv=f(x)\,dx\),边界项在 \(\lim_{x\to\infty}x\big(1-F(x)\big)=0\)(均值有限时)时消失,余下 \(\int_0^\infty(1-F(x))\,dx\)。</p>
+      </details>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 7D</span><span class="src" style="margin:0">课本 p.121 · 离散生存函数</span></div>
+      <p class="q">离散 \(N\):\(f(0)=0.2,\ f(1)=0.3,\ f(2)=0.4,\ f(3)=0.1\)。用生存函数法求 \(E[N]\)。</p>
+      <p>先求 \(P[N>k]\):\(P[N>0]=1-0.2=0.8\);\(P[N>1]=1-0.5=0.5\);\(P[N>2]=1-0.9=0.1\);\(P[N>3]=0\)。<br>
+      故 \(E[N]=0.8+0.5+0.1=1.4\)。与直接法 \(0(0.2)+1(0.3)+2(0.4)+3(0.1)=1.4\) 一致。</p>
+      <span class="ans">E[N] = 1.4</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>为什么好用:</b>题目常直接给 \(F(x)\)(如分段常数),生存函数法只需对 \(1-F\) 分段"数长度"求和,免去先微分求密度再乘 \(x\) 积分。保险里的 <b>\(E[\min(X,k)]=\int_0^k(1-F(x))\,dx\)</b>(式 7.2,免赔额/限额)正是它的直接推论。</span></div>
+  </div>
+</section>
+
+<section id="exist">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-pre">边界情形</span><h2 class="sec-title">期望不一定存在</h2></div></div>
+    <p class="sec-sub">定义里的和 / 积分可能<b>发散</b>——此时期望(以及更高阶的矩)<b>不存在</b>。别默认任何分布都有有限均值。</p>
+    <div class="card accent">
+      <h3>存在性(Existence)<span class="freq">考频 ★</span></h3>
+      <div class="src">课本 p.123 · Table 7.1 旁注</div>
+      <p class="lede">和 / 积分不收敛,该阶矩就不存在——尾巴太肥的分布先验证收敛再谈期望。</p>
+      <p class="dim">"若计算某阶矩的和或积分不收敛,该矩就不存在。"典型如柯西分布 \(f(x)=\dfrac{1}{\pi(1+x^2)}\):\(\int|x|f(x)\,dx=\infty\),均值<b>不存在</b>;又如 \(f(x)\propto x^{-2}\) 的重尾损失,均值可能发散。</p>
+      <p class="dim">实操:遇到 \(x\to\infty\) 处密度衰减太慢(尾巴太肥)时,先<b>验证收敛</b>再谈期望值。生存函数公式里的边界项 \(x(1-F(x))\to0\) 同样要求均值有限才成立。</p>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子一:天平上的砝码(期望 = 重心)</h3>
+      <p>在一根无重量的直尺上,把质量为 \(p(x)\) 的砝码放在刻度 \(x\) 处(总质量为 1)。用一根手指把尺子<b>顶住不翻</b>的那个支点,恰好在 \(\mu=\sum x\,p(x)\)——因为支点处力矩平衡:\(\sum (x-\mu)\,p(x)=0\) 恰好等价于 \(\mu=E[X]\)。</p>
+      <p class="dim">连续版把砝码换成"质量密度 \(f(x)\)",支点是密度面积的质心。这也解释了"右偏分布均值被长尾拉向右":远处哪怕一点点质量,力臂很长,也能把支点拽过去。</p>
+    </div>
+
+    <div class="card">
+      <h3>💡 直觉例子二:按层切蛋糕(生存函数为什么给期望)</h3>
+      <p>非负整数变量想成一摞柱子:\(E[N]=\sum_k k\,p(k)\) 是"竖着数"——每根柱子高 \(k\)、权重 \(p(k)\)。换成"横着切":第 1 层(高度 0→1)被所有 \(N\ge 1\) 的结果占据,宽度 \(P[N>0]\);第 2 层宽 \(P[N>1]\)……层层相加得 \(E[N]=\sum_{k\ge0}P[N>k]\),与竖着数是同一块面积。</p>
+      <p class="dim">连续版每层厚 \(dx\)、宽 \(S(x)\),叠起来 \(E[X]=\int_0^\infty S(x)\,dx\)。例 7D 里 \(0.8+0.5+0.1=1.4\) 就是三层蛋糕的宽度和。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① 保险高频三件套:<b>免赔额(deductible)/ 给付限额(policy limit)/ 期望赔付(expected payment)</b>——见到 "payment per loss, up to a maximum of k" 先写 \(E[\min(X,k)]=\int_0^k S(x)\,dx\)。② 题面给 \(F\)(尤其分段常数)不给 \(f\) → 直接走生存函数法,别费劲微分。③ 给 \(E[X]\) 求 \(E[aX+b]\) 是送分的线性;一旦函数非线性(\(X^2\)、\(1/X\)、\(e^X\))必须 LOTUS 老老实实积,<b>严禁把期望塞进函数里</b>。④ 反解型:给 \(E[X]\) 的值和带参数的 \(p(x)\),回头解参数(练 7.1)。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Expected_value">Wikipedia · Expected value</a></div><div class="z">从帕斯卡–费马"赌局分钱"讲起,定义、性质、反例(圣彼得堡悖论)一页齐全。</div><div class="u">en.wikipedia.org/wiki/Expected_value</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/expected-value">StatLect · Expected value</a></div><div class="z">分层最清楚的免费教材:离散 → 连续 → 一般定义逐级展开,配大量已解例题。</div><div class="u">statlect.com/fundamentals-of-probability/expected-value</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Law_of_the_unconscious_statistician">Wikipedia · LOTUS</a></div><div class="z">"无意识统计学家"名字的来历:人人当定义用、其实是要证的定理,看完不再糊涂。</div><div class="u">en.wikipedia.org/wiki/Law_of_the_unconscious_statistician</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" style="background:linear-gradient(180deg,#f1faf5,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>\(E[g(X)]\neq g(E[X])\)</b>:非线性函数不能把期望"套进去"(Jensen),\(E[X^2]\neq(E[X])^2\)。</li>
+          <li><b>生存函数上下限搞混</b>:整段期望积到 \(\infty\),\(E[\min(X,k)]\) 只积到 \(k\);且公式要求变量<b>非负</b>。</li>
+          <li><b>忘了均值可能不存在</b>:重尾 / 发散积分,先验收敛。</li>
+          <li><b>\(E[X+Y]\) 误加独立条件</b>:线性对任意变量成立,不需独立。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 7.1</span>离散 \(N\):\(p,2p,1-3p\) 于 \(x=1,3,5\),给 \(E[N]=3.8\) 反解 \(p\)。</li>
+          <li><span class="ref">练 7.2</span>会议时长 \(f(x)=5(x-0.5)^4\),\(0.5\le x\le1.5\),求期望时长。</li>
+          <li><span class="ref">练 7.7</span>[Sample:42] 住院日 \(P[X{=}k]=\frac{6-k}{15}\),求期望赔付。</li>
+          <li><span class="ref">练 7.10</span>[110-W96:11] 分段常数 \(F(x)\),用生存函数法求 \(E[X]\)。</li>
+          <li><span class="ref">练 7.11</span>损失 \(f(x)=2000/x^2\)(\(x>2000\))+ 限额 5000,求期望每损失赔付。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(E[X]=4\),求 \(E[3X-2]\)。</li>
+        <li>抛硬币点数 \(X\):\(P[X{>}0]=1,\ P[X{>}1]=0.6,\ P[X{>}2]=0.2\)(整数值),用生存函数求 \(E[X]\)。</li>
+        <li>\(E[X]=2,\ E[X^2]=6\),问 \((E[X])^2\) 等于 \(E[X^2]\) 吗?</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(3\times4-2=10\)(线性);② \(1+0.6+0.2=1.8\);③ 否,\((E[X])^2=4\neq6=E[X^2]\),差 \(2\) 即方差。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 均值</h2></div></div>
+    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义 / LOTUS / 线性</h4>
+        <p>\(E[X]=\sum_x x\,p(x)=\int x f(x)\,dx\)</p>
+        <p>\(E[g(X)]=\sum g(x)p(x)=\int g(x)f(x)\,dx\)</p>
+        <p>\(E[aX+b]=aE[X]+b\)</p>
+        <p>\(E[X+Y]=E[X]+E[Y]\)(不需独立)</p>
+      </div>
+      <div class="cc t">
+        <h4>生存函数 / 边界</h4>
+        <p>\(E[X]=\int_0^\infty(1-F(x))\,dx\)(非负)</p>
+        <p>\(E[X]=\sum_{k\ge0}P[X>k]\)(离散)</p>
+        <p>\(E[\min(X,k)]=\int_0^k(1-F(x))\,dx\)</p>
+        <p>\(E[g(X)]\neq g(E[X])\);积分发散则均值不存在</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab" style="background:linear-gradient(180deg,#f1faf5,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 7 原文用词</span><h2 class="sec-title">均值 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"求什么期望"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 7</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">expected value</td><td class="ipa">/ɪkˈspɛktɪd/</td><td><span class="pos n">n.</span></td><td>期望值</td><td class="root">expect(预期)→ 长期平均结果 \(E[X]\)</td></tr>
+          <tr><td class="en">mean</td><td class="ipa">/miːn/</td><td><span class="pos n">n.</span></td><td>均值 / 期望</td><td class="root">分布中心 \(\mu\),与 expected value 同义</td></tr>
+          <tr><td class="en">expectation</td><td class="ipa">/ˌɛkspɛkˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>期望(运算)</td><td class="root">expect 的名词,\(E[\cdot]\) 算子</td></tr>
+          <tr><td class="en">survival function</td><td class="ipa">/sərˈvaɪvəl/</td><td><span class="pos n">n.</span></td><td>生存函数</td><td class="root">\(S(x)=1-F(x)\),"活过 x 的概率"</td></tr>
+          <tr><td class="en">density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度函数</td><td class="root">连续变量的 \(f(x)\),积分得概率</td></tr>
+          <tr><td class="en">probability function</td><td class="ipa">/ˌprɒbəˈbɪlɪti/</td><td><span class="pos n">n.</span></td><td>概率函数</td><td class="root">离散变量的 \(p(x)=P[X{=}x]\)</td></tr>
+          <tr><td class="en">converge / diverge</td><td class="ipa">/kənˈvɜːrdʒ/</td><td><span class="pos v">v.</span></td><td>收敛 / 发散</td><td class="root">和 / 积分不收敛 → 期望不存在</td></tr>
+          <tr><td class="en">integrate by parts</td><td class="ipa">/ˈɪntɪɡreɪt/</td><td><span class="pos v">v.</span></td><td>分部积分</td><td class="root">证生存函数公式的手法</td></tr>
+          <tr><td class="en">deductible</td><td class="ipa">/dɪˈdʌktɪbəl/</td><td><span class="pos n">n.</span></td><td>免赔额</td><td class="root">deduct(扣除)→ \(E[\min(X,k)]\) 场景</td></tr>
+          <tr><td class="en">benefit limit</td><td class="ipa">/ˈbɛnɪfɪt/</td><td><span class="pos n">n.</span></td><td>给付限额</td><td class="root">赔付封顶 \(k\),配 \(E[\min(X,k)]\)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">calculate E[X]</div><div class="z">求期望值</div></div>
+        <div class="ph"><div class="e">the expected value of …</div><div class="z">……的期望值</div></div>
+        <div class="ph"><div class="e">expected payment per loss</div><div class="z">每笔损失的期望赔付</div></div>
+        <div class="ph"><div class="e">up to a maximum of …</div><div class="z">至多不超过……(封顶)</div></div>
+        <div class="ph"><div class="e">policy limit / deductible</div><div class="z">保单限额 / 免赔额</div></div>
+        <div class="ph"><div class="e">you are also given …</div><div class="z">另已知……(补充条件)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 7</b> · 第七章 Mean 均值</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 7(理论 p.119–122、习题自 p.123 起,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。方差 / 标准差 / 矩属后续 Lesson,本页只讲一阶均值。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

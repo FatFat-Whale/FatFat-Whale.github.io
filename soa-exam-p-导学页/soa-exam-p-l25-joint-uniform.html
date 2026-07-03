@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L25 导学 · Joint Uniform Distribution 联合均匀分布</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#7c3aed; --accent-deep:#5b21b6; --accent-soft:#efe7fd; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#def">联合均匀</a>
+      <a href="#geo">几何概率</a>
+      <a href="#ex">例题</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第二十五章 · <em>Joint Uniform Distribution 联合均匀分布</em></h1>
+    <p class="lead">两个独立均匀变量的联合密度是<b>常数</b> \(1/(ab)\);更一般地,均匀分布在区域 \(R\) 上时密度 \(=1/\text{Area}(R)\)。于是"求概率"变成"<b>数面积</b>"——把事件画成区域,概率就是<b>面积之比</b>。几何法通常比二重积分更快。对照课本 Lesson&nbsp;25 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch25 Joint Uniform <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.441–442</b>(理论)</span>
+      <span class="pill">短章 · <b>几何概率为主</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>区域 \(R\) 上均匀 ⟹ 密度是常数 <b>\(1/\text{Area}(R)\)</b>(面积的倒数),区域外为 0;矩形特例 \(1/(ab)\)。</li>
+        <li>概率彻底几何化:<b>面积比</b> \(P=\text{Area}(A\cap R)\,/\,\text{Area}(R)\)——画区域、数面积(三角 / 梯形 / 扇形),别硬积分。</li>
+        <li><b>边缘未必均匀</b>:只有矩形支撑才边缘均匀且独立;三角 / 圆盘上边缘随位置变,一维公式别乱套。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l24-joint-continuous.html">L24 连续联合</a>
+    <a href="soa-exam-p-l15-uniform-distribution.html">L15 均匀分布</a>
+    <span class="arr">→</span>
+    <span class="here">L25 联合均匀</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <span style="padding:4px 12px;border-radius:999px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft);white-space:nowrap">几何面积法题型</span>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">联合均匀</a>
+  <a href="#geo">几何概率</a>
+  <a href="#ex">例题</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完联合均匀分布你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 写出均匀区域上的联合密度 \(f(x,y)=\dfrac{1}{\text{Area}(R)}\)。</p>
+        <p style="margin-bottom:0">✅ 把 \(P[(X,Y)\in A]\) 化成<b>面积比</b> \(\dfrac{\text{Area}(A\cap R)}{\text{Area}(R)}\),用几何而非积分求解。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用三角形 / 梯形面积公式快速算出常见事件(\(Y\le X\)、\(|X-Y|>c\)、\(X+Y<c\))的概率。</p>
+        <p style="margin-bottom:0">✅ 知道边缘分布<b>未必</b>仍是均匀(取决于 \(R\) 的形状)。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#f9f7fe,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch25 · Lesson 25 · 课本 p.441</span><h2 class="sec-title">联合均匀分布 — 密度是常数</h2></div></div>
+    <p class="sec-sub">若 \(X\sim U[0,a]\)、\(Y\sim U[0,b]\) 且相互独立,联合密度就是两个边缘密度相乘,处处相等——这正是"均匀"的含义:在一块区域上密度不随位置变化。</p>
+
+    <div class="card accent">
+      <h3>定义:区域上的联合均匀密度 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.441 · Lesson 25 引言</div>
+      <p class="lede">均匀 = 密度处处相同,大小只能是 \(1/\text{Area}(R)\)——这样总积分才等于 1。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Uniform density on region R</span>
+        $$f(x,y)=\frac{1}{\text{Area}(R)}\quad\big((x,y)\in R\big),\qquad f(x,y)=0\ \text{elsewhere}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>密度 = 面积的倒数</b> — 摊得越大、每处越薄;矩形特例 \(f=1/(ab)\)。</span></div>
+      <p class="dim">独立情形:\(f(x,y)=f_X(x)\,f_Y(y)=\dfrac1a\cdot\dfrac1b=\dfrac{1}{ab}\),即矩形 \([0,a]\times[0,b]\) 上处处 \(1/(ab)\);再推广到任意区域 \(R\)。密度 = 区域面积的<b>倒数</b>(reciprocal),区域外密度为 0。</p>
+      <details class="more"><summary>展开 · 为什么密度必须是 1/Area(R)</summary>
+        <p class="dim">设常数密度为 \(c\):总概率 \(\iint_R c\,\mathrm dA=c\cdot\text{Area}(R)=1\Rightarrow c=\dfrac{1}{\text{Area}(R)}\)。这样 \(\iint_R f\,\mathrm dx\,\mathrm dy=\dfrac{\text{Area}(R)}{\text{Area}(R)}=1\) 自动成立;矩形是特例:\(\text{Area}=ab\),\(c=1/(ab)=f_X f_Y\)。</p>
+      </details>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>联合均匀 = "一块木板质量均匀铺开"。落点在哪一块的概率,只看那一块<b>占多大面积</b>,与位置无关。所以概率问题彻底几何化。</span></div>
+  </div>
+</section>
+
+<section id="geo">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">核心工具</span><h2 class="sec-title">几何概率:面积之比</h2></div></div>
+    <p class="sec-sub">既然密度是常数,事件 \(A\) 的概率对密度积分就退化成"\(A\) 在 \(R\) 内占的面积 ÷ \(R\) 的总面积"。会画区域、会算三角形/梯形面积,本章就通了。</p>
+    <div class="card accent">
+      <h3>几何概率公式 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.441 · 由密度积分得</div>
+      <p class="lede">常数密度把二重积分退化成面积比:目标面积 ÷ 总面积。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Geometric probability</span>
+        $$P\big[(X,Y)\in A\big]=\iint_{A\cap R}\frac{1}{\text{Area}(R)}\,\mathrm dx\,\mathrm dy=\frac{\text{Area}(A\cap R)}{\text{Area}(R)}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>概率 = 面积比,画图先于计算</b> — 先画 \(R\),再画事件 \(A\),量 \(A\cap R\) 面积除以 \(R\) 面积;总面积不是 1 时别忘了除。</span></div>
+      <p class="dim">步骤:① 画出样本区域 \(R\);② 把事件条件画成子区域 \(A\);③ 量 \(A\cap R\) 的面积,除以 \(R\) 的面积。矩形区域用长方形/三角形/梯形拼,圆形区域用扇形 ± 三角形。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 160" role="img" aria-label="区域 R 与子区域 A 的面积比">
+          <rect x="18" y="14" width="184" height="118" fill="#fff" stroke="#16243d" stroke-width="1.5"/>
+          <polygon points="18,132 202,132 202,52" fill="#7c3aed" fill-opacity="0.28"/>
+          <line x1="18" y1="132" x2="202" y2="52" stroke="#5b21b6" stroke-width="1.8"/>
+          <text x="24" y="28" font-size="12" fill="#16243d" font-style="italic">R</text>
+          <text x="150" y="120" font-size="13" fill="#5b21b6" font-style="italic" font-weight="700">A</text>
+        </svg>
+        <div class="cap">概率 = <b>紫色 \(A\) 面积 ÷ 整块 \(R\)</b> 面积</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 170" role="img" aria-label="例 25A 梯形区域 Y ≤ X − 5">
+          <line x1="34" y1="16" x2="34" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="34" y1="140" x2="224" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <rect x="34" y="40" width="180" height="100" fill="none" stroke="#16243d" stroke-width="1.4"/>
+          <polygon points="64,140 214,140 214,40" fill="#7c3aed" fill-opacity="0.30"/>
+          <line x1="64" y1="140" x2="214" y2="40" stroke="#5b21b6" stroke-width="1.8"/>
+          <text x="18" y="44" font-size="10" fill="#16243d">20</text>
+          <text x="22" y="144" font-size="10" fill="#16243d">0</text>
+          <text x="58" y="154" font-size="10" fill="#16243d">5</text>
+          <text x="204" y="154" font-size="10" fill="#16243d">25</text>
+          <text x="212" y="154" font-size="10" fill="#16243d"> </text>
+          <text x="120" y="167" font-size="11" fill="#16243d" font-style="italic">Sam X (30)</text>
+          <text x="2" y="26" font-size="11" fill="#16243d" font-style="italic">Joelle Y</text>
+        </svg>
+        <div class="cap">例 25A:\(Y\le X-5\) 是<b>梯形</b>,底 25、5,高 20</div>
+      </div>
+    </div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>边缘未必均匀:</b>只有当 \(R\) 是<b>矩形</b>(边平行坐标轴)时,\(X\)、\(Y\) 的边缘分布才各自均匀且独立。若 \(R\) 是三角形、圆盘等非矩形,边缘密度会随位置变化(某一横切线越长概率越大),<b>不再</b>是均匀分布。</span></div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:22%"></th><th>矩形支撑 \([0,a]\times[0,b]\)</th><th>非矩形支撑(三角 / 圆盘)</th></tr></thead>
+      <tbody>
+        <tr><td>联合密度</td><td>\(1/(ab)\)</td><td>\(1/\text{Area}(R)\)</td></tr>
+        <tr><td>边缘分布</td><td>各自均匀</td><td><b>未必均匀</b>(横切线越长密度越大)</td></tr>
+        <tr><td>X、Y 独立?</td><td>独立</td><td>不独立(取值范围互相牵制)</td></tr>
+        <tr><td>一维公式</td><td>可直接套</td><td>别乱套,老老实实算面积 / 积分</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="ex" style="background:linear-gradient(180deg,#f9f7fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">课本 Example</span><h2 class="sec-title">代表例题</h2></div></div>
+    <p class="sec-sub">课本两道自带例题:25A 用矩形区域(几何 vs 积分对照),25B 用圆盘区域(扇形 − 三角形)。吃透 25A 的"面积比"套路,本章的题基本一眼出答案。</p>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 25A</span><span class="src" style="margin:0">课本 p.441 · 保险处理时长</span></div>
+      <p class="q">Sam 完成一次费率申报的时长 \(X\sim U[0,30]\) 小时,Joelle 的时长 \(Y\sim U[0,20]\) 小时,相互独立。求 Joelle 比 Sam <b>至少早 5 小时</b>完成的概率,即 \(P[Y\le X-5]\)。</p>
+      <p>样本区域 \(R=[0,30]\times[0,20]\),面积 \(=30\times20=600\),密度 \(1/600\)。事件 \(Y\le X-5\) 在 \(R\) 内是一个<b>梯形</b>:两平行边(竖直高度)长 \(25\) 与 \(5\)、高(水平跨度)\(20\),</p>
+      <p>\(\text{Area}=\tfrac12(25+5)(20)=300\);故 \(P[Y\le X-5]=\dfrac{300}{600}=0.5\)。(课本还给了等价的二重积分 \(\tfrac{1}{600}\!\int_5^{30}\!\!\int_0^{\min(x-5,20)}\!\mathrm dy\,\mathrm dx\),结果相同——几何法更快。)</p>
+      <span class="ans">P[Y ≤ X−5] = 0.5</span>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 25B</span><span class="src" style="margin:0">课本 p.442 · 圆盘上均匀</span></div>
+      <p class="q">\((X,Y)\) 在<b>半径 1、圆心在原点的圆盘</b>上均匀分布。求 \(P[X>0.5]\)。</p>
+      <p>\(R\) 面积 \(=\pi\)。区域 \(x>0.5\) 关于 \(x\) 轴对称,取上半部分 = <b>\(60^\circ\) 扇形 − 直角三角形</b>:扇形占 \(\tfrac16\) 圆(\(\cos\theta=0.5\Rightarrow\theta=60^\circ\)),面积 \(\pi/6\);三角形底 \(0.5\)、高 \(\tfrac{\sqrt3}{2}\),面积 \(0.125\sqrt3\)。</p>
+      <p>整块面积 \(=2\big(\pi/6-0.125\sqrt3\big)\),故 \(P[X>0.5]=\dfrac{2\big(\pi/6-0.125\sqrt3\big)}{\pi}\approx0.1955\)。</p>
+      <span class="ans">P[X > 0.5] ≈ 0.1955</span>
+    </div>
+    <div class="note"><span class="ic">📐</span><span class="t"><b>套路小结:</b>矩形区域 → 拆长方形/三角形/梯形;圆盘区域 → 扇形 \(\pm\) 三角形。答案永远是"目标面积 ÷ 总面积"。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:飞镖与约会</h3>
+      <p><b>飞镖</b>:蒙眼向一块均匀木板掷镖(保证命中板内),落进任何一块的概率只看<b>那块占板面的比例</b>——红心难中,纯粹因为它面积小。这就是"密度常数 ⟹ 概率 = 面积比"。</p>
+      <p><b>约会问题</b>:两人约好 12:00–13:00 各自随机到达,先到者等 10 分钟。相遇 ⟺ \(|X-Y|\le10\),在 \(60\times60\) 正方形里是一条<b>对角带</b>:正方形减去两个直角边 50 的三角形,\(P=1-\left(\tfrac{50}{60}\right)^2=\tfrac{11}{36}\approx0.31\)。</p>
+      <p class="dim">同一张图换件外衣就是 SOA 题:两台设备的故障时刻、两笔损失之差、两位员工的处理时长(例 25A)——全是"正方形 + 斜线切块"。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① 关键词 <b>uniformly distributed on/over …</b> 一出现,就把题变几何:画 \(R\)、画事件、算面积比。② 三大事件形状:\(X+Y&lt;c\)(斜三角)、\(Y&lt;X-c\)(梯形,例 25A)、\(|X-Y|&gt;c\)(两个对角三角,练 25.2)。③ 圆盘上均匀 → 扇形 ± 三角形拼(例 25B)。④ 条件概率型(练 25.4):分子分母都是面积,先画交集。⑤ 最后一步<b>除以总面积</b>别漏——总面积 ≠ 1 时最容易丢分。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Geometric_probability">Wikipedia · Geometric probability</a></div><div class="z">"概率 = 面积比"的正式出处,含 Buffon 投针等经典问题,把本章方法放进更大的地图。</div><div class="u">en.wikipedia.org/wiki/Geometric_probability</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)">Wikipedia · Bertrand paradox (probability)</a></div><div class="z">同一句"随机取弦"三种画法三个答案——提醒你"均匀"必须说清在哪个空间均匀,对 uniform 的警觉性 +1。</div><div class="u">en.wikipedia.org/wiki/Bertrand_paradox_(probability)</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/probability-distributions/uniform-distribution">StatLect · Uniform distribution</a></div><div class="z">一维均匀分布的严格复习(密度 / cdf / 矩),正是本章二维版的地基(对应 L15)。</div><div class="u">statlect.com/probability-distributions/uniform-distribution</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>概率 = 面积比</b>:先算子区域面积,再<b>除以总面积</b>,别漏掉分母(总面积 ≠ 1 时最容易漏)。</li>
+          <li><b>密度是面积倒数</b>:\(f=1/\text{Area}(R)\),非 1;矩形密度 \(1/(ab)\)。</li>
+          <li><b>边缘未必均匀</b>:非矩形区域(三角/圆盘)上 \(X\) 的边缘不是均匀分布,别乱套一维公式。</li>
+          <li><b>画对区域边界</b>:\(|X-Y|>c\)、\(X+Y<c\) 要画成两条平行线夹的带状 / 斜三角,勿把范围画错。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己画区域算面积,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 25.1</span>\(X,Y\) 独立 \(U(0,1)\),求 \(P[X^2\ge Y^3]\)(积分曲线下面积)。</li>
+          <li><span class="ref">练 25.2</span>两数独立取自 \((0,1)\),求"两数相差超过 \(\tfrac12\)"的概率。</li>
+          <li><span class="ref">练 25.4</span>1999 Sample:10 · 两员工损失独立 \(U[1000,5000]\),条件概率型经典题。</li>
+          <li><span class="ref">练 25.7</span>Jason/Andrew 跑步时长独立均匀,求 \(P[\text{Jason}<\text{Andrew}]\)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(X,Y\) 独立 \(U(0,1)\),求 \(P[X+Y<1]\)。</li>
+        <li>\(X,Y\) 独立 \(U(0,1)\),求 \(P[X>Y]\)。</li>
+        <li>\(X\sim U[0,2]\)、\(Y\sim U[0,3]\) 独立,求 \(P[X>Y]\)。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(\tfrac12\)(单位正方形下三角形);② \(\tfrac12\)(对角线分半);③ \(\dfrac{\text{三角形面积 }2}{\text{总面积 }6}=\dfrac13\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f9f7fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 联合均匀分布</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>密度 / 几何概率</h4>
+        <p>矩形:\(f(x,y)=\dfrac{1}{ab}\)</p>
+        <p>一般:\(f=\dfrac{1}{\text{Area}(R)}\)</p>
+        <p>\(P[(X,Y)\in A]=\dfrac{\text{Area}(A\cap R)}{\text{Area}(R)}\)</p>
+      </div>
+      <div class="cc t">
+        <h4>面积工具箱</h4>
+        <p>三角形 \(=\tfrac12\,\text{底}\times\text{高}\)</p>
+        <p>梯形 \(=\tfrac12(\text{上底}+\text{下底})\times\text{高}\)</p>
+        <p>扇形 \(=\dfrac{\theta}{2\pi}\,\pi r^2\);圆盘 \(=\pi r^2\)</p>
+        <p>矩形区域 → 边缘均匀;非矩形 → 边缘未必均匀</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 25 原文用词</span><h2 class="sec-title">联合均匀分布 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它识别"均匀 / 区域 / 面积"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 25</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">joint distribution</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合分布</td><td class="root">joint(联合)→ 两变量一起看 \(f(x,y)\)</td></tr>
+          <tr><td class="en">uniform (distribution)</td><td class="ipa">/ˈjuːnɪfɔːrm/</td><td><span class="pos adj">adj.</span></td><td>均匀(分布)</td><td class="root">uni-(单一)+form(形态)→ 密度处处相同</td></tr>
+          <tr><td class="en">density</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度</td><td class="root">均匀时 \(=1/\text{Area}(R)\),常数</td></tr>
+          <tr><td class="en">region</td><td class="ipa">/ˈriːdʒən/</td><td><span class="pos n">n.</span></td><td>区域</td><td class="root">概率支撑集 \(R\),事件画成子区域</td></tr>
+          <tr><td class="en">area</td><td class="ipa">/ˈɛəriə/</td><td><span class="pos n">n.</span></td><td>面积</td><td class="root">几何概率的核心度量</td></tr>
+          <tr><td class="en">reciprocal</td><td class="ipa">/rɪˈsɪprəkəl/</td><td><span class="pos n">n.</span></td><td>倒数</td><td class="root">密度 = 面积的 reciprocal</td></tr>
+          <tr><td class="en">marginal</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos adj">adj.</span></td><td>边缘的</td><td class="root">margin(边)→ 只看一个变量的分布</td></tr>
+          <tr><td class="en">trapezoid</td><td class="ipa">/ˈtræpɪzɔɪd/</td><td><span class="pos n">n.</span></td><td>梯形</td><td class="root">例 25A 面积用梯形公式</td></tr>
+          <tr><td class="en">sector</td><td class="ipa">/ˈsɛktər/</td><td><span class="pos n">n.</span></td><td>扇形</td><td class="root">圆盘区域按角度切,例 25B</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">uniformly distributed on …</div><div class="z">在……上均匀分布</div></div>
+        <div class="ph"><div class="e">chosen at random from …</div><div class="z">从……随机选取</div></div>
+        <div class="ph"><div class="e">the joint distribution of X and Y</div><div class="z">X 与 Y 的联合分布</div></div>
+        <div class="ph"><div class="e">independent … random variables</div><div class="z">相互独立的……随机变量</div></div>
+        <div class="ph"><div class="e">differ by more than …</div><div class="z">相差超过……</div></div>
+        <div class="ph"><div class="e">the area of the region</div><div class="z">该区域的面积</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 25</b> · 第二十五章 Joint Uniform Distribution 联合均匀分布</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 25(p.441–442 理论,Example 25A/25B;习题 25.1–25.7 见 p.443–446,页码已标注,细节以课本为准)+ 威普网校视频。<br>本页聚焦几何概率(面积比)方法。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

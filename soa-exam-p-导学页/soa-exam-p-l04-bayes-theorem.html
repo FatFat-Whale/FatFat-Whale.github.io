@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L04 导学 · Bayes' Theorem 贝叶斯定理</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0d9488; --accent-deep:#0b6b60; --accent-soft:#ddf1ef; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#total">全概率</a>
+      <a href="#bayes">贝叶斯</a>
+      <a href="#prior">先验后验</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第四章 · <em>Bayes' Theorem 贝叶斯定理</em></h1>
+    <p class="lead">上一章学会了 <b>\(P[A\mid B]\)</b>。今天把它反过来:已知<b>结果</b> \(B\) 发生,回推是哪个<b>原因</b> \(A_j\) 导致的。工具是<b>全概率公式</b>(把 \(P[B]\) 拆成各原因的加权和)和<b>贝叶斯定理</b>(用先验概率算后验概率)。对照课本 Lesson&nbsp;4 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch4 Bayes' Theorem <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.65–66</b>(理论)</span>
+      <span class="pill">承接 <b>Ch3 条件概率</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li><b>全概率 = 分组加权平均</b>:\(P[A]=\sum_i P[B_i]\,P[A\mid B_i]\),沿一组互斥完备的"原因"把总概率拆开。</li>
+        <li><b>贝叶斯 = 由果推因</b>:\(P[A_j\mid B]\) 的分子,正是分母那个求和里的<b>第 \(j\) 项</b>——忘除分母就不是概率。</li>
+        <li><b>先验 → 后验</b>:看到证据 \(B\) 之前是 \(P[A_i]\),之后更新成 \(P[A_i\mid B]\)——用证据更新信念。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率</a>
+    <span class="arr">→</span>
+    <span class="here">L04 贝叶斯</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l05-random-variables.html">L05 随机变量</a>
+    <a href="soa-exam-p-l06-conditional-probability-rv.html">L06 随机变量的条件概率</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#total">全概率</a>
+  <a href="#bayes">贝叶斯</a>
+  <a href="#prior">先验后验</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完贝叶斯定理你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>全概率公式</b> \(P[A]=\sum_i P[B_i]\,P[A\mid B_i]\) 把一个总概率拆成各分支的加权和。</p>
+        <p style="margin-bottom:0">✅ 识别"互斥且完备(mutually exclusive & exhaustive)"的一组事件,把它们当分类框架。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>贝叶斯定理</b>由结果反推原因:\(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\)。</p>
+        <p style="margin-bottom:0">✅ 分清<b>先验(prior)</b>与<b>后验(posterior)</b>概率,理解"分子是分母求和里的一项"。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="total" style="background:linear-gradient(180deg,#f0faf8,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch4 · Lesson 4 · 课本 p.65</span><h2 class="sec-title">全概率公式 — 把总概率拆开</h2></div></div>
+    <p class="sec-sub">如果一个事件可以拆成一组<b>互斥且完备</b>的子情形,那么它的概率就是每个子情形概率的总和。这是通往贝叶斯的第一块砖。</p>
+
+    <div class="card accent">
+      <h3>Law of Total Probability(全概率公式)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.65 · 式 (4.1)</div>
+      <p class="lede">先按"原因"分好组,算每组内 \(A\) 的条件概率,再按组的权重 \(P[B_i]\) 加权求和。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Law of Total Probability</span>
+        $$P[A]=\sum_{i=1}^{n}P[B_i]\,P[A\mid B_i]$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>先分组,再加权</b> — 概率树上每条支路连乘,含 \(A\) 的支路全加,总和就是 \(P[A]\)。</span></div>
+      <p class="dim">设 \(B_1,\dots,B_n\) 是一组<b>互斥(mutually exclusive)且完备(exhaustive)</b>的事件——它们两两不相交,并集是整个样本空间 \(\Omega\)。任何事件 \(A\) 都被这组事件切成 \(n\) 块 \(A\cap B_i\),各块概率用乘法律 \(P[A\cap B_i]=P[B_i]\,P[A\mid B_i]\),加起来即得公式。</p>
+      <p class="dim">读法:"在每种情形 \(B_i\) 下 \(A\) 的条件概率,按该情形出现的权重 \(P[B_i]\) 加权平均"。这就是把总概率<b>沿一组分支展开</b>。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 190" role="img" aria-label="全概率:样本空间被 B1..Bn 分块">
+          <rect x="6" y="10" width="228" height="150" fill="#fff" stroke="#16243d" stroke-width="1.5"/>
+          <text x="12" y="26" font-size="12" fill="#16243d" font-style="italic">Ω</text>
+          <line x1="63" y1="10" x2="63" y2="160" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="120" y1="10" x2="120" y2="160" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="177" y1="10" x2="177" y2="160" stroke="#16243d" stroke-width="1.2"/>
+          <text x="30" y="150" font-size="12" font-style="italic" fill="#16243d">B₁</text>
+          <text x="87" y="150" font-size="12" font-style="italic" fill="#16243d">B₂</text>
+          <text x="144" y="150" font-size="12" font-style="italic" fill="#16243d">B₃</text>
+          <text x="200" y="150" font-size="12" font-style="italic" fill="#16243d">B₄</text>
+          <ellipse cx="120" cy="70" rx="98" ry="34" fill="#0d9488" fill-opacity="0.24" stroke="#0b6b60" stroke-width="1.5"/>
+          <text x="112" y="74" font-size="14" font-style="italic" fill="#0b6b60">A</text>
+        </svg>
+        <div class="cap"><b>分块:</b>A 被互斥完备的 \(B_i\) 切成 \(A\cap B_i\),\(P[A]=\sum P[A\cap B_i]\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 190" role="img" aria-label="概率树:分支到 Bi 再到 A">
+          <circle cx="24" cy="95" r="5" fill="#16243d"/>
+          <text x="10" y="88" font-size="11" fill="#16243d">Ω</text>
+          <line x1="29" y1="95" x2="96" y2="30" stroke="#0b6b60" stroke-width="1.4"/>
+          <line x1="29" y1="95" x2="96" y2="75" stroke="#0b6b60" stroke-width="1.4"/>
+          <line x1="29" y1="95" x2="96" y2="120" stroke="#0b6b60" stroke-width="1.4"/>
+          <line x1="29" y1="95" x2="96" y2="165" stroke="#0b6b60" stroke-width="1.4"/>
+          <text x="52" y="52" font-size="10" fill="#0b6b60">P[B₁]</text>
+          <text x="52" y="93" font-size="10" fill="#0b6b60">P[B₂]</text>
+          <text x="52" y="163" font-size="10" fill="#0b6b60">P[Bₙ]</text>
+          <text x="100" y="34" font-size="12" font-style="italic" fill="#16243d">B₁</text>
+          <text x="100" y="79" font-size="12" font-style="italic" fill="#16243d">B₂</text>
+          <text x="100" y="124" font-size="12" font-style="italic" fill="#16243d">B₃</text>
+          <text x="100" y="169" font-size="12" font-style="italic" fill="#16243d">Bₙ</text>
+          <line x1="118" y1="30" x2="188" y2="30" stroke="#c6492f" stroke-width="1.4"/>
+          <line x1="118" y1="75" x2="188" y2="75" stroke="#c6492f" stroke-width="1.4"/>
+          <line x1="118" y1="120" x2="188" y2="120" stroke="#c6492f" stroke-width="1.4"/>
+          <line x1="118" y1="165" x2="188" y2="165" stroke="#c6492f" stroke-width="1.4"/>
+          <text x="130" y="24" font-size="9" fill="#c6492f">P[A|B₁]</text>
+          <text x="130" y="69" font-size="9" fill="#c6492f">P[A|B₂]</text>
+          <text x="130" y="159" font-size="9" fill="#c6492f">P[A|Bₙ]</text>
+          <text x="192" y="34" font-size="12" font-style="italic" fill="#c6492f">A</text>
+          <text x="192" y="79" font-size="12" font-style="italic" fill="#c6492f">A</text>
+          <text x="192" y="124" font-size="12" font-style="italic" fill="#c6492f">A</text>
+          <text x="192" y="169" font-size="12" font-style="italic" fill="#c6492f">A</text>
+        </svg>
+        <div class="cap"><b>概率树:</b>每条路径概率 \(=P[B_i]\,P[A\mid B_i]\),含 \(A\) 的路径全加起来 \(=P[A]\)</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>先按"原因/类别"分好组,算每组内 \(A\) 的概率,再按组的大小加权求和。掷骰、抽签、分层人群这类"先选类再看结果"的题,几乎都用它开路。</span></div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 4A</span><span class="src" style="margin:0">课本 p.65 · Sue Acer 竞选</span></div>
+      <p class="q">Sue Acer 竞选 SOA 主席。选民按精算类别分成 5 组,各组人数占比与投她票的比例如下。问 Sue 总共拿到多少百分比的票?</p>
+      <table class="map" style="max-width:520px">
+        <thead><tr><th>类别 Category</th><th>选民占比 \(P[B_i]\)</th><th>投票率 \(P[A\mid B_i]\)</th></tr></thead>
+        <tbody>
+          <tr><td>Life actuaries 寿险</td><td>60%</td><td>55%</td></tr>
+          <tr><td>Health actuaries 健康险</td><td>20%</td><td>35%</td></tr>
+          <tr><td>Pension actuaries 养老金</td><td>10%</td><td>50%</td></tr>
+          <tr><td>Investment actuaries 投资</td><td>5%</td><td>80%</td></tr>
+          <tr><td>Other actuaries 其他</td><td>5%</td><td>10%</td></tr>
+        </tbody>
+      </table>
+      <p>用全概率公式,\(A\)="投 Sue 票",按类别加权求和:</p>
+      <p>\((0.6)(0.55)+(0.2)(0.35)+(0.1)(0.5)+(0.05)(0.8)+(0.05)(0.1)\)<br>\(=0.33+0.07+0.05+0.04+0.005=0.495\)。</p>
+      <span class="ans">Sue Acer 得票 = 49.5%</span>
+    </div>
+  </div>
+</section>
+
+<section id="bayes">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">Ch4 · 核心 · 课本 p.65</span><h2 class="sec-title">贝叶斯定理:由结果反推原因</h2></div></div>
+    <p class="sec-sub">全概率公式是"由原因算结果";贝叶斯把它反过来——已知结果 \(B\) 发生了,问它<b>由哪个原因 \(A_j\) 引起</b>。这才是本章的主戏,也是历年考点。</p>
+
+    <div class="card accent">
+      <h3>Bayes' Theorem(贝叶斯定理)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.65 · 式 (4.2) · Table 4.1 汇总</div>
+      <p class="lede">已知结果 \(B\) 发生,原因是 \(A_j\) 的概率 = \(A_j\) 那条路径,占所有通往 \(B\) 路径之和的比重。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Bayes' Theorem</span>
+        $$P[A_j\mid B]=\frac{P[A_j]\,P[B\mid A_j]}{\displaystyle\sum_{i=1}^{n}P[A_i]\,P[B\mid A_i]}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>分母全走一遍,分子只挑一支</b> — 分母 = 全概率(每个原因都走一遍);分子 = 你关心的第 \(j\) 支。顺着树乘,逆着树除。</span></div>
+      <p class="dim">设 \(A_1,\dots,A_n\) 互斥且完备,\(B\) 是已观测到的结果事件。<b>看结构:</b>分子 \(P[A_j]P[B\mid A_j]\) 正是<b>分母那个求和里的第 \(j\) 项</b>。分母(全概率)= \(P[B]\),是所有原因的总权重;分子是其中属于 \(A_j\) 的那一份。相当于在结果 \(B\) 已发生的世界里,给各原因<b>重新归一化</b>。</p>
+      <details class="more"><summary>展开 · 推导:两步就到(乘法律 + 全概率)</summary>
+        <p class="dim"><b>第一步(乘法律的对称性):</b>\(P[A\cap B]=P[A]P[B\mid A]=P[B]P[A\mid B]\),两边除以 \(P[B]\) 得</p>
+        <div class="formula"><span class="name">(*) 反转条件方向</span>
+          $$P[A\mid B]=\frac{P[A]\,P[B\mid A]}{P[B]}$$</div>
+        <p class="dim"><b>第二步:</b>把分母 \(P[B]\) 用全概率公式沿 \(\{A_i\}\) 展开,并把 \(A\) 换成我们关心的那个原因 \(A_j\),就得到贝叶斯定理。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 190" role="img" aria-label="贝叶斯反转:锁定含 B 的路径中 Aj 那一支">
+          <circle cx="24" cy="95" r="5" fill="#16243d"/>
+          <text x="10" y="88" font-size="11" fill="#16243d">Ω</text>
+          <line x1="29" y1="95" x2="96" y2="45" stroke="#0b6b60" stroke-width="1.4"/>
+          <line x1="29" y1="95" x2="96" y2="145" stroke="#0b6b60" stroke-width="2.6"/>
+          <text x="46" y="60" font-size="10" fill="#0b6b60">P[A₁]</text>
+          <text x="46" y="140" font-size="10" fill="#0b6b60">P[Aⱼ]</text>
+          <text x="100" y="49" font-size="12" font-style="italic" fill="#16243d">A₁</text>
+          <text x="100" y="149" font-size="12" font-style="italic" fill="#0b6b60">Aⱼ</text>
+          <line x1="118" y1="45" x2="190" y2="45" stroke="#c6492f" stroke-width="1.4"/>
+          <line x1="118" y1="145" x2="190" y2="145" stroke="#c6492f" stroke-width="2.6"/>
+          <text x="128" y="39" font-size="9" fill="#c6492f">P[B|A₁]</text>
+          <text x="128" y="139" font-size="9" fill="#c6492f">P[B|Aⱼ]</text>
+          <text x="196" y="49" font-size="12" font-style="italic" fill="#c6492f">B</text>
+          <text x="196" y="149" font-size="12" font-style="italic" fill="#c6492f">B</text>
+          <rect x="112" y="128" width="112" height="34" fill="var(--hi)" fill-opacity="0.28" rx="4"/>
+        </svg>
+        <div class="cap"><b>反转:</b>已知到达 \(B\),问走的是哪支——加粗那条 \(A_j\!\to\!B\) 占所有到 \(B\) 路径的比重</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 190" role="img" aria-label="分子是分母求和的一项">
+          <rect x="16" y="30" width="208" height="52" fill="#fff" stroke="#16243d" stroke-width="1.4" rx="6"/>
+          <text x="24" y="24" font-size="11" fill="#16243d">分母 = P[B] = Σ 各支</text>
+          <rect x="20" y="34" width="46" height="44" fill="#0d9488" fill-opacity="0.20"/>
+          <rect x="66" y="34" width="60" height="44" fill="#0d9488" fill-opacity="0.55" stroke="#0b6b60" stroke-width="1.6"/>
+          <rect x="126" y="34" width="40" height="44" fill="#0d9488" fill-opacity="0.20"/>
+          <rect x="166" y="34" width="54" height="44" fill="#0d9488" fill-opacity="0.20"/>
+          <text x="80" y="60" font-size="10" fill="#0b6b60">Aⱼ 项</text>
+          <rect x="66" y="120" width="60" height="44" fill="#0d9488" fill-opacity="0.55" stroke="#0b6b60" stroke-width="1.6"/>
+          <text x="72" y="146" font-size="10" fill="#0b6b60">分子 = Aⱼ 项</text>
+          <line x1="96" y1="82" x2="96" y2="118" stroke="#c6492f" stroke-width="1.4" stroke-dasharray="3 3"/>
+          <text x="130" y="146" font-size="11" fill="#16243d">占整条的比 = 后验</text>
+        </svg>
+        <div class="cap"><b>归一化:</b>分子(\(A_j\) 那块)÷ 分母(全部块之和)= \(P[A_j\mid B]\)</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 4B</span><span class="src" style="margin:0">课本 p.66 · 汽车驾驶员分型</span></div>
+      <p class="q">驾驶员分两型:<b>Type I</b> 占 80%,每年出险(submit a claim)概率 0.1;<b>Type II</b> 占 20%,出险概率 0.3。已知某驾驶员<b>出了险(事件 \(B\))</b>,求他是 Type II 的概率。</p>
+      <p>记 \(A_1\)=Type I、\(A_2\)=Type II、\(B\)=出险。<b>先验</b> \(P[A_1]=0.8,\ P[A_2]=0.2\);\(P[B\mid A_1]=0.1,\ P[B\mid A_2]=0.3\)。贝叶斯:</p>
+      <p>$$P[A_2\mid B]=\frac{P[A_2]P[B\mid A_2]}{P[A_1]P[B\mid A_1]+P[A_2]P[B\mid A_2]}=\frac{(0.2)(0.3)}{(0.8)(0.1)+(0.2)(0.3)}=\frac{0.06}{0.14}=\frac{3}{7}$$</p>
+      <span class="ans">P[A₂ | B] = 3/7 ≈ 0.4286</span>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>先验 → 后验的更新:</b>没看到出险前,认为他是 Type II 的概率(<b>先验 prior</b>)只有 \(0.2\);观测到"出险"这个证据后,概率升到 \(3/7\approx0.43\)(<b>后验 posterior</b>)——出险这件事,让"高风险型"的嫌疑变大了。</span></div>
+  </div>
+</section>
+
+<section id="prior" style="background:linear-gradient(180deg,#f0faf8,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch4 · 概念</span><h2 class="sec-title">先验概率 vs 后验概率</h2></div></div>
+    <p class="sec-sub">贝叶斯定理的本质是"用证据更新信念"。搞清哪个是先验、哪个是后验,是读懂考题的钥匙。</p>
+    <div class="grid2">
+      <div class="card accent">
+        <h3>先验概率 Prior probabilities <span class="freq">考频 ★★</span></h3>
+        <div class="src">课本 p.66</div>
+        <p class="lede"><b>在观测到证据 \(B\) 之前</b>,对各原因 \(A_i\) 的概率判断,即 \(P[A_i]\)。</p>
+        <p class="dim">通常是题目给的"初始/整体比例"(如 80% 是 Type I)。教材原话:"The \(A_i\) are typically initial probabilities... called <b>prior probabilities</b>"。</p>
+      </div>
+      <div class="card accent">
+        <h3>后验概率 Posterior probabilities <span class="freq">考频 ★★</span></h3>
+        <div class="src">课本 p.66</div>
+        <p class="lede"><b>在观测到证据 \(B\) 之后</b>,重新算出的 \(P[A_i\mid B]\)——贝叶斯定理的<b>输出</b>。</p>
+        <p class="dim">如出险后 Type II 变成 \(3/7\)。"After \(B\) occurs, we use Bayes' Theorem... the probabilities changed... called <b>posterior probabilities</b>"。</p>
+      </div>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>先验 Prior</th><th>后验 Posterior</th></tr></thead>
+      <tbody>
+        <tr><td>何时</td><td>观测到证据 \(B\) <b>之前</b></td><td>观测到证据 \(B\) <b>之后</b></td></tr>
+        <tr><td>记号</td><td>\(P[A_i]\)</td><td>\(P[A_i\mid B]\)</td></tr>
+        <tr><td>从哪来</td><td>题面直接给的整体比例</td><td>贝叶斯定理算出来的结果</td></tr>
+        <tr><td>例 4B</td><td>Type II:\(0.2\)</td><td>出险后 Type II:\(3/7\approx0.43\)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>只需相对权重:</b>教材指出——分子分母里 \(P[A_i]\) 都<b>乘同一个常数不影响结果</b>。所以若题目只说"\(A_2\) 的可能性是 \(A_1\) 的两倍",你可直接令 \(P[A_1]=1,\ P[A_2]=2\) 代入,照样得正确后验。省去把它们归一成真概率的步骤。</span></div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>方向别写反:</b>题目给的是 \(P[B\mid A_i]\)(某型出险率),要求的是 \(P[A_j\mid B]\)(出险者属某型)。这两个是<b>相反方向</b>的条件概率,贝叶斯就是用来"翻方向"的——直接拿 \(P[B\mid A_j]\) 当答案是最经典的错。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:用 1000 个人想罕见病检测</h3>
+      <p>某病患病率 1%;检测对患者 90% 报阳,对健康人 9% 误报阳。随机一人测出阳性,他真患病的概率不是 90%,而是<b>不到 1/10</b>。想象 1000 人:患病的 10 人里约 9 人报阳;健康的 990 人里约 89 人<b>误</b>报阳。阳性合计约 98 人,其中真患者只有 9 个——\(9/98\approx0.09\)。</p>
+      <p class="dim">公式版就是贝叶斯:\(\dfrac{(0.01)(0.9)}{(0.01)(0.9)+(0.99)(0.09)}\approx0.092\)。后验被小小的先验(1%)死死压住:<b>检测再准,也翻不过基率</b>。做题时把"人数表"画出来(自然频数法),分子分母各是哪块一目了然,比死记公式更不容易错。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① 题干形态几乎固定:给分组占比(<b>先验</b>)+ 各组出险/患病/合格率(<b>条件概率</b>),问"已知结果发生,属某组的概率"。信号词:<b>given that a claim has been submitted</b> / <b>it is found that…</b> / <b>of those who…</b>。② 三步走:列表登记 \(P[A_i]\) 与 \(P[B\mid A_i]\) → 分母套全概率 → 分子挑第 \(j\) 项。③ 陷阱:直接拿 \(P[B\mid A_j]\) 当答案(方向反了);只算分子忘除分母;题面只给"可能性是两倍"这类<b>相对权重</b>时,直接令 1 和 2 代入即可,不必先归一。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">3Blue1Brown · Bayes theorem</a></div><div class="z">用面积图把"分子是分母的一块"画给你看,15 分钟建立可复用的几何直觉。</div><div class="u">youtube.com/watch?v=HZGCoVF3YvM</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Base_rate_fallacy">Wikipedia · Base rate fallacy</a></div><div class="z">忽略先验(基率)的经典谬误合集,配医学检测实例——读完不再被"检测很准"唬住。</div><div class="u">en.wikipedia.org/wiki/Base_rate_fallacy</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/Bayes-rule">StatLect · Bayes' rule</a></div><div class="z">严格陈述 + 分步证明 + 带解例题,公式过一遍后用它校准每个记号的含义。</div><div class="u">statlect.com/fundamentals-of-probability/Bayes-rule</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>\(P[A\mid B]\) vs \(P[B\mid A]\) 混向</b>:题给出险率 \(P[B\mid A_i]\),求 \(P[A_j\mid B]\),必须走贝叶斯翻方向。</li>
+          <li><b>忘记除以分母(全概率)</b>:只算分子 \(P[A_j]P[B\mid A_j]\) 不归一化,得到的不是概率。</li>
+          <li><b>先验 / 后验搞反</b>:题给的比例是先验 \(P[A_i]\);算出的 \(P[A_i\mid B]\) 才是后验。</li>
+          <li><b>\(B_i\) 未必互斥完备</b>:全概率/贝叶斯的前提是这组事件两两不交、并集为 \(\Omega\),用前先确认。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 4.1</span>员工前五年收入分层(10%/13% 挣 ≥10万),求整体挣 ≥10万比例——全概率。</li>
+          <li><span class="ref">练 4.3</span>驾驶员高/低风险,已知次年出事故,反求被归为高风险的概率——贝叶斯翻方向。</li>
+          <li><span class="ref">练 4.5</span>学生考 1 月或 2 月场,已知通过,求两场都过的概率。</li>
+          <li><span class="ref">练 4.6</span>委员会成员分 X/Y、男/女,已知是 Y,求是男的概率——贝叶斯。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>某病人群 1% 患病;检测对患者阳性率 90%,对健康者误阳 9%。随机一人阳性,患病的后验约多少?(写出贝叶斯式即可)</li>
+        <li>两袋:甲袋红球占比 0.3、乙袋 0.6,各半概率抽袋。抽到红球,来自乙袋的概率?</li>
+        <li>先验 \(P[A_1]=P[A_2]=0.5\),\(P[B\mid A_1]=0.2,\ P[B\mid A_2]=0.4\),求 \(P[A_1\mid B]\)。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考:① \(\dfrac{(0.01)(0.9)}{(0.01)(0.9)+(0.99)(0.09)}\approx0.092\);② \(\dfrac{(0.5)(0.6)}{(0.5)(0.3)+(0.5)(0.6)}=\dfrac{0.30}{0.45}=\dfrac{2}{3}\);③ \(\dfrac{(0.5)(0.2)}{(0.5)(0.2)+(0.5)(0.4)}=\dfrac{0.1}{0.3}=\dfrac13\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f0faf8,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 贝叶斯定理</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>全概率</h4>
+        <p>\(B_i\) 互斥 + 完备(并集 \(=\Omega\))</p>
+        <p>\(P[A]=\sum_i P[B_i]P[A\mid B_i]\)</p>
+        <p>每支路径概率 \(=P[B_i]P[A\mid B_i]\),含 A 的路径全加</p>
+      </div>
+      <div class="cc t">
+        <h4>贝叶斯</h4>
+        <p>\(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\)</p>
+        <p>分子 = 分母求和的第 \(j\) 项</p>
+        <p>先验 \(P[A_i]\) → 后验 \(P[A_i\mid B]\)</p>
+        <p>只需相对权重(乘常数不影响)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 4 原文用词</span><h2 class="sec-title">贝叶斯定理 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"先验条件"与"已观测结果"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 4</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:17%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">Bayes' Theorem</td><td class="ipa">/beɪz/</td><td><span class="pos n">n.</span></td><td>贝叶斯定理</td><td class="root">人名 Bayes;由结果反推原因 \(P[A_j\mid B]\)</td></tr>
+          <tr><td class="en">law of total probability</td><td class="ipa">/ˈtoʊtl/</td><td><span class="pos n">n.</span></td><td>全概率公式</td><td class="root">total(全部)→ 沿一组分支加权求和得总概率</td></tr>
+          <tr><td class="en">prior probability</td><td class="ipa">/ˈpraɪər/</td><td><span class="pos n">n.</span></td><td>先验概率</td><td class="root">prior(在先)→ 观测证据<b>之前</b>的 \(P[A_i]\)</td></tr>
+          <tr><td class="en">posterior probability</td><td class="ipa">/pɒˈstɪəriər/</td><td><span class="pos n">n.</span></td><td>后验概率</td><td class="root">posterior(在后)→ 观测证据<b>之后</b>的 \(P[A_i\mid B]\)</td></tr>
+          <tr><td class="en">mutually exclusive</td><td class="ipa">/ˈmjuːtʃuəli ɪkˈskluːsɪv/</td><td><span class="pos adj">adj.</span></td><td>互斥的</td><td class="root">两两不能同时发生 \(B_i\cap B_j=\varnothing\)</td></tr>
+          <tr><td class="en">exhaustive</td><td class="ipa">/ɪɡˈzɔːstɪv/</td><td><span class="pos adj">adj.</span></td><td>完备的 / 穷尽的</td><td class="root">exhaust(耗尽)→ 并集穷尽整个样本空间 \(\Omega\)</td></tr>
+          <tr><td class="en">decompose</td><td class="ipa">/ˌdiːkəmˈpoʊz/</td><td><span class="pos v">v.</span></td><td>分解</td><td class="root">de-+compose → 把事件拆成子事件之并</td></tr>
+          <tr><td class="en">submit a claim</td><td class="ipa">/səbˈmɪt/</td><td><span class="pos v">v.</span></td><td>提出理赔 / 出险</td><td class="root">保险语境高频,常作贝叶斯题的"证据 B"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">given that … occurred</div><div class="z">已知……已发生(证据 B,求后验)</div></div>
+        <div class="ph"><div class="e">a randomly selected …</div><div class="z">随机选取的一个……(引出先验比例)</div></div>
+        <div class="ph"><div class="e">what is the probability that it came from …</div><div class="z">它来自……的概率是多少(反推原因)</div></div>
+        <div class="ph"><div class="e">are mutually exclusive and exhaustive</div><div class="z">互斥且完备(全概率前提)</div></div>
+        <div class="ph"><div class="e">is twice as likely as …</div><div class="z">可能性是……的两倍(给相对权重)</div></div>
+        <div class="ph"><div class="e">determine the proportion of …</div><div class="z">求……所占比例(常用全概率)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 4</b> · 第四章 Bayes' Theorem 贝叶斯定理</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 4(p.65–66,页码已标注,细节以课本为准)+ 威普网校视频。<br>承接 Lesson 3 条件概率,乘法律与全概率是其基础。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

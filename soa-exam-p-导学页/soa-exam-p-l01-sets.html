@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L01 导学 · Sets 集合</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#e6a100; --accent-deep:#9a6f00; --accent-soft:#fff7da; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#pre">前导</a>
+      <a href="#sets">集合</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#map">对照</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第一章 · <em>Sets 集合</em></h1>
+    <p class="lead">全书第一块地基:用集合语言描述事件,用 <b>Venn 图</b> 和 <b>容斥公式</b> 处理「并 / 交 / 补」。这是后面所有概率题的底层工具——本页对照课本 Lesson&nbsp;1 精读,随时可回看复习。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:#7ec77a"></span>前导 <b>✓ 已学</b></span>
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch1 Sets <b>✓ 已学</b></span>
+      <span class="pill">概念课 <b>1.2x</b> · 习题 <b>1.5x</b></span>
+      <span class="pill">课本 <b>p.1–4</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li><b>事件就是集合</b>:「或 / 且 / 非」= \(\cup\) / \(\cap\) / \('\),概率题第一步是把文字翻成集合式。</li>
+        <li><b>De Morgan 取补要换符号</b>:\((A\cup B)'=A'\cap B'\)——∪ 和 ∩ 互换,不是原样加撇。</li>
+        <li>求并集概率用<b>容斥</b>:\(P[A\cup B]=P[A]+P[B]-P[A\cap B]\),交集绝不数两遍。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <span style="padding:4px 12px;border-radius:999px;background:var(--paper);border:1px dashed var(--line);color:var(--mute);font-size:13px;white-space:nowrap">全书起点</span>
+    <span class="arr">→</span>
+    <span class="here">L01 集合</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l02-combinatorics.html">L02 计数</a>
+    <a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#pre">前导</a>
+  <a href="#sets">集合</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#map">对照</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完 Sets 你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 用 <b>∪ / ∩ / ′</b> 写出复合事件,并用 <b>De&nbsp;Morgan</b> 化简。</p>
+        <p style="margin-bottom:0">✅ 看到题能立刻判断:画 <b>Venn 图</b> 还是列 <b>表格</b>。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 熟练套用 <b>两 / 三集合容斥公式</b> 求并、交、补的概率。</p>
+        <p style="margin-bottom:0">✅ 把文字("不""至少""都不")正确翻译成 \(P[\cdot]\) 的项。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pre">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-pre">前导 · 1.5x</span><h2 class="sec-title">热身:工具与全景</h2></div></div>
+    <p class="sec-sub">两段短视频,先把"考试用什么算"和"这门课要学什么"搞清楚,再进正课。</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>① 计算器演示</h3>
+        <div class="src">视频 · [Bolong] · 42min · 1.5x</div>
+        <p>认准 SOA <b>允许的机型</b>(常见 TI‑30XS MultiView、TI‑30X&nbsp;IIS、BA&nbsp;II&nbsp;Plus 等,<b>以官网最新清单为准</b>)。重点练熟跟概率最相关的键:</p>
+        <p style="margin-bottom:0">阶乘 <span class="kbd">x!</span> · 排列 <span class="kbd">nPr</span> · 组合 <span class="kbd">nCr</span> · 统计模式(算 \(\bar x,\ \sigma\)) · 指数 \(e^x\)。后面排列组合、二项/泊松/正态全靠它。</p>
+      </div>
+      <div class="card">
+        <h3>② 课程科普</h3>
+        <div class="src">视频 · [Catherine] · 56min · 1.5x · 讲义</div>
+        <p>Exam P = 北美精算 SOA 的第一门,<b>机考、约 3 小时、30 道单选、纯概率</b>。</p>
+        <p style="margin-bottom:0">建立全局地图:<b>集合/计数 → 概率与条件概率 → 随机变量 → 常见分布 → 联合分布/矩 → 变换</b>。本章学的正是最左端那块地基。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sets" style="background:linear-gradient(180deg,#fffdf4,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">Ch1 · Lesson 1 · 课本 p.1–4</span><h2 class="sec-title">Sets — 集合论</h2></div></div>
+    <p class="sec-sub">概率是给"不确定事件"赋一个 0~1 的数。要操作"且 / 或 / 非"这些事件组合,先把事件当成<b>集合</b>来处理。</p>
+
+    <div class="card accent">
+      <h3>核心概念:集合与三大运算 <span class="freq">考频 ★</span></h3>
+      <div class="src">课本 p.1 · 视频 知识点讲解 (1.2x)</div>
+      <p class="lede">把事件当集合处理:\(\cup\) 是「或」、\(\cap\) 是「且」、\('\) 是「非」,全集 \(\Omega\) 装下所有结果。</p>
+      <div class="formula">
+        <span class="name">Union / Intersection / Complement</span>
+        \( A\cup B\):并,\(x\) 在 \(A\) 或 \(B\) 中 &nbsp;·&nbsp; \( A\cap B\):交,\(x\) 同时在 \(A\) 与 \(B\) 中 &nbsp;·&nbsp; \( A'\)(也写 \(A^{c},\bar A\)):补,\(\Omega\) 中不属于 \(A\) 的部分
+      </div>
+      <p class="dim"><b>集合(set)</b>:对象的 collection,里面的对象叫成员(members)。两个特殊集合:<b>全集 \(\Omega\)</b>(entire space),所有成员都来自它;<b>空集 \(\varnothing\)</b>(empty set),没有任何成员。</p>
+      <div class="note tip"><span class="ic">💡</span><span class="t"><b>记号约定:</b>课本用 \(A'\) 表示补集(与 SOA 样题一致),但 SOA 的官方解答常用 \(A^{c}\)。两者同义,看到别懵。</span></div>
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:19px;margin:26px 0 2px">Venn 图:三个必背阴影(对应课本 Fig 1.1–1.3)</h3>
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 150" role="img" aria-label="A union B">
+          <rect x="6" y="6" width="188" height="138" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="12" y="22" font-size="12" fill="#16243d" font-style="italic">Ω</text>
+          <circle cx="82" cy="78" r="46" fill="var(--hi)" stroke="#16243d" stroke-width="1.5"/>
+          <circle cx="124" cy="78" r="46" fill="var(--hi)" stroke="#16243d" stroke-width="1.5"/>
+          <text x="58" y="40" font-size="13" font-style="italic" fill="#16243d">A</text>
+          <text x="140" y="40" font-size="13" font-style="italic" fill="#16243d">B</text>
+        </svg>
+        <div class="cap"><b>\(A\cup B\)</b> · 并(两圆全染)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 150" role="img" aria-label="A intersect B">
+          <defs><clipPath id="cl"><circle cx="82" cy="78" r="46"/></clipPath></defs>
+          <rect x="6" y="6" width="188" height="138" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="12" y="22" font-size="12" fill="#16243d" font-style="italic">Ω</text>
+          <circle cx="124" cy="78" r="46" fill="var(--hi)" clip-path="url(#cl)"/>
+          <circle cx="82" cy="78" r="46" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <circle cx="124" cy="78" r="46" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="58" y="40" font-size="13" font-style="italic" fill="#16243d">A</text>
+          <text x="140" y="40" font-size="13" font-style="italic" fill="#16243d">B</text>
+        </svg>
+        <div class="cap"><b>\(A\cap B\)</b> · 交(只染重叠)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 150" role="img" aria-label="complement of A union B">
+          <defs>
+            <mask id="mk"><rect x="6" y="6" width="188" height="138" fill="#fff"/>
+              <circle cx="82" cy="78" r="46" fill="#000"/><circle cx="124" cy="78" r="46" fill="#000"/></mask>
+          </defs>
+          <rect x="6" y="6" width="188" height="138" fill="var(--hi)" mask="url(#mk)"/>
+          <rect x="6" y="6" width="188" height="138" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <circle cx="82" cy="78" r="46" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <circle cx="124" cy="78" r="46" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="12" y="22" font-size="12" fill="#16243d" font-style="italic">Ω</text>
+          <text x="58" y="40" font-size="13" font-style="italic" fill="#16243d">A</text>
+          <text x="140" y="40" font-size="13" font-style="italic" fill="#16243d">B</text>
+        </svg>
+        <div class="cap"><b>\((A\cup B)'\)</b> · 补(只染外部)</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">🎯</span><span class="t">若 \(A\cap B=\varnothing\),称两集合<b>互斥(mutually exclusive)</b>——两圆不相交。这是后面概率公理的关键场景。</span></div>
+
+    <div class="card accent">
+      <h3>集合运算律(必背)<span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.1 · Table 1.1</div>
+      <p class="lede">三条运算律里 De Morgan 最常考:取补时,∪ 和 ∩ 必须互换。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>De Morgan 律(补的分配)— 高频考点</span>
+        $$(A\cup B)' = A'\cap B'\qquad (A\cap B)' = A'\cup B'$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>撇进括号,符号翻面</b> — 「非(A 或 B)」=「非 A 且 非 B」:撇分给每个字母,∪↔∩ 对调。</span></div>
+      <div class="formula"><span class="name">结合律 Associative</span>
+        $$(A\cup B)\cup C = A\cup(B\cup C)\qquad (A\cap B)\cap C = A\cap(B\cap C)$$</div>
+      <div class="formula"><span class="name">分配律 Distributive</span>
+        $$A\cup(B\cap C)=(A\cup B)\cap(A\cup C)\qquad A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$$</div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>易错:</b>De Morgan 取补时,<b>∪ 和 ∩ 要互换</b>,不是原样加撇。"非(A或B)= 非A 且 非B"。</span></div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 1A</span><span class="src" style="margin:0">课本 p.3</span></div>
+      <p class="q">化简 \((A\cup B)\cap(A\cup B')\)。</p>
+      <p>用分配律提出 \(A\):\((A\cup B)\cap(A\cup B') = A\cup(B\cap B')\)。<br>因为 \(B\) 与 \(B'\) 互斥,\(B\cap B'=\varnothing\),于是 \(=A\cup\varnothing\)。</p>
+      <span class="ans">= A</span>
+    </div>
+
+    <div class="card accent">
+      <h3>概率三公理 → 常用性质 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.3</div>
+      <p class="lede">全部概率规则都从三公理长出来;解题最常用的一条是 \(P[A']=1-P[A]\)。</p>
+      <p><b>三公理:</b>① 任意集合 \(P[A]\ge 0\);② \(P[\Omega]=1\);③ 可数个互斥集合的并,其概率 = 各概率之和。</p>
+      <div class="formula"><span class="name">由公理推出的常用性质</span>
+        $$P[A]\le 1\qquad P[A']=1-P[A]\qquad P[A\cap B]\le P[A]$$</div>
+      <p class="dim">把"非"翻译成 <b>\(P[A']=1-P[A]\)</b> 是解题时最常用的一步(题目给"不发生"的比例时)。</p>
+      <details class="more"><summary>展开 · 为什么 \(P[A']=1-P[A]\)</summary>
+        <p class="dim">\(A\) 与 \(A'\) 互斥且 \(A\cup A'=\Omega\),由公理③:\(P[A]+P[A']=P[\Omega]=1\),移项即得。另两条性质同样由公理③加"子集概率不超过全集"推出。</p>
+      </details>
+    </div>
+
+    <div class="card accent">
+      <h3>容斥公式(本课重点)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.3–4 · 式 (1.1)(1.3)</div>
+      <p class="lede">直接加 \(P[A]+P[B]\) 会把交集数两遍——减掉一次,才是并集的概率。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>两集合 Inclusion–Exclusion</span>
+        $$P[A\cup B]=P[A]+P[B]-P[A\cap B]$$
+        $$\Longleftrightarrow\quad P[A\cap B]=P[A]+P[B]-P[A\cup B]$$</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>三集合(考试最多到三集合)</span>
+        $$P[A\cup B\cup C]=P[A]+P[B]+P[C]-P[A\cap B]-P[A\cap C]-P[B\cap C]+P[A\cap B\cap C]$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>加单、减双、加三</b> — 加单个、减两两交、加回三重交,正负交替;谁被多数了一遍,就把谁退回去。</span></div>
+      <p class="dim">看 \(A\cup B\) 由三块互斥区域组成:只在 \(A\)、只在 \(B\)、以及交集 \(A\cap B\)——直接相加就把交集数了两遍。</p>
+      <details class="more"><summary>展开 · 一般形式(式 1.3)怎么记</summary>
+        <p class="dim">规律:加单个、减两两交、加三个交……正负交替;\(n\) 集合时,第 \(k\) 层交集前的符号是 \((-1)^{k+1}\)。考试最多到三集合,记住节奏即可。</p>
+      </details>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>并 \(A\cup B\)(或)</th><th>交 \(A\cap B\)(且)</th></tr></thead>
+      <tbody>
+        <tr><td>读题信号</td><td>at least one / either … or …(至少一个)</td><td>both … and …(同时;都)</td></tr>
+        <tr><td>Venn 图</td><td>两圆全染</td><td>只染重叠</td></tr>
+        <tr><td>概率工具</td><td>容斥:\(P[A]+P[B]-P[A\cap B]\)</td><td>反解容斥:\(P[A]+P[B]-P[A\cup B]\)</td></tr>
+        <tr><td>取补(De Morgan)</td><td>\((A\cup B)'=A'\cap B'\)(都不发生)</td><td>\((A\cap B)'=A'\cup B'\)(至少缺一个)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid2">
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 1B</span><span class="src" style="margin:0">课本 p.3 · 两集合</span></div>
+        <p class="q">设 \(A\)=参加野餐,\(B\)=参加高尔夫/网球。已知不参加野餐 35%、不参加球局 80%、两者都不参加 25%。问两者都参加的比例?</p>
+        <p>先把"不"翻成补:<br>\(P[A]=1-0.35=0.65\);\(P[B]=1-0.80=0.20\);<br>\(P[A\cup B]=1-P[(A\cup B)']=1-0.25=0.75\)。<br>再套交集容斥:\(P[A\cap B]=0.65+0.20-0.75\)。</p>
+        <span class="ans">= 0.10</span>
+      </div>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 1C</span><span class="src" style="margin:0">课本 p.4 · 三集合</span></div>
+        <p class="q">寿险/健康/伤残三种保障。10% 三种都没有;单项持有 25% / 75% / 20%;两两同时持有 15% / 12% / 5%。求三种都持有的比例 \(x\)?</p>
+        <p>三者并 \(=1-0.10=0.90\)。代入三集合容斥:<br>\(0.90=0.25+0.75+0.20-0.15-0.12-0.05+x\)<br>\(0.90=0.88+x\)。</p>
+        <span class="ans">x = 0.02</span>
+      </div>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>本课题型:</b>课本明确说——本课考题基本都在考 <b>2 或 3 个集合的容斥</b>。剩下的功夫在"把文字翻成 \(P[\cdot]\) 的哪一项"。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:数人头,别数两遍</h3>
+      <p>班里 30 人:20 人会 Python(\(A\)),15 人会 R(\(B\)),10 人两样都会。会至少一样的有几人?直接 \(20+15=35\) 比全班还多——两样都会的 10 人在两份名单里各被点了一次名。退回多点的那次:\(20+15-10=25\) 人。这就是容斥「减交集」的全部道理。</p>
+      <p class="dim">顺手可得「都不会」的人数:\(30-25=5\),正是 \(P[(A\cup B)']=1-P[A\cup B]\) 的人头版。De Morgan 也有同款直觉:「不(会 Python <b>或</b> 会 R)」=「不会 Python <b>且</b> 不会 R」——否定「至少有一个」,等于「一个都没有」,所以取补时 ∪ 变 ∩。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① 本章真题几乎全是 <b>2–3 集合容斥 + 补集翻译</b>:题面给「都不持有 \(x\%\)」,先转 \(P[A\cup B]=1-x\) 再套容斥。② 保险语境信号词:<b>policyholder</b>(保单持有人)、<b>has coverage</b>(持有某险种)、<b>neither … nor …</b>(= 补集之交 \((A\cup B)'\))、<b>at least one</b>(= 并)。③ 陷阱:「only A / 只有 A」是 \(A\cap B'\),不是 \(A\);三集合题先画 Venn 分 8 块,从最里层(三重交)向外填数,填完再读题问的是哪几块。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle">Wikipedia · Inclusion–exclusion principle</a></div><div class="z">容斥从两集合推到 n 集合的完整图解,看懂"正负交替"为什么必然如此。</div><div class="u">en.wikipedia.org/wiki/Inclusion–exclusion_principle</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/De_Morgan%27s_laws">Wikipedia · De Morgan's laws</a></div><div class="z">配 Venn 图把「取补换符号」看成图形操作,一眼记住,顺带覆盖逻辑学写法。</div><div class="u">en.wikipedia.org/wiki/De_Morgan's_laws</div></div>
+        <div class="xr"><div class="e"><a href="https://online.stat.psu.edu/stat414/">PSU STAT 414 · Introduction to Probability</a></div><div class="z">宾州州立免费讲义,开篇几课与本章一一对应,例题全部带完整解答,适合再刷一轮。</div><div class="u">online.stat.psu.edu/stat414</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="map">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-pre">课本 ↔ 视频</span><h2 class="sec-title">本章 5 个视频 · 对照表</h2></div></div>
+    <p class="sec-sub">概念课放慢到 1.2x 吃透定义,习题课 1.5x 过题。</p>
+    <table class="map">
+      <thead><tr><th style="width:33%">视频</th><th style="width:13%">倍速</th><th>对应课本 / 重点</th></tr></thead>
+      <tbody>
+        <tr><td>前导|计算器演示</td><td><span class="spd spd-b">1.5x</span></td><td>nCr / nPr / 阶乘 / 统计模式 键位</td></tr>
+        <tr><td>前导|课程科普</td><td><span class="spd spd-b">1.5x</span></td><td>Exam P 全景与知识地图</td></tr>
+        <tr><td>Ch1 Sets|知识点讲解</td><td><span class="spd spd-a">1.2x</span></td><td>p.1–4:运算、Venn、De Morgan、容斥、三公理</td></tr>
+        <tr><td>Ch1 Sets|习题 Part1</td><td><span class="spd spd-b">1.5x</span></td><td>两集合容斥 + 补集翻译(配例 1B)</td></tr>
+        <tr><td>Ch1 Sets|习题 Part2</td><td><span class="spd spd-b">1.5x</span></td><td>三集合 Venn / 容斥(配例 1C)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="test" style="background:linear-gradient(180deg,#fffdf2,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测(Sets)</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>互斥 ≠ 独立</b>:互斥是 \(A\cap B=\varnothing\)(集合层面);独立是另一个概念(后面才学),别混。</li>
+          <li><b>容斥忘减交集</b>:\(P[A\cup B]\) 一定要 \(-P[A\cap B]\),否则重复计数。</li>
+          <li><b>De Morgan 不换符号</b>:取补后 ∪↔∩ 必须互换。</li>
+          <li><b>"不"要转补集</b>:题给"不发生"比例时,先用 \(P[A']=1-P[A]\)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 1.1</span>已知 \(P[X],P[Y]\),判断 \(P[X\cap Y]\) 的不等式范围。</li>
+          <li><span class="ref">练 1.7</span>容斥求"只拥有其一"(车 or 房,但不都有)。</li>
+          <li><span class="ref">练 1.10</span>三种保险的容斥(求"有 A 但没 B")。</li>
+          <li><span class="ref">练 1.35</span>三风险因子的人数统计(三集合容斥经典)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>已知 \(P[A]=0.6,\ P[B]=0.5,\ P[A\cup B]=0.8\),求 \(P[A\cap B]\)。</li>
+        <li>"既不抽烟也不喝酒"占 30%,如何用 \(P[\,\cdot\,']\) 表示"抽烟或喝酒"?</li>
+        <li>用 De Morgan 把 \((A\cap B)'\) 展开成补集运算。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(0.6+0.5-0.8=0.3\);② \(1-0.30=0.70\);③ \((A\cap B)'=A'\cup B'\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · Sets</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>集合运算</h4>
+        <p>\((A\cup B)'=A'\cap B'\)</p>
+        <p>\((A\cap B)'=A'\cup B'\)</p>
+        <p>分配律 \(A\cup(B\cap C)=(A\cup B)\cap(A\cup C)\)</p>
+        <p>互斥:\(A\cap B=\varnothing\)</p>
+      </div>
+      <div class="cc t">
+        <h4>概率 / 容斥</h4>
+        <p>\(P[A']=1-P[A]\)</p>
+        <p>\(P[A\cup B]=P[A]+P[B]-P[A\cap B]\)</p>
+        <p style="font-size:13px">\(P[A\cup B\cup C]=\sum P-\sum P_{两两}+P_{三}\)</p>
+        <p>公理:\(P[\Omega]=1,\ P[A]\ge 0\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab" style="background:linear-gradient(180deg,#fffdf2,#f5f6f9 220px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 1 原文用词</span><h2 class="sec-title">Sets 词汇表</h2></div></div>
+    <p class="sec-sub">读题慢往往卡在这些词上。A 类术语必须会(中↔英双向),B 类看见就懂,C 类短语整块记。</p>
+
+    <div class="card accent">
+      <h3>A · 集合论术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 1</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">set</td><td class="ipa">/sɛt/</td><td><span class="pos n">n.</span></td><td>集合</td><td class="root">事件可当作集合处理</td></tr>
+          <tr><td class="en">member</td><td class="ipa">/ˈmɛmbər/</td><td><span class="pos n">n.</span></td><td>元素;成员</td><td class="root">集合里的"成员"</td></tr>
+          <tr><td class="en">subset</td><td class="ipa">/ˈsʌbsɛt/</td><td><span class="pos n">n.</span></td><td>子集</td><td class="root">sub-(子) + set</td></tr>
+          <tr><td class="en">union</td><td class="ipa">/ˈjuːnjən/</td><td><span class="pos n">n.</span></td><td>并集(或)</td><td class="root">uni-(合一)→ 合并 \(A\cup B\)</td></tr>
+          <tr><td class="en">intersection</td><td class="ipa">/ˌɪntərˈsɛkʃən/</td><td><span class="pos n">n.</span></td><td>交集(且)</td><td class="root">inter-(之间)+sect(切)→ 相交</td></tr>
+          <tr><td class="en">complement</td><td class="ipa">/ˈkɒmplɪmənt/</td><td><span class="pos n">n.</span></td><td>补集(非)</td><td class="root">com-+ple(填满)→ 补足;别和 compliment(称赞)混</td></tr>
+          <tr><td class="en">empty set</td><td class="ipa">/ˈɛmpti sɛt/</td><td><span class="pos n">n.</span></td><td>空集 \(\varnothing\)</td><td class="root">empty=空的</td></tr>
+          <tr><td class="en">entire space</td><td class="ipa">/ɪnˈtaɪər speɪs/</td><td><span class="pos n">n.</span></td><td>全集 \(\Omega\)</td><td class="root">entire=整个</td></tr>
+          <tr><td class="en">mutually exclusive</td><td class="ipa">/ˈmjuːtʃuəli ɪkˈskluːsɪv/</td><td><span class="pos adj">adj.</span></td><td>互斥的</td><td class="root">mutual(相互)+ exclude(排除)</td></tr>
+          <tr><td class="en">Venn diagram</td><td class="ipa">/vɛn ˈdaɪəɡræm/</td><td><span class="pos n">n.</span></td><td>文氏图</td><td class="root">diagram=图示</td></tr>
+          <tr><td class="en">associative</td><td class="ipa">/əˈsoʊʃiətɪv/</td><td><span class="pos adj">adj.</span></td><td>结合律的</td><td class="root">associate(联结)</td></tr>
+          <tr><td class="en">distributive</td><td class="ipa">/dɪˈstrɪbjətɪv/</td><td><span class="pos adj">adj.</span></td><td>分配律的</td><td class="root">distribute(分发)</td></tr>
+          <tr><td class="en">probability</td><td class="ipa">/ˌprɒbəˈbɪləti/</td><td><span class="pos n">n.</span></td><td>概率</td><td class="root">probable(可能的)+ -ity</td></tr>
+          <tr><td class="en">axiom</td><td class="ipa">/ˈæksiəm/</td><td><span class="pos n">n.</span></td><td>公理</td><td class="root">不证自明的前提</td></tr>
+          <tr><td class="en">event</td><td class="ipa">/ɪˈvɛnt/</td><td><span class="pos n">n.</span></td><td>事件</td><td class="root">概率赋值的对象</td></tr>
+          <tr><td class="en">sample space</td><td class="ipa">/ˈsæmpəl speɪs/</td><td><span class="pos n">n.</span></td><td>样本空间</td><td class="root">所有可能结果的集合</td></tr>
+          <tr><td class="en">inclusion–exclusion</td><td class="ipa">/ɪnˈkluːʒən ɪkˈskluːʒən/</td><td><span class="pos n">n.</span></td><td>容斥(原理)</td><td class="root">include(纳入)↔ exclude(排除)</td></tr>
+          <tr><td class="en">countable</td><td class="ipa">/ˈkaʊntəbəl/</td><td><span class="pos adj">adj.</span></td><td>可数的</td><td class="root">count(数)+ -able</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card accent">
+      <h3>B · 高频通用学术词</h3>
+      <div class="src">非术语,但课本/考题反复出现</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点</th></tr></thead>
+        <tbody>
+          <tr><td class="en">indicate</td><td class="ipa">/ˈɪndɪkeɪt/</td><td><span class="pos v">v.</span></td><td>表明;说明</td><td class="root">"A survey indicates…"</td></tr>
+          <tr><td class="en">proportion</td><td class="ipa">/prəˈpɔːrʃən/</td><td><span class="pos n">n.</span></td><td>比例;占比</td><td class="root">pro-+portion(部分)</td></tr>
+          <tr><td class="en">occur</td><td class="ipa">/əˈkɜːr/</td><td><span class="pos v">v.</span></td><td>发生</td><td class="root">oc-+cur(跑)</td></tr>
+          <tr><td class="en">denote</td><td class="ipa">/dɪˈnoʊt/</td><td><span class="pos v">v.</span></td><td>表示;记作</td><td class="root">de-+note(记)</td></tr>
+          <tr><td class="en">manipulate</td><td class="ipa">/məˈnɪpjuleɪt/</td><td><span class="pos v">v.</span></td><td>(对式子)变形</td><td class="root">mani(手)→ 摆弄</td></tr>
+          <tr><td class="en">simplify</td><td class="ipa">/ˈsɪmplɪfaɪ/</td><td><span class="pos v">v.</span></td><td>化简</td><td class="root">simple + -ify</td></tr>
+          <tr><td class="en">calculate</td><td class="ipa">/ˈkælkjuleɪt/</td><td><span class="pos v">v.</span></td><td>计算</td><td class="root">考题最高频指令</td></tr>
+          <tr><td class="en">determine</td><td class="ipa">/dɪˈtɜːrmɪn/</td><td><span class="pos v">v.</span></td><td>求出;确定</td><td class="root">同 calculate 的指令</td></tr>
+          <tr><td class="en">portray</td><td class="ipa">/pɔːrˈtreɪ/</td><td><span class="pos v">v.</span></td><td>描绘;表示</td><td class="root">"Venn diagrams portray sets"</td></tr>
+          <tr><td class="en">component</td><td class="ipa">/kəmˈpoʊnənt/</td><td><span class="pos n">n.</span></td><td>组成部分</td><td class="root">容斥的"三块区域"</td></tr>
+          <tr><td class="en">interval</td><td class="ipa">/ˈɪntərvəl/</td><td><span class="pos n">n.</span></td><td>区间</td><td class="root">概率取值于 0~1 区间</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">at least one</div><div class="z">至少一个</div></div>
+        <div class="ph"><div class="e">at most</div><div class="z">至多;不超过</div></div>
+        <div class="ph"><div class="e">mutually exclusive</div><div class="z">互斥</div></div>
+        <div class="ph"><div class="e">neither … nor …</div><div class="z">既不……也不……</div></div>
+        <div class="ph"><div class="e">both … and …</div><div class="z">……和……都</div></div>
+        <div class="ph"><div class="e">it follows that</div><div class="z">由此可得</div></div>
+        <div class="ph"><div class="e">is denoted by</div><div class="z">记作;用……表示</div></div>
+        <div class="ph"><div class="e">calculate the probability that …</div><div class="z">求……的概率</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 1</b> · 前导 + 第一章 Sets 集合</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 1(p.1–4,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L23 导学 · Order Statistics 次序统计量</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0d9488; --accent-deep:#0b6b60; --accent-soft:#ddf1ef; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#max">最大值</a>
+      <a href="#min">最小值</a>
+      <a href="#kth">第 k 个</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第二十三章 · <em>Order Statistics 次序统计量</em></h1>
+    <p class="lead">从一组 iid 样本 \(X_1,\dots,X_n\) 里,把它们由小到大排序,取出<b>最小</b>、<b>最大</b>或<b>第 \(k\) 个</b>——这就是次序统计量。考试里最常出的是<b>最大值(maxima)</b>与<b>最小值(minima)</b>的分布。核心只有两招:先写 CDF(全都 \(\le x\) / 全都 \(>x\)),再求导得 pdf。对照课本 Lesson&nbsp;23 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch23 Order Statistics <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.409–413</b>(理论 + Table 23.1)</span>
+      <span class="pill">前置 <b>CDF/pdf · 独立性</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li><b>max 用 F 连乘</b>:「最大 \(\le x\)」=「全体 \(\le x\)」→ \(F_{\max}=(F)^n\),密度 \(nF^{n-1}f\)。</li>
+        <li><b>min 用 S 连乘</b>:「最小 \(&gt;x\)」=「全体 \(&gt;x\)」→ \(S_{\min}=(S)^n\),CDF \(=1-(1-F)^n\)。</li>
+        <li>两条<b>速用结论</b>:iid 指数取最小 \(\sim\text{Exp}(\theta/n)\);\([0,\theta]\) 均匀第 \(k\) 个期望 \(=\dfrac{k\theta}{n+1}\)。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l05-random-variables.html">L05 随机变量</a>
+    <a href="soa-exam-p-l20-exponential-distribution.html">L20 指数分布</a>
+    <span class="arr">→</span>
+    <span class="here">L23 次序统计量</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l34-transformations.html">L34 变换(同源手法)</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#max">最大值</a>
+  <a href="#min">最小值</a>
+  <a href="#kth">第 k 个</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完次序统计量你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 写出<b>最大值</b> \(X_{(n)}\) 的 \(F_{\max}(x)=[F(x)]^n\)、pdf \(f_{\max}(x)=n[F(x)]^{n-1}f(x)\)。</p>
+        <p style="margin-bottom:0">✅ 写出<b>最小值</b> \(X_{(1)}\) 的 \(S_{\min}(x)=[S(x)]^n\)、\(F_{\min}(x)=1-[1-F(x)]^n\)。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 套<b>第 \(k\) 个</b>次序统计量的 pdf 公式(带多项式系数)。</p>
+        <p style="margin-bottom:0">✅ 记住两个速用结论:\(n\) 个 iid 指数取<b>最小</b> \(\sim\text{Exp}(\theta/n)\);\([0,\theta]\) 均匀第 \(k\) 个的期望 \(=\dfrac{k\theta}{n+1}\)。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="max" style="background:linear-gradient(180deg,#f0faf8,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch23 · Lesson 23 · 课本 p.409</span><h2 class="sec-title">最大值 \(X_{(n)}\) 的分布</h2></div></div>
+    <p class="sec-sub">把样本排序后有两套记号:有人用 \(Y_i\),有人用 \(X_{(i)}\);\(X_{(1)}\) 是最小、\(X_{(n)}\) 是最大。先从最好推的<b>最大值</b>开始:最大值 \(\le x\),等价于<b>每一个 \(X_i\) 都 \(\le x\)</b>。</p>
+
+    <div class="card accent">
+      <h3>关键一步:"最大 \(\le x\)" = "全体 \(\le x\)" <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.409 · 式 (23.1)</div>
+      <p class="lede">最大值 \(\le x\) ⟺ 每一个样本都 \(\le x\);独立同分布就把 CDF 连乘 \(n\) 次。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>CDF of the maximum</span>
+        $$F_Y(x)=\Pr[Y\le x]=\prod_{i=1}^{n}\Pr[X_i\le x]=\big(F_X(x)\big)^n$$</div>
+      <p class="dim">设 \(Y=\max(X_1,\dots,X_n)\)。\(Y\le x\) 当且仅当 \(X_i\le x\) 对<b>每一个</b> \(i\) 都成立,独立性让概率可以连乘。对 \(x\) 求导即得密度(链式法则):</p>
+      <div class="formula"><span class="name">pdf of the maximum · (23.2)</span>
+        $$f_Y(x)=n\,\big(F_X(x)\big)^{n-1}\,f_X(x)$$</div>
+      <details class="more"><summary>展开 · pdf 为什么是 nF^(n-1)f</summary>
+        <p class="dim">对 \(F_Y=(F_X)^n\) 用链式法则:\(f_Y=n(F_X)^{n-1}\cdot F_X'=n(F_X)^{n-1}f_X\)。最后那个 \(f_X\) 最容易漏。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="原分布与最大值分布的密度对比">
+          <line x1="20" y1="120" x2="228" y2="120" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="20" y1="120" x2="20" y2="18" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M20 120 Q70 40 110 40 Q150 40 210 118" fill="none" stroke="#7a8699" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <path d="M20 120 Q150 118 178 40 Q192 24 210 118" fill="var(--accent)" fill-opacity="0.18" stroke="var(--accent)" stroke-width="2"/>
+          <text x="70" y="66" font-size="11" fill="#7a8699">原 f(x)</text>
+          <text x="150" y="34" font-size="11" fill="var(--accent-deep)" font-weight="700">max</text>
+        </svg>
+        <div class="cap"><b>最大值密度右移</b>:取最大把质量推向右尾</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="最大值 CDF 是原 CDF 的 n 次方">
+          <line x1="20" y1="120" x2="228" y2="120" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="20" y1="120" x2="20" y2="18" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M20 120 Q90 118 130 70 Q170 24 210 22" fill="none" stroke="#7a8699" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <path d="M20 120 Q150 118 178 60 Q194 30 210 22" fill="none" stroke="var(--accent)" stroke-width="2.2"/>
+          <line x1="20" y1="22" x2="210" y2="22" stroke="#e2e6ee" stroke-width="1"/>
+          <text x="60" y="96" font-size="11" fill="#7a8699">F(x)</text>
+          <text x="150" y="100" font-size="11" fill="var(--accent-deep)" font-weight="700">F(x)^n</text>
+        </svg>
+        <div class="cap"><b>\([F(x)]^n\le F(x)\)</b>:\(n\) 次方把 CDF 压低、爬升更晚</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 23A</span><span class="src" style="margin:0">课本 p.409 · 均匀分布</span></div>
+      <p class="q">从 \([0,1]\) 均匀分布抽 3 个样本,求样本<b>最大值大于 0.7</b> 的概率。</p>
+      <p>均匀 \([0,1]\):\(F_X(x)=x\)。最大值 CDF \(F_Y(x)=x^3\)。故 \(\Pr[Y>0.7]=1-\Pr[Y\le0.7]=1-0.7^3=1-0.343\)。</p>
+      <span class="ans">Pr[Y > 0.7] = 1 − 0.7³ = 0.657</span>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 23B</span><span class="src" style="margin:0">课本 p.409–410 · 保险索赔</span></div>
+      <p class="q">4 笔索赔独立同分布,公共密度 \(f(x)=\dfrac{2}{x^3}\ (x>1)\)。求<b>最大索赔的期望</b> \(E[Y]\)。</p>
+      <p>先求 \(F_X(x)=\displaystyle\int_1^x\frac{2}{u^3}\,du=1-\frac1{x^2}\ (x>1)\)。最大值密度 \(f_Y(x)=4\big(1-\tfrac1{x^2}\big)^{3}\cdot\dfrac{2}{x^3}\)。展开积分 \(E[Y]=\displaystyle\int_1^\infty x\,f_Y(x)\,dx\):</p>
+      <span class="ans">E[Y] = 3.6571</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>套路:</b>先写 \(F_X\),把 \(x\to X_{(n)}\)、\(F\to F^n\),要密度就 \(n F^{n-1}f\)。求 \(E[Y]\) 时对<b>密度</b>积 \(\int x f_Y\,dx\),别对 CDF 积。</span></div>
+  </div>
+</section>
+
+<section id="min">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">对偶做法</span><h2 class="sec-title">最小值 \(X_{(1)}\) 的分布</h2></div></div>
+    <p class="sec-sub">最小值的对偶技巧:直接算 CDF 不好写,但"<b>最小 \(>x\)</b>" = "<b>全体 \(>x\)</b>"很好写。所以先算<b>生存函数</b>(survival function),再补成 CDF。</p>
+    <div class="card accent">
+      <h3>关键一步:走生存函数 \(S=1-F\) <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.410 · 式 (23.3)–(23.4)</div>
+      <p class="lede">最小值 \(&gt;x\) ⟺ 全体 \(&gt;x\)——先写生存函数的 \(n\) 次方,再补成 CDF。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Survival function of the minimum</span>
+        $$S_Y(x)=\Pr[Y>x]=\prod_{i=1}^{n}\Pr[X_i>x]=\big(S_X(x)\big)^n=\big(1-F_X(x)\big)^n$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>max 找 F,min 找 S,都连乘</b> — 「最大 ≤ x」=全体 ≤ x → \(F^n\);「最小 > x」=全体 > x → \((1-F)^n\)。</span></div>
+      <p class="dim">设 \(Y=\min(X_1,\dots,X_n)\)。补成 CDF、再求导得密度:</p>
+      <div class="formula"><span class="name">CDF &amp; pdf of the minimum · (23.3)(23.4)</span>
+        $$F_Y(x)=1-\big(1-F_X(x)\big)^n,\qquad f_Y(x)=n\big(1-F_X(x)\big)^{n-1}f_X(x)$$</div>
+      <p class="dim">与最大值完全对称:最大用 \(F^n\)、最小用 \((1-F)^n\)。</p>
+      <details class="more"><summary>展开 · 从 S 补回 CDF 与 pdf</summary>
+        <p class="dim">\(F_Y=1-S_Y=1-(1-F_X)^n\);求导时链式法则里内层导数是 \(-f_X\),与前面的负号相消,得 \(f_Y=n(1-F_X)^{n-1}f_X\)。</p>
+      </details>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>最大值 \(X_{(n)}\)</th><th>最小值 \(X_{(1)}\)</th></tr></thead>
+      <tbody>
+        <tr><td>等价事件</td><td>「max \(\le x\)」= 全体 \(\le x\)</td><td>「min \(&gt;x\)」= 全体 \(&gt;x\)</td></tr>
+        <tr><td>连乘对象</td><td>CDF:\(F_Y=(F_X)^n\)</td><td>生存函数:\(S_Y=(S_X)^n=(1-F_X)^n\)</td></tr>
+        <tr><td>CDF</td><td>\((F_X)^n\)</td><td>\(1-(1-F_X)^n\)</td></tr>
+        <tr><td>pdf</td><td>\(n(F_X)^{n-1}f_X\)</td><td>\(n(1-F_X)^{n-1}f_X\)</td></tr>
+        <tr><td>密度偏向</td><td>右尾(取最大变大)</td><td>左尾(取最小变小)</td></tr>
+        <tr><td>速用结论</td><td>均匀 \([0,\theta]\):\(E=\dfrac{n\theta}{n+1}\)</td><td>iid 指数:\(\min\sim\text{Exp}(\theta/n)\)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="原分布与最小值分布的密度对比">
+          <line x1="20" y1="120" x2="228" y2="120" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="20" y1="120" x2="20" y2="18" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M20 120 Q80 40 120 40 Q160 40 210 118" fill="none" stroke="#7a8699" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <path d="M20 118 Q40 24 54 40 Q90 118 210 120" fill="var(--accent)" fill-opacity="0.18" stroke="var(--accent)" stroke-width="2"/>
+          <text x="128" y="60" font-size="11" fill="#7a8699">原 f(x)</text>
+          <text x="40" y="20" font-size="11" fill="var(--accent-deep)" font-weight="700">min</text>
+        </svg>
+        <div class="cap"><b>最小值密度左移</b>:取最小把质量推向左尾</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="指数最小值仍是指数,速率相加">
+          <rect x="16" y="26" width="208" height="98" fill="#fff" stroke="var(--line)" stroke-width="1"/>
+          <text x="120" y="50" font-size="12" fill="var(--ink)" text-anchor="middle" font-weight="700">指数分布的最小值</text>
+          <text x="120" y="78" font-size="12.5" fill="var(--accent-deep)" text-anchor="middle">\min Exp(θ)</text>
+          <text x="120" y="100" font-size="12.5" fill="var(--accent-deep)" text-anchor="middle" font-weight="700">∼ Exp(θ / n)</text>
+        </svg>
+        <div class="cap"><b>速用结论</b>:\(n\) 个 iid \(\text{Exp}(\theta)\) 取最小 \(\sim\text{Exp}(\theta/n)\)</div>
+      </div>
+    </div>
+
+    <div class="note tip"><span class="ic">⭐</span><span class="t"><b>指数最小值(高频):</b>若 \(X_i\stackrel{iid}{\sim}\text{Exp}\)、均值 \(\theta\),则 \(S_X(x)=e^{-x/\theta}\),\(S_Y(x)=(e^{-x/\theta})^n=e^{-x/(\theta/n)}\)——最小值仍是指数,均值缩成 \(\theta/n\)。更一般地,速率(hazard)可加:各自均值 \(\theta_i\) 时最小值均值 \(1\big/\sum_{i=1}^n 1/\theta_i\)。</span></div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最易错:</b>最小值必须用<b>生存函数 \(n\) 次方</b> \((1-F)^n\),不是 \(F^n\)。写反就把"最小"当成"最大"了。判别口诀:<b>max→全体 \(\le x\)→\(F^n\);min→全体 \(>x\)→\((1-F)^n\)</b>。</span></div>
+  </div>
+</section>
+
+<section id="kth" style="background:linear-gradient(180deg,#f0faf8,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch23 · 一般公式</span><h2 class="sec-title">第 \(k\) 个次序统计量</h2></div></div>
+    <p class="sec-sub">最大、最小只是 \(k=n\)、\(k=1\) 的特例。一般的第 \(k\) 小(如中位数)有统一密度公式。SOA 大纲说"probably won't be tested",但结构值得懂。</p>
+    <div class="card accent">
+      <h3>第 \(k\) 个次序统计量的密度 <span class="freq">考频 ★</span></h3>
+      <div class="src">课本 p.410 · 式 (23.5) · Table 23.1</div>
+      <p class="lede">第 \(k\) 小落在 \(x\):\(k-1\) 个更小、恰 1 个在 \(x\)、\(n-k\) 个更大——系数数的是分堆方法数。</p>
+      <div class="formula"><span class="name">pdf of the k-th order statistic</span>
+        $$f_{X_{(k)}}(x)=\frac{n!}{(k-1)!\,1!\,(n-k)!}\,\big(F_X(x)\big)^{k-1}\,f_X(x)\,\big(1-F_X(x)\big)^{n-k}$$</div>
+      <p class="dim"><b>组合意义(多项式系数):</b>要让第 \(k\) 小恰好落在 \(x\) 附近,需要 \(k-1\) 个样本<b>小于</b> \(x\)(概率 \(F^{k-1}\))、恰 \(1\) 个<b>在</b> \(x\)(密度 \(f\))、\(n-k\) 个<b>大于</b> \(x\)(概率 \((1-F)^{n-k}\));系数 \(\dfrac{n!}{(k-1)!\,1!\,(n-k)!}\) 数的是"哪些样本分到哪三堆"的方法数。</p>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>指数取最小,均值除 n;均匀第 k,期望 \(k\theta/(n+1)\)</b> — 两条速用结论,考场直接抄。</span></div>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 120" role="img" aria-label="第 k 个次序统计量把样本分成三堆">
+          <line x1="16" y1="86" x2="244" y2="86" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="150" y1="34" x2="150" y2="98" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="46" cy="70" r="5" fill="#7a8699"/><circle cx="72" cy="70" r="5" fill="#7a8699"/><circle cx="98" cy="70" r="5" fill="#7a8699"/>
+          <circle cx="150" cy="70" r="6" fill="var(--accent)"/>
+          <circle cx="196" cy="70" r="5" fill="#c6492f"/><circle cx="222" cy="70" r="5" fill="#c6492f"/>
+          <text x="70" y="112" font-size="10.5" fill="#7a8699" text-anchor="middle">k−1 个 &lt; x</text>
+          <text x="150" y="28" font-size="10.5" fill="var(--accent-deep)" text-anchor="middle" font-weight="700">1 个 = x</text>
+          <text x="209" y="112" font-size="10.5" fill="#c6492f" text-anchor="middle">n−k 个 &gt; x</text>
+        </svg>
+        <div class="cap">三堆划分 → 多项式系数 \(\dfrac{n!}{(k-1)!\,1!\,(n-k)!}\)</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 23C</span><span class="src" style="margin:0">课本 p.410 · 指数 · 中位数</span></div>
+      <p class="q">\(X\sim\text{Exp}\) 均值 1,抽样本量 3。求<b>中间那个</b>(第 2 小,即中位数)的期望。</p>
+      <p>\(F_X(x)=1-e^{-x}\),\(f_X(x)=e^{-x}\);\(n=3,k=2\)。系数 \(\dfrac{3!}{1!\,1!\,1!}=6\)。<br>
+      \(f_{X_{(2)}}(x)=6(1-e^{-x})\,e^{-x}\,e^{-x}=6(e^{-2x}-e^{-3x})\)。<br>
+      \(E[Y]=\displaystyle\int_0^\infty x\cdot6(e^{-2x}-e^{-3x})\,dx=6\big(\tfrac1{2^2}-\tfrac1{3^2}\big)=6\big(\tfrac14-\tfrac19\big)\)。</p>
+      <span class="ans">E[Y] = 6(1/4 − 1/9) = 5/6</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>均匀分布速用:</b>\([0,\theta]\) 均匀、样本量 \(n\),则第 \(k\) 个次序统计量的期望 \(E[X_{(k)}]=\dfrac{k\theta}{n+1}\)(等距分点)。特例:最大 \(=\dfrac{n\theta}{n+1}\)、最小 \(=\dfrac{\theta}{n+1}\)。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:马拉松的第 k 名</h3>
+      <p>\(n\) 名选手的完赛时间 iid。<b>冠军成绩</b>(最小值)"比 \(x\) 慢" ⟺ <b>所有人</b>都比 \(x\) 慢——所以直接连乘生存函数得 \(S^n\);<b>收尾成绩</b>(最大值)"不超过 \(x\)" ⟺ 所有人都不超过 \(x\),连乘 CDF 得 \(F^n\)。</p>
+      <p class="dim">第 \(k\) 名恰好跑出 \(x\)?那得 \(k-1\) 人更快(各以概率 \(F(x)\))、1 人恰在 \(x\)(密度 \(f\))、\(n-k\) 人更慢(各以 \(1-F(x)\)),再乘"谁分到哪一堆"的方法数 \(\frac{n!}{(k-1)!\,1!\,(n-k)!}\)——第 \(k\) 个次序统计量的密度公式一个字都不用背,想着跑道就写得出来。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① 关键词:<b>the largest / smallest of the claims</b>、<b>the first of n machines to fail</b>(第一台故障 = min)、<b>the last to fail</b>(= max)。② 高频组合:\(n\) 台设备寿命 iid 指数,"第一次故障时间" \(\sim\text{Exp}(\theta/n)\) 一步出答案;各自均值不同时 hazard 相加,\(1/\theta_{\min}=\sum 1/\theta_i\)(如练 23.3)。③ 最大索赔期望三步:先 \(F_X\) → \(f_Y=nF^{n-1}f\) → \(\int x\,f_Y\,dx\),积分对象是密度不是 CDF。④ 头号陷阱:min 误用 \(F^n\)(把最小当最大),对比表刻脑。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Order_statistic">Wikipedia · Order statistic</a></div><div class="z">一般公式、联合分布与均匀情形的 Beta 结论全在;\(E[X_{(k)}]=\frac{k}{n+1}\) 的正式出处。</div><div class="u">en.wikipedia.org/wiki/Order_statistic</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/German_tank_problem">Wikipedia · German tank problem</a></div><div class="z">次序统计量最著名的实战:盟军用缴获坦克的最大编号反推德军产量,读起来像侦探小说。</div><div class="u">en.wikipedia.org/wiki/German_tank_problem</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Extreme_value_theory">Wikipedia · Extreme value theory</a></div><div class="z">max/min 分布的工程延伸:洪水、地震、巨灾再保险靠"最大值的分布"定价——看这套工具在 Exam P 之后去了哪。</div><div class="u">en.wikipedia.org/wiki/Extreme_value_theory</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>min 用错方</b>:最小值是 \((1-F)^n\) 不是 \(F^n\);记"全体 \(>x\)"。</li>
+          <li><b>忘了求导</b>:题目要 pdf 却停在 CDF;\(F^n\to nF^{n-1}f\) 别漏 \(f\)。</li>
+          <li><b>iid 前提</b>:公式全靠<b>独立同分布</b>;不同分布要逐个乘 \(\Pr[X_i\le x]\)。</li>
+          <li><b>求期望积错对象</b>:\(E[Y]=\int x\,f_Y\,dx\),对密度积不对 CDF 积。</li>
+          <li><b>指数最小值</b>:\(\sim\text{Exp}(\theta/n)\),别记成 \(\theta n\)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 23.1</span>密度 \(3/x^4\) 的 3 笔索赔,求<b>最大</b>期望。</li>
+          <li><span class="ref">练 23.2</span>均匀 \([0,10]\) 三笔,\(\Pr[\max<7]\)。</li>
+          <li><span class="ref">练 23.3</span>三笔指数(均值 1/1.5/2.4),\(\Pr[\max>3]\)。</li>
+          <li><span class="ref">练 23.7</span>指数均值 1、\(Y=\max(X_1,X_2)\),求 \(E[Y]\)。</li>
+          <li><span class="ref">练 23.9–23.12</span>Minima:\(Y=\min(X_1,X_2)\) 的密度 / 期望。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\([0,1]\) 均匀抽 4 个,\(\Pr[\max\le 0.5]=?\)</li>
+        <li>2 个 iid \(\text{Exp}\)(均值 4)取最小,服从什么分布?</li>
+        <li>样本量 5、\([0,\theta]\) 均匀,\(E[\text{最大}]=?\)</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(0.5^4=0.0625\);② \(\text{Exp}\) 均值 \(4/2=2\);③ \(\dfrac{5\theta}{6}\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f0faf8,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 次序统计量</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了(即课本 Table 23.1)。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>最大 / 最小</h4>
+        <p>最大:\(F_Y=(F_X)^n\),\(f_Y=n(F_X)^{n-1}f_X\)</p>
+        <p>最小:\(F_Y=1-(1-F_X)^n\)</p>
+        <p>　　　\(f_Y=n(1-F_X)^{n-1}f_X\)</p>
+        <p>指数最小 \(\sim\text{Exp}(\theta/n)\)</p>
+      </div>
+      <div class="cc t">
+        <h4>第 k 个 / 均匀</h4>
+        <p>\(f_{X_{(k)}}=\dfrac{n!}{(k-1)!\,1!\,(n-k)!}F^{k-1}f(1-F)^{n-k}\)</p>
+        <p>均匀 \([0,\theta]\):\(E[X_{(k)}]=\dfrac{k\theta}{n+1}\)</p>
+        <p>判别:max→全 \(\le x\);min→全 \(>x\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 23 原文用词</span><h2 class="sec-title">次序统计量 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"最大/最小/第 k 个"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 23</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">order statistic</td><td class="ipa">/ˈɔːrdər stəˈtɪstɪk/</td><td><span class="pos n">n.</span></td><td>次序统计量</td><td class="root">排序后第 \(k\) 个,记 \(X_{(k)}\)</td></tr>
+          <tr><td class="en">maximum</td><td class="ipa">/ˈmæksɪməm/</td><td><span class="pos n">n.</span></td><td>最大值</td><td class="root">\(X_{(n)}\);CDF \(=(F_X)^n\)</td></tr>
+          <tr><td class="en">minimum</td><td class="ipa">/ˈmɪnɪməm/</td><td><span class="pos n">n.</span></td><td>最小值</td><td class="root">\(X_{(1)}\);生存函数 \(=(1-F_X)^n\)</td></tr>
+          <tr><td class="en">identically distributed</td><td class="ipa">/aɪˈdɛntɪkli/</td><td><span class="pos adj">adj.</span></td><td>同分布的</td><td class="root">iid 的 "id";公共密度 \(f_X\)</td></tr>
+          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">iid 的第一个 i;能把概率连乘</td></tr>
+          <tr><td class="en">distribution function</td><td class="ipa">/ˌdɪstrɪˈbjuːʃən/</td><td><span class="pos n">n.</span></td><td>分布函数(CDF)</td><td class="root">\(F_X(x)=\Pr[X\le x]\)</td></tr>
+          <tr><td class="en">density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度函数(pdf)</td><td class="root">CDF 求导得 \(f_X\)</td></tr>
+          <tr><td class="en">underlying distribution</td><td class="ipa">/ˌʌndərˈlaɪɪŋ/</td><td><span class="pos n">n.</span></td><td>底层(原始)分布</td><td class="root">每个 \(X_i\) 服从的原分布</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">a random sample of n …</div><div class="z">大小为 \(n\) 的随机样本</div></div>
+        <div class="ph"><div class="e">the largest / smallest of …</div><div class="z">……中的最大 / 最小</div></div>
+        <div class="ph"><div class="e">the maximum of the three claims</div><div class="z">三笔索赔的最大值</div></div>
+        <div class="ph"><div class="e">independent and identically distributed</div><div class="z">独立同分布(iid)</div></div>
+        <div class="ph"><div class="e">common density function</div><div class="z">公共密度函数</div></div>
+        <div class="ph"><div class="e">the k-th order statistic</div><div class="z">第 \(k\) 个次序统计量</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 23</b> · 第二十三章 Order Statistics 次序统计量</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 23(p.409–413,含 Table 23.1 汇总,页码已标注,细节以课本为准)+ 威普网校视频。<br>第 \(k\) 个次序统计量一般公式大纲注明大概率不考,列出仅为理解结构。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

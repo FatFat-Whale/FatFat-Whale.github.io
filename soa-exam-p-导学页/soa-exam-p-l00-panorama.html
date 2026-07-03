@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L00 全景 · Panorama 知识网络</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#b8860b; --accent-deep:#8a5c00; --accent-soft:#fff3d6; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:44px 0 34px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5vw,44px);line-height:1.06;margin:0 0 14px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:16.5px;color:#cdd6e6;max-width:70ch;margin:0}
+  section{padding:36px 0;scroll-margin-top:112px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  mjx-container{max-width:100%}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>全景 Panorama</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Panorama · 知识网络 · 迷路就回这页</p>
+    <h1>第零章 · <em>Panorama 全景知识网络</em></h1>
+    <p class="lead">全书只讲一件事:<b>把不确定性写成数,再对它做运算</b>。下图是 35 章的依赖地图——实线是块内主链(按它学),虚线沿列间通道走(靠它串)。<b>点任意节点</b>弹出该章必背公式;弹窗里可一键进章精读。</p>
+  </div>
+</div>
+
+<style>
+  .pan .mainline{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:#0f1b30;color:#eaf0fb;
+    border-radius:14px;padding:14px 18px;margin:0 0 18px}
+  .pan .mainline .ml{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--hi);
+    text-transform:uppercase;width:100%;margin-bottom:2px}
+  .pan .mainline .stage{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+    border-radius:8px;padding:5px 12px;font-size:13px;white-space:nowrap}
+  .pan .mainline .stage b{color:var(--hi)}
+  .pan .mainline .marr{color:#8ea1c0;font-family:var(--mono)}
+  .pan .maplegend{font-size:13px;color:var(--mute);margin:8px 2px 4px;display:flex;flex-wrap:wrap;gap:16px}
+  .pan .maplegend .li{display:flex;align-items:center;gap:6px}
+  .pan .maplegend .sw{display:inline-block;width:26px;height:0;border-top:2.5px solid #46566f}
+  .pan .maplegend .sw.d{border-top-style:dashed}
+  .pan .mapcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .pan .mapcard svg{display:block;width:100%;height:auto}
+  .pan .pnode{cursor:pointer}
+  .pan .pnode rect{fill:#fff;stroke:var(--c,#5b53c4);stroke-width:1.6;rx:9}
+  .pan .pnode:hover rect,.pan .pnode:focus rect{stroke-width:3;fill:#fbfaff}
+  .pan .pnode .pl{font-family:var(--mono);font-size:10.5px;font-weight:700;fill:var(--c,#5b53c4)}
+  .pan .pnode .pt{font-size:13px;fill:#16243d}
+  .pan .colh{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:1.5px}
+  .pan .subh{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;fill:#7a8699}
+  .pan .ed{fill:none;stroke-width:2;stroke-linejoin:round}
+  .pan .ed.d{stroke-dasharray:6 5}
+  .pan .thread-box{margin-top:18px;background:#fff;border:1px dashed var(--accent);border-radius:12px;padding:14px 18px}
+  .pan .thread-box h4{margin:0 0 6px;font-family:var(--mono);font-size:12px;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--accent-deep)}
+  .pan .thread-box ul{margin:0;padding-left:20px}
+  .pan .thread-box li{font-size:14px;color:var(--ink-soft);margin:5px 0}
+  .pan .thread-box li b{color:var(--ink)}
+  /* 弹窗 */
+  .pan-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center}
+  .pan-modal[hidden]{display:none}
+  .pan-back{position:absolute;inset:0;background:rgba(15,22,38,.55);backdrop-filter:blur(3px)}
+  .pan-box{position:relative;max-width:760px;width:calc(100% - 40px);max-height:80vh;overflow-y:auto;
+    background:var(--paper);border-radius:16px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);padding:18px 22px}
+  .pan-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .pan-t{font-family:var(--serif);font-weight:700;font-size:19px;flex:1}
+  .pan-go{font-size:13px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap}
+  .pan-go:hover{background:#3a4a63}
+  .pan-x{background:none;border:1px solid var(--line);border-radius:8px;font-size:15px;
+    padding:4px 10px;cursor:pointer;color:var(--ink-soft)}
+  .pan-x:hover{background:#fff}
+  .pan-body .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.pan-body .cheat{grid-template-columns:1fr}}
+  .pan-body .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .pan-body .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .pan-body .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .pan-body .cc p{margin:7px 0;font-size:14.5px}
+  .pan-body .fallback{font-size:14.5px;color:var(--ink-soft)}
+</style>
+
+<section id="map" class="pan" style="padding-top:26px">
+  <div class="wrap">
+
+    <div class="mainline">
+      <span class="ml">★ 全书主线 · 一条线拎起 35 章</span>
+      <span class="stage"><b>①</b> 概率语言</span><span class="marr">→</span>
+      <span class="stage"><b>②</b> 单变量框架</span><span class="marr">→</span>
+      <span class="stage"><b>③</b> 分布族弹药库</span><span class="marr">→</span>
+      <span class="stage"><b>④</b> 多变量联合</span><span class="marr">→</span>
+      <span class="stage"><b>⑤</b> 变换与母函数</span><span class="marr">→</span>
+      <span class="stage"><b>⑥</b> 极限与统计量</span>
+    </div>
+
+    <div class="mapcard">
+    <svg viewBox="0 0 1000 906" role="img" aria-label="Exam P 35 章知识依赖图">
+      <defs>
+        <marker id="ar1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5b53c4"/></marker>
+        <marker id="ar2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0e7c66"/></marker>
+        <marker id="ar3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b8860b"/></marker>
+        <marker id="ar4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b0487a"/></marker>
+        <marker id="ar5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2b6cb0"/></marker>
+      </defs>
+
+      <text class="colh" x="10" y="18" fill="#5b53c4">① 概率语言</text>
+      <text class="colh" x="208" y="18" fill="#0e7c66">② 单变量框架</text>
+      <text class="colh" x="406" y="18" fill="#b8860b">③ 分布族</text>
+      <text class="colh" x="604" y="18" fill="#b0487a">④ 多变量联合</text>
+      <text class="colh" x="802" y="18" fill="#2b6cb0">⑤⑥ 工具与极限</text>
+      <text class="subh" x="406" y="56">离散 · 数次数</text>
+      <text class="subh" x="406" y="268">连续 · 量大小</text>
+      <text class="subh" x="604" y="384">连续镜像</text>
+      <text class="subh" x="604" y="770">特例</text>
+      <text class="subh" x="802" y="326">极限与统计量</text>
+
+      <!-- 块内主链(实线, 列内垂直) -->
+      <path class="ed" d="M95,100 L95,116" stroke="#5b53c4" marker-end="url(#ar1)"/>
+      <path class="ed" d="M95,158 L95,174" stroke="#5b53c4" marker-end="url(#ar1)"/>
+      <path class="ed" d="M95,216 L95,232" stroke="#5b53c4" marker-end="url(#ar1)"/>
+      <path class="ed" d="M293,100 L293,116" stroke="#0e7c66" marker-end="url(#ar2)"/>
+      <path class="ed" d="M293,158 L293,174" stroke="#0e7c66" marker-end="url(#ar2)"/>
+      <path class="ed" d="M293,216 L293,232" stroke="#0e7c66" marker-end="url(#ar2)"/>
+      <path class="ed" d="M293,274 L293,290" stroke="#0e7c66" marker-end="url(#ar2)"/>
+      <path class="ed" d="M491,100 L491,116" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <path class="ed" d="M491,158 L491,174" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <path class="ed" d="M491,312 L491,328" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <path class="ed" d="M491,370 L491,386" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <path class="ed" d="M689,100 L689,116" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,158 L689,174" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,216 L689,232" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,274 L689,290" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,428 L689,444" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,486 L689,502" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,544 L689,560" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,602 L689,618" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M689,660 L689,676" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <path class="ed" d="M887,100 L887,116" stroke="#2b6cb0" marker-end="url(#ar5)"/>
+      <path class="ed" d="M887,216 L887,232" stroke="#2b6cb0" marker-end="url(#ar5)"/>
+
+      <!-- 跨块针线(虚线, 沿列间通道曼哈顿走线, 不穿节点) -->
+      <!-- L03→L06 条件线 (g12 通道) -->
+      <path class="ed d" d="M180,198 H194 V384 H202" stroke="#5b53c4" marker-end="url(#ar1)"/>
+      <!-- L06→L29 条件线 (g23 通道下行 → 空区横穿 → L29 左入) -->
+      <path class="ed d" d="M378,384 H392 V642 H598" stroke="#5b53c4" marker-end="url(#ar1)"/>
+      <!-- L05→L11 框架→联合 (顶部公路 y32) -->
+      <path class="ed d" d="M293,64 V32 H689 V58" stroke="#0e7c66" marker-end="url(#ar2)"/>
+      <!-- L19↔L20 泊松过程搭档 (C3 右通道绕过 L15) -->
+      <path class="ed d" d="M576,198 H590 V352 H582" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <!-- L16→L24 连续镜像入口 (列内) -->
+      <path class="ed d" d="M689,332 L689,386" stroke="#b0487a" marker-end="url(#ar4)"/>
+      <!-- L21→L31 正态→二元正态 (g34 通道长下行) -->
+      <path class="ed d" d="M576,410 H590 V854 H598" stroke="#b8860b" marker-end="url(#ar3)"/>
+
+      <!-- 节点 -->
+      <g class="pnode" data-l="l01" style="--c:#5b53c4" transform="translate(10,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L01</text><text class="pt" x="48" y="23">集合</text></g>
+      <g class="pnode" data-l="l02" style="--c:#5b53c4" transform="translate(10,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L02</text><text class="pt" x="48" y="23">计数</text></g>
+      <g class="pnode" data-l="l03" style="--c:#5b53c4" transform="translate(10,180)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L03</text><text class="pt" x="48" y="23">条件概率</text></g>
+      <g class="pnode" data-l="l04" style="--c:#5b53c4" transform="translate(10,238)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L04</text><text class="pt" x="48" y="23">贝叶斯</text></g>
+
+      <g class="pnode" data-l="l05" style="--c:#0e7c66" transform="translate(208,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L05</text><text class="pt" x="48" y="23">随机变量</text></g>
+      <g class="pnode" data-l="l07" style="--c:#0e7c66" transform="translate(208,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L07</text><text class="pt" x="48" y="23">均值</text></g>
+      <g class="pnode" data-l="l08" style="--c:#0e7c66" transform="translate(208,180)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L08</text><text class="pt" x="48" y="23">方差与矩</text></g>
+      <g class="pnode" data-l="l09" style="--c:#0e7c66" transform="translate(208,238)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L09</text><text class="pt" x="48" y="23">分位数</text></g>
+      <g class="pnode" data-l="l10" style="--c:#0e7c66" transform="translate(208,296)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L10</text><text class="pt" x="48" y="23">众数</text></g>
+      <g class="pnode" data-l="l06" style="--c:#0e7c66" transform="translate(208,366)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L06</text><text class="pt" x="48" y="23">RV 条件概率</text></g>
+
+      <g class="pnode" data-l="l17" style="--c:#b8860b" transform="translate(406,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L17</text><text class="pt" x="48" y="23">二项</text></g>
+      <g class="pnode" data-l="l18" style="--c:#b8860b" transform="translate(406,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L18</text><text class="pt" x="48" y="23">负二项</text></g>
+      <g class="pnode" data-l="l19" style="--c:#b8860b" transform="translate(406,180)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L19</text><text class="pt" x="48" y="23">泊松</text></g>
+      <g class="pnode" data-l="l15" style="--c:#b8860b" transform="translate(406,276)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L15</text><text class="pt" x="48" y="23">均匀</text></g>
+      <g class="pnode" data-l="l20" style="--c:#b8860b" transform="translate(406,334)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L20</text><text class="pt" x="48" y="23">指数</text></g>
+      <g class="pnode" data-l="l21" style="--c:#b8860b" transform="translate(406,392)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L21</text><text class="pt" x="48" y="23">正态</text></g>
+
+      <g class="pnode" data-l="l11" style="--c:#b0487a" transform="translate(604,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L11</text><text class="pt" x="48" y="23">联合分布</text></g>
+      <g class="pnode" data-l="l12" style="--c:#b0487a" transform="translate(604,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L12</text><text class="pt" x="48" y="23">联合矩</text></g>
+      <g class="pnode" data-l="l13" style="--c:#b0487a" transform="translate(604,180)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L13</text><text class="pt" x="48" y="23">协方差</text></g>
+      <g class="pnode" data-l="l14" style="--c:#b0487a" transform="translate(604,238)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L14</text><text class="pt" x="48" y="23">条件矩</text></g>
+      <g class="pnode" data-l="l16" style="--c:#b0487a" transform="translate(604,296)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L16</text><text class="pt" x="48" y="23">双重期望</text></g>
+      <g class="pnode" data-l="l24" style="--c:#b0487a" transform="translate(604,392)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L24</text><text class="pt" x="48" y="23">联合(连续)</text></g>
+      <g class="pnode" data-l="l26" style="--c:#b0487a" transform="translate(604,450)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L26</text><text class="pt" x="48" y="23">边缘(连续)</text></g>
+      <g class="pnode" data-l="l27" style="--c:#b0487a" transform="translate(604,508)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L27</text><text class="pt" x="48" y="23">联合矩(连续)</text></g>
+      <g class="pnode" data-l="l28" style="--c:#b0487a" transform="translate(604,566)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L28</text><text class="pt" x="48" y="23">协方差(连续)</text></g>
+      <g class="pnode" data-l="l29" style="--c:#b0487a" transform="translate(604,624)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L29</text><text class="pt" x="48" y="23">条件分布(连续)</text></g>
+      <g class="pnode" data-l="l30" style="--c:#b0487a" transform="translate(604,682)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L30</text><text class="pt" x="48" y="23">条件矩(连续)</text></g>
+      <g class="pnode" data-l="l25" style="--c:#b0487a" transform="translate(604,778)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L25</text><text class="pt" x="48" y="23">联合均匀</text></g>
+      <g class="pnode" data-l="l31" style="--c:#b0487a" transform="translate(604,836)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L31</text><text class="pt" x="48" y="23">二元正态</text></g>
+
+      <g class="pnode" data-l="l32" style="--c:#2b6cb0" transform="translate(802,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L32</text><text class="pt" x="48" y="23">矩母函数 MGF</text></g>
+      <g class="pnode" data-l="l33" style="--c:#2b6cb0" transform="translate(802,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L33</text><text class="pt" x="48" y="23">母函数 PGF</text></g>
+      <g class="pnode" data-l="l34" style="--c:#2b6cb0" transform="translate(802,180)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L34</text><text class="pt" x="48" y="23">变换</text></g>
+      <g class="pnode" data-l="l35" style="--c:#2b6cb0" transform="translate(802,238)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L35</text><text class="pt" x="48" y="23">多元变换</text></g>
+      <g class="pnode" data-l="l22" style="--c:#6b7280" transform="translate(802,334)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L22</text><text class="pt" x="48" y="23">中心极限定理</text></g>
+      <g class="pnode" data-l="l23" style="--c:#6b7280" transform="translate(802,392)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L23</text><text class="pt" x="48" y="23">次序统计量</text></g>
+    </svg>
+    </div>
+    <div class="maplegend">
+      <span class="li"><span class="sw"></span>块内主链(按它学)</span>
+      <span class="li"><span class="sw d"></span>跨块针线(沿通道走,详见下方六条线)</span>
+      <span class="li">🖱️ 点节点 = 弹出该章必背公式</span>
+    </div>
+
+    <div class="thread-box">
+      <h4>六条跨块串联线 · 考前各走一遍</h4>
+      <ul>
+        <li><b>条件线</b>:L03 定义 → L04 倒推 → L06 离散 RV → L14 条件矩 → L16 双重期望 → L29/L30 连续版。</li>
+        <li><b>期望线</b>:L07 定义 → L08 二阶 → L12 联合 → L16 全期望 \(E[X]=E[E[X\mid Y]]\) → L32 用 MGF 一键取矩。</li>
+        <li><b>正态线</b>:L21 单变量 → L22 CLT(和的极限)→ L31 二元正态(线性组合仍正态,零相关⇔独立是正态特权)。</li>
+        <li><b>泊松线</b>:L19 泊松 ↔ L20 指数(同一泊松过程的"次数"与"间隔")+ 泊松逼近二项(n 大 p 小)。</li>
+        <li><b>无记忆线</b>:几何(离散)与指数(连续)是仅有的两个无记忆分布——考"已用寿命不影响剩余寿命"。</li>
+        <li><b>镜像线</b>:L11–L16(离散)⟷ L24–L30(连续),同名概念求和换积分,学一半送一半。</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="pan-modal" hidden>
+  <div class="pan-back"></div>
+  <div class="pan-box">
+    <div class="pan-head">
+      <span class="pan-t">章节</span>
+      <a class="pan-go" href="#">进入本章 ↗</a>
+      <button class="pan-x" type="button" aria-label="关闭">✕</button>
+    </div>
+    <div class="pan-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal = document.querySelector('.pan-modal');
+  if(!modal) return;
+  var body = modal.querySelector('.pan-body');
+  var title = modal.querySelector('.pan-t');
+  var go = modal.querySelector('.pan-go');
+  function close(){ modal.hidden = true; }
+  // lNN → 兄弟章文件(手维护;新增章改 SVG 节点时一起加行)
+  var CHMAP = {
+    l01:'soa-exam-p-l01-sets.html', l02:'soa-exam-p-l02-combinatorics.html',
+    l03:'soa-exam-p-l03-conditional-probability.html', l04:'soa-exam-p-l04-bayes-theorem.html',
+    l05:'soa-exam-p-l05-random-variables.html', l06:'soa-exam-p-l06-conditional-probability-rv.html',
+    l07:'soa-exam-p-l07-mean.html', l08:'soa-exam-p-l08-variance-moments.html',
+    l09:'soa-exam-p-l09-percentiles.html', l10:'soa-exam-p-l10-mode.html',
+    l11:'soa-exam-p-l11-joint-distribution.html', l12:'soa-exam-p-l12-joint-moments.html',
+    l13:'soa-exam-p-l13-covariance.html', l14:'soa-exam-p-l14-conditional-moments.html',
+    l15:'soa-exam-p-l15-uniform-distribution.html', l16:'soa-exam-p-l16-double-expectation.html',
+    l17:'soa-exam-p-l17-binomial-distribution.html', l18:'soa-exam-p-l18-negative-binomial.html',
+    l19:'soa-exam-p-l19-poisson-distribution.html', l20:'soa-exam-p-l20-exponential-distribution.html',
+    l21:'soa-exam-p-l21-normal-distribution.html', l22:'soa-exam-p-l22-central-limit-theorem.html',
+    l23:'soa-exam-p-l23-order-statistics.html', l24:'soa-exam-p-l24-joint-continuous.html',
+    l25:'soa-exam-p-l25-joint-uniform.html', l26:'soa-exam-p-l26-marginal-continuous.html',
+    l27:'soa-exam-p-l27-joint-moments-continuous.html', l28:'soa-exam-p-l28-covariance-continuous.html',
+    l29:'soa-exam-p-l29-conditional-continuous.html', l30:'soa-exam-p-l30-conditional-moments-continuous.html',
+    l31:'soa-exam-p-l31-bivariate-normal.html', l32:'soa-exam-p-l32-mgf.html',
+    l33:'soa-exam-p-l33-pgf.html', l34:'soa-exam-p-l34-transformations.html',
+    l35:'soa-exam-p-l35-transformations-multivariate.html', l99:'soa-exam-p-l99-network.html'
+  };
+  // 公式预览: fetch 公式总表页克隆对应块(http 下可用; file:// fetch 被拒 → 降级文字提示)
+  var fxDoc = null, fxState = 'idle', curL = null;
+  function fillBody(l){
+    body.innerHTML = '';
+    var src = fxDoc && fxDoc.querySelector('.fx-ch[data-l="' + l + '"]');
+    if(src){
+      var clone = document.importNode(src, true);
+      var h = clone.querySelector('.fx-h'); if(h) h.remove();
+      body.appendChild(clone);
+      if(window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([body]);
+    } else {
+      var p = document.createElement('p');
+      p.className = 'fallback';
+      p.textContent = '公式速查见合辑侧栏「Σ 公式总表」;点右上「进入本章」看全章。';
+      body.appendChild(p);
+    }
+  }
+  function openFor(l, name){
+    title.textContent = name;
+    curL = l;
+    go.setAttribute('href', CHMAP[l] || '#');
+    go.style.display = CHMAP[l] ? '' : 'none';
+    if(fxState === 'idle' && window.fetch){
+      fxState = 'loading';
+      fetch('soa-exam-p-formulas.html')
+        .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+        .then(function(t){
+          fxDoc = new DOMParser().parseFromString(t, 'text/html');
+          fxState = 'ready';
+          if(!modal.hidden && curL) fillBody(curL);
+        })
+        .catch(function(){ fxState = 'failed'; });
+    }
+    fillBody(l);
+    modal.hidden = false;
+  }
+  document.addEventListener('click', function(e){
+    var n = e.target.closest && e.target.closest('.pnode');
+    if(n){
+      var l = n.getAttribute('data-l');
+      var pl = n.querySelector('.pl'), pt = n.querySelector('.pt');
+      openFor(l, (pl ? pl.textContent : '') + ' · ' + (pt ? pt.textContent : ''));
+      return;
+    }
+    if(e.target.closest && (e.target.closest('.pan-x') || e.target.classList.contains('pan-back'))) close();
+    if(e.target.closest && e.target.closest('.pan-go')) close();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') close();
+    if(e.key === 'Enter'){
+      var n = e.target.closest && e.target.closest('.pnode');
+      if(n) n.click();
+    }
+  });
+})();
+</script>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · L00 Panorama</b> · 全景知识网络</p>
+    <p>结构整理自《ASM Exam P Study Manual, 7th ed.》35 讲;依赖图与串联线为 AI 辅助归纳,服务于知识点串联复习。仅供个人备考使用。</p>
+  </div>
+</footer>
+</body>
+</html>

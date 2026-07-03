@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L29 导学 · Conditional Distribution of Two Continuous Variables 连续型条件分布</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#a21caf; --accent-deep:#86198f; --accent-soft:#f8e4f7; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#cond">条件密度</a>
+      <a href="#prob">条件概率</a>
+      <a href="#indep">独立·贝叶斯</a>
+      <a href="#example">例题</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · 周四 · v2 改版 · 全书串联</p>
+    <h1>第二十九章 · <em>Conditional Distribution of Two Continuous Variables 连续型条件分布</em></h1>
+    <p class="lead">离散时"给定 \(Y\) 求 \(X\)"用条件概率函数;换成连续,思路一样,只是把 pmf 换成密度。核心一式:<b>条件密度 \(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\)</b>——联合密度在 \(Y=y\) 这条切片上,再除以边缘 \(f_Y(y)\) 归一化。由此串起全概率、独立性、连续版贝叶斯。对照课本 Lesson&nbsp;29 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch29 Conditional Continuous <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.475–476</b>(理论)</span>
+      <span class="pill">前置 <b>Ch27–28 联合/边缘密度</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>条件密度 = <b>切片再归一</b>:\(f_{X\mid Y}(x\mid y)=f(x,y)/f_Y(y)\)——L03/L06 那句"缩小世界再归一化"的连续版,pmf 换 pdf。</li>
+        <li>拿到条件密度就当普通密度用:区间积分得条件概率;按 \(f_Y\) 加权积回去是<b>全概率</b>,翻转方向是<b>连续贝叶斯</b>——离散版的求和全换积分。</li>
+        <li><b>忘除 \(f_Y(y)\) = 全错</b>;支撑耦合(如 \(0\le x\le y\))⟹ 一定不独立,且积分限随条件值变。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l26-marginal-continuous.html">L26 连续边缘</a>
+    <a href="soa-exam-p-l06-conditional-probability-rv.html">L06 RV条件概率</a>
+    <span class="arr">→</span>
+    <span class="here">L29 连续条件分布</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l30-conditional-moments-continuous.html">L30 连续条件矩</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#cond">条件密度</a>
+  <a href="#prob">条件概率</a>
+  <a href="#indep">独立·贝叶斯</a>
+  <a href="#example">例题</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完连续型条件分布你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 由联合密度 \(f(x,y)\) 与边缘 \(f_Y(y)\) 写出条件密度 \(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\),并说清它对 \(x\) 积分为 1。</p>
+        <p style="margin-bottom:0">✅ 用条件密度求条件概率 \(P[X\in A\mid Y=y]=\displaystyle\int_A f_{X\mid Y}(x\mid y)\,dx\)。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>全概率公式</b> \(f_X(x)=\displaystyle\int f_{X\mid Y}(x\mid y)f_Y(y)\,dy\) 还原边缘密度。</p>
+        <p style="margin-bottom:0">✅ 判断独立:\(f_{X\mid Y}(x\mid y)=f_X(x)\)(与 \(y\) 无关);会用<b>连续版贝叶斯</b>翻转条件方向。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cond" style="background:linear-gradient(180deg,#fbf3fb,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch29 · Lesson 29 · 课本 p.475</span><h2 class="sec-title">条件密度 — 定义</h2></div></div>
+    <p class="sec-sub">连续随机变量取任一点的概率是 0,\(P[Y=y]=0\),不能照搬 \(P[A\cap B]/P[B]\)。改用密度:把联合密度 \(f(x,y)\) 在固定 \(y\) 处切一刀,得到的截面曲线除以该处的边缘密度 \(f_Y(y)\) 归一化,就是条件密度。</p>
+
+    <div class="card accent">
+      <h3>定义:给定 \(Y=y\) 时 \(X\) 的条件密度 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.475 · 式 (29.1)</div>
+      <p class="lede">联合密度沿 \(Y=y\) 切一刀,除以切片下面积 \(f_Y(y)\) 归一化——就是条件密度。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Conditional density of X given Y = y</span>
+        $$f_{X\mid Y}(x\mid y)=\frac{f(x,y)}{f_Y(y)}\qquad\big(f_Y(y)&gt;0\big)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>切一刀,除以切片面积</b> — 切片给形状,\(f_Y(y)\) 负责归一;分母永远是<b>条件变量</b>的边缘密度。</span></div>
+      <p class="dim">这里 \(f_Y(y)\) 是 \(Y\) 的<b>边缘密度</b>(marginal density),对固定的 \(y\)(只要 \(f_Y(y)&gt;0\))才有定义。角标要对齐:分母是"条件"那个变量的边缘密度。</p>
+      <details class="more"><summary>展开 · 为什么固定 y 后它是一支合法密度</summary>
+        <p class="dim"><b>固定 \(y\) 后</b>,\(f_{X\mid Y}(\,\cdot\mid y)\) 是一支合法的密度函数(把它看成 \(x\) 的函数):处处 \(\ge 0\),且<b>对 \(x\) 全积分为 1</b>——因为 \(\displaystyle\int f(x,y)\,dx=f_Y(y)\),分子积分恰好等于分母。所以后续求概率、求矩,都拿它当普通一维密度用。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="联合支撑域与 Y=y 处的水平切片">
+          <rect x="6" y="10" width="208" height="130" fill="#fff" stroke="#16243d" stroke-width="1.5"/>
+          <polygon points="34,128 186,128 186,28" fill="var(--accent)" fill-opacity="0.14" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="34" y1="82" x2="140" y2="82" stroke="var(--accent-deep)" stroke-width="3"/>
+          <line x1="34" y1="82" x2="186" y2="82" stroke="var(--accent-deep)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="9" y="80" font-size="11" fill="var(--accent-deep)" font-style="italic">y</text>
+          <text x="192" y="132" font-size="12" fill="#16243d" font-style="italic">x</text>
+          <text x="14" y="24" font-size="12" fill="#16243d" font-style="italic">y</text>
+          <text x="120" y="60" font-size="11" fill="var(--ink-soft)">支撑域</text>
+        </svg>
+        <div class="cap">固定 \(Y=y\):在支撑域里取<b>一条水平切片</b>(紫线)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="切片上的未归一化联合密度截面">
+          <rect x="6" y="10" width="208" height="130" fill="#fff" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="26" y1="128" x2="204" y2="128" stroke="#16243d" stroke-width="1.2"/>
+          <path d="M34,120 Q110,64 186,120" fill="var(--accent)" fill-opacity="0.20" stroke="var(--accent-deep)" stroke-width="2"/>
+          <text x="188" y="140" font-size="12" fill="#16243d" font-style="italic">x</text>
+          <text x="52" y="96" font-size="10.5" fill="var(--ink-soft)">面积 = \(f_Y(y)\)</text>
+        </svg>
+        <div class="cap">切面曲线 \(x\mapsto f(x,y)\),其下<b>面积 \(=f_Y(y)\)</b>,一般 \(\ne 1\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="除以 fY(y) 后归一化的条件密度">
+          <rect x="6" y="10" width="208" height="130" fill="#fff" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="26" y1="128" x2="204" y2="128" stroke="#16243d" stroke-width="1.2"/>
+          <path d="M34,116 Q110,30 186,116" fill="var(--hi)" fill-opacity="0.34" stroke="var(--accent-deep)" stroke-width="2"/>
+          <text x="188" y="140" font-size="12" fill="#16243d" font-style="italic">x</text>
+          <text x="60" y="70" font-size="10.5" fill="var(--ink-soft)">面积 = 1</text>
+        </svg>
+        <div class="cap">除以 \(f_Y(y)\) → \(f_{X\mid Y}(x\mid y)\),<b>面积归一化为 1</b></div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>条件密度 = "切片 + 归一化"。切片给出形状 \(f(x,y)\),除以 \(f_Y(y)\) 把它拉伸成合法密度。跟离散的 \(P[X=x\mid Y=y]=\dfrac{P[X=x,Y=y]}{P[Y=y]}\) 一模一样,只是 pmf 换成密度。</span></div>
+  </div>
+</section>
+
+<section id="prob">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">条件密度的用法</span><h2 class="sec-title">条件概率 + 全概率公式</h2></div></div>
+    <p class="sec-sub">拿到条件密度,像用普通密度一样:对区间积分求概率;反过来把条件密度按 \(Y\) 加权积分,就还原出 \(X\) 的边缘密度(连续版全概率)。</p>
+    <div class="card accent">
+      <h3>① 条件概率:对条件密度积分 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.475</div>
+      <p class="lede">先固定 \(y\) 得到一支密度,再照常对目标区间积分。</p>
+      <div class="formula"><span class="name">Conditional probability given Y = y</span>
+        $$P[X\in A\mid Y=y]=\int_A f_{X\mid Y}(x\mid y)\,dx$$</div>
+      <p class="dim">例如 \(P[X&gt;1/2\mid Y=y]=\displaystyle\int_{1/2}^{\infty} f_{X\mid Y}(x\mid y)\,dx\)。</p>
+    </div>
+    <div class="card accent">
+      <h3>② 全概率公式(Law of Total Probability):还原边缘密度 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.475 · 式 (29.2)</div>
+      <p class="lede">把"给定各种 \(y\) 时的条件密度"按 \(Y\) 的密度加权积分,得回 \(X\) 的边缘密度。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Law of Total Probability (continuous)</span>
+        $$f_X(x)=\int_{-\infty}^{\infty} f_{X\mid Y}(x\mid y)\,f_Y(y)\,dy$$</div>
+      <p class="dim">对照离散版的 \(P[X=x]=\sum_y P[X=x\mid Y=y]\,P[Y=y]\)——加权求和换成加权积分,镜像成立。</p>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>信息互推:</b>已知<b>联合密度</b> → 边缘、条件全能算;只给<b>一个边缘 + 一个条件密度</b> → 用 (29.1) 反乘得联合 \(f(x,y)=f_{X\mid Y}(x\mid y)f_Y(y)\),再用 (29.2) 求另一边缘。两块信息拼出全部分布。</span></div>
+  </div>
+</section>
+
+<section id="indep" style="background:linear-gradient(180deg,#fbf3fb,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch29 · 核心 + 翻转</span><h2 class="sec-title">独立性 · 连续版贝叶斯</h2></div></div>
+    <p class="sec-sub">若"给定 \(Y=y\)"完全不改变 \(X\) 的分布,就是独立;要把条件方向从"\(X\mid Y\)"翻成"\(Y\mid X\)",用连续版贝叶斯。</p>
+    <div class="card accent">
+      <h3>独立(Independence)的密度判据 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.475–476</div>
+      <p class="lede">条件密度与所给的 \(y\) 无关(等于无条件的 \(f_X\)),即独立;等价于联合密度可拆成两个边缘之积。</p>
+      <div class="formula"><span class="name">Independence ⟺</span>
+        $$f_{X\mid Y}(x\mid y)=f_X(x)\;\Longleftrightarrow\;f(x,y)=f_X(x)\,f_Y(y)$$</div>
+      <p class="dim"><b>暗坑:</b>支撑域若"耦合"(如 \(0\le x\le y\le1\),\(x\) 的上界随 \(y\) 变),则一定<b>不独立</b>——哪怕密度公式看似可乘。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>连续版贝叶斯定理(Bayes' Theorem)<span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.475 · 式 (29.3)</div>
+      <p class="lede">分子 = 先验 × 似然;分母 = 同一个分子对所有可能值积分(归一化常数)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Bayes' Theorem (continuous)</span>
+        $$f_{X\mid Y}(x\mid y)=\frac{f_X(x)\,f_{Y\mid X}(y\mid x)}{\displaystyle\int_{-\infty}^{\infty} f_X(w)\,f_{Y\mid X}(y\mid w)\,dw}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>先验乘似然,除以全概率</b> — 与 Ch4 离散贝叶斯同构;分母对 \(w\) 积分是常数,先算再除。</span></div>
+      <details class="more"><summary>展开 · 怎么从 (29.1)(29.2) 推出来</summary>
+        <p class="dim">把 (29.1) 的分子用乘法 \(f(x,y)=f_X(x)f_{Y\mid X}(y\mid x)\) 展开,分母 \(f_Y(y)\) 用全概率 (29.2) 展开,即得翻转公式。结构与 Ch4 离散贝叶斯一模一样:分子是"先验 × 似然",分母是似然对先验的加权积分。</p>
+      </details>
+    </div>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最易错 — 别忘除以 \(f_Y(y)\):</b>条件密度不是 \(f(x,y)\) 本身,必须除掉边缘 \(f_Y(y)\) 才归一化。少除这一步,\(\int f\,dx\ne1\),后续所有条件概率全错。求 \(f_Y(y)\) 时对 \(x\) 积分,<b>积分限要照支撑域随 \(y\) 变化</b>(如 \(x\) 从 \(0\) 到 \(y\)),别用死区间。</span></div>
+  </div>
+</section>
+
+<section id="example">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">课本 Example</span><h2 class="sec-title">跟着课本例题走一遍</h2></div></div>
+    <div class="ex">
+      <div class="ex-h"><span class="badge">Example 29A</span><span class="src" style="margin:0">课本 p.475–476</span></div>
+      <p class="q">联合密度 \(f(x,y)=2(x+y)\),\(0\le x\le y\le 1\)。求 \(P[\,Y&gt;1/2\mid X=0.1\,]\)。</p>
+      <p><b>第 1 步 · 求 \(f_X(0.1)\)(边缘密度,作分母)。</b>给定 \(X=0.1\) 时,由支撑 \(0.1\le y\le1\):
+      $$f_X(0.1)=\int_{0.1}^{1}2(0.1+y)\,dy=\big(0.1+y\big)^2\Big|_{0.1}^{1}=1.1^2-0.2^2=1.17.$$</p>
+      <p><b>第 2 步 · 对条件密度在 \(y&gt;1/2\) 上积分。</b>条件密度 \(f_{Y\mid X}(y\mid 0.1)=\dfrac{2(0.1+y)}{1.17}\),分母是常数,先积分子再除:
+      $$P[Y&gt;\tfrac12\mid X=0.1]=\frac{\displaystyle\int_{1/2}^{1}2(0.1+y)\,dy}{1.17}=\frac{(0.1+y)^2\big|_{1/2}^{1}}{1.17}=\frac{1.1^2-0.6^2}{1.17}=\frac{0.85}{1.17}.$$</p>
+      <span class="ans">P[Y &gt; 1/2 | X = 0.1] = 0.85 / 1.17 ≈ 0.7265</span>
+      <div class="note tip" style="margin-top:12px;margin-bottom:0"><span class="ic">✅</span><span class="t"><b>套路固定:</b>① 固定条件变量,对另一变量积分求边缘密度(分母);② 分子在目标区间上积同一被积函数;③ 相除。分母一整段都是同一个常数 \(1.17\),不必逐步显式写出条件密度。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:在切片上重新归一</h3>
+      <p>把联合密度想成支撑域上的一座"概率山"。条件 \(X=0.1\)(Example 29A)就是沿 \(x=0.1\) <b>竖切一刀</b>:截面是一条曲线,但曲线下面积只有 \(f_X(0.1)=1.17\)——不是 1,还不能当密度用;<b>除以这块切片面积重新归一</b>,才得到条件密度。例题里那个常数分母 1.17,就是切片面积本尊。条件在 \(Y\) 上则横切,道理相同:固定谁,就沿谁切。</p>
+      <p class="dim">离散 ↔ 连续对照:L06 的 \(P[X=x\mid Y=y]=p(x,y)/p_Y(y)\) 是"从一行格子里挑一格、除以整行之和";本章把"整行之和"换成"整条切片的积分",公式逐字照抄,pmf 换 pdf、求和换积分。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① <b>积分限随条件变化</b>:支撑 \(0\le x\le y\le1\) 下 given \(X=0.1\),则 \(y\) 的范围立即变成 \(0.1\le y\le1\)——条件值一落地,先重写另一变量的范围,再动积分。② <b>分母是常数,最后除</b>:整题共用一个 \(f_Y(y)\)(或 \(f_X(x)\)),先把分子积完再除一次,少写分数少出错。③ 给 \(f_X\) + \(f_{Y\mid X}\) 求 \(P[Y&gt;c]\) 类题(如练 29.4):先反乘合成联合密度,再用全概率积掉 \(x\)——(29.1)(29.2) 连招。④ 判独立先看支撑:耦合(三角/带状)直接判不独立,不必推公式。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Conditional_probability_distribution">Wikipedia · Conditional probability distribution</a></div><div class="z">离散与连续条件分布并排给出,正是本章"镜像"关系的官方版;含条件密度良定义的说明。</div><div class="u">en.wikipedia.org/wiki/Conditional_probability_distribution</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/conditional-probability-distributions">Statlect · Conditional probability distributions</a></div><div class="z">从离散推到连续的完整推导,细致回答"为什么 \(P[Y=y]=0\) 还能定义条件分布"。</div><div class="u">statlect.com/fundamentals-of-probability/conditional-probability-distributions</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Wikipedia · Bayes' theorem</a></div><div class="z">内含连续随机变量一节,把 (29.3) 与 Ch4 离散贝叶斯放进同一框架,翻转方向的直觉更牢。</div><div class="u">en.wikipedia.org/wiki/Bayes%27_theorem</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" style="background:linear-gradient(180deg,#fbf3fb,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>忘除 \(f_Y(y)\)</b>:把 \(f(x,y)\) 当条件密度直接用,漏掉归一化。</li>
+          <li><b>积分限用死区间</b>:支撑域耦合时(\(0\le x\le y\)),积分限随条件变量变,别照抄 \(0\) 到 \(1\)。</li>
+          <li><b>方向搞反</b>:\(f_{X\mid Y}\) 分母是 \(f_Y\);要 \(f_{Y\mid X}\) 就除 \(f_X\)。</li>
+          <li><b>误判独立</b>:支撑域三角/耦合一定不独立,先看域再看公式能否拆积。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 29.4</span>[F01:34] 车险:给 \(f_X\) 与条件密度 \(f_{Y\mid X}\),求 \(P[Y&gt;0.5]\)(先合成联合再积)。</li>
+          <li><span class="ref">练 29.9</span>[110-S85:12] \(f(x,y)=x+y\),求 \(P[2X\le1\mid X+Y\le1]\)。</li>
+          <li><span class="ref">练 29.11</span>[110-S90:27] 单位圆上联合均匀,求给定 \(X=x\) 的 \(Y\) 条件密度。</li>
+          <li><span class="ref">练 29.13</span>[F01:25] 火险 \(f(x,y)=\dfrac{2}{x^2(x-1)}y^{-(2x-1)/(x-1)}\),求条件概率。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算/心算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>条件密度 \(f_{X\mid Y}(x\mid y)\) 对 \(x\) 从头积到尾,结果一定等于多少?</li>
+        <li>只给 \(f_Y(y)\) 与 \(f_{X\mid Y}(x\mid y)\),联合密度 \(f(x,y)=\,?\)</li>
+        <li>若 \(f_{X\mid Y}(x\mid y)\) 与 \(y\) 完全无关,\(X,Y\) 是否独立?</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① 恒等于 \(1\)(合法密度);② \(f(x,y)=f_{X\mid Y}(x\mid y)\,f_Y(y)\)(乘法);③ 独立(条件密度 = 无条件 \(f_X\))。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 连续型条件分布</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>条件密度 / 全概率</h4>
+        <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\)</p>
+        <p>\(P[X\in A\mid Y=y]=\int_A f_{X\mid Y}\,dx\)</p>
+        <p>\(f_X(x)=\int f_{X\mid Y}(x\mid y)f_Y(y)\,dy\)</p>
+        <p>固定 \(y\):\(\int f_{X\mid Y}\,dx=1\)</p>
+      </div>
+      <div class="cc t">
+        <h4>独立 / 贝叶斯</h4>
+        <p>独立:\(f_{X\mid Y}=f_X \Leftrightarrow f=f_Xf_Y\)</p>
+        <p>合成:\(f(x,y)=f_{Y\mid X}(y\mid x)f_X(x)\)</p>
+        <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f_X(x)f_{Y\mid X}(y\mid x)}{\int f_X(w)f_{Y\mid X}(y\mid w)\,dw}\)</p>
+        <p>支撑域耦合 ⇒ 不独立</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab" style="background:linear-gradient(180deg,#fbf3fb,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 29 原文用词</span><h2 class="sec-title">连续型条件分布 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"条件 / 密度"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 29</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:17%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">conditional density function</td><td class="ipa">/kənˈdɪʃənəl/</td><td><span class="pos n">n.</span></td><td>条件密度函数</td><td class="root">\(f_{X\mid Y}=f(x,y)/f_Y(y)\),给定一个变量后另一个的密度</td></tr>
+          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘密度</td><td class="root">margin(边)→ 联合密度对另一变量积掉,作分母</td></tr>
+          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">joint(联合)→ \(f(x,y)\),两变量的共同密度</td></tr>
+          <tr><td class="en">Law of Total Probability</td><td class="ipa">/ˈtoʊtəl/</td><td><span class="pos n">n.</span></td><td>全概率公式</td><td class="root">条件密度按 \(f_Y\) 加权积分,还原边缘</td></tr>
+          <tr><td class="en">Bayes' Theorem</td><td class="ipa">/beɪz ˈθiːərəm/</td><td><span class="pos n">n.</span></td><td>贝叶斯定理</td><td class="root">翻转条件方向,\(X\mid Y \leftrightarrow Y\mid X\)</td></tr>
+          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">条件密度 = 无条件边缘密度,\(f=f_Xf_Y\)</td></tr>
+          <tr><td class="en">support (of a density)</td><td class="ipa">/səˈpɔːrt/</td><td><span class="pos n">n.</span></td><td>支撑域</td><td class="root">密度非零的 \((x,y)\) 区域;耦合支撑 ⇒ 不独立</td></tr>
+          <tr><td class="en">normalize</td><td class="ipa">/ˈnɔːrməlaɪz/</td><td><span class="pos v">v.</span></td><td>归一化</td><td class="root">除以 \(f_Y(y)\) 使积分为 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">given that \(X=x\)</div><div class="z">在给定 \(X=x\) 的条件下</div></div>
+        <div class="ph"><div class="e">conditional density of \(Y\) given \(X\)</div><div class="z">给定 \(X\) 时 \(Y\) 的条件密度</div></div>
+        <div class="ph"><div class="e">joint density function</div><div class="z">联合密度函数</div></div>
+        <div class="ph"><div class="e">over the appropriate domain</div><div class="z">在恰当的定义域上(注意支撑)</div></div>
+        <div class="ph"><div class="e">for \(0&lt;x&lt;y&lt;1\)</div><div class="z">当 …… 时(支撑域,决定积分限)</div></div>
+        <div class="ph"><div class="e">uniformly distributed over …</div><div class="z">在……上均匀分布</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 29</b> · 第二十九章 Conditional Distribution of Two Continuous Variables 连续型条件分布</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 29(p.475–476,表 29.1 汇总;页码已标注,细节以课本为准)+ 威普网校视频。<br>Example 29A 为课本原题方法精解;习题 29.1–29.14 见课本,完整原题与解答请见课本。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

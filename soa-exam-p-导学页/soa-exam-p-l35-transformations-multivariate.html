@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L35 导学 · Transformations of Two or More Variables 多变量变换</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    /* === 每章只改这 4 个: 主题色 === */
+    --accent:#0d9488; --accent-deep:#0b6b60; --accent-soft:#ddf1ef; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+
+  /* v2 · 本章拿走 N 句话 —— 全章最高记忆锚, 放 hero 内底部 */
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  /* v2 · 知识链条: 前置 → 本章 → 去向 (贴 hero 下, modnav 上) */
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  /* 模块快捷跳转条(吸顶于顶栏下) */
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  /* v2 · 卡内分层: lede 一句话结论(先看), dim 细节(后看) */
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  /* 公式两级: 普通 = 理解; .star = ★必背(视觉最高级) */
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  /* 考频徽章: ★★★ 高频 / ★★ 常考 / ★ 低频 */
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  /* 🗝️ 口诀条: 一句话可默背 */
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  /* 图示行 (Venn / 树 / 分布曲线 SVG) */
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  /* v2 · 对比表(独立 vs 互斥这类"最易混"两栏对照): 首列加粗, 表头用主题色 */
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  /* v2 · 扩展阅读卡: 精选外链 + 为什么值得看 */
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#jac">雅可比法</a>
+      <a href="#ex">例题</a>
+      <a href="#conv">和的卷积</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第三十五章 · <em>Transformations of Two or More Variables 多变量变换</em></h1>
+    <p class="lead">上一章把<b>一个</b>随机变量做变换;今天升到<b>两个</b>——已知 \(X,Y\) 的联合密度,求 \(Z=X/Y\)、\(Z=XY\)、\(Z=X+Y\) 等新变量的密度。主武器是<b>雅可比法</b>:凑一个辅助变量把变换补成一一对应,乘以雅可比行列式的绝对值,再把辅助变量积掉。求和还有捷径——<b>卷积</b>。对照课本 Lesson&nbsp;35 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch35 Transformations <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.539–540</b>(理论 + 例)</span>
+      <span class="pill">末章 · <b>Lesson 35</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>二维→一维没法直接换密度:<b>补一个 W</b> 凑成一一对应,\(f_{Z,W}=f_{X,Y}(h_1,h_2)\,\lvert J\rvert\),最后把 \(W\) 积掉。</li>
+        <li>雅可比 \(J\) 用<b>逆变换</b>算(\(x,y\) 对 \(z,w\) 的偏导行列式),且<b>取绝对值</b>。</li>
+        <li>求和走捷径:\(Z=X+Y\) 时 \(\lvert J\rvert=1\),独立则 \(f_Z=\int f_X(z-w)f_Y(w)\,dw\)——<b>卷积</b>,上下限只取两因子同时非零处。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l34-transformations.html">L34 单变量变换</a>
+    <a href="soa-exam-p-l24-joint-continuous.html">L24 连续联合分布</a>
+    <span class="arr">→</span>
+    <span class="here">L35 多元变换</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="#insight">卷积 / 雅可比题型</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#jac">雅可比法</a>
+  <a href="#ex">例题</a>
+  <a href="#conv">和的卷积</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完多变量变换你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 会<b>补辅助变量</b>把 \((Z)=g(X,Y)\) 凑成一一对应的 \((Z,W)\),解出逆变换 \(x,y\)。</p>
+        <p style="margin-bottom:0">✅ 会算<b>雅可比行列式</b> \(J\),写出 \(f_{Z,W}=f_{X,Y}\,|J|\) 再积掉 \(W\)。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 对 \(Z=X+Y\) 直接用<b>卷积</b>:\(f_Z(z)=\int f_X(x)f_Y(z-x)\,dx\)(独立时)。</p>
+        <p style="margin-bottom:0">✅ 会<b>转换定义域</b>、拆分区间,别把积分上下限搞错。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="jac" style="background:linear-gradient(180deg,#eefaf8,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch35 · Lesson 35 · 课本 p.539</span><h2 class="sec-title">雅可比法 — 六步流程</h2></div></div>
+    <p class="sec-sub">典型题给出 \(X,Y\) 的联合密度,要 \(Z=g(X,Y)\)(如 \(Z=X/Y\))的密度。麻烦在于"两个变量映成一个",不是一一对应。解法:<b>再补一个目标变量 \(W\)</b>(最省事就取 \(W=X\) 或 \(W=Y\)),让 \((X,Y)\to(Z,W)\) 一一对应,做完再把 \(W\) 积分掉。</p>
+
+    <div class="card accent">
+      <h3>流程:从 \(f_{X,Y}\) 到 \(f_Z\) <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.539 · 六步</div>
+      <p class="lede">补 \(W\) → 解逆变换 → 算 \(\lvert J\rvert\) → 换密度 → 换定义域 → 积掉 \(W\)。</p>
+      <ol style="margin:6px 0 4px;padding-left:22px">
+        <li><b>补变量</b>:添 \(W\)(如 \(W=Y\)),使 \((Z,W)=g(X,Y)\) 一一对应。</li>
+        <li><b>逆变换</b>:把 \(X,Y\) 解成 \(Z,W\) 的函数 \(x=h_1(z,w),\ y=h_2(z,w)\)。</li>
+        <li><b>算雅可比</b>:\(J=\) 逆变换偏导矩阵的行列式(见下式)。</li>
+        <li><b>换密度</b>:\(f_{Z,W}(z,w)=f_{X,Y}\big(h_1,h_2\big)\,|J|\)。</li>
+        <li><b>换定义域</b>:把 \(X,Y\) 的取值范围翻译成 \(Z,W\) 的范围(常要分段/拆区域)。</li>
+        <li><b>积掉 \(W\)</b>:\(f_Z(z)=\displaystyle\int f_{Z,W}(z,w)\,dw\) 得边缘密度。</li>
+      </ol>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>补一个、逆回去、乘 |J|、积掉它</b> — 六步浓缩成四拍,\(W\) 只是脚手架。</span></div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Jacobian of the inverse transformation</span>
+        $$J=\det\!\begin{pmatrix}\dfrac{\partial x}{\partial z}&\dfrac{\partial x}{\partial w}\\[6pt]\dfrac{\partial y}{\partial z}&\dfrac{\partial y}{\partial w}\end{pmatrix}
+        =\frac{\partial x}{\partial z}\frac{\partial y}{\partial w}-\frac{\partial x}{\partial w}\frac{\partial y}{\partial z}$$</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Density of the transformed variables · 式 (35.1)</span>
+        $$f_{Z,W}(z,w)=f_{X,Y}\big(h_1(z,w),\,h_2(z,w)\big)\,\lvert J\rvert$$</div>
+      <p class="dim">\(2\times2\) 行列式 \(\det\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)=ad-bc\)。\(\lvert J\rvert\) 取<b>绝对值</b>——它是面积缩放因子,不能为负。注意用的是<b>逆变换</b>(\(x,y\) 对 \(z,w\))的偏导,不是正变换的。</p>
+      <details class="more"><summary>展开 · 为什么密度要乘 |J|</summary>
+        <p class="dim">换元时面积微元满足 \(dx\,dy=\lvert J\rvert\,dz\,dw\)。一小块区域上的概率 = 密度 × 面积,换坐标后概率不能变:\(f_{X,Y}\,dx\,dy=f_{X,Y}\,\lvert J\rvert\,dz\,dw\),所以新密度必须是 \(f_{Z,W}=f_{X,Y}\,\lvert J\rvert\)——\(\lvert J\rvert\) 把"格子大小变了"这件事补偿回来。这正是二重积分换元公式在概率上的翻版。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 160" role="img" aria-label="源空间 X-Y 上的支撑矩形">
+          <line x1="24" y1="140" x2="205" y2="140" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="24" y1="140" x2="24" y2="18" stroke="#16243d" stroke-width="1.5"/>
+          <text x="200" y="155" font-size="11" font-style="italic" fill="#16243d">x</text>
+          <text x="10" y="24" font-size="11" font-style="italic" fill="#16243d">y</text>
+          <rect x="24" y="40" width="90" height="60" fill="#0d9488" fill-opacity="0.22" stroke="#0b6b60" stroke-width="1.5"/>
+          <text x="60" y="118" font-size="10" fill="#46566f">0≤x≤1</text>
+          <text x="120" y="74" font-size="10" fill="#46566f">1≤y≤2</text>
+          <line x1="24" y1="100" x2="20" y2="100" stroke="#16243d"/><text x="6" y="103" font-size="9" fill="#46566f">1</text>
+          <line x1="24" y1="40" x2="20" y2="40" stroke="#16243d"/><text x="6" y="43" font-size="9" fill="#46566f">2</text>
+          <line x1="114" y1="140" x2="114" y2="144" stroke="#16243d"/><text x="110" y="155" font-size="9" fill="#46566f">1</text>
+        </svg>
+        <div class="cap"><b>源</b>:\((X,Y)\) 的支撑(矩形)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 160" role="img" aria-label="映射后 Z-W 上的支撑区域">
+          <line x1="24" y1="140" x2="205" y2="140" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="24" y1="140" x2="24" y2="18" stroke="#16243d" stroke-width="1.5"/>
+          <text x="200" y="155" font-size="11" font-style="italic" fill="#16243d">z</text>
+          <text x="8" y="24" font-size="11" font-style="italic" fill="#16243d">w</text>
+          <path d="M24 100 L114 100 C150 100 168 78 168 40 L24 40 Z" fill="var(--hi)" fill-opacity="0.35" stroke="#0b6b60" stroke-width="1.5"/>
+          <line x1="24" y1="100" x2="20" y2="100" stroke="#16243d"/><text x="6" y="103" font-size="9" fill="#46566f">1</text>
+          <line x1="24" y1="40" x2="20" y2="40" stroke="#16243d"/><text x="6" y="43" font-size="9" fill="#46566f">2</text>
+          <line x1="96" y1="140" x2="96" y2="144" stroke="#16243d"/><text x="86" y="155" font-size="9" fill="#46566f">0.5</text>
+          <line x1="168" y1="140" x2="168" y2="144" stroke="#16243d"/><text x="164" y="155" font-size="9" fill="#46566f">1</text>
+        </svg>
+        <div class="cap"><b>映射后</b>:\((Z,W)\) 的支撑(边界弯了,要分段积)</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>为什么补 \(W\):</b>只有 \(Z=g(X,Y)\) 是"二维→一维",没法直接换密度。补上 \(W\) 变成"二维→二维"一一对应,才能套式 (35.1);\(W\) 只是脚手架,最后 \(\int\!\cdot\,dw\) 拆掉即可。取 \(W=X\) 或 \(W=Y\) 通常让逆变换和雅可比最简单。</span></div>
+  </div>
+</section>
+
+<section id="ex">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">课本 Example 35A · 完整精解</span><h2 class="sec-title">例题:商 \(Z=X/Y\) 的密度</h2></div></div>
+    <p class="sec-sub">课本样板题,把六步走一遍。\(X\sim U[0,1]\)、\(Y\sim U[1,2]\)、相互独立,所以 \(f_{X,Y}(x,y)=1\)(在 \(0\le x\le1,\ 1\le y\le2\) 上)。</p>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 35A</span><span class="src" style="margin:0">课本 p.540 · \(Z=X/Y\)</span></div>
+      <p class="q">\(X,Y\) 独立,\(X\sim U[0,1]\),\(Y\sim U[1,2]\)。求 \(Z=X/Y\) 的密度 \(f_Z(z)\)。</p>
+      <p style="margin-bottom:2px"><b>① 补变量 </b>取 \(W=Y\)。<br>
+      <b>② 逆变换 </b>\(Y=W\),\(X=ZY=ZW\),即 \(x=zw,\ y=w\)。<br>
+      <b>③ 雅可比 </b>\(\dfrac{\partial x}{\partial z}=w,\ \dfrac{\partial x}{\partial w}=z,\ \dfrac{\partial y}{\partial z}=0,\ \dfrac{\partial y}{\partial w}=1\),故 \(J=\det\left(\begin{smallmatrix}w&z\\0&1\end{smallmatrix}\right)=w\),\(\lvert J\rvert=w\)。<br>
+      <b>④ 换密度 </b>\(f_{Z,W}(z,w)=1\cdot w=w\)。<br>
+      <b>⑤ 换定义域 </b>由 \(0\le x\le1\Rightarrow 0\le zw\le1\Rightarrow w\le 1/z\);由 \(1\le y\le2\Rightarrow 1\le w\le2\)。又 \(z=x/y\in[0,1]\)。分两段:\(0\le z\le\tfrac12\) 时 \(1/z\ge2\),\(w\) 从 \(1\) 到 \(2\);\(\tfrac12\le z\le1\) 时 \(w\) 从 \(1\) 到 \(1/z\)。<br>
+      <b>⑥ 积掉 \(W\) </b>\(f_Z(z)=\displaystyle\int w\,dw\):</p>
+      $$f_Z(z)=\begin{cases}\displaystyle\int_1^2 w\,dw=\frac{2^2-1^2}{2}=1.5,&0\le z\le 0.5\\[10pt]\displaystyle\int_1^{1/z} w\,dw=\frac{1/z^2-1}{2},&0.5\le z\le 1\end{cases}$$
+      <span class="ans">f_Z(z) = 1.5 (0≤z≤0.5);　(1/z² − 1)/2 (0.5≤z≤1)</span>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>套路:</b>商 \(X/Y\) 取 \(W=Y\)(于是 \(x=zw\) 干净);积 \(XY\) 取 \(W=X\) 或 \(W=Y\);和 \(X+Y\) 取 \(W=Y\)(下一节直接给出卷积)。<b>定义域拆段</b>是本章最费神处——先在 \((z,w)\) 平面画出支撑,再按 \(z\) 切竖条定上下限。</span></div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 35.1</span><span class="src" style="margin:0">课本 p.541 · \(Z=XY\)(积)</span></div>
+      <p class="q">\(X,Y\) 联合密度 \(f(x,y)=x+y\)(在 \(0\le x\le1,\ 0\le y\le1\) 上)。求 \(Z=XY\) 的密度。</p>
+      <p style="margin-bottom:2px">取 \(W=Y\):逆变换 \(y=w,\ x=z/w\)。雅可比 \(J=\det\left(\begin{smallmatrix}1/w & -z/w^2\\ 0 & 1\end{smallmatrix}\right)=\dfrac1w\),\(\lvert J\rvert=1/w\)。
+      \(f_{Z,W}=\Big(\dfrac zw+w\Big)\dfrac1w=\dfrac{z}{w^2}+1\)。定义域 \(0\le z\le w\le1\)。积掉 \(w\):</p>
+      $$f_Z(z)=\int_z^1\Big(\frac{z}{w^2}+1\Big)dw=\Big[-\frac zw+w\Big]_z^1=(-z+1)+(1-z)=2(1-z),\quad 0\le z\le1$$
+      <span class="ans">f_Z(z) = 2(1 − z),　0 ≤ z ≤ 1</span>
+    </div>
+  </div>
+</section>
+
+<section id="conv" style="background:linear-gradient(180deg,#eefaf8,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">和的捷径</span><h2 class="sec-title">和的卷积 \(Z=X+Y\)</h2></div></div>
+    <p class="sec-sub">求"和"是最常考的一类。对 \(Z=X+Y\) 取 \(W=Y\),逆变换 \(x=z-w,\ y=w\),雅可比 \(J=\det\left(\begin{smallmatrix}1&-1\\0&1\end{smallmatrix}\right)=1\)。于是 \(f_{Z,W}(z,w)=f_{X,Y}(z-w,\,w)\),积掉 \(w\) 就得到<b>卷积公式</b>。</p>
+    <div class="card accent">
+      <h3>卷积(Convolution)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.539 · 由雅可比法特化</div>
+      <p class="lede">和 \(Z=X+Y\) 是雅可比法的特例:\(\lvert J\rvert=1\),独立时密度"滑动相乘"——卷积。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Convolution — sum of two variables</span>
+        $$f_Z(z)=\int_{-\infty}^{\infty} f_{X,Y}(z-w,\,w)\,dw
+        \;\xrightarrow{\ X\perp Y\ }\;
+        f_Z(z)=\int_{-\infty}^{\infty} f_X(z-w)\,f_Y(w)\,dw$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>和 = 沿斜线扫一遍</b> — 固定 \(z\),沿 \(x+y=z\) 这条线把联合密度收集起来;上下限只取两因子同时非零处。</span></div>
+      <p class="dim" style="margin-bottom:0">读法:沿直线 \(x+y=z\) 把联合密度"扫一遍"求和。<b>独立</b>时联合密度可拆成两个边缘密度之积,才写成 \(f_X * f_Y\)。<b>积分上下限随支撑变</b>——只在 \(f_X(z-w)\) 与 \(f_Y(w)\) 同时非零处积分。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 160" role="img" aria-label="固定 z 时 x+y=z 的斜线扫过支撑">
+          <line x1="24" y1="140" x2="205" y2="140" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="24" y1="140" x2="24" y2="18" stroke="#16243d" stroke-width="1.5"/>
+          <text x="200" y="155" font-size="11" font-style="italic" fill="#16243d">x</text>
+          <text x="10" y="24" font-size="11" font-style="italic" fill="#16243d">y</text>
+          <rect x="24" y="50" width="90" height="90" fill="#0d9488" fill-opacity="0.16" stroke="#0b6b60" stroke-width="1.2"/>
+          <line x1="24" y1="90" x2="74" y2="140" stroke="#c6492f" stroke-width="2"/>
+          <line x1="44" y1="50" x2="114" y2="120" stroke="var(--hi)" stroke-width="2.5"/>
+          <line x1="64" y1="50" x2="114" y2="100" stroke="#c6492f" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="120" y="104" font-size="9.5" fill="#c6492f">x+y=z</text>
+        </svg>
+        <div class="cap"><b>斜线 \(x+y=z\)</b> 随 \(z\) 平移,扫过支撑</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 160" role="img" aria-label="两密度重叠区决定卷积积分区间">
+          <line x1="14" y1="130" x2="206" y2="130" stroke="#16243d" stroke-width="1.5"/>
+          <text x="200" y="146" font-size="11" font-style="italic" fill="#16243d">w</text>
+          <path d="M30 130 Q70 60 110 130 Z" fill="#0d9488" fill-opacity="0.30" stroke="#0b6b60" stroke-width="1.3"/>
+          <path d="M80 130 Q120 60 160 130 Z" fill="var(--hi)" fill-opacity="0.35" stroke="#b98900" stroke-width="1.3"/>
+          <path d="M80 130 Q95 92 95 92 Q103 92 110 130 Z" fill="#c6492f" fill-opacity="0.30"/>
+          <text x="46" y="150" font-size="9.5" fill="#0b6b60">f_X(z−w)</text>
+          <text x="118" y="150" font-size="9.5" fill="#b98900">f_Y(w)</text>
+        </svg>
+        <div class="cap"><b>重叠区(红)</b>= 两因子同时非零 → 积分区间</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>不独立也能用:</b>一般式 \(f_Z(z)=\int f_{X,Y}(z-w,w)\,dw\) 对任意联合密度都成立(只是雅可比法的特例,\(\lvert J\rvert=1\));只有把 \(f_{X,Y}\) 拆成 \(f_X\,f_Y\) 这一步才需要<b>独立</b>。考试里 \(Z=aX+bY\)(如 \(Z=2X+Y\),课本 35.12)同理,先补 \(W\) 再积。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:雅可比 = 换地图投影时的"面积换算率"</h3>
+      <p>同一块国土,在两张不同投影的地图上占的纸面面积不同。要把"人口密度(人/平方厘米纸面)"从一张图搬到另一张,必须乘上两图局部的<b>面积比</b>——\(\lvert J\rvert\) 就是这个换算率。数学严格版:微元满足 \(dx\,dy=\lvert J\rvert\,dz\,dw\),密度乘 \(\lvert J\rvert\) 恰好让每一小块的概率(密度 × 面积)保持不变。</p>
+      <p class="dim">卷积的直觉:掷两颗骰子,"和为 7" 要把 \((1,6),(2,5),\dots,(6,1)\) 沿反对角线全数收集;连续版把逐格求和换成沿 \(x+y=z\) 的积分,这就是卷积——L33 里"PGF 相乘 = 多项式自动卷积"是同一件事的离散镜像。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① <b>独立和先想 MGF</b>:相乘认形(L32)能秒杀就秒杀(指数和→伽马、正态和→正态);认不出闭式才动手卷积。② <b>卷积上下限</b>:画支撑、按 \(z\) 切竖条,只积两因子同时非零段——uniform 和的密度是三角形/梯形,分段别漏。③ <b>雅可比三连坑</b>:用成正变换的偏导(结果差个倒数)、忘取绝对值、定义域不拆段(例 35A 以 \(z=0.5\) 为界)。④ <b>商/积类</b>:\(W\) 取 \(X\) 或 \(Y\) 里让逆变换最干净的那个,先写逆变换再机械求偏导,少心算。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://online.stat.psu.edu/stat414/lesson/23">PSU STAT 414 · Lesson 23: Transformations of Two Random Variables</a></div><div class="z">二维 change-of-variables 定理 + 完整例题,步骤划分与本章六步一一对应。</div><div class="u">online.stat.psu.edu/stat414/lesson/23</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Convolution_of_probability_distributions">Wikipedia · Convolution of probability distributions</a></div><div class="z">常见分布卷积结果总表(均匀和→三角、指数和→Erlang/伽马),做题对答案的速查神器。</div><div class="u">en.wikipedia.org/wiki/Convolution_of_probability_distributions</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Wikipedia · Jacobian matrix and determinant</a></div><div class="z">看"作为局部面积/体积缩放因子"一节的几何解释,看懂后 \(\lvert J\rvert\) 再不用死记。</div><div class="u">en.wikipedia.org/wiki/Jacobian_matrix_and_determinant</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>雅可比用错变换</b>:是<b>逆变换</b> \(x,y\) 对 \(z,w\) 的偏导行列式,不是正变换的。搞反了倒数会错。</li>
+          <li><b>忘取绝对值</b>:密度里乘的是 \(\lvert J\rvert\),负号必须去掉,否则密度可能为负。</li>
+          <li><b>定义域没换/没拆段</b>:把 \(X,Y\) 的范围翻成 \(Z,W\) 的范围,常要按 \(z\) 分段(如例 35A 以 \(z=0.5\) 为界)。</li>
+          <li><b>卷积限写死</b>:上下限随支撑变,只在两因子都非零处积;不是无脑 \(-\infty\) 到 \(\infty\)。</li>
+          <li><b>非独立当独立</b>:只有独立才把 \(f_{X,Y}\) 拆成 \(f_X f_Y\) 用 \(f_X*f_Y\)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 35.1</span>\(f=x+y\),求 \(Z=XY\) 的密度(答 \(2(1-z)\))。</li>
+          <li><span class="ref">练 35.4</span>[S88] \(U=XY,\ W=X\),求联合密度及其非零区。</li>
+          <li><span class="ref">练 35.7</span>[W96] \(Z=XY,\ W=X/Y\),求 \((Z,W)\) 联合密度。</li>
+          <li><span class="ref">练 35.12</span>\(f=2\)(在 \(0<x<y<1\)),求 \(Z=2X+Y\) 的密度(分段)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(Z=X+Y\) 取 \(W=Y\),逆变换 \(x=z-w,\ y=w\),雅可比 \(J=?\)</li>
+        <li>\(Z=X/Y\) 取 \(W=Y\),\(x=zw,\ y=w\),\(\lvert J\rvert=?\)</li>
+        <li>\(X\perp Y\) 时求 \(X+Y\) 的密度,用哪个公式?</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(J=\det\left(\begin{smallmatrix}1&-1\\0&1\end{smallmatrix}\right)=1\);② \(\lvert J\rvert=w\)(\(w=y\ge1>0\));③ 卷积 \(f_Z(z)=\int f_X(z-w)f_Y(w)\,dw\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#eefaf8,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 多变量变换</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>雅可比法</h4>
+        <p>补 \(W\) → 逆变换 \(x=h_1,\ y=h_2\)</p>
+        <p>\(J=\det\left(\begin{smallmatrix}x_z&x_w\\ y_z&y_w\end{smallmatrix}\right)=x_zy_w-x_wy_z\)</p>
+        <p>\(f_{Z,W}=f_{X,Y}(h_1,h_2)\,\lvert J\rvert\)</p>
+        <p>\(f_Z(z)=\int f_{Z,W}(z,w)\,dw\)</p>
+      </div>
+      <div class="cc t">
+        <h4>常见变换 + 卷积</h4>
+        <p>商 \(X/Y\):\(W=Y,\ x=zw,\ \lvert J\rvert=w\)</p>
+        <p>积 \(XY\):\(W=Y,\ x=z/w,\ \lvert J\rvert=1/w\)</p>
+        <p>和 \(X+Y\):\(W=Y,\ x=z-w,\ \lvert J\rvert=1\)</p>
+        <p>独立和:\(f_Z=\int f_X(z-w)f_Y(w)\,dw\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 35 原文用词</span><h2 class="sec-title">多变量变换 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"求哪个变换"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 35</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">transformation</td><td class="ipa">/ˌtrænsfərˈmeɪʃən/</td><td><span class="pos n">n.</span></td><td>变换</td><td class="root">trans-(跨)+form(形)→ 变量换形 \((Z,W)=g(X,Y)\)</td></tr>
+          <tr><td class="en">Jacobian</td><td class="ipa">/dʒəˈkoʊbiən/</td><td><span class="pos n">n.</span></td><td>雅可比行列式</td><td class="root">偏导矩阵的行列式,面积缩放因子,取 \(\lvert J\rvert\)</td></tr>
+          <tr><td class="en">inverse transformation</td><td class="ipa">/ˈɪnvɜːrs/</td><td><span class="pos n">n.</span></td><td>逆变换</td><td class="root">把 \(x,y\) 解成 \(z,w\) 的函数;雅可比用它</td></tr>
+          <tr><td class="en">partial derivative</td><td class="ipa">/ˈpɑːrʃəl dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>偏导数</td><td class="root">\(\partial x/\partial z\) 等,组成雅可比矩阵</td></tr>
+          <tr><td class="en">determinant</td><td class="ipa">/dɪˈtɜːrmɪnənt/</td><td><span class="pos n">n.</span></td><td>行列式</td><td class="root">\(\det\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)=ad-bc\)</td></tr>
+          <tr><td class="en">one-to-one</td><td class="ipa">/wʌn tə wʌn/</td><td><span class="pos adj">adj.</span></td><td>一一对应的</td><td class="root">补 \(W\) 就是为了让映射可逆(one-to-one)</td></tr>
+          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt ˈdɛnsəti/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">\(f_{X,Y}\);变换的输入</td></tr>
+          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘密度</td><td class="root">积掉 \(W\) 得 \(f_Z\)——最终答案</td></tr>
+          <tr><td class="en">convolution</td><td class="ipa">/ˌkɒnvəˈluːʃən/</td><td><span class="pos n">n.</span></td><td>卷积</td><td class="root">和 \(X+Y\) 的密度 \(\int f_X(z-w)f_Y(w)dw\)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">determine the density function of Z</div><div class="z">求 Z 的密度函数(要 \(f_Z\))</div></div>
+        <div class="ph"><div class="e">Let Z = X/Y</div><div class="z">令 Z = X/Y(商)</div></div>
+        <div class="ph"><div class="e">joint density function of Z and W</div><div class="z">Z 与 W 的联合密度</div></div>
+        <div class="ph"><div class="e">where it is positive / nonzero</div><div class="z">在其为正/非零处(问支撑)</div></div>
+        <div class="ph"><div class="e">two independent random variables</div><div class="z">两个独立随机变量(可用卷积)</div></div>
+        <div class="ph"><div class="e">the excess of A over B</div><div class="z">A 超出 B 的部分(即 \(A-B\))</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 35</b> · 第三十五章 Transformations of Two or More Variables 多变量变换</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 35(p.539–540 理论 + Example 35A,p.541–543 习题,页码已标注,细节以课本为准)+ 威普网校视频。<br>本页为方法精解,完整原题与解答请见课本。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

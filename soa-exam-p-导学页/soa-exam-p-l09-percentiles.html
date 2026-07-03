@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L09 导学 · Percentiles 分位数</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#4f46e5; --accent-deep:#3730a3; --accent-soft:#e8e7fc; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>导学 7/2</b></span>
+    <span class="spacer"></span>
+    <nav>
+      <a href="#def">定义</a>
+      <a href="#cont">连续型</a>
+      <a href="#disc">离散型</a>
+      <a href="#trans">变换</a>
+      <a href="#insight">直觉拓展</a>
+      <a href="#test">自测</a>
+      <a href="#cheat">速查</a>
+      <a href="#vocab">词汇</a>
+    </nav>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第九章 · <em>Percentiles 分位数</em></h1>
+    <p class="lead">均值量"中心",分位数量"位置"。<b>\(100p\) 分位数 \(\pi_p\)</b> 是让累积概率首次达到 \(p\) 的那个值——中位数是 50 分位、四分位数是 25/75 分位。连续型解 \(F(\pi_p)=p\),离散型要盯着 cdf 的"跳跃"用 \(\ge\) 判定。对照课本 Lesson&nbsp;9 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch9 Percentiles <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.161</b>(理论)</span>
+      <span class="pill">练习 <b>p.162–165</b>(9.1–9.23)</span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>\(\pi_p\) = 让 \(F\) <b>首次 ≥ p</b> 的最小 \(x\):连续解方程 \(F(\pi_p)=p\),离散看台阶用 \(\ge\)。</li>
+        <li><b>中位数 = 50 分位</b>,把面积对半劈;midrange \(=\dfrac{\min+\max}{2}\) 只看端点、与概率无关,<b>别混</b>。</li>
+        <li>\(g\) <b>严格递增</b>时分位数跟着搬:\(\pi_p(g(X))=g(\pi_p(X))\)。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l05-random-variables.html">L05 随机变量</a>
+    <a href="soa-exam-p-l08-variance-moments.html">L08 方差与矩</a>
+    <span class="arr">→</span>
+    <span class="here">L09 分位数</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l15-uniform-distribution.html">L15 均匀分位数</a>
+    <a href="soa-exam-p-l21-normal-distribution.html">L21 正态分位数</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">定义</a>
+  <a href="#cont">连续型</a>
+  <a href="#disc">离散型</a>
+  <a href="#trans">变换</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完分位数你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 说清 \(100p\) 分位数 \(\pi_p\) 的定义:让 \(F(\pi_p)\ge p\) 的<b>最小</b>值,并认出中位数 = 50 分位、四分位数 = 25/75 分位。</p>
+        <p style="margin-bottom:0">✅ 连续型解 \(F(\pi_p)=p\) 求分位数(含中位数)。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 离散型盯 cdf 的<b>跳跃点</b>,用 \(\ge\) 而非 \(=\) 定位分位数;知道 ASM 对离散<b>分布</b>不定义中位数、只定义<b>样本</b>中位数。</p>
+        <p style="margin-bottom:0">✅ 会算最小值、最大值、<b>range</b> 和 <b>midrange</b>,并用单调变换搬运分位数。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch9 · Lesson 9 · 课本 p.161</span><h2 class="sec-title">分位数 — 定义</h2></div></div>
+    <p class="sec-sub">均值(mean)是"中心"的一种度量;中位数(median)是另一种——把分布对半劈开的那个点。把"对半"推广成"任意比例 \(p\)",就得到分位数。</p>
+
+    <div class="card accent">
+      <h3>定义:\(100p\) 分位数 \(\pi_p\)(percentile)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.161 · median 的推广</div>
+      <p class="lede">\(\pi_p\) = 让累积分布函数<b>首次达到或超过 \(p\)</b> 的最小值——严格写法用 \(\ge\),连续、离散通吃。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>100p-th percentile</span>
+        $$\pi_p=\min\{x:\ F(x)\ge p\},\qquad P[X\le\pi_p]\ge p\ \text{ 且 }\ P[X\ge\pi_p]\ge 1-p$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>爬到 p 就停</b> — cdf 一路往上爬,首次爬到 / 越过 \(p\) 的那个 \(x\) 就是 \(\pi_p\)。</span></div>
+      <p class="dim"><b>中位数(median)</b>= 50 分位(\(p=0.5\));<b>第一四分位数(first quartile)</b>= 25 分位;<b>第三四分位数(third quartile)</b>= 75 分位。课本无统一符号表示分位数。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>连续型:直接解 \(F(\pi_p)=p\) <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.161</div>
+      <p class="lede">\(F\) <b>严格递增</b>时,\(F(\pi_p)=p\) 有唯一解,\(\ge\) 与 \(=\) 一致——写出 \(F\),令其等于 \(p\),解方程。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Continuous case</span>
+        $$F(\pi_p)=p\ \Longrightarrow\ \pi_p=F^{-1}(p)\quad(F\text{ 严格递增时唯一})$$</div>
+      <p class="dim">连续随机变量的中位数就是满足 \(F(x)=0.5\) 的 \(x\)。这是考场最常见的形态。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="cdf 曲线上的分位数">
+          <line x1="30" y1="20" x2="30" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <line x1="30" y1="135" x2="220" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <text x="14" y="26" font-size="11" fill="#16243d">1</text>
+          <text x="10" y="90" font-size="11" fill="#4f46e5" font-style="italic">p</text>
+          <text x="18" y="139" font-size="11" fill="#16243d">0</text>
+          <text x="8" y="16" font-size="10" fill="#7a8699">F(x)</text>
+          <text x="224" y="139" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <path d="M30,135 C 70,133 95,118 120,86 C 145,54 175,30 210,25" fill="none" stroke="#16243d" stroke-width="2"/>
+          <line x1="30" y1="86" x2="120" y2="86" stroke="#4f46e5" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <line x1="120" y1="86" x2="120" y2="135" stroke="#4f46e5" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <circle cx="120" cy="86" r="3.4" fill="#4f46e5"/>
+          <text x="108" y="150" font-size="12" fill="#4f46e5" font-style="italic">&#960;&#8339;</text>
+        </svg>
+        <div class="cap">连续 cdf:高度 <b>\(p\)</b> 的横线交曲线,落到 x 轴即 <b>\(\pi_p\)</b></div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="密度上的中位数等面积劈分">
+          <line x1="30" y1="20" x2="30" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <line x1="30" y1="135" x2="220" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <text x="8" y="16" font-size="10" fill="#7a8699">f(x)</text>
+          <text x="224" y="139" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <path d="M40,135 C 80,135 95,45 125,45 C 155,45 170,135 210,135 Z" fill="#4f46e5" fill-opacity="0.16"/>
+          <clipPath id="leftHalf"><rect x="0" y="0" width="125" height="160"/></clipPath>
+          <path d="M40,135 C 80,135 95,45 125,45 C 155,45 170,135 210,135 Z" fill="#4f46e5" fill-opacity="0.42" clip-path="url(#leftHalf)"/>
+          <path d="M40,135 C 80,135 95,45 125,45 C 155,45 170,135 210,135" fill="none" stroke="#16243d" stroke-width="2"/>
+          <line x1="125" y1="45" x2="125" y2="135" stroke="#4f46e5" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <text x="113" y="150" font-size="12" fill="#4f46e5" font-style="italic">&#960;&#8320;&#8342;&#8339;</text>
+          <text x="70" y="118" font-size="11" fill="#3730a3">0.5</text>
+          <text x="150" y="118" font-size="11" fill="#7a8699">0.5</text>
+        </svg>
+        <div class="cap">密度视角:中位数把 <b>面积对半劈开</b>(左右各 0.5)</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>cdf 是"累积到 \(x\) 为止的概率"。分位数就是反过来问:"累积概率刚好爬到 \(p\) 时,\(x\) 在哪?"——在图上就是从纵轴 \(p\) 横切过去、再垂直落到横轴。</span></div>
+  </div>
+</section>
+
+<section id="cont">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">连续型 · 主战场</span><h2 class="sec-title">连续型求分位数(附中位数 / midrange)</h2></div></div>
+    <p class="sec-sub">先由密度 \(f\) 积出 cdf \(F\),再令 \(F(x)=p\) 解 \(x\)。中位数取 \(p=0.5\)。顺带算最小/最大值即可得 range 与 midrange。</p>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 9A</span><span class="src" style="margin:0">课本 p.161 · 求中位数与 midrange</span></div>
+      <p class="q">连续随机变量密度 \(f(x)=\dfrac{x^2}{21},\ 1\le x\le 4\)(其余为 0)。求<b>中位数</b>与 <b>midrange</b>。</p>
+      <p>先积 cdf:\(\displaystyle F(x)=\int_1^x\frac{u^2}{21}\,du=\frac{x^3-1}{63}\)。令 \(F(x)=0.5\):</p>
+      <p>\(\dfrac{x^3-1}{63}=0.5\Rightarrow x^3-1=31.5\Rightarrow x^3=32.5\Rightarrow x=\sqrt[3]{32.5}=3.19125\)。</p>
+      <p style="margin-bottom:0">最小值 \(=1\)、最大值 \(=4\),故 \(\text{midrange}=\dfrac{1+4}{2}=2.5\)。</p>
+      <span class="ans">中位数 = ∛32.5 ≈ 3.19125　midrange = 2.5</span>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>提醒:</b>midrange 是 \(\dfrac{\min+\max}{2}\)、range 是 \(\max-\min\),两者只看<b>支撑区间端点</b>,与概率大小无关——别和"中位数"混为一谈。</span></div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>中位数 median</th><th>中程数 midrange</th></tr></thead>
+      <tbody>
+        <tr><td>定义</td><td>\(F\) 首次达 0.5 的点(50 分位)</td><td>\(\dfrac{\min+\max}{2}\),支撑端点的平均</td></tr>
+        <tr><td>看什么</td><td>看概率怎么堆(面积对半)</td><td>只看支撑端点,与概率无关</td></tr>
+        <tr><td>例 9A 里</td><td>\(\sqrt[3]{32.5}\approx 3.19\)</td><td>\(\dfrac{1+4}{2}=2.5\)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="disc" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch9 · 易错核心</span><h2 class="sec-title">离散型 &amp; 跳跃 / 平台的坑</h2></div></div>
+    <p class="sec-sub">离散型的 cdf 是<b>阶梯</b>:多数 \(p\) 落在两级台阶之间,压根没有 \(x\) 让 \(F(x)=p\)。这时 \(=\) 失效,必须回到 \(\ge\) 的定义——取让 \(F(x)\) <b>首次达到或超过 \(p\)</b> 的那个跳跃点。</p>
+
+    <div class="card accent">
+      <h3>两种病态,都靠 \(\ge\) 定义化解 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.161 · 定义细节</div>
+      <p class="lede">跳跃:没有点等于 \(p\) → 取跳跃点;平台:一整段等于 \(p\) → 约定取最小。</p>
+      <p class="dim"><b>① 跳跃(jump):</b>\(F\) 在某点直接从 \(F&lt;p\) 跳到 \(F&gt;p\),没有点等于 \(p\) → 取该<b>跳跃点</b>为 \(\pi_p\)(\(F(x)\) 首次 \(\ge p\))。</p>
+      <p class="dim"><b>② 平台(flat):</b>\(F\) 恰好在某段 \(=p\)(水平段) → 满足 \(F(x)=p\) 的 \(x\) <b>有一整段</b>,分位数不唯一。约定取<b>最小</b>的那个:\(\pi_p=\min\{x:F(x)\ge p\}\)。</p>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>跳过 p 取跳点,躺平 p 取左端</b> — 跳跃没有等号就用 \(\ge\);平台一整段满足就取最小。</span></div>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="离散阶梯 cdf 的跳跃分位数">
+          <line x1="30" y1="20" x2="30" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <line x1="30" y1="135" x2="220" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <text x="14" y="26" font-size="11" fill="#16243d">1</text>
+          <text x="10" y="82" font-size="11" fill="#4f46e5" font-style="italic">p</text>
+          <text x="8" y="16" font-size="10" fill="#7a8699">F(x)</text>
+          <text x="224" y="139" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <line x1="30" y1="120" x2="75" y2="120" stroke="#16243d" stroke-width="2"/>
+          <line x1="75" y1="95" x2="120" y2="95" stroke="#16243d" stroke-width="2"/>
+          <line x1="120" y1="60" x2="165" y2="60" stroke="#16243d" stroke-width="2"/>
+          <line x1="165" y1="30" x2="210" y2="30" stroke="#16243d" stroke-width="2"/>
+          <line x1="120" y1="95" x2="120" y2="60" stroke="#16243d" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="30" y1="78" x2="120" y2="78" stroke="#4f46e5" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <line x1="120" y1="78" x2="120" y2="135" stroke="#4f46e5" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <circle cx="120" cy="60" r="3.4" fill="#4f46e5"/>
+          <text x="110" y="150" font-size="12" fill="#4f46e5" font-style="italic">&#960;&#8339;</text>
+        </svg>
+        <div class="cap">跳跃:\(p\) 卡在台阶间 → 取 <b>首次 \(F\ge p\)</b> 的跳跃点</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="cdf 平台段导致分位数不唯一">
+          <line x1="30" y1="20" x2="30" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <line x1="30" y1="135" x2="220" y2="135" stroke="#16243d" stroke-width="1.4"/>
+          <text x="10" y="82" font-size="11" fill="#4f46e5" font-style="italic">p</text>
+          <text x="8" y="16" font-size="10" fill="#7a8699">F(x)</text>
+          <text x="224" y="139" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <path d="M30,135 C 60,130 80,90 100,78 L 155,78 C 180,74 195,35 210,28" fill="none" stroke="#16243d" stroke-width="2"/>
+          <line x1="30" y1="78" x2="100" y2="78" stroke="#4f46e5" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <line x1="100" y1="78" x2="100" y2="135" stroke="#4f46e5" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <line x1="155" y1="78" x2="155" y2="135" stroke="#7a8699" stroke-width="1.2" stroke-dasharray="2 3"/>
+          <text x="88" y="150" font-size="11" fill="#4f46e5">取min</text>
+          <text x="122" y="90" font-size="10" fill="#7a8699">平台 F=p</text>
+        </svg>
+        <div class="cap">平台:整段 \(F=p\) → 分位数不唯一,<b>约定取最小</b></div>
+      </div>
+    </div>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>课本口径要记牢:</b>ASM 对<b>离散随机变量的分布中位数</b>刻意<b>不定义</b>——"可能没有 \(x\) 满足 \(F(x)=0.5\),也可能有一整段满足"。但它<b>定义样本中位数(sample median)</b>:样本量为奇数取排序后中间项,偶数取中间两项的平均。例:样本 \(\{1,10,5,3,9,7\}\) 排序后中位数 \(=\dfrac{5+7}{2}=6\)。所以看到"离散/样本"求中位数,走样本口径(见练 9.11 / 9.14)。</span></div>
+  </div>
+</section>
+
+<section id="trans">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">技巧 + 其他度量</span><h2 class="sec-title">单调变换搬分位数;min / max / range / midrange</h2></div></div>
+    <p class="sec-sub">分位数在<b>单调递增</b>变换下"跟着走":若 \(g\) 严格递增,\(X\) 的分位数经 \(g\) 一映射就是 \(g(X)\) 的分位数。这让很多题一步到位。</p>
+    <div class="card accent">
+      <h3>单调变换的分位数 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.161 · Example 9B 用到</div>
+      <p class="lede">\(g\) 递增不改变"谁大谁小"的排序,所以"落在下方 \(p\) 比例"的分界点原样被 \(g\) 搬过去。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Monotone transformation</span>
+        $$g\text{ 严格递增}:\quad \pi_p\big(g(X)\big)=g\big(\pi_p(X)\big)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>递增变换,分位数跟着走</b> — 排序不动,分界点直接映射;\(g\) 递减则 \(p\) 与 \(1-p\) 互换。</span></div>
+      <details class="more"><summary>展开 · 为什么分位数会被 g 原样搬走</summary>
+        <p class="dim">\(g\) 严格递增时,事件 \(\{g(X)\le g(\pi_p)\}\) 与 \(\{X\le \pi_p\}\) 是同一个事件(不等号两边可同时套上或脱掉 \(g\)),故 \(P[g(X)\le g(\pi_p)]=P[X\le\pi_p]\ge p\);同理 \(P[g(X)\ge g(\pi_p)]\ge 1-p\)。两条恰好就是"\(g(\pi_p)\) 是 \(g(X)\) 的 \(100p\) 分位数"的定义。</p>
+      </details>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 9B</span><span class="src" style="margin:0">课本 p.161 · 单调变换</span></div>
+      <p class="q">设 \(g(x)=(x-5)^3\) 是 \(x\) 的<b>严格递增</b>函数。已知 \(X\) 的 <b>75 分位数是 13</b>。求 \(g(X)=(X-5)^3\) 的 75 分位数。</p>
+      <p>因 \(g\) 严格递增,\(g(X)\) 的 75 分位数 \(=g(13)=(13-5)^3=8^3=512\)。</p>
+      <span class="ans">75 分位数 = (13−5)³ = 512</span>
+    </div>
+
+    <div class="card accent">
+      <h3>顺带记熟的四个"位置 / 散度"量 <span class="freq">考频 ★</span></h3>
+      <div class="src">课本 p.161</div>
+      <table class="map">
+        <thead><tr><th style="width:26%">量</th><th style="width:30%">定义</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td><b>minimum</b> 最小值</td><td>支撑的最低值</td><td>正概率/密度的最小点</td></tr>
+          <tr><td><b>maximum</b> 最大值</td><td>支撑的最高值</td><td>正概率/密度的最大点</td></tr>
+          <tr><td><b>range</b> 极差</td><td>\(\max-\min\)</td><td>只看端点,不看概率</td></tr>
+          <tr><td><b>midrange</b> 中程数</td><td>\(\dfrac{\min+\max}{2}\)</td><td>端点平均,≠ 中位数</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子一:考试排名(分位数就是"你排第几")</h3>
+      <p>"你的成绩在<b>第 90 百分位</b>" = 至少 90% 的考生分数不高于你。cdf 就是"点名到分数 \(x\) 为止,已覆盖的考生比例";分位数是反查:比例首次爬到 \(p\) 时点到了谁。</p>
+      <p class="dim">考生人数有限时,比例是一格一格跳的——90% 可能恰好卡在两个人之间,没有谁"正好"处在 90%。这就是离散的"跳跃"情形,也是定义必须写 \(\ge\) 而非 \(=\) 的根本原因。</p>
+    </div>
+
+    <div class="card">
+      <h3>💡 直觉例子二:精算里的分位数 = 风险资本线(VaR)</h3>
+      <p>保险监管的 <b>99.5% VaR</b> 就是损失分布的 99.5 分位数:\(\pi_{0.995}\) 是"两百年一遇"的损失水位线,Solvency II 按一年期 99.5% VaR 确定偿付能力资本。分位数在精算里不是抽象练习,它本身就是资本要求。</p>
+      <p class="dim">同理,理赔部门说"中位损失 130"(练 9.2 的车险题)比"平均损失"更抗极端值——重尾分布里均值被大额索赔拖走,中位数稳得多。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <p class="dim">① 标准流程:给 \(f\) → 先积出 \(F\)(注意支撑下限从哪起积)→ 令 \(F(x)=p\) 解方程。② 反解参数型:给 \(F(x)=x^a\) 这类带参 cdf + 一个分位数值,先解出参数再求另一个分位数(练 9.4);指数分布给中位数反求 \(\lambda\)(练 9.6),顺手背下<b>指数中位数 \(=\ln 2/\lambda\)</b>。③ "difference between the 30th and 70th percentiles" → 老老实实解两次再相减(练 9.7)。④ 读题看到 <b>sample / 离散取值</b> → 切换到排序取中的样本口径,偶数样本取中间两项平均(练 9.14)。</p>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Percentile">Wikipedia · Percentile</a></div><div class="z">几种百分位定义口径(最近秩、插值)并排对照,看完就懂为什么课本坚持用 \(\ge\)。</div><div class="u">en.wikipedia.org/wiki/Percentile</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Quantile_function">Wikipedia · Quantile function</a></div><div class="z">把 \(\pi_p=F^{-1}(p)\) 讲成"广义逆":跳跃/平台如何统一处理,正是本章 \(\min\{x:F(x)\ge p\}\) 的出处。</div><div class="u">en.wikipedia.org/wiki/Quantile_function</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Value_at_risk">Wikipedia · Value at risk</a></div><div class="z">分位数最大的行业应用:VaR 的定义、争议与监管用法,给"直觉例子二"补全背景。</div><div class="u">en.wikipedia.org/wiki/Value_at_risk</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>\(\ge\) vs \(=\)</b>:离散/跳跃处没有点等于 \(p\),必须用"首次 \(\ge p\)"的最小 \(x\),别硬解 \(F(x)=p\)。</li>
+          <li><b>平台不唯一</b>:\(F\) 有水平段时分位数是一整段,约定取最小值。</li>
+          <li><b>离散分布中位数"未定义"</b>:ASM 只给样本中位数;偶数样本取中间两项<b>平均</b>。</li>
+          <li><b>midrange ≠ median</b>:midrange 只用端点 \(\dfrac{\min+\max}{2}\),和概率无关。</li>
+          <li><b>变换方向</b>:\(g\) 递增才有 \(\pi_p(g(X))=g(\pi_p)\);\(g\) 递减要换成 \(1-p\)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions(p.166 起)核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 9.1</span>三角形密度图,求 25 分位数。<b>答 (B) 4</b>。</li>
+          <li><span class="ref">练 9.2</span>汽车碰撞损失 \(f(x)=\dfrac{3(500^3)}{(500+x)^4}\),求中位数损失。<b>答 129.96</b>。</li>
+          <li><span class="ref">练 9.4</span>\(F(x)=x^a\) 上 30 分位数为 0.4,求 70 分位数。</li>
+          <li><span class="ref">练 9.6</span>\(f(x)=\lambda e^{-\lambda x}\) 中位数为 \(1/3\),反求 \(\lambda\)。</li>
+          <li><span class="ref">练 9.7</span>\([S03:22]\) 求 30 与 70 分位数之差。</li>
+          <li><span class="ref">练 9.14</span>\([110\text{-}S92:39]\) 3 球样本的中位数(离散/样本)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>连续 \(F(x)=x^2,\ 0\le x\le1\),求中位数。</li>
+        <li>某分布 \(\min=2,\ \max=10\),求 range 与 midrange。</li>
+        <li>\(g(x)=2x+1\) 递增,\(X\) 的中位数为 5,求 \(g(X)\) 的中位数。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(x^2=0.5\Rightarrow x=\sqrt{0.5}\approx0.707\);② range \(=8\),midrange \(=6\);③ \(g(5)=2(5)+1=11\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 分位数</h2></div></div>
+    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义 / 连续</h4>
+        <p>\(\pi_p=\min\{x:F(x)\ge p\}\)</p>
+        <p>连续严增:\(F(\pi_p)=p\)</p>
+        <p>median = 50 分位;\(Q_1\)=25、\(Q_3\)=75 分位</p>
+      </div>
+      <div class="cc t">
+        <h4>离散 / 变换 / 度量</h4>
+        <p>离散跳跃:取首次 \(F\ge p\);平台取 min</p>
+        <p>样本中位数:奇数取中间,偶数取中间两项均值</p>
+        <p>\(g\) 递增:\(\pi_p(g(X))=g(\pi_p)\)</p>
+        <p>range \(=\max-\min\);midrange \(=\dfrac{\min+\max}{2}\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 9 原文用词</span><h2 class="sec-title">分位数 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"求第几分位"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 9</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">percentile</td><td class="ipa">/pərˈsɛntaɪl/</td><td><span class="pos n">n.</span></td><td>百分位数 / 分位数</td><td class="root">per-cent(每百)→ \(100p\) 分位 \(\pi_p\)</td></tr>
+          <tr><td class="en">median</td><td class="ipa">/ˈmiːdiən/</td><td><span class="pos n">n.</span></td><td>中位数</td><td class="root">medi-(中)→ 50 分位,对半劈</td></tr>
+          <tr><td class="en">quartile</td><td class="ipa">/ˈkwɔːrtaɪl/</td><td><span class="pos n">n.</span></td><td>四分位数</td><td class="root">quart(四分之一)→ 25 / 75 分位</td></tr>
+          <tr><td class="en">minimum</td><td class="ipa">/ˈmɪnɪməm/</td><td><span class="pos n">n.</span></td><td>最小值</td><td class="root">支撑最低点</td></tr>
+          <tr><td class="en">maximum</td><td class="ipa">/ˈmæksɪməm/</td><td><span class="pos n">n.</span></td><td>最大值</td><td class="root">支撑最高点</td></tr>
+          <tr><td class="en">range</td><td class="ipa">/reɪndʒ/</td><td><span class="pos n">n.</span></td><td>极差</td><td class="root">\(\max-\min\)</td></tr>
+          <tr><td class="en">midrange</td><td class="ipa">/ˈmɪdreɪndʒ/</td><td><span class="pos n">n.</span></td><td>中程数</td><td class="root">mid+range → \(\dfrac{\min+\max}{2}\),≠ 中位数</td></tr>
+          <tr><td class="en">cumulative distribution function</td><td class="ipa">/ˈkjuːmjələtɪv/</td><td><span class="pos n">n.</span></td><td>累积分布函数(cdf)</td><td class="root">\(F(x)=P[X\le x]\),分位数从它反解</td></tr>
+          <tr><td class="en">monotonically increasing</td><td class="ipa">/ˌmɒnəˈtɒnɪkli/</td><td><span class="pos adj">adj.</span></td><td>单调递增的</td><td class="root">mono-tone → 变换搬分位数的前提</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">the 75th percentile</div><div class="z">第 75 百分位数(\(p=0.75\))</div></div>
+        <div class="ph"><div class="e">calculate the median</div><div class="z">求中位数(50 分位)</div></div>
+        <div class="ph"><div class="e">first / third quartile</div><div class="z">第一 / 第三四分位数</div></div>
+        <div class="ph"><div class="e">the difference between the 30th and 70th percentiles</div><div class="z">30 与 70 分位数之差</div></div>
+        <div class="ph"><div class="e">is monotonically strictly increasing</div><div class="z">单调严格递增(可搬分位数)</div></div>
+        <div class="ph"><div class="e">the median loss size</div><div class="z">损失额的中位数</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 9</b> · 第九章 Percentiles 分位数</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 9(理论 p.161,练习 9.1–9.23 见 p.162–165,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。例题为方法精解,完整原题与解答请见课本 Solutions(p.166 起)。仅供个人备考使用。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>
