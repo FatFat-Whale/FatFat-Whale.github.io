@@ -1,203 +1,305 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sagacious Whale · 睿鲸</title>
+<meta name="description" content="Shizhong 的个人主页 —— 研究笔记、精算之路与收藏架。">
+<style>
+  :root{ --biolum:#6fe3cf; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",-apple-system,"Segoe UI",sans-serif;
+    color:#eaf6fb;line-height:1.8;background:#02090f;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--biolum);color:#02090f}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--biolum);outline-offset:3px;border-radius:2px}
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  /* 阳光光柱：从水面斜射向下，整体横向流动 */
+  @keyframes rayDriftR{
+    0%{transform:translateX(0);opacity:0}
+    10%{opacity:1}
+    88%{opacity:1}
+    100%{transform:translateX(58vw);opacity:0}
+  }
+  @keyframes rayDriftL{
+    0%{transform:translateX(0);opacity:0}
+    10%{opacity:1}
+    88%{opacity:1}
+    100%{transform:translateX(-58vw);opacity:0}
+  }
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  /* 深海雪：缓慢下落的微粒 */
+  @keyframes snowfall{from{transform:translateY(-6vh);opacity:0}12%{opacity:.5}88%{opacity:.35}to{transform:translateY(106vh);opacity:0}}
 
-  
-<meta name="generator" content="Hexo 5.3.0"></head>
+  /* ===== 响应式 ===== */
+  @media (max-width:820px){
+    [data-rail]{display:none !important}
+    nav ul{gap:1.1rem !important}
+    header .hero-inner{padding-top:5.5rem !important;justify-content:flex-start !important}
+    .scroll-hint{display:none !important}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    [data-snow] i,[data-rays] div{animation:none !important}
+  }
 
+  /* ===== 深度轴（原生） ===== */
+  .rail-btn{display:flex;align-items:center;gap:.85rem;background:none;border:none;cursor:pointer;padding:.5rem 0;position:relative;text-align:left;font-family:inherit}
+  /* 每层取自身背景色：从浅到深 */
+  .rail-btn[data-target="hero"]{--zc:#3a9acb}     /* 阳光层 */
+  .rail-btn[data-target="about"]{--zc:#0f4a7c}    /* 暮光层 */
+  .rail-btn[data-target="work"]{--zc:#051f3b}     /* 午夜层 */
+  .rail-btn[data-target="contact"]{--zc:#02090f}  /* 深渊层 */
+  /* 未点亮：统一空心圆点；点亮：填充本层背景色 */
+  .rail-dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto;background:transparent;border:1.5px solid rgba(234,246,251,.65);transition:background .35s,box-shadow .35s,transform .35s}
+  .rail-btn.active .rail-dot{background:var(--zc);box-shadow:0 0 10px rgba(234,246,251,.4);transform:scale(1.2)}
+  .rail-label{font-size:.72rem;letter-spacing:.14em;white-space:nowrap;color:#a9cddd;opacity:0;transform:translateX(-6px);visibility:hidden;pointer-events:none;transition:opacity .3s,transform .3s,color .3s,visibility .3s}
+  .rail-btn.active .rail-label{color:#eaf6fb}
+  @media (min-width:1300px){
+    .rail-label{opacity:.6;transform:none;visibility:visible;pointer-events:auto}
+    .rail-btn.active .rail-label{opacity:1}
+  }
+  @media (max-width:1299.98px){
+    .rail-label{background:rgba(2,9,15,.72);padding:.14rem .55rem;border-radius:999px}
+    #depthRail:hover .rail-label,.rail-btn:focus-visible .rail-label{opacity:.85;transform:none;visibility:visible}
+    #depthRail:hover .rail-btn.active .rail-label{opacity:1}
+  }
+
+  /* ===== 悬停效果（替代 style-hover） ===== */
+  .nav-a:hover{opacity:1 !important;color:var(--biolum) !important}
+  .lnk:hover{text-decoration:underline;text-underline-offset:4px}
+  .card:hover{border-color:var(--biolum) !important;background:rgba(111,227,207,.06) !important;transform:translateY(-3px);box-shadow:0 14px 42px rgba(2,9,15,.35)}
+</style>
+</head>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/02/07/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-02-06T16:11:39.618Z" itemprop="datePublished">2021-02-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/02/07/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/07/hello-world/" data-id="ckku0gtca0000v8j7fm4ldy8t" data-title="Hello World" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2021/02/07/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2021 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+<nav aria-label="主导航" style="position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:1rem 6vw;background:linear-gradient(180deg,rgba(2,9,15,.55),transparent);backdrop-filter:blur(8px)">
+  <div style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-size:1.05rem;letter-spacing:.14em;color:#eaf6fb">SAGACIOUS<span style="color:var(--biolum)">WHALE</span></div>
+  <ul style="display:flex;gap:2rem;list-style:none">
+    <li><a href="#about" class="nav-a" style="color:#eaf6fb;opacity:.85;font-size:.88rem;letter-spacing:.08em;text-decoration:none">关于</a></li>
+    <li><a href="#work" class="nav-a" style="color:#eaf6fb;opacity:.85;font-size:.88rem;letter-spacing:.08em;text-decoration:none">板块</a></li>
+    <li><a href="#contact" class="nav-a" style="color:#eaf6fb;opacity:.85;font-size:.88rem;letter-spacing:.08em;text-decoration:none">联系</a></li>
+  </ul>
 </nav>
-    
 
+<!-- ===== 左侧浮动深度轴（原生实现） ===== -->
+<div id="depthRail" data-rail="1" aria-label="深度导航" style="position:fixed;left:1.7rem;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:.4rem;padding:.4rem 0">
+  <div style="position:absolute;left:5px;top:14px;bottom:14px;width:1px;background:linear-gradient(180deg,rgba(234,246,251,.05),rgba(234,246,251,.3) 20%,rgba(234,246,251,.3) 80%,rgba(234,246,251,.05))"></div>
+  <button class="rail-btn" data-target="hero" title="海面"><span class="rail-dot"></span><span class="rail-label">0 m · 海面</span></button>
+  <button class="rail-btn" data-target="about" title="关于我"><span class="rail-dot"></span><span class="rail-label">200 m · 关于我</span></button>
+  <button class="rail-btn" data-target="work" title="内容板块"><span class="rail-dot"></span><span class="rail-label">1000 m · 内容板块</span></button>
+  <button class="rail-btn" data-target="contact" title="联系我"><span class="rail-dot"></span><span class="rail-label">4000 m · 联系我</span></button>
+</div>
 
-<script src="/js/jquery-3.4.1.min.js"></script>
+<!-- ========== 阳光层 · 首屏 ========== -->
+<div data-screen-label="首屏 · 阳光层" style="width:100%;background:linear-gradient(180deg,#3a9acb 0%,#2585b6 55%,#176695 100%)">
+  <header id="hero" style="position:relative;overflow:hidden">
 
+    <!-- 阳光光柱：约 20 道细光束，长短不一，横向流动（左→右 / 右→左） -->
+    <div data-rays="1" aria-hidden="true" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden">
+      <div style="position:absolute;top:-8%;left:-4%;width:15px;height:66%;animation:rayDriftR 20s linear infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.07) 55%,transparent 85%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:3%;width:10px;height:44%;animation:rayDriftR 26s linear 8s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.05) 50%,transparent 80%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:9%;width:13px;height:74%;animation:rayDriftR 23s linear 4s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-14deg);transform-origin:50% 0;filter:blur(7px);background:linear-gradient(180deg,rgba(255,255,255,.36),rgba(255,255,255,.06) 55%,transparent 86%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:15%;width:12px;height:38%;animation:rayDriftR 31s linear 13s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:21%;width:15px;height:70%;animation:rayDriftR 25s linear 10s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-15deg);transform-origin:50% 0;filter:blur(9px);background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,.05) 55%,transparent 85%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:27%;width:14px;height:52%;animation:rayDriftR 29s linear 2s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 50%,transparent 80%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:33%;width:13px;height:60%;animation:rayDriftR 21s linear 15s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(7px);background:linear-gradient(180deg,rgba(255,255,255,.33),rgba(255,255,255,.05) 52%,transparent 82%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:39%;width:11px;height:46%;animation:rayDriftR 27s linear 6s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:45%;width:14px;height:78%;animation:rayDriftR 24s linear 17s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-14deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 56%,transparent 86%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:50%;width:12px;height:40%;animation:rayDriftR 33s linear 11s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.04) 48%,transparent 76%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:52%;width:13px;height:64%;animation:rayDriftR 22s linear infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-10deg);transform-origin:50% 0;filter:blur(7px);background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,.06) 52%,transparent 84%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:-9%;width:14px;height:42%;animation:rayDriftR 28s linear 7s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:6%;width:15px;height:72%;animation:rayDriftR 24s linear 12s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-14deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,.05) 55%,transparent 85%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:18%;width:11px;height:50%;animation:rayDriftR 30s linear 3s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 50%,transparent 80%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:24%;width:12px;height:58%;animation:rayDriftR 26s linear 9s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,.05) 52%,transparent 82%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:30%;width:12px;height:36%;animation:rayDriftR 32s linear 15s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.04) 46%,transparent 76%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:36%;width:14px;height:68%;animation:rayDriftR 23s linear 5s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-15deg);transform-origin:50% 0;filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 54%,transparent 84%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:42%;width:14px;height:48%;animation:rayDriftR 29s linear 18s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-11deg);transform-origin:50% 0;filter:blur(5px);background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.05) 48%,transparent 78%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:12%;width:10px;height:30%;animation:rayDriftR 35s linear 20s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-12deg);transform-origin:50% 0;filter:blur(4px);background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.04) 45%,transparent 74%)"></div>
+      </div>
+      <div style="position:absolute;top:-8%;left:48%;width:10px;height:32%;animation:rayDriftR 34s linear 21s infinite">
+        <div style="position:absolute;inset:0;transform:rotate(-13deg);transform-origin:50% 0;filter:blur(4px);background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.04) 45%,transparent 74%)"></div>
+      </div>
+      <div style="position:absolute;top:0;left:0;right:0;height:30%;background:radial-gradient(120% 100% at 50% 0%,rgba(255,255,255,.22),transparent 70%)"></div>
+    </div>
 
+    <div class="hero-inner" style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem);min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2">
+      <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#dcf1fa;text-transform:uppercase;margin-bottom:2rem">
+        <span style="width:2.6rem;height:1px;background:#fff;opacity:.85"></span>
+        0 m · <b style="color:#fff;font-weight:500">阳光层</b> · Epipelagic
+      </div>
 
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+      <h1 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-weight:600;letter-spacing:.02em;font-size:clamp(2.4rem,5.6vw,5rem);line-height:1.18;color:#fff;text-shadow:0 2px 24px rgba(2,20,35,.25);position:relative;z-index:2">大海里最安静的<br>是<em style="font-style:normal;color:#bff3e9">一头睿智的鲸</em></h1>
+      <div style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-style:italic;color:#dcf1fa;letter-spacing:.06em;margin-top:1.1rem;font-size:clamp(.95rem,2vw,1.15rem);position:relative;z-index:2">Sagacious Whale — 潜得越深，跃得越高。</div>
 
+      <!-- ✏️ 一句话自我介绍，改成你自己的 -->
+      <p style="margin-top:2.2rem;font-size:1.02rem;color:#e4f3fa;max-width:44em;position:relative;z-index:2">你好，我是 Shizhong。这里是我的个人海域：<br>记录研究、学习与偶尔浮出水面的想法。</p>
 
+      <div class="scroll-hint" style="position:absolute;bottom:2.4rem;left:clamp(1.4rem,5vw,4rem);font-size:.78rem;letter-spacing:.3em;color:#dcf1fa;writing-mode:vertical-rl">下 潜 DIVE</div>
+    </div>
+  </header>
+</div>
 
+<!-- ========== 暮光层 · 关于我 ========== -->
+<div data-screen-label="关于我 · 暮光层" style="width:100%;background:linear-gradient(180deg,#176695 0%,#0f4a7c 26%,#0b3a66 100%)">
+  <section id="about" style="padding:7.5rem 0 6rem">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem)">
+      <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#a9cddd;text-transform:uppercase;margin-bottom:1.4rem">
+        <span style="width:2.6rem;height:1px;background:var(--biolum);opacity:.75"></span>
+        200 m · <b style="color:var(--biolum);font-weight:500">暮光层</b> · Mesopelagic
+      </div>
+      <h2 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-weight:600;letter-spacing:.02em;font-size:clamp(1.6rem,3.4vw,2.2rem);margin-bottom:1.6rem">关于我</h2>
 
-<script src="/js/script.js"></script>
+      <!-- ✏️ 下面这两段换成你的介绍 -->
+      <p style="color:#a9cddd;max-width:44em">我对<strong style="color:#eaf6fb;font-weight:600">保险与医疗健康</strong>的交界地带很感兴趣：从医院的定价与分层，到药品与服务如何被支付，再到风险如何被量化和承接。工作之外，我在准备北美精算师（SOA）考试，一步一步把直觉换算成模型。</p>
+      <p style="color:#a9cddd;max-width:44em;margin-top:1em">取名"睿鲸"，是因为鲸鱼靠声音在黑暗的深海中定位——我希望自己也能在信息的深水区里，安静地听，准确地判断。</p>
 
+      <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.8rem">
+        <span style="font-size:.8rem;letter-spacing:.06em;color:#eaf6fb;border:1px solid rgba(234,246,251,.18);border-radius:999px;padding:.32rem .9rem">精算 · SOA</span>
+        <span style="font-size:.8rem;letter-spacing:.06em;color:#eaf6fb;border:1px solid rgba(234,246,251,.18);border-radius:999px;padding:.32rem .9rem">医疗健康研究</span>
+        <span style="font-size:.8rem;letter-spacing:.06em;color:#eaf6fb;border:1px solid rgba(234,246,251,.18);border-radius:999px;padding:.32rem .9rem">保险市场</span>
+        <span style="font-size:.8rem;letter-spacing:.06em;color:#eaf6fb;border:1px solid rgba(234,246,251,.18);border-radius:999px;padding:.32rem .9rem">中医与消费医疗</span>
+        <span style="font-size:.8rem;letter-spacing:.06em;color:#eaf6fb;border:1px solid rgba(234,246,251,.18);border-radius:999px;padding:.32rem .9rem">长期主义</span>
+      </div>
+    </div>
+  </section>
+</div>
 
-
-
-
+<!-- ========== 午夜层 · 内容板块 ========== -->
+<div data-screen-label="内容板块 · 午夜层" style="width:100%;background:linear-gradient(180deg,#0b3a66 0%,#08304f 30%,#051f3b 100%);position:relative;overflow:hidden">
+  <div data-snow="1" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none">
+    <i style="position:absolute;left:12%;top:0;width:3px;height:3px;border-radius:50%;background:rgba(234,246,251,.4);animation:snowfall 16s linear infinite"></i>
+    <i style="position:absolute;left:34%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,.35);animation:snowfall 21s linear 4s infinite"></i>
+    <i style="position:absolute;left:58%;top:0;width:3px;height:3px;border-radius:50%;background:rgba(234,246,251,.3);animation:snowfall 18s linear 9s infinite"></i>
+    <i style="position:absolute;left:76%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,.4);animation:snowfall 24s linear 2s infinite"></i>
+    <i style="position:absolute;left:90%;top:0;width:2px;height:2px;border-radius:50%;background:rgba(234,246,251,.3);animation:snowfall 20s linear 12s infinite"></i>
   </div>
+  <section id="work" style="padding:7.5rem 0 6rem;position:relative">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem)">
+      <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#a9cddd;text-transform:uppercase;margin-bottom:1.4rem">
+        <span style="width:2.6rem;height:1px;background:var(--biolum);opacity:.75"></span>
+        1000 m · <b style="color:var(--biolum);font-weight:500">午夜层</b> · Bathypelagic
+      </div>
+      <h2 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-weight:600;letter-spacing:.02em;font-size:clamp(1.6rem,3.4vw,2.2rem);margin-bottom:1.6rem">内容板块</h2>
+      <p style="color:#a9cddd;max-width:44em">三条洋流，各自流向不同的方向。板块的链接以后可以指向站内子页面或外部平台。</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6rem;margin-top:2.6rem">
+        <div class="card" style="border:1px solid rgba(234,246,251,.18);border-radius:14px;padding:2rem 1.8rem;background:rgba(234,246,251,.035);transition:border-color .3s,transform .3s,background .3s,box-shadow .3s">
+          <h3 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-size:1.12rem;color:#eaf6fb;margin-bottom:.7rem;font-weight:600">研究笔记</h3>
+          <p style="font-size:.9rem;line-height:1.75;color:#a9cddd">医疗服务市场、支付方与商保创新的观察与拆解，偏行业分析与数据。</p>
+          <!-- ✏️ 链接改成 /notes/ 或你的公众号/知乎等 -->
+          <a href="#" style="display:inline-block;margin-top:1rem;font-size:.84rem;letter-spacing:.06em;color:var(--biolum);text-decoration:none" class="lnk">进入板块 →</a>
+        </div>
+        <div class="card" style="border:1px solid rgba(234,246,251,.18);border-radius:14px;padding:2rem 1.8rem;background:rgba(234,246,251,.035);transition:border-color .3s,transform .3s,background .3s,box-shadow .3s">
+          <h3 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-size:1.12rem;color:#eaf6fb;margin-bottom:.7rem;font-weight:600">精算之路</h3>
+          <p style="font-size:.9rem;line-height:1.75;color:#a9cddd">SOA 考试的备考记录、学习方法与心得，写给同路人，也写给未来的自己。</p>
+          <a href="#" style="display:inline-block;margin-top:1rem;font-size:.84rem;letter-spacing:.06em;color:var(--biolum);text-decoration:none" class="lnk">进入板块 →</a>
+        </div>
+        <div class="card" style="border:1px solid rgba(234,246,251,.18);border-radius:14px;padding:2rem 1.8rem;background:rgba(234,246,251,.035);transition:border-color .3s,transform .3s,background .3s,box-shadow .3s">
+          <h3 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-size:1.12rem;color:#eaf6fb;margin-bottom:.7rem;font-weight:600">收藏架</h3>
+          <p style="font-size:.9rem;line-height:1.75;color:#a9cddd">值得反复咀嚼的书、文章与工具，以及一些不成体系但有趣的碎片。</p>
+          <a href="#" style="display:inline-block;margin-top:1rem;font-size:.84rem;letter-spacing:.06em;color:var(--biolum);text-decoration:none" class="lnk">进入板块 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========== 深渊 · 联系 ========== -->
+<div data-screen-label="联系 · 深渊层" style="width:100%;background:linear-gradient(180deg,#051f3b 0%,#03121f 45%,#02090f 100%)">
+  <section id="contact" style="padding:7.5rem 0 6rem">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem)">
+      <div style="display:flex;align-items:center;gap:.9rem;font-size:.78rem;letter-spacing:.28em;color:#a9cddd;text-transform:uppercase;margin-bottom:1.4rem">
+        <span style="width:2.6rem;height:1px;background:var(--biolum);opacity:.75"></span>
+        4000 m · <b style="color:var(--biolum);font-weight:500">深渊层</b> · Abyssopelagic
+      </div>
+      <h2 style="font-family:'Songti SC','Noto Serif CJK SC','STSong',Georgia,serif;font-weight:600;letter-spacing:.02em;font-size:clamp(1.6rem,3.4vw,2.2rem);margin-bottom:1.6rem">联系我</h2>
+      <p style="color:#a9cddd;max-width:44em">深海里信号稀薄，但邮件总能抵达。欢迎交流行业、精算或任何有意思的话题。</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:1.4rem 2.6rem;margin-top:2rem">
+        <!-- ✏️ 换成你的真实联系方式 -->
+        <a class="lnk" href="mailto:hello@sagaciouswhale.com" style="font-size:.95rem;color:var(--biolum);text-decoration:none">hello@sagaciouswhale.com</a>
+        <a href="#" rel="noopener" style="font-size:.95rem;color:var(--biolum);text-decoration:none" class="lnk">GitHub</a>
+        <a href="#" rel="noopener" style="font-size:.95rem;color:var(--biolum);text-decoration:none" class="lnk">知乎 / 公众号</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(234,246,251,.18)">
+    <div style="max-width:1200px;margin:0 auto;padding:3rem clamp(1.4rem,5vw,4rem) 2.6rem;display:flex;flex-wrap:wrap;gap:.6rem 2rem;font-size:.8rem;color:#a9cddd;letter-spacing:.05em">
+      <div>© 2026 Sagacious Whale · sagaciouswhale.com</div>
+    </div>
+  </footer>
+</div>
+<script>
+(function(){
+  // --- 深度轴：点击平滑跳转 ---
+  var ids = ['hero','about','work','contact'];
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.rail-btn'));
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = btn.getAttribute('data-target');
+      var el = document.getElementById(id);
+      var top = id === 'hero' ? 0 : (el ? el.getBoundingClientRect().top + window.scrollY : 0);
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  });
+
+  // --- 深度轴：滚动时点亮当前层（取覆盖视口中线的板块） ---
+  function spy(){
+    var mid = window.scrollY + window.innerHeight * 0.5;
+    var active = 'hero';
+    ids.forEach(function(id){
+      var el = document.getElementById(id);
+      if (el && mid >= el.getBoundingClientRect().top + window.scrollY) active = id;
+    });
+    btns.forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-target') === active);
+    });
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  window.addEventListener('resize', spy);
+  spy();
+})();
+</script>
 </body>
 </html>
