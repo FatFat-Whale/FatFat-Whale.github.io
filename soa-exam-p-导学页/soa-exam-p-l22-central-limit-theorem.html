@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L22 导学 · Central Limit Theorem 中心极限定理</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#b45309; --accent-deep:#8a3d06; --accent-soft:#fbecd9; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L22 · 中心极限定理</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第二十二章 · <em>Central Limit Theorem 中心极限定理</em></h1>
+    <p class="lead">把很多独立随机变量<b>加起来</b>(或<b>取平均</b>),不管它们本身是什么分布,当个数 \(n\) 足够大时,和与均值都<b>近似正态</b>。于是保险公司的总赔付、总保费、总索赔次数都能用一张正态表算——这是 Exam P 最实用的近似工具。对照课本 Lesson&nbsp;22 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch22 Central Limit Theorem <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.397–399</b>(理论)</span>
+      <span class="pill">正态表 <b>附录 Φ(z)</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>不管原分布长什么样,<b>大量独立相加 / 取平均 ≈ 正态</b>:和 \(S_n\approx N(n\mu,\,n\sigma^2)\),均值 \(\bar X\approx N(\mu,\,\sigma^2/n)\)——\(n\) 的位置相反。</li>
+        <li>解题三步:<b>算 μ、σ² → 标准化 → 查 Φ 表</b>;百分位用 \(\mu+z_p\sigma\),σ 要换成该量(和/均值)自己的标准差。</li>
+        <li>整数计数近似要<b>连续性修正 ±0.5</b>:含端点外扩、不含内缩;连续量不修正。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l21-normal-distribution.html">L21 正态分布</a>
+    <a href="soa-exam-p-l08-variance-moments.html">L08 方差与矩</a>
+    <span class="arr">→</span>
+    <span class="here">L22 中心极限定理</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <span style="padding:4px 12px;border-radius:999px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft);white-space:nowrap">总额近似压轴题型</span>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#clt">定理</a>
+  <a href="#sum">和与均值</a>
+  <a href="#cc">连续性修正</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完中心极限定理你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 对 \(n\) 个 iid 变量,写出<b>和</b> \(S_n\sim N(n\mu,\,n\sigma^2)\)、<b>样本均值</b> \(\bar X\sim N(\mu,\,\sigma^2/n)\)。</p>
+        <p style="margin-bottom:0">✅ 标准化成 \(Z=\dfrac{\bar X-\mu}{\sigma/\sqrt n}\) 后查正态表求概率。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 求"和 / 均值"的<b>百分位</b>:\(\mu+z_p\,\sigma\) 形式。</p>
+        <p style="margin-bottom:0">✅ 离散量(计数)近似成连续正态时,做<b>连续性修正</b> \(\pm0.5\),方向不搞反。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clt" style="background:linear-gradient(180deg,#fdf5ea,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch22 · Lesson 22 · 课本 p.397</span><h2 class="sec-title">中心极限定理 — 陈述</h2></div></div>
+    <p class="sec-sub">设 \(X_1,X_2,\dots,X_n\) 是一组<b>独立同分布(iid)</b>随机变量,共同均值 \(\mu\)、共同方差 \(\sigma^2\)(有限非零)。样本均值 \(\bar X=\dfrac1n\sum_{i=1}^n X_i\)。CLT 说:\(n\to\infty\) 时,标准化后的样本均值<b>收敛到标准正态</b>,与 \(X_i\) 原本是什么分布无关。</p>
+
+    <div class="card accent">
+      <h3>样本均值的期望与方差 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.397 · 式 (22.1)(22.2)</div>
+      <p class="lede">\(\bar X\) 的期望仍是 \(\mu\)、方差缩成 \(\sigma^2/n\)——这两步是精确恒等式,不是近似。</p>
+      <div class="formula"><span class="name">Mean &amp; variance of the sample mean</span>
+        $$\mathrm{E}[\bar X]=\frac{\sum_{i=1}^n \mathrm{E}[X_i]}{n}=\frac{n\mu}{n}=\mu,\qquad
+        \mathrm{Var}(\bar X)=\frac1{n^2}\sum_{i=1}^n\mathrm{Var}(X_i)=\frac{\sigma^2}{n}$$</div>
+      <p class="dim">方差被 \(n\) <b>除小</b>——样本越大,均值越贴近真值 \(\mu\)(分布越窄)。注意 \(\mathrm{Var}(\bar X)=\sigma^2/n\) 用了独立性把交叉项去掉。</p>
+      <details class="more"><summary>展开 · 方差为什么是 σ²/n</summary>
+        <p class="dim">\(\mathrm{Var}(\bar X)=\dfrac1{n^2}\mathrm{Var}\!\Big(\sum X_i\Big)\);独立使所有交叉协方差项为 0,\(\mathrm{Var}\big(\sum X_i\big)=n\sigma^2\),故 \(\mathrm{Var}(\bar X)=n\sigma^2/n^2=\sigma^2/n\)。</p>
+      </details>
+    </div>
+
+    <div class="card accent">
+      <h3>定理:标准化的样本均值 → 标准正态 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.397 · Theorem 1</div>
+      <p class="lede">\(n\) 够大时,把 \(\bar X\) 当作 \(N(\mu,\ \sigma^2/n)\) 用——标准化查表,与原分布形状无关。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Central Limit Theorem · 标准化</span>
+        $$\frac{\sqrt n\,(\bar X-\mu)}{\sigma}=\frac{\bar X-\mu}{\sigma/\sqrt n}\ \xrightarrow[\ n\to\infty\ ]{}\ N(0,1)$$</div>
+      <p class="dim">于是对<b>大样本</b>,直接把 \(\bar X\) 当作 \(N(\mu,\ \sigma^2/n)\) 来算概率:标准化后查正态表 \(\Phi(z)\)。</p>
+      <details class="more"><summary>展开 · 为什么与原分布形状无关</summary>
+        <p class="dim">直觉版:相加时每个 \(X_i\) 自己的"怪形状"在一次次卷积中被抹平,只有均值与方差两条信息存活下来。严格证明走矩母函数:标准化和的 MGF 收敛到 \(e^{t^2/2}\)(标准正态的 MGF)。Exam P 不考证明,只考会用。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="n=2 时样本均值分布较宽">
+          <line x1="14" y1="122" x2="206" y2="122" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="110" y1="122" x2="110" y2="30" stroke="#b45309" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M14 121 Q50 118 78 96 Q98 80 110 78 Q122 80 142 96 Q170 118 206 121" fill="#b45309" fill-opacity="0.14" stroke="#b45309" stroke-width="1.8"/>
+          <text x="102" y="136" font-size="11" fill="#16243d" font-style="italic">μ</text>
+        </svg>
+        <div class="cap"><b>\(n=2\)</b>:均值分布还很宽,\(\sigma^2/2\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="n=10 时样本均值分布收窄">
+          <line x1="14" y1="122" x2="206" y2="122" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="110" y1="122" x2="110" y2="20" stroke="#b45309" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M14 121 Q68 120 88 92 Q102 58 110 56 Q118 58 132 92 Q152 120 206 121" fill="#b45309" fill-opacity="0.18" stroke="#b45309" stroke-width="1.8"/>
+          <text x="102" y="136" font-size="11" fill="#16243d" font-style="italic">μ</text>
+        </svg>
+        <div class="cap"><b>\(n=10\)</b>:更窄更高,\(\sigma^2/10\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="n=30 时样本均值分布很窄接近钟形">
+          <line x1="14" y1="122" x2="206" y2="122" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="110" y1="122" x2="110" y2="12" stroke="#b45309" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M14 121 Q84 121 98 96 Q106 34 110 32 Q114 34 122 96 Q136 121 206 121" fill="#b45309" fill-opacity="0.24" stroke="#b45309" stroke-width="2"/>
+          <text x="102" y="136" font-size="11" fill="#16243d" font-style="italic">μ</text>
+        </svg>
+        <div class="cap"><b>\(n=30\)</b>:高瘦钟形,贴近 \(\mu\)</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>无论 \(X_i\) 原来偏不偏、离不离散,一"平均"就把随机抖动摊薄。\(n\) 越大,\(\bar X\) 的分布越窄(方差 \(\sigma^2/n\))、越对称、越像钟形——这就是"中心极限"。</span></div>
+  </div>
+</section>
+
+<section id="sum">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">两副面孔</span><h2 class="sec-title">和 \(S_n\) 与 均值 \(\bar X\) —— 参数别搞混</h2></div></div>
+    <p class="sec-sub">同一批 iid 变量,常考两种问法:问"总量(和)"用 \(S_n=\sum X_i\),问"平均"用 \(\bar X\)。两者都近似正态,但期望方差的 \(n\) 位置<b>相反</b>——这是本章头号送分/送命点。</p>
+    <div class="card accent">
+      <h3>和 vs 均值:期望方差对照 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.397–398</div>
+      <p class="lede">问"总量"用 \(S_n\approx N(n\mu,\,n\sigma^2)\),问"平均"用 \(\bar X\approx N(\mu,\,\sigma^2/n)\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Sum vs. sample mean</span>
+        $$S_n=\sum_{i=1}^n X_i\ \approx\ N\!\big(n\mu,\ n\sigma^2\big),\qquad
+        \bar X=\frac{S_n}{n}\ \approx\ N\!\Big(\mu,\ \frac{\sigma^2}{n}\Big)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>和乘 n,均除 n</b> — 和的方差 \(n\sigma^2\)、均值的方差 \(\sigma^2/n\);标准化时各除各的标准差。</span></div>
+      <p class="dim"><b>和</b>:期望 \(n\mu\)、方差 \(n\sigma^2\)(都<b>乘</b> \(n\),标准差 \(\sqrt n\,\sigma\))。<b>均值</b>:期望 \(\mu\) 不变、方差 \(\sigma^2/n\)(<b>除</b> \(n\),标准差 \(\sigma/\sqrt n\))。</p>
+      <p class="dim"><b>百分位:</b>正态的第 \(100p\) 百分位是"均值 \(+\,z_p\times\)标准差"。和的第 \(100p\) 百分位 \(=n\mu+z_p\sqrt n\,\sigma\);均值的 \(=\mu+z_p\,\sigma/\sqrt n\)。</p>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:20%"></th><th>和 \(S_n=\sum X_i\)</th><th>均值 \(\bar X=S_n/n\)</th></tr></thead>
+      <tbody>
+        <tr><td>期望</td><td>\(n\mu\)(乘 \(n\))</td><td>\(\mu\)(不变)</td></tr>
+        <tr><td>方差</td><td>\(n\sigma^2\)(乘 \(n\))</td><td>\(\sigma^2/n\)(除 \(n\))</td></tr>
+        <tr><td>标准差</td><td>\(\sqrt n\,\sigma\)</td><td>\(\sigma/\sqrt n\)</td></tr>
+        <tr><td>第 \(100p\) 百分位</td><td>\(n\mu+z_p\sqrt n\,\sigma\)</td><td>\(\mu+z_p\,\sigma/\sqrt n\)</td></tr>
+        <tr><td>读题信号</td><td>total / sum / 总赔付、总时长</td><td>average / mean / 人均、平均每件</td></tr>
+      </tbody>
+    </table>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 22A</span><span class="src" style="margin:0">课本 p.397 · 排队(指数)</span></div>
+      <p class="q">政府办事窗口前有 50 个人排在你前面,每人服务时间 iid 服从指数分布 \(f(x)=e^{-x},\ x&gt;0\)(均值 1、方差 1)。用正态近似,求你等待<b>超过 60 分钟</b>的概率。</p>
+      <p>总等待 \(X=\sum_{i=1}^{50}X_i\)。指数 \(\mu=1,\sigma^2=1\),故 \(X\approx N(50\cdot1,\ 50\cdot1)=N(50,50)\)。标准化:</p>
+      <p>\(\Pr[X&gt;60]=1-\Phi\!\Big(\dfrac{60-50}{\sqrt{50}}\Big)=1-\Phi(1.414)=1-0.9213=0.0787\)。</p>
+      <span class="ans">≈ 0.0787</span>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>关键:</b>问的是<b>总</b>等待时间(和),所以用 \(N(50,50)\) 而<b>不是</b> \(N(1,1/50)\)。若题目改问"平均每人服务时间超过 1.2 分钟",才用 \(\bar X\approx N(1,\ 1/50)\)。</span></div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 22B</span><span class="src" style="margin:0">课本 p.398 · 保单面额百分位</span></div>
+      <p class="q">寿险代理一年卖 60 张保单,每张面额 iid 均匀分布于 \([100{,}000,\ 1{,}000{,}000]\)。求全年总面额的<b>第 75 百分位</b>。</p>
+      <p>单张:\(\mu=\frac{100{,}000+1{,}000{,}000}{2}=550{,}000\),\(\sigma^2=\frac{900{,}000^2}{12}\)。和:\(\mathrm{E}=60(550{,}000)=33{,}000{,}000\),\(\mathrm{SD}=\sqrt{60}\cdot\dfrac{900{,}000}{\sqrt{12}}\)。查表 \(z_{0.75}=0.675\):</p>
+      <p>\(33{,}000{,}000+0.675\cdot 900{,}000\sqrt{60/12}\approx 34{,}358{,}411\)。</p>
+      <span class="ans">≈ 34,358,411</span>
+    </div>
+  </div>
+</section>
+
+<section id="cc" style="background:linear-gradient(180deg,#fdf5ea,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch22 · 易错重灾区</span><h2 class="sec-title">连续性修正(Continuity Correction)</h2></div></div>
+    <p class="sec-sub">当被近似的量本身是<b>离散整数</b>(索赔次数、人数、卖出车数等,常来自二项 / 泊松),而正态是连续的,直接代整数会漏掉半格概率。修正办法:把每个整数看成占 \(\pm0.5\) 宽的一格,边界外扩或内缩<b>半个单位</b>。</p>
+    <div class="card accent">
+      <h3>四种问法的 \(\pm0.5\) 方向 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.398–399</div>
+      <p class="lede">要<b>包含</b>的整数格全吃进来(边界外扩 0.5),要<b>排除</b>的整数格推出去(边界内缩 0.5)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Continuity correction (integer N)</span>
+        $$\begin{aligned}
+        &amp;\Pr[N\ge k]\approx \Pr[X\ge k-0.5], \qquad \Pr[N&gt; k]\approx \Pr[X\ge k+0.5]\\
+        &amp;\Pr[N\le k]\approx \Pr[X\le k+0.5], \qquad \Pr[N&lt; k]\approx \Pr[X\le k-0.5]\\
+        &amp;\Pr[N=k]\approx \Pr[k-0.5\le X\le k+0.5]
+        \end{aligned}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>含着外扩,吐出内缩</b> — 含端点(\(\ge/\le\))边界向外挪 0.5,不含端点(\(&gt;/&lt;\))向内挪 0.5。</span></div>
+      <p class="dim">例:\(\ge k\) 含 \(k\),下界降到 \(k-0.5\);\(&gt;k\) 不含 \(k\),下界升到 \(k+0.5\)。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 150" role="img" aria-label="连续性修正:整数直方格与正态曲线,边界在 k 减 0.5">
+          <line x1="14" y1="120" x2="248" y2="120" stroke="#16243d" stroke-width="1.3"/>
+          <g fill="#b45309" fill-opacity="0.16" stroke="#b45309" stroke-width="0.8">
+            <rect x="70" y="86" width="24" height="34"/>
+            <rect x="94" y="70" width="24" height="50"/>
+            <rect x="118" y="60" width="24" height="60"/>
+            <rect x="142" y="70" width="24" height="50"/>
+            <rect x="166" y="86" width="24" height="34"/>
+          </g>
+          <path d="M20 119 Q80 116 106 84 Q125 58 130 56 Q135 58 154 84 Q180 116 240 119" fill="none" stroke="#16243d" stroke-width="1.6"/>
+          <line x1="118" y1="120" x2="118" y2="34" stroke="#c6492f" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <text x="150" y="22" font-size="11" fill="#c6492f">下界 = k − 0.5</text>
+          <text x="123" y="134" font-size="10" fill="#16243d">k</text>
+        </svg>
+        <div class="cap">\(\Pr[N\ge k]\):把第 \(k\) 格<b>整格算进</b>,积分下界取 <b>\(k-0.5\)</b></div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 22C</span><span class="src" style="margin:0">课本 p.398 · 卖车(泊松)</span></div>
+      <p class="q">某车行每天卖车数服从泊松分布,均值 5,各天独立。200 天内卖车<b>总数超过 1050</b> 的概率。总数 \(N\) 是整数,要连续性修正。</p>
+      <p>和:\(\mathrm{E}[N]=200(5)=1000\),\(\mathrm{Var}(N)=200(5)=1000\)(泊松均值 = 方差),\(N\approx N(1000,1000)\)。"超过 1050" = \(\Pr[N&gt;1050]=\Pr[N\ge1051]\),整数,下界修正到 \(1050.5\):</p>
+      <p>\(\Pr[N&gt;1050]\approx 1-\Phi\!\Big(\dfrac{1050.5-1000}{\sqrt{1000}}\Big)=1-\Phi(1.597)=1-0.9449=0.0551\)。</p>
+      <span class="ans">≈ 0.0551</span>
+    </div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>方向陷阱:</b>\(N&gt;1050\) 里 <b>1050 不算</b>,等价于 \(N\ge1051\),修正后是 \(1050.5\)(不是 \(1049.5\)、也不是 \(1050\))。若不修正直接用 \(1050\),得 \(1-\Phi(1.581)=0.0570\)——差一截。<b>连续量(损失额、等待时间)不用修正</b>,只对<b>整数计数</b>做。</span></div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>考场提示:</b>Exam P 期望你在近似<b>离散</b>分布时<b>使用</b>连续性修正;若题目本身就是连续分布(如例 22A/22B 的指数、均匀),<b>不做</b>修正。样本很大时修正影响很小,但按规矩仍要做。</span></div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>教材原则(课本 p.399 红框):能合理精确计算就不要用正态近似。</b>三条判断:① 题目<b>明说</b>"use the normal approximation"才用近似;② 样本数大到<b>精确计算不现实</b>(如求和几百项)才用;③ 二项 / 泊松 <b>\(n\) 小、算几项就能出精确值</b>时(如 \(\Pr[N\le 2]\) 只需加三项),老实精确算——近似反而答错。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:骰子掷多了,平均值必然钟形</h3>
+      <p>掷一颗骰子,点数 1–6 各 \(1/6\)——分布是平的,毫无"钟形"。掷两颗取和:2 和 12 各只有一种凑法、7 有六种,分布立刻变成三角形。掷 30 颗取平均:要平均数低于 2,得几乎颗颗掷出 1,凑法少得可怜;而平均落在 3.5 附近的凑法多到爆炸。<b>"中间凑法多、极端凑法少"</b>就是钟形的来源——与单颗骰子的分布形状无关。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="一颗骰子的分布是平的,两颗之和已成三角形,7 有六种凑法">
+            <text x="58"  y="16" font-size="9.5" fill="#46566f" text-anchor="middle">1 颗骰子</text>
+            <text x="175" y="16" font-size="9.5" fill="#46566f" text-anchor="middle">2 颗之和</text>
+            <!-- 左:单颗,6 根等高条 -->
+            <rect x="22" y="92" width="10" height="28" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="35" y="92" width="10" height="28" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="48" y="92" width="10" height="28" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="61" y="92" width="10" height="28" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="74" y="92" width="10" height="28" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="87" y="92" width="10" height="28" fill="#b45309" fill-opacity="0.75"/>
+            <text x="58" y="86" font-size="9" fill="#7a8699" text-anchor="middle">各 1/6,平的</text>
+            <line x1="16" y1="121" x2="103" y2="121" stroke="#16243d" stroke-width="2"/>
+            <text x="27" y="136" font-size="9" fill="#16243d" text-anchor="middle">1</text>
+            <text x="92" y="136" font-size="9" fill="#16243d" text-anchor="middle">6</text>
+            <text x="113" y="100" font-size="12" fill="#7a8699" text-anchor="middle">→</text>
+            <!-- 右:两颗之和 2..12,凑法数 1..6..1 -->
+            <rect x="132" y="111" width="6" height="9"  fill="#b45309" fill-opacity="0.75"/>
+            <rect x="140" y="102" width="6" height="18" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="148" y="93"  width="6" height="27" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="156" y="84"  width="6" height="36" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="164" y="75"  width="6" height="45" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="172" y="66"  width="6" height="54" fill="#c6492f" fill-opacity="0.85"/>
+            <rect x="180" y="75"  width="6" height="45" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="188" y="84"  width="6" height="36" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="196" y="93"  width="6" height="27" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="204" y="102" width="6" height="18" fill="#b45309" fill-opacity="0.75"/>
+            <rect x="212" y="111" width="6" height="9"  fill="#b45309" fill-opacity="0.75"/>
+            <text x="175" y="60" font-size="9" font-weight="700" fill="#c6492f" text-anchor="middle">7:六种凑法</text>
+            <line x1="128" y1="121" x2="222" y2="121" stroke="#16243d" stroke-width="2"/>
+            <text x="135" y="136" font-size="9" fill="#16243d" text-anchor="middle">2</text>
+            <text x="175" y="136" font-size="9" fill="#c6492f" text-anchor="middle" font-weight="700">7</text>
+            <text x="215" y="136" font-size="9" fill="#16243d" text-anchor="middle">12</text>
+          </svg>
+          <div class="cap"><b>凑法计数</b>:1 颗是平的;2 颗之和里 7 有六种凑法、2 和 12 各一种,三角形已现</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="30 颗骰子取平均:单颗的平分布收窄成以 3.5 为中心的窄钟形">
+            <text x="120" y="28" font-size="9.5" fill="#46566f" text-anchor="middle">30 颗的平均</text>
+            <!-- 单颗平 pmf 作底色对照 -->
+            <rect x="30" y="108" width="180" height="16" fill="#b45309" fill-opacity="0.22"/>
+            <text x="58" y="101" font-size="9" fill="#7a8699" text-anchor="middle">单颗:平</text>
+            <!-- 窄钟形,±3σ ≈ ±0.9 -->
+            <path d="M 88,124 C 106,121 110,38 120,38 C 130,38 134,121 152,124 Z" fill="#b45309" fill-opacity="0.78"/>
+            <line x1="25" y1="125" x2="215" y2="125" stroke="#16243d" stroke-width="2.5"/>
+            <text x="30"  y="139" font-size="9" fill="#7a8699" text-anchor="middle">1</text>
+            <text x="66"  y="139" font-size="9" fill="#7a8699" text-anchor="middle">2</text>
+            <text x="102" y="139" font-size="9" fill="#7a8699" text-anchor="middle">3</text>
+            <text x="138" y="139" font-size="9" fill="#7a8699" text-anchor="middle">4</text>
+            <text x="174" y="139" font-size="9" fill="#7a8699" text-anchor="middle">5</text>
+            <text x="210" y="139" font-size="9" fill="#7a8699" text-anchor="middle">6</text>
+            <polygon points="120,127 113,141 127,141" fill="#c6492f"/>
+            <text x="120" y="149" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">μ=3.5</text>
+          </svg>
+          <div class="cap"><b>钟形收窄</b>:30 颗取平均,\(\bar X\approx N(3.5,\ 35/360)\)——极端凑法稀少,质量挤向 \(\mu=3.5\)</div>
+        </div>
+      </div>
+      <p class="dim">对应到公式:单颗 \(\mu=3.5,\ \sigma^2=35/12\),30 颗的平均 \(\bar X\approx N(3.5,\ 35/360)\)。任何 iid 变量(再偏的损失分布)同理:一平均,极端值互相抵消,只剩 \(\mu\) 与 \(\sigma^2/n\) 说话。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>母题:<b>\(n\) 份保单总赔付正态近似</b>——给单张保单的 \(\mu,\sigma^2\)(或给分布自己算),问"总赔付超过预算 / 基金够赔"的概率:总量 \(\approx N(n\mu,\,n\sigma^2)\),标准化查表。</li>
+        <li><b>百分位定价</b>:"收多少保费才有 95% 把握够赔" = 和的第 95 百分位 \(n\mu+1.645\sqrt n\,\sigma\)。</li>
+        <li>计数类(索赔<b>件数</b>、死亡<b>人数</b>,二项/泊松)记得 \(\pm0.5\) 修正;金额类(连续)不修正。</li>
+        <li>读题定形:total / sum → \(S_n\);average / mean → \(\bar X\)。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://www.youtube.com/watch?v=zeJD6dqJ5lo">3Blue1Brown · But what is the Central Limit Theorem?</a></div><div class="z">高尔顿板 + 动画把"为什么偏偏是钟形"讲到直觉通透,考前最值的 30 分钟。</div><div class="u">youtube.com/watch?v=zeJD6dqJ5lo</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Central_limit_theorem">Wikipedia · Central limit theorem</a></div><div class="z">定理的准确陈述与条件(iid、方差有限);想知道"CLT 什么时候失效"看重尾分布一节。</div><div class="u">en.wikipedia.org/wiki/Central_limit_theorem</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/asymptotic-theory/central-limit-theorem">StatLect · Central Limit Theorem</a></div><div class="z">免费教科书级讲义,严格陈述 + 带解答的练习,难度刚好在 Exam P 之上一档,适合加深。</div><div class="u">statlect.com/asymptotic-theory/central-limit-theorem</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>和用 \(n\sigma^2\)、均值用 \(\sigma^2/n\)</b>:方差里 \(n\) 的位置搞反是本章最大丢分点。</li>
+          <li><b>标准差 vs 方差</b>:标准化除的是标准差 \(\sqrt{n}\,\sigma\)(和)或 \(\sigma/\sqrt n\)(均值),别拿方差去除。</li>
+          <li><b>连续性修正方向</b>:\(\ge/\le\)(含端点)边界外扩 0.5,\(&gt;/&lt;\)(不含)内缩;整数计数才修正,连续量不修正。</li>
+          <li><b>该用和还是均值</b>:问"总量"用 \(S_n\),问"平均"用 \(\bar X\),读题定形。</li>
+          <li><b>百分位公式</b>:\(\mu+z_p\sigma\) 里的 \(\sigma\) 要换成该量(和/均值)自己的标准差。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 22.1</span>两组样本均值之差 \(P[\bar X&gt;\bar Y]\),标准化用两均值方差之和。</li>
+          <li><span class="ref">练 22.4</span>寿险 600 独立生命,死亡赔 1000,求总赔付第 95 百分位(\(\mu+z_{0.95}\sigma\))。</li>
+          <li><span class="ref">练 22.8</span>1250 份视力险索赔数近似正态,求总索赔在 [2450, 2600] 的概率。</li>
+          <li><span class="ref">练 22.9</span>1000 员工死亡赔 50000,泊松/二项计数 + 连续性修正,求基金够赔概率。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算/查表)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(X_i\) iid,\(\mu=4,\sigma^2=9\),\(n=36\)。\(\bar X\) 的方差与标准差各是多少?和 \(S_{36}\) 的呢?</li>
+        <li>\(S_n\approx N(1000,1000)\),整数计数,\(\Pr[N\ge 1030]\) 的修正后下界是几?</li>
+        <li>某连续量 \(\bar X\approx N(50,4)\),求其第 90 百分位(\(z_{0.90}=1.282\))。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(\mathrm{Var}(\bar X)=9/36=0.25,\ \mathrm{SD}=0.5\);\(\mathrm{Var}(S)=36\cdot9=324,\ \mathrm{SD}=18\)。② 含 1030,下界 \(=1029.5\)。③ \(50+1.282\times2=52.56\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#fdf5ea,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 中心极限定理</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>和 与 均值</h4>
+        <p>\(\bar X\approx N\!\big(\mu,\ \sigma^2/n\big)\)</p>
+        <p>\(S_n=\sum X_i\approx N\!\big(n\mu,\ n\sigma^2\big)\)</p>
+        <p>标准化 \(Z=\dfrac{\bar X-\mu}{\sigma/\sqrt n}=\dfrac{S_n-n\mu}{\sqrt n\,\sigma}\)</p>
+        <p>百分位 \(\mu+z_p\sigma\)(换该量的 \(\sigma\))</p>
+      </div>
+      <div class="cc t">
+        <h4>连续性修正(整数计数)</h4>
+        <p>\(\Pr[N\ge k]\approx\Pr[X\ge k-0.5]\)</p>
+        <p>\(\Pr[N&gt;k]\approx\Pr[X\ge k+0.5]\)</p>
+        <p>\(\Pr[N\le k]\approx\Pr[X\le k+0.5]\)</p>
+        <p>\(\Pr[N=k]\approx\Pr[k-0.5\le X\le k+0.5]\)</p>
+        <p>连续量不修正;含端点外扩、不含内缩</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 22 原文用词</span><h2 class="sec-title">中心极限定理 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它判"求和 / 求均值 / 要不要修正"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 22</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">central limit theorem</td><td class="ipa">/ˈsɛntrəl ˈlɪmɪt ˈθɪərəm/</td><td><span class="pos n">n.</span></td><td>中心极限定理</td><td class="root">limit(极限)→ \(n\to\infty\) 时和/均值趋正态</td></tr>
+          <tr><td class="en">sample mean</td><td class="ipa">/ˈsæmpəl miːn/</td><td><span class="pos n">n.</span></td><td>样本均值</td><td class="root">\(\bar X=\frac1n\sum X_i\);\(\mathrm{Var}=\sigma^2/n\)</td></tr>
+          <tr><td class="en">identically distributed</td><td class="ipa">/aɪˈdɛntɪkli/</td><td><span class="pos adj">adj.</span></td><td>同分布的</td><td class="root">iid 的第二个 "i";各 \(X_i\) 同 \(\mu,\sigma^2\)</td></tr>
+          <tr><td class="en">approximation</td><td class="ipa">/əˌprɒksɪˈmeɪʃən/</td><td><span class="pos n">n.</span></td><td>近似</td><td class="root">approximate→ 正态近似,非精确</td></tr>
+          <tr><td class="en">standard normal</td><td class="ipa">/ˈstændəd ˈnɔːməl/</td><td><span class="pos n">n.</span></td><td>标准正态</td><td class="root">\(N(0,1)\),查 \(\Phi(z)\) 表</td></tr>
+          <tr><td class="en">continuity correction</td><td class="ipa">/ˌkɒntɪˈnjuːɪti/</td><td><span class="pos n">n.</span></td><td>连续性修正</td><td class="root">离散→连续时 \(\pm0.5\) 补半格</td></tr>
+          <tr><td class="en">percentile</td><td class="ipa">/pəˈsɛntaɪl/</td><td><span class="pos n">n.</span></td><td>百分位数</td><td class="root">第 \(100p\) 百分位 \(=\mu+z_p\sigma\)</td></tr>
+          <tr><td class="en">discrete distribution</td><td class="ipa">/dɪˈskriːt/</td><td><span class="pos n">n.</span></td><td>离散分布</td><td class="root">取整数值→近似时需修正</td></tr>
+          <tr><td class="en">face amount</td><td class="ipa">/feɪs əˈmaʊnt/</td><td><span class="pos n">n.</span></td><td>保单面额</td><td class="root">face(票面)→ 保单写明的赔付额;例 22B</td></tr>
+          <tr><td class="en">linear interpolation</td><td class="ipa">/ɪnˌtɜːpəˈleɪʃən/</td><td><span class="pos n">n.</span></td><td>线性插值</td><td class="root">inter-(之间)+ pole → 查 \(z\) 表两值之间按比例取</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">using the normal approximation</div><div class="z">用正态近似(=套 CLT)</div></div>
+        <div class="ph"><div class="e">a random sample of size n</div><div class="z">容量为 n 的随机样本</div></div>
+        <div class="ph"><div class="e">the sum / total amount</div><div class="z">和 / 总量 → 用 \(S_n\sim N(n\mu,n\sigma^2)\)</div></div>
+        <div class="ph"><div class="e">the (approximate) probability that …</div><div class="z">……的近似概率</div></div>
+        <div class="ph"><div class="e">mutually independent</div><div class="z">相互独立(CLT 前提)</div></div>
+        <div class="ph"><div class="e">perform a continuity correction</div><div class="z">做连续性修正(整数计数)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 22</b> · 第二十二章 Central Limit Theorem 中心极限定理</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 22(p.397–399,含 Table 22.1 与 Example 22A/22B/22C,页码已标注,细节以课本为准)+ 威普网校视频。<br>习题号(22.1–22.17,p.399–401)仅供索引。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L27 导学 · Joint Moments for Continuous RV 连续型联合矩</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0891b2; --accent-deep:#0e7490; --accent-soft:#ddf1f6; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L27 · 连续型联合矩</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · 周四 · v2 改版 · 全书串联</p>
+    <h1>第二十七章 · <em>Joint Moments for Continuous RV 连续型联合矩</em></h1>
+    <p class="lead">把第十二章的<b>离散型联合矩</b>搬到连续世界:求 \(E[g(X,Y)]\) 不再是双重求和,而是<b>对联合密度 \(f(x,y)\) 做二重积分</b>。核心就三件事——套 \(\iint g\,f\,dx\,dy\)、用线性 \(E[X+Y]=E[X]+E[Y]\)、以及"独立才能拆" \(E[XY]=E[X]E[Y]\)。对照课本 Lesson&nbsp;27 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch27 Joint Moments <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.453–467</b>(理论 p.453)</span>
+      <span class="pill">离散版见 <b>Ch12</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>本章是 <b>L12 离散联合矩的连续镜像</b>:双重求和换二重积分、pmf 换 pdf——\(E[g(X,Y)]=\iint g\,f\,dx\,dy\),积分限由支撑区域定。</li>
+        <li><b>加法随便拆</b>:\(E[X+Y]=E[X]+E[Y]\) 恒成立,与独立无关。</li>
+        <li><b>乘法只有独立才能拆</b>:\(E[XY]=E[X]E[Y]\) 要求密度可因式分解<b>且</b>支撑是矩形;三角支撑一律老实二重积分。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l26-marginal-continuous.html">L26 连续边缘</a>
+    <a href="soa-exam-p-l12-joint-moments.html">L12 联合矩(离散镜像)</a>
+    <span class="arr">→</span>
+    <span class="here">L27 连续联合矩</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l28-covariance-continuous.html">L28 连续协方差</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">二重积分</a>
+  <a href="#linear">线性</a>
+  <a href="#indep">独立可拆</a>
+  <a href="#ex">例题</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完连续型联合矩你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 用 \(E[g(X,Y)]=\iint g(x,y)\,f(x,y)\,dx\,dy\) 算任意函数的期望,<b>按支撑设积分限</b>。</p>
+        <p style="margin-bottom:0">✅ 特例化算 \(E[XY]\)、\(E[X^2Y]\)、\(E[X+Y]\) 等联合矩。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 无脑用<b>线性</b>:\(E[X+Y]=E[X]+E[Y]\)(不需独立)。</p>
+        <p style="margin-bottom:0">✅ 判断能否把 \(E[XY]\) 拆成 \(E[X]E[Y]\)——<b>仅当 \(X,Y\) 独立</b>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#f2fafc,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch27 · Lesson 27 · 课本 p.453</span><h2 class="sec-title">联合矩 = 二重积分</h2></div></div>
+    <p class="sec-sub">第十二章里对离散联合分布,\(E[g(X,Y)]=\sum_x\sum_y g(x,y)\,p(x,y)\)。到了连续型,把双重求和换成<b>二重积分</b>、把联合概率质量 \(p\) 换成联合密度 \(f\),就是全部改动。</p>
+
+    <div class="card accent">
+      <h3>定义:任意函数 \(g(X,Y)\) 的期望 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.453 · Lesson 27 开篇</div>
+      <p class="lede">求 \(E[g(X,Y)]\) 就一招:把 \(g(x,y)\) 加权联合密度后,在整个支撑上二重积分。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Expectation of a function of X and Y</span>
+        $$E[g(X,Y)]=\iint g(x,y)\,f(x,y)\,dx\,dy$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>求和换积分,pmf 换 pdf</b> — 与 L12 离散版逐字对应:\(\sum_x\sum_y g\,p\ \to\ \iint g\,f\,dx\,dy\),概念一个没变。</span></div>
+      <p class="dim">选好积分次序(<b>先 \(dy\) 后 \(dx\)</b> 或反之)后,内外层积分限由联合密度的<b>支撑区域</b>决定——支撑是矩形则上下限是常数,是三角形/带状则内层限含外层变量。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>常用特例:直接代 \(g\) 即可 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.453 · 由定义特例化</div>
+      <p class="lede">令 \(g=xy\) 得 \(E[XY]\)——算协方差 / 相关系数的原料,下一章就用。</p>
+      <div class="formula"><span class="name">Common joint moments</span>
+        $$E[XY]=\iint xy\,f(x,y)\,dx\,dy,\qquad E[X^{m}Y^{n}]=\iint x^{m}y^{n}\,f(x,y)\,dx\,dy$$</div>
+      <p class="dim">令 \(g=x+y\) 得 \(E[X+Y]\);令 \(g=x\) 就退回单变量 \(E[X]=\iint x\,f\,dx\,dy\)。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 160" role="img" aria-label="矩形支撑:单位正方形">
+          <line x1="26" y1="18" x2="26" y2="140" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="26" y1="140" x2="200" y2="140" stroke="#16243d" stroke-width="1.5"/>
+          <rect x="26" y="40" width="100" height="100" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent-deep)" stroke-width="1.5"/>
+          <text x="14" y="44" font-size="11" fill="#16243d">1</text>
+          <text x="120" y="153" font-size="11" fill="#16243d">1</text>
+          <text x="205" y="143" font-size="12" font-style="italic" fill="#16243d">x</text>
+          <text x="20" y="15" font-size="12" font-style="italic" fill="#16243d">y</text>
+          <text x="60" y="95" font-size="12" fill="var(--accent-deep)">支撑</text>
+        </svg>
+        <div class="cap"><b>矩形支撑</b> \(0\le x\le1,\,0\le y\le1\):内外限都是常数 \(\int_0^1\!\int_0^1\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 160" role="img" aria-label="三角形支撑:0<=x<=y<=1">
+          <line x1="26" y1="18" x2="26" y2="140" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="26" y1="140" x2="200" y2="140" stroke="#16243d" stroke-width="1.5"/>
+          <polygon points="26,140 126,140 126,40" fill="var(--accent)" fill-opacity="0.22" stroke="var(--accent-deep)" stroke-width="1.5"/>
+          <line x1="26" y1="140" x2="126" y2="40" stroke="var(--accent-deep)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <text x="14" y="44" font-size="11" fill="#16243d">1</text>
+          <text x="120" y="153" font-size="11" fill="#16243d">1</text>
+          <text x="205" y="143" font-size="12" font-style="italic" fill="#16243d">x</text>
+          <text x="20" y="15" font-size="12" font-style="italic" fill="#16243d">y</text>
+          <text x="132" y="70" font-size="11" fill="var(--accent-deep)">y=x</text>
+        </svg>
+        <div class="cap"><b>三角形支撑</b> \(0\le x\le y\le1\):内层限含外层变量 \(\int_0^1\!\int_0^{y}\)</div>
+      </div>
+    </div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>头号失分点 — 积分限:</b>支撑不是矩形时,内层积分限必须写成外层变量的函数(如 \(0\le x\le y\) 则内层 \(x\) 从 0 到 \(y\)),不能一律写 0 到 1。<b>先画支撑区域再落笔</b>。</span></div>
+  </div>
+</section>
+
+<section id="linear">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">最省事的性质</span><h2 class="sec-title">线性:和的期望 = 期望的和</h2></div></div>
+    <p class="sec-sub">不管 \(X,Y\) 独立与否、也不管取什么分布,<b>期望永远可加</b>。这是本章最好用、最不会错的一条,能省掉一次二重积分。</p>
+    <div class="card accent">
+      <h3>期望的线性(Linearity)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.453 · 恒成立</div>
+      <p class="lede">和的期望 = 期望的和,恒成立——用它绕开二重积分,是最不会错的一条。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Linearity of expectation</span>
+        $$E[X+Y]=E[X]+E[Y]\qquad E[aX+bY]=a\,E[X]+b\,E[Y]$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>加法随便拆,乘法看独立</b> — 线性与独立无关;\(E[XY]\) 要拆,必须先验独立(下一节)。</span></div>
+      <p class="dim">求 \(E[X+Y]\) 时可以直接对联合密度积 \(\iint (x+y)f\,dx\,dy\),<b>也可以</b>先各自求边际期望 \(E[X],E[Y]\) 再相加——两条路结果必然一致,挑好算的走。</p>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>要点:</b>线性对<b>加法</b>永远成立,和独立无关;但<b>乘法</b> \(E[XY]\) 一般 \(\neq E[X]E[Y]\),要拆必须先确认独立(下一节)。别把两者混为一谈。</span></div>
+  </div>
+</section>
+
+<section id="indep" style="background:linear-gradient(180deg,#f2fafc,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch27 · 核心陷阱</span><h2 class="sec-title">独立时:乘积期望可拆</h2></div></div>
+    <p class="sec-sub">当且仅当 \(X,Y\) <b>独立</b>——联合密度能拆成两个边际的乘积 \(f(x,y)=f_X(x)f_Y(y)\)、且支撑是矩形(\(x\) 的范围不牵扯 \(y\))——乘积的期望才等于期望的乘积。</p>
+    <div class="card accent">
+      <h3>独立 \(\Rightarrow\) 乘积期望拆开 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.453 · Example 27C 前</div>
+      <p class="lede">独立时,乘积的期望 = 期望的乘积——二重积分自动拆成两个一重积分,不必真去积二维。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Independence factors the product moment</span>
+        $$X\perp Y\;\Longrightarrow\;E[g(X)\,h(Y)]=E[g(X)]\,E[h(Y)]$$</div>
+      <p>特例:\(E[XY]=E[X]\,E[Y]\)、\(E[XY^2]=E[X]\,E[Y^2]\)。</p>
+      <p class="dim"><b>如何认独立:</b>① 密度可因式分解为"只含 \(x\)"×"只含 \(y\)";<b>且</b> ② 支撑是矩形(每个变量的范围是固定常数,不随另一个变量变)。两条缺一不可。</p>
+      <details class="more"><summary>展开 · 为什么独立就能拆</summary>
+        <p class="dim">独立时 \(f(x,y)=f_X(x)f_Y(y)\) 且支撑是矩形,于是 \(\iint g(x)h(y)\,f_X(x)f_Y(y)\,dx\,dy=\Big(\int g(x)f_X(x)\,dx\Big)\Big(\int h(y)f_Y(y)\,dy\Big)\)——内外层积分互不牵扯,直接分离成两个一重积分之积。支撑一旦耦合,内层积分限含外层变量,这步分离就做不了。</p>
+      </details>
+    </div>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最大陷阱 — 只有独立才能拆 \(E[XY]\):</b>若支撑写成 \(0\le x\le y\le1\)(\(x\) 的上限是 \(y\)),即便密度形式看着能拆,<b>也不独立</b>,\(E[XY]\neq E[X]E[Y]\),必须老实二重积分。反例见下面 Example 27B(不独立)对比 27C(独立)。</span></div>
+  </div>
+</section>
+
+<section id="ex">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">课本例题精解</span><h2 class="sec-title">三道课本 Example 走一遍</h2></div></div>
+    <p class="sec-sub">课本用三道紧挨着的例题打通"套公式 → 认独立 → 用拆分捷径"。27B(不独立)与 27C(独立)刻意对照,务必对比看。</p>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">Example 27A</span><span class="src" style="margin:0">课本 p.453 · 线性 + 二重积分</span></div>
+      <p class="q">联合密度 \(f(x,y)=1.2\,(x^2+y)\),\(0\le x\le1,\ 0\le y\le1\)。求 \(E[X+Y]\)。</p>
+      <p>直接套定义,\(g=x+y\):
+      $$E[X+Y]=\int_0^1\!\int_0^1 1.2\,(x+y)(x^2+y)\,dy\,dx=\int_0^1\!\int_0^1 1.2\,(x^3+xy+x^2y+y^2)\,dy\,dx.$$
+      先对 \(y\) 积:\(\int_0^1(\cdots)\,dy=x^3+\tfrac12 x+\tfrac12 x^2+\tfrac13\);再对 \(x\) 积:\(1.2\big(\tfrac14+\tfrac14+\tfrac16+\tfrac13\big)=1.2\).</p>
+      <span class="ans">E[X+Y] = 1.2</span>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">Example 27B</span><span class="src" style="margin:0">课本 p.453 · 三角形支撑,不独立</span></div>
+      <p class="q">联合密度 \(f(x,y)=2\),\(0\le x\le y\le1\)(三角形支撑)。求 \(E[XY^2]\)。</p>
+      <p>支撑非矩形,\(x\) 从 0 积到 \(y\),<b>不能拆</b>:
+      $$E[XY^2]=\int_0^1\!\int_0^{y} 2\,xy^2\,dx\,dy=\int_0^1 2y^2\cdot\frac{x^2}{2}\Big|_0^{y}\,dy=\int_0^1 y^4\,dy=\frac15.$$</p>
+      <span class="ans">E[XY²] = 1/5</span>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">Example 27C</span><span class="src" style="margin:0">课本 p.453–454 · 矩形支撑,独立</span></div>
+      <p class="q">联合密度 \(f(x,y)=1\),\(0\le x\le1,\ 0\le y\le1\)(单位正方形上的均匀分布)。求 \(E[XY^2]\)。</p>
+      <p>密度可因式分解、支撑是矩形 \(\Rightarrow\) <b>独立</b>,直接拆:
+      $$E[XY^2]=E[X]\,E[Y^2]=\Big(\tfrac12\Big)\Big(\tfrac13\Big)=\frac16.$$
+      对比 27B:同样问 \(E[XY^2]\),换成三角形支撑就<b>不能</b>这么拆。</p>
+      <span class="ans">E[XY²] = 1/6</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>27B vs 27C 的教训:</b>能否用 \(E[XY^2]=E[X]E[Y^2]\) 这条捷径,<b>只看独立性</b>,不看密度长得像不像。支撑一旦是三角形(\(x\) 上限含 \(y\)),先默认不独立,老实二重积分。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:离散 ↔ 连续,一张对照表</h3>
+      <p>把 L12 的骰子换成飞镖靶:离散是"对每个格子点,拿 \(g\) 值 × 该点概率,逐点加总";连续是"对靶面每一小块,拿 \(g\) 值 × 密度 × 面积微元,把整个靶面扫一遍"——"扫一遍"就是二重积分。方法零新意,只是记号换装:</p>
+      <table class="map">
+        <thead><tr><th style="width:22%">对象</th><th>离散(L12)</th><th>连续(本章)</th></tr></thead>
+        <tbody>
+          <tr><td>权重</td><td>联合 pmf \(p(x,y)\)</td><td>联合 pdf \(f(x,y)\)</td></tr>
+          <tr><td>汇总方式</td><td>\(\sum_x\sum_y\)</td><td>\(\displaystyle\iint\cdots\,dx\,dy\)</td></tr>
+          <tr><td>联合矩</td><td>\(\sum\sum g(x,y)\,p(x,y)\)</td><td>\(\iint g(x,y)\,f(x,y)\,dx\,dy\)</td></tr>
+          <tr><td>取值范围</td><td>枚举取值点</td><td>支撑区域 → 决定积分限</td></tr>
+        </tbody>
+      </table>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="离散:格点上每点取 g 乘 p 逐点加总">
+            <text x="36" y="32" font-size="9" fill="#7a8699" text-anchor="start">点面积 ∝ p(x,y)</text>
+            <circle cx="75"  cy="112" r="5" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="125" cy="112" r="7" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="175" cy="112" r="4" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="75"  cy="80"  r="4" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="125" cy="80"  r="6" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="175" cy="80"  r="5" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="75"  cy="48"  r="3" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="125" cy="48"  r="4" fill="#0891b2" fill-opacity="0.75"/>
+            <circle cx="175" cy="48"  r="4" fill="#0891b2" fill-opacity="0.75" stroke="#c6492f" stroke-width="1.5"/>
+            <text x="175" y="34" font-size="9" font-weight="700" fill="#c6492f" text-anchor="middle">g·p(x,y)</text>
+            <line x1="32" y1="18" x2="32" y2="126" stroke="#16243d" stroke-width="1.5"/>
+            <line x1="32" y1="126" x2="225" y2="126" stroke="#16243d" stroke-width="1.5"/>
+            <text x="27" y="12" font-size="10" font-style="italic" fill="#16243d" text-anchor="middle">y</text>
+            <text x="231" y="130" font-size="10" font-style="italic" fill="#16243d">x</text>
+            <text x="128" y="144" font-size="9" fill="#46566f" text-anchor="middle">Σ Σ g·p:一格一格数过去</text>
+          </svg>
+          <div class="cap"><b>逐点加总</b>:离散(L12 骰子)是格子点,每点拿 \(g\times p\) 相加</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="连续:单位正方形支撑上对 g·f·dxdy 扫面积分">
+            <rect x="32" y="46" width="120" height="80" fill="#0891b2" fill-opacity="0.22" stroke="#0e7490" stroke-width="1.2"/>
+            <line x1="32" y1="76" x2="92" y2="76" stroke="#7a8699" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="32" y1="87" x2="92" y2="87" stroke="#7a8699" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="92"  y1="87" x2="92"  y2="126" stroke="#7a8699" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="103" y1="87" x2="103" y2="126" stroke="#7a8699" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="92" y="76" width="11" height="11" fill="#0891b2" fill-opacity="0.8" stroke="#0e7490" stroke-width="1"/>
+            <text x="108" y="70" font-size="9" font-weight="700" fill="#c6492f" text-anchor="start">g·f(x,y)·dx dy</text>
+            <line x1="32" y1="18" x2="32" y2="126" stroke="#16243d" stroke-width="1.5"/>
+            <line x1="32" y1="126" x2="225" y2="126" stroke="#16243d" stroke-width="1.5"/>
+            <text x="27" y="12" font-size="10" font-style="italic" fill="#16243d" text-anchor="middle">y</text>
+            <text x="231" y="130" font-size="10" font-style="italic" fill="#16243d">x</text>
+            <text x="24" y="50" font-size="9.5" fill="#16243d" text-anchor="end">1</text>
+            <text x="152" y="138" font-size="9.5" fill="#16243d" text-anchor="middle">1</text>
+            <text x="24" y="85" font-size="9" fill="#46566f" text-anchor="end">dy</text>
+            <text x="97" y="138" font-size="9" fill="#46566f" text-anchor="middle">dx</text>
+            <text x="182" y="105" font-size="9" fill="#7a8699" text-anchor="middle">∬ 扫遍支撑</text>
+          </svg>
+          <div class="cap"><b>扫一遍</b>:连续把靶面切成小块 \(dx\,dy\),每块贡献 \(g\cdot f\,dx\,dy\)(27A/27C 的单位正方形)</div>
+        </div>
+      </div>
+      <p class="dim">再一个手感:同一场台风下两张保单的赔付 \(X,Y\) 高度相关,但"总赔付的期望"仍 = 各自期望之和(线性不问相关);而"赔付乘积的期望" \(E[XY]\)(下一章协方差的原料)就必须看依赖结构了——加法与乘法的分野,正是本章两条性质的分野。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li><b>积分限随支撑变</b>:题面一句 "for \(0&lt;x&lt;y&lt;1\)" 就是全部机关——先画支撑,内层限写成外层变量的函数,九成失分在这。</li>
+        <li><b>先找捷径再硬算</b>:见 \(E[aX+bY]\) 直接线性拆开;见 \(E[XY^k]\) 先验独立(密度可因式分解 + 矩形支撑),独立则一维积分 × 一维积分。</li>
+        <li>题面的 insurance loss / time-to-failure 联合密度都是包装,剥掉外衣全是同一句话:对 \(g\,f\) 二重积分。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Law_of_the_unconscious_statistician">Wikipedia · Law of the unconscious statistician</a></div><div class="z">"直接对 \(g\) 加权求和/积分就能得 \(E[g(X,Y)]\)"这件事有名字(LOTUS);看完明白为什么不必先求 \(g(X,Y)\) 的分布。</div><div class="u">en.wikipedia.org/wiki/Law_of_the_unconscious_statistician</div></div>
+        <div class="xr"><div class="e"><a href="https://online.stat.psu.edu/stat414/lesson/20">PSU STAT 414 · Lesson 20: Two Continuous Random Variables</a></div><div class="z">宾州州立公开课:联合密度 → 二重积分求期望,例题都配支撑区域图,与本章节奏完全同步。</div><div class="u">online.stat.psu.edu/stat414/lesson/20</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/expected-value">Statlect · Expected value</a></div><div class="z">把离散求和与连续积分放进同一个定义框架,正对应本章"镜像"视角;性质证明严谨可查。</div><div class="u">statlect.com/fundamentals-of-probability/expected-value</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>积分限套错</b>:非矩形支撑内层限必须含外层变量,先画区域再定限。</li>
+          <li><b>乱拆 \(E[XY]\)</b>:未确认独立就写 \(E[X]E[Y]\)——只有独立才成立。</li>
+          <li><b>把线性也当成需要独立</b>:\(E[X+Y]=E[X]+E[Y]\) 恒成立,别多此一举验独立。</li>
+          <li><b>积分次序与被积函数错配</b>:先 \(dx\) 就用 \(x\) 的限,别把 \(dx\)/\(dy\) 限写反。</li>
+          <li><b>密度常数没归一</b>:题给密度须满足 \(\iint f=1\),代错常数结果全歪。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对(p.455 起)。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 27.1</span>可因式分解密度,判断 \(E[X^2Y^3]=E[X^2]E[Y^3]\) 等命题真伪。</li>
+          <li><span class="ref">练 27.3</span>给分段联合密度,求 \(E[X]\)(保险事故年龄)。</li>
+          <li><span class="ref">练 27.6/27.7</span>两部件系统:非矩形支撑上求 \(E[Y]\)、运行时间期望。</li>
+          <li><span class="ref">练 27.24</span>由联合密度求边际密度,再算 \(\mathrm{Var}(Y)\)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(X,Y\) 独立且都 \(\sim U(0,1)\),求 \(E[XY]\)。</li>
+        <li>\(f(x,y)=2\) 在 \(0\le x\le y\le1\),写出 \(E[XY^2]\) 的正确积分限。</li>
+        <li>已知 \(E[X]=3,\ E[Y]=5\),求 \(E[2X+Y]\)(不知是否独立)。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(E[X]E[Y]=\tfrac12\cdot\tfrac12=\tfrac14\)(独立可拆);② \(\int_0^1\!\int_0^{y}2xy^2\,dx\,dy\)(内层 \(x\):0→\(y\));③ \(2\cdot3+5=11\)(线性,不需独立)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f2fafc,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 连续型联合矩</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义 / 特例</h4>
+        <p>\(E[g(X,Y)]=\iint g(x,y)f(x,y)\,dx\,dy\)</p>
+        <p>\(E[XY]=\iint xy\,f\,dx\,dy\)</p>
+        <p>\(E[X^mY^n]=\iint x^m y^n f\,dx\,dy\)</p>
+        <p>积分限由<b>支撑</b>定;非矩形内层含外层变量</p>
+      </div>
+      <div class="cc t">
+        <h4>线性 / 独立</h4>
+        <p>线性(恒成立):\(E[aX+bY]=aE[X]+bE[Y]\)</p>
+        <p>独立才拆:\(X\perp Y\Rightarrow E[XY]=E[X]E[Y]\)</p>
+        <p>更一般:\(E[g(X)h(Y)]=E[g(X)]E[h(Y)]\)</p>
+        <p>三角支撑 \(\Rightarrow\) 不独立,老实二重积分</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 27 原文用词</span><h2 class="sec-title">连续型联合矩 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"联合密度 / 独立 / 求期望"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 27</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">\(f(x,y)\),对它二重积分得概率/期望</td></tr>
+          <tr><td class="en">joint moment</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>联合矩</td><td class="root">\(E[X^mY^n]\);\(E[XY]\) 是最常用的一个</td></tr>
+          <tr><td class="en">double-integrate</td><td class="ipa">/ˈdʌbəl ˈɪntɪɡreɪt/</td><td><span class="pos v">v.</span></td><td>二重积分</td><td class="root">离散求和的连续对应;\(\iint\cdots dx\,dy\)</td></tr>
+          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边际密度</td><td class="root">\(f_X(x)=\int f(x,y)\,dy\),抽掉另一变量</td></tr>
+          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">\(f=f_Xf_Y\) 且支撑矩形 → 乘积期望可拆</td></tr>
+          <tr><td class="en">factored</td><td class="ipa">/ˈfæktərd/</td><td><span class="pos adj">adj.</span></td><td>可因式分解的</td><td class="root">密度写成"含 \(x\)"×"含 \(y\)",独立的信号</td></tr>
+          <tr><td class="en">support (region)</td><td class="ipa">/səˈpɔːrt/</td><td><span class="pos n">n.</span></td><td>支撑(区域)</td><td class="root">\(f&gt;0\) 的区域,决定积分上下限</td></tr>
+          <tr><td class="en">expected value</td><td class="ipa">/ɪkˈspɛktɪd/</td><td><span class="pos n">n.</span></td><td>期望值</td><td class="root">\(E[\cdot]\),对密度加权积分</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">joint density function</div><div class="z">联合密度函数(给出 \(f(x,y)\))</div></div>
+        <div class="ph"><div class="e">Calculate E[XY²].</div><div class="z">求 \(E[XY^2]\)</div></div>
+        <div class="ph"><div class="e">the variables are independent</div><div class="z">两变量独立(可拆乘积期望)</div></div>
+        <div class="ph"><div class="e">nonzero only on …</div><div class="z">仅在……上非零(即支撑范围)</div></div>
+        <div class="ph"><div class="e">can be factored into …</div><div class="z">能因式分解成……(判独立)</div></div>
+        <div class="ph"><div class="e">over the joint density</div><div class="z">对联合密度(积分)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 27</b> · 第二十七章 Joint Moments for Continuous Random Variables 连续型联合矩</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 27(p.453–467,页码已标注,细节以课本为准)+ 威普网校视频。<br>本章是第十二章离散型联合矩的连续推广;协方差 / 相关系数属后续课次。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

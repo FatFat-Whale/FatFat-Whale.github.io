@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L13 导学 · Covariance 协方差</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#7c3aed; --accent-deep:#5b21b6; --accent-soft:#efe7fd; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L13 · 协方差</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第十三章 · <em>Covariance 协方差</em></h1>
+    <p class="lead">两个随机变量一起变动时,<b>方差不再简单相加</b>——差的那一项就是<b>协方差</b> \(\operatorname{Cov}(X,Y)\)。把它的定义、捷径公式 \(E[XY]-E[X]E[Y]\)、双线性性质、单位无关的<b>相关系数</b> \(\rho\),以及最爱考的"独立 ⇒ Cov=0、反之不成立"一次性打通。这是联合分布、组合投资方差的地基。对照课本 Lesson&nbsp;13 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch13 Covariance <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.211–213</b>(理论)</span>
+      <span class="pill">习题 <b>p.214–</b></span>
+      <span class="pill">重章 · <b>公式密集</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>协方差是<b>同涨同跌的计分</b>:\(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]\);正=同向,负=反向,0=无线性关联。</li>
+        <li>和的方差<b>不再简单相加</b>:\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)——<b>交叉项最易漏</b>。</li>
+        <li><b>独立 ⇒ Cov=0,反之不成立</b>:协方差只看线性,\(Y=X^2\) 极度依赖却 Cov=0。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l12-joint-moments.html">L12 联合矩</a>
+    <span class="arr">→</span>
+    <span class="here">L13 协方差</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l16-double-expectation.html">L16 双重期望</a>
+    <a href="soa-exam-p-l28-covariance-continuous.html">L28 连续协方差</a>
+    <a href="soa-exam-p-l31-bivariate-normal.html">L31 二元正态</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#cov">协方差</a>
+  <a href="#var">方差和</a>
+  <a href="#prop">性质</a>
+  <a href="#corr">相关系数</a>
+  <a href="#indep">独立</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完协方差你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 用两种写法求协方差:定义 \(E[(X-\mu_X)(Y-\mu_Y)]\) 与捷径 \(E[XY]-E[X]E[Y]\)。</p>
+        <p style="margin-bottom:0">✅ 展开 \(\operatorname{Var}(aX+bY)=a^2\operatorname{Var}X+b^2\operatorname{Var}Y+2ab\operatorname{Cov}(X,Y)\),含交叉项不漏。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>双线性 / 对称性</b>快速化简 \(\operatorname{Cov}(aX+b,\,cY+d)\)。</p>
+        <p style="margin-bottom:0">✅ 算<b>相关系数</b> \(\rho\in[-1,1]\),并牢记<b>独立 ⇒ Cov=0,但 Cov=0 推不出独立</b>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cov" style="background:linear-gradient(180deg,#f8f5fe,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch13 · Lesson 13 · 课本 p.211</span><h2 class="sec-title">协方差 — 定义与捷径公式</h2></div></div>
+    <p class="sec-sub">对独立变量,\(\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y\)。但一般情况不成立——展开 \(\operatorname{Var}(X+Y)\) 会多出一项,它度量 \(X,Y\) 是否"同涨同跌",这项就叫协方差。</p>
+
+    <div class="card accent">
+      <h3>从 Var(X+Y) 的展开引出协方差 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.211 · 式 (13.1)(13.2)</div>
+      <p class="lede">\(\operatorname{Var}(X+Y)\) 展开后多出的交叉项就是协方差——它给"同涨同跌"计分。</p>
+      <div class="formula"><span class="name">Covariance — definition</span>
+        $$\operatorname{Cov}(X,Y)=E\big[(X-\mu_X)(Y-\mu_Y)\big]\tag{13.1}$$</div>
+      <div class="formula"><span class="name">Variance of a sum</span>
+        $$\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)+2\operatorname{Cov}(X,Y)\tag{13.2}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>同涨同跌记正分,一涨一跌记负分</b> — \((X-\mu_X)\) 与 \((Y-\mu_Y)\) 常同号 → 乘积期望为正;常异号 → 负。协方差就是"同向偏离均值"的平均强度。</span></div>
+      <p class="dim">用方差定义展开 \(\operatorname{Var}(X+Y)=E\big[(X+Y-\mu_X-\mu_Y)^2\big]\),平方后交叉项 \(2E[(X-\mu_X)(Y-\mu_Y)]\) 就是 \(2\operatorname{Cov}\)。\(\operatorname{Cov}\) <b>可正可负</b>:正 = 同向变动,负 = 反向变动,0 = 无线性关联。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>捷径公式(考试主力)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.211 · 式 (13.4)</div>
+      <p class="lede">和方差捷径 \(E[X^2]-E[X]^2\) 同构——考场上算协方差基本都走这条。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Shortcut formula</span>
+        $$\operatorname{Cov}(X,Y)=E[XY]-E[X]\,E[Y]\tag{13.4}$$</div>
+      <p class="dim">所以对<b>独立</b>变量 \(E[XY]=E[X]E[Y]\),协方差恰为 0——独立时 (13.2) 退回 \(\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y\)。</p>
+      <details class="more"><summary>展开 · 捷径公式怎么来的</summary>
+        <p class="dim">把定义乘开:\(E[(X-\mu_X)(Y-\mu_Y)]=E[XY-\mu_Y X-\mu_X Y+\mu_X\mu_Y]=E[XY]-\mu_Y\mu_X-\mu_X\mu_Y+\mu_X\mu_Y=E[XY]-E[X]E[Y]\)。用的正是上一章的期望线性。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="var">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">最常考的展开</span><h2 class="sec-title">方差的和 与 线性组合</h2></div></div>
+    <p class="sec-sub">把系数带进来的一般式——考试里"两个变量线性组合求方差"几乎必用它,交叉项 \(2ab\operatorname{Cov}\) 是失分重灾区。</p>
+    <div class="card accent">
+      <h3>线性组合的方差 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.211 · 式 (13.3)</div>
+      <p class="lede">系数进方差要<b>平方</b>,进交叉项是 <b>\(2ab\)</b>(带符号)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Variance of a linear combination</span>
+        $$\operatorname{Var}(aX+bY)=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y)+2ab\,\operatorname{Cov}(X,Y)\tag{13.3}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>系数平方进方差,2ab 带符号进交叉</b> — 求 \(\operatorname{Var}(aX-bY)\) 就把 \(b\) 换成 \(-b\),交叉项变 \(-2ab\operatorname{Cov}\)。</span></div>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 130" role="img" aria-label="独立:方差直接相加">
+          <rect x="18" y="70" width="34" height="40" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"/>
+          <rect x="60" y="52" width="34" height="58" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"/>
+          <text x="100" y="86" font-size="20" fill="#16243d">=</text>
+          <rect x="120" y="30" width="34" height="80" fill="var(--accent-deep)" fill-opacity="0.35" stroke="var(--accent-deep)"/>
+          <text x="26" y="124" font-size="10" fill="#46566f">Var X</text>
+          <text x="66" y="124" font-size="10" fill="#46566f">Var Y</text>
+          <text x="120" y="124" font-size="10" fill="#46566f">Var(X+Y)</text>
+        </svg>
+        <div class="cap"><b>Cov=0</b>:直接相加,无交叉项</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 130" role="img" aria-label="正协方差:多出正的交叉项">
+          <rect x="14" y="70" width="30" height="40" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"/>
+          <rect x="50" y="52" width="30" height="58" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"/>
+          <rect x="86" y="86" width="30" height="24" fill="var(--hi)" fill-opacity="0.55" stroke="#c69a00"/>
+          <text x="122" y="86" font-size="18" fill="#16243d">=</text>
+          <rect x="140" y="16" width="34" height="94" fill="var(--accent-deep)" fill-opacity="0.35" stroke="var(--accent-deep)"/>
+          <text x="88" y="124" font-size="9" fill="#8a6d00">+2Cov</text>
+        </svg>
+        <div class="cap"><b>Cov&gt;0</b>:多出黄色 \(+2\operatorname{Cov}\),和更大</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 130" role="img" aria-label="负协方差:扣掉交叉项">
+          <rect x="14" y="60" width="30" height="50" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"/>
+          <rect x="50" y="44" width="30" height="66" fill="var(--accent)" fill-opacity="0.30" stroke="var(--accent)"/>
+          <rect x="86" y="86" width="30" height="24" fill="var(--warn)" fill-opacity="0.40" stroke="var(--warn)"/>
+          <text x="122" y="86" font-size="18" fill="#16243d">=</text>
+          <rect x="140" y="60" width="34" height="50" fill="var(--accent-deep)" fill-opacity="0.35" stroke="var(--accent-deep)"/>
+          <text x="88" y="124" font-size="9" fill="var(--warn)">−2Cov</text>
+        </svg>
+        <div class="cap"><b>Cov&lt;0</b>:扣掉 \(2\operatorname{Cov}\),组合更"抵消"</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>投资直觉(课本 p.213):</b>买 1 只股票方差 500;买 10 只<b>独立</b>股各 5 份,总方差只 50——分散化把风险摊平。协方差为负的资产还能进一步<b>对冲</b>,一涨一跌相互抵消。</span></div>
+  </div>
+</section>
+
+<section id="prop">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">代数性质</span><h2 class="sec-title">协方差的性质:对称 · 双线性 · 与方差的关系</h2></div></div>
+    <p class="sec-sub">协方差在两个位置上都是"线性"的(双线性),记住这几条能把复杂表达式一步化简,不必回定义硬算。</p>
+    <div class="card accent">
+      <h3>四条核心性质 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.211–212 · 式 (13.5)(13.6)(13.7)</div>
+      <p class="lede">合起来一条顶四条:\(\operatorname{Cov}(aX+b,\,cY+d)=ac\,\operatorname{Cov}(X,Y)\)——常数全丢掉,只留系数乘积。</p>
+      <div class="formula"><span class="name">Symmetric · self = variance</span>
+        $$\operatorname{Cov}(X,Y)=\operatorname{Cov}(Y,X)\tag{13.5}\qquad \operatorname{Cov}(X,X)=\operatorname{Var}(X)$$</div>
+      <div class="formula"><span class="name">Multiplicative in constants</span>
+        $$\operatorname{Cov}(aX,\,bY)=ab\,\operatorname{Cov}(X,Y)\tag{13.6}$$</div>
+      <div class="formula"><span class="name">Bilinear (additive in each slot)</span>
+        $$\operatorname{Cov}(X,\,aY+bZ)=a\,\operatorname{Cov}(X,Y)+b\,\operatorname{Cov}(X,Z)\tag{13.7}$$</div>
+      <p class="dim"><b>加常数不影响协方差</b>:\(\operatorname{Cov}(X+c,\,Y)=\operatorname{Cov}(X,Y)\)。</p>
+      <details class="more"><summary>展开 · 为什么加常数不变</summary>
+        <p class="dim">常数没有偏离均值(\((c-c)=0\)),对 \(E[(X-\mu_X)(Y-\mu_Y)]\) 毫无贡献。所以协方差只看"波动",不看"位置"。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="corr" style="background:linear-gradient(180deg,#f8f5fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">Ch13 · 核心</span><h2 class="sec-title">相关系数 — 无单位的线性关联度</h2></div></div>
+    <p class="sec-sub">协方差的大小受量纲影响(换单位数值就变),不好横向比较。除以两个标准差归一化,得到只在 \([-1,1]\) 里的<b>相关系数</b> \(\rho\)。</p>
+    <div class="card accent">
+      <h3>相关系数(Correlation)<span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.212 · 式 (13.8)</div>
+      <p class="lede">协方差除以两个标准差,量纲消掉——只剩 \([-1,1]\) 里的纯"线性关联度"。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Correlation coefficient</span>
+        $$\rho=\operatorname{Corr}(X,Y)=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\,\sigma_Y}=\frac{\operatorname{Cov}(X,Y)}{\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}\in[-1,1]\tag{13.8}$$</div>
+      <p class="dim"><b>符号跟着协方差走</b>,数值在 \(-1\) 到 \(1\) 之间:\(\rho=\pm1\) 当且仅当 \(Y\) 是 \(X\) 的<b>线性函数</b> \(Y=a+bX\)(\(b\) 的正负决定 \(\rho\) 的正负);\(\rho=0\) 称<b>不相关</b>(uncorrelated)。</p>
+      <p class="dim" style="margin-bottom:0">带相关系数的方差公式:</p>
+      <div class="formula"><span class="name">Variance via correlation</span>
+        $$\operatorname{Var}(aX+bY)=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y)+2ab\,\rho\,\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}\tag{13.9}$$</div>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 160" role="img" aria-label="正相关散点">
+          <line x1="24" y1="140" x2="188" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="24" y1="14" x2="24" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="30" y1="132" x2="182" y2="30" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="42" cy="126" r="3.5" fill="var(--accent)"/>
+          <circle cx="60" cy="118" r="3.5" fill="var(--accent)"/>
+          <circle cx="72" cy="98" r="3.5" fill="var(--accent)"/>
+          <circle cx="92" cy="104" r="3.5" fill="var(--accent)"/>
+          <circle cx="108" cy="82" r="3.5" fill="var(--accent)"/>
+          <circle cx="126" cy="70" r="3.5" fill="var(--accent)"/>
+          <circle cx="144" cy="52" r="3.5" fill="var(--accent)"/>
+          <circle cx="168" cy="42" r="3.5" fill="var(--accent)"/>
+          <text x="188" y="152" font-size="11" fill="#16243d" font-style="italic">X</text>
+          <text x="10" y="20" font-size="11" fill="#16243d" font-style="italic">Y</text>
+        </svg>
+        <div class="cap"><b>\(\rho&gt;0\)</b> 正相关:同涨同跌,\(\operatorname{Cov}&gt;0\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 160" role="img" aria-label="负相关散点">
+          <line x1="24" y1="140" x2="188" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="24" y1="14" x2="24" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="30" y1="30" x2="182" y2="132" stroke="var(--warn)" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="42" cy="40" r="3.5" fill="var(--warn)"/>
+          <circle cx="60" cy="54" r="3.5" fill="var(--warn)"/>
+          <circle cx="76" cy="52" r="3.5" fill="var(--warn)"/>
+          <circle cx="94" cy="76" r="3.5" fill="var(--warn)"/>
+          <circle cx="110" cy="86" r="3.5" fill="var(--warn)"/>
+          <circle cx="128" cy="98" r="3.5" fill="var(--warn)"/>
+          <circle cx="148" cy="118" r="3.5" fill="var(--warn)"/>
+          <circle cx="168" cy="124" r="3.5" fill="var(--warn)"/>
+          <text x="188" y="152" font-size="11" fill="#16243d" font-style="italic">X</text>
+          <text x="10" y="20" font-size="11" fill="#16243d" font-style="italic">Y</text>
+        </svg>
+        <div class="cap"><b>\(\rho&lt;0\)</b> 负相关:一涨一跌,\(\operatorname{Cov}&lt;0\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 200 160" role="img" aria-label="零相关散点">
+          <line x1="24" y1="140" x2="188" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="24" y1="14" x2="24" y2="140" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="30" y1="78" x2="182" y2="78" stroke="var(--mute)" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="46" cy="60" r="3.5" fill="var(--mute)"/>
+          <circle cx="58" cy="104" r="3.5" fill="var(--mute)"/>
+          <circle cx="78" cy="46" r="3.5" fill="var(--mute)"/>
+          <circle cx="92" cy="96" r="3.5" fill="var(--mute)"/>
+          <circle cx="108" cy="64" r="3.5" fill="var(--mute)"/>
+          <circle cx="124" cy="112" r="3.5" fill="var(--mute)"/>
+          <circle cx="146" cy="54" r="3.5" fill="var(--mute)"/>
+          <circle cx="166" cy="98" r="3.5" fill="var(--mute)"/>
+          <text x="188" y="152" font-size="11" fill="#16243d" font-style="italic">X</text>
+          <text x="10" y="20" font-size="11" fill="#16243d" font-style="italic">Y</text>
+        </svg>
+        <div class="cap"><b>\(\rho=0\)</b> 不相关:无线性趋势,\(\operatorname{Cov}=0\)</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 13A</span><span class="src" style="margin:0">课本 p.212 · 联合分布求 Cov 与 Corr</span></div>
+      <p class="q">离散 \(X,Y\) 联合概率:\(P(1,1)=0.40,\ P(1,2)=0.12,\ P(1,3)=0.08;\ P(2,1)=0.30,\ P(2,2)=0.06,\ P(2,3)=0.04\)。求 \(\operatorname{Cov}(X,Y)\) 与 \(\operatorname{Corr}(X,Y)\)。</p>
+      <p>边缘:\(f_X(1)=0.6,\ f_X(2)=0.4\);\(f_Y(1)=0.7,\ f_Y(2)=0.18,\ f_Y(3)=0.12\)。<br>
+      \(E[X]=0.6(1)+0.4(2)=1.4\);\(E[Y]=0.7(1)+0.18(2)+0.12(3)=1.42\)。<br>
+      \(E[XY]=0.40(1)+0.12(2)+0.08(3)+0.30(2)+0.06(4)+0.04(6)=1.96\)。<br>
+      \(\operatorname{Cov}=E[XY]-E[X]E[Y]=1.96-1.4\times1.42=\mathbf{-0.028}\)。<br>
+      \(\operatorname{Var}X=E[X^2]-\mu_X^2=2.2-1.96=0.24\);\(\operatorname{Var}Y=2.5-1.42^2=0.4836\)。<br>
+      \(\rho=\dfrac{-0.028}{\sqrt{0.24\times0.4836}}=\dfrac{-0.028}{0.34068}=\mathbf{-0.0822}\)。</p>
+      <span class="ans">Cov(X,Y) = −0.028　Corr(X,Y) ≈ −0.0822</span>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>读数:</b>\(\rho\approx-0.08\) 非常接近 0——\(X,Y\) 几乎<b>无线性关联</b>,但联合表不是行列外积,它们并<b>不独立</b>。这正说明 \(\rho\)(或 Cov)只抓线性关系。</span></div>
+  </div>
+</section>
+
+<section id="indep">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">最爱考的陷阱</span><h2 class="sec-title">独立 vs 协方差为 0</h2></div></div>
+    <p class="sec-sub">这是本章头号考点:一个方向成立,另一个方向不成立。务必分清单向蕴含。</p>
+    <div class="card accent">
+      <h3>独立 ⇒ Cov = 0,但 Cov = 0 ⇏ 独立 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.211 · 式 (13.5) 讨论</div>
+      <p class="lede">只有一个方向成立:独立 ⇒ 不相关;不相关 ⇏ 独立——协方差只度量<b>线性</b>关系。</p>
+      <div class="formula"><span class="name">One-way implication</span>
+        $$X,Y \text{ 独立}\ \Longrightarrow\ E[XY]=E[X]E[Y]\ \Longrightarrow\ \operatorname{Cov}(X,Y)=0$$
+        $$\operatorname{Cov}(X,Y)=0\ \not\!\!\Longrightarrow\ X,Y \text{ 独立}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>独立必不相关,不相关未必独立</b> — Cov 是线性测度;两个变量可以有很强的<b>非线性</b>依赖却协方差为 0,所以"不相关"比"独立"弱。</span></div>
+      <details class="more"><summary>展开 · 经典反例 \(Y=X^2\)(课本 p.211)</summary>
+        <p class="dim">设 \(X\) 取 \(-1,0,1\) 各概率 \(\tfrac14,\tfrac12,\tfrac14\),令 \(Y=X^2\)。显然 \(Y\) 完全由 \(X\) 决定,<b>极度依赖</b>。但 \(E[X]=0\),\(E[XY]=E[X^3]=(-1)^3\tfrac14+0+1^3\tfrac14=0\),故 \(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]=0-0=\mathbf 0\)。协方差为 0,却<b>绝不独立</b>——抛物线关系是纯非线性的,线性测度看不见。</p>
+      </details>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>独立 Independent</th><th>不相关 Uncorrelated</th></tr></thead>
+      <tbody>
+        <tr><td>定义</td><td>\(p(x,y)=p_X(x)\,p_Y(y)\)(联合可分离)</td><td>\(\operatorname{Cov}(X,Y)=0\)(即 \(\rho=0\))</td></tr>
+        <tr><td>一句话</td><td>任何函数关系都没有</td><td>只是没有<b>线性</b>关系</td></tr>
+        <tr><td>谁强谁弱</td><td>强:独立 ⇒ 不相关</td><td>弱:不相关 ⇏ 独立(反例 \(Y=X^2\))</td></tr>
+        <tr><td>解锁什么</td><td>\(E[XY]=E[X]E[Y]\)、\(\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y\) 全解锁</td><td>仅交叉项为 0,别往独立推</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最大陷阱:</b>看到"\(\operatorname{Cov}(X,Y)=0\)"或"不相关"<b>不能</b>下结论"独立"。反过来题目给"独立"时,才能放心用 \(\operatorname{Cov}=0\)、\(E[XY]=E[X]E[Y]\)、\(\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y\)。方向别搞反(习题 13.1 就考这个)。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:伞厂与防晒霜厂的计分板</h3>
+      <p>把两家公司每天的销量各减去自己的平均,逐日打分:两个偏差<b>同号</b>(一起高于/低于平均)记正分,<b>异号</b>记负分——所有天的平均分就是协方差。雪糕与冷饮同热同冷,正分居多 → \(\operatorname{Cov}>0\);<b>伞和防晒霜</b>天晴一个滞销一个热卖,负分居多 → \(\operatorname{Cov}&lt;0\)。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="伞与防晒霜逐日打分:偏差异号记负分,负分居多,平均分即协方差为负">
+            <text x="39"  y="20" font-size="12" text-anchor="middle">☀</text>
+            <text x="64"  y="20" font-size="12" text-anchor="middle">☔</text>
+            <text x="89"  y="20" font-size="12" text-anchor="middle">⛅</text>
+            <text x="114" y="20" font-size="12" text-anchor="middle">☀</text>
+            <text x="139" y="20" font-size="12" text-anchor="middle">⛅</text>
+            <text x="164" y="20" font-size="12" text-anchor="middle">☔</text>
+            <text x="39"  y="34" font-size="9" fill="#7a8699" text-anchor="middle">−</text>
+            <text x="64"  y="34" font-size="9" fill="#7a8699" text-anchor="middle">−</text>
+            <text x="89"  y="34" font-size="9" fill="#7a8699" text-anchor="middle">+</text>
+            <text x="114" y="34" font-size="9" fill="#7a8699" text-anchor="middle">−</text>
+            <text x="139" y="34" font-size="9" fill="#7a8699" text-anchor="middle">+</text>
+            <text x="164" y="34" font-size="9" fill="#7a8699" text-anchor="middle">−</text>
+            <rect x="30"  y="72" width="18" height="34" fill="var(--accent)" fill-opacity="0.75"/>
+            <rect x="55"  y="72" width="18" height="24" fill="var(--accent)" fill-opacity="0.75"/>
+            <rect x="80"  y="58" width="18" height="10" fill="var(--accent)" fill-opacity="0.75"/>
+            <rect x="105" y="72" width="18" height="30" fill="var(--accent)" fill-opacity="0.75"/>
+            <rect x="130" y="60" width="18" height="8"  fill="var(--accent)" fill-opacity="0.75"/>
+            <rect x="155" y="72" width="18" height="20" fill="var(--accent)" fill-opacity="0.75"/>
+            <line x1="22" y1="70" x2="180" y2="70" stroke="#16243d" stroke-width="1.5"/>
+            <text x="14" y="73" font-size="9" fill="#7a8699" text-anchor="middle">0</text>
+            <line x1="22" y1="85" x2="180" y2="85" stroke="#c6492f" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <text x="186" y="82" font-size="9.5" font-weight="700" fill="#c6492f">平均分</text>
+            <text x="186" y="94" font-size="9.5" font-weight="700" fill="#c6492f">=Cov&lt;0</text>
+            <text x="101" y="122" font-size="9" fill="#46566f" text-anchor="middle">每天一根:偏差乘积 (X−μX)(Y−μY)</text>
+          </svg>
+          <div class="cap"><b>逐日打分</b>:☀ 伞滞销·霜热卖、☔ 反过来——偏差异号都记负分,负分居多 → 平均分 \(\operatorname{Cov}&lt;0\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="例13A:均值十字把六个支撑点分成正负区,正分0.40几乎被负分0.30抵消,协方差为负0.028">
+            <text x="40"  y="26" font-size="13" font-weight="700" fill="#7a8699" text-anchor="middle">−</text>
+            <text x="210" y="26" font-size="13" font-weight="700" fill="var(--accent-deep)" text-anchor="middle">+</text>
+            <text x="40"  y="140" font-size="13" font-weight="700" fill="var(--accent-deep)" text-anchor="middle">+</text>
+            <text x="216" y="140" font-size="13" font-weight="700" fill="#7a8699" text-anchor="middle">−</text>
+            <line x1="123" y1="16" x2="123" y2="138" stroke="#46566f" stroke-width="1" stroke-dasharray="4 3"/>
+            <line x1="28" y1="102" x2="226" y2="102" stroke="#46566f" stroke-width="1" stroke-dasharray="4 3"/>
+            <text x="123" y="11" font-size="9" fill="#46566f" text-anchor="middle">μX=1.4</text>
+            <text x="28" y="96" font-size="8.5" fill="#46566f">μY=1.42</text>
+            <circle cx="76"  cy="120" r="12.6" fill="var(--accent)" fill-opacity="0.8"/>
+            <circle cx="76"  cy="77"  r="6.9"  fill="#7a8699" fill-opacity="0.55"/>
+            <circle cx="76"  cy="33"  r="5.7"  fill="#7a8699" fill-opacity="0.55"/>
+            <circle cx="194" cy="120" r="11"   fill="#7a8699" fill-opacity="0.55"/>
+            <circle cx="194" cy="77"  r="4.9"  fill="var(--accent)" fill-opacity="0.8"/>
+            <circle cx="194" cy="33"  r="4"    fill="var(--accent)" fill-opacity="0.8"/>
+            <text x="76"  y="123" font-size="8.5" font-weight="700" fill="#fff" text-anchor="middle">0.40</text>
+            <text x="194" y="142" font-size="8.5" font-weight="700" fill="#46566f" text-anchor="middle">0.30</text>
+            <text x="123" y="149" font-size="9.5" font-weight="700" fill="#c6492f" text-anchor="middle">Cov=−0.028</text>
+          </svg>
+          <div class="cap"><b>回看例 13A</b>:均值十字分出 +/− 区(圆面积=概率),0.40 的正分几乎被 0.30 的负分抵掉 → \(\operatorname{Cov}=-0.028\),仅略偏负</div>
+        </div>
+      </div>
+      <p class="dim">这直接解释 (13.2):同持"雪糕+冷饮",总销量大起大落(\(+2\operatorname{Cov}\) 放大波动);同持"伞+防晒霜",一涨一跌互相抵消(\(-2|\operatorname{Cov}|\) 压低波动)——这就是<b>对冲</b>。而 \(\rho\) 只是把分数除以两边各自的波动幅度归一:无论按"元"还是"百万元"记账,\(\rho\) 都不变。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>保险经典:fire loss \(X\) + theft loss \(Y\),给 \(\operatorname{Var}X\)、\(\operatorname{Var}Y\)、\(\operatorname{Cov}\) 求 total loss 方差 → 直接 (13.2)/(13.3),<b>交叉项别漏</b>,\(\operatorname{Var}(X-Y)\) 的交叉项取负。</li>
+        <li>给联合表:三件套 \(E[X]\)、\(E[Y]\)、\(E[XY]\) 再套捷径(例 13A 模板)。</li>
+        <li>措辞陷阱:题面只说 <b>uncorrelated</b> 千万别当独立用;说 <b>independent</b> 才解锁 Cov=0 全家桶。</li>
+        <li>化简题:\(\operatorname{Cov}(3X+1,\,2Y-5)\) → 常数丢、系数乘,\(=6\operatorname{Cov}(X,Y)\)。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Covariance">Wikipedia · Covariance</a></div><div class="z">性质总表 + 双线性的完整证明,符号与课本几乎一致,可当公式字典查。</div><div class="u">en.wikipedia.org/wiki/Covariance</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/covariance">statlect · Covariance</a></div><div class="z">定义 → 捷径 → 性质逐步推导,一步不跳,配可核对答案的例题。</div><div class="u">statlect.com/fundamentals-of-probability/covariance</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Correlation">Wikipedia · Correlation</a></div><div class="z">开头那张著名散点图矩阵一眼看懂 \(\rho\) 抓什么、漏什么(非线性全看不见)。</div><div class="u">en.wikipedia.org/wiki/Correlation</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" style="background:linear-gradient(180deg,#f8f5fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>Cov=0 ⇏ 独立</b>:头号陷阱,只有"独立 ⇒ Cov=0"这一个方向。</li>
+          <li><b>Var 的和漏交叉项</b>:\(\operatorname{Var}(X+Y)\ne\operatorname{Var}X+\operatorname{Var}Y\),除非已知独立/不相关。</li>
+          <li><b>\(\operatorname{Var}(X-Y)\) 的符号</b>:仍是 \(+\operatorname{Var}Y\),但交叉项变 \(-2\operatorname{Cov}\)。</li>
+          <li><b>系数平方 vs 乘积</b>:方差里 \(a^2,b^2\);协方差项里 \(2ab\)(带符号)。</li>
+          <li><b>加常数当成会变</b>:\(\operatorname{Cov}(aX+b,cY+d)=ac\operatorname{Cov}\),常数 \(b,d\) 丢掉。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 13.1</span>\(Y=X^2\),\(X\) 取 \(-1,0,1\) 等概——判 Cov 与独立性(选择题,正是本章陷阱)。</li>
+          <li><span class="ref">练 13.8</span>\(Z=3X-Y-5\),\(X,Y\) 独立,求 \(\operatorname{Var}(Z)\)。</li>
+          <li><span class="ref">练 13.11</span>火险+盗险,给各方差与 \(\operatorname{Cov}=8\),求总损失方差。</li>
+          <li><span class="ref">练 13.13</span>\([110\text{-}S90{:}4]\) 由联合表直接算 \(\operatorname{Cov}(X,Y)\)。</li>
+          <li><span class="ref">练 13.15</span>\([Sample{:}291]\) 由联合分布求 \(\operatorname{Corr}(X,Y)\)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(\operatorname{Var}X=3,\ \operatorname{Var}Y=2,\ \operatorname{Cov}(X,Y)=1\),求 \(\operatorname{Var}(X+Y)\) 与 \(\operatorname{Var}(X-Y)\)。</li>
+        <li>\(X,Y\) 独立,\(\operatorname{Var}X=4,\ \operatorname{Var}Y=9\),求 \(\operatorname{Var}(2X-Y)\)。</li>
+        <li>\(\operatorname{Cov}(X,Y)=6,\ \sigma_X=3,\ \sigma_Y=4\),求 \(\rho\)。</li>
+        <li>\(\operatorname{Cov}(3X+1,\,2Y-5)=?\)(用 \(\operatorname{Cov}(X,Y)=c\) 表示)</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(3+2+2(1)=7\);\(3+2-2(1)=3\)。② 独立故 \(4\cdot4+1\cdot9=16+9=25\)。③ \(\rho=6/(3\cdot4)=0.5\)。④ \(3\cdot2\cdot c=6c\)(常数丢掉)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 协方差(Table 13.1)</h2></div></div>
+    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。课本 Table 13.1 汇总了这些式子。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义 / 捷径 / 方差和</h4>
+        <p>\(\operatorname{Cov}(X,Y)=E[(X-\mu_X)(Y-\mu_Y)]\)</p>
+        <p>\(=E[XY]-E[X]E[Y]\)</p>
+        <p>\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)</p>
+        <p>\(\operatorname{Var}(aX+bY)=a^2\operatorname{Var}X+b^2\operatorname{Var}Y+2ab\operatorname{Cov}\)</p>
+      </div>
+      <div class="cc t">
+        <h4>性质 / 相关 / 独立</h4>
+        <p>对称 \(\operatorname{Cov}(X,Y)=\operatorname{Cov}(Y,X)\);\(\operatorname{Cov}(X,X)=\operatorname{Var}X\)</p>
+        <p>双线性 \(\operatorname{Cov}(aX+b,cY+d)=ac\operatorname{Cov}(X,Y)\)</p>
+        <p>\(\rho=\dfrac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}\in[-1,1]\)</p>
+        <p>独立 ⇒ Cov=0;<b>Cov=0 ⇏ 独立</b>(\(Y=X^2\))</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab" style="background:linear-gradient(180deg,#f8f5fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">09</span><div><span class="sec-tag tag-accent">背诵 · Lesson 13 原文用词</span><h2 class="sec-title">协方差 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"独立 / 相关 / 组合"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 13</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">covariance</td><td class="ipa">/koʊˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>协方差</td><td class="root">co-(共同)+variance(方差)→ 共同变动 \(E[XY]-E[X]E[Y]\)</td></tr>
+          <tr><td class="en">correlation</td><td class="ipa">/ˌkɔːrəˈleɪʃən/</td><td><span class="pos n">n.</span></td><td>相关(系数)</td><td class="root">co-+relation → 归一化的协方差 \(\rho\in[-1,1]\)</td></tr>
+          <tr><td class="en">correlation coefficient</td><td class="ipa">/ˌkoʊɪˈfɪʃənt/</td><td><span class="pos n">n.</span></td><td>相关系数</td><td class="root">记作 \(\rho\) 或 \(\rho_{XY}\)</td></tr>
+          <tr><td class="en">uncorrelated</td><td class="ipa">/ˌʌnˈkɔːrəleɪtɪd/</td><td><span class="pos adj">adj.</span></td><td>不相关的</td><td class="root">\(\rho=0\);<b>弱于独立</b>,别混</td></tr>
+          <tr><td class="en">bilinear</td><td class="ipa">/baɪˈlɪniər/</td><td><span class="pos adj">adj.</span></td><td>双线性的</td><td class="root">两个位置各自线性 → 式 (13.7)</td></tr>
+          <tr><td class="en">covariance matrix</td><td class="ipa">/ˈmeɪtrɪks/</td><td><span class="pos n">n.</span></td><td>协方差矩阵</td><td class="root">\(\Sigma\),对角为方差,对称非负定</td></tr>
+          <tr><td class="en">linear combination</td><td class="ipa">/ˌkɒmbɪˈneɪʃən/</td><td><span class="pos n">n.</span></td><td>线性组合</td><td class="root">\(aX+bY\),方差用式 (13.3)</td></tr>
+          <tr><td class="en">diversify</td><td class="ipa">/daɪˈvɜːrsɪfaɪ/</td><td><span class="pos v">v.</span></td><td>分散(投资)</td><td class="root">diverse(多样)→ 独立资产摊平方差</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">the covariance of X and Y is …</div><div class="z">X 与 Y 的协方差为……</div></div>
+        <div class="ph"><div class="e">independent random variables</div><div class="z">独立随机变量(⇒ Cov=0)</div></div>
+        <div class="ph"><div class="e">the correlation coefficient of …</div><div class="z">……的相关系数(求 \(\rho\))</div></div>
+        <div class="ph"><div class="e">joint probability function p(x,y)</div><div class="z">联合概率函数(据此算 Cov)</div></div>
+        <div class="ph"><div class="e">is modeled by Z = aX + bY − c</div><div class="z">由……建模(求 Var(Z))</div></div>
+        <div class="ph"><div class="e">have the same mean</div><div class="z">均值相同(变异系数题常见)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 13</b> · 第十三章 Covariance 协方差</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 13(p.211–213,页码已标注,细节以课本为准)+ 威普网校视频。<br>Example 13A 见课本 p.212;习题号(13.1 / 13.8 / 13.11 / 13.13 / 13.15 等)对应课本 Exercises p.214–216。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

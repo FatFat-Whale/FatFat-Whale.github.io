@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L08 导学 · Variance and Other Moments 方差与矩</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0891b2; --accent-deep:#0e7490; --accent-soft:#ddf1f6; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L08 · 方差与矩</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第八章 · <em>Variance and Other Moments 方差与矩</em></h1>
+    <p class="lead">期望描述"中心在哪";本章学描述"分布散不散、偏不偏"的量。核心是<b>方差 \(\operatorname{Var}(X)=E[X^2]-\mu^2\)</b> 与标准差,再推广到<b>矩(moments)</b>、变异系数、偏度。缩放公式 \(\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)\) 是全书高频考点。对照课本 Lesson&nbsp;8 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch8 Variance &amp; Moments <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.143–146</b>(理论)</span>
+      <span class="pill">Bernoulli 捷径 <b>§8.1</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>方差 = <b>平方的平均 − 平均的平方</b>:\(\operatorname{Var}(X)=E[X^2]-\mu^2\),先算两个矩再一减。</li>
+        <li><b>平移不改方差、缩放要平方</b>:\(\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)\),SD 乘 \(|a|\);负号平方后消失,独立时 \(\operatorname{Var}(X-Y)\) 也是"加"。</li>
+        <li><b>独立才可加</b>:\(\operatorname{Var}(\sum X_i)=\sum\operatorname{Var}(X_i)\);两点分布直接套 \((b-a)^2p(1-p)\)。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l07-mean.html">L07 均值</a>
+    <span class="arr">→</span>
+    <span class="here">L08 方差与矩</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l09-percentiles.html">L09 分位数</a>
+    <a href="soa-exam-p-l13-covariance.html">L13 协方差</a>
+    <a href="soa-exam-p-l22-central-limit-theorem.html">L22 CLT</a>
+    <a href="soa-exam-p-l32-mgf.html">L32 MGF</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#var">方差</a>
+  <a href="#moments">矩</a>
+  <a href="#scale">缩放可加</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完方差与矩你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 用计算式 \(\operatorname{Var}(X)=E[X^2]-\mu^2\) 求离散/连续随机变量的方差与标准差。</p>
+        <p style="margin-bottom:0">✅ 用缩放律 \(\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)\)、\(\operatorname{SD}=|a|\sigma\) 处理线性变换。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 写出第 \(n\) 阶原点矩 \(E[X^n]\) 与中心矩 \(E[(X-\mu)^n]\),算变异系数、偏度、峰度。</p>
+        <p style="margin-bottom:0">✅ 用独立可加性 \(\operatorname{Var}(\sum X_i)=\sum\operatorname{Var}(X_i)\) 与 Bernoulli 捷径快速求方差。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="var" style="background:linear-gradient(180deg,#f1fafc,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch8 · Lesson 8 · 课本 p.143–144</span><h2 class="sec-title">方差与标准差 — 分布散多开</h2></div></div>
+    <p class="sec-sub">期望 \(\mu=E[X]\) 只说"中心在哪",两个均值相同的分布可以一个很集中、一个很分散。<b>方差(variance)</b>就是量化"离中心多远"的核心指标——用偏差平方的期望度量离散程度。</p>
+
+    <div class="card accent">
+      <h3>定义:第二中心矩就是方差 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.143 · 二阶中心矩</div>
+      <p class="lede">方差 = <b>偏差平方的期望</b>,量化"离中心多远";标准差开根把单位还原。</p>
+      <p style="margin-top:0">令 \(\mu=E[X]\)。方差是偏差平方的期望(即第二中心矩),记作 \(\operatorname{Var}(X)\) 或 \(\sigma^2\):</p>
+      <div class="formula"><span class="name">Variance — defining formula</span>
+        $$\operatorname{Var}(X)=\sigma^2=E\!\big[(X-\mu)^2\big]$$</div>
+      <p><b>标准差(standard deviation)</b> \(\sigma\) 是方差的正平方根,把单位还原成和 \(X\) 一样(方差单位是 \(X\) 的平方):</p>
+      <div class="formula"><span class="name">Standard deviation</span>
+        $$\sigma=\sqrt{\operatorname{Var}(X)}\;\ge 0$$</div>
+      <p class="dim">方差 \(\ge 0\),越大表示分布越分散;\(\operatorname{Var}(X)=0\) 当且仅当 \(X\) 几乎处处等于常数。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>计算式(考试真正用的那条)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.144 · 式 (8.1)</div>
+      <p class="lede">先算 \(E[X]\) 和 \(E[X^2]\) 两个原点矩,一减就出方差——解题主力式。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Variance — computational formula (8.1)</span>
+        $$\operatorname{Var}(X)=E[X^2]-\mu^2=E[X^2]-\big(E[X]\big)^2$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>平方的平均,减去平均的平方</b> — 两个矩一减出方差,比逐项算 \((x-\mu)^2\) 快得多。</span></div>
+      <details class="more"><summary>展开 · 由定义式推到计算式</summary>
+        <p class="dim">把定义式展开:\(E[(X-\mu)^2]=E[X^2-2\mu X+\mu^2]=E[X^2]-2\mu E[X]+\mu^2\),因 \(E[X]=\mu\),后两项合并为 \(-\mu^2\),得 \(\operatorname{Var}(X)=E[X^2]-\mu^2\)。</p>
+      </details>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 8C</span><span class="src" style="margin:0">课本 p.144 · 离散随机变量</span></div>
+      <p class="q">离散随机变量 \(X\) 的概率函数如下,求 \(\operatorname{Var}(X)\)。</p>
+      <table class="map" style="max-width:420px">
+        <thead><tr><th>取值 \(x\)</th><th>1</th><th>3</th><th>4</th><th>7</th></tr></thead>
+        <tbody><tr><td>概率 \(p(x)\)</td><td>0.55</td><td>0.20</td><td>0.15</td><td>0.10</td></tr></tbody>
+      </table>
+      <p>先求两个矩:<br>
+      \(E[X]=0.55(1)+0.20(3)+0.15(4)+0.10(7)=2.45\);<br>
+      \(E[X^2]=0.55(1^2)+0.20(3^2)+0.15(4^2)+0.10(7^2)=9.65\)。<br>
+      代计算式:\(\operatorname{Var}(X)=E[X^2]-\mu^2=9.65-2.45^2=9.65-6.0025=3.6475\)。</p>
+      <span class="ans">Var(X) = 9.65 − 2.45² = 3.6475</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>\(E[X^2]\) 是"平方的平均",\(\mu^2\) 是"平均的平方",两者之差恰好度量取值围绕均值的摆动幅度。摆动越大,\(E[X^2]\) 越超过 \(\mu^2\)。</span></div>
+  </div>
+</section>
+
+<section id="moments">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">推广</span><h2 class="sec-title">矩:方差之上的形状指标</h2></div></div>
+    <p class="sec-sub">方差只是"矩(moment)"家族里的一员。把期望作用到 \(X\) 的幂或偏差的幂上,就得到一整套刻画分布的量:中心、散度、偏斜、尖峰。</p>
+
+    <div class="card accent">
+      <h3>原点矩 vs 中心矩 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.143</div>
+      <p class="lede">原点矩对 \(X^n\) 取期望;中心矩先减均值再取幂——一阶原点矩是均值,二阶中心矩是方差。</p>
+      <div class="formula"><span class="name">n-th raw / central moment</span>
+        $$\mu_n'=E[X^n]\qquad\qquad \mu_n=E\!\big[(X-\mu)^n\big]$$</div>
+      <p class="dim">一阶原点矩 \(\mu_1'=E[X]=\mu\)(均值,first moment);二阶中心矩 \(\mu_2=E[(X-\mu)^2]=\operatorname{Var}(X)\)(方差)。更高阶用来刻画形状。</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card accent">
+        <h3>变异系数(Coefficient of Variation)<span class="freq">考频 ★</span></h3>
+        <div class="src">课本 p.143 · 无量纲</div>
+        <p class="lede">标准差除以均值,无量纲——跨尺度比较"相对波动"。</p>
+        <div class="formula"><span class="name">Coefficient of variation</span>
+          $$\mathrm{CV}=\frac{\sigma}{\mu}$$</div>
+        <p class="dim">抵消了单位,可横向比较不同尺度分布的"相对波动",保险语境常用。</p>
+      </div>
+      <div class="card accent">
+        <h3>偏度(Skewness)· 峰度(Kurtosis)<span class="freq">考频 ★</span></h3>
+        <div class="src">课本 p.143 · 均无量纲</div>
+        <p class="lede">偏度看拖尾方向(三阶),峰度看峰的尖钝(四阶)。</p>
+        <div class="formula"><span class="name">Skewness / Kurtosis</span>
+          $$\gamma_1=\frac{E[(X-\mu)^3]}{\sigma^3}\qquad \frac{E[(X-\mu)^4]}{\sigma^4}$$</div>
+        <p class="dim"><b>正偏</b>右尾长、<b>负偏</b>左尾长、对称则偏度为 0。</p>
+      </div>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="同均值不同方差的两条密度曲线">
+          <line x1="12" y1="128" x2="228" y2="128" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="120" y1="24" x2="120" y2="130" stroke="var(--mute)" stroke-width="1" stroke-dasharray="4 3"/>
+          <path d="M20 128 C 90 128, 108 34, 120 34 C 132 34, 150 128, 220 128" fill="var(--accent)" fill-opacity="0.18" stroke="var(--accent-deep)" stroke-width="2"/>
+          <path d="M20 122 C 70 118, 100 78, 120 78 C 140 78, 170 118, 220 122" fill="var(--hi)" fill-opacity="0.20" stroke="#b8912a" stroke-width="2"/>
+          <text x="122" y="20" font-size="11" fill="#16243d" font-style="italic">μ</text>
+          <text x="128" y="46" font-size="11" fill="var(--accent-deep)">低方差</text>
+          <text x="176" y="104" font-size="11" fill="#8a6b1f">高方差</text>
+        </svg>
+        <div class="cap"><b>同均值、不同方差:</b>方差越大越"矮胖"、越分散</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="右偏分布曲线">
+          <line x1="12" y1="128" x2="228" y2="128" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M20 128 C 55 128, 70 40, 92 40 C 118 40, 150 118, 228 126" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent-deep)" stroke-width="2"/>
+          <line x1="92" y1="40" x2="92" y2="128" stroke="var(--accent-deep)" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="70" y="34" font-size="10.5" fill="var(--accent-deep)">众数</text>
+          <path d="M150 118 L 214 124" stroke="var(--warn)" stroke-width="1.5"/>
+          <text x="158" y="112" font-size="10.5" fill="var(--warn)">长右尾</text>
+          <text x="150" y="145" font-size="11" fill="#16243d">正偏(right-skewed)γ₁ &gt; 0</text>
+        </svg>
+        <div class="cap"><b>偏度 &gt; 0:</b>右尾拉长,均值被拖到众数右侧</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 8A</span><span class="src" style="margin:0">课本 p.143–144 · 偏度与峰度</span></div>
+      <p class="q">随机变量以概率 \(1/2\) 取 0、以概率 \(1/2\) 取 1。计算其峰度(kurtosis)。</p>
+      <p>\(\mu=0.5(0)+0.5(1)=0.5\);\(\sigma^2=0.5(0-0.5)^2+0.5(1-0.5)^2=0.25\)。<br>
+      四阶中心矩 \(E[(X-0.5)^4]=0.5(0-0.5)^4+0.5(1-0.5)^4=0.0625\)。<br>
+      峰度 \(=\dfrac{E[(X-\mu)^4]}{\sigma^4}=\dfrac{0.0625}{0.25^2}=1\)。(此分布对称,偏度为 0。)</p>
+      <span class="ans">峰度 = 0.0625 / 0.25² = 1</span>
+    </div>
+  </div>
+</section>
+
+<section id="scale" style="background:linear-gradient(180deg,#f1fafc,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch8 · 高频考点</span><h2 class="sec-title">线性变换与可加性</h2></div></div>
+    <p class="sec-sub">期望是线性算子 \(E[ag(X)+bh(X)]=aE[g(X)]+bE[h(X)]\),但方差<b>不是线性的</b>。平移不改方差、缩放要平方——这套规则是全书最常考的机械操作。</p>
+
+    <div class="card accent">
+      <h3>缩放律(Variance of a linear function)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.144–145 · 式 (8.2)</div>
+      <p class="lede">加常数 \(b\) 不改方差,乘 \(a\) 使方差乘 \(a^2\)、标准差乘 \(|a|\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Scaling &amp; shift</span>
+        $$\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)\qquad \operatorname{SD}(aX+b)=|a|\,\sigma$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>平移不散,缩放平方</b> — \(+b\) 整体挪动不改散度;\(\times a\) 方差乘 \(a^2\)、SD 取 \(|a|\),符号消失。</span></div>
+      <p class="dim">特例 \(\operatorname{Var}(cX)=c^2\operatorname{Var}(X)\);\(\operatorname{Var}(-X)=\operatorname{Var}(X)\)。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>独立随机变量的可加性 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.145 · 式 (8.2) 扩展</div>
+      <p class="lede">\(X_1,\dots,X_n\) <b>相互独立</b>(mutually independent)时,方差可加;系数先平方再加。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Additive property (independent)</span>
+        $$\operatorname{Var}\!\Big(\sum_{i=1}^{n}X_i\Big)=\sum_{i=1}^{n}\operatorname{Var}(X_i)$$</div>
+      <p class="dim">若还<b>同分布(i.i.d.)</b>,则 \(\operatorname{Var}(\sum X_i)=n\operatorname{Var}(X)\)。注意:系数要连同缩放律,\(\operatorname{Var}(aX_1+cX_2)=a^2\operatorname{Var}(X_1)+c^2\operatorname{Var}(X_2)\),减号也变加号(见自测 8.2)。</p>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>\(\operatorname{Var}(X+Y)\)</th><th>\(\operatorname{Var}(X-Y)\)</th></tr></thead>
+      <tbody>
+        <tr><td>独立时</td><td>\(\operatorname{Var}(X)+\operatorname{Var}(Y)\)</td><td>\(\operatorname{Var}(X)+\operatorname{Var}(Y)\)——<b>还是加!</b></td></tr>
+        <tr><td>为什么</td><td>系数 \(1^2=1\)</td><td>系数 \((-1)^2=1\),负号平方后消失</td></tr>
+        <tr><td>最常见错</td><td colspan="2">把 \(\operatorname{Var}(X-Y)\) 写成 \(\operatorname{Var}(X)-\operatorname{Var}(Y)\)——方差恒 \(\ge 0\),一减出负数就该警觉</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>延伸阅读(课本 p.145):</b>课本此处建议顺手读 SOA 官网的《Risk and Insurance》study note——理解保险运作背景,为 Lesson 13 相关变量求和做铺垫。精算语境:独立保单方差可加,\(n\) 份同质保单的组合 SD 只按 \(\sqrt{n}\) 增长,人均风险随 \(n\) 摊薄——这正是保险"大数分摊"的数学根基。</span></div>
+
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>计算器(课本 p.144 有操作段):</b>TI-30XS MultiView 可用数据表 + 1-Var Stats 直接出 \(\sigma\) 与均值(<b>data</b> 键录入 \(x\) 与频数/概率列 → <b>2nd</b>+<b>stat</b>)——数据量大的方差题省手算 \(E[X^2]-\mu^2\)。</span></div>
+
+    <div class="card accent">
+      <h3>Bernoulli 捷径(§8.1)<span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.145 · 式 (8.3)</div>
+      <p class="lede">只取两个值 \(a\)(概率 \(p\))、\(b\)(概率 \(1-p\))的变量:方差 = 距离平方 × \(p(1-p)\),秒出答案。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Two-point variance (8.3)</span>
+        $$\operatorname{Var}(X)=(b-a)^2\,p(1-p)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>两点方差 = 距离平方乘 pq</b> — 间距 \((b-a)\) 平方,再乘 \(p(1-p)\)。</span></div>
+      <details class="more"><summary>展开 · 为什么成立</summary>
+        <p class="dim">Bernoulli 变量 \(N\)(取 0/1)有 \(E[N]=p,\ \operatorname{Var}(N)=p(1-p)\);而 \(X=a+(b-a)N\),套缩放律得 \(\operatorname{Var}(X)=(b-a)^2\operatorname{Var}(N)=(b-a)^2p(1-p)\)。</p>
+      </details>
+      <div class="ex" style="margin:12px 0 0">
+        <div class="ex-h"><span class="badge">例 8D</span><span class="src" style="margin:0">课本 p.145</span></div>
+        <p class="q">好日子(70%)考试通过得 10 分,坏日子(30%)不及格得 5 分。求分数的方差。</p>
+        <p>\(\operatorname{Var}(X)=(10-5)^2(0.7)(0.3)=25\times0.21=5.25\)。</p>
+        <span class="ans">Var(X) = (0.7)(0.3)(10−5)² = 5.25</span>
+      </div>
+    </div>
+
+    <div class="note"><span class="ic">📝</span><span class="t"><b>例 8B(线性 vs 方差别混):</b>已知 \(E[X]=10,\ E[X^2]=150\),求 \(E[(X-5)^2]\)。展开 \(E[X^2-10X+25]=150-10(10)+25=75\)——这里 \(E[(X-5)^2]\ne\operatorname{Var}(X)\),因为减的是常数 5 而非均值 \(\mu=10\)。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子一:方差 = 转动惯量</h3>
+      <p>把质量 \(p(x)\) 放在位置 \(x\)(总质量 1),绕重心 \(\mu\) 旋转这根"杆"。力学里的<b>转动惯量</b> \(I=\sum (x-\mu)^2 p(x)\) 恰好就是 \(\operatorname{Var}(X)\):质量离轴越远、转起来越费劲——分布越散、方差越大。"矩(moment)"这个名字正是从力学的力矩借来的。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="方差是转动惯量:概率质量绕均值轴旋转,离轴越远越费劲">
+            <text x="120" y="28" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">绕 μ 轴转</text>
+            <path d="M 104,42 A 16,6 0 0 1 136,42" fill="none" stroke="#7a8699" stroke-width="1.3"/>
+            <polygon points="138,44 130,40 131,47" fill="#7a8699"/>
+            <line x1="120" y1="34" x2="120" y2="118" stroke="#c6492f" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <text x="156" y="56" font-size="9" fill="#46566f" text-anchor="middle">离轴越远 · (x−μ)² 越大</text>
+            <line x1="130" y1="62" x2="182" y2="62" stroke="#7a8699" stroke-width="1.2"/>
+            <polygon points="126,62 132,59 132,65" fill="#7a8699"/>
+            <polygon points="186,62 180,59 180,65" fill="#7a8699"/>
+            <rect x="40" y="81" width="16" height="18" fill="#0891b2" fill-opacity="0.75"/>
+            <rect x="82" y="69" width="16" height="30" fill="#0891b2" fill-opacity="0.75"/>
+            <rect x="142" y="69" width="16" height="30" fill="#0891b2" fill-opacity="0.75"/>
+            <rect x="184" y="81" width="16" height="18" fill="#0891b2" fill-opacity="0.75"/>
+            <line x1="25" y1="100" x2="215" y2="100" stroke="#16243d" stroke-width="2.5"/>
+          </svg>
+          <div class="cap"><b>转动惯量</b>:质量 \(p(x)\) 绕 \(\mu\) 轴转,\(I=\sum(x-\mu)^2p(x)=\operatorname{Var}(X)\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="平行轴定理验证例 8B:绕 c=5 转比绕 μ=10 多出 (μ−c)²=25,共 75">
+            <text x="100" y="28" font-size="10" fill="#46566f" text-anchor="middle">c=5</text>
+            <text x="175" y="28" font-size="10" font-weight="700" fill="#0e7490" text-anchor="middle">μ=10</text>
+            <line x1="100" y1="34" x2="100" y2="120" stroke="#7a8699" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <line x1="175" y1="34" x2="175" y2="120" stroke="#0e7490" stroke-width="2"/>
+            <text x="137" y="46" font-size="9" fill="#46566f" text-anchor="middle">(μ−c)²=25</text>
+            <line x1="106" y1="52" x2="169" y2="52" stroke="#46566f" stroke-width="1.2"/>
+            <polygon points="102,52 108,49 108,55" fill="#46566f"/>
+            <polygon points="173,52 167,49 167,55" fill="#46566f"/>
+            <rect x="149" y="87" width="16" height="16" fill="#0891b2" fill-opacity="0.75"/>
+            <rect x="167" y="77" width="16" height="26" fill="#0891b2" fill-opacity="0.75"/>
+            <rect x="185" y="87" width="16" height="16" fill="#0891b2" fill-opacity="0.75"/>
+            <line x1="25" y1="104" x2="215" y2="104" stroke="#16243d" stroke-width="2.5"/>
+            <text x="175" y="134" font-size="9" fill="#46566f" text-anchor="middle">绕 μ:Var=50</text>
+            <text x="120" y="147" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">E[(X−5)²] = 50 + 25 = 75</text>
+          </svg>
+          <div class="cap"><b>平行轴定理</b>:例 8B 绕 \(c=5\) 转,比绕重心多费 \((\mu-c)^2=25\)</div>
+        </div>
+      </div>
+      <p class="dim">力学的<b>平行轴定理</b>照搬成概率:绕任意点 \(c\) 转,\(E[(X-c)^2]=\operatorname{Var}(X)+(\mu-c)^2\)——绕非重心的轴总是更费劲。用它秒验例 8B:\(\operatorname{Var}=150-10^2=50\),\((\mu-c)^2=(10-5)^2=25\),故 \(E[(X-5)^2]=50+25=75\) ✓。</p>
+    </div>
+
+    <div class="card">
+      <h3>💡 直觉例子二:同均值 ≠ 同风险</h3>
+      <p>保险组合 A 每单确定赔 5;组合 B 以 0.5 概率赔 0、0.5 概率赔 10。期望都是 5,但 A 方差为 0,B 用两点公式 \((10-0)^2(0.5)(0.5)=25\)——需要的准备金完全不同。<b>方差就是给"不确定性"标价</b>,这也是它贯穿精算后续课程(组合方差、CLT、风险度量)的原因。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="组合 A:全部概率质量压在 5,方差为 0">
+            <text x="120" y="40" font-size="9" fill="#46566f" text-anchor="middle">1.0</text>
+            <rect x="112" y="46" width="16" height="80" fill="#0891b2" fill-opacity="0.75"/>
+            <line x1="30" y1="127" x2="210" y2="127" stroke="#16243d" stroke-width="2.5"/>
+            <text x="50" y="142" font-size="10" fill="#16243d" text-anchor="middle">0</text>
+            <text x="190" y="142" font-size="10" fill="#16243d" text-anchor="middle">10</text>
+            <polygon points="120,129 113,144 127,144" fill="#c6492f"/>
+            <text x="133" y="141" font-size="10" font-weight="700" fill="#c6492f">μ=5</text>
+          </svg>
+          <div class="cap"><b>组合 A</b>:确定赔 5,质量全压在均值上,\(\operatorname{Var}=0\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="组合 B:0 和 10 各占一半概率,均值仍是 5,方差 25">
+            <text x="120" y="66" font-size="9" fill="#7a8699" text-anchor="middle">μ 处反而没有质量</text>
+            <text x="50" y="80" font-size="9" fill="#46566f" text-anchor="middle">0.5</text>
+            <text x="190" y="80" font-size="9" fill="#46566f" text-anchor="middle">0.5</text>
+            <rect x="42" y="86" width="16" height="40" fill="#0891b2" fill-opacity="0.75"/>
+            <rect x="182" y="86" width="16" height="40" fill="#0891b2" fill-opacity="0.75"/>
+            <line x1="30" y1="127" x2="210" y2="127" stroke="#16243d" stroke-width="2.5"/>
+            <text x="50" y="142" font-size="10" fill="#16243d" text-anchor="middle">0</text>
+            <text x="190" y="142" font-size="10" fill="#16243d" text-anchor="middle">10</text>
+            <polygon points="120,129 113,144 127,144" fill="#c6492f"/>
+            <text x="120" y="120" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">μ=5</text>
+          </svg>
+          <div class="cap"><b>组合 B</b>:0 与 10 各占 0.5,均值同为 5,\(\operatorname{Var}=(10-0)^2(0.5)(0.5)=25\)</div>
+        </div>
+      </div>
+      <p class="dim">跨尺度比风险用 CV:均值 100 万、SD 10 万的组合(CV=0.1)其实比均值 100、SD 30(CV=0.3)的"稳"。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>通胀/涨价题:"increased by 3% plus a fixed cost" → \(\operatorname{Var}(1.03X+c)=1.03^2\operatorname{Var}(X)\),常数项白给(练 8.1)。</li>
+        <li>线性组合:\(\operatorname{Var}(3X_1-X_2-X_3-X_4)\)(独立)= \((9+1+1+1)\operatorname{Var}(X)\),负系数照样平方(练 8.2)。</li>
+        <li>年 ↔ 周拆分:年 SD 为 3、52 周 i.i.d. → 周方差 \(=9/52\),周 SD \(=3/\sqrt{52}\)——<b>方差可加、SD 不可加</b>,先回到方差再开根(练 8.3)。</li>
+        <li>\(E[(X-c)^2]\) 型:展开或用 \(\operatorname{Var}+(\mu-c)^2\),别当成方差(练 8.4)。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Variance">Wikipedia · Variance</a></div><div class="z">定义、计算式推导、线性组合的一般公式(含协方差项)全在一页,为 L13 提前铺路。</div><div class="u">en.wikipedia.org/wiki/Variance</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/variance">StatLect · Variance</a></div><div class="z">从定义到性质逐条证明,配已解例题;搭配同站 moments 词条食用更佳。</div><div class="u">statlect.com/fundamentals-of-probability/variance</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Moment_(mathematics)">Wikipedia · Moment (mathematics)</a></div><div class="z">"矩"为什么叫矩:力学力矩 → 原点矩/中心矩/标准化矩的完整谱系,一图看全家。</div><div class="u">en.wikipedia.org/wiki/Moment_(mathematics)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>\(\operatorname{Var}(aX+b)\) 丢了 \(+b\)、\(a\) 要平方</b>:平移不改方差,缩放系数平方且符号消失(\(\operatorname{Var}(-X)=\operatorname{Var}(X)\))。</li>
+          <li><b>计算式 \(E[X^2]-\mu^2\) vs 定义式 \(E[(X-\mu)^2]\)</b>:两条等价,但别把 \(E[X^2]\) 写成 \((E[X])^2\)。</li>
+          <li><b>方差不是线性的</b>:\(\operatorname{Var}(X+Y)\ne\operatorname{Var}(X)+\operatorname{Var}(Y)\),除非 \(X,Y\) 独立。</li>
+          <li><b>标准差别忘取绝对值</b>:\(\operatorname{SD}(aX+b)=|a|\sigma\),不是 \(a\sigma\)。</li>
+          <li><b>\(E[(X-c)^2]\ne\operatorname{Var}\)</b>:只有 \(c=\mu\) 时才等于方差(见例 8B)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 8.1</span>[Sample:328] 运营成本方差 50,次年通胀 3%、加固定维护费 2.5,求次年方差 → \(\operatorname{Var}(1.03X+2.5)\)。</li>
+          <li><span class="ref">练 8.2</span>[Sample:580] \(X_1\!-\!X_4\) 独立、均值 10、SD 3,求 \(\operatorname{Var}(3X_1-X_2-X_3-X_4)\)。</li>
+          <li><span class="ref">练 8.3</span>[Sample:582] 年理赔 SD 3、52 周独立同 SD,求每周金额的标准差。</li>
+          <li><span class="ref">练 8.4</span>给 \(E[X]=10,\ \operatorname{Var}(X)=40\),求 \(E[(X+5)^2]\)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>已知 \(E[X]=3,\ E[X^2]=13\),求 \(\operatorname{Var}(X)\) 与 \(\sigma\)。</li>
+        <li>\(\operatorname{Var}(X)=9\),求 \(\operatorname{Var}(2X+7)\) 与 \(\operatorname{SD}(2X+7)\)。</li>
+        <li>练 8.1:次年方差 \(\operatorname{Var}(1.03X+2.5)=?\)(方差 50)。</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(\operatorname{Var}=13-3^2=4,\ \sigma=2\);② \(\operatorname{Var}=2^2\cdot 9=36,\ \operatorname{SD}=|2|\cdot 3=6\);③ \(1.03^2\times 50=1.0609\times50\approx 53.0\)(选 B)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f1fafc,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 方差与矩</h2></div></div>
+    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。对应课本 Table 8.1 摘要。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>方差 / 标准差</h4>
+        <p>\(\operatorname{Var}(X)=E[(X-\mu)^2]=E[X^2]-\mu^2\)</p>
+        <p>\(\sigma=\sqrt{\operatorname{Var}(X)}\)</p>
+        <p>变异系数 \(\mathrm{CV}=\sigma/\mu\)</p>
+        <p>偏度 \(=E[(X-\mu)^3]/\sigma^3\);峰度 \(=E[(X-\mu)^4]/\sigma^4\)</p>
+      </div>
+      <div class="cc t">
+        <h4>线性变换 / 可加</h4>
+        <p>\(\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)\)</p>
+        <p>\(\operatorname{SD}(aX+b)=|a|\sigma\)</p>
+        <p>独立:\(\operatorname{Var}(\sum X_i)=\sum\operatorname{Var}(X_i)\)</p>
+        <p>Bernoulli:\(\operatorname{Var}(X)=(b-a)^2p(1-p)\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 8 原文用词</span><h2 class="sec-title">方差与矩 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"方差/散度"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 8</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">variance</td><td class="ipa">/ˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>方差</td><td class="root">vary(变化)→ 度量取值的变动 \(E[(X-\mu)^2]\)</td></tr>
+          <tr><td class="en">standard deviation</td><td class="ipa">/ˌdiːviˈeɪʃən/</td><td><span class="pos n">n.</span></td><td>标准差</td><td class="root">deviate(偏离)→ 方差开根,\(\sigma\)</td></tr>
+          <tr><td class="en">moment</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>矩</td><td class="root">\(E[X^n]\) 原点矩 / \(E[(X-\mu)^n]\) 中心矩</td></tr>
+          <tr><td class="en">central moment</td><td class="ipa">/ˈsɛntrəl/</td><td><span class="pos n">n.</span></td><td>中心矩</td><td class="root">绕均值 \(\mu\) 取幂的期望</td></tr>
+          <tr><td class="en">coefficient of variation</td><td class="ipa">/ˌkoʊɪˈfɪʃənt/</td><td><span class="pos n">n.</span></td><td>变异系数</td><td class="root">\(\sigma/\mu\),无量纲相对波动</td></tr>
+          <tr><td class="en">skewness</td><td class="ipa">/ˈskjuːnəs/</td><td><span class="pos n">n.</span></td><td>偏度</td><td class="root">skew(歪斜)→ 拖尾方向,三阶</td></tr>
+          <tr><td class="en">kurtosis</td><td class="ipa">/kɜːrˈtoʊsɪs/</td><td><span class="pos n">n.</span></td><td>峰度</td><td class="root">希腊 kurtos(隆起)→ 峰尖钝,四阶</td></tr>
+          <tr><td class="en">dispersion</td><td class="ipa">/dɪˈspɜːrʒən/</td><td><span class="pos n">n.</span></td><td>离散程度</td><td class="root">disperse(分散)→ 分布铺多开</td></tr>
+          <tr><td class="en">linear operator</td><td class="ipa">/ˈlɪniər ˈɑːpəreɪtər/</td><td><span class="pos n">n.</span></td><td>线性算子</td><td class="root">期望是线性算子,方差<b>不是</b></td></tr>
+          <tr><td class="en">Bernoulli distribution</td><td class="ipa">/bɜːrˈnuːli/</td><td><span class="pos n">n.</span></td><td>两点分布</td><td class="root">只取两值 \(a,b\) → §8.1 捷径 \((b-a)^2p(1-p)\)</td></tr>
+          <tr><td class="en">raw moment</td><td class="ipa">/rɔː ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>原点矩</td><td class="root">raw(未加工)→ 绕原点取幂 \(E[X^k]\),对照 central moment</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">has variance …</div><div class="z">方差为……</div></div>
+        <div class="ph"><div class="e">calculate the variance of …</div><div class="z">求……的方差</div></div>
+        <div class="ph"><div class="e">standard deviation of …</div><div class="z">……的标准差</div></div>
+        <div class="ph"><div class="e">mutually independent</div><div class="z">相互独立(可加前提)</div></div>
+        <div class="ph"><div class="e">have the same distribution</div><div class="z">同分布(i.i.d.)</div></div>
+        <div class="ph"><div class="e">increase … by 3%</div><div class="z">提高……3%(缩放 1.03)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 8</b> · 第八章 Variance and Other Moments 方差与矩</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 8(p.143–146,含 Table 8.1 摘要,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。方差可加性的完整证明属 Lesson 13,本页仅给结论。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

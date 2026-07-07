@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L05 导学 · Random Variables 随机变量</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#2563eb; --accent-deep:#1d4ed8; --accent-soft:#e4eeff; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L05 · 随机变量</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第五章 · <em>Random Variables 随机变量</em></h1>
+    <p class="lead">随机变量把样本空间里的<b>结果映射成实数</b>。今天分清<b>离散(pmf \(p(x)\))</b>与<b>连续(pdf \(f(x)\))</b>两类,再学贯穿全书的<b>分布函数 \(F(x)\)</b> 与<b>生存函数 \(S(x)\)</b>——这是后面期望、方差、各种具体分布的地基。对照课本 Lesson&nbsp;5 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch5 Random Variables <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.85–89</b>(理论)</span>
+      <span class="pill">保险随机变量 <b>§5.1</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>随机变量 = <b>把结果映射成实数的函数</b>:大写 \(X\) 记变量,小写 \(x\) 记取值。</li>
+        <li><b>离散数柱子,连续量面积</b>:pmf 求和、pdf 积分;连续下单点概率为 0,密度值可以 \(>1\)。</li>
+        <li>\(F(x)=P[X\le x]\) 是<b>统一入口</b>:区间概率 = \(F(b)-F(a)\);"大于 / 至少"类用 \(S(x)=1-F(x)\)。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l01-sets.html">L01 集合</a>
+    <a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率</a>
+    <span class="arr">→</span>
+    <span class="here">L05 随机变量</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l07-mean.html">L07 均值</a>
+    <a href="soa-exam-p-l11-joint-distribution.html">L11 联合分布</a>
+    <a href="soa-exam-p-l17-binomial-distribution.html">L17 分布族</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#rv">随机变量</a>
+  <a href="#pmf">pmf</a>
+  <a href="#pdf">pdf</a>
+  <a href="#cdf">分布函数</a>
+  <a href="#ins">保险RV</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完随机变量你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 分清<b>离散</b>(用 pmf \(p(x)=P[X=x]\))与<b>连续</b>(用 pdf \(f(x)\))两类随机变量。</p>
+        <p style="margin-bottom:0">✅ 用 pmf 求和 \(\sum p(x)\)、用 pdf 求积分 \(\int_a^b f(x)\,dx\) 得区间概率。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>分布函数</b> \(F(x)=P[X\le x]\) 求区间概率 \(F(b)-F(a)\),并由 \(F'(x)=f(x)\) 还原 pdf。</p>
+        <p>✅ 记牢:连续下 \(P[X=x]=0\)、\(F\) 是 \(\le\) 不是 \(&lt;\)、pdf 值不是概率(可 \(>1\))。</p>
+        <p style="margin-bottom:0">✅ 认得 §5.1 四个保险条款(免赔额 / 给付限额 / 共保 / 通胀)并写出赔付表达式。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rv" style="background:linear-gradient(180deg,#f2f7ff,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch5 · Lesson 5 · 课本 p.85</span><h2 class="sec-title">随机变量 — 定义与两大类</h2></div></div>
+    <p class="sec-sub">掷骰子的点数、样本中的次品数、保单提交的索赔数、一笔理赔的金额——它们都是"把随机试验的结果翻译成一个实数"的规则。这个规则就是随机变量。</p>
+
+    <div class="card accent">
+      <h3>定义:随机变量(random variable)<span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.85</div>
+      <p class="lede">随机变量是<b>从样本空间(事件空间)到实数集的一个函数</b>——把每个结果映射成一个实数。</p>
+      <p class="dim">习惯用<b>大写字母</b>(常取字母表末尾 \(X,Y,Z\))记随机变量,用小写 \(x\) 记它的<b>取值</b>。"点概率"记 \(P[X=x]\),简写 \(p(x)\) 或 \(p_x\);"在某范围"记 \(P[u&lt;X\le v]\)。</p>
+      <p class="dim">骰子点数是 \(1,2,3,4,5,6\);样本次品数、保单索赔数都是<b>非负整数</b>;理赔金额是<b>非负实数</b>。</p>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>离散 Discrete</th><th>连续 Continuous</th></tr></thead>
+      <tbody>
+        <tr><td>取值</td><td><b>可数</b>的一串点(如整数)</td><td>填满一段<b>区间</b>里的所有实数</td></tr>
+        <tr><td>概率长相</td><td><b>集中在点上</b>,每点 \(P[X=x]>0\)</td><td><b>摊在范围上</b>,单点 \(P[X=x]=0\)</td></tr>
+        <tr><td>工具</td><td>pmf \(p(x)\),求和</td><td>pdf \(f(x)\),积分</td></tr>
+        <tr><td>cdf 形态</td><td>阶梯,跳高 \(=p(x)\)</td><td>光滑上升的 S 型</td></tr>
+        <tr><td>例子</td><td>骰子点数、索赔个数</td><td>身高、理赔金额</td></tr>
+      </tbody>
+    </table>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>还有第三种:</b>课本提到部分随机变量是<b>混合型(mixed)</b>——既有集中在点上的概率(如"零索赔"这一点有正概率),又有摊在范围上的概率。保险损失常是这种,后面会遇到。</span></div>
+  </div>
+</section>
+
+<section id="pmf">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">离散 · 课本 p.86</span><h2 class="sec-title">概率函数 / 概率质量函数 pmf</h2></div></div>
+    <p class="sec-sub">离散随机变量由"每个点占多少概率"完全刻画,这张"点→概率"的表就是概率函数。</p>
+    <div class="card accent">
+      <h3>概率质量函数(probability mass function, pmf)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.86 · 又叫 probability function</div>
+      <p class="lede">离散分布就是一张"点 → 概率"的表:每点非负,全部加起来正好是 1。</p>
+      <div class="formula"><span class="name">pmf of a discrete random variable</span>
+        $$p(x)=P[X=x]$$</div>
+      <p>两条<b>合法性</b>要求(整块记):</p>
+      <div class="formula"><span class="name">properties</span>
+        $$p(x)\ge 0\qquad\text{且}\qquad \sum_{\text{all }x} p(x)=1$$</div>
+      <p class="dim">每个点的概率非负,所有点的概率加起来正好是 1。掷均匀骰子 \(p(x)=\tfrac16\)(\(x=1,\dots,6\)),六项相加 \(=1\)。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="离散 pmf 柱状图">
+          <line x1="30" y1="120" x2="212" y2="120" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="30" y1="120" x2="30" y2="26" stroke="#16243d" stroke-width="1.5"/>
+          <text x="16" y="16" font-size="11" fill="#16243d" font-style="italic">p(x)</text>
+          <text x="205" y="135" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <rect x="44"  y="102" width="22" height="18" fill="#2563eb" fill-opacity="0.75"/>
+          <rect x="89"  y="66"  width="22" height="54" fill="#2563eb" fill-opacity="0.75"/>
+          <rect x="134" y="48"  width="22" height="72" fill="#2563eb" fill-opacity="0.75"/>
+          <rect x="179" y="84"  width="22" height="36" fill="#2563eb" fill-opacity="0.75"/>
+          <text x="55"  y="134" font-size="11" fill="#16243d" text-anchor="middle">1</text>
+          <text x="100" y="134" font-size="11" fill="#16243d" text-anchor="middle">2</text>
+          <text x="145" y="134" font-size="11" fill="#16243d" text-anchor="middle">3</text>
+          <text x="190" y="134" font-size="11" fill="#16243d" text-anchor="middle">4</text>
+        </svg>
+        <div class="cap"><b>离散 pmf</b>:概率是<b>一根根柱子</b>,高度 \(=p(x)\),柱高之和 \(=1\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="离散分布函数阶梯图">
+          <line x1="30" y1="120" x2="212" y2="120" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="30" y1="120" x2="30" y2="26" stroke="#16243d" stroke-width="1.5"/>
+          <text x="16" y="16" font-size="11" fill="#16243d" font-style="italic">F(x)</text>
+          <text x="205" y="135" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <line x1="30" y1="120" x2="55" y2="120" stroke="#2563eb" stroke-width="2.4"/>
+          <line x1="55" y1="111" x2="100" y2="111" stroke="#2563eb" stroke-width="2.4"/>
+          <line x1="100" y1="84" x2="145" y2="84" stroke="#2563eb" stroke-width="2.4"/>
+          <line x1="145" y1="48" x2="190" y2="48" stroke="#2563eb" stroke-width="2.4"/>
+          <line x1="190" y1="30" x2="210" y2="30" stroke="#2563eb" stroke-width="2.4"/>
+          <circle cx="55" cy="111" r="3" fill="#2563eb"/>
+          <circle cx="100" cy="84" r="3" fill="#2563eb"/>
+          <circle cx="145" cy="48" r="3" fill="#2563eb"/>
+          <circle cx="190" cy="30" r="3" fill="#2563eb"/>
+        </svg>
+        <div class="cap"><b>离散 cdf</b>:\(F\) 是<b>阶梯</b>,在每个点<b>跳一跳</b>,跳高 \(=p(x)\)(课本图 5.2)</div>
+      </div>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>离散 cdf 由 pmf 累加:</b>\(\;F(x)=\displaystyle\sum_{t\le x}p(t)\;\)——把 \(x\) 及以下所有点的概率加起来。骰子 \(F(1.88)=P[N\le 1]=\tfrac16\)(课本 Example 5B)。</span></div>
+  </div>
+</section>
+
+<section id="pdf" style="background:linear-gradient(180deg,#f2f7ff,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">连续 · 课本 p.87</span><h2 class="sec-title">概率密度函数 pdf</h2></div></div>
+    <p class="sec-sub">连续随机变量没有"点概率"可加,概率靠一条密度曲线<b>下方的面积</b>表示——想要区间概率就积分。</p>
+    <div class="card accent">
+      <h3>概率密度函数(probability density function, pdf)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.87</div>
+      <p class="lede">连续概率是曲线下的<b>面积</b>——要区间概率就积分,单点面积为 0。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>interval probability = area under the curve</span>
+        $$P[a\le X\le b]=\int_a^b f(x)\,dx$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>离散数柱子,连续量面积</b> — pmf 把概率堆在点上求和,pdf 把概率摊在区间上积分;问法一样,动作换一个。</span></div>
+      <p class="dim">密度 \(f(x)\) 是分布函数的导数,\(f(x)=\dfrac{dF(x)}{dx}\);反过来概率是密度在区间上的积分。</p>
+      <p>两条<b>合法性</b>要求:</p>
+      <div class="formula"><span class="name">properties</span>
+        $$f(x)\ge 0\qquad\text{且}\qquad \int_{-\infty}^{\infty} f(x)\,dx=1$$</div>
+      <p class="dim"><b>连续下单点概率为 0</b>:\(P[X=x]=0\),所以 \(\le\) 与 \(&lt;\) 可随意互换,\(P[a\le X\le b]=P[a&lt;X&lt;b]\)。这对离散<b>不成立</b>。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="连续 pdf 曲线与阴影面积">
+          <defs><clipPath id="band"><rect x="100" y="0" width="45" height="150"/></clipPath></defs>
+          <path d="M30,115 C60,115 70,50 95,45 C130,38 160,95 205,108 L205,120 L30,120 Z" fill="#2563eb" fill-opacity="0.12"/>
+          <path d="M30,115 C60,115 70,50 95,45 C130,38 160,95 205,108 L205,120 L30,120 Z" fill="#2563eb" fill-opacity="0.5" clip-path="url(#band)"/>
+          <path d="M30,115 C60,115 70,50 95,45 C130,38 160,95 205,108" fill="none" stroke="#2563eb" stroke-width="2.2"/>
+          <line x1="30" y1="120" x2="212" y2="120" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="30" y1="120" x2="30" y2="26" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="100" y1="120" x2="100" y2="52" stroke="#16243d" stroke-width="1" stroke-dasharray="3 2"/>
+          <line x1="145" y1="120" x2="145" y2="78" stroke="#16243d" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="16" y="16" font-size="11" fill="#16243d" font-style="italic">f(x)</text>
+          <text x="205" y="135" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <text x="98"  y="134" font-size="11" fill="#16243d" text-anchor="middle">a</text>
+          <text x="145" y="134" font-size="11" fill="#16243d" text-anchor="middle">b</text>
+        </svg>
+        <div class="cap"><b>连续 pdf</b>:\(P[a\le X\le b]\) = 曲线下 \([a,b]\) 段的<b>阴影面积</b></div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 220 150" role="img" aria-label="连续分布函数 S 型曲线">
+          <path d="M30,119 C70,119 82,112 105,88 C128,64 150,36 205,31" fill="none" stroke="#2563eb" stroke-width="2.4"/>
+          <line x1="30" y1="120" x2="212" y2="120" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="30" y1="120" x2="30" y2="26" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="30" y1="31" x2="205" y2="31" stroke="#7a8699" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="16" y="16" font-size="11" fill="#16243d" font-style="italic">F(x)</text>
+          <text x="205" y="135" font-size="11" fill="#16243d" font-style="italic">x</text>
+          <text x="34" y="28" font-size="10" fill="#7a8699">1</text>
+        </svg>
+        <div class="cap"><b>连续 cdf</b>:\(F\) 是<b>光滑上升</b>的 S 型曲线,从 0 升到 1,\(F'(x)=f(x)\)</div>
+      </div>
+    </div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>密度 ≠ 概率:</b>\(f(x)\) 的<b>值可以大于 1</b>(它是"每单位长度的概率",不是概率本身)!只有它在区间上的<b>积分(面积)</b>才是概率,且总面积恰为 1。见课本 p.88 关于"proper"密度的说明。</span></div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 5D</span><span class="src" style="margin:0">课本 p.88 · pdf 归一化</span></div>
+      <p class="q">随机变量 \(X\) 的密度为 \(f(x)=cx^2\)(\(1\le x\le 4\),其余为 0)。求常数 \(c\),并计算 \(P[2\le X\le 3]\)。</p>
+      <p>① <b>定 \(c\)</b>:全区间积分等于 1。\(\displaystyle\int_1^4 cx^2\,dx=c\cdot\frac{4^3-1^3}{3}=c\cdot\frac{63}{3}=21c=1\),解得 \(c=\dfrac{1}{21}\)。<br>
+      ② <b>求区间概率</b>:\(\displaystyle P[2\le X\le 3]=\int_2^3\frac{x^2}{21}\,dx=\frac{3^3-2^3}{3(21)}=\frac{27-8}{63}=\frac{19}{63}\)。</p>
+      <span class="ans">c = 1/21　P[2≤X≤3] = 19/63 ≈ 0.302</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>方法套路:</b>给"含未知常数的密度"→ 先用 \(\int f=1\) 反解常数,再积分求所求区间。课本 Example 5C(\(f(x)=\tfrac{1}{(1+x)^2}\),\(x\ge0\))也是同一路子,答案 \(P[2&lt;X&lt;5]=\tfrac16\)。</span></div>
+  </div>
+</section>
+
+<section id="cdf">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">离散连续通用 · 课本 p.85–87</span><h2 class="sec-title">分布函数 cdf 与生存函数</h2></div></div>
+    <p class="sec-sub">分布函数 \(F(x)\) 对离散、连续<b>一视同仁</b>——"知道 \(F\) 就等于知道这个随机变量的一切"。它是刷题时求各种范围概率的统一入口。</p>
+
+    <div class="card accent">
+      <h3>累积分布函数(cumulative distribution function, cdf)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.85 · 式定义</div>
+      <p class="lede">\(F(x)\) 累住"到 \(x\) 为止"的全部概率;任何区间概率都是两个 \(F\) 相减。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>cdf 与区间概率</span>
+        $$F(x)=P[X\le x]\qquad P[u&lt;X\le v]=F(v)-F(u)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>F 管"不超过",S 管"超过"</b> — 俩加起来恒等于 1;看到 at least / greater than,先想 \(S\)。</span></div>
+      <p>四条<b>必备性质</b>(整块记):</p>
+      <div class="formula"><span class="name">properties of F</span>
+        $$\text{非减(nondecreasing)}\quad\text{右连续(right-continuous)}\quad F(-\infty)=0\quad F(\infty)=1$$</div>
+      <p class="dim">连续时 \(F'(x)=f(x)\);离散时 \(F(x)=\displaystyle\sum_{t\le x}p(t)\)。注意范围符号:\(F(x)\) 用的是 \(\le\) <b>不是</b> \(&lt;\)。对离散随机变量这一步差一个跳点,答案就错。</p>
+      <details class="more"><summary>展开 · 为什么离散的 F 在跳点"含端点"</summary>
+        <p class="dim">\(F(x)=P[X\le x]\) 把 \(x\) 本点也算进去,所以阶梯在每个质量点跳 \(p(x)\)、且跳完的值算在该点上(右连续)。骰子:\(F\) 在 \(x=1\) 跳到 \(\tfrac16\),之后 \(F(1.88)\) 仍 \(=\tfrac16\),直到 \(x=2\) 再跳。求 \(P[X&lt;x]\) 时要用跳<b>前</b>的值,与 \(F(x)\) 差一个 \(p(x)\)。</p>
+      </details>
+    </div>
+
+    <div class="card accent">
+      <h3>生存函数(survival function)<span class="freq">考频 ★★</span></h3>
+      <div class="src">保险常用 · 与 \(F\) 互补</div>
+      <p class="lede">"活过 \(x\) / 损失超过 \(x\)"的概率;精算里描述寿命、损失尾部全靠它。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>survival function</span>
+        $$S(x)=P[X>x]=1-F(x)$$</div>
+      <p class="dim">求"至少"、"大于"类问题用它最省事。\(S(-\infty)=1,\;S(\infty)=0\),随 \(x\) 单调<b>递减</b>。</p>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 5A</span><span class="src" style="margin:0">课本 p.85 · cdf 求区间</span></div>
+      <p class="q">已知 \(F(x)=0\)(\(x&lt;0\))、\(F(x)=\dfrac{x^2}{4}\)(\(0\le x\le 2\))、\(F(x)=1\)(\(x>2\))。求 \(P[1.5&lt;X\le 2.5]\)。</p>
+      <p>直接用 \(F(v)-F(u)\):\(\;F(2.5)=1\)(因 \(2.5>2\)),\(F(1.5)=\dfrac{1.5^2}{4}=\dfrac{9}{16}\)。<br>
+      故 \(P[1.5&lt;X\le 2.5]=F(2.5)-F(1.5)=1-\dfrac{9}{16}=\dfrac{7}{16}\)。</p>
+      <span class="ans">P[1.5&lt;X≤2.5] = 7/16</span>
+    </div>
+  </div>
+</section>
+
+<section id="ins" style="background:linear-gradient(180deg,#f2f7ff,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">应用 · 课本 §5.1</span><h2 class="sec-title">保险随机变量 — 四个条款速览</h2></div></div>
+    <p class="sec-sub">课本 §5.1 把"损失 \(X\)"包装成"赔付 \(Y\)"的四种合同条款。本节只立骨架——名词认得、公式写得出;完整题型在 L06(条件概率)、L07(期望)、L15 / L20(具体分布)逐个展开。</p>
+
+    <div class="card accent">
+      <h3>损失 \(X\) → 赔付 \(Y\) 的四种改造 <span class="freq">考频 ★★★(后续章)</span></h3>
+      <div class="src">课本 §5.1 · 术语 + 公式</div>
+      <table class="map">
+        <thead><tr><th style="width:24%">条款</th><th style="width:32%">赔付表达式</th><th>一句话</th></tr></thead>
+        <tbody>
+          <tr><td><b>免赔额</b> deductible \(d\)</td><td>\(Y=\max(X-d,\,0)=(X-d)_+\)</td><td>损失先自担 \(d\),超出部分才赔</td></tr>
+          <tr><td><b>给付限额</b> benefit limit \(u\)</td><td>\(Y=\min(X,\,u)\)</td><td>最多赔 \(u\),封顶</td></tr>
+          <tr><td><b>共保</b> coinsurance \(\alpha\)</td><td>\(Y=\alpha X\)(\(0&lt;\alpha&lt;1\))</td><td>按比例只赔 \(\alpha\) 份</td></tr>
+          <tr><td><b>通胀</b> inflation \(r\)</td><td>\(X'=(1+r)X\)</td><td>明年损失先放大,再套上面的条款</td></tr>
+        </tbody>
+      </table>
+      <p class="dim">条款组合时按合同顺序套,常见次序:先通胀 → 减免赔 → 乘共保 → 封顶限额。</p>
+    </div>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>赔付 \(Y\) 是混合型随机变量:</b>只要 \(P[X\le d]>0\),\(Y=(X-d)_+\) 就在 0 处有<b>质量点</b>(概率 \(F_X(d)\)),其余部分连续——求 \(E[Y]\)、\(F_Y\) 时别当纯连续处理(呼应 §01 的"混合型")。</span></div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>本节只认脸:</b>这四个词后面反复登场——免赔额 × 条件概率见 <a href="soa-exam-p-l06-conditional-probability-rv.html">L06</a>,期望赔付见 <a href="soa-exam-p-l07-mean.html">L07</a>,配均匀 / 指数分布的大题见 <a href="soa-exam-p-l15-uniform-distribution.html">L15</a> / <a href="soa-exam-p-l20-exponential-distribution.html">L20</a>。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:密度为什么能大于 1</h3>
+      <p>设 \(X\) 均匀分布在 \([0,\tfrac12]\) 上,密度 \(f(x)=2\)——区间只有 0.5 长,密度不到 2,面积凑不满 1。密度是"<b>每单位长度</b>的概率",好比人口密度:每平方公里 2 万人不代表总人口 2 万,还得乘上面积。例 5D 那类"先用 \(\int f=1\) 定 \(c\)"的题,本质就是在校准这把"密度尺"。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="密度可以大于 1:均匀分布在 0 到 0.5 上,密度为 2,矩形面积仍是 1">
+            <line x1="34" y1="122" x2="226" y2="122" stroke="#16243d" stroke-width="1.5"/>
+            <line x1="34" y1="122" x2="34" y2="22" stroke="#16243d" stroke-width="1.5"/>
+            <text x="22" y="14" font-size="10.5" fill="#16243d" font-style="italic">f(x)</text>
+            <text x="222" y="136" font-size="10.5" fill="#16243d" font-style="italic">x</text>
+            <rect x="35" y="34" width="59" height="88" fill="#2563eb" fill-opacity="0.75"/>
+            <line x1="36" y1="78" x2="220" y2="78" stroke="#7a8699" stroke-width="1.3" stroke-dasharray="4 3"/>
+            <text x="28" y="37" font-size="10" fill="#16243d" text-anchor="end">2</text>
+            <text x="28" y="81" font-size="10" fill="#7a8699" text-anchor="end">1</text>
+            <text x="34" y="136" font-size="10" fill="#16243d" text-anchor="middle">0</text>
+            <text x="94" y="136" font-size="10" fill="#16243d" text-anchor="middle">0.5</text>
+            <text x="154" y="136" font-size="10" fill="#16243d" text-anchor="middle">1</text>
+            <text x="108" y="60" font-size="10" font-weight="700" fill="#c6492f">面积 = 2 × ½ = 1</text>
+          </svg>
+          <div class="cap"><b>密度尺</b>:\(f(x)=2\) 越过 1 不违法,概率是面积 \(2\times\tfrac12=1\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="离散 cdf 是楼梯,连续 cdf 是坡道,两条路都爬到 1">
+            <line x1="34" y1="122" x2="226" y2="122" stroke="#16243d" stroke-width="1.5"/>
+            <line x1="34" y1="122" x2="34" y2="22" stroke="#16243d" stroke-width="1.5"/>
+            <text x="22" y="14" font-size="10.5" fill="#16243d" font-style="italic">F(x)</text>
+            <text x="222" y="136" font-size="10.5" fill="#16243d" font-style="italic">x</text>
+            <line x1="36" y1="40" x2="146" y2="40" stroke="#7a8699" stroke-width="1.3" stroke-dasharray="4 3"/>
+            <text x="28" y="43" font-size="10" fill="#7a8699" text-anchor="end">1</text>
+            <path d="M34 122 C 96 120, 150 46, 218 42" fill="none" stroke="#16243d" stroke-width="2.2"/>
+            <line x1="34" y1="122" x2="70" y2="122" stroke="#2563eb" stroke-width="2.4"/>
+            <line x1="70" y1="95" x2="110" y2="95" stroke="#2563eb" stroke-width="2.4"/>
+            <line x1="110" y1="68" x2="150" y2="68" stroke="#2563eb" stroke-width="2.4"/>
+            <line x1="150" y1="40" x2="218" y2="40" stroke="#2563eb" stroke-width="2.4"/>
+            <circle cx="70" cy="95" r="3" fill="#2563eb"/>
+            <circle cx="110" cy="68" r="3" fill="#2563eb"/>
+            <circle cx="150" cy="40" r="3" fill="#2563eb"/>
+            <text x="88" y="86" font-size="10" fill="#1d4ed8" text-anchor="middle">楼梯(离散)</text>
+            <text x="176" y="102" font-size="10" fill="#16243d" text-anchor="middle">坡道(连续)</text>
+            <text x="90" y="31" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">两条路都爬到 1</text>
+          </svg>
+          <div class="cap"><b>楼梯与坡道</b>:离散 cdf 跳级上楼,连续 cdf 平滑爬坡,顶都是 1</div>
+        </div>
+      </div>
+      <p class="dim">再一个:<b>楼梯与坡道</b>。离散 cdf 是楼梯——每到一个质量点跳一级,台阶高度 = 该点概率;连续 cdf 是坡道——平滑爬升,坡度(导数)就是密度。两条路爬到顶都是 1。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>给分段 \(F\) 求区间概率:直接 \(F(b)-F(a)\),先看清端点落在哪一段(例 5A 里 \(F(2.5)=1\));离散/混合分布盯紧 \(\le\) 与 \(&lt;\)——差一个跳点 \(p(x)\)。</li>
+        <li>给含常数 \(c\) 的密度:必是"先 \(\int f=1\) 解 \(c\),再积分求区间"两步题。</li>
+        <li>保险语境:损失额 \(X\) 常是<b>混合型</b>(\(X=0\) 有质量点),"损失超过 \(x\)"直接读作 \(S(x)\)——这两件事到 L06 会和免赔额一起变成大题。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Probability_density_function">Wikipedia · Probability density function</a></div><div class="z">"密度可大于 1""单点概率为 0"的图解,与 pmf 的对照一页讲清。</div><div class="u">en.wikipedia.org/wiki/Probability_density_function</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/random-variables">StatLect · Random variables</a></div><div class="z">从定义到 cdf 的严格版,离散/连续/混合分层展开,配带解例题,适合校准概念边界。</div><div class="u">statlect.com/fundamentals-of-probability/random-variables</div></div>
+        <div class="xr"><div class="e"><a href="https://online.stat.psu.edu/stat414/">PSU STAT 414 · Introduction to Probability</a></div><div class="z">宾州州立免费讲义,pmf / pdf / cdf 各一课,习题全部带完整解答,刷完课本再补一轮。</div><div class="u">online.stat.psu.edu/stat414</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test" style="background:linear-gradient(180deg,#f2f7ff,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>离散 vs 连续的 \(P[X=x]\)</b>:连续下 \(=0\),离散下 \(=p(x)>0\)。别把连续的单点当有概率。</li>
+          <li><b>\(F\) 用 \(\le\) 不是 \(&lt;\)</b>:\(F(x)=P[X\le x]\);离散时含端点那一跳,漏了就差 \(p(x)\)。</li>
+          <li><b>密度值不是概率</b>:\(f(x)\) 可以 \(>1\);只有积分(面积)才是概率。</li>
+          <li><b>忘了先定常数</b>:给 \(f=c\cdot g(x)\) 型,先用 \(\int f=1\) 解 \(c\) 再积分。</li>
+          <li><b>\(S\) 与 \(F\) 记反</b>:\(S(x)=P[X>x]=1-F(x)\),别写成 \(F\)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 5.1</span>给出生某婴儿体重的 \(F(x)\)(分段),求"至少 6 磅但不到 7 磅"的概率。</li>
+          <li><span class="ref">练 5.2</span>给索赔数的 \(F(x)\)(阶梯),求"1 次或 2 次索赔"的概率(离散跳点)。</li>
+          <li><span class="ref">练 5.5</span>离散 \(P[X=x]=\tfrac{2}{3^x}\),求 \(X\) 为偶数的概率。</li>
+          <li><span class="ref">练 5.10</span>连续密度 \(f(x)=6x(1-x)\)(\(0&lt;x&lt;1\)),求 \(P[\,|X-\tfrac12|>\tfrac14\,]\)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算/速算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>连续 \(X\),\(P[X=3]=\,?\)</li>
+        <li>密度 \(f(x)=2x\)(\(0\le x\le1\)),\(P[X\le 0.5]=\,?\)</li>
+        <li>\(F(4)=0.8\),则 \(S(4)=P[X>4]=\,?\)</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(0\)(连续单点概率为 0);② \(\int_0^{0.5}2x\,dx=[x^2]_0^{0.5}=0.25\);③ \(1-0.8=0.2\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 随机变量</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>离散 / pmf</h4>
+        <p>\(p(x)=P[X=x]\)</p>
+        <p>\(p(x)\ge 0,\;\sum p(x)=1\)</p>
+        <p>\(F(x)=\sum_{t\le x}p(t)\)(阶梯,跳高 \(=p(x)\))</p>
+        <p>\(P[X=x]>0\)</p>
+      </div>
+      <div class="cc t">
+        <h4>连续 / pdf</h4>
+        <p>\(f(x)=F'(x)\ge 0,\;\int_{-\infty}^{\infty}f=1\)</p>
+        <p>\(P[a\le X\le b]=\int_a^b f\,dx\)(面积)</p>
+        <p>\(P[X=x]=0\);\(f\) 值可 \(>1\)</p>
+        <p>\(\le\) 与 \(&lt;\) 可互换</p>
+      </div>
+      <div class="cc t">
+        <h4>分布函数 cdf</h4>
+        <p>\(F(x)=P[X\le x]\)</p>
+        <p>非减 · 右连续 · \(F(-\infty)=0,\,F(\infty)=1\)</p>
+        <p>\(P[u&lt;X\le v]=F(v)-F(u)\)</p>
+      </div>
+      <div class="cc">
+        <h4>生存函数</h4>
+        <p>\(S(x)=P[X>x]=1-F(x)\)</p>
+        <p>单调递减 · \(S(-\infty)=1,\,S(\infty)=0\)</p>
+        <p>"至少 / 大于"类首选</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">09</span><div><span class="sec-tag tag-accent">背诵 · Lesson 5 原文用词</span><h2 class="sec-title">随机变量 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"是哪类变量、要求哪种概率"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 5(含 §5.1 保险)</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">random variable</td><td class="ipa">/ˈrændəm ˈvɛəriəbl/</td><td><span class="pos n">n.</span></td><td>随机变量</td><td class="root">把结果映射成实数的函数,记大写 \(X\)</td></tr>
+          <tr><td class="en">discrete</td><td class="ipa">/dɪˈskriːt/</td><td><span class="pos adj">adj.</span></td><td>离散的</td><td class="root">取可数点;别与 discreet(谨慎)混</td></tr>
+          <tr><td class="en">continuous</td><td class="ipa">/kənˈtɪnjuəs/</td><td><span class="pos adj">adj.</span></td><td>连续的</td><td class="root">取值填满区间;单点概率 0</td></tr>
+          <tr><td class="en">probability mass function</td><td class="ipa">/mæs/</td><td><span class="pos n">n.</span></td><td>概率质量函数(pmf)</td><td class="root">mass=质量,离散点上的概率 \(p(x)\)</td></tr>
+          <tr><td class="en">probability density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>概率密度函数(pdf)</td><td class="root">density=密度,连续曲线 \(f(x)\)</td></tr>
+          <tr><td class="en">cumulative distribution function</td><td class="ipa">/ˈkjuːmjələtɪv/</td><td><span class="pos n">n.</span></td><td>累积分布函数(cdf)</td><td class="root">cumulate(累积)→ \(F(x)=P[X\le x]\)</td></tr>
+          <tr><td class="en">survival function</td><td class="ipa">/səˈvaɪvl/</td><td><span class="pos n">n.</span></td><td>生存函数</td><td class="root">survive(存活)→ \(S(x)=1-F(x)\)</td></tr>
+          <tr><td class="en">nondecreasing</td><td class="ipa">/ˌnɒndɪˈkriːsɪŋ/</td><td><span class="pos adj">adj.</span></td><td>非减的</td><td class="root">non+decrease,\(F\) 只升不降</td></tr>
+          <tr><td class="en">deductible</td><td class="ipa">/dɪˈdʌktəbl/</td><td><span class="pos n">n.</span></td><td>免赔额</td><td class="root">§5.1 保险;赔付 \(\max(X-d,0)\)</td></tr>
+          <tr><td class="en">benefit limit</td><td class="ipa">/ˈbɛnɪfɪt/</td><td><span class="pos n">n.</span></td><td>给付限额</td><td class="root">§5.1;赔付 \(\min(X,u)\)</td></tr>
+          <tr><td class="en">coinsurance</td><td class="ipa">/ˌkoʊɪnˈʃʊərəns/</td><td><span class="pos n">n.</span></td><td>共保</td><td class="root">co(共同)+insurance;§5.1,按比例赔 \(\alpha X\)</td></tr>
+          <tr><td class="en">inflation</td><td class="ipa">/ɪnˈfleɪʃn/</td><td><span class="pos n">n.</span></td><td>通胀</td><td class="root">inflate(膨胀);§5.1,损失变 \((1+r)X\)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">is defined by …</div><div class="z">由……定义(引出 F 或 f)</div></div>
+        <div class="ph"><div class="e">has density function …</div><div class="z">具有密度函数……(连续信号)</div></div>
+        <div class="ph"><div class="e">with the following distribution function</div><div class="z">分布函数如下(给 F)</div></div>
+        <div class="ph"><div class="e">assume a value between …</div><div class="z">取……之间的值</div></div>
+        <div class="ph"><div class="e">integrate to 1</div><div class="z">积分为 1(定常数)</div></div>
+        <div class="ph"><div class="e">at least / greater than …</div><div class="z">至少 / 大于……(用 S)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 5</b> · 第五章 Random Variables 随机变量</p>
+    <p>定义、性质与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 5(p.85–91,理论 p.85–89,页码已标注,细节以课本为准)+ 威普网校视频。<br>保险随机变量(免赔额 / 给付限额 / 共保 / 通胀)属 §5.1,本页 §05 立骨架速览,完整原题与题型展开见课本及 L06 / L07 / L15 / L20。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

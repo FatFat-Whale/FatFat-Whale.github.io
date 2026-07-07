@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L10 导学 · Mode 众数</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#a21caf; --accent-deep:#86198f; --accent-soft:#f8e4f7; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L10 · 众数</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第十章 · <em>Mode 众数</em></h1>
+    <p class="lead">继均值、中位数之后的第三个"中心"度量。<b>众数(mode)</b>是让概率最大的取值——离散取 \(p(x)\) 最大的点,连续取 \(f(x)\) 最高的峰。求连续众数就是一道"求极大值"的微积分题,但别忘了检查支撑端点。对照课本 Lesson&nbsp;10 精读(短章)。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch10 Mode <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.173</b>(理论)</span>
+      <span class="pill">习题 <b>p.174–176</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>众数 = <b>概率最大的取值</b>:离散数最高柱,连续找 \(f\) 的最高峰;可以不唯一(多峰)。</li>
+        <li>连续求法:<b>\(\ln f\) 求导令零</b> → 验二阶导为负 → <b>必比支撑端点</b>;常数因子直接扔。</li>
+        <li>右偏分布通常 <b>众数 &lt; 中位数 &lt; 均值</b>——三个"中心"各看各的,别互相代入。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l05-random-variables.html">L05 随机变量</a>
+    <span class="arr">→</span>
+    <span class="here">L10 众数</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l19-poisson-distribution.html">L19 泊松众数等分布应用</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">定义</a>
+  <a href="#solve">连续众数</a>
+  <a href="#special">特例</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完众数你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 说清众数 = 让概率函数<b>取最大值</b>的取值:离散 \(\arg\max_x p(x)\),连续 \(\arg\max_x f(x)\)。</p>
+        <p style="margin-bottom:0">✅ 用 \(f'(x)=0\)(常配 \(\ln f\))求连续分布众数,并<b>验证是极大而非极小/拐点</b>。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 记得<b>检查支撑端点</b>:导数无零点或端点密度更高时,众数在边界。</p>
+        <p style="margin-bottom:0">✅ 分清众数 ≠ 均值 ≠ 中位数,并处理<b>多峰(multimodal)</b>与不唯一的情形。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#fdf4fc,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch10 · Lesson 10 · 课本 p.173</span><h2 class="sec-title">众数 — 定义</h2></div></div>
+    <p class="sec-sub">均值给"重心"、中位数给"正中分位",众数给"最可能出现的那个值"。三者都在描述分布的"中心",但视角不同——众数看的是<b>峰</b>。</p>
+
+    <div class="card accent">
+      <h3>定义:让概率最大的取值 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.173</div>
+      <p class="lede">众数是概率函数(离散的概率质量 \(p(x)\) / 连续的密度 \(f(x)\))<b>取得最大值</b>的那个 \(x\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Mode — discrete vs continuous</span>
+        $$\text{离散}:\ \operatorname{mode}=\arg\max_{x}\,p(x)\qquad\text{连续}:\ \operatorname{mode}=\arg\max_{x}\,f(x)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>峰顶即众数</b> — 离散数最高柱,连续找最高峰;它只认峰,不管两边怎么铺。</span></div>
+      <p class="dim">众数<b>不必唯一</b>:若有多个取值并列最高,分布是<b>多峰(multimodal)</b>的,这些点都是众数。样本众数则是样本中<b>出现最频繁</b>的值。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="离散 pmf 柱状图,最高柱高亮为众数">
+          <line x1="24" y1="132" x2="228" y2="132" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="24" y1="20" x2="24" y2="132" stroke="#16243d" stroke-width="1.5"/>
+          <rect x="40"  y="104" width="22" height="28" fill="#c9cfdb"/>
+          <rect x="72"  y="80"  width="22" height="52" fill="#c9cfdb"/>
+          <rect x="104" y="44"  width="22" height="88" fill="var(--accent)"/>
+          <rect x="136" y="72"  width="22" height="60" fill="#c9cfdb"/>
+          <rect x="168" y="98"  width="22" height="34" fill="#c9cfdb"/>
+          <rect x="200" y="116" width="22" height="16" fill="#c9cfdb"/>
+          <text x="111" y="38" font-size="11" fill="var(--accent-deep)" text-anchor="middle" font-weight="700">众数</text>
+          <text x="115" y="150" font-size="11" font-style="italic" fill="#16243d">x</text>
+          <text x="10" y="26" font-size="11" font-style="italic" fill="#16243d">p</text>
+        </svg>
+        <div class="cap">离散:<b>最高的那根柱</b>对应 \(\arg\max_x p(x)\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="连续 pdf 曲线,峰顶投影到 x 轴为众数">
+          <line x1="24" y1="132" x2="228" y2="132" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="24" y1="20" x2="24" y2="132" stroke="#16243d" stroke-width="1.5"/>
+          <path d="M24,132 C70,130 96,40 120,40 C150,40 176,120 228,131" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="120" y1="40" x2="120" y2="132" stroke="var(--accent-deep)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="120" cy="40" r="3.5" fill="var(--accent-deep)"/>
+          <text x="120" y="150" font-size="11" fill="var(--accent-deep)" text-anchor="middle" font-weight="700">众数</text>
+          <text x="10" y="26" font-size="11" font-style="italic" fill="#16243d">f</text>
+        </svg>
+        <div class="cap">连续:<b>密度曲线的峰顶</b>投影到 \(x\) 轴,即 \(\arg\max_x f(x)\)</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>众数就是"最扎堆"的地方。离散数柱子谁最高,连续找曲线最高点——它<b>不看两边如何分布</b>,只认那个峰。</span></div>
+  </div>
+</section>
+
+<section id="solve">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">连续分布 · 微积分求极值</span><h2 class="sec-title">连续众数:令 \(f'(x)=0\) 再验极大</h2></div></div>
+    <p class="sec-sub">连续分布求众数,就是在支撑内求 \(f(x)\) 的最大值:先解 \(f'(x)=0\) 找临界点,再确认是极大(而非极小/拐点),<b>并比较支撑端点</b>。密度里的常数因子(归一化常数)不影响峰的位置,可忽略;含乘积/幂时先取 \(\ln f\) 再求导更省事。</p>
+    <div class="card accent">
+      <h3>求连续众数的三步 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.173</div>
+      <p class="lede">三步:\(\ln f\) 求导令零 → 验二阶导为负 → 比支撑端点的密度。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Mode of a continuous distribution</span>
+        $$\frac{d}{dx}\ln f(x)=0\ \Rightarrow\ \text{临界点};\quad \frac{d^2}{dx^2}\ln f(x)&lt;0\ \Rightarrow\ \text{极大};\quad \text{再比端点 } f(\text{支撑边界})$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>取 ln 求导,端点必比</b> — 对数把乘积/幂拆成加法、常数求导即消;导数无零点时,峰就在边界上。</span></div>
+      <p class="dim">用 \(\ln f\) 而非 \(f\):对数单调,峰位置不变,却把乘积/幂/指数拆成加法,求导干净。常数因子求导即消——所以归一化常数 \(c\) 可以直接扔掉。</p>
+      <details class="more"><summary>展开 · 为什么取对数不挪峰</summary>
+        <p class="dim">对数严格递增:\(f\) 在哪里最大,\(\ln f\) 就在哪里最大(大小顺序原封不动),故两者的 \(\arg\max\) 相同。而 \((\ln f)'=f'/f\),在 \(f>0\) 处与 \(f'\) 同零点——临界点一个不多、一个不少;加法常数 \(\ln c\) 求导直接消失,这就是"常数因子可扔"的严格理由。</p>
+      </details>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 10A</span><span class="src" style="margin:0">课本 p.173</span></div>
+      <p class="q">\(X\) 的密度函数为 \(f(x)=c\,x^{2}(1-x)\)(\(0&lt;x&lt;1\))。求 \(X\) 的众数。</p>
+      <p>常数 \(c\) 不影响峰的位置,忽略。取对数:\(\ln f(x)=\ln c+2\ln x+\ln(1-x)\)。求导令零:</p>
+      <p>\(\dfrac{d\ln f}{dx}=\dfrac{2}{x}-\dfrac{1}{1-x}=0\ \Rightarrow\ 2(1-x)-x=0\ \Rightarrow\ 2-3x=0\ \Rightarrow\ x=\dfrac23\)。</p>
+      <p style="margin-bottom:0">验极大:\(\dfrac{d^{2}\ln f}{dx^{2}}=-\dfrac{2}{x^{2}}-\dfrac{1}{(1-x)^{2}}&lt;0\) 恒成立,故 \(x=\tfrac23\) 是极大点。</p>
+      <span class="ans">mode = 2/3</span>
+    </div>
+    <div class="note"><span class="ic">📝</span><span class="t"><b>为什么验二阶导:</b>\(f'=0\) 只说明是驻点,可能是极大、极小或拐点。考试常"默认"临界点即众数,但严谨起见(尤其只有一个临界点时)应确认 \(\ln f\) 的二阶导为负。</span></div>
+  </div>
+</section>
+
+<section id="special" style="background:linear-gradient(180deg,#fdf4fc,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch10 · 易漏情形</span><h2 class="sec-title">端点、多峰、与均值/中位数的关系</h2></div></div>
+    <p class="sec-sub">众数题的"坑"几乎都在非内点情形:导数没有零点、峰落在支撑边界、或分布本身多峰。</p>
+
+    <div class="card accent">
+      <h3>众数可能落在支撑端点 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.173</div>
+      <p class="lede">\(f'\) 在支撑内<b>无零点</b>(如单调密度)→ 众数落在<b>支撑边界</b>,必须比较端点密度。</p>
+      <p class="dim">所以求连续众数不能只解 \(f'=0\),要把<b>端点处的密度</b>一并比较。<b>混合分布(mixed)</b>更要小心:离散点质量 vs 连续段密度不同量纲,课本明言这类"众数"有争议、考试极少直接问。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>多峰与不唯一 <span class="freq">考频 ★</span></h3>
+      <div class="src">课本 p.173</div>
+      <p class="lede">多个取值并列最高 → <b>多峰(multimodal)</b>,全部都是众数;偏态分布下三个"中心"分离。</p>
+      <p class="dim">样本 \(\{1,3,1,2,2,3,4,2\}\) 中 \(2\) 出现最多,样本众数为 \(2\)。<b>众数 ≠ 均值 ≠ 中位数:</b>对<b>偏态(skewed)</b>分布三者分离,众数是峰;仅当分布对称单峰时三者重合。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="右偏分布,众数在峰、中位数、均值依次右移">
+          <line x1="20" y1="130" x2="228" y2="130" stroke="#16243d" stroke-width="1.5"/>
+          <path d="M20,130 C60,128 78,42 96,42 C130,42 170,124 228,129" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="96"  y1="42"  x2="96"  y2="130" stroke="var(--accent-deep)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="120" y1="72"  x2="120" y2="130" stroke="#16243d" stroke-width="1.3" stroke-dasharray="3 3"/>
+          <line x1="140" y1="92"  x2="140" y2="130" stroke="var(--warn)" stroke-width="1.3" stroke-dasharray="3 3"/>
+          <text x="96"  y="146" font-size="9.5" fill="var(--accent-deep)" text-anchor="middle" font-weight="700">众数</text>
+          <text x="120" y="146" font-size="9.5" fill="#16243d" text-anchor="middle">中位数</text>
+          <text x="140" y="156" font-size="9.5" fill="var(--warn)" text-anchor="middle">均值</text>
+        </svg>
+        <div class="cap">右偏:<b>众数&lt;中位数&lt;均值</b>(长尾把均值拉向右)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="双峰分布,两个众数">
+          <line x1="20" y1="130" x2="228" y2="130" stroke="#16243d" stroke-width="1.5"/>
+          <path d="M20,130 C48,128 60,54 84,54 C104,54 112,104 124,104 C136,104 144,50 166,50 C190,50 204,128 228,129" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="84"  y1="54" x2="84"  y2="130" stroke="var(--accent-deep)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="166" y1="50" x2="166" y2="130" stroke="var(--accent-deep)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="84"  y="146" font-size="9.5" fill="var(--accent-deep)" text-anchor="middle" font-weight="700">众数₁</text>
+          <text x="166" y="146" font-size="9.5" fill="var(--accent-deep)" text-anchor="middle" font-weight="700">众数₂</text>
+        </svg>
+        <div class="cap">双峰(bimodal):两个局部最高点<b>都是众数</b></div>
+      </div>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:16%"></th><th>众数 mode</th><th>中位数 median</th><th>均值 mean</th></tr></thead>
+      <tbody>
+        <tr><td>看什么</td><td>峰(密度最高点)</td><td>面积对半的分界</td><td>重心(加权平均)</td></tr>
+        <tr><td>怎么求</td><td>\(\arg\max f\)(ln 求导 + 比端点)</td><td>解 \(F(x)=0.5\)</td><td>\(\int x f(x)\,dx\)</td></tr>
+        <tr><td>右偏时</td><td>最左(贴着峰)</td><td>居中</td><td>最右(被长尾拉走)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最大陷阱 — 只解 \(f'=0\) 就交卷:</b>当 \(f'\) 在支撑内无零点(如 \(f\) 单调),众数在<b>端点</b>;必须比较支撑两端的密度值。别把"临界点"直接当众数,也别忘了区间是开是闭对边界取值的影响。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:鞋店进货 + 爬山找峰</h3>
+      <p><b>鞋店老板要的是众数。</b>"平均鞋码 41.7"没法进货(没有 41.7 码的鞋,就像 L07 里 \(E[X]=11/3\) 取不到);老板真正要的是<b>卖得最多的码</b>——\(\arg\max p(x)\)。若顾客男女混合,尺码分布双峰:两个众数,而"平均码"可能落在两峰之间的低谷,反而最没人穿——这就是均值代表不了"典型个体"、要靠众数的时刻。</p>
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="双峰鞋码分布:众数 43 码,均值 41.7 落在两峰之间的低谷">
+          <rect x="37"  y="104" width="16" height="22" fill="#a21caf" fill-opacity="0.7"/>
+          <rect x="57"  y="78"  width="16" height="48" fill="#a21caf" fill-opacity="0.7"/>
+          <rect x="77"  y="97"  width="16" height="29" fill="#a21caf" fill-opacity="0.7"/>
+          <rect x="97"  y="113" width="16" height="13" fill="#a21caf" fill-opacity="0.7"/>
+          <rect x="117" y="116" width="16" height="10" fill="#a21caf" fill-opacity="0.7"/>
+          <rect x="137" y="110" width="16" height="16" fill="#a21caf" fill-opacity="0.7"/>
+          <rect x="157" y="72"  width="16" height="54" fill="#a21caf" fill-opacity="0.95"/>
+          <rect x="177" y="88"  width="16" height="38" fill="#a21caf" fill-opacity="0.7"/>
+          <rect x="197" y="107" width="16" height="19" fill="#a21caf" fill-opacity="0.7"/>
+          <text x="65"  y="70" font-size="9" fill="#7a8699" text-anchor="middle">女</text>
+          <text x="185" y="80" font-size="9" fill="#7a8699" text-anchor="middle">男</text>
+          <line x1="139" y1="66" x2="139" y2="125" stroke="#c6492f" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="139" y="58" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">μ=41.7</text>
+          <line x1="28" y1="127" x2="222" y2="127" stroke="#16243d" stroke-width="2.5"/>
+          <text x="45"  y="141" font-size="9" fill="#46566f" text-anchor="middle">37</text>
+          <text x="65"  y="141" font-size="9" fill="#46566f" text-anchor="middle">38</text>
+          <text x="85"  y="141" font-size="9" fill="#46566f" text-anchor="middle">39</text>
+          <text x="105" y="141" font-size="9" fill="#46566f" text-anchor="middle">40</text>
+          <text x="125" y="141" font-size="9" fill="#46566f" text-anchor="middle">41</text>
+          <text x="145" y="141" font-size="9" fill="#46566f" text-anchor="middle">42</text>
+          <text x="165" y="141" font-size="9" font-weight="700" fill="#86198f" text-anchor="middle">43</text>
+          <text x="185" y="141" font-size="9" fill="#46566f" text-anchor="middle">44</text>
+          <text x="205" y="141" font-size="9" fill="#46566f" text-anchor="middle">45</text>
+        </svg>
+        <div class="cap"><b>双峰鞋码</b>:该进的是卖最多的 43 码;"平均码" \(\mu=41.7\) 恰落在两峰间的低谷,最没人穿</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 150" role="img" aria-label="单调递减密度:f 导数无零点,众数在支撑左端点 0">
+          <path d="M50,52 C85,62 105,95 140,110 C170,119 195,123 216,125 L216,126 L50,126 Z" fill="#a21caf" fill-opacity="0.3"/>
+          <path d="M50,52 C85,62 105,95 140,110 C170,119 195,123 216,125" fill="none" stroke="#86198f" stroke-width="2.2"/>
+          <line x1="50" y1="58" x2="50" y2="125" stroke="#7a8699" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <circle cx="50" cy="52" r="4" fill="#c6492f"/>
+          <text x="62" y="44" font-size="10" font-weight="700" fill="#c6492f" text-anchor="start">最高点 = 登山口</text>
+          <text x="165" y="62" font-size="9" fill="#46566f" text-anchor="middle">一路下坡:f′ 无零点</text>
+          <line x1="28" y1="127" x2="222" y2="127" stroke="#16243d" stroke-width="2.5"/>
+          <text x="50" y="142" font-size="10" fill="#16243d" text-anchor="middle">0</text>
+        </svg>
+        <div class="cap"><b>下坡山</b>:密度在支撑内严格递减,\(f'=0\) 无解,众数在左端点 \(x=0\)</div>
+      </div>
+    </div>
+      <p class="dim"><b>爬山视角:</b>解 \(f'=0\) 是找"坡度为零"的山顶;但一路下坡的山(单调递减密度)根本没有内部山顶,最高点在登山口——支撑左端点。这就是"端点必比"的直觉来源。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>关键词:<b>mode / most likely value / value that maximizes the density</b>。</li>
+        <li>密度给成 "\(f(x)\) is proportional to \(x^a e^{-bx}\)"(Gamma 形)→ 常数不用求,\(\ln f\) 求导得 \(\text{mode}=a/b\)(练 10.2 同型)。</li>
+        <li><b>单调递减密度</b>(如指数分布)→ 众数 = 支撑左端点(常为 0)。</li>
+        <li>离散题老老实实逐点比 \(p(x)\)(练 10.4);预告 L19:泊松众数 \(=\lfloor\lambda\rfloor\)(\(\lambda\) 为整数时 \(\lambda-1\) 与 \(\lambda\) 并列)。</li>
+        <li>陷阱:临界点不验极大、端点不比、把众数当均值/中位数互相代入。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Mode_(statistics)">Wikipedia · Mode (statistics)</a></div><div class="z">众数与均值、中位数的比较表 + "mean−median−mode"经验规则的适用与反例。</div><div class="u">en.wikipedia.org/wiki/Mode_(statistics)</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Multimodal_distribution">Wikipedia · Multimodal distribution</a></div><div class="z">双峰从哪来:两个总体混在一起(男/女、好日子/坏日子),正是"鞋店"例子的理论版。</div><div class="u">en.wikipedia.org/wiki/Multimodal_distribution</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Beta_distribution">Wikipedia · Beta distribution</a></div><div class="z">例 10A 的 \(cx^2(1-x)\) 其实是 Beta(3,2):套众数公式 \(\frac{\alpha-1}{\alpha+\beta-2}=\frac23\) 一秒验算。</div><div class="u">en.wikipedia.org/wiki/Beta_distribution</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>忘检查端点</b>:\(f'\) 无内部零点时众数在支撑边界,最常丢分。</li>
+          <li><b>众数 ≠ 均值 ≠ 中位数</b>:偏态分布三者不同,别互相代入。</li>
+          <li><b>不验极大</b>:\(f'=0\) 可能是极小或拐点,配 \(\ln f\) 二阶导确认。</li>
+          <li><b>漏多峰</b>:并列最高时众数不唯一,离散题尤其要逐点比 \(p(x)\)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 10.2</span>密度 \(ax^{2}e^{-bx}\),求连续众数(\(\ln f\) 求导)。</li>
+          <li><span class="ref">练 10.4</span>离散 \(P[n]\) 分段,直接比各点概率取最大。</li>
+          <li><span class="ref">练 10.9</span>灯泡寿命 \(f\propto \dfrac{x^{2}}{(1+x^{3})^{3}}\),求众数。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算/心算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(f(x)=cx^{2}(1-x)\) 于 \((0,1)\),众数 = ?(例 10A)</li>
+        <li>密度在支撑内<b>严格递减</b>,\(f'\) 无零点——众数在哪?</li>
+        <li>样本 \(\{1,3,1,2,2,3,4,2\}\) 的样本众数 = ?</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(2/3\);② 落在<b>左端点</b>(密度最大处即支撑下界);③ \(2\)(出现 3 次,最频繁)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#fdf4fc,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 众数</h2></div></div>
+    <p class="sec-sub">短章,一张卡足矣。默得出这几行就算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义</h4>
+        <p>离散:\(\operatorname{mode}=\arg\max_x p(x)\)</p>
+        <p>连续:\(\operatorname{mode}=\arg\max_x f(x)\)</p>
+        <p>可多峰、可不唯一;样本众数 = 最频繁值</p>
+      </div>
+      <div class="cc t">
+        <h4>连续求法</h4>
+        <p>解 \(\dfrac{d}{dx}\ln f(x)=0\) 找临界点</p>
+        <p>验 \(\dfrac{d^2}{dx^2}\ln f&lt;0\) 为极大</p>
+        <p>常数因子可略;<b>务必比支撑端点</b></p>
+        <p>众数 ≠ 均值 ≠ 中位数(偏态分离)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 10 原文用词</span><h2 class="sec-title">众数 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它认出"求众数"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 10</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">mode</td><td class="ipa">/moʊd/</td><td><span class="pos n">n.</span></td><td>众数</td><td class="root">拉丁 modus(方式/常态)→ 最常出现的值</td></tr>
+          <tr><td class="en">density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度函数</td><td class="root">连续分布的 \(f(x)\),众数取其最大处</td></tr>
+          <tr><td class="en">maximize</td><td class="ipa">/ˈmæksɪmaɪz/</td><td><span class="pos v">v.</span></td><td>使最大化</td><td class="root">max(最大)→ 众数 = 让概率 maximize 的 \(x\)</td></tr>
+          <tr><td class="en">multimodal</td><td class="ipa">/ˌmʌltiˈmoʊdəl/</td><td><span class="pos adj">adj.</span></td><td>多峰的</td><td class="root">multi-(多)+ modal(众数)→ 多个众数</td></tr>
+          <tr><td class="en">mixed distribution</td><td class="ipa">/mɪkst/</td><td><span class="pos n">n.</span></td><td>混合分布</td><td class="root">离散 + 连续并存,众数定义有争议</td></tr>
+          <tr><td class="en">inflection point</td><td class="ipa">/ɪnˈflɛkʃən/</td><td><span class="pos n">n.</span></td><td>拐点</td><td class="root">\(f'=0\) 可能是拐点而非极大,须验二阶导</td></tr>
+          <tr><td class="en">endpoint</td><td class="ipa">/ˈɛndpɔɪnt/</td><td><span class="pos n">n.</span></td><td>端点</td><td class="root">支撑边界;\(f'\) 无零点时众数常在此</td></tr>
+          <tr><td class="en">skewed</td><td class="ipa">/skjuːd/</td><td><span class="pos adj">adj.</span></td><td>偏态的</td><td class="root">分布不对称 → 众数/中位数/均值分离</td></tr>
+          <tr><td class="en">point mass</td><td class="ipa">/pɔɪnt mæs/</td><td><span class="pos n">n.</span></td><td>点质量</td><td class="root">混合分布中质量点概率恒高于连续部分,众数落在点质量处(课本 p.173)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">calculate the mode of X</div><div class="z">求 X 的众数</div></div>
+        <div class="ph"><div class="e">the value that maximizes …</div><div class="z">使……最大的取值</div></div>
+        <div class="ph"><div class="e">the most likely value</div><div class="z">最可能的取值</div></div>
+        <div class="ph"><div class="e">appears most frequently</div><div class="z">出现最频繁(样本众数)</div></div>
+        <div class="ph"><div class="e">f(x) is proportional to …</div><div class="z">f(x) 正比于……(常数可略)</div></div>
+        <div class="ph"><div class="e">at which the density is greatest</div><div class="z">密度最大处</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 10</b> · 第十章 Mode 众数</p>
+    <p>理论、例题与习题号整理自《ASM Exam P Study Manual, 7th ed.》Lesson 10(理论 p.173,习题 p.174–176,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。本章为短章;例 10A、练习号引自课本可见页。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

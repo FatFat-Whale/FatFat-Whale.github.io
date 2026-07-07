@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L20 导学 · Exponential Distribution 指数分布</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#db2777; --accent-deep:#9d174d; --accent-soft:#fce4ef; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L20 · 指数分布</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第二十章 · <em>Exponential Distribution 指数分布</em></h1>
+    <p class="lead">Exam P 最高频的连续分布,几乎每场考试都出。它描述"下一次事件到来前要等多久"——寿命、等待时间、保险损失额。核心记忆点:<b>无记忆性(memoryless)</b>、均值 = \(\theta\)、方差 = \(\theta^2\)、百分位一步套公式。对照课本 Lesson&nbsp;20 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch20 Exponential <b>v2 改版</b></span>
+      <span class="pill">课本 <b>p.337–340</b>(理论)</span>
+      <span class="pill">题量 <b>重章 · SOA 高频</b></span>
+      <span class="pill">伽马分布 <b>本章附带</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>指数管"<b>下一次事件还要等多久</b>":\(S(x)=e^{-x/\theta}\);\(\theta\) 是<b>均值</b>、\(\lambda=1/\theta\) 是<b>速率</b>,读题先认清给哪个。</li>
+        <li><b>方差 = 均值²</b>(\(\theta^2\));百分位闭式 \(\xi_p=-\theta\ln(1-p)\),中位数 \(\theta\ln 2\)。</li>
+        <li><b>无记忆</b>:已等多久不影响剩余等待——免赔额后的赔付部分仍 \(\sim\text{Exp}(\theta)\),不是 \(\theta-d\)。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l19-poisson-distribution.html">L19 泊松</a>
+    <span class="arr">→</span>
+    <span class="here">L20 指数</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l23-order-statistics.html">L23 次序统计量 · 最小值仍指数</a>
+    <a href="soa-exam-p-l18-negative-binomial.html">L18 几何 · 无记忆呼应</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">定义</a>
+  <a href="#moments">矩·百分位</a>
+  <a href="#memory">无记忆性</a>
+  <a href="#gamma">伽马·泊松</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完指数分布你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 在<b>均值 \(\theta\)</b> 与<b>速率 \(\lambda=1/\theta\)</b> 两套参数化之间自由切换,不写混。</p>
+        <p style="margin-bottom:0">✅ 秒背 \(F(x)=1-e^{-x/\theta}\)、\(S(x)=e^{-x/\theta}\)、\(E[X]=\theta\)、\(\operatorname{Var}(X)=\theta^2\)。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用<b>百分位公式</b> \(\xi_p=-\theta\ln(1-p)\) 求中位数 / 任意分位。</p>
+        <p style="margin-bottom:0">✅ 用<b>无记忆性</b>处理免赔额、剩余寿命题,并认出<b>指数之和 = 伽马分布</b>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#fdf5f9,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch20 · Lesson 20 · 课本 p.337</span><h2 class="sec-title">定义与两套参数化</h2></div></div>
+    <p class="sec-sub">指数分布是取值 \(x\ge 0\) 的连续分布。课本以<b>均值 \(\theta\)</b> 为主参数化(式 20.1–20.4),同时给出等价的<b>速率 \(\lambda=1/\theta\)</b> 写法。两套记号 SOA 题面都可能出现,必须都认得、能互换。</p>
+
+    <div class="card accent">
+      <h3>指数分布(均值参数化) <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.337 · 式 (20.1)(20.2),\(\theta>0\)</div>
+      <p class="lede">连续等待时间分布:\(\theta\) 就是均值;生存函数 \(S(x)=e^{-x/\theta}\) 做题最常用。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>CDF · PDF · Survival (mean θ)</span>
+        $$F(x)=1-e^{-x/\theta},\qquad f(x)=\frac{e^{-x/\theta}}{\theta},\qquad S(x)=e^{-x/\theta}\quad(x\ge 0)$$</div>
+      <p class="dim">\(\theta\) 就是<b>均值</b>(mean)、也叫<b>尺度参数(scale parameter)</b>。生存函数 \(S(x)=1-F(x)=e^{-x/\theta}\) 是"活过 \(x\) / 等待超过 \(x\)"的概率,做题极常用。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>等价的速率参数化 \(\lambda=1/\theta\) <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.337 · "often parametrized using \(\lambda=1/\theta\)"</div>
+      <p class="lede">\(\lambda\)(rate)= 单位时间发生率,\(\theta\)(mean)= 平均间隔,\(\lambda\theta=1\)。</p>
+      <div class="formula"><span class="name">CDF · PDF · Survival (rate λ)</span>
+        $$F(x)=1-e^{-\lambda x},\qquad f(x)=\lambda e^{-\lambda x},\qquad S(x)=e^{-\lambda x}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>θ 均值、λ 速率,互为倒数</b> — SOA 常用 \(\lambda\),ASM/损失模型常用 \(\theta\);读题先认清给的是哪一个,代错一格全题报废。</span></div>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="pdf 指数衰减曲线">
+          <line x1="30" y1="130" x2="228" y2="130" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="30" y1="130" x2="30" y2="16" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M30,30 C70,86 110,112 150,122 C180,128 210,129 226,129.5" fill="none" stroke="#db2777" stroke-width="2.2"/>
+          <path d="M30,30 C70,86 110,112 150,122 C180,128 210,129 226,129.5 L226,130 L30,130 Z" fill="#db2777" fill-opacity="0.12"/>
+          <text x="26" y="30" font-size="11" fill="#9d174d" text-anchor="end">λ</text>
+          <text x="222" y="145" font-size="11" fill="#16243d">x</text>
+          <text x="34" y="14" font-size="11" fill="#16243d" font-style="italic">f(x)</text>
+        </svg>
+        <div class="cap"><b>密度 \(f\)</b>:从 \(\lambda\) 处单调<b>衰减</b>,越等越稀</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="CDF 上升曲线">
+          <line x1="30" y1="130" x2="228" y2="130" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="30" y1="130" x2="30" y2="16" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="30" y1="28" x2="228" y2="28" stroke="var(--mute)" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M30,130 C70,74 110,48 150,38 C180,32 210,29 226,28.5" fill="none" stroke="#db2777" stroke-width="2.2"/>
+          <text x="26" y="31" font-size="10" fill="var(--mute)" text-anchor="end">1</text>
+          <text x="222" y="145" font-size="11" fill="#16243d">x</text>
+          <text x="34" y="14" font-size="11" fill="#16243d" font-style="italic">F(x)</text>
+        </svg>
+        <div class="cap"><b>分布 \(F\)</b>:\(1-e^{-\lambda x}\),从 0 升向 1</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="生存函数曲线">
+          <line x1="30" y1="130" x2="228" y2="130" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="30" y1="130" x2="30" y2="16" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M30,28 C70,84 110,110 150,120 C180,126 210,129 226,129.5" fill="none" stroke="#9d174d" stroke-width="2.2"/>
+          <text x="26" y="31" font-size="10" fill="var(--mute)" text-anchor="end">1</text>
+          <text x="222" y="145" font-size="11" fill="#16243d">x</text>
+          <text x="34" y="14" font-size="11" fill="#16243d" font-style="italic">S(x)</text>
+        </svg>
+        <div class="cap"><b>生存 \(S\)</b>:\(e^{-\lambda x}\),\(F\) 的镜像</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>指数分布 = "纯随机等待"。事件以恒定速率 \(\lambda\) 随机来临,等待时间的密度从峰值 \(\lambda\) 起持续衰减——刚开始最可能马上来,越拖概率越小,但永远等不到"必然发生"的时刻。</span></div>
+  </div>
+</section>
+
+<section id="moments">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">必背</span><h2 class="sec-title">矩、方差与百分位数</h2></div></div>
+    <p class="sec-sub">指数分布的一大好处:矩和分位都是闭式,不用现算积分。方差 = 均值的平方,这条要刻进肌肉记忆。</p>
+    <div class="card accent">
+      <h3>均值与方差 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.337 · 式 (20.3)(20.4)</div>
+      <p class="lede">方差 = 均值²,故标准差 = 均值(变异系数恒为 1)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Mean &amp; Variance</span>
+        $$E[X]=\theta=\frac1\lambda,\qquad \operatorname{Var}(X)=\theta^2=\frac1{\lambda^2},\qquad E[X^2]=2\theta^2$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>标准差 = 均值</b> — 记住这一句,方差 \(\theta^2\)、二阶矩 \(2\theta^2\) 全跟着出来。</span></div>
+      <p class="dim">二阶矩 \(E[X^2]=2\theta^2\) 由下面的积分恒等式直接给出。两条<b>值得背下来的积分</b>(课本式 20.5、20.6,\(a>0\)):</p>
+      <div class="formula"><span class="name">Handy integrals</span>
+        $$\int_0^\infty x\,e^{-ax}\,dx=\frac{1}{a^2},\qquad \int_0^\infty x^2 e^{-ax}\,dx=\frac{2}{a^3}$$</div>
+    </div>
+
+    <div class="card accent">
+      <h3>百分位数与中位数 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.337–338 · 式 (20.7)</div>
+      <p class="lede">分位有闭式:令 \(F(\xi_p)=p\) 一步解出;中位数 \(=\theta\ln 2\approx 0.693\,\theta\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>100p-th percentile</span>
+        $$\xi_p=-\theta\ln(1-p)$$</div>
+      <p class="dim"><b>中位数</b>取 \(p=0.5\):\(\ \xi_{0.5}=-\theta\ln(0.5)=\theta\ln 2\approx 0.693\,\theta\)。SOA 很爱直接考中位数或某个百分位,套公式即可,别去积分。</p>
+      <details class="more"><summary>展开 · 10 秒推导</summary>
+        <p class="dim">\(F(\xi_p)=1-e^{-\xi_p/\theta}=p\Rightarrow e^{-\xi_p/\theta}=1-p\Rightarrow -\xi_p/\theta=\ln(1-p)\Rightarrow \xi_p=-\theta\ln(1-p)\)。考场上现推也就 10 秒。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="memory" style="background:linear-gradient(180deg,#fdf5f9,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch20 · 灵魂性质</span><h2 class="sec-title">无记忆性(Memoryless)</h2></div></div>
+    <p class="sec-sub">指数分布是唯一"无记忆"的连续分布:已经等了多久,对"还要再等多久"毫无影响。这是本章最爱考的点,免赔额、剩余寿命题全靠它。</p>
+    <div class="card accent">
+      <h3>无记忆性质 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.338</div>
+      <p class="lede">已等 \(s\) 再撑 \(t\) 的概率 = 刚开始等 \(t\) 的概率;剩余量 \(X-x\) 仍 \(\sim\text{Exp}(\theta)\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Memoryless property</span>
+        $$P[X>s+t\mid X>s]=P[X>t]\qquad(s,t\ge 0)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>过免赔额,重新开局</b> — 超过 \(d\) 的赔付部分仍是均值 \(\theta\) 的指数,<b>不是</b> \(\theta-d\)。</span></div>
+      <p class="dim">更强的说法:给定 \(X\ge x\),<b>剩余量 \(X-x\) 仍是均值相同 \(\theta\) 的指数分布</b>。等了 20 分钟没来,后续等待时间的分布和从头开始一模一样——过去被"忘光"。</p>
+      <details class="more"><summary>展开 · 一行证明</summary>
+        <p class="dim">\(\dfrac{P[X>s+t]}{P[X>s]}=\dfrac{e^{-(s+t)/\theta}}{e^{-s/\theta}}=e^{-t/\theta}=P[X>t]\)。</p>
+      </details>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>几何 Geometric(L18)</th><th>指数 Exponential</th></tr></thead>
+      <tbody>
+        <tr><td>类型</td><td>离散,数"失败几次"</td><td>连续,量"等了多久"</td></tr>
+        <tr><td>尾概率</td><td>\(\Pr(N\ge n)=(1-p)^n\)</td><td>\(P[X>x]=e^{-x/\theta}\)</td></tr>
+        <tr><td>无记忆写法</td><td>\(E[N-n\mid N\ge n]=E[N]\)</td><td>\(P[X>s+t\mid X>s]=P[X>t]\)</td></tr>
+        <tr><td>地位</td><td colspan="2">各自阵营<b>唯一</b>的无记忆分布:几何是唯一无记忆的离散分布,指数是唯一无记忆的连续分布——互为镜像</td></tr>
+      </tbody>
+    </table>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 160" role="img" aria-label="无记忆性:截断后重标定与原分布相同">
+          <line x1="20" y1="130" x2="248" y2="130" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="20" y1="130" x2="20" y2="16" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M20,26 C60,82 110,110 160,121 C195,127 225,129 244,129.5" fill="none" stroke="var(--mute)" stroke-width="1.6"/>
+          <line x1="110" y1="130" x2="110" y2="20" stroke="#9d174d" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <text x="110" y="145" font-size="11" fill="#9d174d" text-anchor="middle">s</text>
+          <path d="M110,60 C138,92 175,110 205,118 C222,122 235,124 244,124.5" fill="none" stroke="#db2777" stroke-width="2.4"/>
+          <path d="M110,60 C138,92 175,110 205,118 C222,122 235,124 244,124.5 L244,130 L110,130 Z" fill="#db2777" fill-opacity="0.13"/>
+          <text x="24" y="14" font-size="11" fill="#16243d" font-style="italic">f</text>
+        </svg>
+        <div class="cap">灰=原密度;越过 \(s\) 后<b>重新归一化</b>(粉),形状与原分布<b>同款</b></div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 260 160" role="img" aria-label="免赔额下的支付:损失超过 d 才赔">
+          <line x1="20" y1="130" x2="248" y2="130" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="20" y1="130" x2="20" y2="16" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M20,26 C60,82 110,110 160,121 C195,127 225,129 244,129.5" fill="none" stroke="#db2777" stroke-width="2.2"/>
+          <path d="M20,26 C50,70 80,96 100,108 L100,130 L20,130 Z" fill="var(--mute)" fill-opacity="0.18"/>
+          <line x1="100" y1="130" x2="100" y2="20" stroke="#9d174d" stroke-width="1.1" stroke-dasharray="4 3"/>
+          <text x="100" y="145" font-size="11" fill="#9d174d" text-anchor="middle">d</text>
+          <text x="58" y="122" font-size="10" fill="var(--ink-soft)" text-anchor="middle">赔 0</text>
+          <text x="176" y="70" font-size="10" fill="#9d174d" text-anchor="middle">赔额 ~ Exp(θ)</text>
+        </svg>
+        <div class="cap"><b>免赔额 \(d\)</b>:损失超 \(d\) 的部分,由无记忆性仍是均值 \(\theta\) 的指数</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 20A</span><span class="src" style="margin:0">课本 p.338 · 免赔额 + 支付方差</span></div>
+      <p class="q">保险损失服从<b>均值 1000 的指数分布</b>,免赔额 \(d=500\)(损失不足 500 赔 0)。求赔付额 \(Y\) 的方差(含赔 0 的情形)。</p>
+      <p>设 \(I=\mathbf 1[\text{损失}\ge 500]\),\(P[I=1]=S(500)=e^{-500/1000}=e^{-1/2}\)。由无记忆性,损失超过 500 时,赔额是均值 1000、方差 \(1000^2\) 的指数。用条件方差公式 \(\operatorname{Var}(Y)=\operatorname{Var}(E[Y\mid I])+E[\operatorname{Var}(Y\mid I)]\):</p>
+      <p>\(E[Y\mid I]\) 取 \(0\)(概率 \(1-e^{-1/2}\))或 \(1000\)(概率 \(e^{-1/2}\)),这是伯努利型 → \(\operatorname{Var}=1000^2\,(1-e^{-1/2})e^{-1/2}\);<br>
+      \(\operatorname{Var}(Y\mid I)\) 取 \(0\) 或 \(1000^2\) → \(E[\cdot]=e^{-1/2}\cdot 10^6\)。</p>
+      <p style="margin-bottom:6px">\(\operatorname{Var}(Y)=10^6 e^{-1/2}+1000^2(1-e^{-1/2})e^{-1/2}\)。</p>
+      <span class="ans">Var(Y) ≈ 845,182</span>
+    </div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>易错:</b>免赔额题里,超过 \(d\) 的赔额<b>仍是均值 \(\theta\)</b> 的指数(无记忆),<b>不是</b>均值 \(\theta-d\)。这一步搞反,后面全错。含"赔 0"分支时,别忘用条件方差公式把两支合起来。</span></div>
+  </div>
+</section>
+
+<section id="gamma">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">关系网</span><h2 class="sec-title">泊松过程 · 指数之和 = 伽马分布</h2></div></div>
+    <p class="sec-sub">指数分布不是孤岛。它是泊松过程的"事件间隔",而若干个独立指数之和就是伽马分布——SOA 偶尔借伽马考多步等待。</p>
+    <div class="card accent">
+      <h3>与泊松过程的关系 <span class="freq">考频 ★★</span></h3>
+      <div class="src">Exam P 常识 · 与 Lesson 泊松分布互通</div>
+      <p class="lede">"计数用泊松,间隔用指数"——同一枚硬币的两面。</p>
+      <p class="dim">若事件按<b>速率 \(\lambda\) 的泊松过程</b>发生(单位时间内计数 \(N\sim\text{Poisson}(\lambda t)\)),则<b>相邻两事件的间隔时间服从速率 \(\lambda\) 的指数分布</b>。</p>
+      <p class="dim">对偶关系:\(P[\text{下一事件的等待}>t]=P[\,[0,t]\ \text{内 0 次事件}\,]=e^{-\lambda t}\)——正是指数生存函数。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>独立指数之和 = 伽马分布 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.338–339</div>
+      <p class="lede">\(n\) 个独立同均值指数相加 → 伽马 \((n,\theta)\):均值 \(n\theta\)、方差 \(n\theta^2\)。</p>
+      <div class="formula"><span class="name">Gamma density (sum of n exponentials)</span>
+        $$f_Y(x)=\frac{x^{\,n-1}e^{-x/\theta}}{\Gamma(n)\,\theta^{\,n}},\qquad E[Y]=n\theta,\quad \operatorname{Var}(Y)=n\theta^2$$</div>
+      <p class="dim">若 \(X_1,\dots,X_n\) 独立同为均值 \(\theta\) 的指数,则 \(Y=\sum_{i=1}^n X_i\) 服从参数为 \(n,\theta\) 的<b>伽马分布(gamma distribution)</b>。这里 \(\Gamma(n)=(n-1)!\)(正整数 \(n\))。\(n=1\) 时退化回指数分布。均值、方差是单个指数的 \(n\) 倍——独立同分布之和的常识。</p>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 20B</span><span class="src" style="margin:0">课本 p.338–339 · 两步审批</span></div>
+      <p class="q">休假计划要先后经<b>老板</b>和<b>老板的老板</b>审批,各自耗时独立、均为<b>均值 3 天的指数分布</b>。求两人都在<b>5 天内</b>批完的概率。</p>
+      <p>总时间 \(Y=X_1+X_2\) 是 \(n=2,\theta=3\) 的伽马,求 \(F_Y(5)\):</p>
+      <p>$$F_Y(5)=\int_0^5\frac{x\,e^{-x/3}}{\Gamma(2)\,3^2}\,dx=\frac19\int_0^5 x\,e^{-x/3}\,dx.$$</p>
+      <p style="margin-bottom:6px">也可用全概率:\(F_Y(5)=\int_0^5\bigl(1-e^{-(5-x)/3}\bigr)\tfrac13 e^{-x/3}\,dx\)——两法同解。</p>
+      <span class="ans">P[Y ≤ 5] ≈ 0.496332</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>考试策略:</b>SOA 真正让你算伽马 CDF 的题很少;更多是"认出这是伽马,用 \(E[Y]=n\theta\)、\(\operatorname{Var}(Y)=n\theta^2\)"。伽马 CDF 无一般闭式,但 \(n\) 为小整数时可分部积分手算(如例 20B)。</span></div>
+  </div>
+</section>
+
+<section id="insight" style="background:linear-gradient(180deg,#fdf5f9,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子一:下一位顾客还要等多久</h3>
+      <p>接着 L19 的面包店:顾客以速率每小时 10 人的泊松过程进店,那么"从现在起到<b>下一位</b>顾客进门"的等待时间 \(\sim\text{Exp}\)(速率 \(\lambda=10\)/小时,均值 \(\theta=1/10\) 小时 = 6 分钟)。泊松数"一小时来几个",指数量"下一个还要等多久"——同一过程的两面,\(P[\text{等待}>t]=P[t\text{ 内 0 人}]=e^{-\lambda t}\) 一条式子把两章缝起来。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="泊松过程时间轴:数点与量隙是同一过程的两面,到下一位顾客的等待服从指数分布,均值 6 分钟">
+            <text x="124" y="15" font-size="9.5" fill="#46566f" text-anchor="middle">泊松流:速率 λ=10/小时(数点)</text>
+            <circle cx="168" cy="31" r="3.5" fill="#db2777" fill-opacity="0.9"/>
+            <text x="175" y="34" font-size="9" fill="#46566f">= 顾客到达</text>
+            <text x="31" y="74" font-size="10" font-weight="700" fill="#c6492f">等待 T ∼ Exp,均值 6 分钟</text>
+            <line x1="35" y1="85" x2="64" y2="85" stroke="#c6492f" stroke-width="1.5"/>
+            <polygon points="31,85 37,82 37,88" fill="#c6492f"/>
+            <polygon points="68,85 62,82 62,88" fill="#c6492f"/>
+            <text x="51" y="99" font-size="9" fill="#7a8699" text-anchor="middle">此段 0 人</text>
+            <line x1="25" y1="105" x2="220" y2="105" stroke="#16243d" stroke-width="2.2"/>
+            <polygon points="220,100 231,105 220,110" fill="#16243d"/>
+            <line x1="30" y1="99" x2="30" y2="111" stroke="#16243d" stroke-width="2"/>
+            <line x1="90" y1="102" x2="90" y2="108" stroke="#7a8699" stroke-width="1"/>
+            <line x1="150" y1="102" x2="150" y2="108" stroke="#7a8699" stroke-width="1"/>
+            <circle cx="72" cy="105" r="4.5" fill="#db2777" fill-opacity="0.9"/>
+            <circle cx="126" cy="105" r="4.5" fill="#db2777" fill-opacity="0.9"/>
+            <circle cx="144" cy="105" r="4.5" fill="#db2777" fill-opacity="0.9"/>
+            <circle cx="198" cy="105" r="4.5" fill="#db2777" fill-opacity="0.9"/>
+            <text x="30" y="123" font-size="9.5" fill="#16243d" text-anchor="middle">0(现在)</text>
+            <text x="90" y="123" font-size="9.5" fill="#7a8699" text-anchor="middle">10</text>
+            <text x="150" y="123" font-size="9.5" fill="#7a8699" text-anchor="middle">20</text>
+            <text x="210" y="123" font-size="9.5" fill="#7a8699" text-anchor="middle">30 分钟</text>
+          </svg>
+          <div class="cap"><b>数点 vs 量隙</b>:每小时 10 人的泊松流,"到下一位"的间隙 \(T\sim\text{Exp}\)(均值 6 分钟);\(P[T&gt;t]=P[t\text{ 内 }0\text{ 人}]=e^{-\lambda t}\)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💡 直觉例子二:旧灯泡不比新灯泡容易坏</h3>
+      <p>若灯泡寿命服从指数分布,一只已经亮了 5000 小时的旧灯泡,和刚拆封的新灯泡,<b>剩余寿命的分布完全相同</b>——"用过多久"不留任何痕迹,这就是无记忆性的物理感受。保险里同款:损失超过免赔额 \(d\) 后,超出部分的分布与从零开始的损失一模一样。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="指数生存曲线:已活 6 年后剩余寿命的生存曲线与原曲线同形,从 6 处原样重开">
+            <text x="150" y="30" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">已活 6 年 → 原样重开</text>
+            <line x1="93" y1="32" x2="74" y2="23" stroke="#c6492f" stroke-width="1.2"/>
+            <polygon points="70,21 77,21 74,27" fill="#c6492f"/>
+            <line x1="66" y1="119" x2="66" y2="26" stroke="#7a8699" stroke-width="1" stroke-dasharray="3 3"/>
+            <polyline points="30,20 42,38 54,53 66,65 78,75 90,83 114,95 138,104 162,109 186,113 210,115" fill="none" stroke="#db2777" stroke-width="2.2" stroke-opacity="0.8" stroke-linejoin="round"/>
+            <polyline points="66,20 78,38 90,53 102,65 114,75 126,83 150,95 174,104 198,109 210,111" fill="none" stroke="#9d174d" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+            <circle cx="66" cy="65" r="3" fill="#db2777"/>
+            <circle cx="66" cy="20" r="3.5" fill="#9d174d"/>
+            <line x1="30" y1="120" x2="222" y2="120" stroke="#16243d" stroke-width="2.2"/>
+            <line x1="30" y1="120" x2="30" y2="16" stroke="#16243d" stroke-width="2.2"/>
+            <text x="30" y="11" font-size="9.5" fill="#46566f" text-anchor="middle">S(t)</text>
+            <text x="30" y="134" font-size="10" fill="#16243d" text-anchor="middle">0</text>
+            <text x="66" y="134" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">6 年</text>
+            <text x="214" y="134" font-size="9" fill="#7a8699" text-anchor="middle">(年)</text>
+          </svg>
+          <div class="cap"><b>重开一局</b>:实线 \(S(t)=e^{-t/10}\);已活 6 年后剩余寿命的生存曲线(虚线)与原曲线同形,\(S(6+t)/S(6)=S(t)\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="旧灯泡已亮 5000 小时,与新灯泡从现在起的剩余寿命分布相同">
+            <text x="90" y="26" font-size="9.5" fill="#46566f" text-anchor="middle">现在</text>
+            <line x1="90" y1="32" x2="90" y2="63" stroke="#7a8699" stroke-width="1.2" stroke-dasharray="3 3"/>
+            <line x1="90" y1="80" x2="90" y2="104" stroke="#7a8699" stroke-width="1.2" stroke-dasharray="3 3"/>
+            <text x="44" y="56" font-size="9.5" fill="#16243d" text-anchor="middle">新灯泡</text>
+            <rect x="92" y="44" width="38" height="16" fill="#db2777" fill-opacity="0.8"/>
+            <rect x="132" y="44" width="34" height="16" fill="#db2777" fill-opacity="0.55"/>
+            <rect x="168" y="44" width="32" height="16" fill="#db2777" fill-opacity="0.3"/>
+            <polygon points="204,48 212,52 204,56" fill="#db2777" fill-opacity="0.3"/>
+            <text x="146" y="75" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">剩余寿命分布相同</text>
+            <text x="44" y="96" font-size="9.5" fill="#16243d" text-anchor="middle">旧灯泡</text>
+            <rect x="62" y="84" width="26" height="16" fill="#7a8699" fill-opacity="0.35"/>
+            <rect x="92" y="84" width="38" height="16" fill="#db2777" fill-opacity="0.8"/>
+            <rect x="132" y="84" width="34" height="16" fill="#db2777" fill-opacity="0.55"/>
+            <rect x="168" y="84" width="32" height="16" fill="#db2777" fill-opacity="0.3"/>
+            <polygon points="204,88 212,92 204,96" fill="#db2777" fill-opacity="0.3"/>
+            <text x="75" y="114" font-size="9" fill="#7a8699" text-anchor="middle">已亮 5000 h</text>
+          </svg>
+          <div class="cap"><b>旧 = 新</b>:已亮 5000 h 的旧灯泡与刚拆封的新灯泡,从"现在"起的剩余寿命同分布——"用过多久"不留痕迹</div>
+        </div>
+      </div>
+      <p class="dim">当然,真实灯泡会老化(故障率随时间上升),指数只是"故障率恒定"的理想化。恰恰因此,题面一旦声明 exponential,就放心大胆用无记忆——它是这个模型的定义性特征。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>保险语境:<b>索赔间隔 / 损失额 ~ 指数</b>是默认设定;"loss exceeds…"直接上生存函数 \(S(x)=e^{-x/\theta}\)。</li>
+        <li><b>免赔额三连:</b>赔付概率 \(=S(d)\);赔付部分(给定赔付)仍 \(\sim\text{Exp}(\theta)\)(无记忆);含"赔 0"分支求方差走条件方差公式(例 20A)。</li>
+        <li>"has survived / lasted \(s\)" → 无记忆,剩余寿命重开一局(60 秒快测第 3 题)。</li>
+        <li>中位数 / 百分位 → \(\xi_p=-\theta\ln(1-p)\) 一步出。</li>
+        <li>预告 L23:独立指数取<b>最小值</b>仍是指数,速率相加(\(\lambda_1+\lambda_2\))——"两台机器谁先坏"型题。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Exponential_distribution">Wikipedia · Exponential distribution</a></div><div class="z">两套参数化并排列出、性质全收录,读题分不清 mean/rate 时回来对一眼。</div><div class="u">en.wikipedia.org/wiki/Exponential_distribution</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Memorylessness">Wikipedia · Memorylessness</a></div><div class="z">专讲无记忆性:为什么恰好只有几何(离散)与指数(连续)两家,证明短而漂亮。</div><div class="u">en.wikipedia.org/wiki/Memorylessness</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/probability-distributions/exponential-distribution">Statlect · Exponential distribution</a></div><div class="z">矩、百分位、与泊松过程关系的推导逐步展开,把本章公式的"为什么"补齐。</div><div class="u">statlect.com/probability-distributions/exponential-distribution</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>参数化混用</b>:θ 是均值、λ 是速率,\(\lambda=1/\theta\)。题给 mean 还是 rate 先看清,别把 \(\theta\) 当 \(\lambda\) 塞进 \(e^{-\lambda x}\)。</li>
+          <li><b>方差 = 均值²</b>:不是均值本身。给标准差 = 均值这条自查。</li>
+          <li><b>无记忆 → 超额部分仍是 \(\theta\)</b>:免赔后赔额均值仍 \(\theta\),不是 \(\theta-d\)。</li>
+          <li><b>百分位符号</b>:\(\xi_p=-\theta\ln(1-p)\),里面是 \(1-p\) 且带负号,别丢。</li>
+          <li><b>"至少一次" 用生存函数</b>:\(P[X\le t]=1-e^{-t/\theta}\),别去积分密度。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。题号为 ASM Lesson 20 练习。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 20.1</span>通胀使索赔额翻倍,求今日"索赔&lt;1000"的概率(生存函数 + 尺度变换)。</li>
+          <li><span class="ref">练 20.3</span>事故等待均值 200 天,求"365 天内无事故后再至少一次"(无记忆性)。</li>
+          <li><span class="ref">练 20.11</span>给 \(N\) 的分布 + \(S\mid N{=}1\) 指数均值 8,求 \(P[4&lt;S&lt;8]\)(混合)。</li>
+          <li><span class="ref">练 20.13</span>\(f(x)=2e^{-2x}\),求条件概率 \(P[X\le 0.5\mid X\le 1.0]\)。</li>
+          <li><span class="ref">练 20.16</span>两独立指数(均值 1),求"其一超过另一两倍"的概率。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>\(X\sim\text{Exp}\),均值 \(\theta=4\)。\(\operatorname{Var}(X)=?\) 中位数 \(=?\)</li>
+        <li>速率 \(\lambda=0.5\)。\(P[X>2]=?\)</li>
+        <li>寿命指数均值 10,已用 6 年仍在工作。它再至少用 4 年的概率 \(=?\)</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(\operatorname{Var}=\theta^2=16\),中位数 \(=4\ln 2\approx 2.77\);② \(P[X>2]=e^{-\lambda\cdot 2}=e^{-1}\approx 0.368\);③ 无记忆性 → 等于全新品用满 4 年 \(=e^{-4/10}=e^{-0.4}\approx 0.670\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 指数分布</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>核心公式(mean θ)</h4>
+        <p>\(f(x)=\tfrac1\theta e^{-x/\theta}\),\(F(x)=1-e^{-x/\theta}\)</p>
+        <p>\(S(x)=e^{-x/\theta}\)(等待超 \(x\))</p>
+        <p>\(E[X]=\theta\),\(\operatorname{Var}(X)=\theta^2\),\(E[X^2]=2\theta^2\)</p>
+        <p>速率:\(\lambda=1/\theta\),换成 \(e^{-\lambda x}\)</p>
+      </div>
+      <div class="cc t">
+        <h4>关键性质</h4>
+        <p>百分位:\(\xi_p=-\theta\ln(1-p)\);中位 \(=\theta\ln 2\)</p>
+        <p>无记忆:\(P[X>s+t\mid X>s]=P[X>t]\)</p>
+        <p>超额部分仍 \(\sim\text{Exp}(\theta)\)</p>
+        <p>\(n\) 个独立指数之和 \(=\text{Gamma}(n,\theta)\),均值 \(n\theta\)、方差 \(n\theta^2\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 20 原文用词</span><h2 class="sec-title">指数分布 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它认出"指数 / 等待 / 无记忆"情境。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 20</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">exponential distribution</td><td class="ipa">/ˌɛkspəˈnɛnʃəl/</td><td><span class="pos n">n.</span></td><td>指数分布</td><td class="root">exponent(指数)→ 密度含 \(e^{-x/\theta}\)</td></tr>
+          <tr><td class="en">memoryless</td><td class="ipa">/ˈmɛməriləs/</td><td><span class="pos adj">adj.</span></td><td>无记忆的</td><td class="root">memory + -less;过去不影响未来,本章灵魂</td></tr>
+          <tr><td class="en">rate (parameter)</td><td class="ipa">/reɪt/</td><td><span class="pos n">n.</span></td><td>速率(参数)</td><td class="root">\(\lambda\) = 单位时间发生率 \(=1/\theta\)</td></tr>
+          <tr><td class="en">scale parameter</td><td class="ipa">/skeɪl/</td><td><span class="pos n">n.</span></td><td>尺度参数</td><td class="root">\(\theta\) 拉伸横轴 = 均值,乘常数仍指数</td></tr>
+          <tr><td class="en">survival function</td><td class="ipa">/sərˈvaɪvəl/</td><td><span class="pos n">n.</span></td><td>生存函数</td><td class="root">\(S(x)=1-F(x)=e^{-x/\theta}\),"活过 \(x\)"</td></tr>
+          <tr><td class="en">percentile</td><td class="ipa">/pərˈsɛntaɪl/</td><td><span class="pos n">n.</span></td><td>百分位数</td><td class="root">\(\xi_p=-\theta\ln(1-p)\);median = 50th</td></tr>
+          <tr><td class="en">deductible</td><td class="ipa">/dɪˈdʌktəbəl/</td><td><span class="pos n">n.</span></td><td>免赔额</td><td class="root">deduct(扣除)→ 损失超此才赔,配无记忆</td></tr>
+          <tr><td class="en">gamma distribution</td><td class="ipa">/ˈɡæmə/</td><td><span class="pos n">n.</span></td><td>伽马分布</td><td class="root">\(n\) 个独立指数之和;\(n{=}1\) 即指数</td></tr>
+          <tr><td class="en">waiting time</td><td class="ipa">/ˈweɪtɪŋ/</td><td><span class="pos n">n.</span></td><td>等待时间</td><td class="root">泊松过程中相邻事件间隔 ~ 指数</td></tr>
+          <tr><td class="en">shape parameter</td><td class="ipa">/ʃeɪp/</td><td><span class="pos n">n.</span></td><td>形状参数</td><td class="root">伽马的 \(n\):改曲线形状,不像 \(\theta\) 只拉伸横轴</td></tr>
+          <tr><td class="en">gamma function</td><td class="ipa">/ˈɡæmə ˈfʌŋkʃən/</td><td><span class="pos n">n.</span></td><td>伽马函数</td><td class="root">\(\Gamma(n)=(n-1)!\)(整数 \(n\));阶乘的推广</td></tr>
+          <tr><td class="en">Bernoulli shortcut</td><td class="ipa">/bərˈnuːli/</td><td><span class="pos n">n.</span></td><td>伯努利捷径</td><td class="root">两点变量方差 \((b-a)^2 p(1-p)\),秒算免积分</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">exponentially distributed with mean …</div><div class="z">服从均值……的指数分布(给 θ)</div></div>
+        <div class="ph"><div class="e">time until the next …</div><div class="z">到下一次……的时间(等待时间)</div></div>
+        <div class="ph"><div class="e">given that it has survived / lasted …</div><div class="z">已知已存活/持续……(触发无记忆)</div></div>
+        <div class="ph"><div class="e">in excess of a deductible of d</div><div class="z">超过免赔额 d 的部分</div></div>
+        <div class="ph"><div class="e">the probability that a loss exceeds …</div><div class="z">损失超过……的概率(用 \(S\))</div></div>
+        <div class="ph"><div class="e">lifetime / lifespan of …</div><div class="z">……的寿命(常设为指数)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 20</b> · 第二十章 Exponential Distribution 指数分布</p>
+    <p>公式与例题(Example 20A、20B)整理自《ASM Exam P Study Manual, 7th ed.》Lesson 20(p.337–340,页码已标注,细节以课本为准)+ 威普网校视频。<br>伽马分布无独立课次,"指数之和 = 伽马"要点见本页 §04,矩母函数视角见 L32。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L33 导学 · Probability Generating Function 概率母函数</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    /* === 每章只改这 4 个: 主题色 === */
+    --accent:#9333ea; --accent-deep:#6b21a8; --accent-soft:#f2e6fc; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+
+  /* v2 · 本章拿走 N 句话 —— 全章最高记忆锚, 放 hero 内底部 */
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  /* v2 · 知识链条: 前置 → 本章 → 去向 (贴 hero 下, modnav 上) */
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  /* 模块快捷跳转条(吸顶于顶栏下) */
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  /* v2 · 卡内分层: lede 一句话结论(先看), dim 细节(后看) */
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  /* 公式两级: 普通 = 理解; .star = ★必背(视觉最高级) */
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  /* 考频徽章: ★★★ 高频 / ★★ 常考 / ★ 低频 */
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  /* 🗝️ 口诀条: 一句话可默背 */
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  /* 图示行 (Venn / 树 / 分布曲线 SVG) */
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  /* v2 · 对比表(独立 vs 互斥这类"最易混"两栏对照): 首列加粗, 表头用主题色 */
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  /* v2 · 扩展阅读卡: 精选外链 + 为什么值得看 */
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L33 · 概率母函数</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第三十三章 · <em>Probability Generating Function 概率母函数</em></h1>
+    <p class="lead">把一个<b>非负整数随机变量</b>的整张概率表,打包成一个函数 <b>\(P_X(t)=E[t^X]\)</b>。这只"母函数"求导一次给期望、求导给<b>阶乘矩</b>、独立和直接相乘、在 0 处求导又能<b>还原每个概率</b>——一个函数装下分布的全部信息。短章,对照课本 Lesson&nbsp;33(p.519–521)精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch33 PGF <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.519–521</b>(理论)</span>
+      <span class="pill">仅限 <b>非负整数 RV</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>PGF 把整张概率表打包:\(P_X(t)=E[t^X]=\sum_k t^k p_k\),只对<b>非负整数</b> RV 有意义。</li>
+        <li><b>两个求值点</b>:求矩在 \(t=1\)(\(P'(1)=E[X]\),给<b>阶乘矩</b>);反读概率在 \(t=0\)(\(p_k=P^{(k)}(0)/k!\))。</li>
+        <li>独立和照样<b>相乘</b> \(P_{X+Y}=P_XP_Y\);与 MGF 一键互换:\(P(t)=M(\ln t)\)。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l32-mgf.html">L32 矩母函数</a>
+    <a href="soa-exam-p-l17-binomial-distribution.html">L17–19 离散分布族</a>
+    <span class="arr">→</span>
+    <span class="here">L33 概率母函数</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="#fmom">阶乘矩</a>
+    <a href="#isum">离散独立和</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">定义</a>
+  <a href="#uses">三大用途</a>
+  <a href="#ex">例题</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完概率母函数你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 写出定义 \(P_X(t)=E[t^X]=\sum_{k\ge0}t^kP[X{=}k]\),并知道它<b>只对非负整数 RV</b> 有意义。</p>
+        <p style="margin-bottom:0">✅ 用 \(P'(1)=E[X]\)、\(P''(1)=E[X(X{-}1)]\) 求期望与<b>方差</b>。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用 \(P[X{=}k]=\dfrac{P^{(k)}(0)}{k!}\) 从母函数<b>反读概率</b>。</p>
+        <p style="margin-bottom:0">✅ 用<b>独立和相乘</b> \(P_{X+Y}(t)=P_X(t)P_Y(t)\),并联系 MGF:\(P(t)=M(\ln t)\)。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#f9f5fe,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch33 · Lesson 33 · 课本 p.519</span><h2 class="sec-title">概率母函数 — 定义</h2></div></div>
+    <p class="sec-sub">对<b>离散、非负整数</b>取值的随机变量 \(X\)(计数变量:泊松、二项、几何……),把它每个取值的概率 \(p_k=P[X{=}k]\) 当作系数,配上 \(t^k\) 求和,就得到一个自变量为 \(t\) 的多项式/幂级数——它"生成"了整张概率表。</p>
+
+    <div class="card accent">
+      <h3>定义:概率母函数 \(P_X(t)\) <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.519 · 式 (33.1)</div>
+      <p class="lede">母函数就是 \(t^X\) 的期望——每个概率 \(p_k\) 当系数、配上 \(t^k\) 求和,<b>一个函数装下整张概率表</b>。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Probability Generating Function</span>
+        $$P_X(t)=E\!\left[t^{X}\right]=\sum_{k=0}^{\infty}t^{k}\,P[X{=}k]$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>P(1)=1 恒成立</b> — 概率求和为 1;任何合法母函数代 \(t=1\) 必等于 1,做完先自检。</span></div>
+      <p class="dim"><b>课本用大写 \(P\) 记母函数</b>,与"概率 \(P[\cdot]\)"同符号,靠上下文区分。通常只在需要处对 \(t\) 取值,不必对所有 \(t\) 收敛。</p>
+      <p class="dim"><b>归一化</b>:所有概率之和为 1,所以 \(P_X(1)=\sum_k P[X{=}k]=1\)——任何合法母函数在 \(t=1\) 处必等于 1(自检点)。只对<b>非负整数</b> RV 有意义,连续型或取负值的变量别硬套。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="概率表打包成幂级数">
+          <line x1="30" y1="128" x2="220" y2="128" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="30" y1="128" x2="30" y2="20" stroke="#16243d" stroke-width="1.5"/>
+          <text x="6" y="30" font-size="10" fill="#7a8699">p</text>
+          <text x="215" y="145" font-size="10" fill="#7a8699">k</text>
+          <line x1="60" y1="128" x2="60" y2="68" stroke="#9333ea" stroke-width="4"/>
+          <circle cx="60" cy="68" r="4" fill="#9333ea"/>
+          <line x1="105" y1="128" x2="105" y2="86" stroke="#9333ea" stroke-width="4"/>
+          <circle cx="105" cy="86" r="4" fill="#9333ea"/>
+          <line x1="150" y1="128" x2="150" y2="104" stroke="#9333ea" stroke-width="4"/>
+          <circle cx="150" cy="104" r="4" fill="#9333ea"/>
+          <line x1="195" y1="128" x2="195" y2="116" stroke="#9333ea" stroke-width="4"/>
+          <circle cx="195" cy="116" r="4" fill="#9333ea"/>
+          <text x="55" y="143" font-size="10" fill="#46566f">0</text>
+          <text x="100" y="143" font-size="10" fill="#46566f">1</text>
+          <text x="145" y="143" font-size="10" fill="#46566f">2</text>
+          <text x="190" y="143" font-size="10" fill="#46566f">3</text>
+        </svg>
+        <div class="cap">离散 pmf:\(p_0,p_1,p_2,\dots\) 一根根"棒棒糖"</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 240 160" role="img" aria-label="打包成一个函数">
+          <rect x="20" y="46" width="200" height="68" rx="12" fill="var(--accent-soft)" stroke="#9333ea" stroke-width="1.5"/>
+          <text x="120" y="82" font-size="13" fill="#6b21a8" text-anchor="middle" font-style="italic">P(t)=&#8721; p&#8342; t&#7524;</text>
+          <text x="120" y="30" font-size="11" fill="#7a8699" text-anchor="middle">一个函数装下整张表</text>
+          <path d="M120 118 L120 132" stroke="#16243d" stroke-width="1.2"/>
+          <text x="120" y="150" font-size="10" fill="#46566f" text-anchor="middle">t=1 → 1 · 求导 → 矩 · t=0 → 概率</text>
+        </svg>
+        <div class="cap">打包为 <b>\(P(t)\)</b>:一个函数,三种读法</div>
+      </div>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>母函数是概率表的"压缩包"。把 \(t\) 代具体值、或对 \(t\) 求导再代值,就能<b>解压</b>出不同的信息——这正是它叫"母(生成)函数"的原因。</span></div>
+  </div>
+</section>
+
+<section id="uses">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">Ch33 · 核心</span><h2 class="sec-title">三大用途 + MGF 关系</h2></div></div>
+    <p class="sec-sub">母函数值得学,是因为它一次打包、多处解压:在 \(t=1\) 求导给矩,在 \(t=0\) 求导给概率,独立和直接相乘。</p>
+
+    <div class="card accent" id="fmom">
+      <h3>① 生成阶乘矩(在 \(t=1\) 求导)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.520 · 式 (33.3)</div>
+      <p class="lede">第 \(n\) 阶导数在 1 处的值 = 第 \(n\) 阶<b>阶乘矩</b> \(\mu_{(n)}=E[X(X{-}1)\cdots(X{-}n{+}1)]\)——求期望方差全靠它。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Factorial moments</span>
+        $$P'(1)=E[X],\qquad P''(1)=E[X(X{-}1)],\qquad P^{(n)}(1)=\mu_{(n)}$$</div>
+      <p class="dim"><b>求方差</b>:\(E[X^2]=P''(1)+P'(1)\),于是 \(\operatorname{Var}(X)=P''(1)+P'(1)-\big(P'(1)\big)^2\)。别忘了 \(P''(1)\) 给的是 \(E[X(X{-}1)]\),<b>不是</b> \(E[X^2]\)。</p>
+      <p class="dim"><b>推到三阶</b>:\(P'''(1)=E[N(N{-}1)(N{-}2)]\) 是三阶<b>阶乘矩</b>;展开 \(N(N{-}1)(N{-}2)=N^3-3N^2+2N\) 即得三阶原点矩 \(E[N^3]=P'''(1)+3P''(1)+P'(1)\)(见例 33C)。</p>
+      <details class="more"><summary>展开 · 为什么在 1 处求导给的是阶乘矩</summary>
+        <p class="dim">对 \(P(t)=\sum_k p_k t^k\) 逐项求 \(n\) 次导:\(P^{(n)}(t)=\sum_k k(k{-}1)\cdots(k{-}n{+}1)\,p_k\,t^{k-n}\)。代 \(t=1\) 后 \(t^{k-n}\) 全变 1,剩 \(\sum_k k(k{-}1)\cdots(k{-}n{+}1)\,p_k=E[X(X{-}1)\cdots(X{-}n{+}1)]\)——每求一次导,指数"下降"一次,所以吐出的是<b>下降阶乘</b>的期望,而非幂的期望。</p>
+      </details>
+    </div>
+
+    <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>矩在 1、概率在 0</b> — 两个求值点一头一尾,别记反;反读概率还要<b>除以 \(k!\)</b>。</span></div>
+
+    <div class="card accent">
+      <h3>② 生成概率(在 \(t=0\) 求导)<span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.521 · 式 (33.5)</div>
+      <p class="lede">幂级数第 \(k\) 项系数就是 \(p_k\):求 \(k\) 阶导、代 0、除以 \(k!\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Recover probabilities</span>
+        $$P[X{=}k]=\frac{P^{(k)}(0)}{k!}\qquad\text{特别地 }P(0)=p_0$$</div>
+      <p class="dim">因为 \(P(t)=p_0+p_1t+p_2t^2+\cdots\),第 \(k\) 阶导在 0 处只剩 \(k!\,p_k\) 一项。给一个母函数,想知道 \(P[X{=}2]\)?求二阶导、代 \(t=0\)、除以 \(2!\) 即可。</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card accent" id="isum">
+        <h3>③ 独立和 → 相乘 <span class="freq">考频 ★★</span></h3>
+        <div class="src">课本 p.520 · 式 (33.4)</div>
+        <p style="margin-top:0">若 \(X,Y\) 独立,则</p>
+        <div class="formula"><span class="name">Sum of independents</span>
+          $$P_{X+Y}(t)=P_X(t)\,P_Y(t)$$</div>
+        <p class="dim" style="margin-bottom:0">因 \(E[t^{X+Y}]=E[t^X]E[t^Y]\)。"母函数是乘性的"——识别独立和分布的利器。</p>
+      </div>
+      <div class="card accent">
+        <h3>联系 MGF <span class="freq">考频 ★★</span></h3>
+        <div class="src">课本 p.519 · 式 (33.2)</div>
+        <p style="margin-top:0">母函数与矩母函数就差一个变量替换:</p>
+        <div class="formula"><span class="name">PGF ↔ MGF</span>
+          $$P(t)=M(\ln t),\qquad M(t)=P(e^{t})$$</div>
+        <p class="dim" style="margin-bottom:0">因为 \(P(t)=E[t^X]=E[e^{X\ln t}]=M(\ln t)\)。会一个就会另一个。</p>
+      </div>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>MGF \(M_X(t)\)(L32)</th><th>PGF \(P_X(t)\)(本章)</th></tr></thead>
+      <tbody>
+        <tr><td>定义</td><td>\(E[e^{tX}]\)</td><td>\(E[t^{X}]\)</td></tr>
+        <tr><td>适用</td><td>任意随机变量</td><td>仅非负整数 RV</td></tr>
+        <tr><td>取矩</td><td>在 \(t=0\) 求导 → <b>原点矩</b> \(E[X^n]\)</td><td>在 \(t=1\) 求导 → <b>阶乘矩</b> \(E[X(X{-}1)\cdots]\)</td></tr>
+        <tr><td>反读概率</td><td>—(不直接)</td><td>在 \(t=0\) 求导:\(p_k=P^{(k)}(0)/k!\)</td></tr>
+        <tr><td>自检点</td><td>\(M(0)=1\)</td><td>\(P(1)=1\)</td></tr>
+        <tr><td>独立和</td><td colspan="2">都相乘:\(M_{X+Y}=M_XM_Y\),\(P_{X+Y}=P_XP_Y\);互换 \(P(t)=M(\ln t)\)、\(M(t)=P(e^t)\)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note"><span class="ic">📝</span><span class="t"><b>泊松母函数(必记):</b>\(X\sim\text{Poisson}(\lambda)\) 时 \(P(t)=e^{\lambda(t-1)}\)。验证:\(P'(t)=\lambda e^{\lambda(t-1)}\),\(P'(1)=\lambda=E[X]\);\(P''(1)=\lambda^2=E[X(X{-}1)]\),故 \(\operatorname{Var}=\lambda^2+\lambda-\lambda^2=\lambda\)。✔</span></div>
+  </div>
+</section>
+
+<section id="ex" style="background:linear-gradient(180deg,#f9f5fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">课本例题精解</span><h2 class="sec-title">例题:三种解压各来一道</h2></div></div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 33A</span><span class="src" style="margin:0">课本 p.519 · 代值</span></div>
+      <p class="q">\(X\) 取 0/1/2,概率分别 0.5 / 0.3 / 0.2。求母函数在 \(t=3\) 处的值 \(P(3)\)。</p>
+      <p>直接按定义代入:\(P(3)=E[3^X]=0.5(3^0)+0.3(3^1)+0.2(3^2)=0.5+0.9+1.8\)。</p>
+      <span class="ans">P(3) = 3.2</span>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 33B</span><span class="src" style="margin:0">课本 p.519 · 泊松母函数</span></div>
+      <p class="q">\(N\sim\text{Poisson}(\lambda)\)。推导它的概率母函数。</p>
+      <p>\(P(t)=\sum_{n\ge0}t^n\,\dfrac{e^{-\lambda}\lambda^n}{n!}=e^{-\lambda}\sum_{n\ge0}\dfrac{(\lambda t)^n}{n!}=e^{-\lambda}e^{\lambda t}=e^{\lambda(t-1)}\)。</p>
+      <span class="ans">P(t) = e^{λ(t−1)}</span>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 33C</span><span class="src" style="margin:0">课本 p.520 · 求高阶矩</span></div>
+      <p class="q">\(N\sim\text{Poisson}(\lambda)\),母函数 \(P(z)=e^{\lambda(z-1)}\)。求三阶原点矩 \(E[N^3]\) 与三阶中心矩 \(E[(N-\lambda)^3]\)。</p>
+      <p>逐阶求导:\(P^{(n)}(z)=\lambda^n e^{\lambda(z-1)}\),故 \(P'''(1)=\lambda^3=E[N(N{-}1)(N{-}2)]\)。配合低阶矩 \(P'(1)=\lambda\)、\(P''(1)=\lambda^2\):\(E[N^3]=P'''(1)+3P''(1)+P'(1)=\lambda^3+3\lambda^2+\lambda\)。再算中心矩:\(E[(N-\lambda)^3]=E[N^3]-3\lambda E[N^2]+2\lambda^3\),其中 \(E[N^2]=\lambda^2+\lambda\),代入得 \((\lambda^3+3\lambda^2+\lambda)-3\lambda(\lambda^2+\lambda)+2\lambda^3=\lambda\)。</p>
+      <span class="ans">E[N³] = λ³ + 3λ² + λ · E[(N−λ)³] = λ</span>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 33D</span><span class="src" style="margin:0">课本 p.521 · 反读概率</span></div>
+      <p class="q">某离散 RV 的母函数为 \(P(t)=\dfrac{1}{0.8\,(1-4(t-1))}-0.25\)。求 \(P[X{=}2]\)。</p>
+      <p>用 \(p_2=\dfrac{P''(0)}{2!}\)。求导:\(P'(t)=\dfrac{4}{0.8\,(1-4(t-1))^2}\),\(P''(t)=\dfrac{32}{0.8\,(1-4(t-1))^3}\)。代 \(t=0\)(此时 \(1-4(t-1)=5\)):\(P''(0)=\dfrac{32}{0.8\cdot5^3}=\dfrac{32}{100}=0.32\)。故 \(p_2=0.32/2\)。</p>
+      <span class="ans">P[X=2] = 0.16</span>
+    </div>
+    <div class="note tip"><span class="ic">🔎</span><span class="t"><b>套路总结:</b>看到"求某个概率"→ 求导代 0 除阶乘;"求期望/方差"→ 求导代 1;"求母函数本身在某点值"→ 直接代;"独立随机变量之和"→ 母函数相乘。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:多项式是"会自动记账"的口袋</h3>
+      <p>掷一颗均匀骰子,把结果记成多项式 \(\tfrac16(t+t^2+\cdots+t^6)\)——指数记"点数"、系数记"概率"。掷<b>两颗</b>呢?把两个多项式<b>相乘</b>:展开后 \(t^7\) 的系数自动等于"和为 7"的概率(\(6/36\)),因为多项式乘法恰好把"指数相加、系数相乘再汇总"这件事全做了。<b>多项式乘法 = 自动卷积</b>,这就是"独立和相乘"的直觉。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="两颗骰子的 6×6 结果网格,和为 7 的六个格子高亮,恰 6/36">
+            <text x="84" y="34" font-size="8" fill="#7a8699" text-anchor="end">A\B</text>
+            <text x="96.5"  y="34" font-size="9" fill="#46566f" text-anchor="middle">1</text>
+            <text x="111.5" y="34" font-size="9" fill="#46566f" text-anchor="middle">2</text>
+            <text x="126.5" y="34" font-size="9" fill="#46566f" text-anchor="middle">3</text>
+            <text x="141.5" y="34" font-size="9" fill="#46566f" text-anchor="middle">4</text>
+            <text x="156.5" y="34" font-size="9" fill="#46566f" text-anchor="middle">5</text>
+            <text x="171.5" y="34" font-size="9" fill="#46566f" text-anchor="middle">6</text>
+            <text x="84" y="50"  font-size="9" fill="#46566f" text-anchor="end">1</text>
+            <text x="84" y="65"  font-size="9" fill="#46566f" text-anchor="end">2</text>
+            <text x="84" y="80"  font-size="9" fill="#46566f" text-anchor="end">3</text>
+            <text x="84" y="95"  font-size="9" fill="#46566f" text-anchor="end">4</text>
+            <text x="84" y="110" font-size="9" fill="#46566f" text-anchor="end">5</text>
+            <text x="84" y="125" font-size="9" fill="#46566f" text-anchor="end">6</text>
+            <g fill="#9333ea" fill-opacity="0.12">
+              <rect x="90" y="40" width="13" height="13"/><rect x="105" y="40" width="13" height="13"/><rect x="120" y="40" width="13" height="13"/><rect x="135" y="40" width="13" height="13"/><rect x="150" y="40" width="13" height="13"/>
+              <rect x="90" y="55" width="13" height="13"/><rect x="105" y="55" width="13" height="13"/><rect x="120" y="55" width="13" height="13"/><rect x="135" y="55" width="13" height="13"/><rect x="165" y="55" width="13" height="13"/>
+              <rect x="90" y="70" width="13" height="13"/><rect x="105" y="70" width="13" height="13"/><rect x="120" y="70" width="13" height="13"/><rect x="150" y="70" width="13" height="13"/><rect x="165" y="70" width="13" height="13"/>
+              <rect x="90" y="85" width="13" height="13"/><rect x="105" y="85" width="13" height="13"/><rect x="135" y="85" width="13" height="13"/><rect x="150" y="85" width="13" height="13"/><rect x="165" y="85" width="13" height="13"/>
+              <rect x="90" y="100" width="13" height="13"/><rect x="120" y="100" width="13" height="13"/><rect x="135" y="100" width="13" height="13"/><rect x="150" y="100" width="13" height="13"/><rect x="165" y="100" width="13" height="13"/>
+              <rect x="105" y="115" width="13" height="13"/><rect x="120" y="115" width="13" height="13"/><rect x="135" y="115" width="13" height="13"/><rect x="150" y="115" width="13" height="13"/><rect x="165" y="115" width="13" height="13"/>
+            </g>
+            <g fill="#9333ea" fill-opacity="0.8">
+              <rect x="165" y="40" width="13" height="13"/>
+              <rect x="150" y="55" width="13" height="13"/>
+              <rect x="135" y="70" width="13" height="13"/>
+              <rect x="120" y="85" width="13" height="13"/>
+              <rect x="105" y="100" width="13" height="13"/>
+              <rect x="90" y="115" width="13" height="13"/>
+            </g>
+            <text x="134" y="145" font-size="9.5" fill="#16243d" text-anchor="middle">和为 7 恰 6 格 → 系数 <tspan font-weight="700" fill="#c6492f">6/36</tspan></text>
+          </svg>
+          <div class="cap"><b>卷积网格</b>:两骰 36 个结果里"和为 7"恰占 6 格,\(t^7\) 系数自动记成 \(6/36\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="两骰之和的系数三角形,峰在 t 的 7 次方,系数 6/36">
+            <text x="120" y="30" font-size="9" fill="#46566f" text-anchor="middle">各 tˢ 的系数 = P(和 = s)</text>
+            <g fill="#9333ea" fill-opacity="0.75">
+              <rect x="30"  y="115" width="13" height="11"/>
+              <rect x="47"  y="104" width="13" height="22"/>
+              <rect x="64"  y="93"  width="13" height="33"/>
+              <rect x="81"  y="82"  width="13" height="44"/>
+              <rect x="98"  y="71"  width="13" height="55"/>
+              <rect x="115" y="60"  width="13" height="66"/>
+              <rect x="132" y="71"  width="13" height="55"/>
+              <rect x="149" y="82"  width="13" height="44"/>
+              <rect x="166" y="93"  width="13" height="33"/>
+              <rect x="183" y="104" width="13" height="22"/>
+              <rect x="200" y="115" width="13" height="11"/>
+            </g>
+            <text x="121.5" y="54" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">6/36</text>
+            <line x1="24" y1="127" x2="220" y2="127" stroke="#16243d" stroke-width="2"/>
+            <text x="36.5"  y="142" font-size="10" fill="#16243d" text-anchor="middle">t²</text>
+            <text x="121.5" y="142" font-size="10" fill="#16243d" text-anchor="middle">t⁷</text>
+            <text x="206.5" y="142" font-size="10" fill="#16243d" text-anchor="middle">t¹²</text>
+          </svg>
+          <div class="cap"><b>系数即概率</b>:\(\tfrac1{36}(t+\cdots+t^6)^2\) 展开后系数排成三角形,峰在 \(t^7\)</div>
+        </div>
+      </div>
+      <p class="dim">另一面,PGF 是概率表的"压缩包":同一个 \(P(t)\),代 \(t=1\) 解压出"总概率 1",在 1 处求导解压出矩,在 0 处求导解压出每个 \(p_k\)。一次打包、三种解压。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>题干出现 <b>probability generating function</b> 就按两个求值点走:问期望/方差 → 求导代 \(t=1\)(记住 \(P''(1)\) 是阶乘矩,\(E[X^2]\) 要加回 \(P'(1)\));问 \(P[X{=}k]\) → 求 \(k\) 阶导代 \(t=0\) 除 \(k!\),或直接展开找 \(t^k\) 系数。</li>
+        <li><b>混合考法</b>:给 \(P(t)\) 问 MGF 相关量(如练 33.3、33.6),用 \(M(t)=P(e^t)\)、\(M'(0)=P'(1)\) 换轨。</li>
+        <li><b>独立泊松和</b>:相乘 \(e^{\lambda_1(t-1)}e^{\lambda_2(t-1)}=e^{(\lambda_1+\lambda_2)(t-1)}\),仍是泊松——认形状秒答。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Probability-generating_function">Wikipedia · Probability-generating function</a></div><div class="z">性质总表 + 常见离散分布(二项/泊松/几何/负二项)的 PGF 一览,当速查字典。</div><div class="u">en.wikipedia.org/wiki/Probability-generating_function</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Factorial_moment">Wikipedia · Factorial moment</a></div><div class="z">解释阶乘矩为什么对离散分布"天生顺手"(下降阶乘与组合计数同构),看完不再死记 \(P''(1)\) 是谁。</div><div class="u">en.wikipedia.org/wiki/Factorial_moment</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/moment-generating-function">Statlect · Moment generating function</a></div><div class="z">复习 MGF 一侧,对照 \(P(t)=M(\ln t)\) 把 L32/L33 两章串成一章看。</div><div class="u">statlect.com/fundamentals-of-probability/moment-generating-function</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>只对非负整数 RV</b>:母函数用 \(t^X\) 的幂级数,连续型或取负值的 RV 别硬套。</li>
+          <li><b>\(P''(1)=E[X(X{-}1)]\) 不是 \(E[X^2]\)</b>:求 \(E[X^2]\) 要加回 \(P'(1)\)。</li>
+          <li><b>求概率在 \(t=0\)、求矩在 \(t=1\)</b>:两个求值点别记反。</li>
+          <li><b>除以 \(k!\)</b>:反读 \(p_k\) 时别漏掉阶乘因子。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 33.3</span>给 \(P(t)=(1+0.2(t{-}1))^2\),求 MGF 在 1 处的值及 \(X\) 的变异系数。</li>
+          <li><span class="ref">练 33.5</span>给 \(P(t)=0.6+\dfrac{0.2t}{1-0.5t}\),用 \(P'(1),P''(1)\) 求方差(答 1.76)。</li>
+          <li><span class="ref">练 33.6</span>已知 \(M'(0)=5,\ P''(1)=35\),求 \(\operatorname{Var}(X)\)(答 15)。</li>
+          <li><span class="ref">练 33.9</span>泊松(均值 4)母函数中 \(t^2\) 系数 = \(P[H{=}2]\)。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>任何合法母函数 \(P(1)=\,?\)</li>
+        <li>\(P(t)=e^{2(t-1)}\)(泊松),\(E[X]=\,?\quad\operatorname{Var}(X)=\,?\)</li>
+        <li>\(X,Y\) 独立,\(P_X(t)=P_Y(t)=e^{2(t-1)}\),则 \(P_{X+Y}(t)=\,?\)</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(1\)(概率求和);② \(E[X]=2,\ \operatorname{Var}=2\)(泊松 \(\lambda=2\));③ \(e^{4(t-1)}\)(相乘 → 仍是泊松,\(\lambda=4\),体现"独立泊松和仍泊松")。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f9f5fe,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 概率母函数</h2></div></div>
+    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义 / 求值</h4>
+        <p>\(P_X(t)=E[t^X]=\sum_k t^k p_k\)</p>
+        <p>\(P(1)=1\)(自检)</p>
+        <p>\(P(0)=p_0\);\(P[X{=}k]=\dfrac{P^{(k)}(0)}{k!}\)</p>
+        <p>限非负整数 RV</p>
+      </div>
+      <div class="cc t">
+        <h4>矩 / 独立和 / MGF</h4>
+        <p>\(P'(1)=E[X]\),\(P''(1)=E[X(X{-}1)]\)</p>
+        <p>\(\operatorname{Var}=P''(1)+P'(1)-\big(P'(1)\big)^2\)</p>
+        <p>独立和:\(P_{X+Y}=P_X\,P_Y\)</p>
+        <p>\(P(t)=M(\ln t)\);泊松 \(P(t)=e^{\lambda(t-1)}\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 33 原文用词</span><h2 class="sec-title">概率母函数 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"要不要用母函数"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 33</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">probability generating function</td><td class="ipa">/ˈdʒɛnəreɪtɪŋ/</td><td><span class="pos n">n.</span></td><td>概率母函数</td><td class="root">generate(生成)→ 生成概率/矩的函数,\(P(t)=E[t^X]\)</td></tr>
+          <tr><td class="en">factorial moment</td><td class="ipa">/fækˈtɔːriəl/</td><td><span class="pos n">n.</span></td><td>阶乘矩</td><td class="root">\(E[X(X{-}1)\cdots]\),由 \(P^{(n)}(1)\) 生成</td></tr>
+          <tr><td class="en">moment generating function</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>矩母函数(MGF)</td><td class="root">\(M(t)=E[e^{tX}]=P(e^t)\)</td></tr>
+          <tr><td class="en">non-negative integer</td><td class="ipa">/ˈɪntɪdʒər/</td><td><span class="pos n">n.</span></td><td>非负整数</td><td class="root">母函数适用范围:0,1,2,…</td></tr>
+          <tr><td class="en">derivative</td><td class="ipa">/dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>导数</td><td class="root">\(n\)th derivative 第 \(n\) 阶导数</td></tr>
+          <tr><td class="en">multiplicative</td><td class="ipa">/ˌmʌltɪˈplɪkətɪv/</td><td><span class="pos adj">adj.</span></td><td>乘性的</td><td class="root">独立和的母函数 = 各自母函数之积</td></tr>
+          <tr><td class="en">coefficient</td><td class="ipa">/ˌkoʊɪˈfɪʃənt/</td><td><span class="pos n">n.</span></td><td>系数</td><td class="root">\(t^k\) 的系数即 \(p_k\)</td></tr>
+          <tr><td class="en">evaluate at</td><td class="ipa">/ɪˈvæljueɪt/</td><td><span class="pos v">v.</span></td><td>在……处求值</td><td class="root">evaluate at 1 / at 0,两大求值点</td></tr>
+          <tr><td class="en">raw moment</td><td class="ipa">/rɔː ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>原点矩</td><td class="root">\(E[X^n]\),幂的期望;由阶乘矩换算(如 \(E[X^3]=P'''(1)+3P''(1)+P'(1)\))</td></tr>
+          <tr><td class="en">central moment</td><td class="ipa">/ˈsɛntrəl ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>中心矩</td><td class="root">\(E[(X-\mu)^n]\),绕均值取矩;二阶中心矩即方差</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">probability generating function</div><div class="z">概率母函数(题眼:出现即用本章)</div></div>
+        <div class="ph"><div class="e">the \(n\)th derivative evaluated at 1</div><div class="z">第 \(n\) 阶导在 1 处求值 → 阶乘矩</div></div>
+        <div class="ph"><div class="e">sum of independent random variables</div><div class="z">独立随机变量之和 → 母函数相乘</div></div>
+        <div class="ph"><div class="e">the coefficient of \(t^k\)</div><div class="z">\(t^k\) 的系数 → 即 \(P[X{=}k]\)</div></div>
+        <div class="ph"><div class="e">calculate the probability of \(k\)</div><div class="z">求 \(P[X{=}k]\) → \(P^{(k)}(0)/k!\)</div></div>
+        <div class="ph"><div class="e">non-negative discrete random variable</div><div class="z">非负离散 RV(母函数前提)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 33</b> · 第三十三章 Probability Generating Function 概率母函数</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 33(p.519–521 理论,例题 33A–33D,习题 33.1–33.10;页码已标注,细节以课本为准)+ 威普网校视频。<br>母函数仅适用于非负整数随机变量。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

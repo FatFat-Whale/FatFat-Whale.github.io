@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L14 导学 · Conditional Moments 条件矩</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#059669; --accent-deep:#047857; --accent-soft:#ddf3ea; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L14 · 条件矩</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第十四章 · <em>Conditional Moments 条件矩</em></h1>
+    <p class="lead">把"条件概率"升级成"条件期望 / 条件方差":在某个条件下,\(X\) 的均值、方差是多少?关键洞察——\(E[X\mid Y=y]\) 是 <b>\(y\) 的函数</b>,于是 \(E[X\mid Y]\) 本身是个<b>随机变量</b>。这一步正是第十六章<b>双重期望公式</b>的入口。对照课本 Lesson&nbsp;14 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch14 Conditional Moments <b>导学已备</b></span>
+      <span class="pill">课本 <b>p.227–228</b>(理论)</span>
+      <span class="pill">双重期望 <b>Ch16 铺垫</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>条件矩 = <b>切块再归一</b>:限定条件区域求 \(\sum g\,P\) / \(\int g\,f\)(分子),再<b>除以 \(P[A]\)</b>(归一化)。</li>
+        <li>以 \(Y=y\) 为条件:先造<b>条件密度</b> \(f_{X\mid Y}=f(x,y)/f_Y(y)\)——切一片,除以边际——再照常求矩。</li>
+        <li>\(E[X\mid Y=y]\) 是<b>数</b>,\(E[X\mid Y]\) 是<b>随机变量</b>——这层理解是 Ch16 双重期望的入口。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l06-conditional-probability-rv.html">L06 随机变量的条件概率</a>
+    <a href="soa-exam-p-l11-joint-distribution.html">L11 联合分布</a>
+    <span class="arr">→</span>
+    <span class="here">L14 条件矩</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l16-double-expectation.html">L16 双重期望</a>
+    <a href="soa-exam-p-l30-conditional-moments-continuous.html">L30 连续条件矩</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#def">条件矩</a>
+  <a href="#two">条件分布</a>
+  <a href="#var">条件方差</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完条件矩你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 在事件 \(A\) 为条件下算 <b>条件矩</b> \(E[g(X)\mid A]\)——把满足 \(A\) 的部分求和/积分,再除以 \(P[A]\)。</p>
+        <p style="margin-bottom:0">✅ 用 <b>条件密度</b> \(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\) 求 \(E[X\mid Y=y]\)、\(E[X^2\mid Y=y]\)。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用 <b>条件方差</b> \(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-\big(E[X\mid Y=y]\big)^2\)。</p>
+        <p style="margin-bottom:0">✅ 分清:\(E[X\mid Y=y]\) 是<b>数</b>,而 \(E[X\mid Y]\) 是关于 \(Y\) 的<b>随机变量</b>——为第十六章双重期望埋伏笔。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="def" style="background:linear-gradient(180deg,#f2fbf7,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch14 · Lesson 14 · 课本 p.227</span><h2 class="sec-title">条件矩 — 以事件 A 为条件</h2></div></div>
+    <p class="sec-sub">第 3 课学过条件概率,第 6 课学过联合分布。把两者合起来:一个随机变量在"某条件成立"下的分布,是一个<b>正当的概率分布</b>,于是它的均值、方差(即"矩")照样能算——这就是<b>条件矩(conditional moment)</b>。</p>
+
+    <div class="card accent">
+      <h3>条件概率函数 → 条件矩 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.227 · 式 (14.1) 附近</div>
+      <p class="lede">套路固定:<b>先算分子</b>(条件区域上的 \(\sum g\,P\) 或 \(\int g\,f\)),<b>再除以</b>那块区域的总概率 \(P[A]\)。</p>
+      <div class="formula"><span class="name">Conditional probability function</span>
+        $$P_{X\mid A}[x\mid A]=\frac{P[X=x\ \text{and}\ A]}{P[A]}$$</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Conditional moment given event A</span>
+        $$E[g(X)\mid A]=\sum_{x\ \text{满足}\ A}\frac{g(x)\,P[X=x]}{P[A]}
+        \;=\;\int_{x\ \text{满足}\ A}\frac{g(x)\,f_X(x)}{P[A]}\,dx$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>先切块,再归一</b> — 令 \(A\) 是一个条件(如 \(X>7\)):把只落在 \(A\) 里的概率重新归一化,拿它当权重求期望,就是条件矩。</span></div>
+      <p class="dim">取 \(g(x)=x\) 得条件期望,\(g(x)=x^2\) 得二阶条件矩。<b>离散</b>:只对满足 \(A\) 的 \(x\) 求和,再除以 \(P[A]\);<b>连续</b>同理换成积分。</p>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 230 160" role="img" aria-label="密度 f=3x^2 全区间">
+          <line x1="30" y1="130" x2="210" y2="130" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="30" y1="130" x2="30" y2="20" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M30,130 Q150,128 190,25" fill="none" stroke="#047857" stroke-width="2"/>
+          <path d="M30,130 Q150,128 190,25 L190,130 Z" fill="#059669" fill-opacity="0.16"/>
+          <text x="182" y="146" font-size="11" fill="#16243d">1</text>
+          <text x="20" y="146" font-size="11" fill="#16243d">0</text>
+          <text x="150" y="60" font-size="12" font-style="italic" fill="#047857">f(x)=3x²</text>
+        </svg>
+        <div class="cap">原分布:\(f_X(x)=3x^2\),整块面积 \(=1\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 230 160" role="img" aria-label="条件在 x>0.5 上重新归一化">
+          <line x1="30" y1="130" x2="210" y2="130" stroke="#16243d" stroke-width="1.3"/>
+          <line x1="30" y1="130" x2="30" y2="20" stroke="#16243d" stroke-width="1.3"/>
+          <path d="M30,130 Q150,128 190,25" fill="none" stroke="#047857" stroke-width="2"/>
+          <path d="M110,129 Q160,120 190,25 L190,130 Z" fill="#059669" fill-opacity="0.5"/>
+          <line x1="110" y1="130" x2="110" y2="20" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="98" y="146" font-size="11" fill="var(--warn)">0.5</text>
+          <text x="182" y="146" font-size="11" fill="#16243d">1</text>
+          <text x="120" y="70" font-size="11" fill="#047857">÷ P[X&gt;0.5]</text>
+        </svg>
+        <div class="cap">条件 \(X>0.5\):只留右块,<b>÷ \(P[X>0.5]\)</b> 重归一化</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 14A</span><span class="src" style="margin:0">课本 p.227 · 连续</span></div>
+      <p class="q">\(X\) 的密度 \(f(x)=3x^2,\ 0\le x\le 1\)(其余为 0)。求 \(E[X\mid X>0.5]\)。</p>
+      <p>用 (14.1)。<b>先算分母</b>(条件区域总概率):
+      \(P[X>0.5]=\displaystyle\int_{0.5}^{1}3x^2\,dx=\big[x^3\big]_{0.5}^{1}=1-0.5^3=\tfrac78\)。<br>
+      <b>再算分子</b>(\(g(x)=x\)):
+      \(\displaystyle\int_{0.5}^{1}x\cdot 3x^2\,dx=\int_{0.5}^{1}3x^3\,dx=\Big[\tfrac34 x^4\Big]_{0.5}^{1}=\tfrac{3(1-0.5^4)}{4}=\tfrac{45}{64}\)。<br>
+      相除:\(E[X\mid X>0.5]=\dfrac{45/64}{7/8}=\dfrac{45}{56}\approx0.8036\)。</p>
+      <span class="ans">E[X | X&gt;0.5] = 45/56 ≈ 0.8036</span>
+    </div>
+    <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>无条件均值 \(E[X]=\int_0^1 3x^3dx=0.75\);加了"\(X>0.5\)"这个条件后均值抬到 \(0.804\)——砍掉了小值那半,剩下的自然偏大。条件矩 = "在被条件切出来的子区域里重新算平均"。</span></div>
+  </div>
+</section>
+
+<section id="two">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">两个随机变量</span><h2 class="sec-title">以 Y=y 为条件:条件分布与条件矩</h2></div></div>
+    <p class="sec-sub">最常考的条件不是"事件 \(A\)",而是"另一个随机变量取了某值 \(Y=y\)"。这时先由联合分布造出<b>条件分布</b>,再在它上面求矩。</p>
+    <div class="card accent">
+      <h3>条件密度 / 条件分布(式 14.1)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.227 · 式 (14.1)</div>
+      <p class="lede">切一片 \(Y=y\),除以边际 \(f_Y(y)\) 归一化——得到的条件分布是正当分布,矩照常求。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Conditional density of X given Y = y</span>
+        $$f_{X\mid Y}[x\mid Y=y]=\frac{f(x,y)}{f_Y(y)}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>切片除边际</b> — 分母 \(f_Y(y)\) 扮演 \(P[A]\) 的角色:把 \(x\) 加/积掉,\(f_Y(y)=\sum_x f(x,y)\) 或 \(\int f(x,y)\,dx\)。</span></div>
+      <p class="dim">有了条件分布,条件矩就是普通的求和/积分:</p>
+      <div class="formula"><span class="name">Conditional moment given Y = y</span>
+        $$E[g(X)\mid Y=y]=\sum_{x}g(x)\,\frac{f(x,y)}{f_Y(y)}
+        \;=\;\int_{x} g(x)\,\frac{f(x,y)}{f_Y(y)}\,dx$$</div>
+      <p><b>关键:</b>算出来的 \(E[g(X)\mid Y=y]\) 里还带着 \(y\)——它是 <b>\(y\) 的函数</b>,不是一个数。把 \(y\) 换回随机变量 \(Y\),\(E[g(X)\mid Y]\) 就成了一个<b>随机变量</b>。</p>
+      <details class="more"><summary>展开 · 为什么条件分布是"正当分布"</summary>
+        <p class="dim">对 \(x\) 求和/积分:\(\sum_x \dfrac{f(x,y)}{f_Y(y)}=\dfrac{f_Y(y)}{f_Y(y)}=1\)——分母正好把切片总量除回 1,非负性也天然满足。所以均值、方差等一切矩的定义与公式都能原封不动搬过来。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 230 160" role="img" aria-label="联合分布中取一条 Y=y 切片">
+          <line x1="34" y1="128" x2="212" y2="128" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="34" y1="128" x2="34" y2="18" stroke="#16243d" stroke-width="1.2"/>
+          <text x="204" y="142" font-size="10" fill="#16243d" font-style="italic">x</text>
+          <text x="22" y="26" font-size="10" fill="#16243d" font-style="italic">y</text>
+          <g fill="#7a8699">
+            <circle cx="60" cy="104" r="4"/><circle cx="100" cy="104" r="6"/><circle cx="140" cy="104" r="8"/><circle cx="180" cy="104" r="5"/>
+            <circle cx="60" cy="74" r="7"/><circle cx="100" cy="74" r="4"/><circle cx="140" cy="74" r="6"/><circle cx="180" cy="74" r="3"/>
+            <circle cx="60" cy="44" r="3"/><circle cx="100" cy="44" r="7"/><circle cx="140" cy="44" r="4"/><circle cx="180" cy="44" r="6"/>
+          </g>
+          <rect x="42" y="64" width="150" height="20" fill="var(--hi)" fill-opacity="0.35" stroke="#047857" stroke-width="1.3"/>
+          <text x="196" y="78" font-size="10" fill="#047857">Y=y</text>
+        </svg>
+        <div class="cap">联合分布 \(f(x,y)\):固定一条 <b>\(Y=y\)</b> 切片(黄条)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 230 160" role="img" aria-label="切片归一化成条件分布">
+          <line x1="34" y1="128" x2="212" y2="128" stroke="#16243d" stroke-width="1.2"/>
+          <line x1="34" y1="128" x2="34" y2="18" stroke="#16243d" stroke-width="1.2"/>
+          <text x="204" y="142" font-size="10" fill="#16243d" font-style="italic">x</text>
+          <rect x="52" y="96" width="24" height="32" fill="#059669" fill-opacity="0.45"/>
+          <rect x="92" y="70" width="24" height="58" fill="#059669" fill-opacity="0.6"/>
+          <rect x="132" y="48" width="24" height="80" fill="#059669" fill-opacity="0.75"/>
+          <rect x="172" y="86" width="24" height="42" fill="#059669" fill-opacity="0.5"/>
+          <text x="70" y="40" font-size="10" fill="#047857">÷ f_Y(y)</text>
+        </svg>
+        <div class="cap">切片 <b>÷ \(f_Y(y)\)</b> → 条件分布 \(f_{X\mid Y}\)(面积 \(=1\))</div>
+      </div>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:20%"></th><th>\(E[X\mid Y=y]\)(带小 \(y\))</th><th>\(E[X\mid Y]\)(带大 \(Y\))</th></tr></thead>
+      <tbody>
+        <tr><td>是什么</td><td>一个<b>数</b>:把具体 \(y\) 代入后的组内平均</td><td>一个<b>随机变量</b>:\(Y\) 的函数,继承 \(Y\) 的随机性</td></tr>
+        <tr><td>随什么变</td><td>随你代入的 \(y\) 不同而不同</td><td>随 \(Y\) 的随机取值而随机</td></tr>
+        <tr><td>能对它做什么</td><td>直接当数值用</td><td>还能再求 \(E[\cdot]\)、\(\operatorname{Var}(\cdot)\)(Ch16 双重期望)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最易错 — 条件期望是随机变量:</b>\(E[X\mid Y=y]\) 是把 \(y\) 代进去后的<b>一个数</b>;但保留 \(Y\) 不代值时,\(E[X\mid Y]\) 随 \(Y\) 变,是个<b>随机变量</b>(取值随 \(Y\) 而定,还有自己的期望和方差)。第十六章的<b>双重期望</b> \(E\big[E[X\mid Y]\big]=E[X]\) 正是对这个随机变量再求一次期望——现在就把这层理解立住。</span></div>
+  </div>
+</section>
+
+<section id="var" style="background:linear-gradient(180deg,#f2fbf7,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Ch14 · 核心</span><h2 class="sec-title">条件方差</h2></div></div>
+    <p class="sec-sub">条件分布既是正当分布,方差公式照搬无误:二阶条件矩减去(一阶条件矩)的平方。</p>
+    <div class="card accent">
+      <h3>条件方差(Conditional Variance)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.228</div>
+      <p class="lede">和无条件方差 \(E[X^2]-(E[X])^2\) 一模一样——只是所有期望都带条件,权重全用条件分布。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Conditional variance</span>
+        $$\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-\big(E[X\mid Y=y]\big)^2$$</div>
+      <p class="dim">三步:① 由 \(f_{X\mid Y}\) 求 \(E[X\mid Y=y]\);② 同一条件分布求 \(E[X^2\mid Y=y]\);③ 相减。</p>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>带 y 是数,带 Y 是随机变量</b> — \(\operatorname{Var}(X\mid Y=y)\) 是 \(y\) 的函数;\(\operatorname{Var}(X\mid Y)\) 是随机变量。Ch16 的<b>方差分解</b> \(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\) 就建在它之上。</span></div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 14B</span><span class="src" style="margin:0">课本 p.228 · 离散</span></div>
+      <p class="q">联合概率函数 \(f(x,y)=\dfrac{x^2+y}{24}\),\(x=0,1,2\) 且 \(y=0,1,2\)。求 \(\operatorname{Var}(Y\mid X=1)\)。</p>
+      <p><b>① 边际 \(P_X(1)\):</b>
+      \(f(1,0)+f(1,1)+f(1,2)=\tfrac{1}{24}+\tfrac{2}{24}+\tfrac{3}{24}=\tfrac{6}{24}=\tfrac14\)。<br>
+      <b>② 条件分布 \(Y\mid X=1\):</b>各项 \(\div\tfrac14\) →
+      \(P(0)=\tfrac16,\ P(1)=\tfrac26,\ P(2)=\tfrac36\)。<br>
+      <b>③ 一、二阶条件矩:</b>
+      \(E[Y\mid X=1]=0\cdot\tfrac16+1\cdot\tfrac26+2\cdot\tfrac36=\tfrac{8}{6}=\tfrac43\);
+      \(E[Y^2\mid X=1]=0+1\cdot\tfrac26+4\cdot\tfrac36=\tfrac{14}{6}=\tfrac73\)。<br>
+      <b>④ 相减:</b>
+      \(\operatorname{Var}(Y\mid X=1)=\tfrac73-\left(\tfrac43\right)^2=\tfrac{21}{9}-\tfrac{16}{9}=\tfrac59\)。</p>
+      <span class="ans">Var(Y | X=1) = 5/9 ≈ 0.556</span>
+    </div>
+    <div class="note tip"><span class="ic">📝</span><span class="t"><b>套路复用:</b>离散题里 \(P[A]\) / \(f_Y(y)\) 就是那一行(或一列)的概率之和,先把它算出来当分母,后面每个条件概率都 \(\div\) 它。别忘了 \(E[Y^2]\) 用的是同一套条件权重,不是无条件权重。</span></div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:先分组,均值就变了</h3>
+      <p>设想一个群体男女各半:男性平均身高 1.75 m,女性 1.61 m,总体平均 \(\tfrac12(1.75)+\tfrac12(1.61)=1.68\) m。"已知抽到的是男性"这一条件把人群<b>切成子群</b>,均值在子群里重算:\(E[身高\mid 男]=1.75\)——这就是条件期望。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="条件把人群切成子群:女子群均值 1.61,男子群均值 1.75,总体均值 1.68">
+            <line x1="22" y1="112" x2="228" y2="112" stroke="#16243d" stroke-width="1.5"/>
+            <g fill="#7a8699" fill-opacity="0.8">
+              <circle cx="56" cy="94" r="3.5"/><circle cx="70" cy="88" r="3.5"/><circle cx="84" cy="96" r="3.5"/>
+              <circle cx="62" cy="76" r="3.5"/><circle cx="78" cy="72" r="3.5"/><circle cx="70" cy="60" r="3.5"/>
+            </g>
+            <text x="70" y="46" font-size="10" fill="#46566f" text-anchor="middle">女</text>
+            <g fill="#059669" fill-opacity="0.75">
+              <circle cx="166" cy="94" r="3.5"/><circle cx="180" cy="88" r="3.5"/><circle cx="194" cy="96" r="3.5"/>
+              <circle cx="172" cy="76" r="3.5"/><circle cx="188" cy="72" r="3.5"/><circle cx="180" cy="60" r="3.5"/>
+            </g>
+            <text x="180" y="46" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">已知男</text>
+            <line x1="70" y1="106" x2="70" y2="118" stroke="#46566f" stroke-width="1.5"/>
+            <line x1="125" y1="106" x2="125" y2="118" stroke="#7a8699" stroke-width="1.5"/>
+            <line x1="180" y1="106" x2="180" y2="118" stroke="#c6492f" stroke-width="2"/>
+            <text x="70" y="132" font-size="10" fill="#46566f" text-anchor="middle">1.61</text>
+            <text x="125" y="132" font-size="9" fill="#7a8699" text-anchor="middle">总体 1.68</text>
+            <text x="180" y="132" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">1.75</text>
+          </svg>
+          <div class="cap"><b>切子群</b>:条件「男」把均值从总体 1.68 拉到子群自己的 \(E[身高\mid 男]=1.75\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="E[身高|性别] 是随机变量:以 1/2、1/2 取 1.61 与 1.75,再平均支点回到 1.68">
+            <rect x="62" y="86" width="16" height="40" fill="#7a8699" fill-opacity="0.7"/>
+            <rect x="172" y="86" width="16" height="40" fill="#059669" fill-opacity="0.75"/>
+            <text x="70" y="78" font-size="9" fill="#46566f" text-anchor="middle">1/2</text>
+            <text x="180" y="78" font-size="9" fill="#46566f" text-anchor="middle">1/2</text>
+            <line x1="30" y1="127" x2="220" y2="127" stroke="#16243d" stroke-width="2.5"/>
+            <text x="70" y="142" font-size="10" fill="#16243d" text-anchor="middle">1.61</text>
+            <text x="180" y="142" font-size="10" fill="#16243d" text-anchor="middle">1.75</text>
+            <polygon points="125,129 118,144 132,144" fill="#c6492f"/>
+            <text x="125" y="118" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">1.68</text>
+          </svg>
+          <div class="cap"><b>再平均回得去</b>:\(E[身高\mid 性别]\) 以 \(\tfrac12,\tfrac12\) 取两组均值当砝码,支点恰在总体 1.68</div>
+        </div>
+      </div>
+      <p class="dim">抽人之前性别未定,\(E[身高\mid 性别]\) 是个<b>随机变量</b>:以 \(1/2\) 概率取 1.75、以 \(1/2\) 概率取 1.61;对它再求一次平均,恰好回到总体的 1.68——这正是 Ch16 的双重期望 \(E[E[X\mid Y]]=E[X]\) 在生活里的样子。例 14A 的 \(0.75\to0.804\) 同理:条件砍掉小值半区,子区域里的平均自然上抬。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>联合表求 \(\operatorname{Var}(Y\mid X=1)\) 是标准三步:<b>边际</b>(该行/列求和)→ <b>条件分布</b>(逐项 ÷ 边际)→ <b>矩</b>(条件权重算 \(E\)、\(E[\cdot^2]\)、相减)。</li>
+        <li>保险语境:<b>given that a payment is made</b> / <b>given the loss exceeds the deductible</b> → 条件化到 \(X>d\),积分限跟着切到 \((d,\infty)\) 或 \((d,b)\)。</li>
+        <li>复合条件如 \(\operatorname{Var}(N\mid N+S=2)\):先把满足条件的格点全列出来,再归一化。</li>
+        <li>陷阱:二阶矩用了无条件权重、分子算完忘除 \(P[A]\)、积分上下限没跟条件走。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Conditional_expectation">Wikipedia · Conditional expectation</a></div><div class="z">从初等定义讲到"条件期望本身是随机变量",体系最全;读前两节即可,后面测度论可跳。</div><div class="u">en.wikipedia.org/wiki/Conditional_expectation</div></div>
+        <div class="xr"><div class="e"><a href="https://www.statlect.com/fundamentals-of-probability/conditional-probability-distributions">statlect · Conditional probability distributions</a></div><div class="z">"切片 ÷ 边际"的推导一步不跳,离散/连续并排对照,配例题与解答。</div><div class="u">statlect.com/fundamentals-of-probability/conditional-probability-distributions</div></div>
+        <div class="xr"><div class="e"><a href="https://online.stat.psu.edu/stat414/">PSU STAT 414 · 概率论开放课程</a></div><div class="z">条件分布一节配大量 Exam P 风格例题(联合表→条件矩),免费全公开。</div><div class="u">online.stat.psu.edu/stat414</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>条件期望当成数</b>:\(E[X\mid Y=y]\) 是数,\(E[X\mid Y]\) 是随机变量——双重期望题栽在这。</li>
+          <li><b>忘除以 \(P[A]\) / \(f_Y(y)\)</b>:分子对了却漏归一化,答案系统性偏小。</li>
+          <li><b>\(E[X^2\mid A]\) 用错权重</b>:二阶矩必须用<b>条件</b>分布,不是无条件 \(E[X^2]\)。</li>
+          <li><b>积分/求和限没跟条件走</b>:连续题上下限要切到条件区域(如 \(0.5\to1\))。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 14.1</span>离散联合表,求 \(\Pr(X+Y>2\mid X-Y&lt;0)\)(条件概率)。</li>
+          <li><span class="ref">练 14.5</span>牙科联合表,求"在补牙数条件下"根管数的<b>条件期望</b>。</li>
+          <li><span class="ref">练 14.9</span>诊断检测联合分布,求 \(\operatorname{Var}(Y\mid X=1)\)。</li>
+          <li><span class="ref">练 14.12</span>事故/超速联合表,求 \(\operatorname{Var}(N\mid N+S=2)\)(答 \(0.5475\))。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>某行 \(P_X(2)=0.5\),\(f(2,0)=0.2,\,f(2,1)=0.3\),求 \(E[Y\mid X=2]\)。</li>
+        <li>已知 \(E[Y\mid X=1]=\tfrac43,\ E[Y^2\mid X=1]=\tfrac73\),求 \(\operatorname{Var}(Y\mid X=1)\)。</li>
+        <li>\(f(x)=3x^2\) 上,\(P[X>0.5]=\,?\)</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① 条件权重 \(0.4,0.6\),\(E[Y\mid X=2]=0\cdot0.4+1\cdot0.6=0.6\);② \(\tfrac73-\left(\tfrac43\right)^2=\tfrac59\);③ \(1-0.5^3=\tfrac78\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat" style="background:linear-gradient(180deg,#f2fbf7,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 条件矩</h2></div></div>
+    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>条件矩 / 条件分布</h4>
+        <p>\(E[g(X)\mid A]=\dfrac{\sum_{x\in A} g(x)P[X=x]}{P[A]}\)</p>
+        <p>连续:\(\dfrac{\int_{A} g(x)f_X(x)\,dx}{P[A]}\)</p>
+        <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\)</p>
+        <p>\(E[g(X)\mid Y=y]=\sum_x g(x)\dfrac{f(x,y)}{f_Y(y)}\)</p>
+      </div>
+      <div class="cc t">
+        <h4>条件方差 / 通往双重期望</h4>
+        <p>\(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-\big(E[X\mid Y=y]\big)^2\)</p>
+        <p>\(E[X\mid Y=y]\) 是数;\(E[X\mid Y]\) 是随机变量</p>
+        <p>Ch16:\(E\big[E[X\mid Y]\big]=E[X]\)</p>
+        <p>Ch16:\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 14 原文用词</span><h2 class="sec-title">条件矩 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"条件"。</p>
+    <div class="card accent">
+      <h3>A · 术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 14</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">conditional moment</td><td class="ipa">/kənˈdɪʃənəl ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>条件矩</td><td class="root">moment(矩)= 期望型量 \(E[X^k]\);带条件即为条件矩</td></tr>
+          <tr><td class="en">conditional expectation</td><td class="ipa">/ˌɛkspɛkˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>条件期望</td><td class="root">\(E[X\mid Y=y]\);是 \(y\) 的函数</td></tr>
+          <tr><td class="en">conditional variance</td><td class="ipa">/ˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>条件方差</td><td class="root">\(E[X^2\mid\cdot]-(E[X\mid\cdot])^2\)</td></tr>
+          <tr><td class="en">conditional distribution</td><td class="ipa">/ˌdɪstrɪˈbjuːʃən/</td><td><span class="pos n">n.</span></td><td>条件分布</td><td class="root">\(f(x,y)/f_Y(y)\),归一化后的正当分布</td></tr>
+          <tr><td class="en">marginal distribution</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边际分布</td><td class="root">把另一变量加/积掉;当条件矩的分母</td></tr>
+          <tr><td class="en">joint probability function</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合概率函数</td><td class="root">\(f(x,y)\),两变量一起的分布</td></tr>
+          <tr><td class="en">density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度函数</td><td class="root">连续型的 \(f_X(x)\)</td></tr>
+          <tr><td class="en">expected value</td><td class="ipa">/ɪkˈspɛktɪd ˈvæljuː/</td><td><span class="pos n">n.</span></td><td>期望值</td><td class="root">= mean;\(g(x)=x\) 的一阶矩</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">given that X &gt; 0.5</div><div class="z">在 \(X>0.5\) 的条件下</div></div>
+        <div class="ph"><div class="e">conditional on Y = y</div><div class="z">以 \(Y=y\) 为条件</div></div>
+        <div class="ph"><div class="e">the conditional distribution of Y | X</div><div class="z">\(Y\) 关于 \(X\) 的条件分布</div></div>
+        <div class="ph"><div class="e">calculate Var(Y | X = 1)</div><div class="z">求 \(X=1\) 下 \(Y\) 的条件方差</div></div>
+        <div class="ph"><div class="e">the expected number …, given that …</div><div class="z">在……条件下的期望个数</div></div>
+        <div class="ph"><div class="e">jointly distributed as …</div><div class="z">按……联合分布</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 14</b> · 第十四章 Conditional Moments 条件矩</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 14(理论 p.227–228,例 14A/14B;习题 14.1–14.12 见 p.228–231,页码已标注,细节以课本为准)+ 威普网校视频。<br>双重期望公式 \(E[E[X\mid Y]]=E[X]\) 与方差分解属 Lesson 16,本页仅铺垫。「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>

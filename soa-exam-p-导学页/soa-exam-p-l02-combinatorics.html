@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · L02 导学 · Combinatorics 排列组合</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0d7d7d; --accent-deep:#0a5a5a; --accent-soft:#dcf0ef; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>L02 · 排列组合</b></span>
+    <span class="spacer"></span>
+    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">7月2日 · v2 改版 · 全书串联</p>
+    <h1>第二章 · <em>Combinatorics 计数</em></h1>
+    <p class="lead">当样本空间是一堆<b>等可能</b>的结果时,概率 = 有利数 ÷ 总数。所以核心是"会数数"——靠 <b>排列</b>(讲顺序)与 <b>组合</b>(不讲顺序)。本页对照课本 Lesson&nbsp;2 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch2 Combinatorics <b>3 个视频</b></span>
+      <span class="pill">概念课 <b>1.2x</b> · 习题 <b>1.5x</b></span>
+      <span class="pill">课本 <b>p.25–27</b></span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 3 句话</p>
+      <ol>
+        <li>等可能世界里,<b>概率 = 有利数 ÷ 总数</b>——概率题先退化成数数题。</li>
+        <li>先问<b>「顺序要不要紧」</b>:要紧用排列 \(n!\),不要紧用组合 \(\binom{n}{k}\)。</li>
+        <li>无放回抽样分子要<b>把每一类都写全</b>:各二项式上标之和 = \(n\)、下标之和 = \(k\),不对就漏项了。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-p-l01-sets.html">L01 集合</a>
+    <span class="arr">→</span>
+    <span class="here">L02 计数</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率</a>
+    <a href="soa-exam-p-l17-binomial-distribution.html">L17 二项分布(二项系数的来源)</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#goals">目标</a>
+  <a href="#comb">计数</a>
+  <a href="#insight">直觉拓展</a>
+  <a href="#map">对照</a>
+  <a href="#test">自测</a>
+  <a href="#cheat">速查</a>
+  <a href="#vocab">词汇</a>
+</nav>
+
+<section id="goals" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完 Combinatorics 你应该能……</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <p style="margin-top:0">✅ 分清 <b>排列(讲顺序)</b> 与 <b>组合(不讲顺序)</b>,正确取舍公式。</p>
+        <p style="margin-bottom:0">✅ 处理 <b>有重复元素</b> 的排列、<b>有/无放回</b> 抽样。</p>
+      </div>
+      <div class="card">
+        <p style="margin-top:0">✅ 用 <b>有利数 ÷ 总数</b> 把计数结果转成古典概率。</p>
+        <p style="margin-bottom:0">✅ 看懂二项式系数 \(\binom{n}{k}\) 与其对称性,为超几何 / 二项分布铺路。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="comb" style="background:linear-gradient(180deg,#f1faf9,#f5f6f9 240px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch2 · Lesson 2 · 课本 p.25–27</span><h2 class="sec-title">Combinatorics — 排列组合</h2></div></div>
+    <p class="sec-sub">当样本空间是 \(n\) 个<b>等可能</b>的互斥结果时,概率 = <b>有利结果数 ÷ 总结果数</b>。所以核心是"会数数"——靠排列与组合。</p>
+
+    <div class="card accent">
+      <h3>等可能模型 & 解题三步 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.25 · 视频 知识点讲解 (1.2x)</div>
+      <p class="lede">"随机(at random)" = 每个结果概率相等;此时求概率就是数两个数、再相除。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>古典概率</span>
+        $$P=\frac{\text{有利结果数 } B}{\text{总结果数 } A}$$</div>
+      <p class="dim">摸球 \(1/n\)、抽牌 \(1/52\)……三步走:① 数总数 \(A\);② 数有利数 \(B\);③ 相除。数数的两件工具:<b>排列</b>与<b>组合</b>。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>排列 Permutations(讲顺序)<span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.25–26</div>
+      <p class="lede">顺序要紧就用排列:\(n\) 个元素排一排共 \(n!\) 种;有重复元素,除掉各类内部的排序。</p>
+      <div class="formula"><span class="name">全排列 / 含重复元素的相异排列</span>
+        $$n! \;=\; n(n-1)\cdots 1\qquad\qquad \frac{n!}{k_1!\,k_2!\cdots k_j!}\ \text{(有 }k_i\text{ 个第 }i\text{ 类相同元素)}$$</div>
+      <p class="dim">不同的<b>排序</b>。\(n\) 个元素:第 1 位 \(n\) 选,第 2 位 \(n-1\) 选……连乘得 \(n!\) 种。</p>
+      <details class="more"><summary>展开 · 为什么相异排列要除以 \(k_i!\)</summary>
+        <p class="dim">同一类的 \(k_i\) 个相同元素内部怎么换位,排出来都长一个样——每种"看得见"的排列在 \(n!\) 里被重复数了 \(k_1!\,k_2!\cdots k_j!\) 次,除回去即得相异排列数。</p>
+      </details>
+      <div class="grid2" style="margin-top:6px">
+        <div class="ex">
+          <div class="ex-h"><span class="badge">例 2A/2B</span><span class="src" style="margin:0">p.26</span></div>
+          <p class="q">A、C、E、F 随机排成 4 字母串。</p>
+          <p>总排列 \(=4!=24\)。其中能拼成英文词的只有 FACE、CAFE 两种,故"拼成正确单词"的概率 \(=2/24\)。</p>
+          <span class="ans">24 种 · P = 1/12</span>
+        </div>
+        <div class="ex">
+          <div class="ex-h"><span class="badge">例 2C</span><span class="src" style="margin:0">p.26</span></div>
+          <p class="q">集合 \(\{1,1,2,2,2,3,4\}\) 有多少种相异排列?</p>
+          <p>7 个元素,含两个 1、三个 2,需除掉重复:<br>\(\dfrac{7!}{2!\,3!\,1!\,1!}\)。</p>
+          <span class="ans">= 420</span>
+        </div>
+      </div>
+      <div class="note tip"><span class="ic">🔁</span><span class="t"><b>有放回选取</b>用乘法:如"9 人部门每月随机选 1 人吃饭,连选 3 月"总数 \(=9^3\)(例 2D),它本身已含顺序、不再乘别的;求"三类(2+3+4 人)各来一位"时,分子 \(2\times3\times4\) 只对应一种类别次序,才要再乘 \(3!\) 种可发生的顺序。</span></div>
+    </div>
+
+    <div class="card accent">
+      <h3>组合 Combinations(不讲顺序)<span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.26–27</div>
+      <p class="lede">顺序不要紧就用组合:先按讲顺序选,再除掉 \(k\) 个的内部排列 \(k!\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>二项式系数 binomial coefficient</span>
+        $$\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\qquad\text{对称性}\quad \binom{n}{k}=\binom{n}{n-k}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>讲序排列,不讲序组合</b> — 拿到题先问一句「换个顺序算不算新结果?」算 → 排列;不算 → 组合。</span></div>
+      <p class="dim">从 \(n\) 个里选 \(k\) 个、<b>不计顺序</b>。先按排列选(\(n(n-1)\cdots(n-k+1)\)),再除掉 \(k\) 个的内部排列 \(k!\)。</p>
+      <div class="grid2" style="margin-top:6px">
+        <div class="ex">
+          <div class="ex-h"><span class="badge">例 2E</span><span class="src" style="margin:0">p.27</span></div>
+          <p class="q">6 名员工选 3 名组队,有几种?</p>
+          <p>\(\dbinom{6}{3}=\dfrac{6!}{3!\,3!}=\dfrac{720}{36}\)。</p>
+          <span class="ans">= 20</span>
+        </div>
+        <div class="ex">
+          <div class="ex-h"><span class="badge">例 2F</span><span class="src" style="margin:0">p.27</span></div>
+          <p class="q">50 辆车含 4 辆次品,8 人各买 1 辆。恰好 2 人买到次品的概率?</p>
+          <p>有利:6 人买好车 + 2 人买次品 \(=\dbinom{46}{6}\dbinom{4}{2}\);总数 \(=\dbinom{50}{8}\)。</p>
+          <span class="ans">≈ 0.1047</span>
+        </div>
+      </div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>无放回抽样:多类型选取的通用式(为超几何铺路)</span>
+        $$P=\frac{\prod_{i=1}^{j}\binom{n_i}{k_i}}{\binom{n}{k}}\qquad \sum k_i=k,\ \sum n_i=n$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>上标和 = n,下标和 = k</b> — 无放回分子的自检口诀:哪一类漏写了,一加就露馅。</span></div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>例 2F 的坑:</b>分子里别只写 \(\binom{4}{2}\) 而漏掉 \(\binom{46}{6}\)——"其余 6 人买好车"也要算进去。<b>检验法:</b>分子各二项式上标之和应 \(=50\)、下标之和应 \(=8\)。</span></div>
+    </div>
+
+    <table class="map vs">
+      <thead><tr><th style="width:18%"></th><th>排列 Permutation</th><th>组合 Combination</th></tr></thead>
+      <tbody>
+        <tr><td>顺序</td><td>要紧(换序 = 新结果)</td><td>不要紧(换序 = 同一组)</td></tr>
+        <tr><td>公式</td><td>\(n!\);取 \(k\) 个:\(n(n-1)\cdots(n-k+1)\)</td><td>\(\binom{n}{k}=\dfrac{n!}{k!\,(n-k)!}\)</td></tr>
+        <tr><td>读题信号</td><td>arrange / order / 排成一排 / 名次</td><td>select / committee / 选出 / 组队</td></tr>
+        <tr><td>关系</td><td colspan="2">组合 = 排列 ÷ \(k!\):先当讲顺序选,再除掉 \(k\) 个的内部排序</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+
+    <div class="card">
+      <h3>💡 直觉例子:彩票与手机密码</h3>
+      <p>双色球头奖为什么难中:从 33 个红球里选 6 个,<b>顺序无关</b>(开奖号码是一组、不是一串),所以是组合 \(\binom{33}{6}=1{,}107{,}568\)——只算红球,一注命中的概率就仅约百万分之一。选号时脑中默念"换个顺序不算新结果",工具自然落到组合上。</p>
+      <div class="fig-row">
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="顺序无关:两种抽出顺序除以 6! 后合并为同一注组合">
+            <circle cx="45"  cy="28" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="75"  cy="28" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="105" cy="28" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="135" cy="28" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="165" cy="28" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="195" cy="28" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <text x="45"  y="31" font-size="9" fill="#fff" text-anchor="middle">3</text>
+            <text x="75"  y="31" font-size="9" fill="#fff" text-anchor="middle">8</text>
+            <text x="105" y="31" font-size="9" fill="#fff" text-anchor="middle">12</text>
+            <text x="135" y="31" font-size="9" fill="#fff" text-anchor="middle">19</text>
+            <text x="165" y="31" font-size="9" fill="#fff" text-anchor="middle">25</text>
+            <text x="195" y="31" font-size="9" fill="#fff" text-anchor="middle">33</text>
+            <text x="120" y="52" font-size="9" fill="#7a8699" text-anchor="middle">同样 6 个号,抽出顺序不同</text>
+            <circle cx="45"  cy="72" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="75"  cy="72" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="105" cy="72" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="135" cy="72" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="165" cy="72" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <circle cx="195" cy="72" r="10" fill="#0d7d7d" fill-opacity="0.75"/>
+            <text x="45"  y="75" font-size="9" fill="#fff" text-anchor="middle">25</text>
+            <text x="75"  y="75" font-size="9" fill="#fff" text-anchor="middle">3</text>
+            <text x="105" y="75" font-size="9" fill="#fff" text-anchor="middle">33</text>
+            <text x="135" y="75" font-size="9" fill="#fff" text-anchor="middle">8</text>
+            <text x="165" y="75" font-size="9" fill="#fff" text-anchor="middle">19</text>
+            <text x="195" y="75" font-size="9" fill="#fff" text-anchor="middle">12</text>
+            <line x1="120" y1="86" x2="120" y2="95" stroke="#16243d" stroke-width="2"/>
+            <polygon points="120,103 114,94 126,94" fill="#16243d"/>
+            <text x="130" y="97" font-size="10" font-weight="700" fill="#c6492f" text-anchor="start">÷6!</text>
+            <rect x="34" y="107" width="172" height="28" rx="8" fill="#0d7d7d" fill-opacity="0.12" stroke="#0d7d7d"/>
+            <text x="120" y="125" font-size="10" fill="#16243d" text-anchor="middle">同一注:{ 3, 8, 12, 19, 25, 33 }</text>
+          </svg>
+          <div class="cap"><b>顺序无关</b>:同样 6 个号不同顺序只算一注,排列数 ÷ \(6!\) 得 \(\binom{33}{6}\)</div>
+        </div>
+        <div class="fig-cell">
+          <svg viewBox="0 0 240 150" role="img" aria-label="槽位法:可重复 10×10×10×10=10000,互不相同 10×9×8×7=5040">
+            <text x="14" y="20" font-size="9.5" fill="#46566f" text-anchor="start">可重复(有放回)</text>
+            <rect x="14"  y="27" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <rect x="52"  y="27" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <rect x="90"  y="27" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <rect x="128" y="27" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <text x="30"  y="45" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">10</text>
+            <text x="68"  y="45" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">10</text>
+            <text x="106" y="45" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">10</text>
+            <text x="144" y="45" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">10</text>
+            <text x="168" y="45" font-size="10" fill="#16243d" text-anchor="start">= 10000</text>
+            <text x="14" y="84" font-size="9.5" fill="#46566f" text-anchor="start">互不相同(无放回)</text>
+            <rect x="14"  y="91" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <rect x="52"  y="91" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <rect x="90"  y="91" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <rect x="128" y="91" width="32" height="28" rx="5" fill="#0d7d7d" fill-opacity="0.75"/>
+            <text x="30"  y="109" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">10</text>
+            <text x="68"  y="109" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">9</text>
+            <text x="106" y="109" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">8</text>
+            <text x="144" y="109" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">7</text>
+            <text x="168" y="109" font-size="10" font-weight="700" fill="#c6492f" text-anchor="start">= 5040</text>
+            <text x="14" y="136" font-size="9" fill="#7a8699" text-anchor="start">每填一位,下一位就少 1 种选择</text>
+          </svg>
+          <div class="cap"><b>槽位法</b>:可重复每槽都是 10 种 → \(10^4\);不可重复逐槽递减 → \(10\times9\times8\times7=5040\)</div>
+        </div>
+      </div>
+      <p class="dim">对照组:手机 4 位解锁密码共 \(10^4=10000\) 种——数字<b>可重复</b>(= 有放回),用乘法 \(n^r\);若规定 4 位互不相同,则是 \(10\times9\times8\times7=5040\) 种(无放回且顺序要紧 = 排列)。同一题面,"可不可重复、讲不讲顺序"一变,工具立刻换。</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 SOA 题型套路</h3>
+      <ol class="dim routine">
+        <li>关键词定工具:<b>at random</b> = 等可能模型;<b>with / without replacement</b> 定"乘法 \(n^r\) vs 组合";<b>committee / group / sample</b> → 组合,<b>arrange / seat / order</b> → 排列。</li>
+        <li>高频形态:"\(N\) 件含 \(m\) 件次品,抽 \(k\) 件恰好 \(j\) 件次品"——分子 \(\binom{m}{j}\binom{N-m}{k-j}\)、分母 \(\binom{N}{k}\)(例 2F 型,日后以「超几何分布」之名重现)。</li>
+        <li>陷阱:<b>at least one</b> 别正面枚举,用补集 \(1-P[\text{none}]\) 最快;分子漏"其余选好品"那块,错误答案往往就埋在选项里等你。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>📚 扩展阅读(精选)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Combination">Wikipedia · Combination</a></div><div class="z">排列与组合的关系、二项式系数的全部常用恒等式,一页看全,补齐对称性的来龙去脉。</div><div class="u">en.wikipedia.org/wiki/Combination</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Hypergeometric_distribution">Wikipedia · Hypergeometric distribution</a></div><div class="z">例 2F 的无放回公式将来叫"超几何分布"——先混个眼熟,到分布章节就是老朋友。</div><div class="u">en.wikipedia.org/wiki/Hypergeometric_distribution</div></div>
+        <div class="xr"><div class="e"><a href="https://online.stat.psu.edu/stat414/">PSU STAT 414 · Counting Techniques</a></div><div class="z">宾州州立免费讲义,计数技巧一课配大量带完整解答的例题,适合刷完课本再补手感。</div><div class="u">online.stat.psu.edu/stat414</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="map">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-pre">课本 ↔ 视频</span><h2 class="sec-title">本章 3 个视频 · 对照表</h2></div></div>
+    <p class="sec-sub">概念课放慢到 1.2x 吃透定义,习题课 1.5x 过题。</p>
+    <table class="map">
+      <thead><tr><th style="width:38%">视频</th><th style="width:13%">倍速</th><th>对应课本 / 重点</th></tr></thead>
+      <tbody>
+        <tr><td>Ch2 Combinatorics|知识点讲解</td><td><span class="spd spd-a">1.2x</span></td><td>p.25–27:古典概率、排列、组合、二项式系数</td></tr>
+        <tr><td>Ch2 Combinatorics|习题 Part1</td><td><span class="spd spd-b">1.5x</span></td><td>排列 / 相异排列(配例 2A–2C)</td></tr>
+        <tr><td>Ch2 Combinatorics|习题 Part2</td><td><span class="spd spd-b">1.5x</span></td><td>组合 / 无放回抽样(配例 2E–2F)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="test" style="background:linear-gradient(180deg,#eefaf9,#f5f6f9 200px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测(Combinatorics)</h2></div></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>⚠️ 高频易错点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li><b>排列 vs 组合</b>:先问"顺序重不重要"。重要→排列,不重要→组合。</li>
+          <li><b>组合抽样漏项</b>:无放回题分子要把"其余都选好的"那块也写上。</li>
+          <li><b>检验法</b>:分子各二项式上标之和应 \(=n\)、下标之和应 \(=k\)。</li>
+          <li><b>有放回用乘法</b>:连续选取是 \(n^r\),不是组合。</li>
+          <li><b>重复元素要除</b>:相异排列除以各重复数的阶乘 \(k_i!\)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📝 课本自测(做完对答案)</h3>
+        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
+        <ul class="clean selftest">
+          <li><span class="ref">练 2.1</span>四色球各取若干,样本计数。</li>
+          <li><span class="ref">练 2.5</span>7 男 3 女选 5,含 3 男 2 女的概率。</li>
+          <li><span class="ref">练 2.8</span>10 灯泡含 4 次品,抽 3 恰 \(k\) 次品。</li>
+          <li><span class="ref">练 2.12</span>有放回抽 3 球,三色各一的概率。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card accent">
+      <h3>🔎 60 秒快测(口算)</h3>
+      <ul class="clean" style="margin-top:6px">
+        <li>从 8 人里选 3 人排成一排领奖(讲名次),多少种?用排列还是组合?</li>
+        <li>\(\binom{10}{2}\) 等于多少?用对称性它还等于 \(\binom{10}{?}\)。</li>
+        <li>\(\{A,A,B,C\}\) 有多少种相异排列?</li>
+      </ul>
+      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① 排列,\(8\times7\times6=336\);② \(45\),且 \(=\binom{10}{8}\);③ \(\dfrac{4!}{2!}=12\)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cheat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · Combinatorics</h2></div></div>
+    <p class="sec-sub">学完这章,这张卡随手能默写,就算过关了。</p>
+    <div class="cheat">
+      <div class="cc t">
+        <h4>计数核心</h4>
+        <p>古典概率 \(P=\dfrac{B}{A}\)(等可能)</p>
+        <p>排列:\(n!\)</p>
+        <p>相异排列 \(\dfrac{n!}{k_1!\cdots k_j!}\)</p>
+        <p>有放回计数 \(n^r\)(用乘法)</p>
+      </div>
+      <div class="cc t">
+        <h4>组合 / 二项式</h4>
+        <p>\(\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}\)</p>
+        <p>对称:\(\dbinom{n}{k}=\dbinom{n}{n-k}\)</p>
+        <p style="font-size:13px">无放回:\(\dfrac{\prod\binom{n_i}{k_i}}{\binom{n}{k}}\)</p>
+        <p style="font-size:12.5px">(上标和=\(n\),下标和=\(k\))</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vocab" style="background:linear-gradient(180deg,#eefaf9,#f5f6f9 220px)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">背诵 · Lesson 2 原文用词</span><h2 class="sec-title">Combinatorics 词汇表</h2></div></div>
+    <p class="sec-sub">A 类术语必须会(中↔英双向),B 类看见就懂,C 类短语整块记。</p>
+
+    <div class="card accent">
+      <h3>A · 计数术语(Must-know)</h3>
+      <div class="src">出现于课本 Lesson 2</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点 / 词根</th></tr></thead>
+        <tbody>
+          <tr><td class="en">permutation</td><td class="ipa">/ˌpɜːrmjuˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>排列(讲顺序)</td><td class="root">per-+mut(变,同 mutate)→ 换序</td></tr>
+          <tr><td class="en">combination</td><td class="ipa">/ˌkɒmbɪˈneɪʃən/</td><td><span class="pos n">n.</span></td><td>组合(不讲顺序)</td><td class="root">com-(共)+bin(合)→ 组到一起</td></tr>
+          <tr><td class="en">factorial</td><td class="ipa">/fækˈtɔːriəl/</td><td><span class="pos n">n.</span></td><td>阶乘 \(n!\)</td><td class="root">factor(因子)相乘</td></tr>
+          <tr><td class="en">binomial coefficient</td><td class="ipa">/baɪˈnoʊmiəl ˌkoʊɪˈfɪʃənt/</td><td><span class="pos n">n.</span></td><td>二项式系数 \(\binom{n}{k}\)</td><td class="root">bi-(二)+nomial(项)</td></tr>
+          <tr><td class="en">ordering</td><td class="ipa">/ˈɔːrdərɪŋ/</td><td><span class="pos n">n.</span></td><td>排序;次序</td><td class="root">order(顺序)→ 排列的本质</td></tr>
+          <tr><td class="en">random sample</td><td class="ipa">/ˈrændəm ˈsæmpəl/</td><td><span class="pos n">n.</span></td><td>随机样本</td><td class="root">从集合里"抽样"</td></tr>
+          <tr><td class="en">replacement</td><td class="ipa">/rɪˈpleɪsmənt/</td><td><span class="pos n">n.</span></td><td>放回</td><td class="root">re-+place(放回原处)</td></tr>
+          <tr><td class="en">denomination</td><td class="ipa">/dɪˌnɒmɪˈneɪʃən/</td><td><span class="pos n">n.</span></td><td>(牌的)点数;面额</td><td class="root">抽牌题:same denomination=同点数</td></tr>
+          <tr><td class="en">distinct</td><td class="ipa">/dɪˈstɪŋkt/</td><td><span class="pos adj">adj.</span></td><td>相异的;不同的</td><td class="root">distinct permutations=相异排列</td></tr>
+          <tr><td class="en">subset</td><td class="ipa">/ˈsʌbsɛt/</td><td><span class="pos n">n.</span></td><td>子集(选取的组合)</td><td class="root">选 k 个=一个 size-k 子集</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card accent">
+      <h3>B · 高频通用学术词</h3>
+      <div class="src">非术语,但课本/考题反复出现</div>
+      <table class="map vocab">
+        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点</th></tr></thead>
+        <tbody>
+          <tr><td class="en">select</td><td class="ipa">/sɪˈlɛkt/</td><td><span class="pos v">v.</span></td><td>选取</td><td class="root">se-+lect(挑,同 elect)</td></tr>
+          <tr><td class="en">arrange</td><td class="ipa">/əˈreɪndʒ/</td><td><span class="pos v">v.</span></td><td>排列;安排</td><td class="root">range(排序)→ 排列题动词</td></tr>
+          <tr><td class="en">random</td><td class="ipa">/ˈrændəm/</td><td><span class="pos adj">adj.</span></td><td>随机的</td><td class="root">at random=随机地</td></tr>
+          <tr><td class="en">calculate</td><td class="ipa">/ˈkælkjuleɪt/</td><td><span class="pos v">v.</span></td><td>计算</td><td class="root">考题最高频指令</td></tr>
+          <tr><td class="en">determine</td><td class="ipa">/dɪˈtɜːrmɪn/</td><td><span class="pos v">v.</span></td><td>求出;确定</td><td class="root">同 calculate</td></tr>
+          <tr><td class="en">illustrate</td><td class="ipa">/ˈɪləstreɪt/</td><td><span class="pos v">v.</span></td><td>举例说明</td><td class="root">lustr(光)→ 照亮说明</td></tr>
+          <tr><td class="en">consider</td><td class="ipa">/kənˈsɪdər/</td><td><span class="pos v">v.</span></td><td>考虑;研究</td><td class="root">"Let's consider…"</td></tr>
+          <tr><td class="en">occur</td><td class="ipa">/əˈkɜːr/</td><td><span class="pos v">v.</span></td><td>发生</td><td class="root">oc-+cur(跑)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card accent">
+      <h3>C · 读题必备短语</h3>
+      <div class="phrase-grid">
+        <div class="ph"><div class="e">at random</div><div class="z">随机地</div></div>
+        <div class="ph"><div class="e">with / without replacement</div><div class="z">有放回 / 无放回</div></div>
+        <div class="ph"><div class="e">selected at random</div><div class="z">随机选取的</div></div>
+        <div class="ph"><div class="e">at least one</div><div class="z">至少一个</div></div>
+        <div class="ph"><div class="e">exactly two</div><div class="z">恰好两个</div></div>
+        <div class="ph"><div class="e">at most</div><div class="z">至多;不超过</div></div>
+        <div class="ph"><div class="e">it follows that</div><div class="z">由此可得</div></div>
+        <div class="ph"><div class="e">calculate the probability that …</div><div class="z">求……的概率</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P 导学 · Lesson 2</b> · 第二章 Combinatorics 排列组合</p>
+    <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 2(p.25–27,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+</body>
+</html>
