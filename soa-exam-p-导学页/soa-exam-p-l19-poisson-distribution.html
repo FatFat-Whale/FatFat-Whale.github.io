@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L19 · 泊松分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -228,29 +298,96 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#dist">分布</a>
   <a href="#prop">性质</a>
   <a href="#combine">可加·逼近</a>
   <a href="#process">泊松过程</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完泊松分布你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 写出 pmf \(P[X=k]=\dfrac{e^{-\lambda}\lambda^k}{k!}\),算任意 \(P[X=k]\)、\(P[X\ge k]\)(取补)。</p>
-        <p style="margin-bottom:0">✅ 一眼默写 <b>\(E[X]=\operatorname{Var}(X)=\lambda\)</b>,由标准差反推 \(\lambda\)。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>pmf / 矩</h4>
+        <p>\(P[X=k]=\dfrac{e^{-\lambda}\lambda^{k}}{k!},\ k=0,1,2,\dots\)</p>
+        <p>\(E[X]=\operatorname{Var}(X)=\lambda\),\(SD=\sqrt{\lambda}\)</p>
+        <p>递推:\(P[k]=\dfrac{\lambda}{k}P[k-1]\)</p>
+        <p>众数 \(=\lfloor\lambda\rfloor\)(λ 整数则双众数)</p>
+      </div>
+      <div class="cc t">
+        <h4>组合 / 过程</h4>
+        <p>可加:\(\sum N_i\sim\text{Poisson}(\sum\lambda_i)\)(独立)</p>
+        <p>逼近二项:\(n\) 大 \(p\) 小,\(\lambda=np\)</p>
+        <p>过程:\(N(t)\sim\text{Poisson}(\lambda t)\)</p>
+        <p>稀释:子类 \(\sim\text{Poisson}(\lambda p)\)</p>
+        <p>至少 \(k\):\(1-\sum_{i&lt;k}P[i]\)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>写出 pmf \(P[X=k]=\dfrac{e^{-\lambda}\lambda^k}{k!}\),算任意 \(P[X=k]\)、\(P[X\ge k]\)(取补)。</li>
+          <li>一眼默写 <b>\(E[X]=\operatorname{Var}(X)=\lambda\)</b>,由标准差反推 \(\lambda\)(标准差先平方)。</li>
+          <li>用<b>可加性</b>合并独立泊松(参数相加),用<b>泊松过程</b> \(\lambda t\)、<b>稀释</b> \(\lambda p\) 换算区间/子类速率。</li>
+          <li>会<b>泊松逼近二项</b>(\(n\) 大 \(p\) 小,\(\lambda=np\)),会找众数 \(\lfloor\lambda\rfloor\)。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 用<b>可加性</b>合并独立泊松(参数相加),用<b>泊松过程</b> \(\lambda t\)、<b>稀释</b> \(\lambda p\) 换算区间/子类速率。</p>
-        <p style="margin-bottom:0">✅ 会<b>泊松逼近二项</b>(\(n\) 大 \(p\) 小,\(\lambda=np\)),会找众数 \(\lfloor\lambda\rfloor\)。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>保险语境:<b>索赔次数 ~ Poisson</b> 几乎是默认设定;"claims occur at a rate of…"就是速率 \(\lambda\)。</li>
+          <li>题给<b>标准差</b>先平方:\(\lambda=SD^2\)(练 19.1 的坑)。</li>
+          <li>三步换参数:改时段 → \(\lambda t\);挑子类(白车、大额索赔)→ \(\lambda p\);多来源合并 → \(\sum\lambda_i\)(要独立)。</li>
+          <li>"at least \(k\)" → 取补 \(1-\sum_{i&lt;k}P[i]\)。</li>
+          <li>条件期望题(例 19C):\(E[N\mid N\ge1]=\dfrac{\lambda}{1-e^{-\lambda}}\) 的套路直接复用。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="泊松分布">● 泊松分布</button><button class="chip" data-card="泊松分布的矩">● 泊松分布的矩</button><button class="chip" data-card="泊松可加性">● 泊松可加性</button><button class="chip" data-card="泊松逼近二项">● 泊松逼近二项</button><button class="chip" data-card="泊松众数">◆ 泊松众数</button><button class="chip" data-card="泊松过程">◆ 泊松过程</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 10 / 全章 69)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>19.1</b></td><td>标准差反推λ + 至少k取补</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q355" type="button" title="展开题目与答案(样题 Q355)">▸</button>Q355</td><td class="dim" style="font-size:13px">§00 招牌坑:给标准差先平方 λ=SD²,再至少2取补,一题串起两条核心套路</td></tr>
+<tr class="kxd kxds" data-kxq="Q355" style="display:none"><td colspan="4"><div class="kx-qtx">The number of calls received by a certain emergency unit in a day is modeled by a Poisson distribution with a standard deviation of 2. Calculate the probability that on a particular day the unit receives at least two calls.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.092</span><span class="kx-opt"><b>(B)</b> 0.147</span><span class="kx-opt"><b>(C)</b> 0.238</span><span class="kx-opt"><b>(D)</b> 0.762</span><span class="kx-opt"><b>(E)</b> 0.908</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;识别泊松写pmf</td><td>\(p(x)=\dfrac{e^{-4}4^x}{x!},\ x=0,1,2,\dots\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;至少2次取补集</td><td>\(P(X\ge 2)=1-p(0)-p(1)\)</td><td class="xr"><a href="soa-exam-p-l01-sets.html">L01</a></td></tr><tr><td>③&nbsp;代入求值</td><td>\(1-e^{-4}(1+4)=1-0.091578=0.908\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>19.2</b></td><td>改时段 λt(周→2周)+ 恰好k</td><td style="white-space:nowrap"><button class="kxb" data-kx="19.2" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">λt 时段缩放最干净的旧真题(110-S83)</td></tr>
+<tr class="kxd" data-kxq="19.2" style="display:none"><td colspan="4"><div class="kx-qtx">The number of traffic accidents per week in a small city has a Poisson distribution with mean equal to 3. What is the probability of exactly 2 accidents in 2 weeks?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 9e^{-6} \)</span><span class="kx-opt"><b>(B)</b> \( 18e^{-6} \)</span><span class="kx-opt"><b>(C)</b> \( 25e^{-6} \)</span><span class="kx-opt"><b>(D)</b> \( 4.5e^{-3} \)</span><span class="kx-opt"><b>(E)</b> \( 9.5e^{-3} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;两周合并参数</td><td>\( \lambda = 2(3) = 6 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入 pmf 求 P[2]</td><td>\( P[2] = e^{-6}\dfrac{6^2}{2!} = 18e^{-6} \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>19.3</b></td><td>速率换时段 λt + 超过k取补</td><td style="white-space:nowrap"><button class="kxb" data-kx="19.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">由 10 秒速率换算半分钟,再 more-than-1 取补,旧真题(110-S85)</td></tr>
+<tr class="kxd" data-kxq="19.3" style="display:none"><td colspan="4"><div class="kx-qtx">In a certain communications system. There is an average of 1 transmission error per 10 seconds. Let the distribution of transmission errors be Poisson. What is the probability of more than 1 error in a communication one-half minute in duration?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 1 - 2e^{-1} \)</span><span class="kx-opt"><b>(B)</b> \( 1 - e^{-1} \)</span><span class="kx-opt"><b>(C)</b> \( 1 - 4e^{-3} \)</span><span class="kx-opt"><b>(D)</b> \( 1 - 3e^{-3} \)</span><span class="kx-opt"><b>(E)</b> \( 1 - e^{-3} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;半分钟换算参数</td><td>\( \lambda = 3(1) = 3 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;超过1取补</td><td>\( 1 - P[0] - P[1] = 1 - e^{-3} - 3e^{-3} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;合并得结果</td><td>\( = 1 - 4e^{-3} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>19.8</b></td><td>独立可加合并 Σλ + 至多k</td><td style="white-space:nowrap"><button class="kxb" data-kx="19.8" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">可加性最直接的旧真题(110-S90),三个独立泊松参数相加</td></tr>
+<tr class="kxd" data-kxq="19.8" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \), \( Y \), and \( Z \) be independent Poisson random variables with \( E[X] = 3 \), \( E[Y] = 1 \), and \( E[Z] = 4 \). What is \( P[X + Y + Z \le 1] \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 13e^{12} \)</span><span class="kx-opt"><b>(B)</b> \( 9e^{-8} \)</span><span class="kx-opt"><b>(C)</b> \( \frac{13}{12}e^{-1/12} \)</span><span class="kx-opt"><b>(D)</b> \( 9e^{-1/8} \)</span><span class="kx-opt"><b>(E)</b> \( \frac{9}{8}e^{-1/8} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;独立可加合参数</td><td>\( \lambda = 3 + 1 + 4 = 8 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;至多1求和</td><td>\( P[0] + P[1] = e^{-8} + 8e^{-8} = 9e^{-8} \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>19.13</b></td><td>由 P[≥1] 反推λ + 至少2</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q463" type="button" title="展开题目与答案(样题 Q463)">▸</button>Q463</td><td class="dim" style="font-size:13px">从 1-e^{-λ}=0.10 反解 λ 再算至少2,反推参数的代表样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q463" style="display:none"><td colspan="4"><div class="kx-qtx">The number of brake repair jobs a particular bus needs in a year is modeled by a Poisson distribution. The probability that the bus needs at least one brake repair job this year is 0.10. Calculate the probability that the bus needs at least two brake repair jobs this year.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0052</span><span class="kx-opt"><b>(B)</b> 0.0100</span><span class="kx-opt"><b>(C)</b> 0.0500</span><span class="kx-opt"><b>(D)</b> 0.1054</span><span class="kx-opt"><b>(E)</b> 0.3303</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;零概率反解λ</td><td>\(0.9=e^{-\lambda}\Rightarrow\lambda=-\ln 0.9\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;至少2次取双重补</td><td>\(P(X\ge2)=1-e^{-\lambda}-\lambda e^{-\lambda}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代值</td><td>\(=0.00518\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>19.16</b></td><td>条件概率 P[X≥2 | X≤4]</td><td style="white-space:nowrap"><button class="kxb" data-kx="19.16" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">双向截断条件概率、e⁻¹ 约分,旧真题(110-S83)</td></tr>
+<tr class="kxd" data-kxq="19.16" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) have a Poisson distribution with \( \lambda = 1 \). What is the probability that \( X \ge 2 \) given that \( X \le 4 \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{5}{65} \)</span><span class="kx-opt"><b>(B)</b> \( \frac{5}{41} \)</span><span class="kx-opt"><b>(C)</b> \( \frac{17}{65} \)</span><span class="kx-opt"><b>(D)</b> \( \frac{17}{41} \)</span><span class="kx-opt"><b>(E)</b> \( \frac{3}{5} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;条件概率拆式</td><td>\( \dfrac{\Pr(2 \le X \le 4)}{\Pr(X \le 4)} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;列各项 pmf</td><td>\( P[2]=\tfrac{e^{-1}}{2},\ P[3]=\tfrac{e^{-1}}{6},\ P[4]=\tfrac{e^{-1}}{24} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;约去 e⁻¹ 求比</td><td>\( \dfrac{1/2+1/6+1/24}{1+1+1/2+1/6+1/24} = \dfrac{17}{65} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>19.17</b></td><td>稀释 λp + 无子类事件 P[0]</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q200" type="button" title="展开题目与答案(样题 Q200)">▸</button>Q200</td><td class="dim" style="font-size:13px">承保语境挑子类(无保险司机)稀释 λp,再取 P[0],稀释代表样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q200" style="display:none"><td colspan="4"><div class="kx-qtx">The number of traffic accidents occurring on any given day in Coralville is Poisson distributed with mean 5. The probability that any such accident involves an uninsured driver is 0.25, independent of all other such accidents.
+
+Calculate the probability that on a given day in Coralville there are no traffic accidents that involve an uninsured driver.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.007</span><span class="kx-opt"><b>(B)</b> 0.010</span><span class="kx-opt"><b>(C)</b> 0.124</span><span class="kx-opt"><b>(D)</b> 0.237</span><span class="kx-opt"><b>(E)</b> 0.287</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;对事故数全概率求和</td><td>\( \sum_{k}P(0\text{起未保}\mid k)P(k\text{起}) \)</td><td class="xr"><a href="soa-exam-p-l04-bayes-theorem.html">L04</a></td></tr><tr><td>②&nbsp;k起全为投保司机</td><td>\( P(0\text{起未保}\mid k)=(0.75)^k \)</td><td class="xr"><a href="soa-exam-p-l17-binomial-distribution.html">L17</a></td></tr><tr><td>③&nbsp;泊松级数合并</td><td>\( \sum_k (0.75)^k\dfrac{e^{-5}5^k}{k!}=e^{-5}e^{3.75}=e^{-1.25}=0.287 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q200" style="display:none"><td colspan="4"><div class="kx-qtx">The number of traffic accidents occurring on any given day in Coralville is Poisson distributed with mean 5. The probability that any such accident involves an uninsured driver is 0.25, independent of all other such accidents.
+
+Calculate the probability that on a given day in Coralville there are no traffic accidents that involve an uninsured driver.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.007</span><span class="kx-opt"><b>(B)</b> 0.010</span><span class="kx-opt"><b>(C)</b> 0.124</span><span class="kx-opt"><b>(D)</b> 0.237</span><span class="kx-opt"><b>(E)</b> 0.287</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;对事故数全概率求和</td><td>\( \sum_{k}P(0\text{起未保}\mid k)P(k\text{起}) \)</td><td class="xr"><a href="soa-exam-p-l04-bayes-theorem.html">L04</a></td></tr><tr><td>②&nbsp;k起全为投保司机</td><td>\( P(0\text{起未保}\mid k)=(0.75)^k \)</td><td class="xr"><a href="soa-exam-p-l17-binomial-distribution.html">L17</a></td></tr><tr><td>③&nbsp;泊松级数合并</td><td>\( \sum_k (0.75)^k\dfrac{e^{-5}5^k}{k!}=e^{-5}e^{3.75}=e^{-1.25}=0.287 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>19.34</b></td><td>二阶矩解λ + 求 P[4]</td><td style="white-space:nowrap"><button class="kxb" data-kx="19.34" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">λ+λ²=二阶矩反解 λ 的干净练习,配对 E=Var=λ 核心恒等式</td></tr>
+<tr class="kxd" data-kxq="19.34" style="display:none"><td colspan="4"><div class="kx-qtx">For a Poisson random variable \( X \), the second moment is 90. Calculate the probability that \( X \) equals 4.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.03374" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;二阶矩解λ</td><td>\( \lambda + \lambda^2 = 90 \Rightarrow \lambda = 9 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入 pmf 求 P[4]</td><td>\( P[4] = e^{-9}\dfrac{9^4}{4!} = 0.03374 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>19.44</b></td><td>条件期望 E[N | N≥2]</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q218" type="button" title="展开题目与答案(样题 Q218)">▸</button>Q218</td><td class="dim" style="font-size:13px">§00 套路5(例 19C)条件期望的直接复用,分子 E[N]-P[1]、分母取补</td></tr>
+<tr class="kxd kxds" data-kxq="Q218" style="display:none"><td colspan="4"><div class="kx-qtx">The number of burglaries occurring on Burlington Street during a one-year period is Poisson distributed with mean 1.
+
+Calculate the expected number of burglaries on Burlington Street in a one-year period, given that there are at least two burglaries.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.63</span><span class="kx-opt"><b>(B)</b> 2.39</span><span class="kx-opt"><b>(C)</b> 2.54</span><span class="kx-opt"><b>(D)</b> 3.00</span><span class="kx-opt"><b>(E)</b> 3.78</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;截断条件期望定义</td><td>\(E(X\mid X\ge2)=\frac{\sum_{x\ge2}xp(x)}{1-p(0)-p(1)}\)</td><td class="xr"><a href="soa-exam-p-l14-conditional-moments.html">L14</a></td></tr><tr><td>②&nbsp;分子用全期望减头项</td><td>\(\sum_{x\ge2}xp(x)=E[X]-p(1)=1-e^{-1}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代泊松值求比</td><td>\(\frac{1-e^{-1}}{1-e^{-1}-e^{-1}}=2.39\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q218" style="display:none"><td colspan="4"><div class="kx-qtx">The number of burglaries occurring on Burlington Street during a one-year period is Poisson distributed with mean 1.
+
+Calculate the expected number of burglaries on Burlington Street in a one-year period, given that there are at least two burglaries.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.63</span><span class="kx-opt"><b>(B)</b> 2.39</span><span class="kx-opt"><b>(C)</b> 2.54</span><span class="kx-opt"><b>(D)</b> 3.00</span><span class="kx-opt"><b>(E)</b> 3.78</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;截断条件期望定义</td><td>\(E(X\mid X\ge2)=\frac{\sum_{x\ge2}xp(x)}{1-p(0)-p(1)}\)</td><td class="xr"><a href="soa-exam-p-l14-conditional-moments.html">L14</a></td></tr><tr><td>②&nbsp;分子用全期望减头项</td><td>\(\sum_{x\ge2}xp(x)=E[X]-p(1)=1-e^{-1}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代泊松值求比</td><td>\(\frac{1-e^{-1}}{1-e^{-1}-e^{-1}}=2.39\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>19.66</b></td><td>求众数 ⌊λ⌋</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q358" type="button" title="展开题目与答案(样题 Q358)">▸</button>Q358</td><td class="dim" style="font-size:13px">非整数 λ=2.5 众数=⌊λ⌋=2,众数考点最小代表样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q358" style="display:none"><td colspan="4"><div class="kx-qtx">The annual number of accidents for a driver is modeled by a Poisson distribution with mean 2.5. Calculate the mode of the annual number of accidents.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1.0</span><span class="kx-opt"><b>(B)</b> 1.5</span><span class="kx-opt"><b>(C)</b> 2.0</span><span class="kx-opt"><b>(D)</b> 2.5</span><span class="kx-opt"><b>(E)</b> 3.0</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;写泊松pmf</td><td>\(P[X=x]=\dfrac{e^{-2.5}2.5^x}{x!}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;逐点算概率比大小</td><td>\(p(0)=0.082,\ p(1)=0.205,\ p(2)=0.257,\ p(3)=0.214\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>③&nbsp;最大概率点即众数</td><td>\(\text{mode}=\lfloor\lambda\rfloor=2\)</td><td class="xr"><a href="soa-exam-p-l10-mode.html">L10</a></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 47(同题型二刷备用)· 跳过 12(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -366,6 +503,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>3 周独立泊松相加 → \(X\sim\text{Poisson}(\lambda)\),\(\lambda=3\times1.2=3.6\)。代入 pmf:<br>
       \(P[X=2]=e^{-3.6}\dfrac{3.6^{2}}{2!}=e^{-3.6}\times 6.48=0.177058\)。</p>
       <span class="ans">P[X = 2] = 0.177058</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 先换参数:3 周独立泊松相加(可加性)</td><td>\(\lambda=3\times1.2=3.6\)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+        <tr><td>② 再套泊松 pmf 求"恰 2 次"</td><td>\(P[X=2]=e^{-3.6}\dfrac{3.6^{2}}{2!}=0.177058\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>关键一步:</b>先把"3 周"折算成 \(\lambda=3.6\)(可加性 / 速率 \(\lambda t\)),<b>再</b>套 pmf——不要用一周的 \(\lambda=1.2\) 硬算 3 次。</span></div>
   </div>
@@ -398,7 +541,17 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">某地一年雪暴(snowstorm)次数服从泊松,均值 3。已知<b>至少发生了 1 次</b>雪暴,求这一年雪暴次数的期望 \(E[N\mid N\ge 1]\)。</p>
       <p>条件分布把整体除以 \(P[N\ge1]=1-P[N=0]=1-e^{-3}\)。由 \(E[N]=\sum_{n\ge1} nP[N=n]=3\) 且 \(n=0\) 项贡献为 0:<br>
       \(E[N\mid N\ge1]=\dfrac{E[N]}{1-e^{-3}}=\dfrac{3}{1-e^{-3}}=\dfrac{3}{0.950213}=3.1572\)。</p>
+      <p><b>逐步拆解</b>:①"已知至少 1 次"= 把 \(N=0\) 的情形从样本空间砍掉,剩余概率整体除以 \(P[N\ge1]\) 重新归一;②套期望定义 \(E[N\mid N\ge1]=\sum_{n\ge1} n\cdot\frac{P[N=n]}{1-e^{-3}}\);③关键一步——分子 \(\sum_{n\ge1} nP[N=n]\) 就是完整的 \(E[N]=3\),因为 \(n=0\) 那一项 \(0\times P[0]\) 本来就没贡献:<b>分子不变、分母变小</b>,所以条件期望略大于 3。</p>
+      <p class="dim"><b>白话</b>:模拟 100 年,均值 3 → 总共约 300 场雪暴,其中约 \(e^{-3}\approx5\) 年一场没下。只统计"下过雪暴的年份":总场数还是 300(空白年本来就贡献 0),但分母从 100 缩到 95 → \(300/95\approx3.16\) 场/年。\(\lambda\) 越小空白年越多,条件期望抬得越高——考试爱在小 \(\lambda\) 上做文章。</p>
+      <div class="note tip"><span class="ic">🧩</span><span class="t"><b>本例用到的公式(按解题顺序):</b>① 泊松 pmf \(P[N=n]=e^{-\lambda}\lambda^{n}/n!\) → 算 \(P[N=0]=e^{-3}\);② 补集 \(P[N\ge1]=1-P[N=0]\) → 条件的分母;③ 条件概率 \(P[A\mid B]=P[A\cap B]/P[B]\) → 逐项归一;④ 期望定义 \(E[X]=\sum n\,P[X=n]\) → 套条件 pmf 并认出分子 \(=E[N]=\lambda\)。串成一行:\(E[N\mid N\ge1]=\sum_{n\ge1} n\,\frac{P[N=n]}{P[N\ge1]}=\frac{\lambda}{1-e^{-\lambda}}\)。<b>未用</b>全期望公式与可加性;条件若换成 \(N\ge2\),分子须减去 \(n{=}1\) 项 \(\lambda e^{-\lambda}\),别硬套。</span></div>
       <span class="ans">E[N | N ≥ 1] = 3.1572</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 条件的分母:补集求 \(P[N\ge1]\)</td><td>\(P[N\ge1]=1-P[N=0]=1-e^{-3}\)(pmf 取 \(n{=}0\))</td><td class="xr"><span class="here">本章</span> · <a href="soa-exam-p-l01-sets.html">L01 集合 ↗</a></td></tr>
+        <tr><td>② 条件 pmf:砍掉 \(N{=}0\),剩余整体归一</td><td>\(P[N=n\mid N\ge1]=\dfrac{P[N=n]}{P[N\ge1]}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率 ↗</a></td></tr>
+        <tr><td>③ 套期望定义,认出分子就是 \(E[N]=\lambda\)(\(n{=}0\) 项零贡献)</td><td>\(E[N\mid N\ge1]=\dfrac{\sum_{n\ge1}nP[N=n]}{1-e^{-3}}=\dfrac{3}{1-e^{-3}}=3.1572\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07 期望 ↗</a> · <span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>合并的前提是独立:</b>可加性要求各 \(N_i\) 相互独立。若两个计数正相关(如同一天气驱动的两地事故),<b>不能</b>简单把 \(\lambda\) 相加。</span></div>
   </div>
@@ -435,6 +588,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>白车计数由稀释得 \(\lambda_{\text{白}}=\lambda p=10\times0.2=2\),即白车 \(\sim\text{Poisson}(2)\)。取补:<br>
       \(P[X\ge2]=1-P[0]-P[1]=1-e^{-2}-2e^{-2}=1-0.135335-0.270671=0.593994\)。</p>
       <span class="ans">P[X ≥ 2] = 0.593994</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 稀释:只数白车,参数先换成 \(\lambda p\)</td><td>\(\lambda_{\text{白}}=\lambda p=10\times0.2=2\)</td><td class="xr"><span class="here">本章 §04</span></td></tr>
+        <tr><td>② "至少 2 辆"取补:尾巴加不完,正面只有两项</td><td>\(P[X\ge2]=1-P[0]-P[1]\)</td><td class="xr"><a href="soa-exam-p-l01-sets.html">L01 集合 ↗</a></td></tr>
+        <tr><td>③ 套泊松 pmf 出数</td><td>\(1-e^{-2}-2e^{-2}=0.593994\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>取补技巧:</b>"至少 \(k\) 个"几乎总是走 \(1-\sum_{i&lt;k}P[i]\)。泊松尾巴无限长,正面加是加不完的。</span></div>
   </div>
@@ -506,17 +666,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>保险语境:<b>索赔次数 ~ Poisson</b> 几乎是默认设定;"claims occur at a rate of…"就是速率 \(\lambda\)。</li>
-        <li>题给<b>标准差</b>先平方:\(\lambda=SD^2\)(练 19.1 的坑)。</li>
-        <li>三步换参数:改时段 → \(\lambda t\);挑子类(白车、大额索赔)→ \(\lambda p\);多来源合并 → \(\sum\lambda_i\)(要独立)。</li>
-        <li>"at least \(k\)" → 取补 \(1-\sum_{i&lt;k}P[i]\)。</li>
-        <li>条件期望题(例 19C):\(E[N\mid N\ge1]=\dfrac{\lambda}{1-e^{-\lambda}}\) 的套路直接复用。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Poisson_distribution">Wikipedia · Poisson distribution</a></div><div class="z">从"一年被马踢死的骑兵数"讲起的权威词条,pmf、可加性、逼近条件一页备齐。</div><div class="u">en.wikipedia.org/wiki/Poisson_distribution</div></div>
@@ -527,106 +676,413 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>均值 = 方差 = λ</b>:题给"标准差",记得 \(\lambda=SD^2\),别直接当 \(\lambda\)。</li>
-          <li><b>先换 λ 再套 pmf</b>:改区间用 \(\lambda t\)、分子类用 \(\lambda p\)、合并用参数相加——换完才代公式。</li>
-          <li><b>可加性要独立</b>:非独立的泊松不能把 \(\lambda\) 相加。</li>
-          <li><b>"至少"取补</b>:\(P[X\ge k]=1-\sum_{i=0}^{k-1}P[i]\),别硬加无穷项。</li>
-          <li><b>众数 \(\lfloor\lambda\rfloor\)</b>:\(\lambda\) 为整数时 \(\lambda-1,\lambda\) 双众数,别只报一个。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 19.1</span>标准差为 2 反推 \(\lambda\),求某天至少 2 次来电。</li>
-          <li><span class="ref">练 19.4</span>每 12 小时 1 次电涌,求 24 小时内不超过 1 次。</li>
-          <li><span class="ref">练 19.8</span>独立泊松 \(X,Y,Z\),求 \(P[X+Y+Z\le1]\)(可加性)。</li>
-          <li><span class="ref">练 19.16</span>条件概率 \(P[X\ge2\mid X\le4]\),\(\lambda=1\)。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算 / 心算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>\(X\sim\text{Poisson}(\lambda)\) 且标准差为 3,则 \(\lambda=\,?\),\(E[X]=\,?\)</li>
-        <li>独立 \(X\sim\text{Poisson}(2)\)、\(Y\sim\text{Poisson}(5)\),\(X+Y\) 的分布与均值?</li>
-        <li>速率 4/小时的泊松过程,半小时内 0 次的概率?</li>
-        <li>\(\lambda=6\) 的众数是几?\(\lambda=6.5\) 呢?</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(\lambda=9\)(方差=λ),\(E[X]=9\);② \(\text{Poisson}(7)\),均值 7;③ \(\lambda t=4\times0.5=2\),\(P[0]=e^{-2}=0.1353\);④ \(\lambda=6\) 整数 → 众数 <b>5 和 6</b>;\(\lambda=6.5\) → 众数 <b>6</b>(\(\lfloor6.5\rfloor\))。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 泊松分布</h2></div></div>
-    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>pmf / 矩</h4>
-        <p>\(P[X=k]=\dfrac{e^{-\lambda}\lambda^{k}}{k!},\ k=0,1,2,\dots\)</p>
-        <p>\(E[X]=\operatorname{Var}(X)=\lambda\),\(SD=\sqrt{\lambda}\)</p>
-        <p>递推:\(P[k]=\dfrac{\lambda}{k}P[k-1]\)</p>
-        <p>众数 \(=\lfloor\lambda\rfloor\)(λ 整数则双众数)</p>
-      </div>
-      <div class="cc t">
-        <h4>组合 / 过程</h4>
-        <p>可加:\(\sum N_i\sim\text{Poisson}(\sum\lambda_i)\)(独立)</p>
-        <p>逼近二项:\(n\) 大 \(p\) 小,\(\lambda=np\)</p>
-        <p>过程:\(N(t)\sim\text{Poisson}(\lambda t)\)</p>
-        <p>稀释:子类 \(\sim\text{Poisson}(\lambda p)\)</p>
-        <p>至少 \(k\):\(1-\sum_{i&lt;k}P[i]\)</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "二项分布": {
+  "kind": "c",
+  "en": "BinomialDistribution",
+  "aliases": [
+   "binomial distribution"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 次<strong>相互独立</strong>、成功概率<strong>恒为 \\(p\\)</strong> 的成/败试验中\"成功次数\"的分布,记 \\(\\text{Binomial}(n,p)\\),取值 \\(0,1,\\dots,n\\)。Exam P 最高频的离散分布。</p><p><strong>白话</strong>:罚球命中率固定 \\(p\\),投 \\(n\\) 次数\"总共进几个\"——每球互不影响、命中率不变,进球总数的分布就是二项。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=k]=\\binom{n}{k}p^{k}(1-p)^{\\,n-k},\\qquad k=0,1,\\dots,n$$</div><ul><li>组合论证\"<strong>选位置,乘概率</strong>\":\\(\\binom{n}{k}\\) 数哪 \\(k\\) 次成功,\\(p^k(1-p)^{n-k}\\) 是每条路径的价钱。</li><li>归一由二项定理保证:\\(\\sum_k\\binom{n}{k}p^k(1-p)^{n-k}=(p+1-p)^n=1\\)(分布因此得名)。</li><li>两个前提缺一不可:各次试验<strong>独立</strong> + \\(p\\) <strong>恒定</strong>;不放回抽样(\\(p\\) 随抽随变)不是二项。</li><li>形状:\\(p&lt;0.5\\) 右偏、\\(p=0.5\\) 对称、\\(p&gt;0.5\\) 左偏,峰在 \\(np\\) 附近。</li><li>\"至少一次\"用补事件 \\(1-(1-p)^n\\) 最快,别逐项累加。</li></ul><p><strong>算一遍</strong>:抛 3 次公平硬币,求恰好 2 次正面。</p><ul><li>选位置:\\(\\binom{3}{2}=3\\) 种排法(正正反、正反正、反正正)。</li><li>每条路径的价钱:\\(0.5^2\\times 0.5=1/8\\)。</li><li>相乘:\\(3\\times\\dfrac18=\\dfrac38\\);对照全枚举——8 条等可能路径里恰有 3 条 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 原子;\\(n=1\\) 特例</li><li>组合 — 二项系数数成功位置(上游 L02)</li><li><a class=\"net-wl\" data-id=\"二项分布的期望与方差\">二项分布的期望与方差</a> — \\(np\\) 与 \\(np(1-p)\\)</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 同 \\(p\\) 独立之和仍二项</li><li>超几何分布 — 不放回抽样的对照(有限总体)</li><li><a class=\"net-wl\" data-id=\"泊松逼近二项\">泊松逼近二项</a> — \\(n\\) 大 \\(p\\) 小时的近似(下游 L19)</li></ul><h4>应用视角</h4><ul><li>二项与负二项的固定对调与尾概率对偶 — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li><li>二项分布与联合分布的层面之辨 — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "二项分布可加性": {
+  "kind": "c",
+  "en": "BinomialAdditivity",
+  "aliases": [
+   "additivity of binomial distribution",
+   "sum of independent binomials"
+  ],
+  "level": "advanced",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>相互独立、<strong>同一成功概率 \\(p\\)</strong> 的二项随机变量之和仍是二项:\\(n\\) 参数相加、\\(p\\) 不动。\\(p\\) 不同则和<strong>不再是</strong>二项。</p><p><strong>白话</strong>:上午投 3 次罚球、下午投 5 次,命中率都是 \\(p\\)——两段进球数加起来,和\"一口气投 8 次\"没有任何区别,所以和仍是二项、\\(n\\) 直接相加。若下午换了个命中率不同的人投,两段就拼不成\"一口气 8 次\",和也就不再是二项。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X_i\\ \\text{独立},\\ X_i\\sim\\text{Binomial}(n_i,\\,p)\\ \\Longrightarrow\\ \\sum_{i=1}^{k}X_i\\ \\sim\\ \\text{Binomial}\\Big(\\sum_{i=1}^{k}n_i,\\ p\\Big)$$</div><ul><li>直觉:把两堆同概率硬币合起来抛,还是一堆同概率硬币——总试验串仍是\"独立同 \\(p\\) 的伯努利序列\"。</li><li>两个条件都要查:<strong>相互独立</strong> + <strong>\\(p\\) 相同</strong>;\\(p\\) 不同的独立二项之和不是二项(高频易错)。</li><li>均值方差自然相加:\\(E=(\\sum n_i)p\\)、\\(\\operatorname{Var}=(\\sum n_i)p(1-p)\\)。</li><li>同款性质在泊松(\\(\\lambda\\) 相加)与负二项(同 \\(p\\)、\\(r\\) 相加)上再现,三个一起记。</li></ul><p><strong>算一遍</strong>:\\(X\\sim\\text{Binomial}(2,\\,0.5)\\)(抛 2 枚硬币)、\\(Y\\sim\\text{Binomial}(3,\\,0.5)\\)(抛 3 枚),独立。</p><ul><li>合并:5 枚同样的硬币一起数正面 → \\(X+Y\\sim\\text{Binomial}(5,\\,0.5)\\)。</li><li>验均值:\\(E=2(0.5)+3(0.5)=2.5=5\\times 0.5\\) ✓;方差 \\(5\\times 0.25=1.25\\) ✓</li><li>若 \\(Y\\) 换成 \\(\\text{Binomial}(3,\\,0.2)\\):总试验串不再\"同 \\(p\\)\",和就不是任何二项——捷径失效。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 本体</li><li>随机变量独立性 — 前提之一(上游 L11)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 同款性质:\\(\\lambda\\) 相加、无同参限制(下游 L19)</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 同款性质:同 \\(p\\)、\\(r\\) 相加(下游 L18)</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — \"和的分布\"的一般工具;此处有闭式捷径</li></ul>"
+ },
+ "二项分布的期望与方差": {
+  "kind": "c",
+  "en": "BinomialMeanAndVariance",
+  "aliases": [
+   "mean and variance of binomial",
+   "binomial moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(\\text{Binomial}(n,p)\\) 的均值为 \\(np\\)、方差为 \\(np(1-p)\\)——把二项看成 \\(n\\) 个独立伯努利之和 \\(N=X_1+\\dots+X_n\\),期望与方差各自乘 \\(n\\) 直接得到。</p><p><strong>白话</strong>:一次罚球平均进 \\(p\\) 个球,投 \\(n\\) 次自然平均进 \\(np\\) 个;波动同理——单次的小波动 \\(p(1-p)\\),\\(n\\) 次互不影响地攒起来就是 \\(np(1-p)\\)。\\(n\\) 份一样的小账,总账直接乘 \\(n\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[N]=np,\\qquad \\operatorname{Var}(N)=np(1-p)$$</div><ul><li>来源:每个伯努利均值 \\(p\\)、方差 \\(p(1-p)\\);期望恒可加(线性),独立时方差也可加。</li><li>方差<strong>绝不是 \\(np\\)</strong>——漏 \\((1-p)\\) 整题崩;标准差 \\(\\sqrt{np(1-p)}\\)。</li><li>反解参数套路:给 \\(E\\) 与 \\(\\operatorname{Var}\\),相除得 \\(1-p\\),再回代求 \\(n\\)(如 \\(E=6\\)、\\(\\operatorname{Var}=2.4\\) → \\(p=0.6\\)、\\(n=10\\))。</li><li>例 17A:\\(\\text{Binomial}(20,0.015)\\):\\(E=0.3\\)、\\(\\operatorname{Var}=0.2955\\)。</li></ul><p><strong>算一遍</strong>:抛 4 次公平硬币数正面。</p><ul><li>均值:\\(E=4\\times 0.5=2\\) 个正面。</li><li>方差:\\(\\operatorname{Var}=4\\times 0.5\\times 0.5=1\\)——别顺手写成 \\(np=2\\),\\((1-p)\\) 不能漏。</li><li>反解练习:给 \\(E=6\\)、\\(\\operatorname{Var}=2.4\\) → 相除得 \\(1-p=0.4\\) → \\(p=0.6\\)、\\(n=6/0.6=10\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 本体</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 单次的 \\(p\\)、\\(p(1-p)\\) 各乘 \\(n\\)</li><li>期望的线性 — 均值可加的依据(不需独立)</li><li>和的方差 — 独立时交叉项为零、方差可加的依据</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 基础定义</li></ul>"
+ },
+ "众数": {
+  "kind": "c",
+  "en": "Mode",
+  "aliases": [
+   "mode",
+   "most likely value"
+  ],
+  "level": "advanced",
+  "chapter": "p-l10",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>让概率函数取最大值的取值——离散取 pmf 最高点,连续取密度最高峰,即\"最可能出现/最扎堆\"的值。可以不唯一(并列最高全是众数);样本众数 = 样本中出现最频繁的值。</p><p><strong>白话</strong>:班里最常见的鞋码——卖鞋备货就先备它。众数就是\"人最扎堆\"的那个值;它和\"排队正中间\"(中位数)、\"总平均\"(均值)是三种不同口径的\"中心\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{离散}:\\ \\operatorname{mode}=\\arg\\max_x p(x)\\qquad\\qquad \\text{连续}:\\ \\operatorname{mode}=\\arg\\max_x f(x)$$</div><ul><li>连续三步:解 \\(\\dfrac{d}{dx}\\ln f(x)=0\\) 找临界点 → 验 \\(\\dfrac{d^2}{dx^2}\\ln f(x)&lt;0\\) 确认极大 → <strong>必比支撑端点</strong>的密度。</li><li>取 \\(\\ln\\) 不挪峰(对数严格递增、\\(\\arg\\max\\) 不变),把乘积/幂拆成加法;归一化常数求导即消,可直接扔。</li><li>\\(f'\\) 在支撑内无零点(单调密度)→ 众数落在<strong>支撑端点</strong>(如单调递减密度的众数 = 左端点)——最常丢分处。</li><li>例 10A:\\(f(x)=cx^2(1-x)\\) 于 \\((0,1)\\) → mode \\(=2/3\\)(即 Beta(3,2),套 \\(\\frac{\\alpha-1}{\\alpha+\\beta-2}\\) 可秒验)。</li><li>偏态下众数 ≠ 中位数 ≠ 均值;右偏:众数 &lt; 中位数 &lt; 均值。</li></ul><p><strong>算一遍</strong>:五个病人本月就诊次数:0、1、1、1、4。</p><ul><li>数频次:0 出现 1 次、1 出现 3 次、4 出现 1 次 → 众数 \\(=1\\)(最扎堆)。</li><li>三中心对照:中位数(排序取中)\\(=1\\);均值 \\(=7/5=1.4\\),被那个 4 拉高。</li><li>右偏的典型格局在此显形:众数 \\(1\\) ≤ 中位数 \\(1\\) &lt; 均值 \\(1.4\\)——极端值只拽得动均值。</li></ul><h4>与其他概念的关系</h4><ul><li>概率密度函数 — 连续众数 = 密度的 \\(\\arg\\max\\)</li><li>概率函数 — 离散众数 = pmf 的 \\(\\arg\\max\\),逐点比大小</li><li>多峰分布 — 并列最高 → 众数不唯一</li><li>中位数 — 三个\"中心\"之一,偏态下分离</li><li><a class=\"net-wl\" data-id=\"泊松众数\">泊松众数</a> — 下游:泊松 mode \\(=\\lfloor\\lambda\\rfloor\\)</li><li>Beta分布 — 例 10A 本尊,mode 有闭式</li></ul>"
+ },
+ "伯努利分布": {
+  "kind": "c",
+  "en": "BernoulliDistribution",
+  "aliases": [
+   "Bernoulli distribution",
+   "Bernoulli trial"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>单次成/败试验的分布:取 1(成功)概率 \\(p\\)、取 0(失败)概率 \\(1-p\\)。它是二项分布 \\(n=1\\) 的特例,也是二项的<strong>原子</strong>——\\(n\\) 个独立伯努利之和即二项。</p><p><strong>白话</strong>:一次抛硬币、一次罚球、一个客户今年出不出险——世界上最小的随机试验,只有\"成/败\"两个结局。它是概率界的乐高最小颗粒,二项等大分布都由它拼出来。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=1]=p,\\quad P[X=0]=1-p;\\qquad E[X]=p,\\quad \\operatorname{Var}(X)=p(1-p)$$</div><ul><li>\\(E[X^2]=p\\)(因 \\(0^2=0\\)、\\(1^2=1\\)),故 \\(\\operatorname{Var}=p-p^2=p(1-p)\\)。</li><li>方差在 \\(p=0.5\\) 时最大(\\(=0.25\\)),越靠近 0 或 1 越小——结果越确定,波动越小。</li><li>二项的 \\(np\\)、\\(np(1-p)\\) 全由它 \\(\\times n\\) 而来。</li><li>作示性变量(indicator)是\"数个数\"类问题的通用积木。</li></ul><p><strong>算一遍</strong>:命中率 \\(p=0.5\\) 的一次罚球,进球记 1、不进记 0。</p><ul><li>均值:\\(E[X]=1(0.5)+0(0.5)=0.5\\)。</li><li>二阶矩:\\(E[X^2]=1^2(0.5)=0.5\\),故 \\(\\operatorname{Var}=0.5-0.5^2=0.25\\)——正是 \\(p(1-p)\\),且是方差的最大值(\\(p=0.5\\) 最难猜)。</li><li>换 \\(p=0.9\\):\\(\\operatorname{Var}=0.9\\times 0.1=0.09\\)——结果越确定,波动越小 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — \\(n=1\\) 特例;\\(n\\) 个独立之和成二项</li><li><a class=\"net-wl\" data-id=\"二项分布的期望与方差\">二项分布的期望与方差</a> — \\(p\\)、\\(p(1-p)\\) 各乘 \\(n\\) 的来源</li><li>几何分布 — 同一串伯努利试验改数\"到首次成功\"(下游 L18)</li><li>概率函数 — 最简两点 pmf</li></ul><h4>应用视角</h4><ul><li>二项与负二项的固定对调与尾概率对偶 — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li></ul>"
+ },
+ "伽马分布": {
+  "kind": "c",
+  "en": "GammaDistribution",
+  "aliases": [
+   "gamma distribution",
+   "Erlang distribution"
+  ],
+  "level": "advanced",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 个独立、同均值 \\(\\theta\\) 的指数随机变量之和 \\(Y=\\sum_{i=1}^n X_i\\) 服从参数 \\((n,\\theta)\\) 的伽马分布——\"接力等 \\(n\\) 次事件\"的总时间。\\(n=1\\) 时退化回指数分布。</p><p><strong>白话</strong>:等一趟公交平均 \\(\\theta\\) 分钟(指数);今天要连换 \\(n\\) 趟车,把 \\(n\\) 段等待接起来的<strong>总</strong>等待时间,分布就是伽马。等一段是指数,接力等 \\(n\\) 段是伽马。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Y(x)=\\frac{x^{\\,n-1}e^{-x/\\theta}}{\\Gamma(n)\\,\\theta^{\\,n}},\\qquad E[Y]=n\\theta,\\quad \\operatorname{Var}(Y)=n\\theta^2$$</div><ul><li>\\(\\Gamma(n)=(n-1)!\\)(正整数 \\(n\\));均值方差是单个指数的 \\(n\\) 倍(iid 之和的常识)。</li><li><strong>考试策略</strong>:真让你算伽马 CDF 的题很少,更多是\"认出这是伽马,直接用 \\(E=n\\theta\\)、\\(\\operatorname{Var}=n\\theta^2\\)\"。</li><li>伽马 CDF 无一般闭式;\\(n\\) 为小整数时可分部积分手算(如两步审批例:\\(n=2,\\theta=3\\) 求 \\(F_Y(5)\\))。</li><li>泊松过程视角:速率 \\(\\lambda\\) 下等到第 \\(n\\) 个事件的时间 \\(\\sim\\text{Gamma}(n,1/\\lambda)\\)。</li></ul><p><strong>算一遍</strong>:每关审批平均耗 3 天(指数 \\(\\theta=3\\)),文件要连过 2 关(\\(n=2\\))。</p><ul><li>总耗时 \\(Y\\sim\\text{Gamma}(2,3)\\):\\(E[Y]=2\\times 3=6\\) 天。</li><li>\\(\\operatorname{Var}=2\\times 3^2=18\\),标准差 \\(\\approx 4.2\\) 天——单关的均值和方差各乘 2,iid 之和的常识。</li><li>若只有 1 关:\\(\\text{Gamma}(1,3)\\) 就是均值 3 的指数——特例验证 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 构件与特例:\\(n=1\\) 即指数</li><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 第 \\(n\\) 个事件的到达时间</li><li>期望的线性 — \\(E[Y]=n\\theta\\) 的依据</li><li>和的方差 — 独立和方差相加:\\(\\operatorname{Var}=n\\theta^2\\)</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 密度的原始推法:指数密度自卷 \\(n\\) 次</li></ul>"
+ },
+ "卷积公式": {
+  "kind": "c",
+  "en": "ConvolutionFormula",
+  "aliases": [
+   "convolution",
+   "sum of two random variables"
+  ],
+  "level": "hard",
+  "chapter": "p-l35",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求和 \\(Z=X+Y\\) 密度的公式:固定 z,沿直线 \\(x+y=z\\) 把联合密度\"扫一遍\"积分。它是雅可比法取 \\(W=Y\\) 的特例(\\(|J|=1\\));X、Y <strong>独立</strong>时联合密度拆成边缘乘积,得经典卷积 \\(f_X*f_Y\\)。</p><p><strong>白话</strong>:两颗骰子点数和是 7 的概率,就是把 \\((1,6)(2,5)\\dots(6,1)\\) 所有拆法逐个加起来;连续版一模一样——和固定成 \\(z\\),沿\"所有拆法\"\\((z-w,\\,w)\\) 扫一遍,求和换成积分。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Z(z)=\\int_{-\\infty}^{\\infty} f_{X,Y}(z-w,\\,w)\\,dw\\;\\xrightarrow{\\ X\\perp Y\\ }\\;f_Z(z)=\\int_{-\\infty}^{\\infty} f_X(z-w)\\,f_Y(w)\\,dw$$</div><ul><li>一般式对任意联合密度成立(不需独立);只有拆成 \\(f_X\\,f_Y\\) 那一步需要<strong>独立</strong>——非独立不能拆。</li><li><strong>积分限随支撑变</strong>:只在 \\(f_X(z-w)\\) 与 \\(f_Y(w)\\) 同时非零处积,不是无脑 \\(-\\infty\\) 到 \\(\\infty\\)(最高频错)。</li><li>画支撑、按 z 切竖条:uniform 和的密度是三角形/梯形,分段别漏。</li><li>先想 MGF:独立和能靠 MGF 相乘认形就秒杀(指数和→伽马、正态和→正态);认不出闭式才动手卷积。</li><li>\\(Z=aX+bY\\)(如 2X+Y)同理:先补 W 再积。</li></ul><p><strong>算一遍</strong>:\\(X,Y\\) 独立均匀于 \\((0,1)\\),求 \\(Z=X+Y\\) 在 \\(z=0.5\\) 处的密度。</p><ul><li>先定非零范围:需 \\(0&lt;w&lt;1\\) 且 \\(0&lt;0.5-w&lt;1\\),交出 \\(0&lt;w&lt;0.5\\)——限被支撑收窄,不是全轴。</li><li>积分:\\(f_Z(0.5)=\\int_0^{0.5}1\\times1\\,dw=0.5\\)。</li><li>逐点扫遍得 \\(f_Z(z)=z\\)(\\(0&lt;z&lt;1\\) 段)——\"两个均匀之和是三角形\"对上 ✓</li></ul><h4>与其他概念的关系</h4><ul><li>多变量变换的雅可比法 — 母方法:取 W=Y、\\(|J|=1\\) 的特化</li><li>独立和的MGF — 替代路线:相乘认形免卷积</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 离散镜像:PGF 相乘 = 多项式自动卷积</li><li>连续型独立性 — 拆 \\(f_X\\,f_Y\\) 的前提</li><li>积分限与支撑 — 上下限纪律的来源</li><li>联合密度函数 — 一般式的输入</li></ul>"
+ },
+ "指数与泊松过程": {
+  "kind": "c",
+  "en": "PoissonInterarrivalTime",
+  "aliases": [
+   "interarrival time",
+   "waiting time in Poisson process",
+   "exponential-Poisson duality"
+  ],
+  "level": "advanced",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>同一枚硬币的两面:事件按<strong>速率 \\(\\lambda\\) 的泊松过程</strong>发生时,固定区间内的<strong>计数</strong>服从泊松,相邻两事件的<strong>间隔时间</strong>服从速率 \\(\\lambda\\)(均值 \\(1/\\lambda\\))的指数分布——<strong>计数用泊松,间隔用指数</strong>。</p><p><strong>白话</strong>:站在公交站看车——\"这一小时来了几辆\"用泊松数,\"下一辆还要等多久\"用指数算;同一条路上的车流,换个问法就换一副分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[\\text{下一事件的等待}&gt;t]=P[\\,[0,t]\\text{ 内 }0\\text{ 次事件}\\,]=e^{-\\lambda t}$$</div><ul><li>右端 \\(e^{-\\lambda t}\\) 既是 \\(\\text{Poisson}(\\lambda t)\\) 取 0 的概率,也正是指数生存函数——一条式子缝合两章。</li><li>换算:速率 10/小时 ⟹ 下一位顾客的等待 \\(\\sim\\text{Exp}\\)(均值 \\(1/10\\) 小时 = 6 分钟)。</li><li>读题分流:问\"区间内<strong>几次</strong>\" → 泊松 \\((\\lambda t)\\);问\"<strong>等多久</strong>\" → 指数(均值 \\(1/\\lambda\\))。</li><li>等到第 \\(n\\) 个事件的总时间 = \\(n\\) 段独立指数间隔之和 = 伽马 \\((n,1/\\lambda)\\)。</li></ul><p><strong>算一遍</strong>:公交车平均每小时来 2 辆(\\(\\lambda=2\\)),求\"半小时内一辆都不来\"的概率。</p><ul><li>泊松那面:半小时期望来 \\(\\lambda t=2\\times0.5=1\\) 辆,来 0 辆的概率 \\(=e^{-1}\\approx0.37\\)。</li><li>指数那面:下一辆的等待超过 0.5 小时,\\(S(0.5)=e^{-2\\times0.5}=e^{-1}\\) ✓</li><li>两条路答案相同——\"区间内 0 次\"和\"等待超过整个区间\"本来就是同一件事。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 共同的底层模型:恒定速率、独立发生</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 计数那一面</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 间隔那一面</li><li>生存函数 — 对偶等式两端都是它</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — 多段间隔之和:第 \\(n\\) 个事件的等待</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "指数分布": {
+  "kind": "c",
+  "en": "ExponentialDistribution",
+  "aliases": [
+   "exponential distribution",
+   "exponential"
+  ],
+  "level": "basic",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>描述\"<strong>下一次事件到来前要等多久</strong>\"的连续分布(\\(x\\ge 0\\)):寿命、等待时间、保险损失额的默认模型。事件以恒定速率随机来临,等待密度从峰值起持续衰减——刚开始最可能马上来,越拖概率越小。Exam P 最高频的连续分布。</p><p><strong>白话</strong>:路边等出租车——空车随时可能冒出来,最可能的是马上就来,\"恰好等满 10 分钟才来\"比\"1 分钟内来\"更稀罕;它就是给这种\"等多久\"画像的分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=1-e^{-x/\\theta},\\qquad f(x)=\\frac{e^{-x/\\theta}}{\\theta},\\qquad S(x)=e^{-x/\\theta}\\quad(x\\ge 0)$$</div><ul><li><strong>两套参数化</strong>:\\(\\theta\\) 是<strong>均值</strong>(尺度参数,ASM/损失模型常用);\\(\\lambda=1/\\theta\\) 是<strong>速率</strong>(SOA 常用),此时 \\(f(x)=\\lambda e^{-\\lambda x}\\)、\\(S(x)=e^{-\\lambda x}\\)。读题先认清给的是 mean 还是 rate,\\(\\lambda\\theta=1\\)。</li><li>生存函数 \\(S(x)=e^{-x/\\theta}\\)(\"活过 \\(x\\) / 等待超过 \\(x\\)\")是做题最常用的形态;\"loss exceeds …\"直接上 \\(S\\)。</li><li>\"至少一次 in \\(t\\)\":\\(P[X\\le t]=1-e^{-t/\\theta}\\),别去积分密度。</li><li>下游预告(L23):独立指数取<strong>最小值</strong>仍是指数,速率相加。</li></ul><p><strong>算一遍</strong>:灯泡寿命服从均值 \\(\\theta=2\\) 年的指数分布,求它活过 2 年的概率。</p><ul><li>直接上生存函数:\\(S(2)=e^{-2/2}=e^{-1}\\approx0.37\\)——只有约三分之一能活过自己的\"平均寿命\"。</li><li>反面:活不过 2 年 \\(F(2)=1-e^{-1}\\approx0.63\\),多数灯泡死在均值之前——右偏分布,少数长寿者把平均拉高。</li><li>换速率写法验一下:\\(\\lambda=1/2\\),\\(S(2)=e^{-\\lambda\\cdot2}=e^{-1}\\) ✓ 两套参数化同一结果。</li></ul><h4>与其他概念的关系</h4><ul><li>指数分布的矩 — \\(E[X]=\\theta\\)、\\(\\operatorname{Var}=\\theta^2\\):方差=均值²</li><li>指数分布百分位数 — 闭式分位 \\(\\xi_p=-\\theta\\ln(1-p)\\)</li><li>无记忆性 — 灵魂性质:已等多久不影响剩余等待</li><li><a class=\"net-wl\" data-id=\"指数与泊松过程\">指数与泊松过程</a> — 泊松管次数、指数管间隔:同一过程的两面</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — \\(n\\) 个独立同均值指数之和</li><li>几何分布 — 离散镜像:各自阵营唯一的无记忆分布</li></ul><h4>应用视角</h4><ul><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "方差": {
+  "kind": "c",
+  "en": "Variance",
+  "aliases": [
+   "variance",
+   "Var",
+   "二阶中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量取值围绕均值摆动幅度的度量:偏差平方的期望(即二阶中心矩),记 \\(\\operatorname{Var}(X)\\) 或 \\(\\sigma^2\\)。方差 \\(\\ge 0\\),越大分布越分散;为 0 当且仅当 \\(X\\) 几乎处处是常数。</p><p><strong>白话</strong>:两个班平均分都是 80,一个班人人 78–82,另一个班一半 60 一半 100——平均分看不出差别,方差看得出:它算的是\"每个人离平均有多远\"的平均账(按平方记)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=E\\big[(X-\\mu)^2\\big]=E[X^2]-\\mu^2$$</div><ul><li>计算式\"<strong>平方的平均 − 平均的平方</strong>\"是解题主力:先算 \\(E[X]\\)、\\(E[X^2]\\) 两个原点矩,一减即出。</li><li><strong>平移不散,缩放平方</strong>:\\(\\operatorname{Var}(aX+b)=a^2\\operatorname{Var}(X)\\);负号平方后消失,\\(\\operatorname{Var}(-X)=\\operatorname{Var}(X)\\)。</li><li><strong>独立才可加</strong>:\\(\\operatorname{Var}(\\sum X_i)=\\sum\\operatorname{Var}(X_i)\\)(i.i.d. 时 \\(=n\\operatorname{Var}(X)\\));独立时 \\(\\operatorname{Var}(X-Y)\\) 也是\"加\"(系数 \\((-1)^2=1\\))。</li><li>两点分布捷径:取 \\(a\\)(概率 \\(p\\))、\\(b\\)(概率 \\(1-p\\))时 \\(\\operatorname{Var}(X)=(b-a)^2p(1-p)\\)。</li><li>绕任意点:\\(E[(X-c)^2]=\\operatorname{Var}(X)+(\\mu-c)^2\\),仅 \\(c=\\mu\\) 时等于方差(平行轴定理)。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0(各占一半),求方差。</p><ul><li>两个原点矩:\\(E[X]=0.5\\);\\(E[X^2]=0^2(0.5)+1^2(0.5)=0.5\\)。</li><li>一减即出:\\(\\operatorname{Var}=0.5-0.5^2=0.25\\),标准差 \\(0.5\\)。</li><li>两点捷径验算:\\((1-0)^2\\times0.5\\times0.5=0.25\\) ✓ 两条路同一答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 两个原点矩一减出方差;期望是线性算子、方差不是</li><li>矩 — 方差 = 二阶中心矩,矩家族一员</li><li><a class=\"net-wl\" data-id=\"标准差\">标准差</a> — 方差的正平方根,单位还原</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 两点捷径的来源:\\(\\operatorname{Var}(N)=p(1-p)\\) 套缩放律</li><li>和的方差 — 不独立时的一般公式(补协方差项)</li><li>协方差 — 度量两变量联动,修正和的方差</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 它最重要的数字概括</li><li>概率函数 — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li>概率密度函数 — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li>LOTUS — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li>期望的线性 — 期望算子最常用的运算性质</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "标准差": {
+  "kind": "c",
+  "en": "StandardDeviation",
+  "aliases": [
+   "standard deviation",
+   "SD",
+   "sigma"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>方差的正平方根 \\(\\sigma\\),把离散程度的单位还原到与 \\(X\\) 同量纲(方差的单位是 \\(X\\) 的平方),便于与取值直接比较。</p><p><strong>白话</strong>:方差像把每人的偏差记成\"平方米\"的账,读不出直感;开个根号换回\"米\",一眼看出大家离平均值典型差几米。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\sigma=\\sqrt{\\operatorname{Var}(X)}\\ \\ge 0$$</div><ul><li>\\(\\operatorname{SD}(aX+b)=|a|\\,\\sigma\\):缩放取<strong>绝对值</strong>、平移无影响——别写成 \\(a\\sigma\\)。</li><li><strong>方差可加、SD 不可加</strong>(独立时):先回到方差再开根,如年 SD 为 3、52 周 i.i.d. → 周方差 \\(=9/52\\),周 SD \\(=3/\\sqrt{52}\\)。</li><li>与均值组合成无量纲的变异系数 \\(\\sigma/\\mu\\),跨尺度比波动。</li></ul><p><strong>算一遍</strong>:地砖边长一半是 2 米、一半是 4 米。</p><ul><li>均值 \\(\\mu=3\\);方差 \\(=(2-3)^2(0.5)+(4-3)^2(0.5)=1\\),单位是\"平方米\"。</li><li>开根:\\(\\sigma=1\\) 米——回到与边长同量纲,可直接说\"典型偏离约 1 米\"。</li><li>缩放检验:边长全翻倍(\\(2X\\)),SD 变 \\(|2|\\times1=2\\) 米;方差才变 4 倍。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 开根即得,一切性质经方差换算</li><li>变异系数 — \\(\\sigma/\\mu\\),无量纲化后可跨尺度比较</li><li>标准化 — \\((X-\\mu)/\\sigma\\) 把任意分布拉到均值 0、SD 1</li><li>68-95-99.7法则 — 正态下 \\(\\pm1\\sigma/2\\sigma/3\\sigma\\) 的覆盖率</li></ul>"
+ },
+ "泊松众数": {
+  "kind": "c",
+  "en": "PoissonMode",
+  "aliases": [
+   "mode of Poisson distribution",
+   "successive-probability recursion"
+  ],
+  "level": "advanced",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>泊松相邻概率之比是 \\(\\lambda/k\\):比值 \\(&gt;1\\)(\\(k&lt;\\lambda\\))时概率上升、越过 \\(\\lambda\\) 后下降,故<strong>众数 \\(=\\lfloor\\lambda\\rfloor\\)</strong>;\\(\\lambda\\) 恰为整数时 \\(\\lambda-1\\) 与 \\(\\lambda\\) 并列双众数。</p><p><strong>白话</strong>:概率像爬山:从 \\(k-1\\) 走到 \\(k\\) 要乘一次 \\(\\lambda/k\\),\\(k\\) 还小于 \\(\\lambda\\) 时这一步大于 1、一路上坡,一过 \\(\\lambda\\) 就变小于 1、开始下坡——山顶自然落在 \\(\\lfloor\\lambda\\rfloor\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\frac{P[X=k]}{P[X=k-1]}=\\frac{\\lambda}{k}\\quad\\Longrightarrow\\quad P[X=k]=\\frac{\\lambda}{k}\\,P[X=k-1]$$</div><ul><li>递推比值干净,便于<strong>逐项累加</strong>求 \\(P[X\\ge k]\\) 或手算一串 pmf。</li><li>众数 \\(=\\lfloor\\lambda\\rfloor\\)(不超过 \\(\\lambda\\) 的最大整数);例:\\(\\lambda=6.5\\to\\) 众数 6。</li><li><strong>整数坑</strong>:\\(\\lambda=6\\) 时 \\(P[5]=P[6]\\),众数是 <strong>5 和 6 两个</strong>,别只报一个。</li><li>直觉:\\(\\lambda\\) 小 → 右偏、峰堆在 0;\\(\\lambda\\) 大 → 峰随 \\(\\lambda\\) 右移趋对称。</li></ul><p><strong>算一遍</strong>:\\(\\lambda=2.5\\),用比值逐步找峰。</p><ul><li>\\(\\dfrac{P[1]}{P[0]}=\\dfrac{2.5}{1}=2.5&gt;1\\) 升;\\(\\dfrac{P[2]}{P[1]}=\\dfrac{2.5}{2}=1.25&gt;1\\) 再升。</li><li>\\(\\dfrac{P[3]}{P[2]}=\\dfrac{2.5}{3}\\approx0.83&lt;1\\),开始下坡。</li><li>峰停在 \\(k=2=\\lfloor2.5\\rfloor\\) ✓;若 \\(\\lambda=3\\) 整数,则 \\(P[2]=P[3]\\),双众数。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 递推式由其 pmf 直接相除得到</li><li><a class=\"net-wl\" data-id=\"众数\">众数</a> — 上位概念:离散分布取 pmf 最大的点</li><li><a class=\"net-wl\" data-id=\"泊松分布的矩\">泊松分布的矩</a> — 峰在均值 \\(\\lambda\\) 附近:众数 \\(\\le\\) 均值</li></ul>"
+ },
+ "泊松分布": {
+  "kind": "c",
+  "en": "PoissonDistribution",
+  "aliases": [
+   "Poisson distribution",
+   "Poisson"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>刻画\"<strong>固定区间内某事件发生几次</strong>\"的单参数计数分布:事故、来电、索赔件数的默认模型。由二项分布在 \\(n\\to\\infty,\\ p\\to 0,\\ np\\to\\lambda\\) 的极限得到,天然适合\"机会极多、每次极小\"的场景。</p><p><strong>白话</strong>:一天有无数个瞬间,每个瞬间来客概率都微乎其微,但平均一天来 \\(\\lambda\\) 个——数\"今天到底来了几个\"就是泊松;只用一个数 \\(\\lambda\\) 就说完了整个分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=k]=\\frac{e^{-\\lambda}\\lambda^{k}}{k!},\\qquad k=0,1,2,\\dots$$</div><ul><li>记 \\(X\\sim\\text{Poisson}(\\lambda)\\),参数 \\(\\lambda&gt;0\\);取值 \\(0,1,2,\\dots\\) <strong>无上限</strong>。</li><li>归一化:\\(\\sum_k e^{-\\lambda}\\lambda^k/k!=e^{-\\lambda}e^{\\lambda}=1\\)(\\(e^{\\lambda}\\) 的泰勒展开)。</li><li>形状随 \\(\\lambda\\) 变:\\(\\lambda\\) 小 → 右偏堆在 0;\\(\\lambda\\) 大 → 趋对称钟形(可正态近似)。</li><li>\"at least \\(k\\)\" 取补:\\(P[X\\ge k]=1-\\sum_{i&lt;k}P[i]\\),尾巴无限长,正面加不完。</li><li>题面信号:\"the number of … per …\"、\"claims occur at a rate of …\"。</li></ul><p><strong>算一遍</strong>:某窗口平均每小时 2 件索赔(\\(\\lambda=2\\)),求一小时内至少 2 件的概率。</p><ul><li>\\(P[0]=e^{-2}\\approx0.135\\);\\(P[1]=2e^{-2}\\approx0.271\\)。</li><li>尾巴无限长,正面加不完,取补:\\(P[X\\ge2]=1-0.135-0.271\\approx0.594\\)。</li><li>自检:超过均值 2 的概率近六成偏高?不高——\\(X\\ge2\\) 含 2 本身,与\"平均 2 件\"相容 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布的矩\">泊松分布的矩</a> — 指纹性质:\\(E[X]=\\operatorname{Var}(X)=\\lambda\\)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 独立泊松相加,参数相加</li><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 恒定速率场景:区间 \\(t\\) 内计数 \\(\\sim\\text{Poisson}(\\lambda t)\\)、稀释 \\(\\lambda p\\)</li><li><a class=\"net-wl\" data-id=\"泊松逼近二项\">泊松逼近二项</a> — 出生证明:\\(n\\) 大 \\(p\\) 小时 \\(\\text{Bin}(n,p)\\approx\\text{Poisson}(np)\\)</li><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 极限来源;有上限 vs 无上限</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 同一泊松过程的另一面:计数用泊松、间隔用指数</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "泊松分布的矩": {
+  "kind": "c",
+  "en": "PoissonMeanAndVariance",
+  "aliases": [
+   "mean and variance of Poisson",
+   "Poisson moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>泊松分布最\"招牌\"的性质:<strong>均值和方差相等,都等于参数 \\(\\lambda\\)</strong>。这是判别一个计数是否泊松、以及由标准差反推参数的关键。</p><p><strong>白话</strong>:泊松只有一个旋钮 \\(\\lambda\\):拧它,平均数和波动大小同时被定死——报出均值就等于报出方差,这是它的\"指纹\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\lambda,\\qquad \\operatorname{Var}(X)=\\lambda,\\qquad SD(X)=\\sqrt{\\lambda}$$</div><ul><li><strong>一个 \\(\\lambda\\) 走天下</strong>:均值是它、方差还是它;题给标准差 \\(s\\) 先平方 \\(\\lambda=s^2\\)(高频坑)。</li><li>为何均值=方差:沿二项极限看,\\(np(1-p)\\xrightarrow{p\\to0} np=\\lambda\\),方差与均值在极限里合二为一。</li><li>反向判别:数据方差明显大于均值(overdispersion)→ 怀疑不是泊松。</li><li>别与二项混:二项是 \\(np\\) vs \\(np(1-p)\\),方差 &lt; 均值。</li></ul><p><strong>算一遍</strong>:题给某泊松计数的标准差是 3,求均值。</p><ul><li>先平方:\\(\\lambda=\\operatorname{Var}=3^2=9\\)——别把 SD 当 \\(\\lambda\\) 直接用。</li><li>于是 \\(E[X]=9\\)、\\(\\operatorname{Var}(X)=9\\):一个 9 走天下。</li><li>反向判别:若数据均值 9 而方差 20(明显偏大),就该怀疑不是泊松。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 所属分布本体</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — \\(E[X]=\\lambda\\) 的上位概念</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — \\(\\operatorname{Var}(X)=\\lambda\\) 的上位概念</li><li><a class=\"net-wl\" data-id=\"标准差\">标准差</a> — \\(SD=\\sqrt{\\lambda}\\);由 SD 反推 \\(\\lambda=SD^2\\)</li><li><a class=\"net-wl\" data-id=\"二项分布的期望与方差\">二项分布的期望与方差</a> — 对照组:\\(np\\) 与 \\(np(1-p)\\),极限下重合</li><li><a class=\"net-wl\" data-id=\"泊松众数\">泊松众数</a> — 峰的位置 \\(\\lfloor\\lambda\\rfloor\\) 也由同一个 \\(\\lambda\\) 决定</li></ul>"
+ },
+ "泊松可加性": {
+  "kind": "c",
+  "en": "PoissonAdditivity",
+  "aliases": [
+   "additivity of Poisson",
+   "sum of independent Poissons"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>相互独立</strong>的泊松随机变量之和仍是泊松,参数直接相加——合并多个独立泊松源(多路口事故、多天来电、多张保单)时无需卷积。</p><p><strong>白话</strong>:两条互不相干的水管往同一个桶里随机滴水,合起来看还是\"随机滴水\",只是滴速直接相加——不必逐滴对账(卷积)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N_i\\sim\\text{Poisson}(\\lambda_i)\\ \\text{独立}\\quad\\Longrightarrow\\quad \\sum_{i=1}^{n}N_i\\;\\sim\\;\\text{Poisson}\\!\\left(\\sum_{i=1}^{n}\\lambda_i\\right)$$</div><ul><li><strong>前提是独立</strong>:两个计数正相关(如同一天气驱动的两地事故)不能简单把 \\(\\lambda\\) 相加。</li><li>典型用法:\"3 周、每周均值 1.2\" → \\(\\lambda=3.6\\) 再套 pmf,<strong>先换 \\(\\lambda\\) 再算概率</strong>。</li><li>与泊松过程的区间缩放 \\(\\lambda t\\) 是同一件事(把区间拆成小段相加)。</li><li>泊松连\"同参数\"条件都不需要(对比二项/负二项可加性要求同 \\(p\\))。</li></ul><p><strong>算一遍</strong>:两个独立路口,事故率分别为每天 1 起和 2 起,求两口合计一天无事故的概率。</p><ul><li>先合参数:\\(N_1+N_2\\sim\\text{Poisson}(1+2)=\\text{Poisson}(3)\\)。</li><li>套 pmf:\\(P[\\text{合计}=0]=e^{-3}\\approx0.050\\)。</li><li>验算:等于\"各自无事故\"相乘 \\(e^{-1}\\times e^{-2}\\)(独立)✓——参数相加与概率相乘是同一回事。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 规则的宿主分布</li><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 区间缩放 \\(\\lambda t\\) 即\"逐段相加\"的连续版</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 姊妹规则:须同 \\(p\\)</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 姊妹规则:须同 \\(p\\)</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 证明套路:独立和的 PGF/MGF 相乘</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 可加性成立时绕开的笨办法</li></ul>"
+ },
+ "泊松过程": {
+  "kind": "c",
+  "en": "PoissonProcess",
+  "aliases": [
+   "Poisson process",
+   "thinning",
+   "rate scaling"
+  ],
+  "level": "advanced",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>事件以<strong>恒定速率 \\(\\lambda\\)</strong>(每单位时间)随机、独立地发生的过程。长度 \\(t\\) 的区间内的计数服从 \\(\\text{Poisson}(\\lambda t)\\);若每个事件再独立地以概率 \\(p\\) 归入某子类,该子类计数服从 \\(\\text{Poisson}(\\lambda p)\\)(稀释/thinning),且不同子类<strong>相互独立</strong>。</p><p><strong>白话</strong>:便利店客人零零星星随机进门、平均每小时 \\(\\lambda\\) 个:改看两小时,就按两小时记账(\\(\\lambda t\\));只数买咖啡的客人,就按占比打折(\\(\\lambda p\\))——口径随便换,\"随机进门\"的性质不变。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N(t)\\sim\\text{Poisson}(\\lambda t),\\qquad N_{\\text{子类}}\\sim\\text{Poisson}(\\lambda p)$$</div><ul><li><strong>先换 \\(\\lambda\\),再代公式</strong>:\"半小时\"\"三天\"\"白色的车\"这类改条件题,参数先换成 \\(\\lambda t\\) 或 \\(\\lambda p\\),概率才开算。</li><li>区间缩放:速率 4/小时、问半小时 → \\(\\lambda t=2\\)。</li><li>稀释:每分钟 10 辆车、白车占 0.2 → 白车 \\(\\sim\\text{Poisson}(2)\\);子类之间独立。</li><li>与指数互为表里:\\(P[\\text{等待}&gt;t]=P[\\,[0,t]\\text{ 内 }0\\text{ 次}\\,]=e^{-\\lambda t}\\)——<strong>泊松管次数,指数管间隔</strong>。</li></ul><p><strong>算一遍</strong>:路口出租车每分钟平均 3 辆,其中 \\(\\tfrac13\\) 是空车,问 2 分钟内等不到空车的概率。</p><ul><li>先稀释:空车速率 \\(=3\\times\\tfrac13=1\\) 辆/分;再缩放:2 分钟 → \\(\\lambda t=2\\)。</li><li>套 pmf:\\(P[\\text{计数}=0]=e^{-2}\\approx0.135\\)。</li><li>这同时就是\"等待时间 \\(&gt;2\\) 分钟\"的概率——泊松管次数、指数管间隔,一体两面。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 固定区间内计数的分布形态</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 同一过程的另一面:相邻事件的等待时间</li><li><a class=\"net-wl\" data-id=\"指数与泊松过程\">指数与泊松过程</a> — 两面关系的专卡(计数↔间隔换算)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 区间拼接 / 多源合并的依据</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — 等到第 \\(n\\) 个事件的总时间(\\(n\\) 段指数间隔之和)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "泊松过程中的次数与等待时间": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:单位时间平均 \\(\\lambda\\) 次索赔,问「某时段恰 k 次」或「下一次还要等多久」——同一过程的两张脸。</p><h4>求解套路</h4><ol><li><strong>数次数</strong> → <a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a>:时段 t 内次数 \\(\\sim\\text{Poisson}(\\lambda t)\\)(速率必须先乘时长)。</li><li><strong>量间隔</strong> → <a class=\"net-wl\" data-id=\"指数分布\">指数分布</a>:相邻事件间隔 \\(\\sim\\text{Exp}(\\text{mean }1/\\lambda)\\);「t 内至少一次」=「等待 \\(\\le t\\)」两算等价。</li><li>无记忆性:已等 s 不影响再等 t 的分布——「旧设备剩余寿命」题直接换新算。</li><li>独立时段次数可加(泊松可加性)。</li></ol><h4>易错</h4><ul><li>\\(\\lambda\\) 是速率还是均值看清题面;时段变了 \\(\\lambda t\\) 要跟着变。</li><li>「第 3 次事件的等待时间」是伽马不是指数(k 个指数之和)。</li></ul>"
+ },
+ "泊松逼近二项": {
+  "kind": "c",
+  "en": "PoissonApproximationToBinomial",
+  "aliases": [
+   "Poisson approximation",
+   "law of rare events"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当试验次数 \\(n\\) 很大、单次成功概率 \\(p\\) 很小、\\(np\\) 适中时,二项分布近似于参数 \\(\\lambda=np\\) 的泊松分布——省掉庞大的组合数计算。</p><p><strong>白话</strong>:1000 张彩票、每张中奖率 0.002,逐张按二项算组合数太笨重;反正\"机会极多、单次极小\",只记住\"平均中 2 张\"这一个数,按泊松查就八九不离十。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\binom{n}{k}p^{k}(1-p)^{n-k}\\;\\approx\\;\\frac{e^{-\\lambda}\\lambda^{k}}{k!},\\qquad \\lambda=np$$</div><ul><li>严格说是极限:\\(n\\to\\infty,\\ p\\to0,\\ np\\to\\lambda\\) 时 \\(\\text{Bin}(n,p)\\to\\text{Poisson}(\\lambda)\\)。</li><li>典型场景:大量保单、每张出险概率极低;大量元件、每个失效概率极低。</li><li>操作就一步:令 \\(\\lambda=np\\),之后全按泊松算。</li><li>副产品解释\"均值=方差\":\\(np(1-p)\\to np\\),二项方差在极限里与均值重合。</li></ul><p><strong>算一遍</strong>:1000 张保单、每张出险概率 0.002,求全年零索赔的概率。</p><ul><li>换参数:\\(\\lambda=np=1000\\times0.002=2\\);按泊松 \\(P[0]=e^{-2}\\approx0.1353\\)。</li><li>精确二项对照:\\(0.998^{1000}\\approx0.1352\\)——几乎重合。</li><li>一步换参免掉组合数;\\(k\\) 再大也照 \\(e^{-2}2^k/k!\\) 算下去。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 被逼近的对象;\\(n\\) 有限时的精确模型</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 逼近的目标;\"机会极多、每次极小\"的极限形态</li><li><a class=\"net-wl\" data-id=\"泊松分布的矩\">泊松分布的矩</a> — 均值=方差性质正是此极限的后果</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 底层构件:\\(n\\) 个小概率伯努利之和</li></ul>"
+ },
+ "独立和的母函数": {
+  "kind": "c",
+  "en": "PGFOfIndependentSum",
+  "aliases": [
+   "PGF of sum of independent random variables",
+   "multiplicative property of PGF"
+  ],
+  "level": "advanced",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>独立(非负整数)随机变量之和的母函数等于各自母函数的乘积。多项式乘法恰好把\"指数相加、系数相乘再汇总\"全做了——<strong>多项式乘法 = 自动卷积</strong>,这正是\"独立和相乘\"的直觉。</p><p><strong>白话</strong>:把每个变量的\"概率价目表\"编成一个多项式(取几记在 \\(t\\) 的指数上,概率记在系数上)。两个独立变量相加,不用自己逐项枚举\"凑出每种总数的所有搭配\"——两张价目表一乘,乘法自动替你配对、归总。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\ \\Longrightarrow\\ P_{X+Y}(t)=P_X(t)\\,P_Y(t)$$</div><ul><li>一行推导:\\(E[t^{X+Y}]=E[t^X t^Y]\\overset{\\text{独立}}{=}E[t^X]\\,E[t^Y]\\)。</li><li>独立泊松和:\\(e^{\\lambda_1(t-1)}e^{\\lambda_2(t-1)}=e^{(\\lambda_1+\\lambda_2)(t-1)}\\),仍是泊松——认形状秒答。</li><li>骰子直觉:两颗骰子各记成 \\(\\tfrac16(t+t^2+\\cdots+t^6)\\),相乘后 \\(t^7\\) 的系数自动等于\"和为 7\"的概率 \\(6/36\\)。</li><li>独立是前提;与 MGF 的乘性完全平行。</li></ul><p><strong>算一遍</strong>:独立抛两枚硬币(正面 1、反面 0),用 PGF 求两枚之和的分布。</p><ul><li>单枚:\\(P(t)=0.5+0.5t\\);独立相加 → 相乘:\\((0.5+0.5t)^2=0.25+0.5t+0.25t^2\\)。</li><li>按\"\\(t\\) 的指数 = 取值、系数 = 概率\"读回:和为 0、1、2 的概率是 \\(0.25,\\,0.5,\\,0.25\\)。</li><li>与直接数\"零正/一正/两正\"完全一致——多项式乘法就是自动卷积 ✓</li></ul><h4>与其他概念的关系</h4><ul><li>概率母函数 — 所属工具</li><li>独立和的MGF — MGF 侧平行结论;\\(P(t)=M(\\ln t)\\) 下是同一件事</li><li>随机变量独立性 — 成立前提</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 由母函数相乘一行可证</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 连续版硬算;PGF 相乘是离散卷积的自动化</li></ul>"
+ },
+ "负二项分布可加性": {
+  "kind": "c",
+  "en": "NegativeBinomialAdditivity",
+  "aliases": [
+   "additivity of negative binomial",
+   "sum of independent negative binomials"
+  ],
+  "level": "basic",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>相互独立、<strong>同一成功概率 \\(p\\)</strong> 的负二项随机变量之和仍是负二项,参数为 \\(\\{\\sum_i k_i,\\ p\\}\\)——\"等 \\(\\sum k_i\\) 次成功\"可拆成一段段独立等待的接力。</p><p><strong>白话</strong>:你在同一个卡池先抽齐 2 张 SSR,朋友接着抽齐 3 张——两人吃的歪卡加起来,和一个人一口气抽齐 5 张吃的歪卡是同一本账;前提是用的<strong>同一个卡池</strong>(同 \\(p\\))。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N_i\\sim \\mathrm{NB}(k_i,\\,p)\\ \\text{独立}\\quad\\Longrightarrow\\quad \\sum_i N_i\\sim \\mathrm{NB}\\Big(\\sum_i k_i,\\ p\\Big)$$</div><ul><li>前提缺一不可:<strong>独立</strong> + <strong>同一个 \\(p\\)</strong>;\\(p\\) 不同不能直接加 \\(k\\)。</li><li>最小例:\\(\\mathrm{NB}(k,p)\\) 本身 = \\(k\\) 段独立几何等待之和(每段等一次成功)。</li><li>用途:和的分布直接写参数,免逐点卷积。</li></ul><p><strong>算一遍</strong>:两个独立几何变量(各数一次正面前的反面数,\\(p=0.5\\))相加,验证和是 \\(\\mathrm{NB}(2,0.5)\\)——算 \\(\\Pr[S=1]\\)。</p><ul><li>卷积硬算:拆法只有 \\((0,1)\\) 和 \\((1,0)\\),\\(0.5\\times0.25+0.25\\times0.5=0.25\\)。</li><li>套 NB 公式:\\(\\binom{2}{1}(0.5)^2(0.5)^1=0.25\\) ✓</li><li>两边对上:参数直接相加(\\(1+1=2\\))就替你做完了整个卷积。</li></ul><h4>与其他概念的关系</h4><ul><li>负二项分布 — 规则的宿主分布</li><li>几何分布 — 可加性的最小构件:NB = \\(k\\) 个独立几何之和</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 姊妹规则:同 \\(p\\) 的二项相加 \\(n\\) 相加</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 同类\"参数相加\"规则(泊松连 \\(p\\) 条件都不需要)</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 证明套路:独立和的 PGF/MGF 相乘</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 可加性成立时绕开的笨办法</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab" style="background:linear-gradient(180deg,#f3fbf5,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 19 原文用词</span><h2 class="sec-title">泊松分布 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"计数 / 速率 / 至少"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 19</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">Poisson distribution</td><td class="ipa">/pwɑːˈsɒn/</td><td><span class="pos n">n.</span></td><td>泊松分布</td><td class="root">人名 Poisson;计数分布,参数 \(\lambda\)</td></tr>
-          <tr><td class="en">parameter</td><td class="ipa">/pəˈræmɪtər/</td><td><span class="pos n">n.</span></td><td>参数</td><td class="root">para-(旁)+meter(量)→ 决定分布的量 \(\lambda\)</td></tr>
-          <tr><td class="en">mean</td><td class="ipa">/miːn/</td><td><span class="pos n">n.</span></td><td>均值 / 期望</td><td class="root">泊松里 mean \(=\lambda=\) variance</td></tr>
-          <tr><td class="en">variance</td><td class="ipa">/ˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>方差</td><td class="root">vary(变)→ 离散程度;泊松中 \(=\lambda\)</td></tr>
-          <tr><td class="en">mode</td><td class="ipa">/moʊd/</td><td><span class="pos n">n.</span></td><td>众数</td><td class="root">最可能取值 \(\lfloor\lambda\rfloor\)</td></tr>
-          <tr><td class="en">nonnegative integer</td><td class="ipa">/ˌnɒnˈnɛɡətɪv/</td><td><span class="pos n">n.</span></td><td>非负整数</td><td class="root">泊松取值 \(0,1,2,\dots\)</td></tr>
-          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">可加性前提;in-(非)+depend</td></tr>
-          <tr><td class="en">thinning</td><td class="ipa">/ˈθɪnɪŋ/</td><td><span class="pos n">n.</span></td><td>稀释 / 分流</td><td class="root">按 \(p\) 分子类,子类 \(\sim\text{Poisson}(\lambda p)\)</td></tr>
-          <tr><td class="en">Poisson process</td><td class="ipa">/pwɑːˈsɒn ˈprɒsɛs/</td><td><span class="pos n">n.</span></td><td>泊松过程</td><td class="root">恒定速率;区间 \(t\) 内 \(\sim\text{Poisson}(\lambda t)\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">follows a Poisson distribution</div><div class="z">服从泊松分布(定分布)</div></div>
-        <div class="ph"><div class="e">with mean λ / with a mean of …</div><div class="z">均值为 λ(即参数)</div></div>
-        <div class="ph"><div class="e">standard deviation of …</div><div class="z">标准差为……(λ = SD²)</div></div>
-        <div class="ph"><div class="e">the number of … per …</div><div class="z">每(单位)……的次数(计数信号)</div></div>
-        <div class="ph"><div class="e">are mutually independent</div><div class="z">相互独立(可加性成立)</div></div>
-        <div class="ph"><div class="e">at least / no more than / fewer than</div><div class="z">至少 / 不超过 / 少于(取补)</div></div>
-        <div class="ph"><div class="e">given that … / conditional on …</div><div class="z">已知……条件下(条件泊松)</div></div>
-        <div class="ph"><div class="e">in a … period / interval</div><div class="z">在……时段内(缩放 λt)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 19</b> · 第十九章 Poisson Distribution 泊松分布</p>
@@ -665,5 +1121,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

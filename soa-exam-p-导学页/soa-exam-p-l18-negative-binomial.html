@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L18 · 负二项分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -227,28 +297,91 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#def">定义</a>
   <a href="#mean">均值方差</a>
   <a href="#geom">几何分布</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完负二项分布你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 用 pmf \(\Pr(N=n)=\binom{k+n-1}{n}p^k(1-p)^n\) 求"第 \(k\) 次成功前恰 \(n\) 次失败",也会从首原理(二项 × 最后一次成功)直接推。</p>
-        <p style="margin-bottom:0">✅ 记住 \(E[N]=\dfrac{k(1-p)}{p}\)、\(\operatorname{Var}(N)=\dfrac{k(1-p)}{p^2}\),并会把"失败数"换算成"成功所在的试验序号"(加 \(k\))。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>负二项(N = 失败数,起点 0)</h4>
+        <p><span class="fx-de" data-tip="推导:末次必成功:前 k+n-1 次里摆 n 次失败 C(k+n-1,n),概率连乘" tabindex="0">推</span>\(\Pr(N=n)=\dbinom{k+n-1}{n}p^k(1-p)^n\)</p>
+        <p>\(E[N]=\dfrac{k(1-p)}{p}\),\(\operatorname{Var}(N)=\dfrac{k(1-p)}{p^2}\)</p>
+        <p>试验序号 \(=N+k\);独立同 \(p\) 相加 \(\Rightarrow\) \(k\) 相加</p>
+      </div>
+      <div class="cc t">
+        <h4>几何(k = 1 特例)</h4>
+        <p><span class="fx-de" data-tip="推导:序列『若干失败+一次成功』连乘;失败数起点0/试验数起点1差个位移" tabindex="0">推</span>\(P[n]=p(1-p)^n\)(起点 0)/ \(p(1-p)^{n-1}\)(起点 1)</p>
+        <p>\(E=\dfrac{1-p}{p}\)(起点 0)/ \(\dfrac{1}{p}\)(起点 1),\(\operatorname{Var}=\dfrac{1-p}{p^2}\)</p>
+        <p><span class="fx-de" data-tip="推导:失败数≥n ⟺ 前 n 次全失败,独立连乘" tabindex="0">推</span>\(\Pr(N\ge n)=(1-p)^n\);无记忆 \(E[N-n\mid N\ge n]=E[N]\)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>用 pmf \(\Pr(N=n)=\binom{k+n-1}{n}p^k(1-p)^n\) 求"第 \(k\) 次成功前恰 \(n\) 次失败",也会从<b>首原理</b>(二项 × 最后一次成功)直接推。</li>
+          <li>记住 \(E[N]=\dfrac{k(1-p)}{p}\)、\(\operatorname{Var}(N)=\dfrac{k(1-p)}{p^2}\),并把"<b>失败数</b>"换算成"成功所在的<b>试验序号</b>"(加 \(k\))。</li>
+          <li>认出<b>几何分布</b>是 \(k=1\) 特例,用 \(E=\dfrac{1-p}{p}\)、\(\Pr(N\ge n)=(1-p)^n\) 和<b>无记忆性</b>秒算条件期望。</li>
+          <li>分清"<b>失败数</b>(起点 0)"与"<b>试验序号</b>(起点 1)"两种约定,公式差一截别用错。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 认出<b>几何分布</b>是 \(k=1\) 特例,用 \(E=\dfrac{1-p}{p}\)、\(\Pr(N\ge n)=(1-p)^n\) 和<b>无记忆性</b>秒算条件期望。</p>
-        <p style="margin-bottom:0">✅ 分清"<b>失败数</b>(起点 0)"与"<b>试验序号</b>(起点 1)"两种约定,公式差一截别用错。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>保险语境:年索赔次数常设<b>几何分布并只给均值</b>(如例 18D)→ 先解 \(\frac{1-p}{p}=\) 均值反推 \(p\),再代 pmf。</li>
+          <li>"第 \(k\) 次成功恰在第 \(m\) 次试验 / 在第 \(j\) 次失败之前" → 别硬套公式,<b>用二项首原理</b>拆"前 \(m-1\) 次 × 最后一次成功"(例 18A)。</li>
+          <li>"given that … at least \(n\)" → 触发<b>无记忆性</b>,答案 \(n+E[N]\) 一步出,别硬算条件分布。</li>
+          <li>读题先定<b>约定</b>:问"失败几次"(起点 0)还是"第几次试验"(起点 1),幂次与均值都差一截。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="几何分布">● 几何分布</button><button class="chip" data-card="负二项分布可加性">● 负二项分布可加性</button><button class="chip" data-card="负二项分布的均值方差">● 负二项分布的均值方差</button><button class="chip" data-card="几何分布无记忆性">◆ 几何分布无记忆性</button><button class="chip" data-card="负二项分布">◆ 负二项分布</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 10 / 全章 35)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>18.1</b></td><td>几何 pmf 形式辨识(失败前计数,起点0)</td><td style="white-space:nowrap"><button class="kxb" data-kx="18.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">约定辨识:失败前检查数=起点0几何 pmf,老真题(110-S92)</td></tr>
+<tr class="kxd" data-kxq="18.1" style="display:none"><td colspan="4"><div class="kx-qtx">Ten percent of all new businesses fail within the first year. The records of new businesses are examined until a business that failed within the first year is found. Let \( X \) be the total number of businesses examined prior to finding a business that failed within the first year. What is the probability function for \( X \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 0.1(0.9)^x \) for \( x = 0, 1, 2, 3, \ldots \)</span><span class="kx-opt"><b>(B)</b> \( 0.9(0.1)^x \) for \( x = 0, 1, 2, 3, \ldots \)</span><span class="kx-opt"><b>(C)</b> \( 0.1x(0.9)^x \) for \( x = 1, 2, 3, \ldots \)</span><span class="kx-opt"><b>(D)</b> \( 0.9x(0.1)^x \) for \( x = 1, 2, 3, \ldots \)</span><span class="kx-opt"><b>(E)</b> \( 0.1(x-1)(0.9)^x \) for \( x = 2, 3, 4, \ldots \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;认作起点0几何:X=失败前计数</td><td>\( X = 0, 1, 2, \ldots \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;前x家不失败再一家失败</td><td>\( P[X=x] = (0.9)^x(0.1) \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>18.5</b></td><td>首原理:第3个正面落第5次(二项×末次成功)</td><td style="white-space:nowrap"><button class="kxb" data-kx="18.5" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">首原理拆『前四次二项×末次成功』,经典老真题(110-S90)</td></tr>
+<tr class="kxd" data-kxq="18.5" style="display:none"><td colspan="4"><div class="kx-qtx">A coin is twice as likely to turn up tails as heads. If the coin is tossed independently, what is the probability that the third head occurs on the fifth trial?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{8}{81} \)</span><span class="kx-opt"><b>(B)</b> \( \frac{40}{243} \)</span><span class="kx-opt"><b>(C)</b> \( \frac{16}{81} \)</span><span class="kx-opt"><b>(D)</b> \( \frac{80}{243} \)</span><span class="kx-opt"><b>(E)</b> \( \frac{3}{5} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;定成功概率</td><td>\( p = \Pr(H) = \tfrac{1}{3} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;前4次恰2正2反(二项)</td><td>\( \binom{4}{2}\left(\tfrac{1}{3}\right)^2\left(\tfrac{2}{3}\right)^2 = \tfrac{24}{81} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;第5次再正,连乘</td><td>\( \tfrac{24}{81}\cdot\tfrac{1}{3} = \tfrac{8}{81} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>18.7</b></td><td>几何均值反解 p → 第6人首次(起点1)</td><td style="white-space:nowrap"><button class="kxb" data-kx="18.7" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">保险语境只给均值→反推 p 再代 pmf,套路①代表(1999 旧样题)</td></tr>
+<tr class="kxd" data-kxq="18.7" style="display:none"><td colspan="4"><div class="kx-qtx">As part of the underwriting process for insurance, each prospective policyholder is tested for high blood pressure. Let \( X \) represent the number of tests completed when the first person with high blood pressure is found. The expected value of \( X \) is 12.5. Calculate the probability that the sixth person tested is the first one with high blood pressure.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.000</span><span class="kx-opt"><b>(B)</b> 0.053</span><span class="kx-opt"><b>(C)</b> 0.080</span><span class="kx-opt"><b>(D)</b> 0.316</span><span class="kx-opt"><b>(E)</b> 0.395</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;由均值反解 p(试验序号,起点1)</td><td>\( E[X] = \tfrac{1}{p} = 12.5 \Rightarrow p = 0.08 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;前5人无病、第6人有病</td><td>\( (1-p)^5 p = (0.92)^5(0.08) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( = 0.052727 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>18.9</b></td><td>NB 直接 pmf:第4个红球前6个白球 P[X=6]</td><td style="white-space:nowrap"><button class="kxb" data-kx="18.9" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">有放回 NB pmf 直接套用代表题(110-W96)</td></tr>
+<tr class="kxd" data-kxq="18.9" style="display:none"><td colspan="4"><div class="kx-qtx">A bowl contains 10 balls, of which 4 are red and 6 are white. Balls are randomly selected with replacement from the bowl until 4 red balls have been selected. Let \( X \) be the number of white balls drawn before the fourth red ball is selected. Calculate \( P[X = 6] \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0012</span><span class="kx-opt"><b>(B)</b> 0.0187</span><span class="kx-opt"><b>(C)</b> 0.0446</span><span class="kx-opt"><b>(D)</b> 0.1003</span><span class="kx-opt"><b>(E)</b> 0.2508</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;白=失败、红=成功:p=0.4,k=4</td><td>\( \Pr(X=6) = \binom{4+6-1}{6}(0.4)^4(0.6)^6 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;首原理:前9球6白3红 × 第10球红</td><td>\( \binom{9}{6}(0.6)^6(0.4)^3 \times 0.4 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( = 0.4(0.250823) = 0.1003 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>18.11</b></td><td>NB 方差:招3人面试数,平移不改方差</td><td style="white-space:nowrap"><button class="kxb" data-kx="18.11" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">Var(N)=k(1-p)/p² 直接代入、序号平移不改方差的干净代表</td></tr>
+<tr class="kxd" data-kxq="18.11" style="display:none"><td colspan="4"><div class="kx-qtx">A company has 3 openings for actuaries. To fill these openings, the company interviews candidates until all openings are filled. The probability that a candidate is hired is 1/4. A decision whether to hire a candidate is made before interviewing other candidates, and no candidates are interviewed once all three positions are filled. Calculate the variance of the number of interviews.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="36" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;面试总数=NB失败数+3,平移不改方差</td><td>\( \operatorname{Var} = \operatorname{Var}(N),\ k=3,\ p=\tfrac{1}{4} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代 NB 方差公式</td><td>\( \dfrac{k(1-p)}{p^2} = \dfrac{3(3/4)}{(1/4)^2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( = 36 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>18.14</b></td><td>抽样无放回 NB 陷阱 → 改超几何</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q149" type="button" title="展开题目与答案(样题 Q149)">▸</button>Q149</td><td class="dim" style="font-size:13px">『without replacement』NB 不适用、必须超几何,重要陷阱题</td></tr>
+<tr class="kxd kxds" data-kxq="Q149" style="display:none"><td colspan="4"><div class="kx-qtx">In a shipment of 20 packages, 7 packages are damaged. The packages are randomly inspected, one at a time, without replacement, until the fourth damaged package is discovered.
+
+Calculate the probability that exactly 12 packages are inspected.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.079</span><span class="kx-opt"><b>(B)</b> 0.119</span><span class="kx-opt"><b>(C)</b> 0.237</span><span class="kx-opt"><b>(D)</b> 0.243</span><span class="kx-opt"><b>(E)</b> 0.358</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;链式拆两阶段</td><td>\( P(\text{前11中3坏})\cdot P(\text{第12坏}\mid \text{前11中3坏}) \)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>②&nbsp;前11抽用超几何计数</td><td>\( \binom{7}{3}\binom{13}{8}/\binom{20}{11}=35(1287)/167960 \)</td><td class="xr"><a href="soa-exam-p-l02-combinatorics.html">L02</a></td></tr><tr><td>③&nbsp;余量比例乘出结果</td><td>\( \times\ 4/9=0.119 \)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q149" style="display:none"><td colspan="4"><div class="kx-qtx">In a shipment of 20 packages, 7 packages are damaged. The packages are randomly inspected, one at a time, without replacement, until the fourth damaged package is discovered.
+
+Calculate the probability that exactly 12 packages are inspected.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.079</span><span class="kx-opt"><b>(B)</b> 0.119</span><span class="kx-opt"><b>(C)</b> 0.237</span><span class="kx-opt"><b>(D)</b> 0.243</span><span class="kx-opt"><b>(E)</b> 0.358</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;链式拆两阶段</td><td>\( P(\text{前11中3坏})\cdot P(\text{第12坏}\mid \text{前11中3坏}) \)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>②&nbsp;前11抽用超几何计数</td><td>\( \binom{7}{3}\binom{13}{8}/\binom{20}{11}=35(1287)/167960 \)</td><td class="xr"><a href="soa-exam-p-l02-combinatorics.html">L02</a></td></tr><tr><td>③&nbsp;余量比例乘出结果</td><td>\( \times\ 4/9=0.119 \)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr></table></div></td></tr>
+<tr><td><b>18.18</b></td><td>无记忆性:首次故障晚于第5天 | 已撑过前3天</td><td style="white-space:nowrap"><button class="kxb" data-kx="18.18" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">纯无记忆条件概率,套路③『given at least n』代表</td></tr>
+<tr class="kxd" data-kxq="18.18" style="display:none"><td colspan="4"><div class="kx-qtx">On any given day, a certain machine has either no malfunctions or exactly one malfunction. The probability of malfunction on any given day is 0.20. Machine malfunctions on different days are mutually independent. Calculate the probability that the first malfunction occurs after the fifth day, given that it did not malfunction in the first three days.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.64" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;无记忆性:已过前3天,重新计时</td><td>\( \Pr(\text{首次}>5 \mid >3) = \Pr(\text{再撑2天}) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;接下来两天都不故障</td><td>\( (0.8)^2 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( = 0.64 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>18.21</b></td><td>NB 可加性:两周合并 k 相加</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q15" type="button" title="展开题目与答案(样题 Q15)">▸</button>Q15</td><td class="dim" style="font-size:13px">独立几何相加成 NB,可加性代表(真题 F01/样题15)</td></tr>
+<tr class="kxd kxds" data-kxq="Q15" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company determines that \( N \), the number of claims received in a week, is a random variable with \( P[N = n] = \frac{1}{2^{n+1}} \) where \( n \ge 0 \). The company also determines that the number of claims received in a given week is independent of the number of claims received in any other week. Calculate the probability that exactly seven claims will be received during a given two-week period.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1/256</span><span class="kx-opt"><b>(B)</b> 1/128</span><span class="kx-opt"><b>(C)</b> 7/512</span><span class="kx-opt"><b>(D)</b> 1/64</span><span class="kx-opt"><b>(E)</b> 1/32</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;独立性给联合乘积</td><td>\(P[N_1=n,N_2=7-n]=P[N_1=n]P[N_2=7-n]\)</td><td class="xr"><a href="soa-exam-p-l11-joint-distribution.html">L11</a></td></tr><tr><td>②&nbsp;卷积求和</td><td>\(P[N_1+N_2=7]=\sum_{n=0}^{7}\frac{1}{2^{n+1}}\cdot\frac{1}{2^{8-n}}\)</td><td class="xr"><a href="soa-exam-p-l11-joint-distribution.html">L11</a></td></tr><tr><td>③&nbsp;每项相同直接乘项数</td><td>\(8\cdot\frac{1}{2^9}=\frac{1}{64}\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>18.24</b></td><td>NB pmf:第8通电话产生第3份完成问卷</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q488" type="button" title="展开题目与答案(样题 Q488)">▸</button>Q488</td><td class="dim" style="font-size:13px">『第k次成功恰在第m次试验』现行样题代表</td></tr>
+<tr class="kxd kxds" data-kxq="Q488" style="display:none"><td colspan="4"><div class="kx-qtx">A representative of a market research firm contacts consumers by phone to conduct surveys. The specific consumer contacted by each phone call is randomly determined. The probability that a phone call produces a completed survey is 0.25.
+
+Calculate the probability that the eighth phone call produces the third completed survey.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.03</span><span class="kx-opt"><b>(B)</b> 0.08</span><span class="kx-opt"><b>(C)</b> 0.13</span><span class="kx-opt"><b>(D)</b> 0.21</span><span class="kx-opt"><b>(E)</b> 0.31</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;前7次恰2次成功</td><td>\(\binom{7}{2}(0.25)^2(0.75)^5=0.31146\)</td><td class="xr"><a href="soa-exam-p-l17-binomial-distribution.html">L17</a></td></tr><tr><td>②&nbsp;第8次必成功相乘</td><td>\(0.31146\times0.25=0.078\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q488" style="display:none"><td colspan="4"><div class="kx-qtx">A representative of a market research firm contacts consumers by phone to conduct surveys. The specific consumer contacted by each phone call is randomly determined. The probability that a phone call produces a completed survey is 0.25.
+
+Calculate the probability that the eighth phone call produces the third completed survey.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.03</span><span class="kx-opt"><b>(B)</b> 0.08</span><span class="kx-opt"><b>(C)</b> 0.13</span><span class="kx-opt"><b>(D)</b> 0.21</span><span class="kx-opt"><b>(E)</b> 0.31</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;前7次恰2次成功</td><td>\(\binom{7}{2}(0.25)^2(0.75)^5=0.31146\)</td><td class="xr"><a href="soa-exam-p-l17-binomial-distribution.html">L17</a></td></tr><tr><td>②&nbsp;第8次必成功相乘</td><td>\(0.31146\times0.25=0.078\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>18.34</b></td><td>NB 方差 + 序号换算 Var(X)=Var(N)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q322" type="button" title="展开题目与答案(样题 Q322)">▸</button>Q322</td><td class="dim" style="font-size:13px">掷骰第3个6的总次数方差,序号平移不改方差(样题322)</td></tr>
+<tr class="kxd kxds" data-kxq="Q322" style="display:none"><td colspan="4"><div class="kx-qtx">A fair die is rolled until three sixes are obtained. Let the random variable X be the total number of rolls required. Calculate Var (X).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 5/12</span><span class="kx-opt"><b>(B)</b> 18/25</span><span class="kx-opt"><b>(C)</b> 15</span><span class="kx-opt"><b>(D)</b> 30</span><span class="kx-opt"><b>(E)</b> 90</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;识别负二项分布</td><td>\(r=3,\ p=\frac16\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;负二项方差公式</td><td>\(Var(X)=\frac{r(1-p)}{p^2}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代值</td><td>\(\frac{3(5/6)}{(1/6)^2}=90\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 24(同题型二刷备用)· 跳过 1(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -338,6 +471,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>考虑 \(4+3-1=6\) 局:这 6 局里若 Anne 赢 \(\ge 4\),则第 4 胜必早于第 3 负;赢 \(\le 3\) 则已输 \(\ge 3\)。故所求 = 6 局中<b>至少赢 4</b> 的二项概率:</p>
       <p>\(\displaystyle\binom{6}{4}(0.6^4)(0.4^2)+\binom{6}{5}(0.6^5)(0.4)+0.6^6 = 15(0.6^4)(0.4^2)+6(0.6^5)(0.4)+0.6^6 = 0.54432\)。</p>
       <span class="ans">P = 0.54432</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 定观察窗:\(4+3-1=6\) 局内必分胜负</td><td>第 4 胜与第 3 负不可能都要 7 局以上才出现</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 翻译事件:"第 4 胜先到" ⟺ 6 局中赢 \(\ge4\)</td><td>赢 \(\ge4\Rightarrow\) 负 \(\le2\),第 3 负还没来</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 二项求和(首原理,不硬套 NB 记号)</td><td>\(\sum_{k=4}^{6}\binom{6}{k}0.6^k\,0.4^{6-k}=0.54432\)</td><td class="xr"><a href="soa-exam-p-l17-binomial-distribution.html">L17 二项 ↗</a></td></tr>
+      </table></div>
     </div>
   </div>
 </section>
@@ -364,6 +504,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>① 前 5 位中恰 1 位购买、第 6 位再购买:\(\displaystyle\binom{5}{1}(0.7^4)(0.3^2)=0.108045\)。</p>
       <p>② \(p=0.3,\ k=2\),失败数均值 \(=2\cdot\dfrac{0.7}{0.3}=\dfrac{14}{3}\);序号 = 失败数 + 2 次购买 \(=2+\dfrac{14}{3}=\dfrac{20}{3}\)。</p>
       <span class="ans">① 0.108045　② 20/3</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① "第 2 位购买者恰是第 6 位" = 前 5 恰 1 购 × 第 6 再购</td><td>\(\binom{5}{1}(0.7)^4(0.3)\times0.3=0.108045\)</td><td class="xr"><span class="here">本章</span> · <a href="soa-exam-p-l17-binomial-distribution.html">L17 二项 ↗</a></td></tr>
+        <tr><td>② 失败数(未购顾客数)的 NB 均值</td><td>\(E[N]=\dfrac{k(1-p)}{p}=\dfrac{2(0.7)}{0.3}=\dfrac{14}{3}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 换算成"序号":失败数 + \(k\) 次购买</td><td>\(E[\text{序号}]=E[N]+k=\dfrac{14}{3}+2=\dfrac{20}{3}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
   </div>
 </section>
@@ -400,12 +547,24 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">一年内某保单的索赔数服从几何分布,<b>均值 0.4</b>。求"恰 1 次索赔"的概率。</p>
       <p>均值 \(\dfrac{1-p}{p}=0.4\Rightarrow p=\dfrac{1}{1.4}\)。则 \(P[1]=p(1-p)=\dfrac{1}{1.4}\cdot\dfrac{0.4}{1.4}=\dfrac{0.4}{1.96}=0.2041\)。</p>
       <span class="ans">P[1] = 0.2041</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 由均值反解 \(p\)(索赔数可为 0 → 起点 0 版)</td><td>\(E[N]=\dfrac{1-p}{p}=0.4\ \Rightarrow\ p=\dfrac{1}{1.4}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 套几何 pmf 求"恰 1 次"</td><td>\(P[1]=p(1-p)=\dfrac{1}{1.4}\cdot\dfrac{0.4}{1.4}=0.2041\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="ex">
       <div class="ex-h"><span class="badge">例 18E</span><span class="src" style="margin:0">课本 p.299 · 无记忆性</span></div>
       <p class="q">团体险索赔数服从几何分布,<b>均值 15</b>。已知某保单<b>至少提交了 20 次</b>索赔,期望共有多少次?</p>
       <p>无记忆性:超过 20 之后再来的索赔数期望仍是 \(E[N]=15\),即 \(E[N-20\mid N\ge 20]=15\)。故期望共 \(20+15=35\)。</p>
       <span class="ans">E[N | N≥20] = 35</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 无记忆性:已知 \(N\ge20\),剩余索赔数分布照旧</td><td>\(E[N-20\mid N\ge20]=E[N]=15\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 条件期望线性拆开,加回已知的 20</td><td>\(E[N\mid N\ge20]=20+E[N-20\mid N\ge20]=35\)</td><td class="xr"><a href="soa-exam-p-l14-conditional-moments.html">L14 条件矩 ↗</a></td></tr>
+      </table></div>
     </div>
   </div>
 </section>
@@ -504,16 +663,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>保险语境:年索赔次数常设<b>几何分布并只给均值</b>(如例 18D)→ 先解 \(\frac{1-p}{p}=\) 均值反推 \(p\),再代 pmf。</li>
-        <li>"第 \(k\) 次成功恰在第 \(m\) 次试验 / 在第 \(j\) 次失败之前" → 别硬套公式,<b>用二项首原理</b>拆"前 \(m-1\) 次 × 最后一次成功"(例 18A)。</li>
-        <li>"given that … at least \(n\)" → 触发<b>无记忆性</b>,答案 \(n+E[N]\) 一步出,别硬算条件分布。</li>
-        <li>读题先定<b>约定</b>:问"失败几次"(起点 0)还是"第几次试验"(起点 1),幂次与均值都差一截。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Negative_binomial_distribution">Wikipedia · Negative binomial distribution</a></div><div class="z">词条开头就并列多种参数化约定——正好练出"读题先认约定"的火眼金睛。</div><div class="u">en.wikipedia.org/wiki/Negative_binomial_distribution</div></div>
@@ -524,101 +673,414 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>两种约定混用</b>:失败数(起点 0)vs 试验序号(起点 1),均值差 \(k\)、pmf 幂次差一。读题先定约定。</li>
-          <li><b>\(k\) 与 \(p\) 认错</b>:\(p\) 是每次成功概率;别把"均值 0.4"当成 \(p\),要先解 \(\frac{1-p}{p}=0.4\)。</li>
-          <li><b>几何条件期望绕圈</b>:记无记忆性,\(E[N-n\mid N\ge n]=E[N]\),一步到位别硬积分。</li>
-          <li><b>可加性看错 \(p\)</b>:只有<b>同 \(p\)</b> 的独立负二项相加,\(k\) 才直接相加。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 18.1</span>[110-S92:35] 10% 新企业首年倒闭,\(X=\)找到首个倒闭企业前需审查的企业总数,写 \(X\) 的 pmf。</li>
-          <li><span class="ref">练 18.5</span>[110-S90:45] 硬币反面概率是正面两倍,求第 3 个正面恰在第 5 次抛出的概率。</li>
-          <li><span class="ref">练 18.7</span>[1999 Sample:7] 逐人检测高血压,求首个高血压者恰是第 6 人的概率,及已完成检测数的 \(E[X]\)。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>负二项 \(k=3,\ p=0.5\),失败数期望 \(E[N]=?\)</li>
-        <li>几何(起点 0)\(p=0.25\),\(\Pr(N\ge 2)=?\)</li>
-        <li>几何(起点 0)均值为 4,求 \(p\)。</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(\dfrac{3(1-0.5)}{0.5}=3\);② \((1-0.25)^2=0.5625\);③ \(\dfrac{1-p}{p}=4\Rightarrow p=0.2\)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat" style="background:linear-gradient(180deg,#eef7fe,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 负二项 / 几何</h2></div></div>
-    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>负二项(N = 失败数,起点 0)</h4>
-        <p>\(\Pr(N=n)=\dbinom{k+n-1}{n}p^k(1-p)^n\)</p>
-        <p>\(E[N]=\dfrac{k(1-p)}{p}\),\(\operatorname{Var}(N)=\dfrac{k(1-p)}{p^2}\)</p>
-        <p>试验序号 \(=N+k\);独立同 \(p\) 相加 \(\Rightarrow\) \(k\) 相加</p>
-      </div>
-      <div class="cc t">
-        <h4>几何(k = 1 特例)</h4>
-        <p>\(P[n]=p(1-p)^n\)(起点 0)/ \(p(1-p)^{n-1}\)(起点 1)</p>
-        <p>\(E=\dfrac{1-p}{p}\)(起点 0)/ \(\dfrac{1}{p}\)(起点 1),\(\operatorname{Var}=\dfrac{1-p}{p^2}\)</p>
-        <p>\(\Pr(N\ge n)=(1-p)^n\);无记忆 \(E[N-n\mid N\ge n]=E[N]\)</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "二项与负二项的固定对调与尾概率对偶": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>核心辨析</h4><p>同一串伯努利试验,<strong>固定的东西对调</strong>:</p><table><thead><tr><th></th><th>二项</th><th>负二项</th></tr></thead><tbody><tr><td>固定</td><td>试验次数 \\(n\\)</td><td>成功次数 \\(r\\)</td></tr><tr><td>随机</td><td>成功几次 \\(X\\)</td><td>试到第几次才凑齐 \\(r\\) 个成功</td></tr><tr><td>取值</td><td>有界 \\(\\{0,\\dots,n\\}\\)</td><td>无界 \\(\\{r, r+1, \\dots\\}\\)</td></tr><tr><td>积木</td><td>\\(n\\) 个[[伯努利分布</td><td>伯努利]]之和</td><td>\\(r\\) 个[[几何分布</td><td>几何]]之和(见 <a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a>)</td></tr><tr><td>特例</td><td>\\(n=1\\) → 伯努利</td><td>\\(r=1\\) → 几何</td></tr></tbody></table><p><strong>白话</strong>:二项问\"投 10 球进几个\",负二项问\"要进 3 个得投几球\"——一个卡死次数问成绩,一个卡死成绩问次数。</p><h4>尾概率对偶(考场互算)</h4><div class=\"net-mth\">$$P(\\text{NB: 第 } r \\text{ 个成功} \\le \\text{第 } n \\text{ 次试验}) = P(\\mathrm{Bin}(n,p) \\ge r)$$</div><p>同一事件的两种说法:\"\\(n\\) 次里至少 \\(r\\) 个成功\" = \"第 \\(r\\) 个成功不晚于第 \\(n\\) 次\"。哪边求和项少走哪边。</p><p><strong>算一遍</strong>:\\(p=0.5\\),问\"3 次内凑齐 2 个正面\"。</p><ul><li>负二项路:第 2 个正面落在第 2 或第 3 次,\\(P = \\binom{1}{1}(0.5)^2 + \\binom{2}{1}(0.5)^3 = 0.25 + 0.25 = 0.5\\)</li><li>二项路:\\(P[\\mathrm{Bin}(3, 0.5) \\ge 2] = \\binom{3}{2}(0.5)^3 + \\binom{3}{3}(0.5)^3 = 0.375 + 0.125 = 0.5\\)</li><li>两边同一事件,必相等——验算利器。</li></ul><h4>易错点</h4><ul><li><strong>参数化口径</strong>:负二项有两种——数\"总试验次数\"(取值 \\(\\ge r\\))或数\"失败次数\"(取值 \\(\\ge 0\\)),均值差一个 \\(r\\);先认清题目数的是哪个。</li><li>\"负\"字来源:PMF 系数可写成负指数广义二项系数 \\(\\binom{-r}{k}\\),不是\"负面\"义。</li><li>对偶式两边不等号方向易搞反:\"不晚于第 \\(n\\) 次\"对应二项\"<strong>至少</strong> \\(r\\) 个\",不是\"恰好\"。</li></ul>"
+ },
+ "二项分布": {
+  "kind": "c",
+  "en": "BinomialDistribution",
+  "aliases": [
+   "binomial distribution"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 次<strong>相互独立</strong>、成功概率<strong>恒为 \\(p\\)</strong> 的成/败试验中\"成功次数\"的分布,记 \\(\\text{Binomial}(n,p)\\),取值 \\(0,1,\\dots,n\\)。Exam P 最高频的离散分布。</p><p><strong>白话</strong>:罚球命中率固定 \\(p\\),投 \\(n\\) 次数\"总共进几个\"——每球互不影响、命中率不变,进球总数的分布就是二项。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=k]=\\binom{n}{k}p^{k}(1-p)^{\\,n-k},\\qquad k=0,1,\\dots,n$$</div><ul><li>组合论证\"<strong>选位置,乘概率</strong>\":\\(\\binom{n}{k}\\) 数哪 \\(k\\) 次成功,\\(p^k(1-p)^{n-k}\\) 是每条路径的价钱。</li><li>归一由二项定理保证:\\(\\sum_k\\binom{n}{k}p^k(1-p)^{n-k}=(p+1-p)^n=1\\)(分布因此得名)。</li><li>两个前提缺一不可:各次试验<strong>独立</strong> + \\(p\\) <strong>恒定</strong>;不放回抽样(\\(p\\) 随抽随变)不是二项。</li><li>形状:\\(p&lt;0.5\\) 右偏、\\(p=0.5\\) 对称、\\(p&gt;0.5\\) 左偏,峰在 \\(np\\) 附近。</li><li>\"至少一次\"用补事件 \\(1-(1-p)^n\\) 最快,别逐项累加。</li></ul><p><strong>算一遍</strong>:抛 3 次公平硬币,求恰好 2 次正面。</p><ul><li>选位置:\\(\\binom{3}{2}=3\\) 种排法(正正反、正反正、反正正)。</li><li>每条路径的价钱:\\(0.5^2\\times 0.5=1/8\\)。</li><li>相乘:\\(3\\times\\dfrac18=\\dfrac38\\);对照全枚举——8 条等可能路径里恰有 3 条 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 原子;\\(n=1\\) 特例</li><li>组合 — 二项系数数成功位置(上游 L02)</li><li>二项分布的期望与方差 — \\(np\\) 与 \\(np(1-p)\\)</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 同 \\(p\\) 独立之和仍二项</li><li>超几何分布 — 不放回抽样的对照(有限总体)</li><li>泊松逼近二项 — \\(n\\) 大 \\(p\\) 小时的近似(下游 L19)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li><li>二项分布与联合分布的层面之辨 — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "二项分布可加性": {
+  "kind": "c",
+  "en": "BinomialAdditivity",
+  "aliases": [
+   "additivity of binomial distribution",
+   "sum of independent binomials"
+  ],
+  "level": "advanced",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>相互独立、<strong>同一成功概率 \\(p\\)</strong> 的二项随机变量之和仍是二项:\\(n\\) 参数相加、\\(p\\) 不动。\\(p\\) 不同则和<strong>不再是</strong>二项。</p><p><strong>白话</strong>:上午投 3 次罚球、下午投 5 次,命中率都是 \\(p\\)——两段进球数加起来,和\"一口气投 8 次\"没有任何区别,所以和仍是二项、\\(n\\) 直接相加。若下午换了个命中率不同的人投,两段就拼不成\"一口气 8 次\",和也就不再是二项。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X_i\\ \\text{独立},\\ X_i\\sim\\text{Binomial}(n_i,\\,p)\\ \\Longrightarrow\\ \\sum_{i=1}^{k}X_i\\ \\sim\\ \\text{Binomial}\\Big(\\sum_{i=1}^{k}n_i,\\ p\\Big)$$</div><ul><li>直觉:把两堆同概率硬币合起来抛,还是一堆同概率硬币——总试验串仍是\"独立同 \\(p\\) 的伯努利序列\"。</li><li>两个条件都要查:<strong>相互独立</strong> + <strong>\\(p\\) 相同</strong>;\\(p\\) 不同的独立二项之和不是二项(高频易错)。</li><li>均值方差自然相加:\\(E=(\\sum n_i)p\\)、\\(\\operatorname{Var}=(\\sum n_i)p(1-p)\\)。</li><li>同款性质在泊松(\\(\\lambda\\) 相加)与负二项(同 \\(p\\)、\\(r\\) 相加)上再现,三个一起记。</li></ul><p><strong>算一遍</strong>:\\(X\\sim\\text{Binomial}(2,\\,0.5)\\)(抛 2 枚硬币)、\\(Y\\sim\\text{Binomial}(3,\\,0.5)\\)(抛 3 枚),独立。</p><ul><li>合并:5 枚同样的硬币一起数正面 → \\(X+Y\\sim\\text{Binomial}(5,\\,0.5)\\)。</li><li>验均值:\\(E=2(0.5)+3(0.5)=2.5=5\\times 0.5\\) ✓;方差 \\(5\\times 0.25=1.25\\) ✓</li><li>若 \\(Y\\) 换成 \\(\\text{Binomial}(3,\\,0.2)\\):总试验串不再\"同 \\(p\\)\",和就不是任何二项——捷径失效。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 本体</li><li>随机变量独立性 — 前提之一(上游 L11)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 同款性质:\\(\\lambda\\) 相加、无同参限制(下游 L19)</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 同款性质:同 \\(p\\)、\\(r\\) 相加(下游 L18)</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — \"和的分布\"的一般工具;此处有闭式捷径</li></ul>"
+ },
+ "伯努利分布": {
+  "kind": "c",
+  "en": "BernoulliDistribution",
+  "aliases": [
+   "Bernoulli distribution",
+   "Bernoulli trial"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>单次成/败试验的分布:取 1(成功)概率 \\(p\\)、取 0(失败)概率 \\(1-p\\)。它是二项分布 \\(n=1\\) 的特例,也是二项的<strong>原子</strong>——\\(n\\) 个独立伯努利之和即二项。</p><p><strong>白话</strong>:一次抛硬币、一次罚球、一个客户今年出不出险——世界上最小的随机试验,只有\"成/败\"两个结局。它是概率界的乐高最小颗粒,二项等大分布都由它拼出来。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=1]=p,\\quad P[X=0]=1-p;\\qquad E[X]=p,\\quad \\operatorname{Var}(X)=p(1-p)$$</div><ul><li>\\(E[X^2]=p\\)(因 \\(0^2=0\\)、\\(1^2=1\\)),故 \\(\\operatorname{Var}=p-p^2=p(1-p)\\)。</li><li>方差在 \\(p=0.5\\) 时最大(\\(=0.25\\)),越靠近 0 或 1 越小——结果越确定,波动越小。</li><li>二项的 \\(np\\)、\\(np(1-p)\\) 全由它 \\(\\times n\\) 而来。</li><li>作示性变量(indicator)是\"数个数\"类问题的通用积木。</li></ul><p><strong>算一遍</strong>:命中率 \\(p=0.5\\) 的一次罚球,进球记 1、不进记 0。</p><ul><li>均值:\\(E[X]=1(0.5)+0(0.5)=0.5\\)。</li><li>二阶矩:\\(E[X^2]=1^2(0.5)=0.5\\),故 \\(\\operatorname{Var}=0.5-0.5^2=0.25\\)——正是 \\(p(1-p)\\),且是方差的最大值(\\(p=0.5\\) 最难猜)。</li><li>换 \\(p=0.9\\):\\(\\operatorname{Var}=0.9\\times 0.1=0.09\\)——结果越确定,波动越小 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — \\(n=1\\) 特例;\\(n\\) 个独立之和成二项</li><li>二项分布的期望与方差 — \\(p\\)、\\(p(1-p)\\) 各乘 \\(n\\) 的来源</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 同一串伯努利试验改数\"到首次成功\"(下游 L18)</li><li>概率函数 — 最简两点 pmf</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li></ul>"
+ },
+ "几何分布": {
+  "kind": "c",
+  "en": "GeometricDistribution",
+  "aliases": [
+   "geometric distribution",
+   "geometric"
+  ],
+  "level": "basic",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>负二项分布 \\(k=1\\) 的特例——每次成功概率 \\(p\\) 的独立试验中,<strong>第一次成功之前的失败次数</strong> \\(N\\) 的分布。概率逐项按 \\((1-p)\\) 等比(几何)衰减,故得名。</p><p><strong>白话</strong>:掷骰子直到出第一个 6,数\"出 6 之前白掷了几次\"——等待越长越少见,每多等一轮概率就打一次 \\(5/6\\) 折,像等比数列一样滑下去。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[n]=p(1-p)^n,\\ \\ n=0,1,2,\\dots;\\qquad E[N]=\\frac{1-p}{p},\\quad \\operatorname{Var}(N)=\\frac{1-p}{p^2}$$</div><ul><li><strong>尾概率一步可写</strong>:\\(\\Pr[N\\ge n]=(1-p)^n\\)(前 \\(n\\) 次全失败)——离散分布里少有的能直接写尾巴的。</li><li><strong>起点 1 变体</strong>(试验序号):\\(P[n]=p(1-p)^{n-1},\\ n=1,2,\\dots\\),此时 \\(E=\\dfrac{1}{p}\\)(多 1),方差不变;考试约定:0 取得到就从 0 起,否则从 1 起。</li><li>保险语境高频:年索赔次数设几何、<strong>只给均值</strong> → 先解 \\(\\frac{1-p}{p}=\\) 均值反推 \\(p\\),再代 pmf。</li><li>pmf 从 \\(p\\) 起单调递减(起点 0 版众数恒为 0)。</li></ul><p><strong>算一遍</strong>:掷骰子等第一个 6,\\(p=1/6\\)。</p><ul><li>均值:\\(E[N]=\\dfrac{1-p}{p}=\\dfrac{5/6}{1/6}=5\\)——平均白掷 5 次才见到 6(连出 6 那次共 6 掷,对上\"起点 1 版 \\(E=1/p=6\\)\")。</li><li>尾概率:前 2 次都没出 6 的概率 \\(\\Pr[N\\ge 2]=(5/6)^2=25/36\\)——直接写,不用逐项加。</li><li>头两项 pmf:\\(P[0]=1/6\\),\\(P[1]=(5/6)(1/6)=5/36\\)——每项比上一项打 \\(5/6\\) 折,等比衰减名副其实。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"负二项分布\">负二项分布</a> — 本体的 \\(k=1\\) 特例;反之 NB = \\(k\\) 段几何之和</li><li><a class=\"net-wl\" data-id=\"几何分布无记忆性\">几何分布无记忆性</a> — 灵魂性质:已等多久不改剩余等待</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 底层单次试验</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 连续世界的对应物(同样无记忆)</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — \\(\\Pr[N\\ge n]=(1-p)^n\\) 就是它的生存函数</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li></ul>"
+ },
+ "几何分布无记忆性": {
+  "kind": "c",
+  "en": "GeometricMemorylessness",
+  "aliases": [
+   "memoryless property of geometric distribution",
+   "memoryless"
+  ],
+  "level": "advanced",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>已知前 \\(n\\) 次都未成功(\\(N\\ge n\\)),剩余等待 \\(N-n\\) 的分布与从头开始<strong>完全相同</strong>——几何分布在整数点上无记忆,过去的失败被\"忘光\"。</p><p><strong>白话</strong>:老虎机不会因为你输了一晚上就\"欠你一次\"——每一轮它都把你当刚进门的新客人,剩余等待永远从零重新计。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N-n\\ \\big|\\ N\\ge n\\ \\sim\\ \\text{同均值的几何分布}\\quad\\Longrightarrow\\quad E[N-n\\mid N\\ge n]=E[N]$$</div><ul><li>一行证明:尾概率相除 \\(\\dfrac{(1-p)^{m+n}}{(1-p)^n}=(1-p)^m=\\Pr[N\\ge m]\\)。</li><li><strong>考试即用推论</strong>:\\(E[N\\mid N\\ge n]=n+E[N]\\)——题面出现 \"given that … at least \\(n\\)\" 一步出答案,别硬算条件分布(例:几何均值 15、已知至少 20 次索赔 → 期望共 \\(20+15=35\\))。</li><li>赌徒谬误的正解:连掷 10 次没出 6,下一次仍是 \\(1/6\\),平均还要再掷 6 次——骰子没有记忆。</li><li>离散分布中唯几何具备此性质;连续对应物是指数分布。</li></ul><p><strong>算一遍</strong>:掷骰子等 6(\\(p=1/6\\)),已经连白掷了 10 次,期望总共白掷几次?</p><ul><li>无条件均值:\\(E[N]=\\dfrac{5/6}{1/6}=5\\)。</li><li>套推论:\\(E[N\\mid N\\ge 10]=10+5=15\\)——前 10 次全作废,从头再平均等 5 次。</li><li>尾概率验证:\\(\\dfrac{(5/6)^{12}}{(5/6)^{10}}=(5/6)^2=\\Pr[N\\ge 2]\\)——条件分布真的和重新开局一模一样。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 性质的宿主</li><li><a class=\"net-wl\" data-id=\"无记忆性\">无记忆性</a> — 连续版:指数分布的同名性质</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — \\(E[N\\mid N\\ge n]=n+E[N]\\) 是条件期望的秒算特例</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 定义本身就是条件尾概率的不变性</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 唯二无记忆分布的另一位(连续)</li></ul>"
+ },
+ "卷积公式": {
+  "kind": "c",
+  "en": "ConvolutionFormula",
+  "aliases": [
+   "convolution",
+   "sum of two random variables"
+  ],
+  "level": "hard",
+  "chapter": "p-l35",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求和 \\(Z=X+Y\\) 密度的公式:固定 z,沿直线 \\(x+y=z\\) 把联合密度\"扫一遍\"积分。它是雅可比法取 \\(W=Y\\) 的特例(\\(|J|=1\\));X、Y <strong>独立</strong>时联合密度拆成边缘乘积,得经典卷积 \\(f_X*f_Y\\)。</p><p><strong>白话</strong>:两颗骰子点数和是 7 的概率,就是把 \\((1,6)(2,5)\\dots(6,1)\\) 所有拆法逐个加起来;连续版一模一样——和固定成 \\(z\\),沿\"所有拆法\"\\((z-w,\\,w)\\) 扫一遍,求和换成积分。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Z(z)=\\int_{-\\infty}^{\\infty} f_{X,Y}(z-w,\\,w)\\,dw\\;\\xrightarrow{\\ X\\perp Y\\ }\\;f_Z(z)=\\int_{-\\infty}^{\\infty} f_X(z-w)\\,f_Y(w)\\,dw$$</div><ul><li>一般式对任意联合密度成立(不需独立);只有拆成 \\(f_X\\,f_Y\\) 那一步需要<strong>独立</strong>——非独立不能拆。</li><li><strong>积分限随支撑变</strong>:只在 \\(f_X(z-w)\\) 与 \\(f_Y(w)\\) 同时非零处积,不是无脑 \\(-\\infty\\) 到 \\(\\infty\\)(最高频错)。</li><li>画支撑、按 z 切竖条:uniform 和的密度是三角形/梯形,分段别漏。</li><li>先想 MGF:独立和能靠 MGF 相乘认形就秒杀(指数和→伽马、正态和→正态);认不出闭式才动手卷积。</li><li>\\(Z=aX+bY\\)(如 2X+Y)同理:先补 W 再积。</li></ul><p><strong>算一遍</strong>:\\(X,Y\\) 独立均匀于 \\((0,1)\\),求 \\(Z=X+Y\\) 在 \\(z=0.5\\) 处的密度。</p><ul><li>先定非零范围:需 \\(0&lt;w&lt;1\\) 且 \\(0&lt;0.5-w&lt;1\\),交出 \\(0&lt;w&lt;0.5\\)——限被支撑收窄,不是全轴。</li><li>积分:\\(f_Z(0.5)=\\int_0^{0.5}1\\times1\\,dw=0.5\\)。</li><li>逐点扫遍得 \\(f_Z(z)=z\\)(\\(0&lt;z&lt;1\\) 段)——\"两个均匀之和是三角形\"对上 ✓</li></ul><h4>与其他概念的关系</h4><ul><li>多变量变换的雅可比法 — 母方法:取 W=Y、\\(|J|=1\\) 的特化</li><li>独立和的MGF — 替代路线:相乘认形免卷积</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 离散镜像:PGF 相乘 = 多项式自动卷积</li><li>连续型独立性 — 拆 \\(f_X\\,f_Y\\) 的前提</li><li>积分限与支撑 — 上下限纪律的来源</li><li>联合密度函数 — 一般式的输入</li></ul>"
+ },
+ "指数分布": {
+  "kind": "c",
+  "en": "ExponentialDistribution",
+  "aliases": [
+   "exponential distribution",
+   "exponential"
+  ],
+  "level": "basic",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>描述\"<strong>下一次事件到来前要等多久</strong>\"的连续分布(\\(x\\ge 0\\)):寿命、等待时间、保险损失额的默认模型。事件以恒定速率随机来临,等待密度从峰值起持续衰减——刚开始最可能马上来,越拖概率越小。Exam P 最高频的连续分布。</p><p><strong>白话</strong>:路边等出租车——空车随时可能冒出来,最可能的是马上就来,\"恰好等满 10 分钟才来\"比\"1 分钟内来\"更稀罕;它就是给这种\"等多久\"画像的分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=1-e^{-x/\\theta},\\qquad f(x)=\\frac{e^{-x/\\theta}}{\\theta},\\qquad S(x)=e^{-x/\\theta}\\quad(x\\ge 0)$$</div><ul><li><strong>两套参数化</strong>:\\(\\theta\\) 是<strong>均值</strong>(尺度参数,ASM/损失模型常用);\\(\\lambda=1/\\theta\\) 是<strong>速率</strong>(SOA 常用),此时 \\(f(x)=\\lambda e^{-\\lambda x}\\)、\\(S(x)=e^{-\\lambda x}\\)。读题先认清给的是 mean 还是 rate,\\(\\lambda\\theta=1\\)。</li><li>生存函数 \\(S(x)=e^{-x/\\theta}\\)(\"活过 \\(x\\) / 等待超过 \\(x\\)\")是做题最常用的形态;\"loss exceeds …\"直接上 \\(S\\)。</li><li>\"至少一次 in \\(t\\)\":\\(P[X\\le t]=1-e^{-t/\\theta}\\),别去积分密度。</li><li>下游预告(L23):独立指数取<strong>最小值</strong>仍是指数,速率相加。</li></ul><p><strong>算一遍</strong>:灯泡寿命服从均值 \\(\\theta=2\\) 年的指数分布,求它活过 2 年的概率。</p><ul><li>直接上生存函数:\\(S(2)=e^{-2/2}=e^{-1}\\approx0.37\\)——只有约三分之一能活过自己的\"平均寿命\"。</li><li>反面:活不过 2 年 \\(F(2)=1-e^{-1}\\approx0.63\\),多数灯泡死在均值之前——右偏分布,少数长寿者把平均拉高。</li><li>换速率写法验一下:\\(\\lambda=1/2\\),\\(S(2)=e^{-\\lambda\\cdot2}=e^{-1}\\) ✓ 两套参数化同一结果。</li></ul><h4>与其他概念的关系</h4><ul><li>指数分布的矩 — \\(E[X]=\\theta\\)、\\(\\operatorname{Var}=\\theta^2\\):方差=均值²</li><li>指数分布百分位数 — 闭式分位 \\(\\xi_p=-\\theta\\ln(1-p)\\)</li><li><a class=\"net-wl\" data-id=\"无记忆性\">无记忆性</a> — 灵魂性质:已等多久不影响剩余等待</li><li>指数与泊松过程 — 泊松管次数、指数管间隔:同一过程的两面</li><li>伽马分布 — \\(n\\) 个独立同均值指数之和</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 离散镜像:各自阵营唯一的无记忆分布</li></ul><h4>应用视角</h4><ul><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li><li>泊松过程中的次数与等待时间 — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "方差": {
+  "kind": "c",
+  "en": "Variance",
+  "aliases": [
+   "variance",
+   "Var",
+   "二阶中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量取值围绕均值摆动幅度的度量:偏差平方的期望(即二阶中心矩),记 \\(\\operatorname{Var}(X)\\) 或 \\(\\sigma^2\\)。方差 \\(\\ge 0\\),越大分布越分散;为 0 当且仅当 \\(X\\) 几乎处处是常数。</p><p><strong>白话</strong>:两个班平均分都是 80,一个班人人 78–82,另一个班一半 60 一半 100——平均分看不出差别,方差看得出:它算的是\"每个人离平均有多远\"的平均账(按平方记)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=E\\big[(X-\\mu)^2\\big]=E[X^2]-\\mu^2$$</div><ul><li>计算式\"<strong>平方的平均 − 平均的平方</strong>\"是解题主力:先算 \\(E[X]\\)、\\(E[X^2]\\) 两个原点矩,一减即出。</li><li><strong>平移不散,缩放平方</strong>:\\(\\operatorname{Var}(aX+b)=a^2\\operatorname{Var}(X)\\);负号平方后消失,\\(\\operatorname{Var}(-X)=\\operatorname{Var}(X)\\)。</li><li><strong>独立才可加</strong>:\\(\\operatorname{Var}(\\sum X_i)=\\sum\\operatorname{Var}(X_i)\\)(i.i.d. 时 \\(=n\\operatorname{Var}(X)\\));独立时 \\(\\operatorname{Var}(X-Y)\\) 也是\"加\"(系数 \\((-1)^2=1\\))。</li><li>两点分布捷径:取 \\(a\\)(概率 \\(p\\))、\\(b\\)(概率 \\(1-p\\))时 \\(\\operatorname{Var}(X)=(b-a)^2p(1-p)\\)。</li><li>绕任意点:\\(E[(X-c)^2]=\\operatorname{Var}(X)+(\\mu-c)^2\\),仅 \\(c=\\mu\\) 时等于方差(平行轴定理)。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0(各占一半),求方差。</p><ul><li>两个原点矩:\\(E[X]=0.5\\);\\(E[X^2]=0^2(0.5)+1^2(0.5)=0.5\\)。</li><li>一减即出:\\(\\operatorname{Var}=0.5-0.5^2=0.25\\),标准差 \\(0.5\\)。</li><li>两点捷径验算:\\((1-0)^2\\times0.5\\times0.5=0.25\\) ✓ 两条路同一答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 两个原点矩一减出方差;期望是线性算子、方差不是</li><li>矩 — 方差 = 二阶中心矩,矩家族一员</li><li>标准差 — 方差的正平方根,单位还原</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 两点捷径的来源:\\(\\operatorname{Var}(N)=p(1-p)\\) 套缩放律</li><li>和的方差 — 不独立时的一般公式(补协方差项)</li><li>协方差 — 度量两变量联动,修正和的方差</li></ul>"
+ },
+ "无记忆性": {
+  "kind": "c",
+  "en": "MemorylessProperty",
+  "aliases": [
+   "memorylessness",
+   "memoryless",
+   "lack of memory"
+  ],
+  "level": "advanced",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>指数分布的灵魂性质:<strong>已经等了多久,对\"还要再等多久\"毫无影响</strong>。已亮 5000 小时的旧灯泡与新灯泡剩余寿命同分布。指数是<strong>唯一</strong>无记忆的连续分布(离散阵营的唯一是几何)。</p><p><strong>白话</strong>:等出租车已经等了 10 分钟,不会让下一辆来得更快——每一刻都像刚开始等;\"等了很久所以快了\"是错觉,过去的等待不攒运气。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X&gt;s+t\\mid X&gt;s]=P[X&gt;t]\\qquad(s,t\\ge 0)$$</div><ul><li>一行证明:\\(\\dfrac{P[X&gt;s+t]}{P[X&gt;s]}=\\dfrac{e^{-(s+t)/\\theta}}{e^{-s/\\theta}}=e^{-t/\\theta}\\)。</li><li>更强的说法:给定 \\(X\\ge x\\),<strong>剩余量 \\(X-x\\) 仍是均值 \\(\\theta\\) 的指数分布</strong>——过去被\"忘光\"。</li><li><strong>免赔额高频易错</strong>:损失超过免赔额 \\(d\\) 后,超出部分仍 \\(\\sim\\text{Exp}(\\theta)\\),<strong>不是</strong> \\(\\theta-d\\);这一步搞反后面全错。</li><li>含\"赔 0\"分支求方差:先用无记忆定超额部分的分布,再走条件方差公式合并两支(ASM 例 20A)。</li><li>题面信号:\"given that it has survived / lasted \\(s\\)\" → 剩余寿命重开一局。</li></ul><p><strong>算一遍</strong>:灯泡寿命 \\(\\sim\\text{Exp}(\\theta=2\\) 年\\()\\),已亮了 3 年,求再撑 1 年的概率。</p><ul><li>条件概率硬算:\\(\\dfrac{P[X&gt;4]}{P[X&gt;3]}=\\dfrac{e^{-4/2}}{e^{-3/2}}=e^{-1/2}\\approx0.61\\)。</li><li>全新灯泡撑过 1 年:\\(P[X&gt;1]=e^{-1/2}\\)——一模一样 ✓</li><li>已亮的 3 年被\"忘光\",旧灯泡剩余寿命和新灯泡同分布,重开一局。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 性质的宿主;实为其定义性特征(故障率恒定)</li><li><a class=\"net-wl\" data-id=\"几何分布无记忆性\">几何分布无记忆性</a> — 离散镜像:整数点上的同一性质</li><li>免赔额与正赔付条件 — 主战场:超额赔付分布不变</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — 证明即尾概率相除</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 性质本身是一条条件概率恒等式</li><li>条件方差 — 免赔额含赔 0 分支时的搭配工具</li></ul><h4>应用视角</h4><ul><li>泊松过程中的次数与等待时间 — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 它最重要的数字概括</li><li>概率函数 — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li>概率密度函数 — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li>LOTUS — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — 期望算子最常用的运算性质</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "期望的线性": {
+  "kind": "c",
+  "en": "LinearityOfExpectation",
+  "aliases": [
+   "linearity of expectation",
+   "linearity",
+   "期望线性性"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>期望算子对线性运算\"透明\":常数可提出、加法可拆开。关键在于 \\(E[X+Y]=E[X]+E[Y]\\) 对<strong>任意</strong>随机变量恒成立,<strong>不要求独立</strong>。</p><p><strong>白话</strong>:夫妻俩的平均月收入各是 1 万和 2 万,家庭总收入平均就是 3 万——哪怕两人收入互相牵连(一起加班、一起休假)也照样成立,\"总和的平均 = 平均的总和\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[aX+b]=a\\,E[X]+b\\qquad E[X+Y]=E[X]+E[Y]$$</div><ul><li>推论:线性组合 \\(E\\!\\left[\\sum a_iX_i\\right]=\\sum a_iE[X_i]\\)——保险里\"总赔付期望=各笔期望之和\"的根据。</li><li>独立性只在<strong>乘积</strong> \\(E[XY]\\) 时才用得上;和的期望永远直接拆。</li><li><strong>只对线性成立</strong>:\\(E[g(X)]\\neq g(E[X])\\)(非线性要走 LOTUS);\\(E[X^2]\\ge(E[X])^2\\),两者之差就是方差。</li><li>送分题形态:给 \\(E[X]=4\\) 求 \\(E[3X-2]=10\\),一步线性。</li></ul><p><strong>算一遍</strong>:掷两颗骰子,求点数之和的期望。</p><ul><li>单颗均值 \\(E[X]=3.5\\);直接拆:\\(E[X+Y]=3.5+3.5=7\\),36 种组合一个都不用列。</li><li>就算两颗骰子被粘在一起同步转(完全不独立),答案照样是 7——线性不问独立。</li><li>顺手一个缩放:\\(E[3X-2]=3\\times3.5-2=8.5\\),常数提出、平移直加。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 期望算子的最常用运算性质</li><li>LOTUS — 对照:非线性函数的期望必须换头积分</li><li>独立与乘积期望 — 乘积才需要独立:\\(E[XY]=E[X]E[Y]\\) 的前提</li><li>和的方差 — 对照:方差相加就要看独立/协方差,期望不用</li></ul><h4>应用视角</h4><ul><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "条件期望": {
+  "kind": "c",
+  "en": "ConditionalExpectation",
+  "aliases": [
+   "conditional expectation",
+   "conditional mean"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定条件下 \\(X\\) 的平均值:用<strong>条件分布</strong>作权重求出的期望。以 \\(Y=y\\) 为条件时结果里还带着 \\(y\\)——它是 \\(y\\) 的函数;代入具体 \\(y\\) 是一个数,保留 \\(Y\\) 不代值则升级为随机变量。</p><p><strong>白话</strong>:还是算平均,只是换了名单——外卖平均送达 30 分钟,但\"已知在下雨\"就只统计下雨天的单子,重摊出来可能是 45 分钟;条件一换,名单一换,平均跟着换。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X\\mid Y=y]=\\sum_{x}x\\,\\frac{f(x,y)}{f_Y(y)}\\;=\\;\\int_{x} x\\,\\frac{f(x,y)}{f_Y(y)}\\,dx$$</div><ul><li>离散题三步:边际 \\(f_Y(y)\\)(该行/列求和)→ 条件分布(逐项 ÷ 边际)→ 加权平均。</li><li>\\(E[X\\mid Y=y]\\) 是<strong>数</strong>,\\(E[X\\mid Y]\\) 是<strong>随机变量</strong>——Ch16 双重期望的入口。</li><li>直觉:条件把总体切成子群,均值在子群里重算(男性组平均身高 1.75,总体 1.68)。</li><li>对函数同理:\\(E[g(X)\\mid Y=y]\\) 用同一套条件权重。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求\"已知点数为偶\"时的条件期望。</p><ul><li>条件分布:2、4、6 各占 \\(\\frac13\\)(奇数被排除,剩下的重新归一)。</li><li>加权平均:\\(E[X\\mid\\text{偶}]=\\frac{2+4+6}{3}=4\\)——比无条件的 3.5 高,因为条件砍掉了小点数。</li><li>换条件\"点数为奇\" → \\(\\frac{1+3+5}{3}=3\\);条件一换数就换——条件期望是条件的函数。</li></ul><h4>与其他概念的关系</h4><ul><li>条件分布 — 权重来源</li><li>条件矩 — 条件期望是它的一阶特例</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 无条件对应物</li><li>条件期望是随机变量 — 不代值时的升维理解</li><li>全期望公式 — \\(E[E[X\\mid Y]]=E[X]\\)(下游 L16)</li><li>连续型条件期望 — 连续版(下游 L30)</li></ul><h4>应用视角</h4><ul><li>条件期望分层求解 — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件概率": {
+  "kind": "c",
+  "en": "ConditionalProbability",
+  "aliases": [
+   "conditional probability",
+   "条件机率"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在事件 B 已发生的前提下,事件 A 发生的概率。把样本空间<strong>缩小到 B</strong>(B 成为新的\"全体\"),A 剩下的部分是 \\(A\\cap B\\),再除以 \\(P[B]\\) 归一化。</p><p><strong>白话</strong>:问\"下雨天堵车的概率\",不拿全年当分母——先把下雨的日子挑出来当新的\"全体\",再数其中堵车的占几成。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\mid B]=\\frac{P[A\\cap B]}{P[B]}\\qquad(P[B]\\neq 0)$$</div><ul><li>固定条件 B 后,\\(P[\\cdot\\mid B]\\) 满足与普通概率相同的<strong>三公理</strong>——补集、容斥等规则在\"竖线右边不动\"时照常可用。</li><li>\\(P[A\\mid B]\\neq P[B\\mid A]\\):分母是\"条件\"那一个,写反是高频错。</li><li>直觉:<strong>先缩世界,再归一</strong>;\\(P[B]=0\\) 时无定义。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 掷出 6,\\(B=\\) 点数为偶,求 \\(P[A\\mid B]\\)。</p><ul><li>套定义:\\(P[A\\cap B]=P[\\{6\\}]=\\frac16\\),\\(P[B]=\\frac12\\),相除得 \\(P[A\\mid B]=\\frac13\\)。</li><li>直觉核对:世界缩到 \\(\\{2,4,6\\}\\) 三个等可能点,6 占一席 → \\(\\frac13\\) ✓</li><li>反向对照:\\(P[B\\mid A]=1\\)(掷出 6 必是偶数)——\\(\\frac13\\neq1\\),分母是\"条件\"那一个,写反差很远。</li></ul><h4>与其他概念的关系</h4><ul><li>乘法公式 — 定义两边乘 \\(P[B]\\) 的变形,求交集的主力工具</li><li>事件独立性 — \\(P[A\\mid B]=P[A]\\) 的特例:条件不带来信息</li><li>贝叶斯定理 — 把 \\(P[A\\mid B]\\) 反转成 \\(P[B\\mid A]\\)</li><li>全概率公式 — 用一组条件概率加权拼出无条件概率</li><li>连续型条件概率 — 连续版(密度上的同一动作)</li><li>随机变量的条件分布 — 条件思想进入随机变量后的形态</li></ul><h4>应用视角</h4><ul><li>贝叶斯表格法快解后验 — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "概率母函数": {
+  "kind": "c",
+  "en": "ProbabilityGeneratingFunction",
+  "aliases": [
+   "probability generating function",
+   "PGF"
+  ],
+  "level": "basic",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>对<strong>非负整数</strong>取值的随机变量(计数变量:泊松、二项、几何……),把每个概率 \\(p_k=P[X{=}k]\\) 当系数、配上 \\(t^k\\) 求和得到的函数 \\(P_X(t)=E[t^X]\\)——一个函数装下整张概率表。连续型或取负值的变量不适用。</p><p><strong>白话</strong>:像把整张概率表打成一个 zip 压缩包:\\((p_0,p_1,p_2,\\dots)\\) 全装进一个函数里,之后按不同方式解压——想验总和、想要矩、想反读某个概率,都从这一个包里取。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P_X(t)=E\\!\\left[t^{X}\\right]=\\sum_{k=0}^{\\infty}t^{k}\\,P[X{=}k]$$</div><ul><li>\\(P(1)=1\\) <strong>恒成立</strong>(概率求和为 1)——做完先自检。</li><li>一次打包、三种解压:代值直接算 \\(E[t^X]\\);在 \\(t=1\\) 求导取矩(阶乘矩);在 \\(t=0\\) 求导反读概率。</li><li>独立和相乘:\\(P_{X+Y}=P_XP_Y\\)。</li><li>泊松必记:\\(P(t)=e^{\\lambda(t-1)}\\)(例 33B:\\(\\sum_n t^n\\tfrac{e^{-\\lambda}\\lambda^n}{n!}=e^{-\\lambda}e^{\\lambda t}=e^{\\lambda(t-1)}\\))。</li><li>课本用大写 P 记母函数,与概率 \\(P[\\cdot]\\) 同符号,靠上下文区分。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,反面记 0、正面记 1(各半)。</p><ul><li>打包:\\(P(t)=E[t^X]=0.5t^0+0.5t^1=0.5+0.5t\\)。</li><li>自检:\\(P(1)=1\\) ✓;求导 \\(P'(t)=0.5\\),在 \\(t=1\\) 取值 \\(=0.5=E[X]\\) ✓</li><li>在 \\(t=0\\) 反读:\\(P'(0)/1!=0.5=P[X{=}1]\\)——一个函数,三种解压全通。</li></ul><h4>与其他概念的关系</h4><ul><li>矩母函数 — 姊妹工具:M 适用任意 RV、取原点矩;P 仅非负整数 RV</li><li>阶乘矩 — 在 1 处求导的产出</li><li>母函数生成概率 — 在 0 处求导反读概率</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 乘性:独立和 → 相乘</li><li>PGF与MGF关系 — \\(P(t)=M(\\ln t)\\) 一键互换</li><li>泊松分布 — 最常考母函数 \\(e^{\\lambda(t-1)}\\)</li></ul>"
+ },
+ "泊松可加性": {
+  "kind": "c",
+  "en": "PoissonAdditivity",
+  "aliases": [
+   "additivity of Poisson",
+   "sum of independent Poissons"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>相互独立</strong>的泊松随机变量之和仍是泊松,参数直接相加——合并多个独立泊松源(多路口事故、多天来电、多张保单)时无需卷积。</p><p><strong>白话</strong>:两条互不相干的水管往同一个桶里随机滴水,合起来看还是\"随机滴水\",只是滴速直接相加——不必逐滴对账(卷积)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N_i\\sim\\text{Poisson}(\\lambda_i)\\ \\text{独立}\\quad\\Longrightarrow\\quad \\sum_{i=1}^{n}N_i\\;\\sim\\;\\text{Poisson}\\!\\left(\\sum_{i=1}^{n}\\lambda_i\\right)$$</div><ul><li><strong>前提是独立</strong>:两个计数正相关(如同一天气驱动的两地事故)不能简单把 \\(\\lambda\\) 相加。</li><li>典型用法:\"3 周、每周均值 1.2\" → \\(\\lambda=3.6\\) 再套 pmf,<strong>先换 \\(\\lambda\\) 再算概率</strong>。</li><li>与泊松过程的区间缩放 \\(\\lambda t\\) 是同一件事(把区间拆成小段相加)。</li><li>泊松连\"同参数\"条件都不需要(对比二项/负二项可加性要求同 \\(p\\))。</li></ul><p><strong>算一遍</strong>:两个独立路口,事故率分别为每天 1 起和 2 起,求两口合计一天无事故的概率。</p><ul><li>先合参数:\\(N_1+N_2\\sim\\text{Poisson}(1+2)=\\text{Poisson}(3)\\)。</li><li>套 pmf:\\(P[\\text{合计}=0]=e^{-3}\\approx0.050\\)。</li><li>验算:等于\"各自无事故\"相乘 \\(e^{-1}\\times e^{-2}\\)(独立)✓——参数相加与概率相乘是同一回事。</li></ul><h4>与其他概念的关系</h4><ul><li>泊松分布 — 规则的宿主分布</li><li>泊松过程 — 区间缩放 \\(\\lambda t\\) 即\"逐段相加\"的连续版</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 姊妹规则:须同 \\(p\\)</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 姊妹规则:须同 \\(p\\)</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 证明套路:独立和的 PGF/MGF 相乘</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 可加性成立时绕开的笨办法</li></ul>"
+ },
+ "独立和的母函数": {
+  "kind": "c",
+  "en": "PGFOfIndependentSum",
+  "aliases": [
+   "PGF of sum of independent random variables",
+   "multiplicative property of PGF"
+  ],
+  "level": "advanced",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>独立(非负整数)随机变量之和的母函数等于各自母函数的乘积。多项式乘法恰好把\"指数相加、系数相乘再汇总\"全做了——<strong>多项式乘法 = 自动卷积</strong>,这正是\"独立和相乘\"的直觉。</p><p><strong>白话</strong>:把每个变量的\"概率价目表\"编成一个多项式(取几记在 \\(t\\) 的指数上,概率记在系数上)。两个独立变量相加,不用自己逐项枚举\"凑出每种总数的所有搭配\"——两张价目表一乘,乘法自动替你配对、归总。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\ \\Longrightarrow\\ P_{X+Y}(t)=P_X(t)\\,P_Y(t)$$</div><ul><li>一行推导:\\(E[t^{X+Y}]=E[t^X t^Y]\\overset{\\text{独立}}{=}E[t^X]\\,E[t^Y]\\)。</li><li>独立泊松和:\\(e^{\\lambda_1(t-1)}e^{\\lambda_2(t-1)}=e^{(\\lambda_1+\\lambda_2)(t-1)}\\),仍是泊松——认形状秒答。</li><li>骰子直觉:两颗骰子各记成 \\(\\tfrac16(t+t^2+\\cdots+t^6)\\),相乘后 \\(t^7\\) 的系数自动等于\"和为 7\"的概率 \\(6/36\\)。</li><li>独立是前提;与 MGF 的乘性完全平行。</li></ul><p><strong>算一遍</strong>:独立抛两枚硬币(正面 1、反面 0),用 PGF 求两枚之和的分布。</p><ul><li>单枚:\\(P(t)=0.5+0.5t\\);独立相加 → 相乘:\\((0.5+0.5t)^2=0.25+0.5t+0.25t^2\\)。</li><li>按\"\\(t\\) 的指数 = 取值、系数 = 概率\"读回:和为 0、1、2 的概率是 \\(0.25,\\,0.5,\\,0.25\\)。</li><li>与直接数\"零正/一正/两正\"完全一致——多项式乘法就是自动卷积 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 所属工具</li><li>独立和的MGF — MGF 侧平行结论;\\(P(t)=M(\\ln t)\\) 下是同一件事</li><li>随机变量独立性 — 成立前提</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 由母函数相乘一行可证</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 连续版硬算;PGF 相乘是离散卷积的自动化</li></ul>"
+ },
+ "生存函数": {
+  "kind": "c",
+  "en": "SurvivalFunction",
+  "aliases": [
+   "survival function",
+   "尾概率",
+   "尾函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(S(x)=P[X&gt;x]\\):\"活过 x / 损失超过 x\"的概率,与分布函数互补 \\(S=1-F\\)。精算里描述寿命、损失尾部全靠它。</p><p><strong>白话</strong>:全村人排队过一道 80 岁的门槛,\\(S(80)\\) 就是\"迈过去的人占几成\"——F 数的是倒在门槛前的,S 数的是熬过去的,两拨人加起来正好是全村。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$S(x)=P[X&gt;x]=1-F(x)$$</div><ul><li><strong>F 管\"不超过\",S 管\"超过\"</strong>,俩加起来恒等于 1;看到 at least / greater than,先想 S。</li><li>单调<strong>递减</strong>,\\(S(-\\infty)=1\\)、\\(S(\\infty)=0\\)——与 F 的四条性质镜像。</li><li>求\"至少 / 大于\"类问题用它最省事:\\(F(4)=0.8\\Rightarrow S(4)=0.2\\),一步到位。</li><li>保险语境:\"损失超过免赔额 d\"直接读作 \\(S(d)\\)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,问\"至少 5 点\"的概率。</p><ul><li>先看 F:\\(F(4)=P[X\\le4]=\\tfrac46\\)——1 到 4 点占四格。</li><li>取补:\\(S(4)=1-\\tfrac46=\\tfrac26=\\tfrac13\\),正是 5、6 两格。</li><li>题面写 at least 5,直接想 \\(S(4)\\) 一步到位,不用逐点累加。</li></ul><h4>与其他概念的关系</h4><ul><li>累积分布函数 — 互补关系:\\(S=1-F\\),性质全部镜像</li><li>生存函数求期望 — 非负变量 \\(E[X]=\\int_0^\\infty S(x)\\,dx\\) 的捷径</li><li>免赔额与正赔付条件 — \"损失超过 d 才赔\"就是拿 \\(S(d)\\) 当条件概率分母</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 最常用的生存函数实例:\\(S(x)=e^{-x/\\theta}\\)</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "负二项分布": {
+  "kind": "c",
+  "en": "NegativeBinomialDistribution",
+  "aliases": [
+   "negative binomial distribution",
+   "negative binomial",
+   "NB"
+  ],
+  "level": "advanced",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>每次成功概率为 \\(p\\) 的独立重复试验中,<strong>第 \\(k\\) 次成功之前的失败次数</strong> \\(N\\) 所服从的分布。与二项分布互为镜像:二项固定试验数、数成功几次;负二项固定成功数 \\(k\\)、数成功前失败几次。</p><p><strong>白话</strong>:抽卡集齐 3 张 SSR——数的不是一共抽了几次,而是集齐<strong>之前</strong>吃了多少张歪卡:目标(成功数)定死,账本上记的是路上的失败数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\Pr[N=n]=\\binom{k+n-1}{n}p^k(1-p)^n,\\qquad n=0,1,2,\\dots$$</div><ul><li>首原理推导:前 \\(k+n-1\\) 次里恰 \\(k-1\\) 次成功(二项),<strong>最后一次被\"钉死\"是成功</strong>——两段独立相乘;组合数只在前 \\(k+n-1\\) 次里选 \\(n\\) 个失败位。</li><li>参数 \\(k\\) 取正整数、\\(0\\le p\\le 1\\);取值 \\(n=0,1,2,\\dots\\) <strong>无上限</strong>(二项有上限 \\(n\\))。</li><li><strong>约定坑(最易错)</strong>:本卡 \\(N=\\) 失败数(起点 0);另一常见约定取\"第 \\(k\\) 次成功所在的试验序号\" \\(X=N+k\\)(起点 \\(k\\)),pmf 幂次与均值都差一截——读题先定问的是\"失败几次\"还是\"第几次试验\"。</li><li>题面信号:\"until the k-th success / before the third loss\";问\"第 \\(k\\) 次成功恰在第 \\(m\\) 次试验 / 在第 \\(j\\) 次失败之前\"时,用二项首原理直接拆(前 \\(m-1\\) 次 × 最后一次成功)比硬套公式更稳。</li></ul><p><strong>算一遍</strong>:抛硬币(正面算成功,\\(p=0.5\\)),求第 2 次正面之前恰好吃 1 次反面的概率 \\(\\Pr[N=1]\\)。</p><ul><li>套公式:\\(\\binom{2}{1}(0.5)^2(0.5)^1=2\\times0.125=0.25\\)。</li><li>枚举对照:合法序列只有「反正正」「正反正」(最后一次必须是正面),各 \\(1/8\\),合计 \\(2/8=0.25\\) ✓</li><li>组合数 \\(\\binom{2}{1}\\) 只在前两次里挑失败位——正是\"最后一抛被钉死是成功\"的体现。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 镜像对偶:固定试验数数成功 vs 固定成功数数失败;负二项 pmf 也由\"二项 × 最后一抛成功\"推出</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — \\(k=1\\) 特例:等第一次成功前的失败数</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 底层单次试验:成功/失败二元</li><li><a class=\"net-wl\" data-id=\"负二项分布的均值方差\">负二项分布的均值方差</a> — \\(E[N]=k(1-p)/p\\)、\\(\\operatorname{Var}=k(1-p)/p^2\\) 及序号换算</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 独立同 \\(p\\) 相加,\\(k\\) 相加</li><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 下游 L33:离散计数分布用 PGF 取矩、证可加性</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li></ul>"
+ },
+ "负二项分布可加性": {
+  "kind": "c",
+  "en": "NegativeBinomialAdditivity",
+  "aliases": [
+   "additivity of negative binomial",
+   "sum of independent negative binomials"
+  ],
+  "level": "basic",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>相互独立、<strong>同一成功概率 \\(p\\)</strong> 的负二项随机变量之和仍是负二项,参数为 \\(\\{\\sum_i k_i,\\ p\\}\\)——\"等 \\(\\sum k_i\\) 次成功\"可拆成一段段独立等待的接力。</p><p><strong>白话</strong>:你在同一个卡池先抽齐 2 张 SSR,朋友接着抽齐 3 张——两人吃的歪卡加起来,和一个人一口气抽齐 5 张吃的歪卡是同一本账;前提是用的<strong>同一个卡池</strong>(同 \\(p\\))。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N_i\\sim \\mathrm{NB}(k_i,\\,p)\\ \\text{独立}\\quad\\Longrightarrow\\quad \\sum_i N_i\\sim \\mathrm{NB}\\Big(\\sum_i k_i,\\ p\\Big)$$</div><ul><li>前提缺一不可:<strong>独立</strong> + <strong>同一个 \\(p\\)</strong>;\\(p\\) 不同不能直接加 \\(k\\)。</li><li>最小例:\\(\\mathrm{NB}(k,p)\\) 本身 = \\(k\\) 段独立几何等待之和(每段等一次成功)。</li><li>用途:和的分布直接写参数,免逐点卷积。</li></ul><p><strong>算一遍</strong>:两个独立几何变量(各数一次正面前的反面数,\\(p=0.5\\))相加,验证和是 \\(\\mathrm{NB}(2,0.5)\\)——算 \\(\\Pr[S=1]\\)。</p><ul><li>卷积硬算:拆法只有 \\((0,1)\\) 和 \\((1,0)\\),\\(0.5\\times0.25+0.25\\times0.5=0.25\\)。</li><li>套 NB 公式:\\(\\binom{2}{1}(0.5)^2(0.5)^1=0.25\\) ✓</li><li>两边对上:参数直接相加(\\(1+1=2\\))就替你做完了整个卷积。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"负二项分布\">负二项分布</a> — 规则的宿主分布</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 可加性的最小构件:NB = \\(k\\) 个独立几何之和</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 姊妹规则:同 \\(p\\) 的二项相加 \\(n\\) 相加</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 同类\"参数相加\"规则(泊松连 \\(p\\) 条件都不需要)</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 证明套路:独立和的 PGF/MGF 相乘</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 可加性成立时绕开的笨办法</li></ul>"
+ },
+ "负二项分布的均值方差": {
+  "kind": "c",
+  "en": "NegativeBinomialMeanAndVariance",
+  "aliases": [
+   "mean and variance of negative binomial",
+   "negative binomial moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>负二项随机变量(\\(N=\\) 第 \\(k\\) 次成功前的失败数)的期望与方差公式,以及\"失败数 ↔ 试验序号\"的换算规则。</p><p><strong>白话</strong>:每班公交挤得上去的概率是 \\(p\\),要成功上车 \\(k\\) 次,平均得眼睁睁看多少班挤不上的车开走——这两个公式就是给\"白等的车\"记的账;把白等的加上坐上的,才是一共等了几班。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[N]=\\frac{k(1-p)}{p},\\qquad \\operatorname{Var}(N)=\\frac{k(1-p)}{p^2}$$</div><ul><li>记忆:方差 = 均值再除一个 \\(p\\)。</li><li><strong>序号换算</strong>:第 \\(k\\) 次成功的试验序号 \\(=N+k\\),期望须 \\(+k\\)、<strong>方差不变</strong>(平移不改方差);故 \\(E[\\text{序号}]=k+\\dfrac{k(1-p)}{p}=\\dfrac{k}{p}\\)。</li><li>直觉:总试验数期望 \\(k/p\\) = \"平均每 \\(1/p\\) 次出一个成功 × \\(k\\) 个\"(抽卡:\\(p=2\\%\\) 集齐 3 张 SSR 期望 150 抽)。</li><li>\\(k=1\\) 退化为几何:\\(E=\\dfrac{1-p}{p}\\)、\\(\\operatorname{Var}=\\dfrac{1-p}{p^2}\\)。</li></ul><p><strong>算一遍</strong>:抛硬币(\\(p=0.5\\))等 2 次正面,算平均吃几次反面。</p><ul><li>\\(E[N]=\\dfrac{2(0.5)}{0.5}=2\\)——平均吃 2 次反面。</li><li>方差再除一个 \\(p\\):\\(\\operatorname{Var}=2/0.5=4\\)。</li><li>换算试验序号:期望 \\(+k\\) 得 \\(2+2=4=k/p\\) ✓;方差仍是 4——整体平移 2 格,散布不变。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"负二项分布\">负二项分布</a> — 所属分布本体(pmf 与约定见彼)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — \\(E[N]=k(1-p)/p\\) 是期望概念的具体取值</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 平移不变性正是\"序号版方差不变\"的依据</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — 序号 \\(=N+k\\) 的期望 \\(+k\\) 即线性性</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — \\(k=1\\) 时的退化公式</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 18 原文用词</span><h2 class="sec-title">负二项分布 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它认出"负二项/几何"情境。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 18</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:17%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">negative binomial distribution</td><td class="ipa">/ˈnɛɡətɪv baɪˈnoʊmiəl/</td><td><span class="pos n">n.</span></td><td>负二项分布</td><td class="root">数"第 \(k\) 次成功前的失败数";\(k=1\) 即几何</td></tr>
-          <tr><td class="en">geometric distribution</td><td class="ipa">/ˌdʒiːəˈmɛtrɪk/</td><td><span class="pos n">n.</span></td><td>几何分布</td><td class="root">负二项 \(k=1\) 特例;概率呈几何(等比)衰减</td></tr>
-          <tr><td class="en">Bernoulli trial</td><td class="ipa">/bərˈnuːli/</td><td><span class="pos n">n.</span></td><td>伯努利试验</td><td class="root">只有成功/失败两种结果的独立试验</td></tr>
-          <tr><td class="en">success / failure</td><td class="ipa">/səkˈsɛs/ /ˈfeɪljər/</td><td><span class="pos n">n.</span></td><td>成功 / 失败</td><td class="root">\(p=\) 成功概率,\(1-p=\) 失败概率</td></tr>
-          <tr><td class="en">memoryless</td><td class="ipa">/ˈmɛməriləs/</td><td><span class="pos adj">adj.</span></td><td>无记忆的</td><td class="root">memory(记忆)+less;过去等待不影响未来</td></tr>
-          <tr><td class="en">sequence number</td><td class="ipa">/ˈsiːkwəns/</td><td><span class="pos n">n.</span></td><td>序号</td><td class="root">第几次试验 = 失败数 \(N\) + \(k\)</td></tr>
-          <tr><td class="en">parameter</td><td class="ipa">/pəˈræmɪtər/</td><td><span class="pos n">n.</span></td><td>参数</td><td class="root">para-(旁)+meter(量度);此处 \(k\) 与 \(p\)</td></tr>
-          <tr><td class="en">nonnegative integer</td><td class="ipa">/ˌnɒnˈnɛɡətɪv/</td><td><span class="pos n">n.</span></td><td>非负整数</td><td class="root">\(n=0,1,2,\dots\),失败数从 0 起</td></tr>
-          <tr><td class="en">claim</td><td class="ipa">/kleɪm/</td><td><span class="pos n">n.</span></td><td>索赔</td><td class="root">保险语境高频;年索赔数常设几何分布(例 18D/18E)</td></tr>
-          <tr><td class="en">policy</td><td class="ipa">/ˈpɒləsi/</td><td><span class="pos n">n.</span></td><td>保单</td><td class="root">insurance policy;别与"政策"义混淆</td></tr>
-          <tr><td class="en">group insurance coverage</td><td class="ipa">/ˈkʌvərɪdʒ/</td><td><span class="pos n">n.</span></td><td>团体险(保障)</td><td class="root">cover(覆盖)+age;一张保单保一群人(例 18E)</td></tr>
-          <tr><td class="en">submit a claim</td><td class="ipa">/səbˈmɪt/</td><td><span class="pos v">phr.</span></td><td>提交索赔</td><td class="root">sub-(下)+mit(送);= file a claim</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">occurs before the third loss</div><div class="z">发生在第三次失败之前</div></div>
-        <div class="ph"><div class="e">the k-th success / head</div><div class="z">第 k 次成功 / 正面</div></div>
-        <div class="ph"><div class="e">follows a geometric distribution</div><div class="z">服从几何分布</div></div>
-        <div class="ph"><div class="e">with mean …</div><div class="z">均值为……(反解 p)</div></div>
-        <div class="ph"><div class="e">given that … at least n</div><div class="z">已知至少 n(触发无记忆性)</div></div>
-        <div class="ph"><div class="e">the sequence number of …</div><div class="z">……的序号(= 失败数 + k)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 18</b> · 第十八章 Negative Binomial Distribution 负二项分布</p>
@@ -657,5 +1119,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

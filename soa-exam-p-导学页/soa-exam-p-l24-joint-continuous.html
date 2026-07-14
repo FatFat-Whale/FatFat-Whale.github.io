@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L24 · 连续型联合分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -234,7 +246,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -385,6 +396,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       $$\int_0^{0.5}\!\!\int_0^{0.4}1.2(x^2+y)\,dy\,dx=\int_0^{0.5}1.2\Big(0.4x^2+\tfrac{0.4^2}{2}\Big)dx=\int_0^{0.5}1.2(0.4x^2+0.08)\,dx$$
       $$=1.2\Big(0.4\cdot\tfrac{0.5^3}{3}+0.08\cdot0.5\Big)=1.2(0.0166\overline{6}+0.04)=0.068$$
       <span class="ans">P[X&lt;0.5, Y&lt;0.4] = 0.068</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 区域概率 = 联合密度的二重积分</td><td>\(\Pr[X&lt;0.5,\,Y&lt;0.4]=\iint_R f(x,y)\,dA\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>② 矩形区域 → 积分限全是常数</td><td>\(\int_0^{0.5}\!\!\int_0^{0.4}1.2(x^2+y)\,dy\,dx\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 逐层积分:先内层 \(y\) 再外层 \(x\)</td><td>\(1.2\big(0.4\cdot\tfrac{0.5^3}{3}+0.08\cdot0.5\big)=0.068\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -394,6 +412,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       $$P[X+Y\le0.8]=\int_0^{0.8}\!\!\int_0^{0.8-x}1.2(x^2+y)\,dy\,dx=0.14336$$
       $$\Rightarrow\ P[X+Y&gt;0.8]=1-0.14336=0.85664$$
       <span class="ans">P[X+Y&gt;0.8] = 0.85664</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 斜边事件 → 先取补(补集是好积的三角形)</td><td>\(\Pr[X+Y&gt;0.8]=1-\Pr[X+Y\le0.8]\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 三角形定限:内层 \(y\) 上限随 \(x\) 变</td><td>\(0\le y\le 0.8-x,\ \ 0\le x\le0.8\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 二重积分得补集概率,再取补</td><td>\(\int_0^{0.8}\!\!\int_0^{0.8-x}1.2(x^2+y)\,dy\,dx=0.14336\ \Rightarrow\ 1-0.14336=0.85664\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+      </table></div>
     </div>
     <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>斜边先取补</b> — \(X+Y&gt;c\) 这类斜线事件,先看补集是不是一块更好积的三角形,常把两块积分省成一块。</span></div>
 
@@ -466,7 +491,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
             <line x1="120" y1="88" x2="214" y2="116" stroke="#7a8699" stroke-width="1" stroke-dasharray="4 3"/>
             <polygon points="120,26 26,116 214,116" fill="#2563eb" fill-opacity="0.7" stroke="#1d4ed8" stroke-width="1.2"/>
             <line x1="26" y1="116" x2="214" y2="116" stroke="#16243d" stroke-width="1.8"/>
-            <line x1="120" y1="26" x2="120" y2="144" stroke="#7a8699" stroke-width="1"/>
+            <line x1="120" y1="26" x2="120" y2="72" stroke="#7a8699" stroke-width="1"/><line x1="120" y1="108" x2="120" y2="144" stroke="#7a8699" stroke-width="1"/>
             <line x1="26" y1="116" x2="120" y2="144" stroke="#16243d" stroke-width="1.1"/>
             <line x1="120" y1="144" x2="214" y2="116" stroke="#16243d" stroke-width="1.1"/>
             <text x="120" y="14" font-size="10" font-weight="700" fill="#c6492f" text-anchor="middle">P[X = Y] = 0</text>
@@ -563,41 +588,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 24 原文用词</span><h2 class="sec-title">连续型联合分布 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"密度 / 区域 / 求什么"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 24</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">joint(联合)→ \(f(x,y)\),两变量一起的密度</td></tr>
-          <tr><td class="en">joint distribution function</td><td class="ipa">/ˌdɪstrɪˈbjuːʃən/</td><td><span class="pos n">n.</span></td><td>联合(累积)分布函数</td><td class="root">即联合 cdf \(F(x,y)=P[X\le x,Y\le y]\)</td></tr>
-          <tr><td class="en">continuous</td><td class="ipa">/kənˈtɪnjuəs/</td><td><span class="pos adj">adj.</span></td><td>连续的</td><td class="root">对立于 discrete;单点概率为 0</td></tr>
-          <tr><td class="en">double integral</td><td class="ipa">/ˈdʌbəl ˈɪntɪɡrəl/</td><td><span class="pos n">n.</span></td><td>二重积分</td><td class="root">\(\iint\);区域概率的核心运算</td></tr>
-          <tr><td class="en">region</td><td class="ipa">/ˈriːdʒən/</td><td><span class="pos n">n.</span></td><td>区域</td><td class="root">积分区域 \(R\);读题先画出它</td></tr>
-          <tr><td class="en">integrate over</td><td class="ipa">/ˈɪntɪɡreɪt/</td><td><span class="pos v">v.</span></td><td>在……上积分</td><td class="root">"integrate over the region" = 在区域上积分</td></tr>
-          <tr><td class="en">limits of integration</td><td class="ipa">/ˈlɪmɪts/</td><td><span class="pos n">n.</span></td><td>积分限</td><td class="root">内外层上下限;非矩形时内层随外层变</td></tr>
-          <tr><td class="en">partial derivative</td><td class="ipa">/ˈpɑːʃəl dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>偏导数</td><td class="root">\(f=\partial^2F/\partial x\,\partial y\) 混合二阶偏导</td></tr>
-          <tr><td class="en">otherwise</td><td class="ipa">/ˈʌðəwaɪz/</td><td><span class="pos adv">adv.</span></td><td>其他情况(下)</td><td class="root">分段密度里 "otherwise \(=0\)" 界定支撑</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">joint density function of X and Y</div><div class="z">X 与 Y 的联合密度</div></div>
-        <div class="ph"><div class="e">for 0 &lt; x &lt; y &lt; 1</div><div class="z">支撑范围(定积分限的依据)</div></div>
-        <div class="ph"><div class="e">calculate the probability that …</div><div class="z">求……的概率</div></div>
-        <div class="ph"><div class="e">the region we integrate over</div><div class="z">我们要积分的区域</div></div>
-        <div class="ph"><div class="e">take the complement</div><div class="z">取补集(简化斜边区域)</div></div>
-        <div class="ph"><div class="e">what is the value of k?</div><div class="z">常数 k 的值(令积分=1 反解)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -637,5 +627,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

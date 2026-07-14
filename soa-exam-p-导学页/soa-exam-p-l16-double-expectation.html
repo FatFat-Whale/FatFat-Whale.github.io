@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L16 · 双重期望公式</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -227,28 +297,104 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#tower">全期望</a>
   <a href="#rv">条件是随机变量</a>
   <a href="#evve">全方差</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完双重期望你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 用<b>全期望公式</b> \(E[X]=E\big[E[X\mid Y]\big]\) 把难算的期望拆成"先对 X、后对 Y"两步。</p>
-        <p style="margin-bottom:0">✅ 对分段/混合/免赔额场景,按 \(Y\) 分情形条件求 \(E[X]\)。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>全期望(塔式)</h4>
+        <p>\(E[g(X)]=E_Y\big[E_X[g(X)\mid Y]\big]\)</p>
+        <p><span class="fx-de" data-tip="推导:按 Y 分组算组内均值,再按组权重加权:分组平均=总平均" tabindex="0">推</span>\(E[X]=E\big[E[X\mid Y]\big]\)</p>
+        <p>先内层对 \(X\)、后外层对 \(Y\)</p>
+        <p>用途:分段 / 免赔额 / 混合分布</p>
+      </div>
+      <div class="cc t">
+        <h4>全方差(EVVE)</h4>
+        <p>\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
+        <p>E-of-V + <b>V-of-E</b>(勿漏第二项)</p>
+        <p><span class="fx-de" data-tip="推导:Var 捷径 Var=E[Y²]-E[Y]² 移项" tabindex="0">推</span>\(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\)</p>
+        <p>\(\operatorname{Var}(aY)=a^2\operatorname{Var}(Y)\)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>用<b>全期望公式</b> \(E[X]=E\big[E[X\mid Y]\big]\) 把难算的期望拆成"先对 \(X\)、后对 \(Y\)"两步;对<b>分段 / 混合 / 免赔额</b>场景,按 \(Y\) 分情形条件求 \(E[X]\)。</li>
+          <li>用<b>全方差公式(EVVE)</b> \(\operatorname{Var}(X)=E\big[\operatorname{Var}(X\mid Y)\big]+\operatorname{Var}\big(E[X\mid Y]\big)\) 拆方差,两项缺一不可。</li>
+          <li>认清 \(E[X\mid Y]\)、\(\operatorname{Var}(X\mid Y)\) <b>是关于 \(Y\) 的随机变量</b>,才能再对它们求期望 / 方差。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 用<b>全方差公式(EVVE)</b> \(\operatorname{Var}(X)=E\big[\operatorname{Var}(X\mid Y)\big]+\operatorname{Var}\big(E[X\mid Y]\big)\) 拆方差。</p>
-        <p style="margin-bottom:0">✅ 认清 \(E[X\mid Y]\)、\(\operatorname{Var}(X\mid Y)\) <b>是关于 \(Y\) 的随机变量</b>,能再对它们求期望/方差。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>句式信号:"given \(Y=y\), \(X\) has mean \(10y\) and variance \(3y^2\)" → 直接抄成 \(E[X\mid Y]=10Y\)、\(\operatorname{Var}(X\mid Y)=3Y^2\) 套 EVVE(例 16B 模板)。</li>
+          <li><b>分层 / 复合</b>:先抽组、组内再出结果——掷硬币定掷几颗骰、好/坏司机再出事故数、按风险类出损失;期望用塔式,方差用 EVVE。</li>
+          <li>免赔额 / 分段:找"分情形开关" \(Y\)(例 16A)。</li>
+          <li>陷阱:漏 \(\operatorname{Var}(E[X\mid Y])\)、\(E[3Y^2]\) 写成 \(3E[Y]^2\)(丢 \(\operatorname{Var}(Y)\))、\(\operatorname{Var}(aY)\) 忘平方系数。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="全期望公式">◆ 全期望公式</button><button class="chip" data-card="条件期望是随机变量">◆ 条件期望是随机变量</button><button class="chip" data-card="全方差公式">★ 全方差公式</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 9 / 全章 26)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>16.2</b></td><td>混合分布:部分损失+全损期望赔付</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q51" type="button" title="展开题目与答案(样题 Q51)">▸</button>Q51</td><td class="dim" style="font-size:13px">全损点质量+部分损失密度的混合分布,分情形条件求期望赔付(S01:17)</td></tr>
+<tr class="kxd kxds" data-kxq="Q51" style="display:none"><td colspan="4"><div class="kx-qtx">An auto insurance company insures an automobile worth 15,000 for one year under a policy with a 1,000 deductible. During the policy year there is a 0.04 chance of partial damage to the car and a 0.02 chance of a total loss of the car. If there is partial damage to the car, the amount \( X \) of damage (in thousands) follows a distribution with density function \( f(x) = 0.5003 e^{-x/2} \) for \( 0 &lt; x &lt; 15 \), and \( f(x) = 0 \) otherwise. Calculate the expected claim payment.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 320</span><span class="kx-opt"><b>(B)</b> 328</span><span class="kx-opt"><b>(C)</b> 352</span><span class="kx-opt"><b>(D)</b> 380</span><span class="kx-opt"><b>(E)</b> 540</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;三情形混合加权</td><td>\(E=(0.94)(0)+(0.02)(15-1)+0.04\int_1^{15}(x-1)0.5003e^{-x/2}dx\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;部分损失含免赔1</td><td>\(\int_1^{15}(x-1)0.5003e^{-x/2}dx\ \text{按}(x-1)\text{赔}\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07</a></td></tr><tr><td>③&nbsp;分部积分合计</td><td>\(0.28+(0.020012)(2.408)=0.328\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>16.3</b></td><td>分层全期望:硬币定掷骰数</td><td style="white-space:nowrap"><button class="kxb" data-kx="16.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">掷硬币决定掷几颗骰的分层全期望最干净范本(110-S85:50)</td></tr>
+<tr class="kxd" data-kxq="16.3" style="display:none"><td colspan="4"><div class="kx-qtx">A fair coin is tossed. If a head occurs, 1 die is rolled; if a tail occurs, 2 dice are rolled. Let \( Y \) be the total on the die or dice. What is \( \mathrm{E}[Y] \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{7}{2} \)</span><span class="kx-opt"><b>(B)</b> \( 5 \)</span><span class="kx-opt"><b>(C)</b> \( \frac{21}{4} \)</span><span class="kx-opt"><b>(D)</b> \( 7 \)</span><span class="kx-opt"><b>(E)</b> \( \frac{21}{2} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;按硬币结果条件分解</td><td>\( \mathrm{E}[Y]=P[H]\,\mathrm{E}[Y\mid H]+P[T]\,\mathrm{E}[Y\mid T] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入两组条件均值</td><td>\( =0.5(3.5)+0.5(7) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( =5.25 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>16.9</b></td><td>免赔额全期望:均匀损失未赔部分</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q219" type="button" title="展开题目与答案(样题 Q219)">▸</button>Q219</td><td class="dim" style="font-size:13px">均匀分布按是否超免赔额切两段,求免赔额 d 的标准全期望题</td></tr>
+<tr class="kxd kxds" data-kxq="Q219" style="display:none"><td colspan="4"><div class="kx-qtx">For a certain health insurance policy, losses are uniformly distributed on the interval [0, 450]. The policy has a deductible of \(d\) and the expected value of the unreimbursed portion of a loss is 56.
+
+Calculate \(d\).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 60</span><span class="kx-opt"><b>(B)</b> 87</span><span class="kx-opt"><b>(C)</b> 112</span><span class="kx-opt"><b>(D)</b> 169</span><span class="kx-opt"><b>(E)</b> 224</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;自留额=损失与d取小</td><td>\(\min(X,d),\ X\sim U(0,450)\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>②&nbsp;分段积分列期望方程</td><td>\(\int_0^d\frac{x}{450}dx+d\cdot\frac{450-d}{450}=56\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07</a></td></tr><tr><td>③&nbsp;解二次方程</td><td>\(d^2-900d+50400=0\Rightarrow d=60\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q219" style="display:none"><td colspan="4"><div class="kx-qtx">For a certain health insurance policy, losses are uniformly distributed on the interval [0, 450]. The policy has a deductible of \(d\) and the expected value of the unreimbursed portion of a loss is 56.
+
+Calculate \(d\).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 60</span><span class="kx-opt"><b>(B)</b> 87</span><span class="kx-opt"><b>(C)</b> 112</span><span class="kx-opt"><b>(D)</b> 169</span><span class="kx-opt"><b>(E)</b> 224</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;自留额=损失与d取小</td><td>\(\min(X,d),\ X\sim U(0,450)\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>②&nbsp;分段积分列期望方程</td><td>\(\int_0^d\frac{x}{450}dx+d\cdot\frac{450-d}{450}=56\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07</a></td></tr><tr><td>③&nbsp;解二次方程</td><td>\(d^2-900d+50400=0\Rightarrow d=60\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>16.12</b></td><td>离散混合:三地区索赔额标准差</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q174" type="button" title="展开题目与答案(样题 Q174)">▸</button>Q174</td><td class="dim" style="font-size:13px">等概率抽地区再出索赔的离散混合边缘分布方差范式</td></tr>
+<tr class="kxd kxds" data-kxq="Q174" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company has an equal number of claims in each of three territories. In each territory, only three claim amounts are possible: 100, 500, and 1000. Based on the company&#x27;s data, the probabilities of each claim amount are:
+
+Claim Amount: 100, 500, 1000 | Territory 1: 0.90, 0.08, 0.02 | Territory 2: 0.80, 0.11, 0.09 | Territory 3: 0.70, 0.20, 0.10
+
+Calculate the standard deviation of a randomly selected claim amount.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 254</span><span class="kx-opt"><b>(B)</b> 291</span><span class="kx-opt"><b>(C)</b> 332</span><span class="kx-opt"><b>(D)</b> 368</span><span class="kx-opt"><b>(E)</b> 396</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;均匀混合平均概率</td><td>\( P(100)=0.80,\ P(500)=0.13,\ P(1000)=0.07 \)</td><td class="xr"><a href="soa-exam-p-l04-bayes-theorem.html">L04</a></td></tr><tr><td>②&nbsp;求均值与二阶矩</td><td>\( E(X)=215,\ E(X^2)=110500 \)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr><tr><td>③&nbsp;方差开根</td><td>\( \sqrt{110500-215^2}=\sqrt{64275}=253.53 \)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q174" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company has an equal number of claims in each of three territories. In each territory, only three claim amounts are possible: 100, 500, and 1000. Based on the company&#x27;s data, the probabilities of each claim amount are:
+
+Claim Amount: 100, 500, 1000 | Territory 1: 0.90, 0.08, 0.02 | Territory 2: 0.80, 0.11, 0.09 | Territory 3: 0.70, 0.20, 0.10
+
+Calculate the standard deviation of a randomly selected claim amount.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 254</span><span class="kx-opt"><b>(B)</b> 291</span><span class="kx-opt"><b>(C)</b> 332</span><span class="kx-opt"><b>(D)</b> 368</span><span class="kx-opt"><b>(E)</b> 396</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;均匀混合平均概率</td><td>\( P(100)=0.80,\ P(500)=0.13,\ P(1000)=0.07 \)</td><td class="xr"><a href="soa-exam-p-l04-bayes-theorem.html">L04</a></td></tr><tr><td>②&nbsp;求均值与二阶矩</td><td>\( E(X)=215,\ E(X^2)=110500 \)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr><tr><td>③&nbsp;方差开根</td><td>\( \sqrt{110500-215^2}=\sqrt{64275}=253.53 \)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr></table></div></td></tr>
+<tr><td><b>16.16</b></td><td>EVVE:免赔额 b/2 下赔付方差比</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q230" type="button" title="展开题目与答案(样题 Q230)">▸</button>Q230</td><td class="dim" style="font-size:13px">免赔额下条件方差公式求方差比值的代表题</td></tr>
+<tr class="kxd kxds" data-kxq="Q230" style="display:none"><td colspan="4"><div class="kx-qtx">Under a liability insurance policy, losses are uniformly distributed on \([0, b]\), where \(b\) is a positive constant. There is a deductible of \(b/2\).
+
+Calculate the ratio of the variance of the claim payment (greater than or equal to zero) from a given loss to the variance of the loss.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1:8</span><span class="kx-opt"><b>(B)</b> 3:16</span><span class="kx-opt"><b>(C)</b> 1:4</span><span class="kx-opt"><b>(D)</b> 5:16</span><span class="kx-opt"><b>(E)</b> 1:2</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;均匀损失方差</td><td>\(Var(X)=b^2/12\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>②&nbsp;赔付均值分段积分</td><td>\(E(C)=\int_{b/2}^{b}(x-\tfrac b2)\tfrac1b dx=b/8\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07</a></td></tr><tr><td>③&nbsp;赔付二阶矩</td><td>\(E(C^2)=(b/2)^3/(3b)=b^2/24\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr><tr><td>④&nbsp;求方差取比</td><td>\(Var(C)=\tfrac{5b^2}{192},\ \frac{5b^2/192}{b^2/12}=\tfrac{5}{16}\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q230" style="display:none"><td colspan="4"><div class="kx-qtx">Under a liability insurance policy, losses are uniformly distributed on \([0, b]\), where \(b\) is a positive constant. There is a deductible of \(b/2\).
+
+Calculate the ratio of the variance of the claim payment (greater than or equal to zero) from a given loss to the variance of the loss.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1:8</span><span class="kx-opt"><b>(B)</b> 3:16</span><span class="kx-opt"><b>(C)</b> 1:4</span><span class="kx-opt"><b>(D)</b> 5:16</span><span class="kx-opt"><b>(E)</b> 1:2</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;均匀损失方差</td><td>\(Var(X)=b^2/12\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>②&nbsp;赔付均值分段积分</td><td>\(E(C)=\int_{b/2}^{b}(x-\tfrac b2)\tfrac1b dx=b/8\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07</a></td></tr><tr><td>③&nbsp;赔付二阶矩</td><td>\(E(C^2)=(b/2)^3/(3b)=b^2/24\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr><tr><td>④&nbsp;求方差取比</td><td>\(Var(C)=\tfrac{5b^2}{192},\ \frac{5b^2/192}{b^2/12}=\tfrac{5}{16}\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>16.18</b></td><td>EVVE分层:好/坏司机索赔方差</td><td style="white-space:nowrap"><button class="kxb" data-kx="16.18" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">两组均值+方差直接套 EVVE 的经典分层范本(1999 Sample:24)</td></tr>
+<tr class="kxd" data-kxq="16.18" style="display:none"><td colspan="4"><div class="kx-qtx">An automobile insurance company divides its policyholders into two groups: good drivers and bad drivers. For the good drivers, the amount of an average claim is 1400, with a variance of 40,000. For the bad drivers, the amount of an average claim is 2000, with a variance of 250,000. Sixty percent of the policyholders are classified as good drivers. Calculate the variance of the amount of a claim for a policyholder.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 124{,}000 \)</span><span class="kx-opt"><b>(B)</b> \( 145{,}000 \)</span><span class="kx-opt"><b>(C)</b> \( 166{,}000 \)</span><span class="kx-opt"><b>(D)</b> \( 210{,}400 \)</span><span class="kx-opt"><b>(E)</b> \( 235{,}000 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;按司机组用 EVVE 分解</td><td>\( \mathrm{Var}(X)=\mathrm{Var}(\mathrm{E}[X\mid I])+\mathrm{E}[\mathrm{Var}(X\mid I)] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;组间均值方差+组内方差期望</td><td>\( =600^2(0.6)(0.4)+0.6(40{,}000)+0.4(250{,}000) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( =210{,}400 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>16.20</b></td><td>EVVE复合:速度定指数损失方差</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q245" type="button" title="展开题目与答案(样题 Q245)">▸</button>Q245</td><td class="dim" style="font-size:13px">给定速度条件损失为指数分布的复合方差高频题</td></tr>
+<tr class="kxd kxds" data-kxq="Q245" style="display:none"><td colspan="4"><div class="kx-qtx">On Main Street, a driver&#x27;s speed just before an accident is uniformly distributed on [5, 20]. Given the speed, the resulting loss from the accident is exponentially distributed with mean equal to three times the speed.
+
+Calculate the variance of a loss due to an accident on Main Street.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 525</span><span class="kx-opt"><b>(B)</b> 1463</span><span class="kx-opt"><b>(C)</b> 1575</span><span class="kx-opt"><b>(D)</b> 1632</span><span class="kx-opt"><b>(E)</b> 1744</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;全方差公式拆解</td><td>\(Var(X)=Var[E(X\mid S)]+E[Var(X\mid S)]\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;条件指数的均值方差</td><td>\(E(X\mid S)=3S,\ Var(X\mid S)=9S^2\)</td><td class="xr"><a href="soa-exam-p-l20-exponential-distribution.html">L20</a></td></tr><tr><td>③&nbsp;均匀分布矩代入</td><td>\(Var(3S)=9\tfrac{15^2}{12},\ E(S^2)=\tfrac{15^2}{12}+12.5^2\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>④&nbsp;合计</td><td>\(168.75+1575=1743.75\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q245" style="display:none"><td colspan="4"><div class="kx-qtx">On Main Street, a driver&#x27;s speed just before an accident is uniformly distributed on [5, 20]. Given the speed, the resulting loss from the accident is exponentially distributed with mean equal to three times the speed.
+
+Calculate the variance of a loss due to an accident on Main Street.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 525</span><span class="kx-opt"><b>(B)</b> 1463</span><span class="kx-opt"><b>(C)</b> 1575</span><span class="kx-opt"><b>(D)</b> 1632</span><span class="kx-opt"><b>(E)</b> 1744</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;全方差公式拆解</td><td>\(Var(X)=Var[E(X\mid S)]+E[Var(X\mid S)]\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;条件指数的均值方差</td><td>\(E(X\mid S)=3S,\ Var(X\mid S)=9S^2\)</td><td class="xr"><a href="soa-exam-p-l20-exponential-distribution.html">L20</a></td></tr><tr><td>③&nbsp;均匀分布矩代入</td><td>\(Var(3S)=9\tfrac{15^2}{12},\ E(S^2)=\tfrac{15^2}{12}+12.5^2\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>④&nbsp;合计</td><td>\(168.75+1575=1743.75\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>16.22</b></td><td>EVVE模板:条件均值 x、方差 x²</td><td style="white-space:nowrap"><button class="kxb" data-kx="16.22" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">例16B『given Y=y 抄均值方差』的纯抽象 EVVE 模板题(110-S92:21)</td></tr>
+<tr class="kxd" data-kxq="16.22" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) be a random variable with mean 3 and variance 2, and let \( Y \) be a random variable such that for every \( x \), the conditional distribution of \( Y \) given \( X = x \) has mean \( x \) and variance \( x^2 \). What is the variance of the marginal distribution of \( Y \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 2 \)</span><span class="kx-opt"><b>(B)</b> \( 4 \)</span><span class="kx-opt"><b>(C)</b> \( 5 \)</span><span class="kx-opt"><b>(D)</b> \( 11 \)</span><span class="kx-opt"><b>(E)</b> \( 13 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;条件在 X 上套 EVVE</td><td>\( \mathrm{Var}(Y)=\mathrm{E}[\mathrm{Var}(Y\mid X)]+\mathrm{Var}(\mathrm{E}[Y\mid X]) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入 Var(Y|X)=X²、E[Y|X]=X</td><td>\( =\mathrm{E}[X^2]+\mathrm{Var}(X) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;用 E[X²]=Var(X)+E[X]² 收口</td><td>\( =(2+3^2)+2=13 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>16.24</b></td><td>EVVE:保修截断均匀方差</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q57" type="button" title="展开题目与答案(样题 Q57)">▸</button>Q57</td><td class="dim" style="font-size:13px">失效或4岁替换的截断均匀分布+EVVE 求方差代表题(S01:35)</td></tr>
+<tr class="kxd kxds" data-kxq="Q57" style="display:none"><td colspan="4"><div class="kx-qtx">The warranty on a machine specifies that it will be replaced at failure or age 4, whichever occurs first. The machine&#x27;s age at failure, \( X \), has density function \( f(x) = 1/5 \) for \( 0 &lt; x &lt; 5 \), and \( f(x) = 0 \) otherwise. Let \( Y \) be the age of the machine at the time of replacement. Calculate the variance of \( Y \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1.3</span><span class="kx-opt"><b>(B)</b> 1.4</span><span class="kx-opt"><b>(C)</b> 1.7</span><span class="kx-opt"><b>(D)</b> 2.1</span><span class="kx-opt"><b>(E)</b> 7.5</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;限额4的期望</td><td>\(E[Y]=\int_0^4 x(0.2)dx+4(0.2)=1.6+0.8=2.4\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07</a></td></tr><tr><td>②&nbsp;限额4的二阶矩</td><td>\(E[Y^2]=\int_0^4 x^2(0.2)dx+16(0.2)=7.46667\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr><tr><td>③&nbsp;方差公式</td><td>\(\mathrm{Var}[Y]=7.46667-2.4^2=1.707\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08</a></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 15(同题型二刷备用)· 跳过 2(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -319,6 +465,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>再对"分组"取期望(全期望):\(\;\Pr(X>1000)=1-\dfrac{1000}{10000}=0.9\),于是
       $$E[Y]=\underbrace{\Pr(X\le1000)}_{0.1}\cdot 0+\underbrace{\Pr(X>1000)}_{0.9}\cdot 4500=0.9\times4500.$$</p>
       <span class="ans">E[Y] = 0.9 × 4500 = 4050</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 找"分情形开关":损失是否超免赔额</td><td>\(B=\{X&gt;1000\}\),两组内 \(E[Y\mid\cdot]\) 都简单</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 组内条件期望:超额部分仍均匀</td><td>\(X\mid X&gt;1000\sim U(1000,10000]\Rightarrow Y\sim U[0,9000],\ E=\tfrac{a+b}{2}=4500\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15 均匀 ↗</a></td></tr>
+        <tr><td>③ 分组概率(均匀分布按长度占比)</td><td>\(\Pr(X&gt;1000)=1-\tfrac{1000}{10000}=0.9\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15 均匀 ↗</a></td></tr>
+        <tr><td>④ 全期望:按组概率加权</td><td>\(E[Y]=\sum_i \Pr(B_i)\,E[Y\mid B_i]=0.1\cdot0+0.9\cdot4500\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>套路:</b>遇到<b>分段函数 / 免赔额 / 混合分布</b>,先找一个"分情形的开关" \(Y\),在每种情形下 \(E[X\mid Y]\) 都简单,再按各情形概率加权——比直接积分省事得多。</span></div>
   </div>
@@ -477,6 +631,15 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       $$\operatorname{Var}\big(E[X\mid Y]\big)=\operatorname{Var}(10Y)=10^2\operatorname{Var}(Y)=100\times12=1200.$$</p>
       <p>相加(EVVE):\(\;\operatorname{Var}(X)=111+1200\)。</p>
       <span class="ans">Var(X) = 111 + 1200 = 1311</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 认题型:给了 \(E[X\mid Y]\)、\(\operatorname{Var}(X\mid Y)\) → 全方差</td><td>\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 组内方差的平均:先补出 \(E[Y^2]\)</td><td>\(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2=12+25=37\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08 方差 ↗</a></td></tr>
+        <tr><td>③ 代入得第一块</td><td>\(E[3Y^2]=3E[Y^2]=111\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07 期望 ↗</a></td></tr>
+        <tr><td>④ 组均值的方差:常数平方外提</td><td>\(\operatorname{Var}(10Y)=10^2\operatorname{Var}(Y)=1200\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08 方差 ↗</a></td></tr>
+        <tr><td>⑤ EVVE 两块相加</td><td>\(\operatorname{Var}(X)=111+1200=1311\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>算 \(E[\operatorname{Var}(X\mid Y)]\) 的常见配套:</b>条件方差往往含 \(Y^2\)(如 \(3Y^2\)),对它求期望要用 \(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\),别直接写成 \(3\,E[Y]^2\)——那样漏了 \(\operatorname{Var}(Y)\)。</span></div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>教材自创速记号 \(E[a,b]\) 与 \(\operatorname{Var}(a,b)\)(课本 p.258):</b>课本用它表示一个<b>两点随机变量</b>(按题面给定的权重取 \(a\) 或 \(b\))的均值 / 方差。课本的例子:变量以概率 0.7 取 10、以概率 0.3 取 20,则 \(E[10,20]=0.7(10)+0.3(20)=13\);又 \(E[X^2]=0.7(100)+0.3(400)=190\),故 \(\operatorname{Var}(10,20)=190-13^2=21\)。注意这是<b>该书自创记号</b>,SOA 考题不会出现——认得课本里的这两个写法即可,不必自己用。</span></div>
@@ -526,28 +689,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
             <line x1="30" y1="112" x2="210" y2="112" stroke="#16243d" stroke-width="2"/>
             <text x="70" y="127" font-size="10" fill="#16243d" text-anchor="middle">80</text>
             <text x="170" y="127" font-size="10" fill="#16243d" text-anchor="middle">90</text>
-            <line x1="50" y1="136" x2="90" y2="136" stroke="#46566f" stroke-width="1"/>
-            <line x1="50" y1="132" x2="50" y2="140" stroke="#46566f" stroke-width="1"/>
-            <line x1="90" y1="132" x2="90" y2="140" stroke="#46566f" stroke-width="1"/>
-            <line x1="150" y1="136" x2="190" y2="136" stroke="#46566f" stroke-width="1"/>
-            <line x1="150" y1="132" x2="150" y2="140" stroke="#46566f" stroke-width="1"/>
-            <line x1="190" y1="132" x2="190" y2="140" stroke="#46566f" stroke-width="1"/>
+            <line x1="50" y1="144" x2="90" y2="144" stroke="#46566f" stroke-width="1"/>
+            <line x1="50" y1="140" x2="50" y2="148" stroke="#46566f" stroke-width="1"/>
+            <line x1="90" y1="140" x2="90" y2="148" stroke="#46566f" stroke-width="1"/>
+            <line x1="150" y1="144" x2="190" y2="144" stroke="#46566f" stroke-width="1"/>
+            <line x1="150" y1="140" x2="150" y2="148" stroke="#46566f" stroke-width="1"/>
+            <line x1="190" y1="140" x2="190" y2="148" stroke="#46566f" stroke-width="1"/>
             <text x="120" y="140" font-size="9" fill="#46566f" text-anchor="middle">组内波动 E[Var]</text>
           </svg>
           <div class="cap"><b>EVVE=两块拼起来</b>:各班内部散开是 \(E[\operatorname{Var}]\),两班平均分相差 10 是 \(\operatorname{Var}(E)\),缺一必偏小</div>
         </div>
       </div>
       <p class="dim">全校分数为什么散?两个来源:<b>各班内部</b>本来就有高低(组内波动,对应 \(E[\operatorname{Var}]\));<b>两个班的平均分</b>又彼此差 10 分(组间差异,对应 \(\operatorname{Var}(E)\))。把两块加起来才是全校的总方差——这就是 EVVE。只记组内、忘了班与班的差,方差必然偏小,这正是考题最爱挖的坑。</p>
-    </div>
-
-    <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>句式信号:"given \(Y=y\), \(X\) has mean \(10y\) and variance \(3y^2\)" → 直接抄成 \(E[X\mid Y]=10Y\)、\(\operatorname{Var}(X\mid Y)=3Y^2\) 套 EVVE(例 16B 模板)。</li>
-        <li><b>分层 / 复合</b>:先抽组、组内再出结果——掷硬币定掷几颗骰、好/坏司机再出事故数、按风险类出损失;期望用塔式,方差用 EVVE。</li>
-        <li>免赔额 / 分段:找"分情形开关" \(Y\)(例 16A)。</li>
-        <li>陷阱:漏 \(\operatorname{Var}(E[X\mid Y])\)、\(E[3Y^2]\) 写成 \(3E[Y]^2\)(丢 \(\operatorname{Var}(Y)\))、\(\operatorname{Var}(aY)\) 忘平方系数。</li>
-      </ol>
     </div>
 
     <div class="card">
@@ -561,102 +714,297 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>全方差漏第二项</b>:只写 \(E[\operatorname{Var}(X\mid Y)]\)、忘了 \(\operatorname{Var}(E[X\mid Y])\)——最常见的失分点。</li>
-          <li><b>内外层顺序反</b>:必须<b>内层先对 \(X\)</b>(把 \(Y\) 当常数)、<b>外层再对 \(Y\)</b>;写成先对 \(Y\) 就错。</li>
-          <li><b>把 \(E[X\mid Y]\) 当成数</b>:不带具体值时它是随机变量,才能再求期望/方差。</li>
-          <li><b>\(E[\operatorname{Var}(X\mid Y)]\) 里 \(Y^2\) 直接平方</b>:要用 \(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\),别丢 \(\operatorname{Var}(Y)\)。</li>
-          <li><b>\(\operatorname{Var}(aY)=a^2\operatorname{Var}(Y)\)</b>:算 \(\operatorname{Var}(E[X\mid Y])\) 时系数要平方,别忘。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 16.1</span>32 个独立风险,索赔概率 1/6、赔额密度 \(2(1-y)\),求期望总赔付。<b>答 16/9 (A)</b></li>
-          <li><span class="ref">练 16.3</span>抛硬币:正面掷 1 骰、反面掷 2 骰,求点数和 \(E[Y]\)。<b>答 21/4 (C)</b></li>
-          <li><span class="ref">练 16.4</span>反复掷骰,\(X\)=首现 5 的次数,\(Y\)=首现 6,求 \(E[X\mid Y=2]\)。</li>
-          <li><span class="ref">练 16.9</span>免赔额 \(d\)、损失 \(U[0,450]\),给定未赔付部分期望 56 求 \(d\)。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>已知 \(E[X\mid Y]=2Y\),\(E[Y]=3\),求 \(E[X]\)。</li>
-        <li>\(\operatorname{Var}(X\mid Y)=Y\)(即恒等于 \(Y\)),\(E[Y]=4\),求 \(E[\operatorname{Var}(X\mid Y)]\)。</li>
-        <li>\(E[X\mid Y]=5Y\),\(\operatorname{Var}(Y)=2\),求 \(\operatorname{Var}(E[X\mid Y])\)。</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(E[X]=E[2Y]=2\times3=6\);② \(E[\operatorname{Var}(X\mid Y)]=E[Y]=4\);③ \(\operatorname{Var}(5Y)=25\times2=50\)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 双重期望</h2></div></div>
-    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>全期望(塔式)</h4>
-        <p>\(E[g(X)]=E_Y\big[E_X[g(X)\mid Y]\big]\)</p>
-        <p>\(E[X]=E\big[E[X\mid Y]\big]\)</p>
-        <p>先内层对 \(X\)、后外层对 \(Y\)</p>
-        <p>用途:分段 / 免赔额 / 混合分布</p>
-      </div>
-      <div class="cc t">
-        <h4>全方差(EVVE)</h4>
-        <p>\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
-        <p>E-of-V + <b>V-of-E</b>(勿漏第二项)</p>
-        <p>\(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\)</p>
-        <p>\(\operatorname{Var}(aY)=a^2\operatorname{Var}(Y)\)</p>
-      </div>
-    </div>
-    <div class="note"><span class="ic">🧠</span><span class="t"><b>一句话:</b>\(E[X\mid Y]\) 与 \(\operatorname{Var}(X\mid Y)\) 都是<b>关于 \(Y\) 的随机变量</b>;塔式对第一个再求期望,EVVE 对第一个求方差、对第二个求期望。</span></div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "全方差公式": {
+  "kind": "c",
+  "en": "LawOfTotalVariance",
+  "aliases": [
+   "law of total variance",
+   "conditional variance formula",
+   "EVVE"
+  ],
+  "level": "hard",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>总方差 = <strong>组内方差的平均 + 组间均值的方差</strong>(EVVE)。总波动来自两处:每组内部本身的散布(条件方差的期望),以及各组中心彼此的差异(条件期望的方差)——两项相加,缺一不可。</p><p><strong>白话</strong>:全校成绩的总波动 = 各班内部成绩有多散(平均一下)+ 各班平均分彼此差多远。\"班里散\"和\"班与班散\"是两股独立的波动,加起来才是全貌。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=\\underbrace{E\\big[\\operatorname{Var}(X\\mid Y)\\big]}_{\\text{组内方差的平均}}+\\underbrace{\\operatorname{Var}\\big(E[X\\mid Y]\\big)}_{\\text{组均值的方差}}$$</div><ul><li>口诀 <strong>EVVE:E-of-V 加 V-of-E</strong>;头号丢分是漏第二项 \\(\\operatorname{Var}(E[X\\mid Y])\\)。</li><li>推导:对 \\(X\\)、\\(X^2\\) 各用一次塔式,内层展开 \\(E[X^2\\mid Y]=\\operatorname{Var}(X\\mid Y)+E[X\\mid Y]^2\\),末步对 \\(Z=E[X\\mid Y]\\) 用 \\(\\operatorname{Var}(Z)=E[Z^2]-E[Z]^2\\)。</li><li>配套工具:条件方差含 \\(Y^2\\)(如 \\(3Y^2\\))时用 \\(E[Y^2]=\\operatorname{Var}(Y)+E[Y]^2\\),别写成 \\(3E[Y]^2\\);\\(\\operatorname{Var}(aY)=a^2\\operatorname{Var}(Y)\\),系数要平方。</li><li>例 16B:\\(E[X\\mid Y]=10Y\\)、\\(\\operatorname{Var}(X\\mid Y)=3Y^2\\),\\(E[Y]=5\\)、\\(\\operatorname{Var}(Y)=12\\) → \\(3(12+25)+100\\times12=111+1200=1311\\)。</li><li>题型:分层 / 复合(先抽组、组内再出结果——掷硬币定掷几颗骰、好坏司机再出事故数);期望用塔式,方差用 EVVE。</li></ul><p><strong>算一遍</strong>:两个班各占一半:A 班人人 60 分(组内方差 0);B 班一半 70、一半 90(组内均值 80、方差 100)。</p><ul><li>组内方差的平均:\\(E[\\operatorname{Var}(X\\mid Y)]=0.5(0)+0.5(100)=50\\)。</li><li>组均值的方差:均值 60 与 80 各占一半,总均值 70 → \\(0.5(60-70)^2+0.5(80-70)^2=100\\)。</li><li>总方差 \\(=50+100=150\\)(直接对三点分布 60/70/90 硬算也得 150 ✓);只记第一项就漏掉班际差异——EVVE 缺一不可。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — 第一项的对象(上游 L14)</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 第二项的对象</li><li><a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a> — 两项有意义的地基</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 推导中用了两次的姊妹公式</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 被分解对象;\\(\\operatorname{Var}=E[\\cdot^2]-E[\\cdot]^2\\) 是推导枢纽</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "全期望公式": {
+  "kind": "c",
+  "en": "LawOfTotalExpectation",
+  "aliases": [
+   "law of total expectation",
+   "double expectation formula",
+   "tower rule",
+   "tower property",
+   "double expectation",
+   "law of iterated expectations",
+   "双重期望律"
+  ],
+  "level": "advanced",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>总期望等于<strong>条件期望的期望</strong>(塔式法则):先按 \\(Y\\) 分组算各组内的条件期望,再按各组出现的概率加权平均,结果恰好是总期望——\"平均的平均 = 总平均\"。当直接算 \\(E[X]\\) 难、\"给定 \\(Y\\) 后\"好算时的分而治之利器。</p><p><strong>白话</strong>:算全家每月平均伙食开销:不必逐天记账——工作日一档、周末一档各算个平均,再按天数占比加权,就是总平均。找到那个\"分情形的开关\",难题就拆成几个好算的小平均。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[g(X)]=E_Y\\!\\big[\\,E_X[g(X)\\mid Y]\\,\\big];\\qquad E[X]=E\\big[E[X\\mid Y]\\big]$$</div><ul><li>下标读法:内层 \\(E_X\\) 把 \\(Y\\) 当常数、只对 \\(X\\) 求平均(得到 \\(Y\\) 的函数 \\(h(Y)\\));外层 \\(E_Y\\) 再对 \\(Y\\) 平均。<strong>先内后外,顺序不能反</strong>。</li><li>用途:分段函数 / 免赔额 / 混合分布——找一个\"分情形开关\" \\(Y\\),每种情形下 \\(E[X\\mid Y]\\) 都简单,再按情形概率加权。</li><li>例 16A:损失 \\(U[0,10000]\\) + 1000 免赔,\\(E[\\text{赔付}]=0.1\\cdot0+0.9\\cdot4500=4050\\)。</li><li>直觉:全校平均分 = 各班平均分按班级人数占比加权。</li><li>对任意 \\(g(X)\\) 都成立,是全概率公式的期望版推广。</li></ul><p><strong>算一遍</strong>:抛一枚公平硬币定掷几颗骰子:正面掷 1 颗、反面掷 2 颗,求点数总和的期望。</p><ul><li>内层(各情形好算):正面时 \\(E[X\\mid\\text{正}]=3.5\\);反面时 \\(E[X\\mid\\text{反}]=7\\)。</li><li>外层加权:\\(E[X]=0.5(3.5)+0.5(7)=5.25\\)。</li><li>全程没碰\"总和的完整分布\"——先内后外,分而治之。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 内层对象</li><li><a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a> — 外层期望有意义的前提</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 概率版对应(上游 L04)</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> — 姊妹公式:方差版分解</li><li><a class=\"net-wl\" data-id=\"条件矩\">条件矩</a> — 内层的一般形式 \\(E[g(X)\\mid Y]\\)(上游 L14)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 被分解的对象</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "全概率公式": {
+  "kind": "c",
+  "en": "LawOfTotalProbability",
+  "aliases": [
+   "law of total probability",
+   "total probability theorem",
+   "全概率定理"
+  ],
+  "level": "advanced",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把一个事件的总概率<strong>沿一组互斥且完备的\"原因\"拆开</strong>:在每种情形 \\(B_i\\) 下算 A 的条件概率,再按该情形出现的权重 \\(P[B_i]\\) 加权求和。本质是\"分组加权平均\"。</p><p><strong>白话</strong>:全校近视率不用一个个数——先问每个班的近视率,再按各班人数占比加权平均,就是全校的。\"班\"就是那组互斥完备的 \\(B_i\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A]=\\sum_{i=1}^{n}P[B_i]\\,P[A\\mid B_i]$$</div><ul><li>前提:\\(B_1,\\dots,B_n\\) <strong>互斥</strong>(两两不交)且<strong>完备</strong>(并集为 \\(\\Omega\\)),A 被切成 n 块 \\(A\\cap B_i\\)。</li><li>每块用乘法公式 \\(P[A\\cap B_i]=P[B_i]\\,P[A\\mid B_i]\\),加总即得——<strong>先分组,再加权</strong>。</li><li>概率树视角:每条支路连乘,含 A 的支路全加,总和就是 \\(P[A]\\)。</li><li>\"先选类再看结果\"(掷骰、抽袋、分层人群)的题几乎都用它开路;它也是贝叶斯定理的分母。</li></ul><p><strong>算一遍</strong>:甲班 40 人近视率 \\(0.5\\),乙班 60 人近视率 \\(0.2\\),求全校近视率。</p><ul><li>按人数定权重:甲占 \\(0.4\\)、乙占 \\(0.6\\)——互斥且完备(每人恰属一班)。</li><li>加权求和:\\(P=0.4\\times0.5+0.6\\times0.2=0.2+0.12=0.32\\)。</li><li>直接数人验证:近视 \\(20+12=32\\) 人,除以 \\(100\\) 人正是 \\(0.32\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li>条件概率 — 每个分支项 \\(P[A\\mid B_i]\\) 都是条件概率</li><li>乘法公式 — 每条支路的交集概率由它给出</li><li>互斥事件 — 分组前提:互斥且完备,用前先确认</li><li>贝叶斯定理 — 分母 \\(P[B]\\) 就是全概率展开</li><li>全概率公式-连续 — 连续版:求和换成密度加权积分</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 同一\"分组加权平均\"思想搬到期望上</li></ul><h4>应用视角</h4><ul><li>贝叶斯表格法快解后验 — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "方差": {
+  "kind": "c",
+  "en": "Variance",
+  "aliases": [
+   "variance",
+   "Var",
+   "二阶中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量取值围绕均值摆动幅度的度量:偏差平方的期望(即二阶中心矩),记 \\(\\operatorname{Var}(X)\\) 或 \\(\\sigma^2\\)。方差 \\(\\ge 0\\),越大分布越分散;为 0 当且仅当 \\(X\\) 几乎处处是常数。</p><p><strong>白话</strong>:两个班平均分都是 80,一个班人人 78–82,另一个班一半 60 一半 100——平均分看不出差别,方差看得出:它算的是\"每个人离平均有多远\"的平均账(按平方记)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=E\\big[(X-\\mu)^2\\big]=E[X^2]-\\mu^2$$</div><ul><li>计算式\"<strong>平方的平均 − 平均的平方</strong>\"是解题主力:先算 \\(E[X]\\)、\\(E[X^2]\\) 两个原点矩,一减即出。</li><li><strong>平移不散,缩放平方</strong>:\\(\\operatorname{Var}(aX+b)=a^2\\operatorname{Var}(X)\\);负号平方后消失,\\(\\operatorname{Var}(-X)=\\operatorname{Var}(X)\\)。</li><li><strong>独立才可加</strong>:\\(\\operatorname{Var}(\\sum X_i)=\\sum\\operatorname{Var}(X_i)\\)(i.i.d. 时 \\(=n\\operatorname{Var}(X)\\));独立时 \\(\\operatorname{Var}(X-Y)\\) 也是\"加\"(系数 \\((-1)^2=1\\))。</li><li>两点分布捷径:取 \\(a\\)(概率 \\(p\\))、\\(b\\)(概率 \\(1-p\\))时 \\(\\operatorname{Var}(X)=(b-a)^2p(1-p)\\)。</li><li>绕任意点:\\(E[(X-c)^2]=\\operatorname{Var}(X)+(\\mu-c)^2\\),仅 \\(c=\\mu\\) 时等于方差(平行轴定理)。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0(各占一半),求方差。</p><ul><li>两个原点矩:\\(E[X]=0.5\\);\\(E[X^2]=0^2(0.5)+1^2(0.5)=0.5\\)。</li><li>一减即出:\\(\\operatorname{Var}=0.5-0.5^2=0.25\\),标准差 \\(0.5\\)。</li><li>两点捷径验算:\\((1-0)^2\\times0.5\\times0.5=0.25\\) ✓ 两条路同一答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 两个原点矩一减出方差;期望是线性算子、方差不是</li><li>矩 — 方差 = 二阶中心矩,矩家族一员</li><li>标准差 — 方差的正平方根,单位还原</li><li>伯努利分布 — 两点捷径的来源:\\(\\operatorname{Var}(N)=p(1-p)\\) 套缩放律</li><li>和的方差 — 不独立时的一般公式(补协方差项)</li><li>协方差 — 度量两变量联动,修正和的方差</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — 它最重要的数字概括</li><li>概率函数 — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li>概率密度函数 — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li>LOTUS — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li>期望的线性 — 期望算子最常用的运算性质</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "条件方差": {
+  "kind": "c",
+  "en": "ConditionalVariance",
+  "aliases": [
+   "conditional variance"
+  ],
+  "level": "advanced",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定条件下 \\(X\\) 的方差:与无条件方差公式同构(二阶矩减一阶矩平方),但<strong>所有期望都换成条件版本</strong>、权重全用条件分布。</p><p><strong>白话</strong>:全国身高的散布里混着\"男女平均本来就差一截\"的成分;只看男性组内部,身高还散不散——在子群里面重新算一遍方差,就是条件方差。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X\\mid Y=y)=E[X^2\\mid Y=y]-\\big(E[X\\mid Y=y]\\big)^2$$</div><ul><li>三步:① 由 \\(f_{X\\mid Y}\\) 求 \\(E[X\\mid Y=y]\\);② 同一条件分布求 \\(E[X^2\\mid Y=y]\\);③ 相减。</li><li>例 14B:\\(f(x,y)=\\frac{x^2+y}{24}\\),求 \\(\\operatorname{Var}(Y\\mid X=1)\\):条件分布 \\((\\tfrac16,\\tfrac26,\\tfrac36)\\),\\(E=\\tfrac43\\)、\\(E[\\cdot^2]=\\tfrac73\\),\\(\\operatorname{Var}=\\tfrac73-\\tfrac{16}9=\\tfrac59\\)。</li><li>\\(\\operatorname{Var}(X\\mid Y=y)\\) 是 \\(y\\) 的函数;\\(\\operatorname{Var}(X\\mid Y)\\) 是随机变量,可再对它求期望——EVVE 第一项 \\(E[\\operatorname{Var}(X\\mid Y)]\\)。</li><li>算 \\(E[\\operatorname{Var}(X\\mid Y)]\\) 含 \\(Y^2\\) 时用 \\(E[Y^2]=\\operatorname{Var}(Y)+E[Y]^2\\),别丢 \\(\\operatorname{Var}(Y)\\)。</li><li>易错:二阶矩误用无条件权重。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,给定\"点数为偶\"(2、4、6 各 \\(\\frac13\\)),求条件方差。</p><ul><li>条件均值:\\(E[X\\mid\\text{偶}]=\\frac{2+4+6}{3}=4\\)。</li><li>条件二阶矩:\\(\\frac{4+16+36}{3}=\\frac{56}{3}\\);相减:\\(\\operatorname{Var}=\\frac{56}{3}-16=\\frac83\\approx2.67\\)。</li><li>对照无条件方差 \\(\\frac{35}{12}\\approx2.92\\)——条件砍掉了一半取值,组内摆动变小了。</li></ul><h4>与其他概念的关系</h4><ul><li>条件分布 — 权重来源</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 一阶项</li><li><a class=\"net-wl\" data-id=\"条件矩\">条件矩</a> — 由一、二阶条件矩组合而成</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 无条件版的同构公式</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> — \\(E[\\operatorname{Var}(X\\mid Y)]\\) 是其第一项(下游 L16)</li><li>连续型条件方差 — 连续版(下游 L30)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件期望": {
+  "kind": "c",
+  "en": "ConditionalExpectation",
+  "aliases": [
+   "conditional expectation",
+   "conditional mean"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定条件下 \\(X\\) 的平均值:用<strong>条件分布</strong>作权重求出的期望。以 \\(Y=y\\) 为条件时结果里还带着 \\(y\\)——它是 \\(y\\) 的函数;代入具体 \\(y\\) 是一个数,保留 \\(Y\\) 不代值则升级为随机变量。</p><p><strong>白话</strong>:还是算平均,只是换了名单——外卖平均送达 30 分钟,但\"已知在下雨\"就只统计下雨天的单子,重摊出来可能是 45 分钟;条件一换,名单一换,平均跟着换。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X\\mid Y=y]=\\sum_{x}x\\,\\frac{f(x,y)}{f_Y(y)}\\;=\\;\\int_{x} x\\,\\frac{f(x,y)}{f_Y(y)}\\,dx$$</div><ul><li>离散题三步:边际 \\(f_Y(y)\\)(该行/列求和)→ 条件分布(逐项 ÷ 边际)→ 加权平均。</li><li>\\(E[X\\mid Y=y]\\) 是<strong>数</strong>,\\(E[X\\mid Y]\\) 是<strong>随机变量</strong>——Ch16 双重期望的入口。</li><li>直觉:条件把总体切成子群,均值在子群里重算(男性组平均身高 1.75,总体 1.68)。</li><li>对函数同理:\\(E[g(X)\\mid Y=y]\\) 用同一套条件权重。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求\"已知点数为偶\"时的条件期望。</p><ul><li>条件分布:2、4、6 各占 \\(\\frac13\\)(奇数被排除,剩下的重新归一)。</li><li>加权平均:\\(E[X\\mid\\text{偶}]=\\frac{2+4+6}{3}=4\\)——比无条件的 3.5 高,因为条件砍掉了小点数。</li><li>换条件\"点数为奇\" → \\(\\frac{1+3+5}{3}=3\\);条件一换数就换——条件期望是条件的函数。</li></ul><h4>与其他概念的关系</h4><ul><li>条件分布 — 权重来源</li><li><a class=\"net-wl\" data-id=\"条件矩\">条件矩</a> — 条件期望是它的一阶特例</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 无条件对应物</li><li><a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a> — 不代值时的升维理解</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — \\(E[E[X\\mid Y]]=E[X]\\)(下游 L16)</li><li>连续型条件期望 — 连续版(下游 L30)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件期望分层求解": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "hard",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:损失分布依赖类别/参数(如好司机坏司机、N 依赖 Θ),求总体均值方差——先分层再合并。</p><h4>求解套路</h4><ol><li>分层写条件矩:\\(E[X\\mid Y=y]\\)、\\(\\mathrm{Var}(X\\mid Y=y)\\)(每层内是干净的标准分布)。</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> 合并均值:\\(E[X]=E\\big[E[X\\mid Y]\\big]\\)——外层对 Y 的分布加权。</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> 合并方差:\\(\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]+\\mathrm{Var}(E[X\\mid Y])\\)——<strong>层内平均 + 层间波动</strong>,两项都不能丢。</li><li>记住 <a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a>:\\(E[X\\mid Y]\\) 是 Y 的函数,才能再对它取期望/方差。</li></ol><h4>易错</h4><ul><li>全方差只算第一项(丢层间项)是最高频扣分点。</li><li>离散权重不归一(类别概率没加到 1)。</li></ul>"
+ },
+ "条件期望是随机变量": {
+  "kind": "c",
+  "en": "ConditionalExpectationAsRandomVariable",
+  "aliases": [
+   "conditional expectation as a random variable"
+  ],
+  "level": "advanced",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(E[X\\mid Y=y]\\) 代入具体 \\(y\\) 后是一个<strong>数</strong>;不固定 \\(Y\\) 时,\\(E[X\\mid Y]\\) 是函数 \\(y\\mapsto E[X\\mid Y=y]\\) 作用在随机的 \\(Y\\) 上,因而<strong>本身是随机变量</strong>,继承 \\(Y\\) 的随机性。全期望 / 全方差公式正建立在\"能再对它求期望、方差\"这一点上。</p><p><strong>白话</strong>:\\(E[X\\mid Y]\\) 像一台报数机——喂进哪个 \\(y\\) 就吐对应的平均数;而喂什么本身要抽签决定(\\(Y\\) 是随机的),所以\"机器将吐出的数\"在抽签前也是随机的。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X\\mid Y]=h(Y),\\quad h(y)=E[X\\mid Y=y];\\qquad \\operatorname{Var}(X\\mid Y)\\ \\text{同理是随机变量}$$</div><ul><li>口诀:<strong>带小 \\(y\\) 是数,带大 \\(Y\\) 是随机变量</strong>——符号即语义。</li><li>正因是随机变量,才能写 \\(E\\big[E[X\\mid Y]\\big]\\)(塔式)与 \\(\\operatorname{Var}\\big(E[X\\mid Y]\\big)\\)(EVVE 第二项)。</li><li>\\(\\operatorname{Var}(X\\mid Y)\\) 同理:EVVE 第一项就是对它求期望。</li><li>直觉:抽人前性别未定,\\(E[\\text{身高}\\mid \\text{性别}]\\) 以 \\(\\tfrac12\\) 取 1.75、\\(\\tfrac12\\) 取 1.61;对它再平均恰回总体的 1.68。</li><li>题面写 \"given \\(Y=y\\), \\(X\\) has mean \\(10y\\)\" → 直接抄成 \\(E[X\\mid Y]=10Y\\) 再往下算。</li></ul><p><strong>算一遍</strong>:\\(Y\\) 是掷一颗骰子的点数,题面给\"given \\(Y=y\\), \\(X\\) has mean \\(10y\\)\"。</p><ul><li>抄成随机变量:\\(E[X\\mid Y]=10Y\\)——骰子掷出 3 它就是 30,掷出 6 就是 60;没掷之前它跟着 \\(Y\\) 一起随机。</li><li>正因它是随机变量,才能再对它求期望:\\(E\\big[E[X\\mid Y]\\big]=10\\,E[Y]=10\\times3.5=35\\)。</li><li>这个 35 就是 \\(E[X]\\)(塔式)——\"先分骰子点数各算平均,再把六个平均摊平\"。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 升维前的本体(上游 L14)</li><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — \"\\(Y\\) 的函数\"因而是随机变量(上游 L05)</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 对它求期望</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> — 对它求方差</li><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — \\(\\operatorname{Var}(X\\mid Y)\\) 的同款理解</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件矩": {
+  "kind": "c",
+  "en": "ConditionalMoment",
+  "aliases": [
+   "conditional moment",
+   "conditional moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量在给定条件(事件 \\(A\\) 或 \\(Y=y\\))下的矩:把落在条件区域里的概率<strong>重新归一化</strong>,拿它当权重求 \\(E[g(X)]\\)。条件分布是正当的概率分布,故均值、方差等一切矩照常可求。</p><p><strong>白话</strong>:只统计\"及格的同学\"的平均分和分数波动——不及格的先剔出名单,剩下的人头重新当 100%,然后照常算平均、算离散,一套算法原样搬。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[g(X)\\mid A]=\\sum_{x\\ \\text{满足}\\ A}\\frac{g(x)\\,P[X=x]}{P[A]}\\;=\\;\\int_{x\\ \\text{满足}\\ A}\\frac{g(x)\\,f_X(x)}{P[A]}\\,dx$$</div><ul><li>套路固定:<strong>先算分子</strong>(条件区域上的 \\(\\sum g\\,P\\) 或 \\(\\int g\\,f\\)),<strong>再除以</strong> \\(P[A]\\)——\"先切块,再归一\"。</li><li>\\(g(x)=x\\) 得条件期望,\\(g(x)=x^2\\) 得二阶条件矩;积分/求和限必须切到条件区域。</li><li>以 \\(Y=y\\) 为条件时,分母换成边际 \\(f_Y(y)\\)(扮演 \\(P[A]\\) 的角色)。</li><li>例 14A:\\(f(x)=3x^2\\) 于 \\([0,1]\\),\\(E[X\\mid X&gt;0.5]=\\dfrac{45/64}{7/8}=\\dfrac{45}{56}\\approx0.804\\)——条件砍掉小值半区,均值从 0.75 上抬。</li><li>易错:二阶矩误用无条件权重;分子算完忘除 \\(P[A]\\)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,给定 \\(X&gt;3\\)(剩 4、5、6),求一、二阶条件矩。</p><ul><li>归一:\\(P[A]=\\frac12\\),条件权重 \\(\\frac{1/6}{1/2}=\\frac13\\) 每点。</li><li>一阶:\\(E[X\\mid X&gt;3]=\\frac{4+5+6}{3}=5\\)——条件砍掉小半区,均值从 3.5 上抬。</li><li>二阶:\\(E[X^2\\mid X&gt;3]=\\frac{16+25+36}{3}=\\frac{77}{3}\\);顺手 \\(\\operatorname{Var}=\\frac{77}{3}-25=\\frac23\\)——两阶权重全用条件版。</li></ul><h4>与其他概念的关系</h4><ul><li>条件概率 — \"缩世界再归一\"动作的源头</li><li>随机变量的条件分布 — 条件矩在其上求(上游 L06)</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — \\(g(x)=x\\) 的一阶特例</li><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — 一、二阶条件矩的组合</li><li>矩 — 无条件版本</li><li>连续型条件矩 — 双连续变量版(下游 L30)</li></ul>"
+ },
+ "随机变量": {
+  "kind": "c",
+  "en": "RandomVariable",
+  "aliases": [
+   "random variable",
+   "RV",
+   "随机变数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>从样本空间到实数集的一个函数</strong>——把随机试验的每个结果映射成一个实数(骰子点数、索赔个数、理赔金额)。大写 \\(X\\) 记变量,小写 \\(x\\) 记它的取值。</p><p><strong>白话</strong>:随机变量是给每个可能结局<strong>贴价签</strong>的机器:骰子摇出\"三点\"这个结局本身没法加减,贴上数字 3 才能求和算平均——它不是\"随机的数\",而是把结局翻译成数的一条固定规则。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X:\\Omega\\to\\mathbb{R}\\qquad p(x)=P[X=x],\\quad P[u&lt;X\\le v]$$</div><ul><li><strong>离散</strong>:取可数的一串点,概率集中在点上(每点 \\(P[X=x]&gt;0\\)),工具是 pmf 求和;cdf 呈阶梯。</li><li><strong>连续</strong>:取值填满区间,概率摊在范围上(单点 \\(P[X=x]=0\\)),工具是 pdf 积分;cdf 光滑上升。</li><li>还有第三种<strong>混合型</strong>:既有质量点(如\"零索赔\"有正概率)又有摊开的密度,保险损失常是这种。</li><li><strong>离散数柱子,连续量面积</strong>——问法一样,动作换一个。</li></ul><p><strong>算一遍</strong>:抛两枚硬币,定义 \\(X=\\) 正面数,把 4 个结局翻译成数。</p><ul><li>贴价签:反反 \\(\\to0\\),反正、正反 \\(\\to1\\),正正 \\(\\to2\\)——同一个数可由多个结局共享。</li><li>收概率:\\(p(0)=\\tfrac14\\)、\\(p(1)=\\tfrac12\\)、\\(p(2)=\\tfrac14\\);加总 \\(=1\\) ✓</li><li>这是离散型:概率全集中在 \\(0,1,2\\) 三个点上,问区间就数柱子,如 \\(P[0&lt;X\\le2]=\\tfrac12+\\tfrac14=\\tfrac34\\)。</li></ul><h4>与其他概念的关系</h4><ul><li>概率函数 — 离散随机变量的完全刻画(点→概率的表)</li><li>概率密度函数 — 连续随机变量的刻画(曲线下面积)</li><li>累积分布函数 — 离散连续通吃的统一入口:知道 F 就知道一切</li><li>混合型随机变量 — 质量点 + 密度并存的第三类</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 随机变量最重要的数字概括(下游)</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 16 原文用词</span><h2 class="sec-title">双重期望 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"条件"与"分组"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 16</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">double expectation</td><td class="ipa">/ˌdʌbl ˌɛkspɛkˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>双重期望</td><td class="root">期望套期望 \(E[E[X\mid Y]]\),又叫 tower rule</td></tr>
-          <tr><td class="en">tower rule</td><td class="ipa">/ˈtaʊər ruːl/</td><td><span class="pos n">n.</span></td><td>塔式法则</td><td class="root">tower(塔)→ 一层套一层求期望</td></tr>
-          <tr><td class="en">conditional expectation</td><td class="ipa">/kənˈdɪʃənəl ˌɛkspɛkˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>条件期望</td><td class="root">\(E[X\mid Y]\);不带值时是<b>随机变量</b></td></tr>
-          <tr><td class="en">conditional variance</td><td class="ipa">/kənˈdɪʃənəl ˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>条件方差</td><td class="root">\(\operatorname{Var}(X\mid Y)\);EVVE 第一项对它求期望</td></tr>
-          <tr><td class="en">by conditioning</td><td class="ipa">/baɪ kənˈdɪʃənɪŋ/</td><td><span class="pos v">v.</span></td><td>通过取条件</td><td class="root">condition(条件)→ "先分组再合"的手法</td></tr>
-          <tr><td class="en">deductible</td><td class="ipa">/dɪˈdʌktəbl/</td><td><span class="pos n">n.</span></td><td>免赔额</td><td class="root">deduct(扣除)→ 损失里先扣掉、超出才赔</td></tr>
-          <tr><td class="en">uniformly distributed</td><td class="ipa">/ˈjuːnɪfɔːmli/</td><td><span class="pos adj">adj.</span></td><td>均匀分布的</td><td class="root">uniform(一致)→ 区间上等概率</td></tr>
-          <tr><td class="en">indicator variable</td><td class="ipa">/ˈɪndɪkeɪtər/</td><td><span class="pos n">n.</span></td><td>示性变量</td><td class="root">只取 0/1 的开关变量,常用作条件 \(Y\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">by conditioning on Y</div><div class="z">通过对 Y 取条件</div></div>
-        <div class="ph"><div class="e">given Y = y</div><div class="z">在给定 Y=y 下</div></div>
-        <div class="ph"><div class="e">the conditional mean / variance</div><div class="z">条件均值 / 条件方差</div></div>
-        <div class="ph"><div class="e">the mean of X, given Y = y, is …</div><div class="z">给定 Y=y 时 X 的均值是……</div></div>
-        <div class="ph"><div class="e">has a mean of 10y and a variance of 3y²</div><div class="z">均值为 10y、方差为 3y²</div></div>
-        <div class="ph"><div class="e">calculate the variance of X</div><div class="z">求 X 的方差(提示用 EVVE)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 16</b> · 第十六章 Double Expectation Formulas 双重期望公式</p>
@@ -695,5 +1043,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

@@ -17,16 +17,8 @@
   *{box-sizing:border-box}
   body{margin:0;height:100vh;display:flex;overflow:hidden;background:var(--paper);
        color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-  .booknav{position:fixed;top:0;left:0;bottom:0;z-index:55;width:250px;overflow-y:auto;background:#fafbfd;
-    border-right:1px solid var(--line);padding:0 10px 40px;
-    transform:translateX(-100%);transition:transform .18s ease}
-  .booknav.open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,.25)}
-  .edge{position:fixed;top:0;left:0;bottom:0;width:14px;z-index:54}
-  .edge .etab{position:absolute;top:50%;left:0;transform:translateY(-50%);cursor:pointer;
-    writing-mode:vertical-rl;font-family:var(--mono);font-size:11px;letter-spacing:3px;
-    background:rgba(22,36,61,.85);color:#ffd23f;border-radius:0 8px 8px 0;
-    padding:12px 4px;opacity:.45;transition:opacity .15s}
-  .edge:hover .etab,.edge .etab:hover{opacity:1}
+  .booknav{flex:none;width:250px;height:100%;overflow-y:auto;background:#fafbfd;
+    border-right:1px solid var(--line);padding:0 10px 40px}
   .brand{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,#16243d,#1d3050);
     margin:0 -10px 10px;padding:13px 16px 12px;border-bottom:2px solid var(--hi)}
   .brand .logo{font-family:var(--serif);font-weight:700;font-size:16.5px;color:#fff}
@@ -49,8 +41,9 @@
     border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:6px 12px;
     font-size:15px;cursor:pointer}
   @media(max-width:860px){
-    .booknav{width:270px}
-    .edge{display:none}
+    .booknav{position:fixed;top:0;left:0;bottom:0;z-index:55;width:270px;height:auto;
+      transform:translateX(-100%);transition:transform .18s ease}
+    .booknav.open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,.25)}
     .menu{display:inline-block}
   }
 </style>
@@ -61,6 +54,19 @@
 <div class="grp">全景</div>
 <a href="soa-exam-p-导学页/soa-exam-p-l00-panorama.html" target="content" data-l="l00" class="navlink"><span class="ndot" style="background:#b8860b"></span><span class="nl">L00</span><span class="nt">Panorama 全景知识网络</span></a>
 <a href="soa-exam-p-导学页/soa-exam-p-l99-network.html" target="content" data-l="l99" class="navlink"><span class="ndot" style="background:#16697a"></span><span class="nl">L99</span><span class="nt">概念知识网络 Knowledge Network</span></a>
+<div class="grp">习题串讲</div>
+<a href="soa-exam-p-导学页/soa-exam-p-e01-scenario-l07-l13.html" target="content" data-l="e01" class="navlink"><span class="ndot" style="background:#c2410c"></span><span class="nl">E01</span><span class="nt">一份骑手意外险,串起 L07–L13 + L16</span></a>
+<a href="soa-exam-p-导学页/soa-exam-p-e02-distributions-l15-l23.html" target="content" data-l="e02" class="navlink"><span class="ndot" style="background:#0e7490"></span><span class="nl">E02</span><span class="nt">六大分布全景 L15 + L17–L23</span></a>
+<a href="soa-exam-p-导学页/soa-exam-p-e03-payouts-deductible-limit.html" target="content" data-l="e03" class="navlink"><span class="ndot" style="background:#0e7a55"></span><span class="nl">E03</span><span class="nt">赔付机制横切 L05–L20</span></a>
+<a href="soa-exam-p-导学页/soa-exam-p-e04-conditioning.html" target="content" data-l="e04" class="navlink"><span class="ndot" style="background:#9d174d"></span><span class="nl">E04</span><span class="nt">条件与更新全景 L01–L16</span></a>
+<div class="grp">冲刺</div>
+<a href="soa-exam-p-导学页/soa-exam-p-samples.html" target="content" data-l="samples" class="navlink"><span class="ndot" style="background:#6b3fa0"></span><span class="nl">📝</span><span class="nt">样题冲刺索引</span></a>
+<a href="soa-exam-p-导学页/soa-exam-p-examday.html" target="content" data-l="examday" class="navlink"><span class="ndot" style="background:#a63a3a"></span><span class="nl">🎯</span><span class="nt">考务与冲刺策略</span></a>
+<div class="grp">速查</div>
+<a href="soa-exam-p-导学页/soa-exam-p-formulas.html" target="content" data-l="formulas" class="navlink"><span class="ndot" style="background:#16243d"></span><span class="nl">Σ</span><span class="nt">公式总表</span></a>
+<a href="soa-exam-p-导学页/soa-exam-p-vocab.html" target="content" data-l="vocab" class="navlink"><span class="ndot" style="background:#0d4a56"></span><span class="nl">词</span><span class="nt">词汇总表</span></a>
+<a href="soa-exam-p-导学页/soa-exam-p-calculus.html" target="content" data-l="calculus" class="navlink"><span class="ndot" style="background:#475569"></span><span class="nl">∫</span><span class="nt">微积分速查</span></a>
+<a href="soa-exam-p-导学页/soa-exam-p-ti30xs.html" target="content" data-l="ti30xs" class="navlink"><span class="ndot" style="background:#206a42"></span><span class="nl">⌨</span><span class="nt">TI-30XS 按键</span></a>
 <div class="grp">Lessons</div>
 <a href="soa-exam-p-导学页/soa-exam-p-l01-sets.html" target="content" data-l="l01" class="navlink"><span class="ndot" style="background:#e6a100"></span><span class="nl">L01</span><span class="nt">Sets 集合</span></a>
 <a href="soa-exam-p-导学页/soa-exam-p-l02-combinatorics.html" target="content" data-l="l02" class="navlink"><span class="ndot" style="background:#0d7d7d"></span><span class="nl">L02</span><span class="nt">Combinatorics 计数</span></a>
@@ -85,23 +91,8 @@
 <a href="soa-exam-p-导学页/soa-exam-p-l21-normal-distribution.html" target="content" data-l="l21" class="navlink"><span class="ndot" style="background:#9333ea"></span><span class="nl">L21</span><span class="nt">Normal Distribution 正态分布</span></a>
 <a href="soa-exam-p-导学页/soa-exam-p-l22-central-limit-theorem.html" target="content" data-l="l22" class="navlink"><span class="ndot" style="background:#b45309"></span><span class="nl">L22</span><span class="nt">Central Limit Theorem 中心极限定理</span></a>
 <a href="soa-exam-p-导学页/soa-exam-p-l23-order-statistics.html" target="content" data-l="l23" class="navlink"><span class="ndot" style="background:#0d9488"></span><span class="nl">L23</span><span class="nt">Order Statistics 次序统计量</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l24-joint-continuous.html" target="content" data-l="l24" class="navlink"><span class="ndot" style="background:#2563eb"></span><span class="nl">L24</span><span class="nt">Joint Distribution for Continuous RV 连续型联合分布</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l25-joint-uniform.html" target="content" data-l="l25" class="navlink"><span class="ndot" style="background:#7c3aed"></span><span class="nl">L25</span><span class="nt">Joint Uniform Distribution 联合均匀分布</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l26-marginal-continuous.html" target="content" data-l="l26" class="navlink"><span class="ndot" style="background:#059669"></span><span class="nl">L26</span><span class="nt">Marginal Distribution for Continuous RV 连续型边缘分布</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l27-joint-moments-continuous.html" target="content" data-l="l27" class="navlink"><span class="ndot" style="background:#0891b2"></span><span class="nl">L27</span><span class="nt">Joint Moments for Continuous RV 连续型联合矩</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l28-covariance-continuous.html" target="content" data-l="l28" class="navlink"><span class="ndot" style="background:#4f46e5"></span><span class="nl">L28</span><span class="nt">Covariance 协方差(连续)</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l29-conditional-continuous.html" target="content" data-l="l29" class="navlink"><span class="ndot" style="background:#a21caf"></span><span class="nl">L29</span><span class="nt">Conditional Distribution of Two Continuous Variables 连续型条件分布</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l30-conditional-moments-continuous.html" target="content" data-l="l30" class="navlink"><span class="ndot" style="background:#0284c7"></span><span class="nl">L30</span><span class="nt">Conditional Moments of Two Continuous Variables 连续型条件矩</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l31-bivariate-normal.html" target="content" data-l="l31" class="navlink"><span class="ndot" style="background:#16a34a"></span><span class="nl">L31</span><span class="nt">Bivariate Normal Distribution 二元正态分布</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l32-mgf.html" target="content" data-l="l32" class="navlink"><span class="ndot" style="background:#db2777"></span><span class="nl">L32</span><span class="nt">Moment Generating Function 矩母函数</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l33-pgf.html" target="content" data-l="l33" class="navlink"><span class="ndot" style="background:#9333ea"></span><span class="nl">L33</span><span class="nt">Probability Generating Function 概率母函数</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l34-transformations.html" target="content" data-l="l34" class="navlink"><span class="ndot" style="background:#b45309"></span><span class="nl">L34</span><span class="nt">Transformations 变换</span></a>
-<a href="soa-exam-p-导学页/soa-exam-p-l35-transformations-multivariate.html" target="content" data-l="l35" class="navlink"><span class="ndot" style="background:#0d9488"></span><span class="nl">L35</span><span class="nt">Transformations of Two or More Variables 多变量变换</span></a>
-<div class="grp">速查</div>
-<a href="soa-exam-p-导学页/soa-exam-p-formulas.html" target="content" data-l="formulas" class="navlink"><span class="ndot" style="background:#16243d"></span><span class="nl">Σ</span><span class="nt">公式总表</span></a>
 </nav>
 <main><iframe name="content" src="soa-exam-p-导学页/soa-exam-p-l00-panorama.html" title="章节内容"></iframe></main>
-<div class="edge"><span class="etab">目录</span></div>
 <button class="menu" type="button" aria-label="目录">☰</button>
 <script>
 (function(){
@@ -139,14 +130,6 @@
     if(e.target.closest && e.target.closest('.menu'))
       document.querySelector('.booknav').classList.toggle('open');
   });
-  // 侧栏自动隐藏: 默认收起, 鼠标滑到左边缘/悬停侧栏时展开, 移开后延时收起(边缘竖标可点)
-  var nav=document.querySelector('.booknav'), edge=document.querySelector('.edge'), hideT;
-  function openNav(){ clearTimeout(hideT); nav.classList.add('open'); }
-  function closeSoon(){ clearTimeout(hideT); hideT=setTimeout(function(){ nav.classList.remove('open'); },260); }
-  edge.addEventListener('mouseenter',openNav);
-  edge.addEventListener('click',function(){ nav.classList.toggle('open'); });
-  nav.addEventListener('mouseenter',openNav);
-  nav.addEventListener('mouseleave',closeSoon);
   // 深链兼容: 导学.html#l03 → 直接载入对应章(初载 + 同页 hash 变化都处理)
   function applyHash(){
     var h=location.hash.slice(1);
@@ -160,7 +143,8 @@
   // 倒计时运行时计算, 壳不重建也不过期
   var d=Math.ceil((new Date(2026,6,16)-new Date())/864e5);
   var el=document.querySelector('[data-days]');
-  if(el) el.textContent=(d>=0?d:0);
+  if(el){ if(d<0){ var cd=el.closest('.cd'); if(cd) cd.style.display='none'; }
+    else el.textContent=d; }
 })();
 </script>
 </body>

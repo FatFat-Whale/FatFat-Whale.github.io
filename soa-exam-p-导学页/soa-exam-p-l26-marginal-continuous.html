@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L26 · 连续型边缘分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -234,7 +246,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -309,9 +320,9 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <line x1="30" y1="130" x2="30" y2="20" stroke="#16243d" stroke-width="1.3"/>
           <text x="178" y="145" font-size="11" font-style="italic" fill="#16243d">t</text>
           <line x1="30" y1="30" x2="160" y2="130" stroke="var(--accent-deep)" stroke-width="2"/>
-          <text x="86" y="58" font-size="10" fill="var(--accent-deep)">\(f_X=2(1-x)\)</text>
+          <text x="58" y="50" font-size="10" fill="var(--accent-deep)" font-style="italic">f<tspan dy="2" font-size="7">X</tspan><tspan dy="-2">=2(1−x)</tspan></text>
           <line x1="30" y1="130" x2="160" y2="30" stroke="#b8860b" stroke-width="2"/>
-          <text x="96" y="120" font-size="10" fill="#b8860b">\(f_Y=2y\)</text>
+          <text x="88" y="120" font-size="10" fill="#b8860b" font-style="italic">f<tspan dy="2" font-size="7">Y</tspan><tspan dy="-2">=2y</tspan></text>
           <text x="14" y="34" font-size="10" fill="#16243d">2</text>
           <text x="152" y="145" font-size="10" fill="#16243d">1</text>
         </svg>
@@ -335,6 +346,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       固定 \(y\):由 \(0\le x\le y\),\(x\) 从 \(0\) 积到 \(y\) —— \(f_Y(y)=\displaystyle\int_{0}^{y}2\,dx=2y\),\(0\le y\le1\)。<br>
       复核:\(\int_0^1 2(1-x)\,dx=1\),\(\int_0^1 2y\,dy=1\)。✔</p>
       <span class="ans">f_X(x)=2(1−x)　f_Y(y)=2y</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 边缘密度定义:把另一变量积掉</td><td>\(f_X(x)=\int f(x,y)\,dy,\ \ f_Y(y)=\int f(x,y)\,dx\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>② 读三角支撑定限(限随变量变)</td><td>\(f_X(x)=\int_x^1 2\,dy=2(1-x),\ \ f_Y(y)=\int_0^y 2\,dx=2y\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>③ 复核:密度总积分 = 1</td><td>\(\int_0^1 2(1-x)\,dx=1,\ \ \int_0^1 2y\,dy=1\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 密度性质 ↗</a></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -343,6 +361,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>半圆盘面积 \(=\pi/2\),故联合密度 \(f=\dfrac{2}{\pi}\)(均匀)。固定 \(x\),\(y\) 从 \(-\sqrt{1-x^2}\) 到 \(\sqrt{1-x^2}\):<br>
       \(f_X(x)=\displaystyle\int_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}\frac{2}{\pi}\,dy=\frac{2}{\pi}\cdot 2\sqrt{1-x^2}=\frac{4}{\pi}\sqrt{1-x^2}\)。</p>
       <span class="ans">(A) f_X(x) = (4/π)·√(1−x²)</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 均匀 → 联合密度 = 1/支撑面积</td><td>\(f(x,y)=\tfrac{1}{\pi/2}=\tfrac{2}{\pi}\)</td><td class="xr"><a href="soa-exam-p-l25-joint-uniform.html">L25 联合均匀 ↗</a></td></tr>
+        <tr><td>② 固定 \(x\) 读 \(y\) 的扫描区间(限随 \(x\) 变)</td><td>\(-\sqrt{1-x^2}\le y\le \sqrt{1-x^2}\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>③ 积掉 \(y\) 得边缘密度</td><td>\(f_X(x)=\int_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}\tfrac{2}{\pi}\,dy=\tfrac{4}{\pi}\sqrt{1-x^2}\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>看点:</b>26.8 的积分限 \(\pm\sqrt{1-x^2}\) 是彻底的 \(x\) 的函数,把"限随变量变"演到极致;均匀密度 = \(1/\text{面积}\)。</span></div>
   </div>
@@ -504,40 +529,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 26 原文用词</span><h2 class="sec-title">连续型边缘分布 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"支撑"与"边缘"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 26</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘密度</td><td class="root">margin(页边)→ 把另一变量"积到边上"剩下的单变量密度</td></tr>
-          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">joint(联合)→ \(f(x,y)\),两变量一起</td></tr>
-          <tr><td class="en">integrate over</td><td class="ipa">/ˈɪntɪɡreɪt/</td><td><span class="pos v">v.</span></td><td>对……积分(积掉)</td><td class="root">"integrate over \(y\)" = 把 \(y\) 积掉得 \(f_X\)</td></tr>
-          <tr><td class="en">support / domain</td><td class="ipa">/səˈpɔːrt/</td><td><span class="pos n">n.</span></td><td>支撑 / 定义域</td><td class="root">\(f>0\) 的区域;决定积分限</td></tr>
-          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">因式分解 + 矩形支撑</td></tr>
-          <tr><td class="en">rectangle</td><td class="ipa">/ˈrɛktæŋɡəl/</td><td><span class="pos n">n.</span></td><td>矩形</td><td class="root">独立所需的支撑形状;各变量范围互不依赖</td></tr>
-          <tr><td class="en">uniform (over)</td><td class="ipa">/ˈjuːnɪfɔːrm/</td><td><span class="pos adj">adj.</span></td><td>(在……上)均匀的</td><td class="root">均匀 ⟹ 密度 \(=1/\text{面积}\)</td></tr>
-          <tr><td class="en">half-disk</td><td class="ipa">/hɑːf dɪsk/</td><td><span class="pos n">n.</span></td><td>半圆盘</td><td class="root">26.8 支撑;面积 \(\pi/2\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">joint density function</div><div class="z">联合密度函数</div></div>
-        <div class="ph"><div class="e">marginal density of X</div><div class="z">X 的边缘密度</div></div>
-        <div class="ph"><div class="e">when nonzero / where nonzero</div><div class="z">在(密度)非零处</div></div>
-        <div class="ph"><div class="e">for 0 &lt; x &lt; y &lt; 2</div><div class="z">支撑约束(把两变量绑一起)</div></div>
-        <div class="ph"><div class="e">uniform over the half-disk</div><div class="z">在半圆盘上均匀分布</div></div>
-        <div class="ph"><div class="e">determine the marginal density</div><div class="z">求边缘密度</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -577,5 +568,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

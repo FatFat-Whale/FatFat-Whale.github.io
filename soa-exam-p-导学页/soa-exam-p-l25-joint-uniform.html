@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L25 · 联合均匀分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -234,7 +246,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -342,6 +353,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>样本区域 \(R=[0,30]\times[0,20]\),面积 \(=30\times20=600\),密度 \(1/600\)。事件 \(Y\le X-5\) 在 \(R\) 内是一个<b>梯形</b>:两平行边(竖直高度)长 \(25\) 与 \(5\)、高(水平跨度)\(20\),</p>
       <p>\(\text{Area}=\tfrac12(25+5)(20)=300\);故 \(P[Y\le X-5]=\dfrac{300}{600}=0.5\)。(课本还给了等价的二重积分 \(\tfrac{1}{600}\!\int_5^{30}\!\!\int_0^{\min(x-5,20)}\!\mathrm dy\,\mathrm dx\),结果相同——几何法更快。)</p>
       <span class="ans">P[Y ≤ X−5] = 0.5</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 独立均匀 → 联合均匀,密度 = 1/总面积</td><td>\(f(x,y)=f_X(x)f_Y(y)=\tfrac1{30}\cdot\tfrac1{20}=\tfrac1{600}\)</td><td class="xr"><span class="here">本章 §01</span> · <a href="soa-exam-p-l11-joint-distribution.html">L11 独立 ↗</a></td></tr>
+        <tr><td>② 画事件区域:\(y\le x-5\) 在矩形内截出梯形</td><td>\(\text{Area}=\tfrac12(25+5)(20)=300\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 概率 = 面积比</td><td>\(\Pr[Y\le X-5]=\tfrac{\text{事件面积}}{\text{总面积}}=\tfrac{300}{600}=0.5\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -350,6 +368,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>\(R\) 面积 \(=\pi\)。区域 \(x>0.5\) 关于 \(x\) 轴对称,取上半部分 = <b>\(60^\circ\) 扇形 − 直角三角形</b>:扇形占 \(\tfrac16\) 圆(\(\cos\theta=0.5\Rightarrow\theta=60^\circ\)),面积 \(\pi/6\);三角形底 \(0.5\)、高 \(\tfrac{\sqrt3}{2}\),面积 \(0.125\sqrt3\)。</p>
       <p>整块面积 \(=2\big(\pi/6-0.125\sqrt3\big)\),故 \(P[X>0.5]=\dfrac{2\big(\pi/6-0.125\sqrt3\big)}{\pi}\approx0.1955\)。</p>
       <span class="ans">P[X > 0.5] ≈ 0.1955</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 圆盘均匀 → 密度 = 1/圆面积</td><td>\(f(x,y)=\tfrac1{\pi}\)(半径 1)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>② 事件区域拆解:上半 = 60° 扇形 − 直角三角形,对称乘 2</td><td>\(\text{Area}=2\big(\tfrac{\pi}{6}-0.125\sqrt3\big)\)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+        <tr><td>③ 概率 = 面积比</td><td>\(\Pr[X&gt;0.5]=\tfrac{2(\pi/6-0.125\sqrt3)}{\pi}\approx0.1955\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📐</span><span class="t"><b>套路小结:</b>矩形区域 → 拆长方形/三角形/梯形;圆盘区域 → 扇形 \(\pm\) 三角形。答案永远是"目标面积 ÷ 总面积"。</span></div>
   </div>
@@ -484,42 +509,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 25 原文用词</span><h2 class="sec-title">联合均匀分布 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它识别"均匀 / 区域 / 面积"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 25</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">joint distribution</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合分布</td><td class="root">joint(联合)→ 两变量一起看 \(f(x,y)\)</td></tr>
-          <tr><td class="en">uniform (distribution)</td><td class="ipa">/ˈjuːnɪfɔːrm/</td><td><span class="pos adj">adj.</span></td><td>均匀(分布)</td><td class="root">uni-(单一)+form(形态)→ 密度处处相同</td></tr>
-          <tr><td class="en">density</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度</td><td class="root">均匀时 \(=1/\text{Area}(R)\),常数</td></tr>
-          <tr><td class="en">region</td><td class="ipa">/ˈriːdʒən/</td><td><span class="pos n">n.</span></td><td>区域</td><td class="root">概率支撑集 \(R\),事件画成子区域</td></tr>
-          <tr><td class="en">area</td><td class="ipa">/ˈɛəriə/</td><td><span class="pos n">n.</span></td><td>面积</td><td class="root">几何概率的核心度量</td></tr>
-          <tr><td class="en">reciprocal</td><td class="ipa">/rɪˈsɪprəkəl/</td><td><span class="pos n">n.</span></td><td>倒数</td><td class="root">密度 = 面积的 reciprocal</td></tr>
-          <tr><td class="en">marginal</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos adj">adj.</span></td><td>边缘的</td><td class="root">margin(边)→ 只看一个变量的分布</td></tr>
-          <tr><td class="en">trapezoid</td><td class="ipa">/ˈtræpɪzɔɪd/</td><td><span class="pos n">n.</span></td><td>梯形</td><td class="root">例 25A 面积用梯形公式</td></tr>
-          <tr><td class="en">sector</td><td class="ipa">/ˈsɛktər/</td><td><span class="pos n">n.</span></td><td>扇形</td><td class="root">圆盘区域按角度切,例 25B</td></tr>
-          <tr><td class="en">rate filing</td><td class="ipa">/reɪt ˈfaɪlɪŋ/</td><td><span class="pos n">n.</span></td><td>费率申报</td><td class="root">file(呈报)→ 保险公司向监管报备费率,例 25A 情境词</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">uniformly distributed on …</div><div class="z">在……上均匀分布</div></div>
-        <div class="ph"><div class="e">chosen at random from …</div><div class="z">从……随机选取</div></div>
-        <div class="ph"><div class="e">the joint distribution of X and Y</div><div class="z">X 与 Y 的联合分布</div></div>
-        <div class="ph"><div class="e">independent … random variables</div><div class="z">相互独立的……随机变量</div></div>
-        <div class="ph"><div class="e">differ by more than …</div><div class="z">相差超过……</div></div>
-        <div class="ph"><div class="e">the area of the region</div><div class="z">该区域的面积</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -559,5 +548,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

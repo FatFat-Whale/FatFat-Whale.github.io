@@ -208,6 +208,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -215,7 +227,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L35 · 多变量变换</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -260,7 +272,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -360,6 +371,16 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <b>⑥ 积掉 \(W\) </b>\(f_Z(z)=\displaystyle\int w\,dw\):</p>
       $$f_Z(z)=\begin{cases}\displaystyle\int_1^2 w\,dw=\frac{2^2-1^2}{2}=1.5,&0\le z\le 0.5\\[10pt]\displaystyle\int_1^{1/z} w\,dw=\frac{1/z^2-1}{2},&0.5\le z\le 1\end{cases}$$
       <span class="ans">f_Z(z) = 1.5 (0≤z≤0.5);　(1/z² − 1)/2 (0.5≤z≤1)</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 独立 ⇒ 联合密度 = 边缘乘积</td><td>\(f_{X,Y}(x,y)=1\cdot1=1\ \ (0\le x\le1,\ 1\le y\le2)\)</td><td class="xr"><a href="soa-exam-p-l11-joint-distribution.html">L11 独立 ↗</a> · <a href="soa-exam-p-l15-uniform-distribution.html">L15 均匀 ↗</a></td></tr>
+        <tr><td>② 补变量、解逆变换</td><td>\(W=Y:\ \ x=zw,\ y=w\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>③ 算雅可比</td><td>\(J=\det\big(\begin{smallmatrix}w&z\\0&1\end{smallmatrix}\big)=w,\ \ \lvert J\rvert=w\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>④ 换密度</td><td>\(f_{Z,W}(z,w)=f_{X,Y}(zw,w)\,\lvert J\rvert=w\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>⑤ 换定义域、按 \(z\) 拆段</td><td>\(w\le\tfrac1z,\ 1\le w\le2\ \Rightarrow\) 分 \(z\le\tfrac12\) 与 \(z\ge\tfrac12\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>⑥ 积掉 \(W\) 得边缘密度</td><td>\(f_Z(z)=\int w\,dw=1.5\) 或 \(\tfrac{1/z^2-1}{2}\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>套路:</b>商 \(X/Y\) 取 \(W=Y\)(于是 \(x=zw\) 干净);积 \(XY\) 取 \(W=X\) 或 \(W=Y\);和 \(X+Y\) 取 \(W=Y\)(下一节直接给出卷积)。<b>定义域拆段</b>是本章最费神处——先在 \((z,w)\) 平面画出支撑,再按 \(z\) 切竖条定上下限。</span></div>
 
@@ -370,6 +391,15 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       \(f_{Z,W}=\Big(\dfrac zw+w\Big)\dfrac1w=\dfrac{z}{w^2}+1\)。定义域 \(0\le z\le w\le1\)。积掉 \(w\):</p>
       $$f_Z(z)=\int_z^1\Big(\frac{z}{w^2}+1\Big)dw=\Big[-\frac zw+w\Big]_z^1=(-z+1)+(1-z)=2(1-z),\quad 0\le z\le1$$
       <span class="ans">f_Z(z) = 2(1 − z),　0 ≤ z ≤ 1</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 补变量、解逆变换</td><td>\(W=Y:\ \ x=\tfrac zw,\ y=w\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>② 算雅可比</td><td>\(J=\det\big(\begin{smallmatrix}1/w&-z/w^2\\0&1\end{smallmatrix}\big)=\tfrac1w,\ \ \lvert J\rvert=\tfrac1w\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>③ 换密度</td><td>\(f_{Z,W}(z,w)=\big(\tfrac zw+w\big)\tfrac1w=\tfrac{z}{w^2}+1\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>④ 换定义域</td><td>\(0\le x\le1,\ 0\le y\le1\ \Rightarrow\ 0\le z\le w\le1\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>⑤ 积掉 \(W\)</td><td>\(f_Z(z)=\int_z^1\big(\tfrac{z}{w^2}+1\big)dw=2(1-z)\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+      </table></div>
     </div>
   </div>
 </section>
@@ -554,41 +584,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 35 原文用词</span><h2 class="sec-title">多变量变换 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"求哪个变换"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 35</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">transformation</td><td class="ipa">/ˌtrænsfərˈmeɪʃən/</td><td><span class="pos n">n.</span></td><td>变换</td><td class="root">trans-(跨)+form(形)→ 变量换形 \((Z,W)=g(X,Y)\)</td></tr>
-          <tr><td class="en">Jacobian</td><td class="ipa">/dʒəˈkoʊbiən/</td><td><span class="pos n">n.</span></td><td>雅可比行列式</td><td class="root">偏导矩阵的行列式,面积缩放因子,取 \(\lvert J\rvert\)</td></tr>
-          <tr><td class="en">inverse transformation</td><td class="ipa">/ˈɪnvɜːrs/</td><td><span class="pos n">n.</span></td><td>逆变换</td><td class="root">把 \(x,y\) 解成 \(z,w\) 的函数;雅可比用它</td></tr>
-          <tr><td class="en">partial derivative</td><td class="ipa">/ˈpɑːrʃəl dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>偏导数</td><td class="root">\(\partial x/\partial z\) 等,组成雅可比矩阵</td></tr>
-          <tr><td class="en">determinant</td><td class="ipa">/dɪˈtɜːrmɪnənt/</td><td><span class="pos n">n.</span></td><td>行列式</td><td class="root">\(\det\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)=ad-bc\)</td></tr>
-          <tr><td class="en">one-to-one</td><td class="ipa">/wʌn tə wʌn/</td><td><span class="pos adj">adj.</span></td><td>一一对应的</td><td class="root">补 \(W\) 就是为了让映射可逆(one-to-one)</td></tr>
-          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt ˈdɛnsəti/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">\(f_{X,Y}\);变换的输入</td></tr>
-          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘密度</td><td class="root">积掉 \(W\) 得 \(f_Z\)——最终答案</td></tr>
-          <tr><td class="en">convolution</td><td class="ipa">/ˌkɒnvəˈluːʃən/</td><td><span class="pos n">n.</span></td><td>卷积</td><td class="root">和 \(X+Y\) 的密度 \(\int f_X(z-w)f_Y(w)dw\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">determine the density function of Z</div><div class="z">求 Z 的密度函数(要 \(f_Z\))</div></div>
-        <div class="ph"><div class="e">Let Z = X/Y</div><div class="z">令 Z = X/Y(商)</div></div>
-        <div class="ph"><div class="e">joint density function of Z and W</div><div class="z">Z 与 W 的联合密度</div></div>
-        <div class="ph"><div class="e">where it is positive / nonzero</div><div class="z">在其为正/非零处(问支撑)</div></div>
-        <div class="ph"><div class="e">two independent random variables</div><div class="z">两个独立随机变量(可用卷积)</div></div>
-        <div class="ph"><div class="e">the excess of A over B</div><div class="z">A 超出 B 的部分(即 \(A-B\))</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -628,5 +623,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

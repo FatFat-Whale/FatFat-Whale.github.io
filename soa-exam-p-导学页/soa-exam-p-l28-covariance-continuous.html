@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L28 · 协方差(连续)</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -234,7 +246,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -365,6 +376,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       $$E[XY]=\int_0^1\!\!\int_0^y xy\,(6x)\,dx\,dy=\int_0^1\!\!\int_0^y 6x^2y\,dx\,dy=\int_0^1 2y^4\,dy=\frac25.$$
       再代定义:\(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]=\dfrac25-\dfrac12\cdot\dfrac34=\dfrac{16}{40}-\dfrac{15}{40}=\dfrac{1}{40}.\)</p>
       <span class="ans">Cov(X, Y) = 1/40 = 0.025　(A)</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 认套路:协方差走捷径式,已给 \(E[X],E[Y]\),只缺 \(E[XY]\)</td><td>\(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]\)</td><td class="xr"><a href="soa-exam-p-l13-covariance.html">L13 Cov 捷径 ↗</a></td></tr>
+        <tr><td>② 联合矩定义 + 三角形支撑定限:内层 \(x\) 从 0 积到 \(y\)</td><td>\(E[XY]=\int_0^1\!\int_0^y xy\,(6x)\,dx\,dy\)</td><td class="xr"><a href="soa-exam-p-l27-joint-moments-continuous.html">L27 联合矩 ↗</a> · <a href="soa-exam-p-l24-joint-continuous.html">L24 联合连续 ↗</a></td></tr>
+        <tr><td>③ 逐层积分:先 \(x\) 后 \(y\)</td><td>\(\int_0^1 2y^4\,dy=\tfrac25\)</td><td class="xr"><a href="soa-exam-p-l24-joint-continuous.html">L24 联合连续 ↗</a></td></tr>
+        <tr><td>④ 代回捷径式</td><td>\(\tfrac25-\tfrac12\cdot\tfrac34=\tfrac{1}{40}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">📝</span><span class="t"><b>套路固定:</b>连续协方差题永远是"三步走"——① 定支撑域、摆好积分上下限;② 逐个积出 \(E[XY],E[X],E[Y]\);③ 代 \(E[XY]-E[X]E[Y]\)。三角形支撑(如 \(0&lt;x&lt;y&lt;1\))最易在积分限上出错,画个图再动笔。</span></div>
   </div>
@@ -494,13 +513,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     <div class="cheat">
       <div class="cc">
         <h4>协方差 / 期望</h4>
-        <p>\(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]\)</p>
+        <p><span class="fx-de" data-tip="推导:展开中心化乘积取期望,三项合并成 -E[X]E[Y](同 L13)" tabindex="0">推</span>\(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]\)</p>
         <p>\(E[XY]=\iint xy\,f(x,y)\,dx\,dy\)</p>
         <p>\(E[X]=\iint x\,f\,dx\,dy,\ E[Y]=\iint y\,f\,dx\,dy\)</p>
       </div>
       <div class="cc t">
         <h4>方差 / 相关</h4>
-        <p>\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)</p>
+        <p><span class="fx-de" data-tip="推导:展开 (X±Y)²,交叉项 ±2Cov,与离散同一推导" tabindex="0">推</span>\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)</p>
         <p>\(\operatorname{Var}(\sum c_iX_i)=\sum c_i^2\operatorname{Var}X_i+2\sum_{i&lt;j}c_ic_j\operatorname{Cov}\)</p>
         <p>\(\rho=\dfrac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}\in[-1,1]\)</p>
         <p>独立 \(\Rightarrow \operatorname{Cov}=0\)(反之不真)</p>
@@ -509,39 +528,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 28 原文用词</span><h2 class="sec-title">协方差 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"联合密度 / 相关"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 28</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">covariance</td><td class="ipa">/koʊˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>协方差</td><td class="root">co-(共同)+variance(方差)→ 共同变动 \(E[XY]-E[X]E[Y]\)</td></tr>
-          <tr><td class="en">correlation</td><td class="ipa">/ˌkɔːrəˈleɪʃən/</td><td><span class="pos n">n.</span></td><td>相关(性)</td><td class="root">co-+relation → 归一化的协方差 \(\rho\)</td></tr>
-          <tr><td class="en">correlation coefficient</td><td class="ipa">/ˌkəʊ.ɪˈfɪʃənt/</td><td><span class="pos n">n.</span></td><td>相关系数</td><td class="root">\(\rho=\operatorname{Cov}/(\sigma_X\sigma_Y)\in[-1,1]\)</td></tr>
-          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">\(f(x,y)\),二重积分的被积核</td></tr>
-          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">独立 \(\Rightarrow\operatorname{Cov}=0\),反之不真</td></tr>
-          <tr><td class="en">uniformly distributed</td><td class="ipa">/ˈjuːnɪfɔːmli/</td><td><span class="pos adj">adj.</span></td><td>均匀分布的</td><td class="root">区间 \((0,\theta)\) 均匀,方差 \(=\theta^2/12\)</td></tr>
-          <tr><td class="en">variance</td><td class="ipa">/ˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>方差</td><td class="root">和的方差需补 \(2\operatorname{Cov}\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">with joint density function</div><div class="z">具有联合密度函数……</div></div>
-        <div class="ph"><div class="e">calculate Cov(X, Y)</div><div class="z">求 \(X,Y\) 的协方差</div></div>
-        <div class="ph"><div class="e">continuous random variables</div><div class="z">连续型随机变量</div></div>
-        <div class="ph"><div class="e">independent and uniformly distributed</div><div class="z">相互独立且均匀分布</div></div>
-        <div class="ph"><div class="e">the covariance of the two …</div><div class="z">这两个……的协方差</div></div>
-        <div class="ph"><div class="e">correctly describes the covariances</div><div class="z">正确描述这些协方差(判符号)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -581,5 +567,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

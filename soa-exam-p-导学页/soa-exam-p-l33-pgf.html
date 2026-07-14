@@ -208,6 +208,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -215,7 +227,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L33 · 概率母函数</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -261,7 +273,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -406,6 +417,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">\(X\) 取 0/1/2,概率分别 0.5 / 0.3 / 0.2。求母函数在 \(t=3\) 处的值 \(P(3)\)。</p>
       <p>直接按定义代入:\(P(3)=E[3^X]=0.5(3^0)+0.3(3^1)+0.2(3^2)=0.5+0.9+1.8\)。</p>
       <span class="ans">P(3) = 3.2</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 按定义写母函数</td><td>\(P(t)=E[t^{X}]=\sum_k t^k\,p_k\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>② 离散期望:按 pmf 加权、代 \(t=3\)</td><td>\(P(3)=0.5(3^0)+0.3(3^1)+0.2(3^2)=3.2\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07 期望 ↗</a></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -413,6 +430,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">\(N\sim\text{Poisson}(\lambda)\)。推导它的概率母函数。</p>
       <p>\(P(t)=\sum_{n\ge0}t^n\,\dfrac{e^{-\lambda}\lambda^n}{n!}=e^{-\lambda}\sum_{n\ge0}\dfrac{(\lambda t)^n}{n!}=e^{-\lambda}e^{\lambda t}=e^{\lambda(t-1)}\)。</p>
       <span class="ans">P(t) = e^{λ(t−1)}</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 按定义列级数(泊松 pmf 当系数)</td><td>\(P(t)=\sum_{n\ge0}t^n\,\tfrac{e^{-\lambda}\lambda^n}{n!}\)</td><td class="xr"><span class="here">本章 §01</span> · <a href="soa-exam-p-l19-poisson-distribution.html">L19 泊松 ↗</a></td></tr>
+        <tr><td>② 认出 \(e^x\) 级数并求和</td><td>\(\sum_{n\ge0}\tfrac{(\lambda t)^n}{n!}=e^{\lambda t}\ \Rightarrow\ P(t)=e^{\lambda(t-1)}\)</td><td class="xr"><a href="soa-exam-p-calculus.html">微积分 ↗</a></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -420,6 +443,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">\(N\sim\text{Poisson}(\lambda)\),母函数 \(P(z)=e^{\lambda(z-1)}\)。求三阶原点矩 \(E[N^3]\) 与三阶中心矩 \(E[(N-\lambda)^3]\)。</p>
       <p>逐阶求导:\(P^{(n)}(z)=\lambda^n e^{\lambda(z-1)}\),故 \(P'''(1)=\lambda^3=E[N(N{-}1)(N{-}2)]\)。配合低阶矩 \(P'(1)=\lambda\)、\(P''(1)=\lambda^2\):\(E[N^3]=P'''(1)+3P''(1)+P'(1)=\lambda^3+3\lambda^2+\lambda\)。再算中心矩:\(E[(N-\lambda)^3]=E[N^3]-3\lambda E[N^2]+2\lambda^3\),其中 \(E[N^2]=\lambda^2+\lambda\),代入得 \((\lambda^3+3\lambda^2+\lambda)-3\lambda(\lambda^2+\lambda)+2\lambda^3=\lambda\)。</p>
       <span class="ans">E[N³] = λ³ + 3λ² + λ · E[(N−λ)³] = λ</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 逐阶求导、代 \(z=1\) 取阶乘矩</td><td>\(P^{(n)}(z)=\lambda^n e^{\lambda(z-1)}\Rightarrow P'(1)=\lambda,\ P''(1)=\lambda^2,\ P'''(1)=\lambda^3\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 阶乘矩换原点矩</td><td>\(E[N^3]=P'''(1)+3P''(1)+P'(1)=\lambda^3+3\lambda^2+\lambda\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 三阶中心矩按二项式展开、代入化简</td><td>\(E[(N-\lambda)^3]=E[N^3]-3\lambda E[N^2]+2\lambda^3=\lambda\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08 矩 ↗</a></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -427,6 +457,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">某离散 RV 的母函数为 \(P(t)=\dfrac{1}{0.8\,(1-4(t-1))}-0.25\)。求 \(P[X{=}2]\)。</p>
       <p>用 \(p_2=\dfrac{P''(0)}{2!}\)。求导:\(P'(t)=\dfrac{4}{0.8\,(1-4(t-1))^2}\),\(P''(t)=\dfrac{32}{0.8\,(1-4(t-1))^3}\)。代 \(t=0\)(此时 \(1-4(t-1)=5\)):\(P''(0)=\dfrac{32}{0.8\cdot5^3}=\dfrac{32}{100}=0.32\)。故 \(p_2=0.32/2\)。</p>
       <span class="ans">P[X=2] = 0.16</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 反读概率公式定目标</td><td>\(p_2=\dfrac{P''(0)}{2!}\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 求两阶导(链式法则)、代 \(t=0\)、除以 \(2!\)</td><td>\(P''(0)=\tfrac{32}{0.8\cdot5^3}=0.32\ \Rightarrow\ p_2=0.16\)</td><td class="xr"><a href="soa-exam-p-calculus.html">微积分 ↗</a> · <span class="here">本章 §02</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">🔎</span><span class="t"><b>套路总结:</b>看到"求某个概率"→ 求导代 0 除阶乘;"求期望/方差"→ 求导代 1;"求母函数本身在某点值"→ 直接代;"独立随机变量之和"→ 母函数相乘。</span></div>
   </div>
@@ -568,12 +604,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>定义 / 求值</h4>
         <p>\(P_X(t)=E[t^X]=\sum_k t^k p_k\)</p>
         <p>\(P(1)=1\)(自检)</p>
-        <p>\(P(0)=p_0\);\(P[X{=}k]=\dfrac{P^{(k)}(0)}{k!}\)</p>
+        <p><span class="fx-de" data-tip="推导:P(t)=Σp_k t^k 是幂级数:系数=k 阶导在 0 点除 k!" tabindex="0">推</span>\(P(0)=p_0\);\(P[X{=}k]=\dfrac{P^{(k)}(0)}{k!}\)</p>
         <p>限非负整数 RV</p>
       </div>
       <div class="cc t">
         <h4>矩 / 独立和 / MGF</h4>
-        <p>\(P'(1)=E[X]\),\(P''(1)=E[X(X{-}1)]\)</p>
+        <p><span class="fx-de" data-tip="推导:逐项求导 Σk·p_k·t^(k-1),代 t=1 得 Σk·p_k=E[X]" tabindex="0">推</span>\(P'(1)=E[X]\),\(P''(1)=E[X(X{-}1)]\)</p>
         <p>\(\operatorname{Var}=P''(1)+P'(1)-\big(P'(1)\big)^2\)</p>
         <p>独立和:\(P_{X+Y}=P_X\,P_Y\)</p>
         <p>\(P(t)=M(\ln t)\);泊松 \(P(t)=e^{\lambda(t-1)}\)</p>
@@ -582,42 +618,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 33 原文用词</span><h2 class="sec-title">概率母函数 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"要不要用母函数"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 33</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">probability generating function</td><td class="ipa">/ˈdʒɛnəreɪtɪŋ/</td><td><span class="pos n">n.</span></td><td>概率母函数</td><td class="root">generate(生成)→ 生成概率/矩的函数,\(P(t)=E[t^X]\)</td></tr>
-          <tr><td class="en">factorial moment</td><td class="ipa">/fækˈtɔːriəl/</td><td><span class="pos n">n.</span></td><td>阶乘矩</td><td class="root">\(E[X(X{-}1)\cdots]\),由 \(P^{(n)}(1)\) 生成</td></tr>
-          <tr><td class="en">moment generating function</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>矩母函数(MGF)</td><td class="root">\(M(t)=E[e^{tX}]=P(e^t)\)</td></tr>
-          <tr><td class="en">non-negative integer</td><td class="ipa">/ˈɪntɪdʒər/</td><td><span class="pos n">n.</span></td><td>非负整数</td><td class="root">母函数适用范围:0,1,2,…</td></tr>
-          <tr><td class="en">derivative</td><td class="ipa">/dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>导数</td><td class="root">\(n\)th derivative 第 \(n\) 阶导数</td></tr>
-          <tr><td class="en">multiplicative</td><td class="ipa">/ˌmʌltɪˈplɪkətɪv/</td><td><span class="pos adj">adj.</span></td><td>乘性的</td><td class="root">独立和的母函数 = 各自母函数之积</td></tr>
-          <tr><td class="en">coefficient</td><td class="ipa">/ˌkoʊɪˈfɪʃənt/</td><td><span class="pos n">n.</span></td><td>系数</td><td class="root">\(t^k\) 的系数即 \(p_k\)</td></tr>
-          <tr><td class="en">evaluate at</td><td class="ipa">/ɪˈvæljueɪt/</td><td><span class="pos v">v.</span></td><td>在……处求值</td><td class="root">evaluate at 1 / at 0,两大求值点</td></tr>
-          <tr><td class="en">raw moment</td><td class="ipa">/rɔː ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>原点矩</td><td class="root">\(E[X^n]\),幂的期望;由阶乘矩换算(如 \(E[X^3]=P'''(1)+3P''(1)+P'(1)\))</td></tr>
-          <tr><td class="en">central moment</td><td class="ipa">/ˈsɛntrəl ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>中心矩</td><td class="root">\(E[(X-\mu)^n]\),绕均值取矩;二阶中心矩即方差</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">probability generating function</div><div class="z">概率母函数(题眼:出现即用本章)</div></div>
-        <div class="ph"><div class="e">the \(n\)th derivative evaluated at 1</div><div class="z">第 \(n\) 阶导在 1 处求值 → 阶乘矩</div></div>
-        <div class="ph"><div class="e">sum of independent random variables</div><div class="z">独立随机变量之和 → 母函数相乘</div></div>
-        <div class="ph"><div class="e">the coefficient of \(t^k\)</div><div class="z">\(t^k\) 的系数 → 即 \(P[X{=}k]\)</div></div>
-        <div class="ph"><div class="e">calculate the probability of \(k\)</div><div class="z">求 \(P[X{=}k]\) → \(P^{(k)}(0)/k!\)</div></div>
-        <div class="ph"><div class="e">non-negative discrete random variable</div><div class="z">非负离散 RV(母函数前提)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -657,5 +657,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

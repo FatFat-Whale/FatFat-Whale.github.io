@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!-- 源页: 全书词汇总表(每科唯一词汇载体)。A 术语(字母序)/ B 通用学术词 / C 读题短语, 全书打通去重。
+     自测: 表头 👁 遮中文; 勾「已掌握」即隐藏(不持久化, 刷新重置)。直接维护本页; 新章词汇加对应段。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · 词汇总表</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#e6a100; --accent-deep:#9a6f00; --accent-soft:#fff7da; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+<style>
+  .vx-hero{background:linear-gradient(180deg,#16243d,#1d3050);color:#eef2f8;padding:30px 0 24px}
+  .vx-hero h1{font-family:var(--serif);font-size:clamp(24px,4vw,34px);margin:0 0 8px}
+  .vx-hero h1 em{font-style:normal;color:var(--hi)}
+  .vx-hero p{font-size:14px;color:#cdd6e6;margin:0;max-width:80ch}
+  .vx-toc{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:7px;
+    background:rgba(245,246,249,.96);backdrop-filter:blur(6px);padding:10px 0;border-bottom:1px solid var(--line)}
+  .vx-toc a{font-size:12.5px;text-decoration:none;color:#fff;border-radius:999px;padding:4px 11px;font-family:var(--mono)}
+  .vx-toc a:hover{filter:brightness(1.15)}
+  .vx-ch{padding:6px 0 12px}
+  .vx-hot{color:#b45309;font-size:12px}
+  .vx-h{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:20px;margin:18px 0 12px}
+  .vx-h .vxn{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;border-radius:6px;padding:3px 9px}
+  td.mst{text-align:center}
+  .mst input,.mst-ph input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+  .mst-ph{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mute);margin-top:8px;cursor:pointer;user-select:none}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>词汇总表</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
+  </div>
+</header>
+<div class="vx-hero"><div class="wrap">
+  <h1>全书 <em>词汇总表 Vocabulary</em></h1>
+  <p>全书唯一词汇载体:<b>A 术语 232 词</b>(字母序)· <b>读题必备词汇 147 条</b>(教材各章习题全书重盘:核心题眼 + 高频词,按跨章频次排序,★=全书级)。自测:表头 <b>👁</b> 遮中文,点格揭示;背会就勾<b>已掌握</b>——词条即隐,刷新页面全部重置。</p>
+</div></div>
+<div class="wrap"><nav class="vx-toc"><a href="#terms" style="background:var(--accent)">A 术语 232</a><a href="#phrases" style="background:#b45309">读题必备词汇 147</a></nav></div>
+<section class="vx-ch" id="terms"><div class="wrap">
+  <h2 class="vx-h"><span class="vxn" style="background:var(--accent)">A</span>术语 Must-know(全书 · 字母序)</h2>
+  <div class="card accent">
+  <table class="map vocab">
+    <thead><tr><th style="width:26%">English</th><th style="width:7%">词性</th><th style="width:22%">中文</th><th>记忆点 / 词根</th><th style="width:9%">已掌握</th></tr></thead>
+    <tbody>
+<tr><td class="en">approximation</td><td><span class="pos n">n.</span></td><td>近似</td><td class="root">approximate→ 正态近似,非精确</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">area</td><td><span class="pos n">n.</span></td><td>面积</td><td class="root">几何概率的核心度量</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">associative</td><td><span class="pos adj">adj.</span></td><td>结合律的</td><td class="root">associate(联结)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">axiom</td><td><span class="pos n">n.</span></td><td>公理</td><td class="root">不证自明的前提</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Bayes' Theorem</td><td><span class="pos n">n.</span></td><td>贝叶斯定理</td><td class="root">人名 Bayes;由结果反推原因 \(P[A_j\mid B]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">benefit limit</td><td><span class="pos n">n.</span></td><td>给付限额</td><td class="root">§5.1;赔付 \(\min(X,u)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Bernoulli distribution</td><td><span class="pos n">n.</span></td><td>两点分布</td><td class="root">只取两值 \(a,b\) → §8.1 捷径 \((b-a)^2p(1-p)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Bernoulli shortcut</td><td><span class="pos n">n.</span></td><td>伯努利捷径</td><td class="root">两点变量方差 \((b-a)^2 p(1-p)\),秒算免积分</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Bernoulli trial</td><td><span class="pos n">n.</span></td><td>伯努利试验</td><td class="root">只有成功/失败两种结果的独立试验</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">beta distribution</td><td><span class="pos n">n.</span></td><td>Beta 分布</td><td class="root">定义在 \([0,1]\) 的分布族;均匀是其特例(\(a=b=1\)),本课仅作了解</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">bilinear</td><td><span class="pos adj">adj.</span></td><td>双线性的</td><td class="root">两个位置各自线性 → 式 (13.7)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">binomial coefficient</td><td><span class="pos n">n.</span></td><td>二项式系数 \(\binom{n}{k}\)</td><td class="root">bi-(二)+nomial(项)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">binomial distribution</td><td><span class="pos n">n.</span></td><td>二项分布</td><td class="root">bi-(二)+ nom(项)→ 两类结果的计数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">bivariate distribution</td><td><span class="pos n">n.</span></td><td>双变量分布</td><td class="root">bi(二)+ variate(变量)→ \((X,Y)\) 联合分布</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">bivariate normal distribution</td><td><span class="pos n">n.</span></td><td>二元正态分布</td><td class="root">bi-(二)+variate(变量)→ 两个正态变量的联合</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">bodily injury</td><td><span class="pos n">n.</span></td><td>人身伤害</td><td class="root">body(身体)→ 引例中的 \(Y\):伤到的人</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">by conditioning</td><td><span class="pos v">v.</span></td><td>通过取条件</td><td class="root">condition(条件)→ "先分组再合"的手法</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">central limit theorem</td><td><span class="pos n">n.</span></td><td>中心极限定理</td><td class="root">limit(极限)→ \(n\to\infty\) 时和/均值趋正态</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">central moment</td><td><span class="pos n">n.</span></td><td>中心矩</td><td class="root">绕均值 \(\mu\) 取幂的期望</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">claim</td><td><span class="pos n">n.</span></td><td>索赔 / 理赔</td><td class="root">number of claims = 索赔件数;claim(主张)→ 向保险公司主张赔付</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">claim amount</td><td><span class="pos n">n.</span></td><td>理赔额</td><td class="root">claim(索赔)+ amount(金额);p.529 引言中的 \(X\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">closed form</td><td><span class="pos n">n.</span></td><td>闭式 / 封闭形式</td><td class="root">常见分布 MGF 有 closed form</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">coefficient</td><td><span class="pos n">n.</span></td><td>系数</td><td class="root">\(t^k\) 的系数即 \(p_k\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">coefficient of variation</td><td><span class="pos n">n.</span></td><td>变异系数</td><td class="root">\(\sigma/\mu\),无量纲相对波动</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">coinsurance</td><td><span class="pos n">n.</span></td><td>共保</td><td class="root">co(共同)+insurance;§5.1,按比例赔 \(\alpha X\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">combination</td><td><span class="pos n">n.</span></td><td>组合(不讲顺序)</td><td class="root">com-(共)+bin(合)→ 组到一起</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">complement</td><td><span class="pos n">n.</span></td><td>补集(非)</td><td class="root">com-+ple(填满)→ 补足;别和 compliment(称赞)混</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional density</td><td><span class="pos n">n.</span></td><td>条件密度</td><td class="root">\(f_{X\mid Y}(x\mid y)=f(x,y)/f_Y(y)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional density function</td><td><span class="pos n">n.</span></td><td>条件密度函数</td><td class="root">条件 cdf 求导;\(f_{X\mid A}=f/P[A]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional distribution</td><td><span class="pos n">n.</span></td><td>条件分布</td><td class="root">\(f(x,y)/f_Y(y)\),归一化后的正当分布</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional expectation</td><td><span class="pos n">n.</span></td><td>条件期望</td><td class="root">\(E[X\mid Y=y]\);是 \(y\) 的函数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional moment</td><td><span class="pos n">n.</span></td><td>条件矩</td><td class="root">moment(矩)= 期望型量 \(E[X^k]\);带条件即为条件矩</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional probability</td><td><span class="pos n">n.</span></td><td>条件概率</td><td class="root">condition(条件)→ 在条件下的概率 \(P[A\mid B]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional random variable</td><td><span class="pos n">n.</span></td><td>条件随机变量</td><td class="root">\(Y=X\mid \text{condition}\),有自己的分布</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional variance</td><td><span class="pos n">n.</span></td><td>条件方差</td><td class="root">\(E[X^2\mid\cdot]-(E[X\mid\cdot])^2\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">continuity correction</td><td><span class="pos n">n.</span></td><td>连续性修正</td><td class="root">离散→正态近似时 ±0.5</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">continuous</td><td><span class="pos adj">adj.</span></td><td>连续的</td><td class="root">取值填满区间;单点概率 0</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">continuous random variable</td><td><span class="pos n">n.</span></td><td>连续型随机变量</td><td class="root">con(共)+tinue(延续)→ 不间断;\(\Pr(X=c)=0\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">converge</td><td><span class="pos v">v.</span></td><td>收敛</td><td class="root">积分 converges 才有定义(定义域)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">converge / diverge</td><td><span class="pos v">v.</span></td><td>收敛 / 发散</td><td class="root">和 / 积分不收敛 → 期望不存在</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">convolution</td><td><span class="pos n">n.</span></td><td>卷积</td><td class="root">和 \(X+Y\) 的密度 \(\int f_X(z-w)f_Y(w)dw\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">correlation</td><td><span class="pos n">n.</span></td><td>相关(系数)</td><td class="root">co-+relation → 归一化的协方差 \(\rho\in[-1,1]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">correlation coefficient</td><td><span class="pos n">n.</span></td><td>相关系数</td><td class="root">记作 \(\rho\) 或 \(\rho_{XY}\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">countable</td><td><span class="pos adj">adj.</span></td><td>可数的</td><td class="root">count(数)+ -able</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">covariance</td><td><span class="pos n">n.</span></td><td>协方差</td><td class="root">co-(共同)+variance(方差)→ 共同变动 \(E[XY]-E[X]E[Y]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">covariance matrix</td><td><span class="pos n">n.</span></td><td>协方差矩阵</td><td class="root">\(\Sigma\),对角为方差,对称非负定</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">cumulative distribution function</td><td><span class="pos n">n.</span></td><td>累积分布函数(cdf)</td><td class="root">cumulate(累积)→ \(F(x)=P[X\le x]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">decompose</td><td><span class="pos v">v.</span></td><td>分解</td><td class="root">de-+compose → 把事件拆成子事件之并</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">deductible</td><td><span class="pos n">n.</span></td><td>免赔额</td><td class="root">§5.1 保险;赔付 \(\max(X-d,0)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">defective</td><td><span class="pos adj">adj.</span></td><td>次品的 / 有缺陷的</td><td class="root">题里常"数次品",典型二项情境</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">denomination</td><td><span class="pos n">n.</span></td><td>(牌的)点数;面额</td><td class="root">抽牌题:same denomination=同点数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">density</td><td><span class="pos n">n.</span></td><td>密度</td><td class="root">均匀时 \(=1/\text{Area}(R)\),常数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">density function</td><td><span class="pos n">n.</span></td><td>密度函数</td><td class="root">连续变量的 \(f(x)\),积分得概率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">derivative</td><td><span class="pos n">n.</span></td><td>导数</td><td class="root">\(n\)-th derivative at 0 = 第 \(n\) 阶矩</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">determinant</td><td><span class="pos n">n.</span></td><td>行列式</td><td class="root">\(\det\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)=ad-bc\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">discrete</td><td><span class="pos adj">adj.</span></td><td>离散的</td><td class="root">取可数点;别与 discreet(谨慎)混</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">discrete distribution</td><td><span class="pos n">n.</span></td><td>离散分布</td><td class="root">取整数值→近似时需修正</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">dispersion</td><td><span class="pos n">n.</span></td><td>离散程度</td><td class="root">disperse(分散)→ 分布铺多开</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">distinct</td><td><span class="pos adj">adj.</span></td><td>相异的;不同的</td><td class="root">distinct permutations=相异排列</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">distribution function</td><td><span class="pos n">n.</span></td><td>分布函数(cdf)</td><td class="root">\(F(x)=\Pr(X\le x)\);微分得密度</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">distributive</td><td><span class="pos adj">adj.</span></td><td>分配律的</td><td class="root">distribute(分发)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">diversify</td><td><span class="pos v">v.</span></td><td>分散(投资)</td><td class="root">diverse(多样)→ 独立资产摊平方差</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">double expectation</td><td><span class="pos n">n.</span></td><td>双重期望</td><td class="root">期望套期望 \(E[E[X\mid Y]]\),又叫 tower rule</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">double integral</td><td><span class="pos n">n.</span></td><td>二重积分</td><td class="root">\(\iint\);区域概率的核心运算</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">double-integrate</td><td><span class="pos v">v.</span></td><td>二重积分</td><td class="root">离散求和的连续对应;\(\iint\cdots dx\,dy\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">empty set</td><td><span class="pos n">n.</span></td><td>空集 \(\varnothing\)</td><td class="root">empty=空的</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">endpoint</td><td><span class="pos n">n.</span></td><td>端点</td><td class="root">支撑边界;\(f'\) 无零点时众数常在此</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">entire space</td><td><span class="pos n">n.</span></td><td>全集 \(\Omega\)</td><td class="root">entire=整个</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">evaluate at</td><td><span class="pos v">v.</span></td><td>在……处求值</td><td class="root">evaluate at 1 / at 0,两大求值点</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">event</td><td><span class="pos n">n.</span></td><td>事件</td><td class="root">概率赋值的对象</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">exhaustive</td><td><span class="pos adj">adj.</span></td><td>完备的 / 穷尽的</td><td class="root">exhaust(耗尽)→ 并集穷尽整个样本空间 \(\Omega\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">expectation</td><td><span class="pos n">n.</span></td><td>期望(运算)</td><td class="root">expect 的名词,\(E[\cdot]\) 算子</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">expected value</td><td><span class="pos n">n.</span></td><td>期望值</td><td class="root">expect(预期)→ 长期平均结果 \(E[X]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">exponential distribution</td><td><span class="pos n">n.</span></td><td>指数分布</td><td class="root">exponent(指数)→ 密度含 \(e^{-x/\theta}\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">face amount</td><td><span class="pos n">n.</span></td><td>保单面额</td><td class="root">face(票面)→ 保单写明的赔付额;例 22B</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">factored</td><td><span class="pos adj">adj.</span></td><td>可因式分解的</td><td class="root">密度写成"含 \(x\)"×"含 \(y\)",独立的信号</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">factorial</td><td><span class="pos n">n.</span></td><td>阶乘 \(n!\)</td><td class="root">factor(因子)相乘</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">factorial moment</td><td><span class="pos n">n.</span></td><td>阶乘矩</td><td class="root">\(E[X(X{-}1)\cdots]\),由 \(P^{(n)}(1)\) 生成</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">gamma distribution</td><td><span class="pos n">n.</span></td><td>伽马分布</td><td class="root">\(n\) 个独立指数之和;\(n{=}1\) 即指数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">gamma function</td><td><span class="pos n">n.</span></td><td>伽马函数</td><td class="root">\(\Gamma(n)=(n-1)!\)(整数 \(n\));阶乘的推广</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">geometric distribution</td><td><span class="pos n">n.</span></td><td>几何分布</td><td class="root">负二项 \(k=1\) 特例;概率呈几何(等比)衰减</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">given</td><td><span class="pos prep">prep.</span></td><td>在……已知/给定下</td><td class="root">"\(A\) given \(B\)" = \(A\mid B\),竖线读 given</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">gross premium</td><td><span class="pos n">n.</span></td><td>毛保费</td><td class="root">净保费 + 费用与利润,实际收取价</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">group insurance coverage</td><td><span class="pos n">n.</span></td><td>团体险(保障)</td><td class="root">cover(覆盖)+age;一张保单保一群人(例 18E)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">half-disk</td><td><span class="pos n">n.</span></td><td>半圆盘</td><td class="root">26.8 支撑;面积 \(\pi/2\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">hypergeometric</td><td><span class="pos adj">adj.</span></td><td>超几何的</td><td class="root">不放回抽样的分布</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">identically distributed</td><td><span class="pos adj">adj.</span></td><td>同分布的</td><td class="root">iid 的第二个 "i";各 \(X_i\) 同 \(\mu,\sigma^2\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">inclusion–exclusion</td><td><span class="pos n">n.</span></td><td>容斥(原理)</td><td class="root">include(纳入)↔ exclude(排除)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">independence</td><td><span class="pos n">n.</span></td><td>独立性</td><td class="root">independent 的名词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">independent</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">in-(非)+depend(依赖)→ 互不依赖</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">indicator variable</td><td><span class="pos n">n.</span></td><td>示性变量</td><td class="root">只取 0/1 的开关变量,常用作条件 \(Y\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">inflation</td><td><span class="pos n">n.</span></td><td>通胀</td><td class="root">inflate(膨胀);§5.1,损失变 \((1+r)X\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">inflection point</td><td><span class="pos n">n.</span></td><td>拐点</td><td class="root">\(f'=0\) 可能是拐点而非极大,须验二阶导</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">integrate by parts</td><td><span class="pos v">v.</span></td><td>分部积分</td><td class="root">证生存函数公式的手法</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">integrate over</td><td><span class="pos v">v.</span></td><td>在……上积分</td><td class="root">"integrate over the region" = 在区域上积分</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">intersection</td><td><span class="pos n">n.</span></td><td>交集(且)</td><td class="root">inter-(之间)+sect(切)→ 相交</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">inverse function</td><td><span class="pos n">n.</span></td><td>反函数</td><td class="root">\(h=g^{-1}\),\(h(g(x))=x\);解出 \(x\) 关于 \(y\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">inverse transformation</td><td><span class="pos n">n.</span></td><td>逆变换</td><td class="root">把 \(x,y\) 解成 \(z,w\) 的函数;雅可比用它</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Jacobian</td><td><span class="pos n">n.</span></td><td>雅可比(行列式)</td><td class="root">\(\big|dx/dy\big|\),密度换元的伸缩因子,<b>取绝对值</b></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint density</td><td><span class="pos n">n.</span></td><td>联合密度</td><td class="root">\(f(x,y)\),两变量的密度</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint density function</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">连续版,\(\iint f=1\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint distribution</td><td><span class="pos n">n.</span></td><td>联合分布</td><td class="root">joint(连接的)→ 两变量一起看 \(F(x,y)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint distribution function</td><td><span class="pos n">n.</span></td><td>联合(累积)分布函数</td><td class="root">即联合 cdf \(F(x,y)=P[X\le x,Y\le y]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint moment</td><td><span class="pos n">n.</span></td><td>联合矩</td><td class="root">joint(联合)+moment(矩)→ \(E[X^aY^b]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint moment generating function</td><td><span class="pos n">n.</span></td><td>联合矩母函数</td><td class="root">joint=联合,\(E[e^{t_1X+t_2Y}]\),两变量版 MGF</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint probability function</td><td><span class="pos n">n.</span></td><td>联合概率函数(离散 pmf)</td><td class="root">\(p(x,y)=P[X=x,Y=y]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">kurtosis</td><td><span class="pos n">n.</span></td><td>峰度</td><td class="root">希腊 kurtos(隆起)→ 峰尖钝,四阶</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">law of total probability</td><td><span class="pos n">n.</span></td><td>全概率公式</td><td class="root">total(全部)→ 沿一组分支加权求和得总概率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">liability policy</td><td><span class="pos n">n.</span></td><td>责任险保单</td><td class="root">liable(负有责任的)→ 赔第三方的险种</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">limits of integration</td><td><span class="pos n">n.</span></td><td>积分限</td><td class="root">内外层上下限;非矩形时内层随外层变</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">linear combination</td><td><span class="pos n">n.</span></td><td>线性组合</td><td class="root">\(aX+bY\),方差用式 (13.3)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">linear interpolation</td><td><span class="pos n">n.</span></td><td>线性插值</td><td class="root">inter- 两点之间 → 按比例估查表中间值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">linear operator</td><td><span class="pos n">n.</span></td><td>线性算子</td><td class="root">期望是线性算子,方差<b>不是</b></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">linearity (of expectation)</td><td><span class="pos n">n.</span></td><td>(期望的)线性</td><td class="root">linear(线性)→ 和可拆、系数可提,无需独立</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">lognormal distribution</td><td><span class="pos n">n.</span></td><td>对数正态分布</td><td class="root">\(\ln Y\) 是正态;保险损失建模常用</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">loss</td><td><span class="pos n">n.</span></td><td>损失</td><td class="root">保险读题核心词:loss \(X\) 是原始损失,赔付 \(Y\) 再经免赔额/限额加工</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">loss adjustment expense</td><td><span class="pos n">n.</span></td><td>损失理算费用(ALAE)</td><td class="root">adjust(核定)→ 查勘定损的开销;总支出 \(X(1+Y)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">many-to-one</td><td><span class="pos adj">adj.</span></td><td>多对一的</td><td class="root">非单调,如 \(Y=X^2\);<b>分支密度相加</b></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">marginal</td><td><span class="pos adj">adj.</span></td><td>边缘的</td><td class="root">margin(边)→ 只看一个变量的分布</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">marginal density</td><td><span class="pos n">n.</span></td><td>边缘密度</td><td class="root">margin(页边)→ 把另一变量"积到边上"剩下的单变量密度</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">marginal distribution</td><td><span class="pos n">n.</span></td><td>边缘分布</td><td class="root">margin(页边)→ 行/列加总写在表边</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">maximize</td><td><span class="pos v">v.</span></td><td>使最大化</td><td class="root">max(最大)→ 众数 = 让概率 maximize 的 \(x\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">maximum</td><td><span class="pos n">n.</span></td><td>最大值</td><td class="root">支撑最高点</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mean</td><td><span class="pos n">n.</span></td><td>均值 / 期望</td><td class="root">分布中心 \(\mu\),与 expected value 同义</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">median</td><td><span class="pos n">n.</span></td><td>中位数</td><td class="root">medi-(中)→ 50 分位,对半劈</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">member</td><td><span class="pos n">n.</span></td><td>元素;成员</td><td class="root">集合里的"成员"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">memoryless</td><td><span class="pos adj">adj.</span></td><td>无记忆的</td><td class="root">memory(记忆)+less;过去等待不影响未来</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">midrange</td><td><span class="pos n">n.</span></td><td>中程数</td><td class="root">mid+range → \(\dfrac{\min+\max}{2}\),≠ 中位数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">minimum</td><td><span class="pos n">n.</span></td><td>最小值</td><td class="root">支撑最低点</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mixed distribution</td><td><span class="pos n">n.</span></td><td>混合分布</td><td class="root">离散 + 连续并存,众数定义有争议</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mixed moment</td><td><span class="pos n">n.</span></td><td>混合矩</td><td class="root">\(E[X^aY^b]\),\(a,b\) 都 \(\ge1\) 时"混合"两变量</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mixed random variable</td><td><span class="pos n">n.</span></td><td>混合型随机变量</td><td class="root">离散质量点 + 连续密度(如 \(X=0\) 有正概率)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mode</td><td><span class="pos n">n.</span></td><td>众数</td><td class="root">拉丁 modus(方式/常态)→ 最常出现的值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">moment</td><td><span class="pos n">n.</span></td><td>矩</td><td class="root">\(E[X^n]\) 原点矩 / \(E[(X-\mu)^n]\) 中心矩</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">moment generating function</td><td><span class="pos n">n.</span></td><td>矩母函数(MGF)</td><td class="root">generate(生成)→ 求导即"生"出各阶矩</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">monotonically increasing</td><td><span class="pos adj">adj.</span></td><td>单调递增的</td><td class="root">mono-tone → 变换搬分位数的前提</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">monotonic(ally) increasing</td><td><span class="pos adj">adj.</span></td><td>单调递增的</td><td class="root">mono(单)+ton(调)→ 只升不降,不等号不翻</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">multimodal</td><td><span class="pos adj">adj.</span></td><td>多峰的</td><td class="root">multi-(多)+ modal(众数)→ 多个众数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">multinomial / trinomial</td><td><span class="pos adj">adj.</span></td><td>多项 / 三项的</td><td class="root">multi-(多)→ 多于两类结果</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">multiplication rule</td><td><span class="pos n">n.</span></td><td>乘法律</td><td class="root">交集 = 概率连乘</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">multiplicative</td><td><span class="pos adj">adj.</span></td><td>乘性的</td><td class="root">独立和 → MGF 相乘</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">multivariate</td><td><span class="pos adj">adj.</span></td><td>多元的</td><td class="root">multi(多)+variate(变量)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mutually exclusive</td><td><span class="pos adj">adj.</span></td><td>互斥的</td><td class="root">mutual(相互)+ exclude(排除)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mutually independent</td><td><span class="pos adj">adj.</span></td><td>相互独立的</td><td class="root">所有子集都满足乘积,最强</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">negative binomial distribution</td><td><span class="pos n">n.</span></td><td>负二项分布</td><td class="root">数"第 \(k\) 次成功前的失败数";\(k=1\) 即几何</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">net premium</td><td><span class="pos n">n.</span></td><td>净保费</td><td class="root">= 期望总赔付 \(E[\text{aggregate losses}]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">nondecreasing</td><td><span class="pos adj">adj.</span></td><td>非减的</td><td class="root">non+decrease,\(F\) 只升不降</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">nonnegative integer</td><td><span class="pos n">n.</span></td><td>非负整数</td><td class="root">\(n=0,1,2,\dots\),失败数从 0 起</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">non-negative integer</td><td><span class="pos n">n.</span></td><td>非负整数</td><td class="root">母函数适用范围:0,1,2,…</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">normal distribution</td><td><span class="pos n">n.</span></td><td>正态分布</td><td class="root">钟形对称 \(N(\mu,\sigma^2)\),又称 Gaussian</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">normalize</td><td><span class="pos v">v.</span></td><td>归一化</td><td class="root">除以 \(f_Y(y)\) 使积分为 1</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">one-to-one</td><td><span class="pos adj">adj.</span></td><td>一一对应的</td><td class="root">单射;每个 \(y\) 只对一个 \(x\),单分支</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">order statistic</td><td><span class="pos n">n.</span></td><td>次序统计量</td><td class="root">排序后第 \(k\) 个,记 \(X_{(k)}\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">ordering</td><td><span class="pos n">n.</span></td><td>排序;次序</td><td class="root">order(顺序)→ 排列的本质</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">otherwise</td><td><span class="pos adv">adv.</span></td><td>其他情况(下)</td><td class="root">分段密度里 "otherwise \(=0\)" 界定支撑</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">pairwise independent</td><td><span class="pos adj">adj.</span></td><td>两两独立的</td><td class="root">pair(对)→ 只两两满足,弱于相互独立</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">parameter</td><td><span class="pos n">n.</span></td><td>参数</td><td class="root">para-(旁)+meter(量度);此处 \(k\) 与 \(p\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">partial derivative</td><td><span class="pos n">n.</span></td><td>偏导数</td><td class="root">\(f=\partial^2F/\partial x\,\partial y\) 混合二阶偏导</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">percentile</td><td><span class="pos n">n.</span></td><td>百分位数 / 分位数</td><td class="root">per-cent(每百)→ \(100p\) 分位 \(\pi_p\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">permutation</td><td><span class="pos n">n.</span></td><td>排列(讲顺序)</td><td class="root">per-+mut(变,同 mutate)→ 换序</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">point mass</td><td><span class="pos n">n.</span></td><td>点质量</td><td class="root">混合分布中质量点概率恒高于连续部分,众数落在点质量处(课本 p.173)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Poisson distribution</td><td><span class="pos n">n.</span></td><td>泊松分布</td><td class="root">人名 Poisson;计数分布,参数 \(\lambda\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Poisson process</td><td><span class="pos n">n.</span></td><td>泊松过程</td><td class="root">恒定速率;区间 \(t\) 内 \(\sim\text{Poisson}(\lambda t)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">policy</td><td><span class="pos n">n.</span></td><td>保单</td><td class="root">insurance policy;别与"政策"义混淆</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">policy limit</td><td><span class="pos n">n.</span></td><td>保单限额</td><td class="root">赔付封顶 \(Y=\min(X,\text{limit})\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">portfolio</td><td><span class="pos n">n.</span></td><td>保单组合</td><td class="root">port(携带)+ folio(纸页)→ 一夹子保单</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">positive payment</td><td><span class="pos n">n.</span></td><td>正赔付</td><td class="root">损失超过免赔额才有的赔付,常作"条件"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">posterior probability</td><td><span class="pos n">n.</span></td><td>后验概率</td><td class="root">posterior(在后)→ 观测证据<b>之后</b>的 \(P[A_i\mid B]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">preferred / standard / rated policy</td><td><span class="pos n">n.</span></td><td>保单三类别</td><td class="root">优选(低风险)/ 标准 / 加费(高风险,rated=被加评级)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">prior probability</td><td><span class="pos n">n.</span></td><td>先验概率</td><td class="root">prior(在先)→ 观测证据<b>之前</b>的 \(P[A_i]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">probability</td><td><span class="pos n">n.</span></td><td>概率</td><td class="root">probable(可能的)+ -ity</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">probability density function</td><td><span class="pos n">n.</span></td><td>概率密度函数(pdf)</td><td class="root">density=密度,连续曲线 \(f(x)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">probability function</td><td><span class="pos n">n.</span></td><td>概率函数</td><td class="root">离散变量的 \(p(x)=P[X{=}x]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">probability generating function</td><td><span class="pos n">n.</span></td><td>概率母函数</td><td class="root">generate(生成)→ 生成概率/矩的函数,\(P(t)=E[t^X]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">probability mass function</td><td><span class="pos n">n.</span></td><td>概率质量函数(pmf)</td><td class="root">mass=质量,离散点上的概率 \(p(x)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">property damage</td><td><span class="pos n">n.</span></td><td>财产损失</td><td class="root">p.183 引例中的 \(X\):撞坏的车/物</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">quartile</td><td><span class="pos n">n.</span></td><td>四分位数</td><td class="root">quart(四分之一)→ 25 / 75 分位</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">random sample</td><td><span class="pos n">n.</span></td><td>随机样本</td><td class="root">从集合里"抽样"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">random variable</td><td><span class="pos n">n.</span></td><td>随机变量</td><td class="root">把结果映射成实数的函数,记大写 \(X\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">range</td><td><span class="pos n">n.</span></td><td>极差</td><td class="root">\(\max-\min\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">rate filing</td><td><span class="pos n">n.</span></td><td>费率申报</td><td class="root">file(呈报)→ 保险公司向监管报备费率,例 25A 情境词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">rate (parameter)</td><td><span class="pos n">n.</span></td><td>速率(参数)</td><td class="root">\(\lambda\) = 单位时间发生率 \(=1/\theta\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">raw moment</td><td><span class="pos n">n.</span></td><td>原点矩</td><td class="root">raw(未加工)→ 绕原点取幂 \(E[X^k]\),对照 central moment</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">reciprocal</td><td><span class="pos n">n.</span></td><td>倒数</td><td class="root">密度 = 面积的 reciprocal</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">rectangle</td><td><span class="pos n">n.</span></td><td>矩形</td><td class="root">独立所需的支撑形状;各变量范围互不依赖</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">region</td><td><span class="pos n">n.</span></td><td>区域</td><td class="root">积分区域 \(R\);读题先画出它</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">renormalize</td><td><span class="pos v">v.</span></td><td>重新归一化</td><td class="root">re-(再)+normalize;除以 \(P[A]\) 让面积回 1</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">replacement</td><td><span class="pos n">n.</span></td><td>放回</td><td class="root">re-+place(放回原处)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">sample mean</td><td><span class="pos n">n.</span></td><td>样本均值</td><td class="root">\(\bar{X}=\frac{1}{n}\sum X_i\),样本的平均;区别于分布均值 \(\mu\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">sample median</td><td><span class="pos n">n.</span></td><td>样本中位数</td><td class="root">排序后取中:奇数个取正中间,偶数个取中间两数均值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">sample space</td><td><span class="pos n">n.</span></td><td>样本空间</td><td class="root">所有可能结果的集合</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">scale parameter</td><td><span class="pos n">n.</span></td><td>尺度参数</td><td class="root">\(\theta\) 拉伸横轴 = 均值,乘常数仍指数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">sector</td><td><span class="pos n">n.</span></td><td>扇形</td><td class="root">圆盘区域按角度切,例 25B</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">sequence number</td><td><span class="pos n">n.</span></td><td>序号</td><td class="root">第几次试验 = 失败数 \(N\) + \(k\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">set</td><td><span class="pos n">n.</span></td><td>集合</td><td class="root">事件可当作集合处理</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">shape parameter</td><td><span class="pos n">n.</span></td><td>形状参数</td><td class="root">伽马的 \(n\):改曲线形状,不像 \(\theta\) 只拉伸横轴</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">skewed</td><td><span class="pos adj">adj.</span></td><td>偏态的</td><td class="root">分布不对称 → 众数/中位数/均值分离</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">skewness</td><td><span class="pos n">n.</span></td><td>偏度</td><td class="root">skew(歪斜)→ 拖尾方向,三阶</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">standard deviation</td><td><span class="pos n">n.</span></td><td>标准差</td><td class="root">deviate(偏离)→ 方差开根,\(\sigma\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">standard normal</td><td><span class="pos n">n.</span></td><td>标准正态</td><td class="root">\(N(0,1)\),累积记 \(\Phi\)、密度记 \(\phi\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">standardize</td><td><span class="pos v">v.</span></td><td>标准化</td><td class="root">\(Z=(X-\mu)/\sigma\),化成 \(N(0,1)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">strictly increasing</td><td><span class="pos adj">adj.</span></td><td>严格递增的</td><td class="root">保证反函数存在、可逆</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">submit a claim</td><td><span class="pos v">v.</span></td><td>提出理赔 / 出险</td><td class="root">保险语境高频,常作贝叶斯题的"证据 B"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">subset</td><td><span class="pos n">n.</span></td><td>子集</td><td class="root">sub-(子) + set</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">success / failure</td><td><span class="pos n">n.</span></td><td>成功 / 失败</td><td class="root">记 1 / 0,概率 \(p\) / \(1-p\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">support / domain</td><td><span class="pos n">n.</span></td><td>支撑 / 定义域</td><td class="root">\(f>0\) 的区域;决定积分限</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">support (of a density)</td><td><span class="pos n">n.</span></td><td>支撑域</td><td class="root">密度非零的 \((x,y)\) 区域;耦合支撑 ⇒ 不独立</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">support (region)</td><td><span class="pos n">n.</span></td><td>支撑(区域)</td><td class="root">\(f&gt;0\) 的区域,决定积分上下限</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">survival function</td><td><span class="pos n">n.</span></td><td>生存函数</td><td class="root">survive(存活)→ \(S(x)=1-F(x)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">symmetric</td><td><span class="pos adj">adj.</span></td><td>对称的</td><td class="root">关于 \(\mu\) 对称 → \(\Phi(-z)=1-\Phi(z)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">thinning</td><td><span class="pos n">n.</span></td><td>稀释 / 分流</td><td class="root">按 \(p\) 分子类,子类 \(\sim\text{Poisson}(\lambda p)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">total loss</td><td><span class="pos n">n.</span></td><td>总损失</td><td class="root">引例中保险公司真正关心的 \(X+Y\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">total variance</td><td><span class="pos n">n.</span></td><td>全方差</td><td class="root">\(E[\operatorname{Var}]+\operatorname{Var}[E]\) 分解</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">tower rule</td><td><span class="pos n">n.</span></td><td>塔式法则</td><td class="root">tower(塔)→ 一层套一层求期望</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">transformation</td><td><span class="pos n">n.</span></td><td>变换</td><td class="root">trans-(跨)+form(形)→ 把 \(X\) 变成 \(Y=g(X)\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">trapezoid</td><td><span class="pos n">n.</span></td><td>梯形</td><td class="root">例 25A 面积用梯形公式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">trial</td><td><span class="pos n">n.</span></td><td>试验(一次)</td><td class="root">一次抛硬币 / 一次抽样</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">trinomial coefficient</td><td><span class="pos n">n.</span></td><td>三项式系数</td><td class="root">tri-(三)+ nomial(项);\(\frac{n!}{(k-1)!\,1!\,(n-k)!}\),第 \(k\) 个次序统计量密度里把样本分三组的组合数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">uncorrelated</td><td><span class="pos adj">adj.</span></td><td>不相关的</td><td class="root">\(\rho=0\);<b>弱于独立</b>,别混</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">underlying distribution</td><td><span class="pos n">n.</span></td><td>底层(原始)分布</td><td class="root">每个 \(X_i\) 服从的原分布</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">underwriter</td><td><span class="pos n">n.</span></td><td>承保员;核保人</td><td class="root">under+write(在保单下方签名担责)→ 例 12A 的出题情境</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">underwriting class</td><td><span class="pos n">n.</span></td><td>承保等级</td><td class="root">under-write(在保单下签名担责)→ 按风险分级,例 17C</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">uniform distribution</td><td><span class="pos n">n.</span></td><td>均匀分布</td><td class="root">uni-(单一)+form(形)→ 处处同形,密度平顶</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">uniform (distribution)</td><td><span class="pos adj">adj.</span></td><td>均匀(分布)</td><td class="root">uni-(单一)+form(形态)→ 密度处处相同</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">uniform (over)</td><td><span class="pos adj">adj.</span></td><td>(在……上)均匀的</td><td class="root">均匀 ⟹ 密度 \(=1/\text{面积}\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">uniformly distributed</td><td><span class="pos adj">adj.</span></td><td>均匀分布的</td><td class="root">uniform(一致)→ 区间上等概率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">union</td><td><span class="pos n">n.</span></td><td>并集(或)</td><td class="root">uni-(合一)→ 合并 \(A\cup B\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">unique</td><td><span class="pos adj">adj.</span></td><td>唯一的</td><td class="root">分布 ↔ MGF 一一对应,认形状</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">variance</td><td><span class="pos n">n.</span></td><td>方差</td><td class="root">vary(变化)→ 度量取值的变动 \(E[(X-\mu)^2]\)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Venn diagram</td><td><span class="pos n">n.</span></td><td>文氏图</td><td class="root">diagram=图示</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">waiting time</td><td><span class="pos n">n.</span></td><td>等待时间</td><td class="root">泊松过程中相邻事件间隔 ~ 指数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">with replacement</td><td><span class="pos n">phr.</span></td><td>有放回</td><td class="root">放回 → \(p\) 恒定 → <b>二项</b></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div></section>
+<section class="vx-ch" id="phrases"><div class="wrap">
+  <h2 class="vx-h"><span class="vxn" style="background:#b45309">读题</span>读题必备词汇(全书打通 · 按跨章频次排序)</h2>
+  <div class="card accent"><div class="src">源自全书各章习题重盘:核心题眼 + 高频词汇;★ = 出现于 5 章以上的全书级题眼</div>
+  <table class="map vocab">
+    <thead><tr><th style="width:30%">English</th><th style="width:22%">中文</th><th>解读 / 备注</th><th style="width:9%">已掌握</th></tr></thead>
+    <tbody>
+<tr><td class="en">Calculate … <span class="vx-hot">★</span></td><td>计算/求出</td><td class="root">全书最高频指令动词,题干末句锁定所求量(概率/期望/方差/参数)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Determine … <span class="vx-hot">★</span></td><td>求出/确定</td><td class="root">第二指令动词,常要求表达式、完整分布或判断选项而非单一数值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">given (that) <span class="vx-hot">★</span></td><td>已知/在……条件下</td><td class="root">条件概率/条件矩核心信号,出现即触发 P(A|B)、条件分布或无记忆性</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at least (one) <span class="vx-hot">★</span></td><td>至少(≥)</td><td class="root">数量下界,含等号;常配补集法 1−P(0)−…</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">(mutually) independent <span class="vx-hot">★</span></td><td>(相互)独立</td><td class="root">核心条件标记:概率可乘、方差可加、Cov=0;极易被忽略</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">more than / fewer than / less than / greater than <span class="vx-hot">★</span></td><td>多于/少于(严格不等)</td><td class="root">严格不等号,不含端点;离散场景端点归属定生死</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">exceeds / in excess of <span class="vx-hot">★</span></td><td>超过/超出……的部分</td><td class="root">比较与超额双义:exceeds 是 >;in excess of 指超出量本身(X−d)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">claim / loss / payment <span class="vx-hot">★</span></td><td>索赔/损失/赔付</td><td class="root">精算场景核心名词组:分清件数 N 与金额 X、loss 与 payment</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Let X be / Let X denote <span class="vx-hot">★</span></td><td>设 X 为/记 X 表示</td><td class="root">随机变量设定句式,先锁定变量含义再读题</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at most / no more than <span class="vx-hot">★</span></td><td>至多/不超过(≤)</td><td class="root">数量上界,含等号,防漏端点;变体 does not exceed / or less</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">deductible <span class="vx-hot">★</span></td><td>免赔额</td><td class="root">保险场景核心词,赔付=(X−d)₊;常配 exceeds the deductible 判是否触赔</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">exactly <span class="vx-hot">★</span></td><td>恰好(=)</td><td class="root">锁定单点取值,勿累加成累积概率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">joint density / joint probability function <span class="vx-hot">★</span></td><td>联合密度/联合概率函数</td><td class="root">多变量题干标志,给 f(x,y) 或 p(x,y)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">uniformly distributed on … <span class="vx-hot">★</span></td><td>在……上均匀分布</td><td class="root">高频分布设定:均值=区间中点,密度=1/长度(面积)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">otherwise <span class="vx-hot">★</span></td><td>其他情况(取0)</td><td class="root">分段密度/概率函数收尾行,划定支撑集边界,易漏</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">up to a maximum / policy limit <span class="vx-hot">★</span></td><td>赔付上限/保单限额</td><td class="root">封顶标记,payment=min(X,u),别漏封顶处概率质量</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">What is … <span class="vx-hot">★</span></td><td>……是多少</td><td class="root">疑问式指令,选择题常用问法</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">expected value / number / payment <span class="vx-hot">★</span></td><td>期望(值/个数/赔付)</td><td class="root">求 E[·] 信号;expected payment 含赔 0 情形</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">policyholder / insured <span class="vx-hot">★</span></td><td>投保人/被保险人</td><td class="root">保险场景最高频主体词,常问 per policyholder 人均值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">reimburse / unreimbursed <span class="vx-hot">★</span></td><td>赔付/未获赔部分</td><td class="root">赔付动词,常给百分比或上限;unreimbursed=自付部分</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">which of the following (must be true) <span class="vx-hot">★</span></td><td>下列哪一项(必然成立)</td><td class="root">选择/判断题信号,常配 I/II/III 罗马数字选项,答案多为式子或判断</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at random / randomly selected <span class="vx-hot">★</span></td><td>随机(等可能)抽取</td><td class="root">等概率抽样标记,常隐含均匀分布</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">subject to (a deductible / limit) <span class="vx-hot">★</span></td><td>受限于/附带(免赔额/限额)</td><td class="root">条件标记,引出保单修正,决定赔付函数分段</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">between … and … <span class="vx-hot">★</span></td><td>介于……之间</td><td class="root">双边区间,两端概率相减</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">for 0 < x < y < 1 … <span class="vx-hot">★</span></td><td>定义域条件</td><td class="root">不等式链决定积分/求和上下限,最易失分处</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">such that</td><td>使得/满足</td><td class="root">条件标记,后接约束等式,常用于反解参数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">where k/c is a constant</td><td>其中 k/c 为常数</td><td class="root">待定常数标记,提示先归一化解常数再答题</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">with / without replacement</td><td>有放回/无放回</td><td class="root">抽样方式,决定二项 vs 超几何、独立与否</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">within … of</td><td>在……范围内(±)</td><td class="root">对称区间/绝对值信号,对应 2Φ(·)−1 或 F(t)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">You are given</td><td>已知(以下条件)</td><td class="root">条件块开场标记,后接 (i)(ii)(iii) 编号条件,读题先抓这些数据</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">insurer / insurance company</td><td>保险公司/承保人</td><td class="root">题干场景设定开场词,常接 categorizes … into groups</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">is proportional to</td><td>与……成正比</td><td class="root">密度只给正比形式,须先用「积分/求和为1」补归一化常数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">per (day / loss / annum …)</td><td>每/按……计</td><td class="root">费率与年化表达,FM 中 per annum 常接 compounded</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">respectively</td><td>分别地</td><td class="root">多变量按序对应赋值,读错则张冠李戴</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">when/where nonzero</td><td>在其非零处</td><td class="root">只需给非零区间表达式,不写 otherwise 分支</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">evaluated at / Evaluate</td><td>在某点取值/求值</td><td class="root">代入求值指令,如 P_N(z) evaluated at 10</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">exponentially distributed with mean …</td><td>均值为……的指数分布</td><td class="root">锁定 θ;注意给的可能是标准差或中位数,需换算</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">independently and identically distributed (i.i.d.)</td><td>独立同分布</td><td class="root">iid 条件,样本/求和题基座</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">median</td><td>中位数</td><td class="root">即第 50 百分位</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">neither … nor</td><td>既不……也不</td><td class="root">双重否定指向补集区域</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Poisson distribution with mean …</td><td>均值为……的泊松分布</td><td class="root">给出 λ;时间区间变长按比例缩放 λ</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">positive</td><td>为正(盈利)</td><td class="root">判断 P(X>0),盈利类题的高频落点</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">random sample of size n</td><td>容量为 n 的随机样本</td><td class="root">界定样本量 n,直接进公式指数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">0 < x < y < 2(链式不等式)</td><td>变量大小排序</td><td class="root">数量比较题眼,x<y决定积分限用x或y替换,最易失分处</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">80th percentile</td><td>第80百分位数</td><td class="root">分位数指令,需用 z 值反解</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">absolute value</td><td>绝对值</td><td class="root">要求</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">accident</td><td>事故</td><td class="root">车险场景高频事件词,involved in an accident</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">approximate/approximately</td><td>近似(地)</td><td class="root">贯穿全章的信号词,提示用 CLT/正态逼近而非精确计算</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">arrange</td><td>range(排序)→ 排列题动词</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">before</td><td>在……之前</td><td class="root">次序/先后条件,决定成功先于失败的判定</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">but not</td><td>而非/但不</td><td class="root">排除区域条件(auto or house but not both)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">common density function</td><td>共同的密度函数</td><td class="root">标记同分布(i.i.d.),配 independent 一起读</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">component</td><td>容斥的"三块区域"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">conditional density</td><td>条件密度</td><td class="root">待求对象高频语,题目要求推导的目标</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">consider</td><td>"Let's consider…"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">consists of / consisting of</td><td>由……组成</td><td class="root">交代类别构成,后接分组计数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">continuity correction</td><td>连续性修正</td><td class="root">离散分布逼近时的关键提示,题目会明说是否使用</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Cov(X, Y) > 0 / = 0 / < 0</td><td>协方差大于/等于/小于零</td><td class="root">判断相关方向而非精确值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">defective</td><td>次品/有缺陷</td><td class="root">最高频场景名词,通常即"成功"事件</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">denote</td><td>de-+note(记)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">density function of Y</td><td>Y 的密度函数</td><td class="root">核心问法,由 X 的分布推导 Y 的密度</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">differ by ... or more</td><td>相差达…及以上</td><td class="root"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">differ by more than</td><td>相差超过</td><td class="root"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">difference between the ... and ... percentiles</td><td>……与……百分位之差</td><td class="root">先各算再相减</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">either / both</td><td>任一/两者皆</td><td class="root">逻辑连接词,决定并集或交集积分区域,极易看错</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Express ... in terms of</td><td>用…表示</td><td class="root">要求符号化推导而非数值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">fails when, and only when, both components fail</td><td>当且仅当两部件都失效时失效</td><td class="root">器件失效场景句</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Find …</td><td>求</td><td class="root">指令动词,与 Calculate/Determine 等价</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">first … is found</td><td>首次发现……</td><td class="root">首成功停止场景,几何分布触发语</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">first half hour / first hour of operation</td><td>运行的头半小时/头一小时</td><td class="root">时间窗口条件,决定积分上限</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">follow a bivariate normal distribution</td><td>服从二元正态分布</td><td class="root">场景开场套语,几乎每题出现</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">for</td><td>当...(满足条件)时</td><td class="root">域条件引导词,for后紧跟积分上下限的关键不等式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">for every full … inches</td><td>每满…(英寸)</td><td class="root">阶梯赔付触发语,提示按整档计数而非连续</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">future lifetime(s)</td><td>未来寿命</td><td class="root">精算场景高频名词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">high-risk</td><td>高风险(类)</td><td class="root">风险分类高频词,常与 low-risk / medium-risk 并列作为条件事件</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">How many different / in how many ways</td><td>有多少种不同/多少种方式</td><td class="root">排列组合计数题干</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">illustrate</td><td>lustr(光)→ 照亮说明</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">in the event that</td><td>在……发生的情况下</td><td class="root">条件场景标记,限定赔付仅在受损时计算</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">indicate</td><td>"A survey indicates…"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">insured</td><td>被保险人/已投保的</td><td class="root">保险场景词,常与driver/male/female搭配</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">interval</td><td>概率取值于 0~1 区间</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">kth order statistic</td><td>第 k 个次序统计量</td><td class="root">直接点名目标统计量</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">machine consists of two components</td><td>机器由两部件组成</td><td class="root">工程场景高频语,常引出 max/min</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">manipulate</td><td>mani(手)→ 摆弄</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">marginal distribution of</td><td>…的边际分布</td><td class="root">要求先对联合分布求边际再算矩,常被忽略的限定语</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">maximum / largest / highest</td><td>最大值/最大的/最高的</td><td class="root">求最大次序统计量的信号词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">maximum / minimum of X and Y</td><td>X 与 Y 的最大/最小值</td><td class="root">payoff = max/min 型题眼,须构造新变量</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">maximum number</td><td>最大数目/最多次数</td><td class="root">极值计数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">maximum value</td><td>最大值</td><td class="root">数量比较题眼,求 Var 的最大值须对参数优化</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">mean</td><td>均值、期望</td><td class="root">场景参数标记,给出指数分布的均值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">minimize the variance</td><td>使方差最小</td><td class="root">最优化题眼,配合 "smallest variance"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">minimum / smallest / shortest</td><td>最小值/最小的/最短的</td><td class="root">求最小次序统计量的信号词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">no ... or ... / NOT drawn</td><td>没有……/未被抽到</td><td class="root">排除型条件</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">none of the three</td><td>三者都不</td><td class="root">补集场景(none of the three sports)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">not / no</td><td>没有/不(零值条件)</td><td class="root">条件标记,表"未发生/为0"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">not during its first half hour</td><td>但不在头半小时内</td><td class="root">排除性条件,须做区间相减</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Note that E[X] = ...</td><td>注意 E[X]=…</td><td class="root">题干预先给出边际期望,提示只需再算 E[XY]</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">occur</td><td>oc-+cur(跑)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">one at a time</td><td>一次一个/逐个</td><td class="root">逐次试验场景语,暗示序贯抽取</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">operates until one / both components fail</td><td>运行至一个/全部部件失效</td><td class="root">判断取 min 还是 max 的题眼,一词之差改变解法</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">out of operation</td><td>停机、停止运行</td><td class="root">场景描述,故障时间 T</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">outlasts</td><td>比……更耐用/存活更久</td><td class="root">寿命比较场景词,转成 P(B>A+1)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">percentile</td><td>百分位数</td><td class="root">反查/逆算场景的核心词,常给一个百分位求另一个或求参数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">percentile / median</td><td>百分位数 / 中位数</td><td class="root">所求量高频词,median 即第50百分位</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">portray</td><td>"Venn diagrams portray sets"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">positive integers / nonnegative integers</td><td>正整数/非负整数</td><td class="root">限定取值范围,影响求和上下限</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">probability distribution / probability function</td><td>概率分布/概率函数</td><td class="root">要求给出整条分布而非单个数值的题型标志</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">probability that</td><td>…的概率</td><td class="root">读题核心锚点,后面紧跟目标事件,定位问什么</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">proportion</td><td>pro-+portion(部分)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">random</td><td>at random=随机地</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">ratio of ... to ...</td><td>……与……之比</td><td class="root">数量比较题眼,常问赔付与损失的标准差/方差之比</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">ratio of the ... percentile to the ... percentile</td><td>……百分位与……百分位之比</td><td class="root">数量比较表达</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">remaining lifetimes of a husband and wife</td><td>夫妻的剩余寿命</td><td class="root">经典寿险场景</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">renewed</td><td>续保</td><td class="root">保单场景词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">second largest / second smallest</td><td>第二大/第二小</td><td class="root">次序统计量题眼,提示组合计数构造</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">select</td><td>se-+lect(挑,同 elect)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">show up</td><td>出现/到场</td><td class="root">超售类题场景词(航班/巴士),"not show up"是关键否定</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">simplify</td><td>simple + -ify</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">standard deviation of X (+Y)</td><td>X(+Y)的标准差</td><td class="root">要求量,注意是标准差非方差,别忘开方</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Suppose</td><td>假设</td><td class="root">应用题场景引入词,后接实际背景</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Suppose / given</td><td>假设 / 已给</td><td class="root">条件铺垫词,引出约束</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">survey</td><td>调查</td><td class="root">抽样/分组场景引导词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the device fails</td><td>设备失效</td><td class="root">器件题场景词,须辨"both fail"(交)与"either fails"(并)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the first / the second</td><td>第一次/第二次</td><td class="root">顺序场景标记,决定 X<Y 的积分区域</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the number of</td><td>……的数量/个数</td><td class="root">计数型随机变量的定义句式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the number of ... in a year</td><td>一年内…的数量</td><td class="root">应用场景高频语(计数变量)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the probability that the random variable equals</td><td>随机变量等于…的概率</td><td class="root">求点概率的标准表述</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the ratio of A to B</td><td>A 与 B 之比</td><td class="root">构造比值型变量(失效时间之比、理赔与保费之比)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the same</td><td>相同的</td><td class="root">等量条件标记:same mean / same purchase price</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the sum of the squares / the product</td><td>平方和 / 乘积</td><td class="root">数量组合表达,决定 g(X,Y) 形式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the system will fail if any component fails</td><td>任一部件失效系统即失效</td><td class="root">最小值应用场景措辞</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">the third … occurs on the nth …</td><td>第三次……发生在第 n 次</td><td class="root">典型负二项句式,第 k 次成功落在第 n 次试验</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">times</td><td>倍</td><td class="root">比例比较词,如"1.8 times",建立两事件概率方程求参数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">total</td><td>总的/合计</td><td class="root">场景高频:total payoff / total costs,提示求和后再算方差</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">total / sum / average</td><td>总额 / 和 / 平均</td><td class="root">界定目标量是求和(nμ,nσ²)还是样本均值(μ,σ²/n)的关键</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">twice as likely</td><td>可能性是……的两倍</td><td class="root">给相对概率的条件表达(变体 two/three times、half as likely),Bayes 只需相对值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">twice that of</td><td>是...的两倍</td><td class="root">数量比较表达</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">until</td><td>直到……为止</td><td class="root">停止条件标记,界定试验何时终止</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">up to</td><td>至多/最高至</td><td class="root">额度表达,常与 benefit/maximum 连用</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">(using the) Central Limit Theorem</td><td>(依据)中心极限定理</td><td class="root">题干点名 CLT,提示对和/样本均值做正态处理</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">using the normal approximation</td><td>用正态逼近</td><td class="root">明确指令逼近方法</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">variance</td><td>方差</td><td class="root">要求量,由 M''(0)−[M'(0)]² 得</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">variance of / standard deviation of</td><td>……的方差/标准差</td><td class="root">高频所求量,提示需用条件方差公式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">when</td><td>当……时</td><td class="root">条件标记,给出某变量取值下的期望</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">where</td><td>其中(参数约束)</td><td class="root">引出参数条件,如 where a > 0 and b > 0</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">whichever occurs first / no earlier than</td><td>以先发生者为准;不早于</td><td class="root">封顶/封底边界标记,决定分段</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">X times</td><td>……倍</td><td class="root">倍数比较,常用于两公司方差或标准差的关系</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div></section>
+<footer><div class="wrap" style="padding:26px 22px;color:var(--mute);font-size:13px;text-align:center">
+  <p><b>Exam P · 词汇总表</b> · 每科唯一词汇载体,直接维护本页;新章词汇加对应段。</p>
+</div></footer>
+<script>
+(function(){
+  // zh-eye: 表头中文列加 👁, 点击遮住整列自测; 单格点击揭示
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid var(--line);color:inherit;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(0,0,0,.08)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+<script>
+(function(){
+  // 是否已掌握: 勾选即从列表隐藏; 不持久化, 刷新重置
+  document.addEventListener('change', function(e){
+    var cb = e.target;
+    if(cb.tagName !== 'INPUT' || cb.type !== 'checkbox') return;
+    if(!cb.closest('.mst') && !cb.closest('.mst-ph')) return;
+    if(!cb.checked) return;
+    var row = cb.closest('tr') || cb.closest('.ph');
+    if(row) row.style.display = 'none';
+  });
+})();
+</script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+</body>
+</html>

@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<!--
+  Exam P 习题串讲 E02:六大分布全景(L15 均匀 + L17–L23)。
+  概念卡弹窗内容是构建时快照:概念卡 .md 修改后重跑
+      python3 _Meta/tools/build-exam-p-e01-cards.py
+  重新注入(脚本扫描本页 data-card 清单,写入 CARDS_JSON 标记之间)。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · E02 六大分布全景:一家奶茶店串起 L15 + L17–L23</title>
+<script>
+MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --accent:#0e7490; --accent-deep:#085466; --accent-soft:#e4f2f6; --hi:#ffd23f;
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#fbfaf7; --card:#ffffff; --line:#e2e0d8; --grid:#f0efe9;
+    --pos:#0e8a6d; --pos-fill:rgba(14,138,109,.12);
+    --neg:#bb2649; --neg-fill:rgba(187,38,73,.10);
+    --blue:#3b66c4; --blue-fill:rgba(59,102,196,.10);
+    --disc:#5b53c4; --disc-soft:#edebfa;
+    --cont:#b8860b; --cont-soft:#f7efdc;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC","Noto Serif SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       line-height:1.8;font-size:16px;-webkit-font-smoothing:antialiased}
+  .bar{background:linear-gradient(180deg,#16243d,#1d3050);color:#fff;border-bottom:3px solid var(--hi);
+       padding:14px 24px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:17px}
+  .bar .logo b{color:var(--hi)}
+  .bar .tagline{font-family:var(--mono);font-size:12px;color:#cdd6e6}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 24px 90px}
+  h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.35}
+  h1{font-size:29px;margin:0 0 8px}
+  h1 em{font-style:normal;color:var(--accent-deep)}
+  h2{font-size:22px;margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
+  .act-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--mute);margin-top:40px}
+  .thesis{color:var(--ink-soft);max-width:46em;margin:0 0 6px}
+  .thesis strong{color:var(--ink)}
+  .howto{font-size:14px;color:var(--accent-deep);background:var(--accent-soft);
+         border-radius:8px;padding:8px 14px;margin:14px 0 4px;max-width:46em}
+  .chain{font-size:13.5px;color:var(--mute);margin:10px 0 0}
+  .chain a{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .chain a:hover{border-bottom-color:var(--accent-deep)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:8px;
+     padding:20px 24px 16px;margin:24px 0}
+  .q-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .q-no{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--accent);white-space:nowrap}
+  .q-title{font-weight:700;font-size:17px}
+  .chips{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid rgba(14,116,144,.35);border-radius:10px;padding:1px 9px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:#d3e9ef}
+  .chip::after{content:" ▸";opacity:.6}
+  .scene{color:var(--ink-soft);font-size:15px;margin:4px 0 8px}
+  .scene::before{content:"场景 · ";color:var(--ink);font-weight:600}
+  .ask{margin:8px 0;font-weight:600}
+  .ask::before{content:"问:";color:var(--accent)}
+  .solve{margin:8px 0 4px}
+  .solve ol{margin:6px 0;padding-left:22px}
+  .solve li{margin:4px 0}
+  .takeaway{border-left:3px solid var(--pos);padding:2px 0 2px 12px;font-size:14.5px;margin:12px 0 4px}
+  .takeaway strong{color:var(--pos)}
+  .warn{border-left-color:var(--neg)}
+  .warn strong{color:var(--neg)}
+  var,.f{font-family:Georgia,"Times New Roman",serif;font-style:italic}
+  .formula{font-family:Georgia,"Times New Roman",serif;background:var(--accent-soft);border-radius:6px;
+           padding:8px 14px;margin:10px 0;overflow-x:auto;font-size:15.5px}
+  table{border-collapse:collapse;margin:12px 0;font-size:14.5px;font-variant-numeric:tabular-nums}
+  th,td{padding:6px 12px;border:1px solid var(--line);text-align:center}
+  th{font-size:13px;color:var(--mute);font-weight:600;background:var(--grid)}
+  td.hl-pos{background:var(--pos-fill);font-weight:600}
+  td.hl-disc{background:var(--disc-soft)}
+  td.hl-cont{background:var(--cont-soft)}
+  .tbl-wrap{overflow-x:auto}
+  table.map td{text-align:left}
+  table.map td:first-child{white-space:nowrap;font-weight:600}
+  figure{margin:16px 0 4px}
+  figure svg{display:block;margin:0 auto;max-width:100%}
+  figcaption{font-size:13px;color:var(--mute);margin-top:6px;text-align:center}
+  svg text{font-family:var(--sans);fill:var(--ink-soft);font-size:11px}
+  svg text.dark{fill:var(--ink);font-weight:600}
+  svg text.small{font-size:9.5px;fill:var(--mute)}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  @media(max-width:640px){.chips{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="logo">Exam&nbsp;P · <b>习题串讲</b></span>
+  <span class="tagline">E02 · six distributions, one shop · L15 + L17–L23</span>
+</div>
+
+<div class="wrap">
+  <h1>你开一家奶茶店:<em>六大分布全景 L15 + L17–L23</em></h1>
+  <p class="thesis">学完六个分布,公式一多就糊。这一页<strong>图先行</strong>:先给全景关系图和六个分布的<strong>形状</strong>,每道题都配场景图,看懂图再读公式;然后<strong>分组对比</strong>(离散三兄弟、连续三姐妹各自怎么区分),最后用<strong>一家奶茶店</strong>把每个分布的全部核心公式各算一遍——pmf/pdf、期望方差、MGF、分位数、可加性,一个不漏,数字全部手算可验。末幕收官 L22 中心极限定理与 L23 次序统计量——六分布的两件后日谈。</p>
+  <p class="howto">💡 每题右上角的<strong>概念标签</strong>可点:弹窗直接显示知识卡片(定义 / 白话 / 公式 / 算一遍);卡片里的虚线词可链式跳卡。</p>
+  <p class="chain">配套章节:
+    <a href="soa-exam-p-l15-uniform-distribution.html">L15 均匀</a> ·
+    <a href="soa-exam-p-l17-binomial-distribution.html">L17 二项</a> ·
+    <a href="soa-exam-p-l18-negative-binomial.html">L18 负二项</a> ·
+    <a href="soa-exam-p-l19-poisson-distribution.html">L19 泊松</a> ·
+    <a href="soa-exam-p-l20-exponential-distribution.html">L20 指数</a> ·
+    <a href="soa-exam-p-l21-normal-distribution.html">L21 正态</a> ·
+    <a href="soa-exam-p-l22-central-limit-theorem.html">L22 中心极限定理</a> ·
+    <a href="soa-exam-p-l23-order-statistics.html">L23 次序统计量</a></p>
+
+  <!-- ================= 第一幕:全景 ================= -->
+  <div class="act-tag">第一幕 · 全景</div>
+  <h2>六个分布到底是什么关系</h2>
+  <p class="thesis">全部故事从<strong>一枚硬币</strong>(伯努利试验)开始:反复抛,<strong>数成功</strong>是二项,<strong>数要抛几次</strong>是负二项;把"抛硬币"打碎成时间线上的随机滴答,<strong>固定时间窗数滴答</strong>是泊松,<strong>量两声滴答的间隔</strong>是指数;而<strong>什么信息都没有</strong>时的"一无所知"是均匀;<strong>无数小随机加在一起</strong>终点是正态。</p>
+
+  <figure>
+    <svg viewBox="0 0 860 330" role="img" aria-label="六大分布关系图:伯努利生二项与负二项,二项极限到泊松,泊松对偶指数,和的极限到正态,均匀是无信息底色">
+      <defs>
+        <marker id="e2ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#7a8699"/></marker><marker id="e2teal" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto-start-reverse"><path d="M0,0 L8,4.5 L0,9 z" fill="#0e7490"/></marker>
+      </defs>
+      <rect x="20" y="20" width="400" height="290" rx="14" fill="#edebfa" fill-opacity="0.5"/>
+      <rect x="440" y="20" width="400" height="290" rx="14" fill="#f7efdc" fill-opacity="0.5"/>
+      <text x="36" y="44" class="dark" font-size="13" fill="#5b53c4">离散 · 数个数</text>
+      <text x="456" y="44" class="dark" font-size="13" fill="#b8860b">连续 · 量多少</text>
+      <rect x="150" y="60" width="140" height="40" rx="9" fill="#fff" stroke="#5b53c4" stroke-width="1.6"/>
+      <text x="220" y="85" text-anchor="middle" class="dark">伯努利试验(单次成/败)</text>
+      <rect x="42" y="150" width="120" height="46" rx="9" fill="#fff" stroke="#5b53c4" stroke-width="2"/>
+      <text x="102" y="169" text-anchor="middle" class="dark">二项 Bin(n,p)</text>
+      <text x="102" y="186" text-anchor="middle" class="small">固定 n 次,数成功</text>
+      <rect x="186" y="150" width="132" height="46" rx="9" fill="#fff" stroke="#5b53c4" stroke-width="2"/>
+      <text x="252" y="169" text-anchor="middle" class="dark">负二项 NB(r,p)</text>
+      <text x="252" y="186" text-anchor="middle" class="small">固定 r 个成功,数次数</text>
+      <rect x="80" y="242" width="128" height="46" rx="9" fill="#fff" stroke="#5b53c4" stroke-width="2"/>
+      <text x="144" y="261" text-anchor="middle" class="dark">泊松 Poisson(λ)</text>
+      <text x="144" y="278" text-anchor="middle" class="small">固定时间窗,数发生</text>
+      <line x1="185" y1="100" x2="120" y2="148" stroke="#7a8699" stroke-width="1.3" marker-end="url(#e2ar)"/>
+      <line x1="245" y1="100" x2="252" y2="148" stroke="#7a8699" stroke-width="1.3" marker-end="url(#e2ar)"/>
+      <line x1="102" y1="196" x2="132" y2="240" stroke="#7a8699" stroke-width="1.3" marker-end="url(#e2ar)"/>
+      <text x="14" y="224" class="small">n→∞, p→0, np=λ</text>
+      <rect x="470" y="150" width="120" height="46" rx="9" fill="#fff" stroke="#b8860b" stroke-width="2"/>
+      <text x="530" y="169" text-anchor="middle" class="dark">指数 Exp(θ)</text>
+      <text x="530" y="186" text-anchor="middle" class="small">等下一次发生多久</text>
+      <rect x="614" y="150" width="120" height="46" rx="9" fill="#fff" stroke="#b8860b" stroke-width="2"/>
+      <text x="674" y="169" text-anchor="middle" class="dark">均匀 U(a,b)</text>
+      <text x="674" y="186" text-anchor="middle" class="small">区间内处处等可能</text>
+      <rect x="540" y="242" width="150" height="46" rx="9" fill="#fff" stroke="#b8860b" stroke-width="2.4"/>
+      <text x="615" y="261" text-anchor="middle" class="dark">正态 N(μ, σ²)</text>
+      <text x="615" y="278" text-anchor="middle" class="small">大量小随机之和</text>
+      <line x1="210" y1="265" x2="538" y2="265" stroke="#7a8699" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#e2ar)"/>
+      <text x="300" y="258" class="small">n 大时二项/泊松都长成钟形(L22 正式化)</text>
+      <path d="M214,254 C310,226 390,206 462,188" fill="none" stroke="#0e7490" stroke-width="1.8" marker-start="url(#e2teal)" marker-end="url(#e2teal)"/>
+      <text x="300" y="306" class="small" fill="#0e7490">↗ 青色双箭头 = 同一个泊松过程:数次数 ⇄ 量间隔</text>
+    </svg>
+    <figcaption>紫框 = 离散(答案是 0,1,2,…个);黄框 = 连续(答案是一段长度/金额/时间)。青色双箭头 = 泊松与指数互为表里。</figcaption>
+  </figure>
+
+  <div class="tbl-wrap">
+  <table class="map">
+    <tr><th style="width:12%">分布</th><th style="width:22%">一句话身份</th><th style="width:24%">生活例</th><th style="width:20%">参数与支撑</th><th>均值 / 方差</th></tr>
+    <tr><td>二项</td><td>n 次独立尝试里成功几次</td><td>10 杯新品能卖出几杯</td><td>$n,p$;$k=0..n$ 有界</td><td>$np$ / $np(1-p)$</td></tr>
+    <tr><td>负二项</td><td>凑齐 r 个成功要试几次</td><td>集齐 3 个印章要买几杯</td><td>$r,p$;$n\ge r$ 无界</td><td>$r/p$ / $r(1-p)/p^2$</td></tr>
+    <tr><td>泊松</td><td>固定窗口里随机事件发生几次</td><td>一小时进店几位顾客</td><td>$\lambda$;$k=0,1,\dots$</td><td>$\lambda$ / $\lambda$</td></tr>
+    <tr><td>均匀</td><td>区间内一无所知、处处等可能</td><td>做一杯要 2–6 分钟,毫无偏好</td><td>$a,b$;$[a,b]$</td><td>$\frac{a+b}{2}$ / $\frac{(b-a)^2}{12}$</td></tr>
+    <tr><td>指数</td><td>下一次随机事件还要等多久</td><td>下一位顾客几分钟后进门</td><td>$\theta$(均值);$x\ge0$</td><td>$\theta$ / $\theta^2$</td></tr>
+    <tr><td>正态</td><td>大量独立小扰动之和</td><td>一天的营业额</td><td>$\mu,\sigma$;全实轴</td><td>$\mu$ / $\sigma^2$</td></tr>
+  </table>
+  </div>
+
+
+  <figure>
+    <svg viewBox="0 0 868 324" role="img" aria-label="六分布形状六宫格:上排离散条形,下排连续曲线"><g><rect x="10" y="6" width="276" height="148" rx="10" fill="#fff" stroke="#e2e0d8"/><text x="24" y="28" font-size="12.5" fill="#5b53c4" font-weight="700">二项 Bin(10, 0.3)</text><text x="24" y="44" font-size="10" fill="#7a8699">有界小山:0 到 n 就到头</text><rect x="30.0" y="117.4" width="13.0" height="6.6" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="51.3" y="95.9" width="13.0" height="28.1" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="72.5" y="69.8" width="13.0" height="54.3" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="93.8" y="62.0" width="13.0" height="62.0" rx="1.5" fill="#0e7490" fill-opacity="0.85"/><rect x="115.1" y="77.5" width="13.0" height="46.5" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="136.4" y="100.1" width="13.0" height="23.9" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="157.6" y="115.5" width="13.0" height="8.5" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="178.9" y="121.9" width="13.0" height="2.1" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="200.2" y="123.7" width="13.0" height="0.3" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="221.5" y="124.0" width="13.0" height="0.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="242.7" y="124.0" width="13.0" height="0.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><text x="30" y="136" font-size="9" fill="#7a8699">0</text><text x="256" y="136" font-size="9" fill="#7a8699">10</text></g><g><rect x="296" y="6" width="276" height="148" rx="10" fill="#fff" stroke="#e2e0d8"/><text x="310" y="28" font-size="12.5" fill="#5b53c4" font-weight="700">负二项 NB(3, 0.3)</text><text x="310" y="44" font-size="10" fill="#7a8699">从 r=3 起步,右长尾拖到天边</text><rect x="316.0" y="106.8" width="13.0" height="17.2" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="334.0" y="87.8" width="13.0" height="36.2" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="352.0" y="73.4" width="13.0" height="50.6" rx="1.5" fill="#0e7490" fill-opacity="0.85"/><rect x="370.0" y="65.0" width="13.0" height="59.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="388.0" y="62.0" width="13.0" height="62.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="406.0" y="63.2" width="13.0" height="60.8" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="424.0" y="67.3" width="13.0" height="56.7" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="442.0" y="73.0" width="13.0" height="51.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="460.0" y="79.3" width="13.0" height="44.7" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="478.0" y="85.8" width="13.0" height="38.2" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="496.0" y="91.9" width="13.0" height="32.1" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="514.0" y="97.4" width="13.0" height="26.6" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="532.0" y="102.3" width="13.0" height="21.7" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><text x="316" y="136" font-size="9" fill="#7a8699">3</text><text x="536" y="136" font-size="9" fill="#7a8699">15+</text></g><g><rect x="582" y="6" width="276" height="148" rx="10" fill="#fff" stroke="#e2e0d8"/><text x="596" y="28" font-size="12.5" fill="#5b53c4" font-weight="700">泊松 Poisson(3)</text><text x="596" y="44" font-size="10" fill="#7a8699">无上限;λ 小偏左,λ 大变钟</text><rect x="602.0" y="110.2" width="13.0" height="13.8" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="623.3" y="82.7" width="13.0" height="41.3" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="644.5" y="62.0" width="13.0" height="62.0" rx="1.5" fill="#0e7490" fill-opacity="0.85"/><rect x="665.8" y="62.0" width="13.0" height="62.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="687.1" y="77.5" width="13.0" height="46.5" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="708.4" y="96.1" width="13.0" height="27.9" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="729.6" y="110.0" width="13.0" height="14.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="750.9" y="118.0" width="13.0" height="6.0" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="772.2" y="121.8" width="13.0" height="2.2" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="793.5" y="123.3" width="13.0" height="0.7" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><rect x="814.7" y="123.8" width="13.0" height="0.2" rx="1.5" fill="#5b53c4" fill-opacity="0.85"/><text x="602" y="136" font-size="9" fill="#7a8699">0</text><text x="822" y="136" font-size="9" fill="#7a8699">10+</text></g><g><rect x="10" y="164" width="276" height="148" rx="10" fill="#fff" stroke="#e2e0d8"/><text x="24" y="186" font-size="12.5" fill="#b8860b" font-weight="700">均匀 U(2, 6)</text><text x="24" y="202" font-size="10" fill="#7a8699">平板:概率=长度比,均值=中点</text><rect x="70" y="240" width="150" height="42" fill="#b8860b" fill-opacity="0.3" stroke="#b8860b" stroke-width="2"/><line x1="34" y1="282" x2="260" y2="282" stroke="#16243d" stroke-width="1.2"/><text x="66" y="294" font-size="9" fill="#7a8699">2</text><text x="216" y="294" font-size="9" fill="#7a8699">6</text></g><g><rect x="296" y="164" width="276" height="148" rx="10" fill="#fff" stroke="#e2e0d8"/><text x="310" y="186" font-size="12.5" fill="#b8860b" font-weight="700">指数 Exp(θ=10)</text><text x="310" y="202" font-size="10" fill="#7a8699">滑梯:右偏长尾,无记忆</text><polyline points="322.0,220.0 326.7,225.0 331.3,229.5 336.0,233.7 340.7,237.6 345.3,241.1 350.0,244.4 354.7,247.4 359.3,250.2 364.0,252.7 368.7,255.1 373.3,257.2 378.0,259.2 382.7,261.0 387.3,262.7 392.0,264.2 396.7,265.7 401.3,267.0 406.0,268.2 410.7,269.3 415.3,270.3 420.0,271.2 424.7,272.1 429.3,272.9 434.0,273.6 438.7,274.3 443.3,274.9 448.0,275.5 452.7,276.0 457.3,276.5 462.0,276.9 466.7,277.3 471.3,277.7 476.0,278.0 480.7,278.4 485.3,278.6 490.0,278.9 494.7,279.2 499.3,279.4 504.0,279.6 508.7,279.8 513.3,280.0 518.0,280.1 522.7,280.3 527.3,280.4 532.0,280.5 536.7,280.7 541.3,280.8 546.0,280.9" fill="none" stroke="#b8860b" stroke-width="2.2"/><line x1="320" y1="282" x2="546" y2="282" stroke="#16243d" stroke-width="1.2"/><text x="318" y="294" font-size="9" fill="#7a8699">0</text><text x="376" y="294" font-size="9" fill="#7a8699">θ=10</text></g><g><rect x="582" y="164" width="276" height="148" rx="10" fill="#fff" stroke="#e2e0d8"/><text x="596" y="186" font-size="12.5" fill="#b8860b" font-weight="700">正态 N(μ, σ²)</text><text x="596" y="202" font-size="10" fill="#7a8699">钟:对称,μ±σ 装 68%</text><polyline points="608.0,281.3 612.7,281.0 617.3,280.6 622.0,280.0 626.7,279.3 631.3,278.3 636.0,277.1 640.7,275.5 645.3,273.6 650.0,271.3 654.7,268.6 659.3,265.4 664.0,261.9 668.7,257.9 673.3,253.6 678.0,249.1 682.7,244.4 687.3,239.7 692.0,235.2 696.7,231.0 701.3,227.3 706.0,224.2 710.7,221.9 715.3,220.5 720.0,220.0 724.7,220.5 729.3,221.9 734.0,224.2 738.7,227.3 743.3,231.0 748.0,235.2 752.7,239.7 757.3,244.4 762.0,249.1 766.7,253.6 771.3,257.9 776.0,261.9 780.7,265.4 785.3,268.6 790.0,271.3 794.7,273.6 799.3,275.5 804.0,277.1 808.7,278.3 813.3,279.3 818.0,280.0 822.7,280.6 827.3,281.0 832.0,281.3" fill="none" stroke="#b8860b" stroke-width="2.2"/><line x1="606" y1="282" x2="832" y2="282" stroke="#16243d" stroke-width="1.2"/><text x="725" y="294" font-size="9" fill="#7a8699" text-anchor="middle">μ</text></g></svg>
+    <figcaption>先认形状再背公式:上排<b>离散</b>(条形,紫)——高亮条 = 底座数据下最可能的取值;下排<b>连续</b>(曲线,黄)。</figcaption>
+  </figure>
+  <!-- ================= 第二幕:分组对比 ================= -->
+  <div class="act-tag">第二幕 · 分组对比</div>
+  <h2>离散三兄弟:二项 · 负二项 · 泊松</h2>
+  <p class="thesis">三个都在<strong>数个数</strong>,分家钥匙只有一句话:<strong>你固定的是什么?</strong>固定次数问成绩 → 二项;固定成绩问次数 → 负二项;固定时间窗、次数本身没上限 → 泊松。</p>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比</span><span class="q-title">离散计数全参数表</span>
+      <span class="chips"><button class="chip" data-card="二项分布">二项 · L17</button><button class="chip" data-card="负二项分布">负二项 · L18</button><button class="chip" data-card="泊松分布">泊松 · L19</button></span></div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>二项 $\text{Bin}(n,p)$</th><th>负二项 $NB(r,p)$(数总试验)</th><th>泊松 $\text{Poisson}(\lambda)$</th></tr>
+      <tr><th>读题信号</th><td>“10 次里恰好/至少 k 次”</td><td>“直到 / until … 第 r 次成功”</td><td>“per hour / at a rate of”</td></tr>
+      <tr><th>pmf</th><td>$\binom{n}{k}p^k(1-p)^{n-k}$</td><td>$\binom{n-1}{r-1}p^r(1-p)^{n-r}$</td><td>$\dfrac{e^{-\lambda}\lambda^k}{k!}$</td></tr>
+      <tr><th>支撑</th><td>$0,\dots,n$ <b>有界</b></td><td>$r,r+1,\dots$ 无界</td><td>$0,1,2,\dots$ 无界</td></tr>
+      <tr><th>均值</th><td>$np$</td><td>$r/p$</td><td>$\lambda$</td></tr>
+      <tr><th>方差</th><td>$np(1-p)$</td><td>$r(1-p)/p^2$</td><td>$\lambda$</td></tr>
+      <tr><th>方差 vs 均值</th><td class="hl-pos">方差 &lt; 均值</td><td class="hl-pos">方差 &gt; 均值($p&lt;\tfrac12$ 时;数失败口径恒成立)</td><td class="hl-pos">方差 = 均值</td></tr>
+      <tr><th>MGF</th><td>$(1-p+pe^t)^n$</td><td>$\left(\dfrac{pe^t}{1-(1-p)e^t}\right)^{r}$</td><td>$e^{\lambda(e^t-1)}$</td></tr>
+      <tr><th>可加性(独立)</th><td>同 $p$:$n_1+n_2$</td><td>同 $p$:$r_1+r_2$</td><td>任意:$\lambda_1+\lambda_2$</td></tr>
+      <tr><th>最小积木</th><td>$n=1$ → 伯努利</td><td>$r=1$ → 几何</td><td>—(自己就是极限)</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>认分布神器:</strong>题目同时给了均值和方差?比大小直接锁定——小于是二项、等于是泊松、大于是负二项(口径注意:数失败次数恒大于;数总试验次数要 $p&lt;\tfrac12$ 才大于,常规考题都满足)。这是三兄弟最快的验血报告。</div>
+    <div class="takeaway warn"><strong>负二项口径坑:</strong>“数总试验次数”(取值从 $r$ 起,均值 $r/p$)和“数失败次数”(取值从 0 起,均值 $r(1-p)/p$)两种教材写法都常见,先看清题目数的是哪个,两口径均值差整整一个 $r$。</div>
+  </div>
+
+  <h2>连续三姐妹:均匀 · 指数 · 正态</h2>
+  <p class="thesis">三个都在<strong>量一段多少</strong>(时间、金额、长度),分家钥匙是<strong>形状与记忆</strong>:均匀是一块平板(无偏好),指数是滑梯(越久越稀少、且<strong>不记仇</strong>),正态是钟(对称、有中心)。</p>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比</span><span class="q-title">连续三分布全参数表</span>
+      <span class="chips"><button class="chip" data-card="连续均匀分布">均匀 · L15</button><button class="chip" data-card="指数分布">指数 · L20</button><button class="chip" data-card="正态分布">正态 · L21</button></span></div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>均匀 $U(a,b)$</th><th>指数 $\text{Exp}(\theta)$</th><th>正态 $N(\mu,\sigma^2)$</th></tr>
+      <tr><th>读题信号</th><td>“uniformly distributed on”</td><td>“等待时间 / lifetime,均值 θ”</td><td>“normally distributed / 大样本和”</td></tr>
+      <tr><th>pdf</th><td>$\dfrac{1}{b-a}$(平的)</td><td>$\dfrac{1}{\theta}e^{-x/\theta}$</td><td>$\dfrac{e^{-(x-\mu)^2/2\sigma^2}}{\sigma\sqrt{2\pi}}$</td></tr>
+      <tr><th>CDF / 生存</th><td>$F=\dfrac{x-a}{b-a}$(长度比)</td><td>$S(x)=e^{-x/\theta}$</td><td>查表:$\Phi\!\left(\dfrac{x-\mu}{\sigma}\right)$</td></tr>
+      <tr><th>均值</th><td>$\dfrac{a+b}{2}$(中点)</td><td>$\theta$</td><td>$\mu$</td></tr>
+      <tr><th>方差</th><td>$\dfrac{(b-a)^2}{12}$</td><td>$\theta^2$</td><td>$\sigma^2$</td></tr>
+      <tr><th>分位数</th><td>$(1-p)a+pb$(线性插值)</td><td>$-\theta\ln(1-p)$;中位数 $\theta\ln 2$</td><td>$\mu+z_p\sigma$(查表)</td></tr>
+      <tr><th>MGF</th><td>$\dfrac{e^{bt}-e^{at}}{(b-a)t}$(少考)</td><td>$\dfrac{1}{1-\theta t}$($t&lt;1/\theta$)</td><td>$e^{\mu t+\sigma^2t^2/2}$</td></tr>
+      <tr><th>记忆性</th><td class="hl-pos">条件到子区间<b>仍是均匀</b></td><td class="hl-pos"><b>无记忆</b>:$P[X&gt;s{+}t\mid X&gt;s]=P[X&gt;t]$</td><td>有记忆(离中心越远越难)</td></tr>
+      <tr><th>对称性</th><td>关于中点对称</td><td>右偏(长尾)</td><td>关于 $\mu$ 对称,$\Phi(-z)=1-\Phi(z)$</td></tr>
+      <tr><th>可加性(独立)</th><td>✗(和是三角/梯形)</td><td>同 θ 相加 → 伽马$(n,\theta)$</td><td>线性组合仍正态</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>各自的独门绝活:</strong>均匀 = 一切概率都是<b>长度比</b>,不用积分;指数 = <b>无记忆</b>,"已经等了 s 分钟"可以直接扔掉;正态 = <b>标准化</b>,任何正态都压成 $N(0,1)$ 查同一张表。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">跨组</span><span class="q-title">三座桥:离散和连续怎么连起来</span>
+      <span class="chips"><button class="chip" data-card="指数与泊松过程">泊松⇄指数 · L20</button><button class="chip" data-card="泊松逼近二项">二项→泊松 · L19</button><button class="chip" data-card="几何分布无记忆性">几何⇄指数 · L18</button></span></div>
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th style="width:24%">桥</th><th>内容</th></tr>
+      <tr><td>泊松 ⇄ 指数</td><td>同一个泊松过程(速率 $\lambda$)的两面:窗口 $t$ 内<b>数次数</b> $\sim\text{Poisson}(\lambda t)$;<b>量等待</b> $\sim\text{Exp}(1/\lambda)$。缝合公式一条:$P[\text{等待}>t]=P[\,t\text{ 内 }0\text{ 次}\,]=e^{-\lambda t}$。</td></tr>
+      <tr><td>二项 → 泊松</td><td>$n$ 大、$p$ 小、$np=\lambda$ 适中时 $\text{Bin}(n,p)\approx\text{Poisson}(np)$——"大量保单、每张出险概率极低"的标准建模。</td></tr>
+      <tr><td>几何 ⇄ 指数</td><td>同是"等第一次成功",几何数<b>整数次</b>、指数量<b>连续时间</b>——离散/连续的无记忆双胞胎(无记忆性各自独门,别家都没有)。</td></tr>
+      <tr><td>一切 → 正态</td><td>二项($n$ 大)、泊松($\lambda$ 大)、任何独立同分布之和,加多了都长成钟形——L22 中心极限定理把这句话变成可计算的近似(离散逼近记得连续性修正 ±0.5)。</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- ================= 第三幕:奶茶店实战 ================= -->
+  <div class="act-tag">第三幕 · 实战(每个分布全公式过一遍)</div>
+  <h2>一家奶茶店,六个分布各管一摊事</h2>
+
+  <div class="q" style="border-color:var(--accent)">
+    <div class="q-head"><span class="q-no">底座</span><span class="q-title">店铺数据</span></div>
+    <p>你盘下一家奶茶店。数据盘点:</p>
+    <ul style="margin:6px 0;padding-left:22px">
+      <li>顾客按泊松过程进店,<strong>平均每小时 6 人</strong>(速率 $\lambda=6$/时,即每 10 分钟 1 人);</li>
+      <li>每位进店顾客<strong>买新品"杨枝甘露 2.0"的概率 $p=0.3$</strong>,各人独立;</li>
+      <li>做一杯的时间在 <strong>2 到 6 分钟之间均匀</strong>分布;</li>
+      <li>日营业额近似<strong>正态 $N(3000,\ 400^2)$</strong>(元)。</li>
+    </ul>
+  </div>
+
+  <!-- Q1 二项 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q1</span><span class="q-title">今晚 10 位顾客,新品能卖几杯?(二项全家桶)</span>
+      <span class="chips"><button class="chip" data-card="二项分布">二项分布 · L17</button><button class="chip" data-card="二项分布的期望与方差">期望与方差 · L17</button><button class="chip" data-card="伯努利分布">伯努利 · L17</button></span></div>
+    <p class="scene">晚市恰好来了 $n=10$ 位顾客,每位独立地以 $p=0.3$ 买新品。设卖出杯数 $X\sim\text{Bin}(10,0.3)$。</p>
+    <p class="ask">恰好卖 3 杯的概率?至少卖 1 杯的概率?平均卖几杯、波动多大?</p>
+    <figure><svg viewBox="0 0 430 80" role="img" aria-label="10 位顾客中 3 位购买新品"><circle cx="40.0" cy="34.6" r="6.6" fill="#9aa6ba" fill-opacity="0.55"/><path d="M28.6 58.0 q11.4 -28.5 22.8 0 z" fill="#9aa6ba" fill-opacity="0.55"/><circle cx="76.0" cy="34.6" r="6.6" fill="#9aa6ba" fill-opacity="0.55"/><path d="M64.6 58.0 q11.4 -28.5 22.8 0 z" fill="#9aa6ba" fill-opacity="0.55"/><circle cx="112.0" cy="34.6" r="6.6" fill="#0e7490" fill-opacity="1.0"/><path d="M100.6 58.0 q11.4 -28.5 22.8 0 z" fill="#0e7490" fill-opacity="1.0"/><text x="112" y="74" font-size="9" fill="#0e7490" text-anchor="middle">买了</text><circle cx="148.0" cy="34.6" r="6.6" fill="#9aa6ba" fill-opacity="0.55"/><path d="M136.6 58.0 q11.4 -28.5 22.8 0 z" fill="#9aa6ba" fill-opacity="0.55"/><circle cx="184.0" cy="34.6" r="6.6" fill="#9aa6ba" fill-opacity="0.55"/><path d="M172.6 58.0 q11.4 -28.5 22.8 0 z" fill="#9aa6ba" fill-opacity="0.55"/><circle cx="220.0" cy="34.6" r="6.6" fill="#0e7490" fill-opacity="1.0"/><path d="M208.6 58.0 q11.4 -28.5 22.8 0 z" fill="#0e7490" fill-opacity="1.0"/><text x="220" y="74" font-size="9" fill="#0e7490" text-anchor="middle">买了</text><circle cx="256.0" cy="34.6" r="6.6" fill="#9aa6ba" fill-opacity="0.55"/><path d="M244.6 58.0 q11.4 -28.5 22.8 0 z" fill="#9aa6ba" fill-opacity="0.55"/><circle cx="292.0" cy="34.6" r="6.6" fill="#9aa6ba" fill-opacity="0.55"/><path d="M280.6 58.0 q11.4 -28.5 22.8 0 z" fill="#9aa6ba" fill-opacity="0.55"/><circle cx="328.0" cy="34.6" r="6.6" fill="#0e7490" fill-opacity="1.0"/><path d="M316.6 58.0 q11.4 -28.5 22.8 0 z" fill="#0e7490" fill-opacity="1.0"/><text x="328" y="74" font-size="9" fill="#0e7490" text-anchor="middle">买了</text><circle cx="364.0" cy="34.6" r="6.6" fill="#9aa6ba" fill-opacity="0.55"/><path d="M352.6 58.0 q11.4 -28.5 22.8 0 z" fill="#9aa6ba" fill-opacity="0.55"/></svg><figcaption>n=10 位顾客各自独立掷一次 p=0.3 的"买/不买"硬币——今晚掷出了 3 个"买"。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>pmf</b>:$P[X=3]=\binom{10}{3}(0.3)^3(0.7)^7=120\times0.027\times0.0824=\mathbf{0.2668}$。</li>
+      <li><b>补集法</b>("至少一"):$P[X\ge1]=1-P[X=0]=1-(0.7)^{10}=1-0.0282=\mathbf{0.9718}$。</li>
+      <li><b>期望方差</b>:$E[X]=np=3$;$\operatorname{Var}=np(1-p)=10\times0.3\times0.7=2.1$;$SD=\sqrt{2.1}=1.45$。</li>
+      <li><b>MGF 对账</b>:$M(t)=(0.7+0.3e^t)^{10}$,$M'(0)=10\times0.3=3$ ✓——它就是 10 个伯努利 MGF 的乘方。</li>
+    </ol></div>
+    <div class="takeaway"><strong>结构:</strong>$X=$ 10 个独立伯努利(买/不买)之和——期望方差直接 $\times10$,不用求和硬算。</div>
+  </div>
+
+  <!-- Q2 负二项 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q2</span><span class="q-title">集章活动:凑齐 3 个章,顾客要买几杯?(负二项)</span>
+      <span class="chips"><button class="chip" data-card="负二项分布">负二项分布 · L18</button><button class="chip" data-card="负二项分布的均值方差">均值方差 · L18</button><button class="chip" data-card="几何分布">几何分布 · L18</button></span></div>
+    <p class="scene">每杯附刮刮卡,中章概率 $p=0.3$。老顾客小王要集满 $r=3$ 个章。设需要购买的总杯数 $N\sim NB(3,0.3)$。</p>
+    <p class="ask">恰好第 5 杯集齐的概率?平均要买几杯?为什么和二项"固定的东西"相反?</p>
+    <figure><svg viewBox="0 0 330 92" role="img" aria-label="第5杯集齐第3个章"><path d="M17.6 26.0 L42.4 26.0 L38.9 66.0 L21.1 66.0 Z" fill="#fff" stroke="#5b53c4" stroke-width="1.6"/><line x1="32.5" y1="18.0" x2="27.0" y2="48.0" stroke="#5b53c4" stroke-width="1.6"/><circle cx="25.5" cy="61.5" r="1.8" fill="#5b53c4"/><circle cx="30.5" cy="57.5" r="1.8" fill="#5b53c4"/><circle cx="35.0" cy="61.5" r="1.8" fill="#5b53c4"/><circle cx="40.4" cy="30.0" r="8" fill="#ffd23f" stroke="#a06a00" stroke-width="1"/><text x="40.4" y="33.5" text-anchor="middle" font-size="9" fill="#7e2a08" font-weight="700">章</text><text x="30" y="84" font-size="9.5" fill="#7a8699" text-anchor="middle">第1杯</text><path d="M75.6 26.0 L100.4 26.0 L96.9 66.0 L79.1 66.0 Z" fill="#fff" stroke="#9aa6ba" stroke-width="1.6"/><line x1="90.5" y1="18.0" x2="85.0" y2="48.0" stroke="#9aa6ba" stroke-width="1.6"/><circle cx="83.5" cy="61.5" r="1.8" fill="#9aa6ba"/><circle cx="88.5" cy="57.5" r="1.8" fill="#9aa6ba"/><circle cx="93.0" cy="61.5" r="1.8" fill="#9aa6ba"/><text x="88" y="84" font-size="9.5" fill="#7a8699" text-anchor="middle">第2杯</text><path d="M133.6 26.0 L158.4 26.0 L154.9 66.0 L137.1 66.0 Z" fill="#fff" stroke="#5b53c4" stroke-width="1.6"/><line x1="148.5" y1="18.0" x2="143.0" y2="48.0" stroke="#5b53c4" stroke-width="1.6"/><circle cx="141.5" cy="61.5" r="1.8" fill="#5b53c4"/><circle cx="146.5" cy="57.5" r="1.8" fill="#5b53c4"/><circle cx="151.0" cy="61.5" r="1.8" fill="#5b53c4"/><circle cx="156.4" cy="30.0" r="8" fill="#ffd23f" stroke="#a06a00" stroke-width="1"/><text x="156.4" y="33.5" text-anchor="middle" font-size="9" fill="#7e2a08" font-weight="700">章</text><text x="146" y="84" font-size="9.5" fill="#7a8699" text-anchor="middle">第3杯</text><path d="M191.6 26.0 L216.4 26.0 L212.9 66.0 L195.1 66.0 Z" fill="#fff" stroke="#9aa6ba" stroke-width="1.6"/><line x1="206.5" y1="18.0" x2="201.0" y2="48.0" stroke="#9aa6ba" stroke-width="1.6"/><circle cx="199.5" cy="61.5" r="1.8" fill="#9aa6ba"/><circle cx="204.5" cy="57.5" r="1.8" fill="#9aa6ba"/><circle cx="209.0" cy="61.5" r="1.8" fill="#9aa6ba"/><text x="204" y="84" font-size="9.5" fill="#7a8699" text-anchor="middle">第4杯</text><rect x="243.6" y="16.0" width="36.8" height="56.0" rx="7" fill="none" stroke="#0e7490" stroke-width="2.2"/><path d="M249.6 26.0 L274.4 26.0 L270.9 66.0 L253.1 66.0 Z" fill="#fff" stroke="#5b53c4" stroke-width="1.6"/><line x1="264.5" y1="18.0" x2="259.0" y2="48.0" stroke="#5b53c4" stroke-width="1.6"/><circle cx="257.5" cy="61.5" r="1.8" fill="#5b53c4"/><circle cx="262.5" cy="57.5" r="1.8" fill="#5b53c4"/><circle cx="267.0" cy="61.5" r="1.8" fill="#5b53c4"/><circle cx="272.4" cy="30.0" r="8" fill="#ffd23f" stroke="#a06a00" stroke-width="1"/><text x="272.4" y="33.5" text-anchor="middle" font-size="9" fill="#7e2a08" font-weight="700">章</text><text x="262" y="84" font-size="9.5" fill="#7a8699" text-anchor="middle">第5杯</text></svg><figcaption>前 4 杯恰中 2 章(第1、3杯),第 5 杯中第 3 章收官——这就是 pmf 的两段结构:$\binom{4}{2}$ 种前程 × 末杯必中。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>pmf</b>(第 $r$ 个成功落在第 $n$ 次):前 4 杯里恰 2 章、第 5 杯中章——$P[N=5]=\binom{4}{2}(0.3)^3(0.7)^2=6\times0.027\times0.49=\mathbf{0.0794}$。</li>
+      <li><b>期望</b>:$E[N]=r/p=3/0.3=\mathbf{10}$ 杯;<b>方差</b> $=r(1-p)/p^2=3\times0.7/0.09=23.3$(方差 &gt; 均值,负二项签名)。</li>
+      <li><b>特例</b>:只集 1 个章($r=1$)就是几何分布,平均 $1/p=3.33$ 杯——负二项 = 3 段几何等待的接力,$E=3\times3.33=10$ ✓。</li>
+      <li><b>对偶验证</b>:"10 杯内集齐 3 章" = "$\text{Bin}(10,0.3)\ge3$"——和 Q1 的 $P[X\ge3]$ 是同一个事件,两边可互算。</li>
+    </ol></div>
+    <div class="takeaway"><strong>镜像:</strong>Q1 固定次数问成绩,Q2 固定成绩问次数——同一串伯努利,视角对调(见应用卡「二项与负二项的固定对调与尾概率对偶」)。</div>
+  </div>
+
+  <!-- Q3 泊松 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q3</span><span class="q-title">下午茶高峰半小时,会来几位顾客?(泊松三板斧)</span>
+      <span class="chips"><button class="chip" data-card="泊松分布">泊松分布 · L19</button><button class="chip" data-card="泊松过程">泊松过程 · L19</button><button class="chip" data-card="泊松逼近二项">泊松逼近二项 · L19</button></span></div>
+    <p class="scene">顾客速率 $\lambda=6$/时。看三个窗口:①半小时来客数;②只数买新品的("稀释");③加上隔壁自提柜(速率 4/时,独立)的合并流。</p>
+    <p class="ask">半小时恰来 2 人的概率?半小时内买新品的人数分布?两条客流合并后一小时至少 1 人的概率?</p>
+    <figure><svg viewBox="0 0 430 76" role="img" aria-label="一小时时间轴上的随机到店点,前30分钟窗口高亮"><rect x="30" y="18" width="180" height="34" rx="6" fill="#0e7490" fill-opacity="0.12"/><line x1="30" y1="52" x2="400" y2="52" stroke="#16243d" stroke-width="1.6"/><line x1="30" y1="52" x2="30" y2="58" stroke="#7a8699" stroke-width="1"/><text x="30" y="70" font-size="9.5" fill="#7a8699" text-anchor="middle">0 分</text><line x1="215" y1="52" x2="215" y2="58" stroke="#7a8699" stroke-width="1"/><text x="215" y="70" font-size="9.5" fill="#7a8699" text-anchor="middle">30 分</text><line x1="400" y1="52" x2="400" y2="58" stroke="#7a8699" stroke-width="1"/><text x="400" y="70" font-size="9.5" fill="#7a8699" text-anchor="middle">60 分</text><circle cx="54.7" cy="30.8" r="4.8" fill="#5b53c4" fill-opacity="0.95"/><path d="M46.3 48.0 q8.4 -20.9 16.7 0 z" fill="#5b53c4" fill-opacity="0.95"/><circle cx="110.2" cy="30.8" r="4.8" fill="#0e7490" fill-opacity="0.95"/><path d="M101.8 48.0 q8.4 -20.9 16.7 0 z" fill="#0e7490" fill-opacity="0.95"/><circle cx="165.7" cy="30.8" r="4.8" fill="#5b53c4" fill-opacity="0.95"/><path d="M157.3 48.0 q8.4 -20.9 16.7 0 z" fill="#5b53c4" fill-opacity="0.95"/><circle cx="221.2" cy="30.8" r="4.8" fill="#5b53c4" fill-opacity="0.95"/><path d="M212.8 48.0 q8.4 -20.9 16.7 0 z" fill="#5b53c4" fill-opacity="0.95"/><circle cx="301.3" cy="30.8" r="4.8" fill="#0e7490" fill-opacity="0.95"/><path d="M293.0 48.0 q8.4 -20.9 16.7 0 z" fill="#0e7490" fill-opacity="0.95"/><circle cx="369.2" cy="30.8" r="4.8" fill="#5b53c4" fill-opacity="0.95"/><path d="M360.8 48.0 q8.4 -20.9 16.7 0 z" fill="#5b53c4" fill-opacity="0.95"/><text x="120" y="12" font-size="10" fill="#0e7490" text-anchor="middle">前 30 分钟窗口:λt = 3</text></svg><figcaption>一小时随机滴答 6 声(λ=6);圈定前 30 分钟就换参数 λt=3;只数青色的"买新品客"(每人 30% 概率)就换 λp=0.9。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>区间缩放</b>:半小时 → $\lambda t=6\times0.5=3$,$N\sim\text{Poisson}(3)$;$P[N=2]=\dfrac{e^{-3}3^2}{2!}=4.5e^{-3}=\mathbf{0.2240}$。</li>
+      <li><b>稀释 thinning</b>:每人独立以 0.3 买新品 → 新品购买流 $\sim\text{Poisson}(3\times0.3=0.9)$,依旧是泊松,且与"不买"流独立。</li>
+      <li><b>可加性</b>:合并流速率 $6+4=10$/时 → 一小时 $M\sim\text{Poisson}(10)$;$P[M\ge1]=1-e^{-10}\approx\mathbf{1}$(补集法)。</li>
+      <li><b>期望=方差</b>:半小时窗口 $E=\operatorname{Var}=3$——题目若给"均值 3、方差 3"就是在报泊松的名字。</li>
+    </ol></div>
+    <div class="takeaway"><strong>三板斧:</strong>改窗口乘 $t$、挑子类乘 $p$、合并流相加(要独立)——先换参数,再代公式。</div>
+  </div>
+
+  <!-- Q4 指数 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q4</span><span class="q-title">已经 10 分钟没客人了,还要等多久?(指数与无记忆)</span>
+      <span class="chips"><button class="chip" data-card="指数分布">指数分布 · L20</button><button class="chip" data-card="无记忆性">无记忆性 · L20</button><button class="chip" data-card="指数分布百分位数">百分位数 · L20</button></span></div>
+    <p class="scene">速率 $\lambda=6$/时 ⇒ 相邻顾客间隔 $T\sim\text{Exp}(\theta=10\text{ 分钟})$。</p>
+    <p class="ask">下一位 5 分钟内到的概率?已干等 10 分钟,再等超 10 分钟的概率?等待的中位数?</p>
+    <figure><svg viewBox="0 0 430 72" role="img" aria-label="指数等待与无记忆:已等的10分钟作废,重新开表"><line x1="30" y1="46" x2="400" y2="46" stroke="#16243d" stroke-width="1.6"/><circle cx="40.0" cy="24.8" r="4.8" fill="#9aa6ba" fill-opacity="0.6"/><path d="M31.6 42.0 q8.4 -20.9 16.7 0 z" fill="#9aa6ba" fill-opacity="0.6"/><text x="40" y="64" font-size="9.5" fill="#7a8699" text-anchor="middle">上一位 t=0</text><line x1="170" y1="30" x2="170" y2="52" stroke="#bb2649" stroke-width="2"/><text x="170" y="24" font-size="10" fill="#bb2649" text-anchor="middle">你已干等 10 分钟</text><path d="M178,38 C220,26 260,26 300,36" fill="none" stroke="#0e7490" stroke-width="1.6" marker-end="url(#e2ar)"/><text x="196" y="62" font-size="10" fill="#0e7490" text-anchor="middle">无记忆:重新开表,仍是 Exp(10)</text><circle cx="330.0" cy="24.8" r="4.8" fill="#5b53c4" fill-opacity="0.9"/><path d="M321.6 42.0 q8.4 -20.9 16.7 0 z" fill="#5b53c4" fill-opacity="0.9"/><text x="330" y="64" font-size="9.5" fill="#7a8699" text-anchor="middle">下一位 ?</text></svg><figcaption>指数的独门:等过的时间不算数——红线处重新开表,后面的等待和刚开门时一模一样。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>CDF / 生存</b>:$P[T\le5]=1-e^{-5/10}=1-e^{-0.5}=\mathbf{0.3935}$;$S(10)=e^{-1}=0.3679$。</li>
+      <li><b>无记忆</b>:$P[T>20\mid T>10]=P[T>10]=e^{-1}=\mathbf{0.3679}$——已等的 10 分钟直接作废,不用条件概率硬算。</li>
+      <li><b>中位数</b>:$\theta\ln2=10\times0.693=\mathbf{6.93}$ 分钟 &lt; 均值 10(右偏:多数等待短,偶尔一次超长把均值拽高)。</li>
+      <li><b>矩全套</b>:$E[T]=\theta=10$,$\operatorname{Var}=\theta^2=100$,$E[T^n]=n!\,\theta^n$(Gamma 技巧);MGF $=\dfrac{1}{1-10t}$。</li>
+      <li><b>与泊松对账</b>:$P[T>10\text{ 分}]=P[\text{10 分钟内 0 人}]=e^{-1}$——泊松侧 $\text{Poisson}(1)$ 取 0,两边同一个数 ✓。</li>
+    </ol></div>
+    <div class="takeaway warn"><strong>参数报法:</strong>题目说"均值 10 分钟"给的是 $\theta$;说"速率每小时 6 个"给的是 $\lambda=1/\theta$——先认清哪种,再动笔。</div>
+  </div>
+
+  <!-- Q5 均匀 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q5</span><span class="q-title">这杯要做多久?(均匀:一切都是长度比)</span>
+      <span class="chips"><button class="chip" data-card="连续均匀分布">连续均匀 · L15</button><button class="chip" data-card="均匀分布的分位数">分位数 · L15</button><button class="chip" data-card="均匀分布的矩">矩 · L15</button></span></div>
+    <p class="scene">制作时间 $W\sim U(2,6)$(分钟)。</p>
+    <p class="ask">超过 5 分钟的概率?平均几分钟、波动多大?90 分位是多少?已知超过 4 分钟,超过 5 分钟的概率?</p>
+    <figure><svg viewBox="0 0 430 84" role="img" aria-label="均匀分布平板,5到6分钟的青色块占总长四分之一"><rect x="60" y="26" width="320" height="34" fill="#b8860b" fill-opacity="0.25" stroke="#b8860b" stroke-width="2"/><rect x="300" y="26" width="80" height="34" fill="#0e7490" fill-opacity="0.5"/><line x1="40" y1="60" x2="400" y2="60" stroke="#16243d" stroke-width="1.4"/><text x="60" y="76" font-size="10" fill="#46566f" text-anchor="middle">2</text><text x="220" y="76" font-size="10" fill="#46566f" text-anchor="middle">4</text><text x="300" y="76" font-size="10" fill="#46566f" text-anchor="middle">5</text><text x="380" y="76" font-size="10" fill="#46566f" text-anchor="middle">6</text><text x="340" y="18" font-size="10" fill="#0e7490" text-anchor="middle">这块 = 1/4</text></svg><figcaption>平板无偏好:P[W&gt;5] 就是青色块占整块的长度比 1/4——均匀的所有概率都这么量。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>长度比</b>:$P[W>5]=\dfrac{6-5}{6-2}=\mathbf{0.25}$——不用积分,量长度。</li>
+      <li><b>矩</b>:$E[W]=\dfrac{2+6}{2}=4$;$\operatorname{Var}=\dfrac{(6-2)^2}{12}=\dfrac{16}{12}=1.33$;$SD=1.15$。</li>
+      <li><b>分位数=线性插值</b>:$w_{0.90}=(1-0.9)\times2+0.9\times6=\mathbf{5.6}$ 分钟。</li>
+      <li><b>条件仍均匀</b>:已知 $W>4$ ⇒ $W\mid W>4\sim U(4,6)$,$P[W>5\mid W>4]=\dfrac{1}{2}$——工具照用,区间换新。</li>
+    </ol></div>
+    <div class="takeaway"><strong>三件套:</strong>概率=长度比、均值=中点、条件=换区间再来一遍。均匀没有无记忆性(越等剩的区间越短,概率会变),别和指数混。</div>
+  </div>
+
+  <!-- Q6 正态 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q6</span><span class="q-title">今天营业额能过 3500 吗?(正态:标准化一招鲜)</span>
+      <span class="chips"><button class="chip" data-card="正态分布">正态分布 · L21</button><button class="chip" data-card="标准化">标准化 · L21</button><button class="chip" data-card="正态百分位数">百分位数 · L21</button><button class="chip" data-card="线性插值">线性插值 · L21</button></span></div>
+    <p class="scene">日营业额 $R\sim N(3000, 400^2)$。</p>
+    <p class="ask">超过 3500 的概率?落在 2600–3400 的概率?"前 10% 好日子"的门槛是多少?</p>
+    <figure><svg viewBox="0 0 430 96" role="img" aria-label="正态钟形,3500以右的尾部涂色,占10.6%"><polygon points="280.0,74.0 280.0,49.3 284.7,52.0 289.3,54.6 294.0,57.0 298.6,59.2 303.3,61.2 307.9,63.1 312.6,64.7 317.3,66.2 321.9,67.5 326.6,68.6 331.2,69.6 335.9,70.4 340.6,71.1 345.2,71.7 349.9,72.1 354.5,72.5 359.2,72.8 363.9,73.1 368.5,73.3 373.2,73.5 377.8,73.6 382.5,73.7 387.1,73.8 391.8,73.8 391.8,74.0" fill="#0e7490" fill-opacity="0.4"/><polyline points="38.2,73.8 45.6,73.7 52.9,73.6 60.3,73.4 67.7,73.0 75.0,72.6 82.4,71.9 89.8,71.0 97.1,69.9 104.5,68.4 111.9,66.4 119.2,64.1 126.6,61.3 134.0,58.0 141.3,54.2 148.7,50.0 156.1,45.6 163.4,41.0 170.8,36.4 178.2,32.0 185.5,28.0 192.9,24.7 200.3,22.1 207.6,20.5 215.0,20.0 222.4,20.5 229.7,22.1 237.1,24.7 244.5,28.0 251.8,32.0 259.2,36.4 266.6,41.0 273.9,45.6 281.3,50.0 288.7,54.2 296.0,58.0 303.4,61.3 310.8,64.1 318.1,66.4 325.5,68.4 332.9,69.9 340.2,71.0 347.6,71.9 355.0,72.6 362.3,73.0 369.7,73.4 377.1,73.6 384.4,73.7 391.8,73.8" fill="none" stroke="#b8860b" stroke-width="2.2"/><line x1="25" y1="74" x2="405" y2="74" stroke="#16243d" stroke-width="1.4"/><line x1="280" y1="74" x2="280" y2="43" stroke="#0e7490" stroke-width="1.6"/><text x="215" y="89" font-size="10" fill="#46566f" text-anchor="middle">3000</text><text x="280" y="89" font-size="10" fill="#0e7490" text-anchor="middle">3500 (z=1.25)</text><text x="296" y="28" font-size="10" fill="#0e7490">尾巴 10.6%</text></svg><figcaption>标准化 = 把横轴刻度从"元"换成"σ 步数":3500 离均值 1.25 步,涂色尾巴查表得 10.6%。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>标准化</b>:$z=\dfrac{3500-3000}{400}=1.25$;$P[R>3500]=1-\Phi(1.25)=1-0.8944=\mathbf{0.1056}$。</li>
+      <li><b>区间</b>:$P[2600<R<3400]=\Phi(1)-\Phi(-1)=0.8413-(1-0.8413)=\mathbf{0.6826}$——正是 68-95-99.7 的第一圈。</li>
+      <li><b>反查分位</b>:$z_{0.90}=1.282$(表两位小数时用线性插值精化)⇒ 门槛 $=3000+1.282\times400=\mathbf{3513}$ 元。</li>
+      <li><b>对称性</b>:$\Phi(-1)=1-\Phi(1)$——表只印正半轴,负号全靠这条翻。</li>
+    </ol></div>
+    <div class="takeaway"><strong>万能三步:</strong>标准化 → 查表 → (反查时)$\mu+z_p\sigma$ 还原。任何正态题都是这三步的排列组合。</div>
+  </div>
+
+  <!-- Q7 正态线性组合 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q7</span><span class="q-title">开了分店:两店总营业额怎么算?(线性组合 + 和的预告)</span>
+      <span class="chips"><button class="chip" data-card="正态的线性组合">线性组合 · L21</button><button class="chip" data-card="和的方差">和的方差 · L13</button><button class="chip" data-card="连续性修正">连续性修正 · L21</button></span></div>
+    <p class="scene">分店 $R_2\sim N(2000,300^2)$,与本店独立。总额 $S=R+R_2$。</p>
+    <p class="ask">$S$ 什么分布?超过 5500 的概率?顺带:为什么"数杯数"也能用正态算?</p>
+    <figure><svg viewBox="0 0 430 92" role="img" aria-label="两个正态钟相加得到一个更宽的钟,标准差按勾股合成"><polyline points="28.4,57.2 30.1,56.9 31.9,56.5 33.6,56.0 35.3,55.4 37.1,54.6 38.8,53.6 40.5,52.4 42.3,51.0 44.0,49.3 45.7,47.5 47.5,45.3 49.2,43.0 50.9,40.4 52.7,37.7 54.4,35.0 56.1,32.1 57.9,29.3 59.6,26.7 61.3,24.3 63.1,22.1 64.8,20.4 66.5,19.1 68.3,18.3 70.0,18.0 71.7,18.3 73.5,19.1 75.2,20.4 76.9,22.1 78.7,24.3 80.4,26.7 82.1,29.3 83.9,32.1 85.6,35.0 87.3,37.7 89.1,40.4 90.8,43.0 92.5,45.3 94.3,47.5 96.0,49.3 97.7,51.0 99.5,52.4 101.2,53.6 102.9,54.6 104.7,55.4 106.4,56.0 108.1,56.5 109.9,56.9 111.6,57.2" fill="none" stroke="#b8860b" stroke-width="2"/><line x1="27" y1="58" x2="113" y2="58" stroke="#16243d" stroke-width="1.1"/><text x="70" y="72" font-size="10" fill="#b8860b" text-anchor="middle" font-weight="600">本店 σ=400</text><text x="70" y="84" font-size="9" fill="#7a8699" text-anchor="middle">N(3000,400²)</text><text x="135" y="46" font-size="16" fill="#7a8699" text-anchor="middle">+</text><polyline points="164.8,57.2 166.1,56.9 167.4,56.5 168.7,56.0 170.0,55.4 171.3,54.6 172.6,53.6 173.9,52.4 175.2,51.0 176.5,49.3 177.8,47.5 179.1,45.3 180.4,43.0 181.7,40.4 183.0,37.7 184.3,35.0 185.6,32.1 186.9,29.3 188.2,26.7 189.5,24.3 190.8,22.1 192.1,20.4 193.4,19.1 194.7,18.3 196.0,18.0 197.3,18.3 198.6,19.1 199.9,20.4 201.2,22.1 202.5,24.3 203.8,26.7 205.1,29.3 206.4,32.1 207.7,35.0 209.0,37.7 210.3,40.4 211.6,43.0 212.9,45.3 214.2,47.5 215.5,49.3 216.8,51.0 218.1,52.4 219.4,53.6 220.7,54.6 222.0,55.4 223.3,56.0 224.6,56.5 225.9,56.9 227.2,57.2" fill="none" stroke="#b8860b" stroke-width="2"/><line x1="164" y1="58" x2="228" y2="58" stroke="#16243d" stroke-width="1.1"/><text x="196" y="72" font-size="10" fill="#b8860b" text-anchor="middle" font-weight="600">分店 σ=300</text><text x="196" y="84" font-size="9" fill="#7a8699" text-anchor="middle">N(2000,300²)</text><text x="262" y="46" font-size="16" fill="#7a8699" text-anchor="middle">=</text><polyline points="293.0,57.1 295.2,56.8 297.3,56.4 299.5,55.8 301.7,55.1 303.8,54.2 306.0,53.1 308.2,51.8 310.3,50.3 312.5,48.5 314.7,46.4 316.8,44.1 319.0,41.5 321.2,38.7 323.3,35.7 325.5,32.6 327.7,29.5 329.8,26.5 332.0,23.6 334.2,20.9 336.3,18.5 338.5,16.6 340.7,15.2 342.8,14.3 345.0,14.0 347.2,14.3 349.3,15.2 351.5,16.6 353.7,18.5 355.8,20.9 358.0,23.6 360.2,26.5 362.3,29.5 364.5,32.6 366.7,35.7 368.8,38.7 371.0,41.5 373.2,44.1 375.3,46.4 377.5,48.5 379.7,50.3 381.8,51.8 384.0,53.1 386.2,54.2 388.3,55.1 390.5,55.8 392.7,56.4 394.8,56.8 397.0,57.1" fill="none" stroke="#0e7490" stroke-width="2"/><line x1="291" y1="58" x2="399" y2="58" stroke="#16243d" stroke-width="1.1"/><text x="345" y="72" font-size="10" fill="#0e7490" text-anchor="middle" font-weight="600">总额 σ=500</text><text x="345" y="84" font-size="9" fill="#7a8699" text-anchor="middle">N(5000,500²)</text></svg><figcaption>钟加钟还是钟,但宽度走"勾股":$\sqrt{400^2+300^2}=500$,不是 700。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>线性组合仍正态</b>:$S\sim N(3000{+}2000,\ 400^2{+}300^2)=N(5000,\ 500^2)$(独立 ⇒ 方差相加,标准差走"勾股" $\sqrt{400^2+300^2}=500$)。</li>
+      <li>$P[S>5500]=1-\Phi\!\left(\dfrac{500}{500}\right)=1-\Phi(1)=\mathbf{0.1587}$。</li>
+      <li><b>预告</b>:一天卖出杯数 $\sim\text{Poisson}(\lambda t)$,$\lambda t$ 大时也近似正态(离散→连续要连续性修正 ±0.5)——"什么加多了都变钟形",L22 正式开讲。</li>
+    </ol></div>
+    <div class="takeaway warn"><strong>方差相加、标准差不相加:</strong>$400+300=700$ 是错的,$\sqrt{400^2+300^2}=500$ 才对——独立正态叠加永远在方差层面做加法。</div>
+  </div>
+
+  <!-- ================= 第四幕:收官双章 ================= -->
+  <div class="act-tag">第四幕 · 收官双章(L22–L23)</div>
+  <h2>钟形的兑现,与最快最慢的分布</h2>
+  <p class="thesis">六个分布讲完,还剩两件后日谈:一是第一幕那条虚线箭头许诺的<strong>"加多了都变钟形"</strong>——L22 中心极限定理把它变成可计算的公式;二是<strong>"一群随机变量里挑最快和最慢"</strong>——L23 次序统计量给它们各自的分布。奶茶店最后两问:100 天平均能赚多少?5 名店员谁先出杯、谁垫底?</p>
+
+  <!-- Q8 中心极限定理 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q8</span><span class="q-title">100 天平均营业额落在哪?(中心极限定理)</span>
+      <span class="chips"><button class="chip" data-card="中心极限定理">中心极限定理 · L22</button><button class="chip" data-card="和的正态近似">和的正态近似 · L22</button><button class="chip" data-card="连续性修正">连续性修正 · L22</button></span></div>
+    <p class="scene">接入外卖平台后,日销杯数 $N\sim\text{Poisson}(\lambda t=120)$;日营业额仍是 $R\sim N(3000,400^2)$,各天独立同分布。</p>
+    <p class="ask">今天卖出不超过 130 杯的概率?100 天总营业额、平均营业额各是什么分布?平均值超 3080 的概率为什么比单日小得多?</p>
+
+    <div class="solve"><ol>
+      <li><b>定理本体</b>:任何独立同分布(均值 $\mu$、方差 $\sigma^2$ 有限)的变量,$n$ 大时——<b>和</b> $\sum X_i\approx N(n\mu,\ n\sigma^2)$,<b>均值</b> $\bar X\approx N(\mu,\ \sigma^2/n)$。不挑出身:原分布是偏的、离散的都行。$\text{Poisson}(120)$ 本身就是 120 个独立 $\text{Poisson}(1)$ 之和,天然适用。</li>
+      <li><b>离散计数要连续性修正 ±0.5</b>:$N$ 只取整数,拿连续的钟去盖离散的条,"$\le130$"要盖住 130 那整根条,上界取 130.5——$P[N\le130]\approx\Phi\!\left(\dfrac{130.5-120}{\sqrt{120}}\right)=\Phi(0.958)=\mathbf{0.831}$(不修正得 $\Phi(10/\sqrt{120})=\Phi(0.913)=0.819$,平白少一截)。</li>
+      <li><b>和</b>:$S_{100}=\sum_{i=1}^{100}R_i\sim N(100\times3000,\ 100\times400^2)=N(300000,\ 4000^2)$——均值乘 $n$,<b>方差</b>乘 $n$,标准差只乘 $\sqrt{n}=10$。</li>
+      <li><b>均值</b>:$\bar R\sim N(3000,\ 400^2/100)=N(3000,\ 40^2)$;$P[\bar R>3080]=1-\Phi\!\left(\dfrac{80}{40}\right)=1-\Phi(2)=\mathbf{0.0228}$。而单日 $P[R>3080]=1-\Phi(0.2)=0.4207$——平均是把波动除以 $\sqrt{n}$,好日子坏日子互相抵消。</li>
+    </ol></div>
+    <div class="takeaway"><strong>兑现:</strong>第一幕那条虚线箭头"n 大时二项/泊松都长成钟形",到这里正式落地——CLT 不问原分布长相,只要独立同分布、方差有限,加多了就是钟;唯一的手续费是离散计数别忘 ±0.5。</div>
+  </div>
+
+  <!-- Q9 次序统计量 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q9</span><span class="q-title">5 名店员并行出杯:最快和最慢怎么分布?(次序统计量)</span>
+      <span class="chips"><button class="chip" data-card="最大值分布">最大值分布 · L23</button><button class="chip" data-card="最小值分布">最小值分布 · L23</button><button class="chip" data-card="第k个次序统计量">第k个次序统计量 · L23</button></span></div>
+    <p class="scene">高峰期 5 名店员同时各做一杯,单杯用时独立同分布 $\sim U(2,6)$(分钟)。第一杯出杯 = $\min$,清空全部订单 = $\max$。</p>
+    <p class="ask">最快一杯 3 分钟内做好的概率?5 杯全部在 5 分钟内做完的概率?最快、最慢平均各是几分钟?</p>
+    <figure><svg viewBox="0 0 430 165" role="img" aria-label="五条并列时间条:五名店员的出杯用时,最短2.7分钟青色高亮,最长5.6分钟红色高亮"><text x="52" y="33" font-size="9.5" fill="#7a8699" text-anchor="end">店员A</text><rect x="60" y="24" width="56" height="12" rx="3" fill="#0e7490" fill-opacity="0.9"/><text x="124" y="34" font-size="10" fill="#0e7490">min 2.7 分</text><text x="52" y="55" font-size="9.5" fill="#7a8699" text-anchor="end">店员B</text><rect x="60" y="46" width="232" height="12" rx="3" fill="#9aa6ba" fill-opacity="0.55"/><text x="52" y="77" font-size="9.5" fill="#7a8699" text-anchor="end">店员C</text><rect x="60" y="68" width="112" height="12" rx="3" fill="#9aa6ba" fill-opacity="0.55"/><text x="52" y="99" font-size="9.5" fill="#7a8699" text-anchor="end">店员D</text><rect x="60" y="90" width="288" height="12" rx="3" fill="#bb2649" fill-opacity="0.85"/><text x="356" y="100" font-size="10" fill="#bb2649">max 5.6 分</text><text x="52" y="121" font-size="9.5" fill="#7a8699" text-anchor="end">店员E</text><rect x="60" y="112" width="168" height="12" rx="3" fill="#9aa6ba" fill-opacity="0.55"/><line x1="60" y1="138" x2="380" y2="138" stroke="#16243d" stroke-width="1.4"/><line x1="60" y1="138" x2="60" y2="144" stroke="#7a8699" stroke-width="1"/><line x1="140" y1="138" x2="140" y2="144" stroke="#7a8699" stroke-width="1"/><line x1="220" y1="138" x2="220" y2="144" stroke="#7a8699" stroke-width="1"/><line x1="300" y1="138" x2="300" y2="144" stroke="#7a8699" stroke-width="1"/><line x1="380" y1="138" x2="380" y2="144" stroke="#7a8699" stroke-width="1"/><text x="60" y="157" font-size="9.5" fill="#7a8699" text-anchor="middle">2</text><text x="140" y="157" font-size="9.5" fill="#7a8699" text-anchor="middle">3</text><text x="220" y="157" font-size="9.5" fill="#7a8699" text-anchor="middle">4</text><text x="300" y="157" font-size="9.5" fill="#7a8699" text-anchor="middle">5</text><text x="380" y="157" font-size="9.5" fill="#7a8699" text-anchor="middle">6 分钟</text></svg><figcaption>五名店员并行做单:最快的一条(青)决定"第一杯何时出",最慢的一条(红)决定"订单何时清空"——min 和 max 都是全体 5 条一起说了算。</figcaption></figure>
+
+    <div class="solve"><ol>
+      <li><b>两条主公式</b>:$P[\max\le t]=F(t)^n$("全部都 $\le t$"的交集);$P[\min>t]=S(t)^n$("全部都 $>t$"的交集)。$U(2,6)$ 的 $F(t)=\dfrac{t-2}{4}$、$S(t)=\dfrac{6-t}{4}$。</li>
+      <li><b>最快</b>(min 走补集):$P[\min\le3]=1-S(3)^5=1-\left(\dfrac{3}{4}\right)^5=1-0.2373=\mathbf{0.763}$——5 个人里只要一个够快就成,所以远大于单人的 0.25。</li>
+      <li><b>最慢</b>(max 直接乘):$P[\max\le5]=F(5)^5=\left(\dfrac{3}{4}\right)^5=\mathbf{0.237}$——要 5 个人全都 $\le5$ 分钟,和上一问恰好是同一个 $0.75^5$ 的镜像。</li>
+      <li><b>均匀的第 $k$ 个次序统计量期望</b>:$E[X_{(k)}]=a+(b-a)\dfrac{k}{n+1}$——$n$ 个样本把区间切成 $n+1$ 等份。最快 $E[X_{(1)}]=2+4\times\dfrac{1}{6}=\mathbf{2.67}$ 分钟,最慢 $E[X_{(5)}]=2+4\times\dfrac{5}{6}=5.33$ 分钟。</li>
+    </ol></div>
+    <div class="takeaway warn"><strong>方向别搞反:</strong>max 配 CDF 直接乘($F^n$),min 配生存函数乘完再补集($1-S^n$);写 $P[\min\le t]=F(t)^n$ 是最常见的错——"最快 $\le t$"只需一人达标,不是全员达标。</div>
+  </div>
+
+  <!-- 决策树 -->
+  <div class="act-tag">收官 · 判分布决策树</div>
+  <h2>读题 30 秒:它在考哪个分布?</h2>
+  <div class="q">
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th style="width:38%">题面信号</th><th style="width:18%">分布</th><th>下一步</th></tr>
+      <tr><td>"$n$ 次独立试验,恰好/至少 $k$ 次成功"</td><td>二项</td><td>$\binom{n}{k}p^kq^{n-k}$;"至少"取补集</td></tr>
+      <tr><td>"until / 直到第 $r$ 次成功;第 $r$ 次发生在第 $n$ 次"</td><td>负二项</td><td>前 $n-1$ 次里 $r-1$ 个成功 × 末次成功</td></tr>
+      <tr><td>"at a rate of / per hour;给均值=方差"</td><td>泊松</td><td>先换参数($\lambda t$、$\lambda p$、$\sum\lambda$)再代 pmf</td></tr>
+      <tr><td>"uniformly distributed on $[a,b]$"</td><td>均匀</td><td>长度比;均值中点;条件换区间</td></tr>
+      <tr><td>"等待时间/寿命,均值 $\theta$;memoryless"</td><td>指数</td><td>$S(x)=e^{-x/\theta}$;条件用无记忆清零</td></tr>
+      <tr><td>"normally distributed;大量之和/平均"</td><td>正态</td><td>标准化 → 查表 → $\mu+z_p\sigma$</td></tr>
+    </table>
+    </div>
+    <p style="color:var(--mute);font-size:14px">自测建议:合上页面,只凭"底座"四行数据,把 Q1–Q7 的数字全部重算一遍;再用"方差 vs 均值"口诀互相验血。</p>
+  </div>
+
+</div>
+
+<!-- ===== 概念卡弹窗 ===== -->
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
+      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
+    </div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
+    </div>
+  </div>
+</div>
+<!--CARD_POPUP_HTML_END-->
+
+<footer style="text-align:center;color:var(--mute);font-size:12.5px;padding:20px 0 40px">
+  E02 习题串讲 · 自编场景(非 ASM 原题)· 概念卡快照自 <span style="font-family:var(--mono)">10-Finance/Concepts/</span>,卡片更新后重跑 build-exam-p-e01-cards.py
+</footer>
+
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "Beta分布": {
+  "kind": "c",
+  "en": "BetaDistribution",
+  "aliases": [
+   "beta distribution"
+  ],
+  "level": "advanced",
+  "chapter": "p-l15",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>支撑在 \\([0,1]\\) 上、由两个形状参数 \\(a,b\\) 控制的连续分布族,是连续均匀分布的<strong>推广</strong>:\\(a=b=1\\) 时退化为 \\(U(0,1)\\)。Exam P 仅要求了解。</p><p><strong>白话</strong>:想猜一枚不均匀硬币正面朝上的概率是多少——这个\"概率本身\"是个 0 到 1 之间的不确定数。Beta 分布就是给它建模的橡皮泥:捏 \\(a,b\\) 两个旋钮,形状可平、可鼓成钟形、可偏向一头。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x)\\propto x^{a-1}(1-x)^{b-1}\\ (0\\le x\\le 1),\\qquad \\mathrm{E}[X]=\\frac{a}{a+b}$$</div><ul><li>\\(a=b=1\\):密度恒定 → \\(U(0,1)\\)——\"均匀是 Beta 的特例\"是本卡唯一必记句。</li><li>均值 \\(\\frac{a}{a+b}\\) 好记:\\(a\\) 在 \\(a+b\\) 里的\"票数占比\"。</li><li>支撑天然落在 \\([0,1]\\),适合给\"概率本身\"建模(如二项参数 \\(p\\) 的不确定性)。</li><li>考试极少直接考;形状随 \\(a,b\\) 可平、可钟形、可 U 形。</li></ul><p><strong>算一遍</strong>:取 \\(a=2,\\ b=1\\)(给\"偏大\"多投一票)。</p><ul><li>密度 \\(\\propto x^{2-1}(1-x)^{1-1}=x\\):一条从 0 到 1 递增的斜线——硬币\"偏正面\"的可能性越大越受青睐。</li><li>均值 \\(=\\dfrac{a}{a+b}=\\dfrac{2}{3}\\):\\(a\\) 在总票数 3 里占 2 票。</li><li>换回 \\(a=b=1\\):密度 \\(\\propto x^0(1-x)^0=1\\) 恒定,正是 \\(U(0,1)\\)——\"均匀是 Beta 的特例\"验证 ✓。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"连续均匀分布\">连续均匀分布</a> — \\(a=b=1\\) 的特例</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — 亲缘分布族:两独立 Gamma 之比 \\(X/(X+Y)\\) 构成 Beta(了解)</li><li>先验后验概率 — 贝叶斯视角下常作二项 \\(p\\) 的先验</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 密度形状全由 \\(a,b\\) 两参数塑形</li></ul>"
+ },
+ "中位数": {
+  "kind": "c",
+  "en": "Median",
+  "aliases": [
+   "median",
+   "sample median",
+   "样本中位数"
+  ],
+  "level": "basic",
+  "chapter": "p-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>50 分位数——把概率(密度面积)对半劈开的位置。连续型解 \\(F(x)=0.5\\);ASM 对离散<strong>分布</strong>的中位数刻意不定义(可能无解或有一整段解),只定义<strong>样本中位数</strong>(排序取中)。</p><p><strong>白话</strong>:全班按身高排队,站正中间那个人的身高就是中位数——一半人比他矮、一半人比他高。它只管\"人数对半\",不管两头的人有多极端。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(\\pi_{0.5})=0.5\\qquad\\text{(连续型)}$$</div><ul><li>样本中位数:奇数个取排序后中间项;偶数个取中间两项<strong>平均</strong>,如 \\(\\{1,10,5,3,9,7\\}\\) 排序后 \\(=(5+7)/2=6\\)。</li><li>抗极端值:重尾分布下均值被大额索赔拖走,中位数稳得多——\"中位损失\"比\"平均损失\"更代表典型。</li><li>右偏分布:众数 &lt; 中位数 &lt; 均值,中位数居中。</li></ul><p><strong>算一遍</strong>:五个病人的索赔额(万元):1、2、3、4、90。</p><ul><li>排序取中:中位数 \\(=3\\)——一半人赔得比它少、一半比它多。</li><li>均值 \\(=(1+2+3+4+90)/5=20\\),被那笔 90 万拖飞。</li><li>报\"典型赔付\"时 3 比 20 实在得多——中位数抗极端值。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — \\(p=0.5\\) 的特例,定义与解法整套沿用</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 解 \\(F=0.5\\) 的对象</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 另一个\"中心\":均值怕重尾,中位数抗拉扯</li><li>众数 — 第三个\"中心\",偏态下三者分离</li><li>range 与 midrange — midrange 只看端点,与中位数是两回事</li></ul>"
+ },
+ "中心极限定理": {
+  "kind": "c",
+  "en": "CentralLimitTheorem",
+  "aliases": [
+   "central limit theorem",
+   "CLT"
+  ],
+  "level": "hard",
+  "chapter": "p-l22",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 个独立同分布(iid)、共同均值 \\(\\mu\\)、方差 \\(\\sigma^2\\)(有限非零)的随机变量,\\(n\\to\\infty\\) 时标准化后的样本均值<strong>收敛到标准正态——与原分布形状无关</strong>。保险公司的总赔付、总保费、总索赔次数全靠它用一张正态表算。</p><p><strong>白话</strong>:一个人某天迟到几分钟很随机、分布形状也许很怪,但他 100 天的<strong>平均</strong>迟到时间稳稳落在一个钟形范围里——加总/取平均会把个体的怪脾气抹平,最后都长成同一张\"钟形脸\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\frac{\\sqrt n\\,(\\bar X-\\mu)}{\\sigma}=\\frac{\\bar X-\\mu}{\\sigma/\\sqrt n}\\ \\xrightarrow[\\ n\\to\\infty\\ ]{}\\ N(0,1)$$</div><ul><li>大样本实操:把 \\(\\bar X\\) 当 \\(N(\\mu,\\ \\sigma^2/n)\\)、和 \\(S_n\\) 当 \\(N(n\\mu,\\ n\\sigma^2)\\) 用。</li><li><strong>解题三步</strong>:算 \\(\\mu,\\sigma^2\\) → 标准化 → 查 \\(\\Phi\\) 表;百分位 \\(\\mu+z_p\\sigma\\)(\\(\\sigma\\) 换成该量自己的标准差)。</li><li>为何与原分布无关:相加时各 \\(X_i\\) 的\"怪形状\"在一次次卷积中被抹平,只有均值与方差存活;严格证明走 MGF——标准化和的 MGF 收敛到 \\(e^{t^2/2}\\)。Exam P 不考证明,只考会用。</li><li>骰子直觉:掷 30 颗取平均,\"中间凑法多、极端凑法少\"自然堆出钟形,与单颗的平分布无关。</li><li>前提别丢:<strong>iid + 方差有限</strong>;整数计数近似还要配连续性修正。</li></ul><p><strong>算一遍</strong>:抛 100 次公平硬币,正面总数 \\(S\\) 落在 45–55 的概率约多少?</p><ul><li>单次:\\(\\mu=0.5\\)、\\(\\sigma^2=0.25\\);总和近似 \\(S\\approx N(100\\times0.5,\\ 100\\times0.25)=N(50,\\,25)\\),标准差 \\(5\\)。</li><li>45–55 正是 \\(50\\pm1\\sigma\\),按 68-95-99.7 法则 → 约 \\(68\\%\\)。</li><li>硬币单次只有 0/1 两个值、毫无钟形,可 100 次的总数已像正态——\"与原分布形状无关\"落地。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"样本均值分布\">样本均值分布</a> — \"均值面孔\":\\(\\bar X\\approx N(\\mu,\\sigma^2/n)\\)</li><li><a class=\"net-wl\" data-id=\"和的正态近似\">和的正态近似</a> — \"总量面孔\":\\(S_n\\approx N(n\\mu,n\\sigma^2)\\)</li><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 极限的目的地;正态无处不在的原因</li><li><a class=\"net-wl\" data-id=\"标准化\">标准化</a> — 近似之后的统一收尾动作</li><li><a class=\"net-wl\" data-id=\"连续性修正\">连续性修正</a> — 离散计数近似时的配套校准</li><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 严格证明的工具(MGF 收敛 + 唯一性)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"理赔总额的正态近似\">理赔总额的正态近似</a> — CLT 拼理赔总额,连续性修正</li></ul>"
+ },
+ "二元正态分布": {
+  "kind": "c",
+  "en": "BivariateNormalDistribution",
+  "aliases": [
+   "bivariate normal",
+   "bivariate Gaussian"
+  ],
+  "level": "advanced",
+  "chapter": "p-l31",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>两个正态随机变量用相关系数 \\(\\rho\\) 绑在一起的联合分布:由两个独立标准正态的线性组合构造,<strong>5 个参数</strong> \\(\\mu_X,\\mu_Y,\\sigma_X,\\sigma_Y,\\rho\\) 定死一切(等价地用 \\(\\sigma_{XY}=\\rho\\,\\sigma_X\\sigma_Y\\))。</p><p><strong>白话</strong>:父亲身高和儿子身高:各自都是钟形,又互相牵连——爸高儿子往往偏高。二元正态就是把两条钟形曲线用一根\"相关度绳子\"(\\(\\rho\\))绑起来的联合模型,绳子越紧,散点云从正圆压成越斜越扁的椭圆。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X=\\mu_X+aZ_1,\\qquad Y=\\mu_Y+bZ_1+cZ_2\\qquad\\big(Z_1,Z_2\\ \\text{独立}\\ n(0,1)\\big)$$</div><ul><li>三张王牌:<strong>边缘正态、线性组合正态、条件分布仍正态</strong>。</li><li>等高线永远是椭圆:\\(\\rho=0\\) 正圆(轴对齐),\\(|\\rho|\\to1\\) 压成斜线;\\(\\rho\\) 定倾斜与扁度。</li><li>\\(\\rho=0\\Leftrightarrow\\) 独立——正态特权,一般分布不成立。</li><li>两个边缘各自正态 \\(\\ne\\) 联合二元正态;上述特权只认<strong>联合</strong>二元正态。</li></ul><p><strong>算一遍</strong>:取最小构造 \\(X=Z_1\\)、\\(Y=Z_1+Z_2\\)(\\(Z_1,Z_2\\) 独立 \\(n(0,1)\\))。</p><ul><li>边缘:\\(X\\sim N(0,1)\\);\\(Y\\sim N(0,2)\\)(方差 \\(1+1\\))——边缘正态 ✓</li><li>相关:\\(\\sigma_{XY}=\\operatorname{Cov}(Z_1,\\,Z_1+Z_2)=1\\),故 \\(\\rho=\\dfrac{1}{\\sqrt{1\\times 2}}\\approx 0.71\\)——共享的 \\(Z_1\\) 就是那根绳子。</li><li>线性组合:\\(X+Y=2Z_1+Z_2\\sim N(0,\\,4+1)=N(0,5)\\) 仍正态——王牌验证 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 一维原型与边缘形态</li><li>相关系数 — 第 5 个参数,绑定两变量</li><li>联合密度函数 — 它是最重要的连续联合分布家族</li><li>边缘正态与线性组合 — 王牌一、二</li><li>条件分布(二元正态) — 王牌三,考点核心</li><li>零相关即独立(正态特有) — 招牌特权</li></ul><h4>应用视角</h4><ul><li>二元正态条件期望直线公式 — 条件期望直线 \\(\\mu_Y+\\rho\\sigma_Y z\\) 秒解,免积分</li></ul>"
+ },
+ "二项与负二项的固定对调与尾概率对偶": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>核心辨析</h4><p>同一串伯努利试验,<strong>固定的东西对调</strong>:</p><table><thead><tr><th></th><th>二项</th><th>负二项</th></tr></thead><tbody><tr><td>固定</td><td>试验次数 \\(n\\)</td><td>成功次数 \\(r\\)</td></tr><tr><td>随机</td><td>成功几次 \\(X\\)</td><td>试到第几次才凑齐 \\(r\\) 个成功</td></tr><tr><td>取值</td><td>有界 \\(\\{0,\\dots,n\\}\\)</td><td>无界 \\(\\{r, r+1, \\dots\\}\\)</td></tr><tr><td>积木</td><td>\\(n\\) 个[[伯努利分布</td><td>伯努利]]之和</td><td>\\(r\\) 个[[几何分布</td><td>几何]]之和(见 <a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a>)</td></tr><tr><td>特例</td><td>\\(n=1\\) → 伯努利</td><td>\\(r=1\\) → 几何</td></tr></tbody></table><p><strong>白话</strong>:二项问\"投 10 球进几个\",负二项问\"要进 3 个得投几球\"——一个卡死次数问成绩,一个卡死成绩问次数。</p><h4>尾概率对偶(考场互算)</h4><div class=\"net-mth\">$$P(\\text{NB: 第 } r \\text{ 个成功} \\le \\text{第 } n \\text{ 次试验}) = P(\\mathrm{Bin}(n,p) \\ge r)$$</div><p>同一事件的两种说法:\"\\(n\\) 次里至少 \\(r\\) 个成功\" = \"第 \\(r\\) 个成功不晚于第 \\(n\\) 次\"。哪边求和项少走哪边。</p><p><strong>算一遍</strong>:\\(p=0.5\\),问\"3 次内凑齐 2 个正面\"。</p><ul><li>负二项路:第 2 个正面落在第 2 或第 3 次,\\(P = \\binom{1}{1}(0.5)^2 + \\binom{2}{1}(0.5)^3 = 0.25 + 0.25 = 0.5\\)</li><li>二项路:\\(P[\\mathrm{Bin}(3, 0.5) \\ge 2] = \\binom{3}{2}(0.5)^3 + \\binom{3}{3}(0.5)^3 = 0.375 + 0.125 = 0.5\\)</li><li>两边同一事件,必相等——验算利器。</li></ul><h4>易错点</h4><ul><li><strong>参数化口径</strong>:负二项有两种——数\"总试验次数\"(取值 \\(\\ge r\\))或数\"失败次数\"(取值 \\(\\ge 0\\)),均值差一个 \\(r\\);先认清题目数的是哪个。</li><li>\"负\"字来源:PMF 系数可写成负指数广义二项系数 \\(\\binom{-r}{k}\\),不是\"负面\"义。</li><li>对偶式两边不等号方向易搞反:\"不晚于第 \\(n\\) 次\"对应二项\"<strong>至少</strong> \\(r\\) 个\",不是\"恰好\"。</li></ul>"
+ },
+ "二项分布": {
+  "kind": "c",
+  "en": "BinomialDistribution",
+  "aliases": [
+   "binomial distribution"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 次<strong>相互独立</strong>、成功概率<strong>恒为 \\(p\\)</strong> 的成/败试验中\"成功次数\"的分布,记 \\(\\text{Binomial}(n,p)\\),取值 \\(0,1,\\dots,n\\)。Exam P 最高频的离散分布。</p><p><strong>白话</strong>:罚球命中率固定 \\(p\\),投 \\(n\\) 次数\"总共进几个\"——每球互不影响、命中率不变,进球总数的分布就是二项。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=k]=\\binom{n}{k}p^{k}(1-p)^{\\,n-k},\\qquad k=0,1,\\dots,n$$</div><ul><li>组合论证\"<strong>选位置,乘概率</strong>\":\\(\\binom{n}{k}\\) 数哪 \\(k\\) 次成功,\\(p^k(1-p)^{n-k}\\) 是每条路径的价钱。</li><li>归一由二项定理保证:\\(\\sum_k\\binom{n}{k}p^k(1-p)^{n-k}=(p+1-p)^n=1\\)(分布因此得名)。</li><li>两个前提缺一不可:各次试验<strong>独立</strong> + \\(p\\) <strong>恒定</strong>;不放回抽样(\\(p\\) 随抽随变)不是二项。</li><li>形状:\\(p&lt;0.5\\) 右偏、\\(p=0.5\\) 对称、\\(p&gt;0.5\\) 左偏,峰在 \\(np\\) 附近。</li><li>\"至少一次\"用补事件 \\(1-(1-p)^n\\) 最快,别逐项累加。</li></ul><p><strong>算一遍</strong>:抛 3 次公平硬币,求恰好 2 次正面。</p><ul><li>选位置:\\(\\binom{3}{2}=3\\) 种排法(正正反、正反正、反正正)。</li><li>每条路径的价钱:\\(0.5^2\\times 0.5=1/8\\)。</li><li>相乘:\\(3\\times\\dfrac18=\\dfrac38\\);对照全枚举——8 条等可能路径里恰有 3 条 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 原子;\\(n=1\\) 特例</li><li><a class=\"net-wl\" data-id=\"组合\">组合</a> — 二项系数数成功位置(上游 L02)</li><li><a class=\"net-wl\" data-id=\"二项分布的期望与方差\">二项分布的期望与方差</a> — \\(np\\) 与 \\(np(1-p)\\)</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 同 \\(p\\) 独立之和仍二项</li><li><a class=\"net-wl\" data-id=\"超几何分布\">超几何分布</a> — 不放回抽样的对照(有限总体)</li><li><a class=\"net-wl\" data-id=\"泊松逼近二项\">泊松逼近二项</a> — \\(n\\) 大 \\(p\\) 小时的近似(下游 L19)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li><li><a class=\"net-wl\" data-id=\"二项分布与联合分布的层面之辨\">二项分布与联合分布的层面之辨</a> — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "二项分布与联合分布的层面之辨": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>核心辨析</h4><p>两者不构成平行对比——层面不同:</p><table><thead><tr><th></th><th>二项分布</th><th>联合分布</th></tr></thead><tbody><tr><td>层面</td><td>具体分布(有名字、有公式)</td><td>概念框架(多变量的分布)</td></tr><tr><td>变量个数</td><td>1 个</td><td>≥2 个</td></tr><tr><td>描述对象</td><td>单个计数 \\(X\\) 的概率规律</td><td>多个变量<strong>组合出现</strong>的概率规律</td></tr><tr><td>平行对比对象</td><td>泊松、几何、负二项…</td><td>边缘分布、条件分布</td></tr></tbody></table><p><strong>白话</strong>:二项分布回答\"抛 10 次硬币正面几次\"——一个数的规律;联合分布回答\"身高和体重一起看长什么样\"——\"高的人往往重\"这种依赖关系,只有联合分布装得下,拆成两个边缘就丢了。</p><p>正确的对比组:</p><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> vs <a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> vs <a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> —— 同为具体单变量分布</li><li>联合分布 vs 边缘分布 vs <a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> —— 同为多变量框架的三视角</li></ul><h4>连接点:多项分布</h4><p><a class=\"net-wl\" data-id=\"多项分布\">多项分布</a>是两者的桥——二项的多变量推广:\\(n\\) 次试验、\\(k\\) 类结果,各类计数 \\((X_1, \\dots, X_k)\\) 的<strong>联合分布</strong>即多项分布;每个 \\(X_i\\) 单看,边缘分布是二项 \\(B(n, p_i)\\)。</p><p><strong>算一遍</strong>:掷骰子 3 次,记 \\(X_1\\) = 出 1 的次数,\\(X_2\\) = 出 6 的次数。</p><ul><li>\\((X_1, X_2)\\) 联合:\\(P(X_1=1, X_2=1) = \\dfrac{3!}{1!\\,1!\\,1!} \\cdot \\dfrac{1}{6} \\cdot \\dfrac{1}{6} \\cdot \\dfrac{4}{6} = \\dfrac{1}{9}\\)</li><li>\\(X_1\\) 边缘:\\(X_1 \\sim B(3, \\tfrac{1}{6})\\),\\(P(X_1=1) = 3 \\cdot \\tfrac{1}{6} \\cdot (\\tfrac{5}{6})^2 = \\tfrac{25}{72}\\)</li><li>同一个 \\(X_1\\):进联合是多项的一维,单拎出来是二项——层面切换,对象没变。</li></ul><h4>易错点</h4><ul><li>把\"二项 vs 联合\"当同类概念背——考试不这么考,考的是<strong>多项分布的边缘是二项</strong>这条关系。</li><li>多项分布各 \\(X_i\\) <strong>不独立</strong>(\\(\\sum X_i = n\\) 硬约束,协方差 \\(\\operatorname{Cov}(X_i, X_j) = -np_ip_j &lt; 0\\)),别拿边缘乘积当联合。</li></ul>"
+ },
+ "二项分布可加性": {
+  "kind": "c",
+  "en": "BinomialAdditivity",
+  "aliases": [
+   "additivity of binomial distribution",
+   "sum of independent binomials"
+  ],
+  "level": "advanced",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>相互独立、<strong>同一成功概率 \\(p\\)</strong> 的二项随机变量之和仍是二项:\\(n\\) 参数相加、\\(p\\) 不动。\\(p\\) 不同则和<strong>不再是</strong>二项。</p><p><strong>白话</strong>:上午投 3 次罚球、下午投 5 次,命中率都是 \\(p\\)——两段进球数加起来,和\"一口气投 8 次\"没有任何区别,所以和仍是二项、\\(n\\) 直接相加。若下午换了个命中率不同的人投,两段就拼不成\"一口气 8 次\",和也就不再是二项。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X_i\\ \\text{独立},\\ X_i\\sim\\text{Binomial}(n_i,\\,p)\\ \\Longrightarrow\\ \\sum_{i=1}^{k}X_i\\ \\sim\\ \\text{Binomial}\\Big(\\sum_{i=1}^{k}n_i,\\ p\\Big)$$</div><ul><li>直觉:把两堆同概率硬币合起来抛,还是一堆同概率硬币——总试验串仍是\"独立同 \\(p\\) 的伯努利序列\"。</li><li>两个条件都要查:<strong>相互独立</strong> + <strong>\\(p\\) 相同</strong>;\\(p\\) 不同的独立二项之和不是二项(高频易错)。</li><li>均值方差自然相加:\\(E=(\\sum n_i)p\\)、\\(\\operatorname{Var}=(\\sum n_i)p(1-p)\\)。</li><li>同款性质在泊松(\\(\\lambda\\) 相加)与负二项(同 \\(p\\)、\\(r\\) 相加)上再现,三个一起记。</li></ul><p><strong>算一遍</strong>:\\(X\\sim\\text{Binomial}(2,\\,0.5)\\)(抛 2 枚硬币)、\\(Y\\sim\\text{Binomial}(3,\\,0.5)\\)(抛 3 枚),独立。</p><ul><li>合并:5 枚同样的硬币一起数正面 → \\(X+Y\\sim\\text{Binomial}(5,\\,0.5)\\)。</li><li>验均值:\\(E=2(0.5)+3(0.5)=2.5=5\\times 0.5\\) ✓;方差 \\(5\\times 0.25=1.25\\) ✓</li><li>若 \\(Y\\) 换成 \\(\\text{Binomial}(3,\\,0.2)\\):总试验串不再\"同 \\(p\\)\",和就不是任何二项——捷径失效。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 本体</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 前提之一(上游 L11)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 同款性质:\\(\\lambda\\) 相加、无同参限制(下游 L19)</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 同款性质:同 \\(p\\)、\\(r\\) 相加(下游 L18)</li><li>卷积公式 — \"和的分布\"的一般工具;此处有闭式捷径</li></ul>"
+ },
+ "二项分布的期望与方差": {
+  "kind": "c",
+  "en": "BinomialMeanAndVariance",
+  "aliases": [
+   "mean and variance of binomial",
+   "binomial moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(\\text{Binomial}(n,p)\\) 的均值为 \\(np\\)、方差为 \\(np(1-p)\\)——把二项看成 \\(n\\) 个独立伯努利之和 \\(N=X_1+\\dots+X_n\\),期望与方差各自乘 \\(n\\) 直接得到。</p><p><strong>白话</strong>:一次罚球平均进 \\(p\\) 个球,投 \\(n\\) 次自然平均进 \\(np\\) 个;波动同理——单次的小波动 \\(p(1-p)\\),\\(n\\) 次互不影响地攒起来就是 \\(np(1-p)\\)。\\(n\\) 份一样的小账,总账直接乘 \\(n\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[N]=np,\\qquad \\operatorname{Var}(N)=np(1-p)$$</div><ul><li>来源:每个伯努利均值 \\(p\\)、方差 \\(p(1-p)\\);期望恒可加(线性),独立时方差也可加。</li><li>方差<strong>绝不是 \\(np\\)</strong>——漏 \\((1-p)\\) 整题崩;标准差 \\(\\sqrt{np(1-p)}\\)。</li><li>反解参数套路:给 \\(E\\) 与 \\(\\operatorname{Var}\\),相除得 \\(1-p\\),再回代求 \\(n\\)(如 \\(E=6\\)、\\(\\operatorname{Var}=2.4\\) → \\(p=0.6\\)、\\(n=10\\))。</li><li>例 17A:\\(\\text{Binomial}(20,0.015)\\):\\(E=0.3\\)、\\(\\operatorname{Var}=0.2955\\)。</li></ul><p><strong>算一遍</strong>:抛 4 次公平硬币数正面。</p><ul><li>均值:\\(E=4\\times 0.5=2\\) 个正面。</li><li>方差:\\(\\operatorname{Var}=4\\times 0.5\\times 0.5=1\\)——别顺手写成 \\(np=2\\),\\((1-p)\\) 不能漏。</li><li>反解练习:给 \\(E=6\\)、\\(\\operatorname{Var}=2.4\\) → 相除得 \\(1-p=0.4\\) → \\(p=0.6\\)、\\(n=6/0.6=10\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 本体</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 单次的 \\(p\\)、\\(p(1-p)\\) 各乘 \\(n\\)</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — 均值可加的依据(不需独立)</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — 独立时交叉项为零、方差可加的依据</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 基础定义</li></ul>"
+ },
+ "伯努利分布": {
+  "kind": "c",
+  "en": "BernoulliDistribution",
+  "aliases": [
+   "Bernoulli distribution",
+   "Bernoulli trial"
+  ],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>单次成/败试验的分布:取 1(成功)概率 \\(p\\)、取 0(失败)概率 \\(1-p\\)。它是二项分布 \\(n=1\\) 的特例,也是二项的<strong>原子</strong>——\\(n\\) 个独立伯努利之和即二项。</p><p><strong>白话</strong>:一次抛硬币、一次罚球、一个客户今年出不出险——世界上最小的随机试验,只有\"成/败\"两个结局。它是概率界的乐高最小颗粒,二项等大分布都由它拼出来。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=1]=p,\\quad P[X=0]=1-p;\\qquad E[X]=p,\\quad \\operatorname{Var}(X)=p(1-p)$$</div><ul><li>\\(E[X^2]=p\\)(因 \\(0^2=0\\)、\\(1^2=1\\)),故 \\(\\operatorname{Var}=p-p^2=p(1-p)\\)。</li><li>方差在 \\(p=0.5\\) 时最大(\\(=0.25\\)),越靠近 0 或 1 越小——结果越确定,波动越小。</li><li>二项的 \\(np\\)、\\(np(1-p)\\) 全由它 \\(\\times n\\) 而来。</li><li>作示性变量(indicator)是\"数个数\"类问题的通用积木。</li></ul><p><strong>算一遍</strong>:命中率 \\(p=0.5\\) 的一次罚球,进球记 1、不进记 0。</p><ul><li>均值:\\(E[X]=1(0.5)+0(0.5)=0.5\\)。</li><li>二阶矩:\\(E[X^2]=1^2(0.5)=0.5\\),故 \\(\\operatorname{Var}=0.5-0.5^2=0.25\\)——正是 \\(p(1-p)\\),且是方差的最大值(\\(p=0.5\\) 最难猜)。</li><li>换 \\(p=0.9\\):\\(\\operatorname{Var}=0.9\\times 0.1=0.09\\)——结果越确定,波动越小 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — \\(n=1\\) 特例;\\(n\\) 个独立之和成二项</li><li><a class=\"net-wl\" data-id=\"二项分布的期望与方差\">二项分布的期望与方差</a> — \\(p\\)、\\(p(1-p)\\) 各乘 \\(n\\) 的来源</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 同一串伯努利试验改数\"到首次成功\"(下游 L18)</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 最简两点 pmf</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li></ul>"
+ },
+ "伽马分布": {
+  "kind": "c",
+  "en": "GammaDistribution",
+  "aliases": [
+   "gamma distribution",
+   "Erlang distribution"
+  ],
+  "level": "advanced",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 个独立、同均值 \\(\\theta\\) 的指数随机变量之和 \\(Y=\\sum_{i=1}^n X_i\\) 服从参数 \\((n,\\theta)\\) 的伽马分布——\"接力等 \\(n\\) 次事件\"的总时间。\\(n=1\\) 时退化回指数分布。</p><p><strong>白话</strong>:等一趟公交平均 \\(\\theta\\) 分钟(指数);今天要连换 \\(n\\) 趟车,把 \\(n\\) 段等待接起来的<strong>总</strong>等待时间,分布就是伽马。等一段是指数,接力等 \\(n\\) 段是伽马。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Y(x)=\\frac{x^{\\,n-1}e^{-x/\\theta}}{\\Gamma(n)\\,\\theta^{\\,n}},\\qquad E[Y]=n\\theta,\\quad \\operatorname{Var}(Y)=n\\theta^2$$</div><ul><li>\\(\\Gamma(n)=(n-1)!\\)(正整数 \\(n\\));均值方差是单个指数的 \\(n\\) 倍(iid 之和的常识)。</li><li><strong>考试策略</strong>:真让你算伽马 CDF 的题很少,更多是\"认出这是伽马,直接用 \\(E=n\\theta\\)、\\(\\operatorname{Var}=n\\theta^2\\)\"。</li><li>伽马 CDF 无一般闭式;\\(n\\) 为小整数时可分部积分手算(如两步审批例:\\(n=2,\\theta=3\\) 求 \\(F_Y(5)\\))。</li><li>泊松过程视角:速率 \\(\\lambda\\) 下等到第 \\(n\\) 个事件的时间 \\(\\sim\\text{Gamma}(n,1/\\lambda)\\)。</li></ul><p><strong>算一遍</strong>:每关审批平均耗 3 天(指数 \\(\\theta=3\\)),文件要连过 2 关(\\(n=2\\))。</p><ul><li>总耗时 \\(Y\\sim\\text{Gamma}(2,3)\\):\\(E[Y]=2\\times 3=6\\) 天。</li><li>\\(\\operatorname{Var}=2\\times 3^2=18\\),标准差 \\(\\approx 4.2\\) 天——单关的均值和方差各乘 2,iid 之和的常识。</li><li>若只有 1 关:\\(\\text{Gamma}(1,3)\\) 就是均值 3 的指数——特例验证 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 构件与特例:\\(n=1\\) 即指数</li><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 第 \\(n\\) 个事件的到达时间</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — \\(E[Y]=n\\theta\\) 的依据</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — 独立和方差相加:\\(\\operatorname{Var}=n\\theta^2\\)</li><li>卷积公式 — 密度的原始推法:指数密度自卷 \\(n\\) 次</li></ul>"
+ },
+ "免赔额与保单限额的期望计算": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:损失 \\(X\\),保单带免赔额 \\(d\\)(赔 \\(\\max(X-d,0)\\))或限额 \\(u\\)(赔 \\(\\min(X,u)\\)),求期望赔付。</p><h4>求解套路</h4><ol><li><strong>认清赔付函数</strong>:免赔额 → \\((X-d)_+\\);限额 → \\(X\\wedge u\\);两者叠加 \\((X\\wedge u)-(X\\wedge d)\\)。</li><li><strong>生存函数积分是主力</strong>:\\(E[(X-d)_+]=\\int_d^\\infty S(x)\\,dx\\)、\\(E[X\\wedge u]=\\int_0^u S(x)\\,dx\\)——见 生存函数求期望,比对密度积分快一个量级。</li><li>指数损失有闭式:\\(E[(X-d)_+]=\\theta e^{-d/\\theta}\\)(无记忆的红利,见 <a class=\"net-wl\" data-id=\"指数分布\">指数分布</a>)。</li><li>条件版陷阱:「已知发生正赔付」= 除以 \\(P[X&gt;d]\\),见 <a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a>。</li></ol><h4>易错</h4><ul><li>把 \\(E[(X-d)_+]\\) 写成 \\(E[X]-d\\)(只有 \\(X\\ge d\\) 恒成立时才对)。</li><li>免赔额+限额混合时积分限错位:上限是 \\(u\\) 不是 \\(u-d\\) 时要看清赔付定义。</li></ul>"
+ },
+ "免赔额与正赔付条件": {
+  "kind": "c",
+  "en": "DeductibleAndPositivePayment",
+  "aliases": [
+   "deductible",
+   "positive payment",
+   "given that a payment is made",
+   "免赔额"
+  ],
+  "level": "hard",
+  "chapter": "p-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>带免赔额 d 的保单:赔付 = 损失 − d(损失超过 d 才赔)。Exam P 高频形态是\"<strong>given that a payment is made</strong>\"——把\"有正赔付\"当条件事件,先把条件与目标都<strong>翻译回损失 X 的区间</strong>再上条件概率。</p><p><strong>白话</strong>:修车险免赔 100 元:修车花 250,保险只赔 150;花 80 就一分不赔。题目问\"已知保险赔了钱……\"时,诀窍是把每句\"赔付\"的话都翻译回\"损失\"的语言——赔了钱 = 损失超 100,赔付不超 500 = 损失不超 600。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\Pr(X\\le c+d\\mid X&gt;d)=\\frac{\\Pr(d&lt;X\\le c+d)}{\\Pr(X&gt;d)}$$</div><ul><li><strong>赔付换损失,先加免赔额</strong>:\"有正赔付\"= \\(X&gt;d\\);\"赔付 \\(\\le c\\)\"= \\(X\\le c+d\\)。平移方向是 \\(c+d\\) <strong>不是</strong> \\(c-d\\),搞反是经典错。</li><li>分母永远是那个<strong>\"已知\"事件</strong> \\(\\Pr(X&gt;d)=S(d)\\)。</li><li>Example 6B:\\(f(x)=\\frac{1000-x}{500000}\\)(\\(0&lt;x\\le1000\\)),d=100;正赔付 ⟺ \\(X&gt;100\\),赔付 \\(\\le500\\) ⟺ \\(X\\le600\\);\\(\\Pr=\\frac{F(600)-F(100)}{1-F(100)}=\\frac{0.84-0.19}{0.81}=0.802469\\)。</li><li>多步流程易漏:翻译区间 → 求 cdf 两点值 → 分子取交、分母取条件——每步都有坑。</li></ul><p><strong>算一遍</strong>:损失 \\(X\\) 均匀分布于 \\((0,1000)\\),免赔额 \\(d=100\\);已知有赔付,求赔付 \\(\\le 400\\) 的概率。</p><ul><li>翻译回损失:有赔付 ⟺ \\(X&gt;100\\);赔付 \\(\\le 400\\) ⟺ \\(X\\le 500\\)(加免赔额,<strong>不是</strong>减)。</li><li>分子 \\(\\Pr(100&lt;X\\le 500)=400/1000=0.4\\);分母 \\(\\Pr(X&gt;100)=900/1000=0.9\\)。</li><li>相除:\\(0.4/0.9=4/9\\approx 0.44\\)——分母永远是那个\"已知\"事件。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 整题就是一次条件概率计算,分母=已知事件</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — \"有正赔付\"的概率直接是 \\(S(d)\\)</li><li>随机变量的条件分布 — 给定 \\(X&gt;d\\) 后损失的条件分布</li><li>条件密度与条件pmf — 需要整条条件密度时的形态(截断+归一)</li><li>混合型随机变量 — 赔付变量在 0 处有质量点,天然混合型</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"免赔额与保单限额的期望计算\">免赔额与保单限额的期望计算</a> — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "几何分布": {
+  "kind": "c",
+  "en": "GeometricDistribution",
+  "aliases": [
+   "geometric distribution",
+   "geometric"
+  ],
+  "level": "basic",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>负二项分布 \\(k=1\\) 的特例——每次成功概率 \\(p\\) 的独立试验中,<strong>第一次成功之前的失败次数</strong> \\(N\\) 的分布。概率逐项按 \\((1-p)\\) 等比(几何)衰减,故得名。</p><p><strong>白话</strong>:掷骰子直到出第一个 6,数\"出 6 之前白掷了几次\"——等待越长越少见,每多等一轮概率就打一次 \\(5/6\\) 折,像等比数列一样滑下去。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[n]=p(1-p)^n,\\ \\ n=0,1,2,\\dots;\\qquad E[N]=\\frac{1-p}{p},\\quad \\operatorname{Var}(N)=\\frac{1-p}{p^2}$$</div><ul><li><strong>尾概率一步可写</strong>:\\(\\Pr[N\\ge n]=(1-p)^n\\)(前 \\(n\\) 次全失败)——离散分布里少有的能直接写尾巴的。</li><li><strong>起点 1 变体</strong>(试验序号):\\(P[n]=p(1-p)^{n-1},\\ n=1,2,\\dots\\),此时 \\(E=\\dfrac{1}{p}\\)(多 1),方差不变;考试约定:0 取得到就从 0 起,否则从 1 起。</li><li>保险语境高频:年索赔次数设几何、<strong>只给均值</strong> → 先解 \\(\\frac{1-p}{p}=\\) 均值反推 \\(p\\),再代 pmf。</li><li>pmf 从 \\(p\\) 起单调递减(起点 0 版众数恒为 0)。</li></ul><p><strong>算一遍</strong>:掷骰子等第一个 6,\\(p=1/6\\)。</p><ul><li>均值:\\(E[N]=\\dfrac{1-p}{p}=\\dfrac{5/6}{1/6}=5\\)——平均白掷 5 次才见到 6(连出 6 那次共 6 掷,对上\"起点 1 版 \\(E=1/p=6\\)\")。</li><li>尾概率:前 2 次都没出 6 的概率 \\(\\Pr[N\\ge 2]=(5/6)^2=25/36\\)——直接写,不用逐项加。</li><li>头两项 pmf:\\(P[0]=1/6\\),\\(P[1]=(5/6)(1/6)=5/36\\)——每项比上一项打 \\(5/6\\) 折,等比衰减名副其实。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"负二项分布\">负二项分布</a> — 本体的 \\(k=1\\) 特例;反之 NB = \\(k\\) 段几何之和</li><li><a class=\"net-wl\" data-id=\"几何分布无记忆性\">几何分布无记忆性</a> — 灵魂性质:已等多久不改剩余等待</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 底层单次试验</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 连续世界的对应物(同样无记忆)</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — \\(\\Pr[N\\ge n]=(1-p)^n\\) 就是它的生存函数</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li></ul>"
+ },
+ "几何分布无记忆性": {
+  "kind": "c",
+  "en": "GeometricMemorylessness",
+  "aliases": [
+   "memoryless property of geometric distribution",
+   "memoryless"
+  ],
+  "level": "advanced",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>已知前 \\(n\\) 次都未成功(\\(N\\ge n\\)),剩余等待 \\(N-n\\) 的分布与从头开始<strong>完全相同</strong>——几何分布在整数点上无记忆,过去的失败被\"忘光\"。</p><p><strong>白话</strong>:老虎机不会因为你输了一晚上就\"欠你一次\"——每一轮它都把你当刚进门的新客人,剩余等待永远从零重新计。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N-n\\ \\big|\\ N\\ge n\\ \\sim\\ \\text{同均值的几何分布}\\quad\\Longrightarrow\\quad E[N-n\\mid N\\ge n]=E[N]$$</div><ul><li>一行证明:尾概率相除 \\(\\dfrac{(1-p)^{m+n}}{(1-p)^n}=(1-p)^m=\\Pr[N\\ge m]\\)。</li><li><strong>考试即用推论</strong>:\\(E[N\\mid N\\ge n]=n+E[N]\\)——题面出现 \"given that … at least \\(n\\)\" 一步出答案,别硬算条件分布(例:几何均值 15、已知至少 20 次索赔 → 期望共 \\(20+15=35\\))。</li><li>赌徒谬误的正解:连掷 10 次没出 6,下一次仍是 \\(1/6\\),平均还要再掷 6 次——骰子没有记忆。</li><li>离散分布中唯几何具备此性质;连续对应物是指数分布。</li></ul><p><strong>算一遍</strong>:掷骰子等 6(\\(p=1/6\\)),已经连白掷了 10 次,期望总共白掷几次?</p><ul><li>无条件均值:\\(E[N]=\\dfrac{5/6}{1/6}=5\\)。</li><li>套推论:\\(E[N\\mid N\\ge 10]=10+5=15\\)——前 10 次全作废,从头再平均等 5 次。</li><li>尾概率验证:\\(\\dfrac{(5/6)^{12}}{(5/6)^{10}}=(5/6)^2=\\Pr[N\\ge 2]\\)——条件分布真的和重新开局一模一样。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 性质的宿主</li><li><a class=\"net-wl\" data-id=\"无记忆性\">无记忆性</a> — 连续版:指数分布的同名性质</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — \\(E[N\\mid N\\ge n]=n+E[N]\\) 是条件期望的秒算特例</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 定义本身就是条件尾概率的不变性</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 唯二无记忆分布的另一位(连续)</li></ul>"
+ },
+ "协方差": {
+  "kind": "c",
+  "en": "Covariance",
+  "aliases": [
+   "covariance",
+   "Cov"
+  ],
+  "level": "basic",
+  "chapter": "p-l13",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>度量两个随机变量\"同涨同跌\"程度的量:两变量各自减去均值后,乘积的期望。正 = 同向变动,负 = 反向变动,0 = 无线性关联。它正是 \\(\\operatorname{Var}(X+Y)\\) 展开时多出的那个交叉项。</p><p><strong>白话</strong>:身高和体重——高个通常也偏重,两者总一起站在各自平均线的同一侧,偏差乘积多为正,平均下来就是个正数;协方差量的就是这份\"平均同向程度\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Cov}(X,Y)=E\\big[(X-\\mu_X)(Y-\\mu_Y)\\big]=E[XY]-E[X]\\,E[Y]$$</div><ul><li>捷径公式 \\(E[XY]-E[X]E[Y]\\) 是考场主力,与方差捷径 \\(E[X^2]-E[X]^2\\) 同构;由定义乘开 + 期望线性即得。</li><li>直觉是\"同向偏离均值的计分板\":两偏差常同号 → 正分;常异号 → 负分。</li><li>\\(\\operatorname{Cov}(X,X)=\\operatorname{Var}(X)\\):协方差是方差的双变量推广。</li><li>\\(\\operatorname{Var}(X+Y)=\\operatorname{Var}X+\\operatorname{Var}Y+2\\operatorname{Cov}(X,Y)\\):独立(或不相关)时才退回简单相加。</li><li>独立 \\(\\Rightarrow E[XY]=E[X]E[Y]\\Rightarrow \\operatorname{Cov}=0\\);反之不成立。</li><li>联合表题三件套:先算 \\(E[X]\\)、\\(E[Y]\\)、\\(E[XY]\\),再套捷径。</li></ul><p><strong>算一遍</strong>:\\((X,Y)\\) 等可能取 \\((0,0)\\) 或 \\((1,1)\\)(完全同步的一对)。</p><ul><li>三件套:\\(E[X]=E[Y]=0.5\\);\\(E[XY]=0.5\\times0+0.5\\times1=0.5\\)。</li><li>套捷径:\\(\\operatorname{Cov}=0.5-0.5\\times0.5=0.25\\)——正,同涨同跌。</li><li>反向对照:改成等可能取 \\((0,1)\\) 或 \\((1,0)\\),则 \\(E[XY]=0\\),\\(\\operatorname{Cov}=0-0.25=-0.25\\)——负号立刻把\"反着动\"暴露出来。</li></ul><h4>与其他概念的关系</h4><ul><li>联合矩 — \\(E[XY]\\) 是联合矩,捷径公式的原料</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — 定义乘开推出捷径公式的引擎</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — \\(\\operatorname{Var}(X\\pm Y)\\) 的交叉项 \\(\\pm2\\operatorname{Cov}\\) 就是它</li><li>协方差的性质 — 对称、双线性、加常数不变的代数规则</li><li>相关系数 — 除以两个标准差后的无量纲版本</li><li><a class=\"net-wl\" data-id=\"独立与不相关\">独立与不相关</a> — 独立 ⇒ Cov=0 只有单向成立</li></ul>"
+ },
+ "变换求分布的分布函数法实战": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "hard",
+  "chapter": "p-l34",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:已知 X 的分布,求 \\(Y=g(X)\\)(或 max/min)的 pdf/cdf——万能起手式只有一个。</p><h4>求解套路</h4><ol><li><strong>万能起手</strong>:分布函数法 \\(F_Y(y)=P[g(X)\\le y]\\),把事件反解成 X 的区间再代 \\(F_X\\),最后求导。</li><li>g 严格单调时抄近道:单调变换密度法 \\(f_Y(y)=f_X(g^{-1}(y))\\cdot|\\,dx/dy\\,|\\)——雅可比因子 别丢绝对值。</li><li>g 非单调(如 \\(Y=X^2\\)):分支求和,每支各带自己的反函数与因子,见 非单调变换。</li><li>n 个独立同分布的极值:\\(F_{\\max}=F^n\\)、\\(S_{\\min}=S^n\\)(<a class=\"net-wl\" data-id=\"最大值分布\">最大值分布</a> / <a class=\"net-wl\" data-id=\"最小值分布\">最小值分布</a>),本质也是分布函数法。</li></ol><h4>易错</h4><ul><li>忘记因子 \\(|dx/dy|\\) 或忘加绝对值。</li><li>反解区间方向错(g 递减时不等号要翻)。</li><li>新变量支撑不更新(y 的取值范围跟着 g 变)。</li></ul>"
+ },
+ "和的方差": {
+  "kind": "c",
+  "en": "VarianceOfSum",
+  "aliases": [
+   "variance of a sum",
+   "variance of a linear combination",
+   "variance of linear combination",
+   "方差的和"
+  ],
+  "level": "advanced",
+  "chapter": "p-l28",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>相关随机变量之和(或线性组合)的方差:除各自方差外,必须补上交叉的协方差项。协方差的头号用途。</p><p><strong>白话</strong>:两只股票打包,风险不是各自风险简单相加:它俩爱同涨同跌(正协方差),波动互相叠浪,包更颠;一涨一跌(负协方差)互相对冲,包反而更稳——多出来的 \\(2\\operatorname{Cov}\\) 就是这份\"合拍账\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X\\pm Y)=\\operatorname{Var}X+\\operatorname{Var}Y\\pm2\\operatorname{Cov}(X,Y)$$</div><div class=\"net-mth\">$$\\operatorname{Var}\\!\\Big(\\sum_i c_iX_i\\Big)=\\sum_i c_i^{\\,2}\\operatorname{Var}(X_i)+2\\sum_{i&lt;j} c_i c_j\\operatorname{Cov}(X_i,X_j)$$</div><ul><li><strong>和差都加方差,协方差项跟符号</strong>:\\(\\operatorname{Var}(X-Y)\\) 是减 \\(2\\operatorname{Cov}\\),两个方差本身仍相加(方差恒非负)。</li><li>系数进方差要<strong>平方</strong>(\\(c_i^2\\)),进协方差是<strong>相乘</strong>(\\(c_ic_j\\),含符号);如 \\(\\operatorname{Var}(X_1+2X_2-X_3)\\) 取 \\(c=(1,2,-1)\\) 逐对配对。</li><li>独立时 \\(\\operatorname{Cov}=0\\),退化为方差直加。</li><li>高频错:漏 \\(2\\operatorname{Cov}\\) 交叉项、系数忘平方。</li></ul><p><strong>算一遍</strong>:两只股票 \\(\\operatorname{Var}X=\\operatorname{Var}Y=1\\),\\(\\operatorname{Cov}(X,Y)=0.5\\)。</p><ul><li>打包:\\(\\operatorname{Var}(X+Y)=1+1+2(0.5)=3\\)——比独立时的 2 更颠,同向波动叠了浪。</li><li>对冲:\\(\\operatorname{Var}(X-Y)=1+1-2(0.5)=1\\)——方差仍相加,只有协方差项跟了减号。</li><li>系数检验:\\(\\operatorname{Var}(2X)=\\operatorname{Var}(X+X)=1+1+2(1)=4=2^2\\operatorname{Var}X\\) ✓(系数进方差要平方)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 被组合的基本量</li><li><a class=\"net-wl\" data-id=\"协方差\">协方差</a> — 交叉项的来源</li><li><a class=\"net-wl\" data-id=\"独立与不相关\">独立与不相关</a> — 交叉项消失的条件</li><li><a class=\"net-wl\" data-id=\"正态的线性组合\">正态的线性组合</a> — 正态下配合此式求 \\(P[aX+bY&gt;c]\\)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"理赔总额的正态近似\">理赔总额的正态近似</a> — CLT 拼理赔总额,连续性修正</li></ul>"
+ },
+ "和的正态近似": {
+  "kind": "c",
+  "en": "NormalApproximationOfSums",
+  "aliases": [
+   "normal approximation to the sum",
+   "sum of iid random variables"
+  ],
+  "level": "advanced",
+  "chapter": "p-l22",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 个 iid(\\(\\mu,\\sigma^2\\))随机变量之和 \\(S_n=\\sum X_i\\) 在 \\(n\\) 大时近似正态 \\(N(n\\mu,\\ n\\sigma^2)\\):期望方差都<strong>乘 \\(n\\)</strong>、标准差乘 \\(\\sqrt n\\)。保险\"总赔付超预算 / 基金够不够赔\"的母题工具。</p><p><strong>白话</strong>:一个人的赔付忽大忽小没法猜,一万个人加起来的总赔付却规矩得像口钟——个体的怪脾气在加总里互相抵消,只剩\"均值乘 \\(n\\)、方差乘 \\(n\\)\"的正态轮廓。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$S_n=\\sum_{i=1}^{n}X_i\\ \\approx\\ N\\!\\big(n\\mu,\\ n\\sigma^2\\big),\\qquad Z=\\frac{S_n-n\\mu}{\\sqrt n\\,\\sigma}$$</div><ul><li>百分位:第 \\(100p\\) 百分位 \\(=n\\mu+z_p\\sqrt n\\,\\sigma\\)——\"收多少保费才有 95% 把握够赔\"即 \\(z_{0.95}=1.645\\) 的百分位定价。</li><li><strong>与均值对照:和乘 \\(n\\)、均除 \\(n\\)</strong>;标准化各除各的标准差(\\(\\sqrt n\\,\\sigma\\) vs \\(\\sigma/\\sqrt n\\))。</li><li>被加的是<strong>整数计数</strong>(索赔件数、二项/泊松)→ 配连续性修正 ±0.5;金额/时间等连续量不修正。</li><li>例:50 人排队、服务各 \\(\\sim\\text{Exp}(1)\\) → 总等待 \\(\\approx N(50,50)\\),\\(P[X&gt;60]=1-\\Phi(1.414)\\approx0.0787\\)。</li><li>读题信号:total / sum / 总赔付、总时长。</li></ul><p><strong>算一遍</strong>:100 份保单,单份赔付均值 1、方差 4,求总赔付超 120 的概率。</p><ul><li>套近似:\\(S\\approx N(100\\times1,\\ 100\\times4)=N(100,\\,400)\\),SD \\(=\\sqrt{400}=20\\)——标准差只乘 \\(\\sqrt n\\),不是乘 \\(n\\)。</li><li>标准化:\\(Z=\\dfrac{120-100}{20}=1\\) → \\(P[S&gt;120]=1-\\Phi(1)\\approx0.16\\)。</li><li>顺手定价:要 95% 把握够赔,备金 \\(=100+1.645\\times20\\approx133\\)——百分位公式一步出。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> — 近似的理论依据</li><li><a class=\"net-wl\" data-id=\"样本均值分布\">样本均值分布</a> — 另一副面孔:\\(\\bar X=S_n/n\\),\\(n\\) 位置相反</li><li><a class=\"net-wl\" data-id=\"连续性修正\">连续性修正</a> — 整数计数之和的必配校准</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 百分位定价的查表原料 \\(z_p\\)</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — \\(\\operatorname{Var}(S_n)=n\\sigma^2\\) 的一般依据(独立无交叉项)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"理赔总额的正态近似\">理赔总额的正态近似</a> — CLT 拼理赔总额,连续性修正</li></ul>"
+ },
+ "均匀分布的分位数": {
+  "kind": "c",
+  "en": "UniformDistributionPercentiles",
+  "aliases": [
+   "percentiles of uniform distribution",
+   "uniform quantiles"
+  ],
+  "level": "advanced",
+  "chapter": "p-l15",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(U(a,b)\\) 的 100\\(p\\) 百分位数是\"沿区间走 \\(p\\) 那么远\"的<a class=\"net-wl\" data-id=\"线性插值\">线性插值</a> \\((1-p)a+pb\\);且均匀分布<strong>限制到任何子区间后仍是均匀</strong>,中点/长度比工具照用——两者组合可秒解一大类免赔额题。</p><p><strong>白话</strong>:公交每 10 分钟一班、到站时刻全凭运气——\"90% 的人等车不超过几分钟\"就是沿 0 到 10 走九成路:9 分钟。均匀分布的分位数不用解方程,按比例量路程就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\pi_p=(1-p)\\,a+p\\,b$$</div><ul><li>\\(p=0.5\\) 得中位数 = 中点 \\(\\frac{a+b}2\\);\\(p=0.9\\) 得 \\(0.1a+0.9b\\)。</li><li>条件后仍均匀:\\(X\\sim U(a,c)\\) 时 \\(X\\mid(X&lt;b)\\sim U(a,b)\\)、\\(X\\mid(X&gt;b)\\sim U(b,c)\\)(\\(a&lt;b&lt;c\\))——条件密度 = 常数 ÷ 常数,平顶还是平顶。</li><li>免赔额裁左边、限额封右边,剩下照用\"中点求均值、长度比求概率\"。</li><li>定参套路(例 15A):均值 = 中点、条件概率 = 长度比,两条方程解出 \\(a,b\\),再代分位公式(答 \\(\\pi_{0.9}=2720\\))。</li><li>公交直觉:已干等 4 分钟,剩余等待仍均匀于 \\((0,6)\\),平均再等 3 分钟(新中点)。</li></ul><p><strong>算一遍</strong>:等车时间 \\(\\sim U(0,10)\\)。</p><ul><li>90 百分位:\\(\\pi_{0.9}=(1-0.9)\\times0+0.9\\times10=9\\) 分钟——沿区间走九成。</li><li>中位数:\\(p=0.5\\) 得 \\((0+10)/2=5\\),正是中点。</li><li>条件后仍均匀:已知等超 4 分钟,剩余落 \\((4,10)\\) 仍平顶,新中点 7 → 预计总共等 7 分钟。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 一般定义(上游 L09)</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — \\(p=0.5\\) 特例,等于中点</li><li><a class=\"net-wl\" data-id=\"连续均匀分布\">连续均匀分布</a> — 本体</li><li><a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> — \"条件后仍均匀\"的机制(L14 切块再归一)</li><li><a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a> — \"已知产生赔付\" ⟺ 条件化到 \\(X&gt;d\\)</li></ul>"
+ },
+ "均匀分布的矩": {
+  "kind": "c",
+  "en": "UniformDistributionMoments",
+  "aliases": [
+   "moments of uniform distribution",
+   "mean and variance of uniform"
+  ],
+  "level": "basic",
+  "chapter": "p-l15",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(U(a,b)\\) 的均值是区间<strong>中点</strong>、方差是<strong>长度平方除以 12</strong>;\\([0,\\theta]\\) 特例下各阶原点矩有闭式 \\(\\theta^n/(n+1)\\)。方差只跟区间长度有关,与位置无关。</p><p><strong>白话</strong>:一根质地均匀的木条,重心自然在正中间(均值 = 中点);木条越长,随手一点离重心可能越远(方差随长度平方涨)——而把木条整根挪个地方,晃动幅度不变(方差与位置无关)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\mathrm{E}[X]=\\frac{a+b}{2},\\qquad \\operatorname{Var}(X)=\\frac{(b-a)^2}{12}$$</div><ul><li>\\([0,\\theta]\\) 特例:\\(\\mathrm{E}=\\dfrac\\theta2\\)、\\(\\operatorname{Var}=\\dfrac{\\theta^2}{12}\\)、\\(\\mathrm{E}[X^2]=\\dfrac{\\theta^2}{3}\\)、\\(\\mathrm{E}[X^n]=\\dfrac{\\theta^n}{n+1}\\)。</li><li>分母 <strong>12</strong> 死记,别写成 \\(/2\\) 或 \\(/6\\);来历:\\(\\theta^2(\\tfrac13-\\tfrac14)=\\theta^2/12\\)。</li><li>\\(\\mathrm{E}[X^2]=\\theta^2/3\\neq(\\mathrm{E}[X])^2=\\theta^2/4\\)——二阶矩别当均值平方。</li><li>平移不变:一般区间只是 \\([0,\\theta]\\) 的平移,把 \\(\\theta\\) 换成 \\(b-a\\) 即可。</li><li>均值 = 中点 = 中位数(对称分布)。</li></ul><p><strong>算一遍</strong>:\\(X\\sim U(0,6)\\)。</p><ul><li>均值:中点 \\(=(0+6)/2=3\\)。</li><li>方差:\\((6-0)^2/12=36/12=3\\)。</li><li>二阶矩核对:\\(E[X^2]=\\theta^2/3=36/3=12\\),\\(\\operatorname{Var}=12-3^2=3\\) ✓——分母 12 没记错,且 \\(E[X^2]=12\\neq(E[X])^2=9\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"连续均匀分布\">连续均匀分布</a> — 本体</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 一阶矩</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 二阶中心矩</li><li><a class=\"net-wl\" data-id=\"矩\">矩</a> — \\(\\mathrm{E}[X^n]\\) 通式属各阶原点矩</li><li><a class=\"net-wl\" data-id=\"离散均匀分布\">离散均匀分布</a> — 对照:\\(\\mathrm{E}=\\frac{n+1}2\\)、\\(\\operatorname{Var}=\\frac{n^2-1}{12}\\)</li></ul>"
+ },
+ "多项分布": {
+  "kind": "c",
+  "en": "MultinomialDistribution",
+  "aliases": [
+   "multinomial distribution",
+   "trinomial distribution"
+  ],
+  "level": "hard",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>每次试验有 \\(k\\) 类结果(概率 \\(p_0,\\dots,p_{k-1}\\),和为 1),\\(n\\) 次独立试验中各类出现次数 \\((X_0,\\dots,X_{k-1})\\) 的<strong>联合分布</strong>。二项是 \\(k=2\\) 的特例;\\(k=3\\) 称三项(trinomial)分布。</p><p><strong>白话</strong>:掷骰子 \\(n\\) 次,不只记\"出没出 6\",而是六个面各出现几次一起记——把二项的\"成功/失败\"两格账本,扩成 \\(k\\) 格账本一起结算。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X_0=i_0,\\dots,X_{k-1}=i_{k-1}]=\\frac{n!}{i_0!\\,i_1!\\cdots i_{k-1}!}\\;p_0^{\\,i_0}p_1^{\\,i_1}\\cdots p_{k-1}^{\\,i_{k-1}}\\qquad\\Big(\\sum_j i_j=n\\Big)$$</div><ul><li>多项系数 \\(\\frac{n!}{i_0!\\cdots i_{k-1}!}\\) 数\"哪些位置放哪类\"的重排数,再乘各类概率的幂。</li><li>边际:把\"第 \\(j\\) 类 vs 非第 \\(j\\) 类\"当成败 → \\(X_j\\sim\\text{Binomial}(n,p_j)\\),\\(E=np_j\\)、\\(\\operatorname{Var}=np_j(1-p_j)\\)。</li><li>分量协方差为<strong>负</strong>:\\(\\operatorname{Cov}(X_i,X_j)=-np_ip_j\\)(\\(i\\neq j\\))——总数固定,一类多则另一类少,此消彼长。</li><li>\"至少……\"类事件:列出所有满足的次数组合,逐个套 pmf 相加(例 17C:三类保单,答 0.2592)。</li><li>易错:协方差忘负号。</li></ul><p><strong>算一遍</strong>:抽 3 张保单,类型 A/B/C 概率 \\(0.5/0.3/0.2\\),求恰好各中 1 张。</p><ul><li>数重排:\\(\\dfrac{3!}{1!\\,1!\\,1!}=6\\) 种出现顺序。</li><li>乘概率幂:\\(6\\times0.5\\times0.3\\times0.2=6\\times0.03=0.18\\)。</li><li>顺手核对边际与协方差:只盯 A 类则 \\(X_A\\sim\\text{Bin}(3,0.5)\\)、\\(E=1.5\\);\\(\\operatorname{Cov}(X_A,X_B)=-3\\times0.5\\times0.3=-0.45\\)——负号别丢,总数锁死 3 张,A 多一张 B 就少一张。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — \\(k=2\\) 特例;各分量的边际</li><li>排列 — 多项系数 = 含同类元素的重排计数(上游 L02)</li><li>联合分布 — 本质是 \\(k\\) 个计数的联合 pmf(上游 L11)</li><li><a class=\"net-wl\" data-id=\"协方差\">协方差</a> — 分量间负协方差(上游 L13)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布与联合分布的层面之辨\">二项分布与联合分布的层面之辨</a> — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "指数与泊松过程": {
+  "kind": "c",
+  "en": "PoissonInterarrivalTime",
+  "aliases": [
+   "interarrival time",
+   "waiting time in Poisson process",
+   "exponential-Poisson duality"
+  ],
+  "level": "advanced",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>同一枚硬币的两面:事件按<strong>速率 \\(\\lambda\\) 的泊松过程</strong>发生时,固定区间内的<strong>计数</strong>服从泊松,相邻两事件的<strong>间隔时间</strong>服从速率 \\(\\lambda\\)(均值 \\(1/\\lambda\\))的指数分布——<strong>计数用泊松,间隔用指数</strong>。</p><p><strong>白话</strong>:站在公交站看车——\"这一小时来了几辆\"用泊松数,\"下一辆还要等多久\"用指数算;同一条路上的车流,换个问法就换一副分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[\\text{下一事件的等待}&gt;t]=P[\\,[0,t]\\text{ 内 }0\\text{ 次事件}\\,]=e^{-\\lambda t}$$</div><ul><li>右端 \\(e^{-\\lambda t}\\) 既是 \\(\\text{Poisson}(\\lambda t)\\) 取 0 的概率,也正是指数生存函数——一条式子缝合两章。</li><li>换算:速率 10/小时 ⟹ 下一位顾客的等待 \\(\\sim\\text{Exp}\\)(均值 \\(1/10\\) 小时 = 6 分钟)。</li><li>读题分流:问\"区间内<strong>几次</strong>\" → 泊松 \\((\\lambda t)\\);问\"<strong>等多久</strong>\" → 指数(均值 \\(1/\\lambda\\))。</li><li>等到第 \\(n\\) 个事件的总时间 = \\(n\\) 段独立指数间隔之和 = 伽马 \\((n,1/\\lambda)\\)。</li></ul><p><strong>算一遍</strong>:公交车平均每小时来 2 辆(\\(\\lambda=2\\)),求\"半小时内一辆都不来\"的概率。</p><ul><li>泊松那面:半小时期望来 \\(\\lambda t=2\\times0.5=1\\) 辆,来 0 辆的概率 \\(=e^{-1}\\approx0.37\\)。</li><li>指数那面:下一辆的等待超过 0.5 小时,\\(S(0.5)=e^{-2\\times0.5}=e^{-1}\\) ✓</li><li>两条路答案相同——\"区间内 0 次\"和\"等待超过整个区间\"本来就是同一件事。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 共同的底层模型:恒定速率、独立发生</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 计数那一面</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 间隔那一面</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — 对偶等式两端都是它</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — 多段间隔之和:第 \\(n\\) 个事件的等待</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "指数分布": {
+  "kind": "c",
+  "en": "ExponentialDistribution",
+  "aliases": [
+   "exponential distribution",
+   "exponential"
+  ],
+  "level": "basic",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>描述\"<strong>下一次事件到来前要等多久</strong>\"的连续分布(\\(x\\ge 0\\)):寿命、等待时间、保险损失额的默认模型。事件以恒定速率随机来临,等待密度从峰值起持续衰减——刚开始最可能马上来,越拖概率越小。Exam P 最高频的连续分布。</p><p><strong>白话</strong>:路边等出租车——空车随时可能冒出来,最可能的是马上就来,\"恰好等满 10 分钟才来\"比\"1 分钟内来\"更稀罕;它就是给这种\"等多久\"画像的分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=1-e^{-x/\\theta},\\qquad f(x)=\\frac{e^{-x/\\theta}}{\\theta},\\qquad S(x)=e^{-x/\\theta}\\quad(x\\ge 0)$$</div><ul><li><strong>两套参数化</strong>:\\(\\theta\\) 是<strong>均值</strong>(尺度参数,ASM/损失模型常用);\\(\\lambda=1/\\theta\\) 是<strong>速率</strong>(SOA 常用),此时 \\(f(x)=\\lambda e^{-\\lambda x}\\)、\\(S(x)=e^{-\\lambda x}\\)。读题先认清给的是 mean 还是 rate,\\(\\lambda\\theta=1\\)。</li><li>生存函数 \\(S(x)=e^{-x/\\theta}\\)(\"活过 \\(x\\) / 等待超过 \\(x\\)\")是做题最常用的形态;\"loss exceeds …\"直接上 \\(S\\)。</li><li>\"至少一次 in \\(t\\)\":\\(P[X\\le t]=1-e^{-t/\\theta}\\),别去积分密度。</li><li>下游预告(L23):独立指数取<strong>最小值</strong>仍是指数,速率相加。</li></ul><p><strong>算一遍</strong>:灯泡寿命服从均值 \\(\\theta=2\\) 年的指数分布,求它活过 2 年的概率。</p><ul><li>直接上生存函数:\\(S(2)=e^{-2/2}=e^{-1}\\approx0.37\\)——只有约三分之一能活过自己的\"平均寿命\"。</li><li>反面:活不过 2 年 \\(F(2)=1-e^{-1}\\approx0.63\\),多数灯泡死在均值之前——右偏分布,少数长寿者把平均拉高。</li><li>换速率写法验一下:\\(\\lambda=1/2\\),\\(S(2)=e^{-\\lambda\\cdot2}=e^{-1}\\) ✓ 两套参数化同一结果。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布的矩\">指数分布的矩</a> — \\(E[X]=\\theta\\)、\\(\\operatorname{Var}=\\theta^2\\):方差=均值²</li><li><a class=\"net-wl\" data-id=\"指数分布百分位数\">指数分布百分位数</a> — 闭式分位 \\(\\xi_p=-\\theta\\ln(1-p)\\)</li><li><a class=\"net-wl\" data-id=\"无记忆性\">无记忆性</a> — 灵魂性质:已等多久不影响剩余等待</li><li><a class=\"net-wl\" data-id=\"指数与泊松过程\">指数与泊松过程</a> — 泊松管次数、指数管间隔:同一过程的两面</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — \\(n\\) 个独立同均值指数之和</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 离散镜像:各自阵营唯一的无记忆分布</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"免赔额与保单限额的期望计算\">免赔额与保单限额的期望计算</a> — 赔付变量截断/封顶后的期望套路</li><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "指数分布百分位数": {
+  "kind": "c",
+  "en": "ExponentialPercentiles",
+  "aliases": [
+   "percentile of exponential distribution",
+   "exponential median"
+  ],
+  "level": "basic",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>指数分布的分位数有闭式:令 \\(F(\\xi_p)=p\\) 一步解出,无需积分。SOA 很爱直接考中位数或某个百分位。</p><p><strong>白话</strong>:问\"排在前一半的顾客最多等几分钟\"就是在要中位数;别的分布得查表,指数分布掏个对数公式一步报数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\xi_p=-\\theta\\ln(1-p)$$</div><ul><li><strong>中位数</strong>取 \\(p=0.5\\):\\(\\xi_{0.5}=\\theta\\ln 2\\approx 0.693\\,\\theta\\)——永远小于均值(右偏)。</li><li>10 秒推导:\\(1-e^{-\\xi_p/\\theta}=p\\Rightarrow e^{-\\xi_p/\\theta}=1-p\\Rightarrow \\xi_p=-\\theta\\ln(1-p)\\)。</li><li>符号坑:括号里是 \\(1-p\\) 且整体带<strong>负号</strong>(\\(\\ln(1-p)&lt;0\\),结果为正),别丢。</li><li>速率参数化:\\(\\xi_p=-\\ln(1-p)/\\lambda\\)。</li></ul><p><strong>算一遍</strong>:平均等待 \\(\\theta=10\\) 分钟,求中位数(一半人等不到这么久)。</p><ul><li>套公式:\\(\\xi_{0.5}=-10\\ln(0.5)=10\\ln 2\\approx 6.9\\) 分钟。</li><li>中位数 6.9 &lt; 均值 10——一半人 7 分钟内就等到,少数等很久的人把平均拉高(右偏)。</li><li>验算:\\(S(6.9)=e^{-6.9/10}\\approx e^{-0.69}=0.5\\) ✓ 恰好一半人等得更久。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 所属分布本体</li><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 上位概念:\\(F(\\xi_p)=p\\) 的解</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — 特例 \\(p=0.5\\):\\(\\theta\\ln2\\)</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 解的对象:由 CDF 反解</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 对照:正态分位靠查表 \\(\\mu+\\sigma z_p\\),指数分位有闭式</li></ul>"
+ },
+ "指数分布的矩": {
+  "kind": "c",
+  "en": "ExponentialMoments",
+  "aliases": [
+   "mean and variance of exponential",
+   "moments of exponential distribution"
+  ],
+  "level": "basic",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>指数分布(均值参数 \\(\\theta\\))的矩全是闭式:<strong>方差 = 均值²,标准差 = 均值</strong>——记住这一句,方差、二阶矩全跟着出来。</p><p><strong>白话</strong>:这家分布的\"身材数据\"全绑在一个数上——平均等 10 分钟,摆动幅度(标准差)也是 10 分钟;报一个均值,全套指标就都定了。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\theta=\\frac1\\lambda,\\qquad \\operatorname{Var}(X)=\\theta^2=\\frac1{\\lambda^2},\\qquad E[X^2]=2\\theta^2$$</div><ul><li>标准差 = 均值 ⟹ 变异系数恒为 1;题给\"标准差=均值\"可反向自查是指数。</li><li><strong>值得背的积分恒等式</strong>(\\(a&gt;0\\),二阶矩即由此出):</li></ul><div class=\"net-mth\">$$\\int_0^\\infty x\\,e^{-ax}\\,dx=\\frac{1}{a^2},\\qquad \\int_0^\\infty x^2 e^{-ax}\\,dx=\\frac{2}{a^3}$$</div><ul><li>易错:方差是均值的<strong>平方</strong> \\(\\theta^2\\),不是均值本身。</li><li>速率参数化下全套除以 \\(\\lambda\\) 幂:\\(E=1/\\lambda\\)、\\(\\operatorname{Var}=1/\\lambda^2\\)。</li></ul><p><strong>算一遍</strong>:灯泡寿命服从均值 \\(\\theta=2\\) 年的指数分布,写全它的矩。</p><ul><li>均值 \\(E[X]=2\\);方差 \\(=\\theta^2=4\\);标准差 \\(=2=\\) 均值 ✓ 指数的指纹。</li><li>二阶矩:\\(E[X^2]=\\operatorname{Var}+\\mu^2=4+4=8\\),正是 \\(2\\theta^2\\) ✓</li><li>易错自查:方差是 4 不是 2——是均值的<strong>平方</strong>,不是均值本身。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 所属分布本体</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — \\(E[X]=\\theta\\) 的上位概念</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — \\(\\operatorname{Var}=\\theta^2\\) 的上位概念</li><li>标准差 — 标准差 = 均值是指数的指纹</li><li>变异系数 — 恒为 1 的典型例</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — \\(n\\) 个指数之和:均值方差各乘 \\(n\\)</li></ul>"
+ },
+ "方差": {
+  "kind": "c",
+  "en": "Variance",
+  "aliases": [
+   "variance",
+   "Var",
+   "二阶中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量取值围绕均值摆动幅度的度量:偏差平方的期望(即二阶中心矩),记 \\(\\operatorname{Var}(X)\\) 或 \\(\\sigma^2\\)。方差 \\(\\ge 0\\),越大分布越分散;为 0 当且仅当 \\(X\\) 几乎处处是常数。</p><p><strong>白话</strong>:两个班平均分都是 80,一个班人人 78–82,另一个班一半 60 一半 100——平均分看不出差别,方差看得出:它算的是\"每个人离平均有多远\"的平均账(按平方记)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=E\\big[(X-\\mu)^2\\big]=E[X^2]-\\mu^2$$</div><ul><li>计算式\"<strong>平方的平均 − 平均的平方</strong>\"是解题主力:先算 \\(E[X]\\)、\\(E[X^2]\\) 两个原点矩,一减即出。</li><li><strong>平移不散,缩放平方</strong>:\\(\\operatorname{Var}(aX+b)=a^2\\operatorname{Var}(X)\\);负号平方后消失,\\(\\operatorname{Var}(-X)=\\operatorname{Var}(X)\\)。</li><li><strong>独立才可加</strong>:\\(\\operatorname{Var}(\\sum X_i)=\\sum\\operatorname{Var}(X_i)\\)(i.i.d. 时 \\(=n\\operatorname{Var}(X)\\));独立时 \\(\\operatorname{Var}(X-Y)\\) 也是\"加\"(系数 \\((-1)^2=1\\))。</li><li>两点分布捷径:取 \\(a\\)(概率 \\(p\\))、\\(b\\)(概率 \\(1-p\\))时 \\(\\operatorname{Var}(X)=(b-a)^2p(1-p)\\)。</li><li>绕任意点:\\(E[(X-c)^2]=\\operatorname{Var}(X)+(\\mu-c)^2\\),仅 \\(c=\\mu\\) 时等于方差(平行轴定理)。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0(各占一半),求方差。</p><ul><li>两个原点矩:\\(E[X]=0.5\\);\\(E[X^2]=0^2(0.5)+1^2(0.5)=0.5\\)。</li><li>一减即出:\\(\\operatorname{Var}=0.5-0.5^2=0.25\\),标准差 \\(0.5\\)。</li><li>两点捷径验算:\\((1-0)^2\\times0.5\\times0.5=0.25\\) ✓ 两条路同一答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 两个原点矩一减出方差;期望是线性算子、方差不是</li><li><a class=\"net-wl\" data-id=\"矩\">矩</a> — 方差 = 二阶中心矩,矩家族一员</li><li>标准差 — 方差的正平方根,单位还原</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 两点捷径的来源:\\(\\operatorname{Var}(N)=p(1-p)\\) 套缩放律</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — 不独立时的一般公式(补协方差项)</li><li><a class=\"net-wl\" data-id=\"协方差\">协方差</a> — 度量两变量联动,修正和的方差</li></ul>"
+ },
+ "无记忆性": {
+  "kind": "c",
+  "en": "MemorylessProperty",
+  "aliases": [
+   "memorylessness",
+   "memoryless",
+   "lack of memory"
+  ],
+  "level": "advanced",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>指数分布的灵魂性质:<strong>已经等了多久,对\"还要再等多久\"毫无影响</strong>。已亮 5000 小时的旧灯泡与新灯泡剩余寿命同分布。指数是<strong>唯一</strong>无记忆的连续分布(离散阵营的唯一是几何)。</p><p><strong>白话</strong>:等出租车已经等了 10 分钟,不会让下一辆来得更快——每一刻都像刚开始等;\"等了很久所以快了\"是错觉,过去的等待不攒运气。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X&gt;s+t\\mid X&gt;s]=P[X&gt;t]\\qquad(s,t\\ge 0)$$</div><ul><li>一行证明:\\(\\dfrac{P[X&gt;s+t]}{P[X&gt;s]}=\\dfrac{e^{-(s+t)/\\theta}}{e^{-s/\\theta}}=e^{-t/\\theta}\\)。</li><li>更强的说法:给定 \\(X\\ge x\\),<strong>剩余量 \\(X-x\\) 仍是均值 \\(\\theta\\) 的指数分布</strong>——过去被\"忘光\"。</li><li><strong>免赔额高频易错</strong>:损失超过免赔额 \\(d\\) 后,超出部分仍 \\(\\sim\\text{Exp}(\\theta)\\),<strong>不是</strong> \\(\\theta-d\\);这一步搞反后面全错。</li><li>含\"赔 0\"分支求方差:先用无记忆定超额部分的分布,再走条件方差公式合并两支(ASM 例 20A)。</li><li>题面信号:\"given that it has survived / lasted \\(s\\)\" → 剩余寿命重开一局。</li></ul><p><strong>算一遍</strong>:灯泡寿命 \\(\\sim\\text{Exp}(\\theta=2\\) 年\\()\\),已亮了 3 年,求再撑 1 年的概率。</p><ul><li>条件概率硬算:\\(\\dfrac{P[X&gt;4]}{P[X&gt;3]}=\\dfrac{e^{-4/2}}{e^{-3/2}}=e^{-1/2}\\approx0.61\\)。</li><li>全新灯泡撑过 1 年:\\(P[X&gt;1]=e^{-1/2}\\)——一模一样 ✓</li><li>已亮的 3 年被\"忘光\",旧灯泡剩余寿命和新灯泡同分布,重开一局。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 性质的宿主;实为其定义性特征(故障率恒定)</li><li><a class=\"net-wl\" data-id=\"几何分布无记忆性\">几何分布无记忆性</a> — 离散镜像:整数点上的同一性质</li><li><a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a> — 主战场:超额赔付分布不变</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — 证明即尾概率相除</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 性质本身是一条条件概率恒等式</li><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — 免赔额含赔 0 分支时的搭配工具</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "最大值分布": {
+  "kind": "c",
+  "en": "SampleMaximum",
+  "aliases": [
+   "distribution of the maximum",
+   "maxima",
+   "largest order statistic"
+  ],
+  "level": "advanced",
+  "chapter": "p-l23",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>n 个 iid 随机变量的最大值 \\(Y=\\max(X_1,\\dots,X_n)=X_{(n)}\\) 的分布。核心等价一步:「最大 ≤ x」⟺「每一个 \\(X_i\\) 都 ≤ x」,独立性让 CDF 直接连乘 n 次。</p><p><strong>白话</strong>:聚会几点能开席看最晚到的那个人——\"最晚的人 8 点前到\"等于\"每个人都 8 点前到\";人越多,全员按时越难,开席时间被拖得越晚。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F_{\\max}(x)=\\big(F_X(x)\\big)^n,\\qquad f_{\\max}(x)=n\\big(F_X(x)\\big)^{n-1}f_X(x)$$</div><ul><li>推导:\\(\\Pr[\\max\\le x]=\\prod_{i}\\Pr[X_i\\le x]=F^n\\);对 x 用链式法则求导得 pdf,<strong>末尾的 \\(f_X\\) 最易漏</strong>。</li><li>密度右移:取最大把概率质量推向右尾;\\([F]^n\\le F\\),CDF 爬升更晚。</li><li>均匀 \\([0,\\theta]\\) 速用:\\(E[X_{(n)}]=\\dfrac{n\\theta}{n+1}\\)。</li><li>求期望对<strong>密度</strong>积 \\(E[Y]=\\int x\\,f_{\\max}\\,dx\\),别对 CDF 积。</li><li>非同分布时不套公式,老实逐个乘 \\(\\Pr[X_i\\le x]\\)。</li></ul><p><strong>算一遍</strong>:掷两颗骰子取较大点数,求 \\(P[\\max\\le 2]\\)。</p><ul><li>单颗 \\(\\le 2\\) 的概率是 \\(2/6=1/3\\);两颗都 \\(\\le 2\\):\\((1/3)^2=1/9\\)——这就是 \\(F^2\\)。</li><li>对照单颗的 \\(1/3\\):取最大后\"小值\"难出现得多,概率质量被推向右尾。</li><li>连续版验感觉:iid 均匀 \\([0,1]\\) 取 \\(n=2\\),\\(E[\\max]=\\frac{2}{3}\\)(公式 \\(\\frac{n\\theta}{n+1}\\))——比单个的均值 \\(\\frac12\\) 右移。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"次序统计量\">次序统计量</a> — 本卡是 k=n 的特例</li><li><a class=\"net-wl\" data-id=\"最小值分布\">最小值分布</a> — 对偶:min 走生存函数连乘 \\((1-F)^n\\),写反是头号错</li><li><a class=\"net-wl\" data-id=\"第k个次序统计量\">第k个次序统计量</a> — 一般公式取 k=n 退回本式</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — \"先写 CDF 再求导\"的直接应用</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 连乘的合法性来源</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"变换求分布的分布函数法实战\">变换求分布的分布函数法实战</a> — Y=g(X) 求分布:CDF 万能法与密度法选路</li></ul>"
+ },
+ "最小值分布": {
+  "kind": "c",
+  "en": "SampleMinimum",
+  "aliases": [
+   "distribution of the minimum",
+   "minima",
+   "smallest order statistic"
+  ],
+  "level": "advanced",
+  "chapter": "p-l23",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>n 个 iid 随机变量的最小值 \\(Y=\\min(X_1,\\dots,X_n)=X_{(1)}\\) 的分布。CDF 不好直接写,走对偶:「最小 &gt; x」⟺「全体 &gt; x」,先连乘生存函数,再补成 CDF。</p><p><strong>白话</strong>:老式串联彩灯,一只坏整串灭——整串的寿命就是最短命那只的寿命;\"整串还亮着\"等于\"每一只都还活着\",灯越多整串越短命。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$S_{\\min}(x)=\\big(1-F_X(x)\\big)^n,\\qquad F_{\\min}(x)=1-\\big(1-F_X(x)\\big)^n,\\qquad f_{\\min}(x)=n\\big(1-F_X(x)\\big)^{n-1}f_X(x)$$</div><ul><li>口诀:<strong>max 找 F,min 找 S,都连乘</strong>;min 写成 \\(F^n\\) 是头号错(把最小当成最大)。</li><li>密度左移:取最小把概率质量推向左尾。</li><li>指数速用(高频):iid \\(\\text{Exp}(\\theta)\\) 取最小 \\(\\sim\\text{Exp}(\\theta/n)\\);更一般 hazard 可加——各自均值 \\(\\theta_i\\) 时最小值均值 \\(=1\\big/\\sum_i 1/\\theta_i\\)。</li><li>读题:\"the first of n machines to fail\"(第一台故障)= 最小值。</li></ul><p><strong>算一遍</strong>:掷两颗骰子取较小点数,求 \\(P[\\min\\ge 5]\\)。</p><ul><li>单颗 \\(\\ge 5\\) 的概率是 \\(2/6=1/3\\);两颗都 \\(\\ge 5\\):\\((1/3)^2=1/9\\)——这就是生存函数连乘 \\(S^2\\)。</li><li>补成 CDF:\\(F_{\\min}(4)=1-1/9=8/9\\)——较小值想大很难,概率质量被推向左尾。</li><li>指数速用验一下:两台机器寿命各 \\(\\sim\\text{Exp}(2\\) 年\\()\\),第一台故障时间 \\(\\sim\\text{Exp}(2/2)\\),平均只撑 1 年。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"次序统计量\">次序统计量</a> — 本卡是 k=1 的特例</li><li><a class=\"net-wl\" data-id=\"最大值分布\">最大值分布</a> — 对偶:max 连乘 CDF \\(F^n\\)</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — 推导主角:\\(S_{\\min}=(S_X)^n\\)</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — iid 指数取最小仍是指数,均值缩成 \\(\\theta/n\\)</li><li><a class=\"net-wl\" data-id=\"第k个次序统计量\">第k个次序统计量</a> — 一般公式取 k=1 退回本式</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"变换求分布的分布函数法实战\">变换求分布的分布函数法实战</a> — Y=g(X) 求分布:CDF 万能法与密度法选路</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 它最重要的数字概括</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li>LOTUS — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — 期望算子最常用的运算性质</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li><a class=\"net-wl\" data-id=\"免赔额与保单限额的期望计算\">免赔额与保单限额的期望计算</a> — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "期望的线性": {
+  "kind": "c",
+  "en": "LinearityOfExpectation",
+  "aliases": [
+   "linearity of expectation",
+   "linearity",
+   "期望线性性"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>期望算子对线性运算\"透明\":常数可提出、加法可拆开。关键在于 \\(E[X+Y]=E[X]+E[Y]\\) 对<strong>任意</strong>随机变量恒成立,<strong>不要求独立</strong>。</p><p><strong>白话</strong>:夫妻俩的平均月收入各是 1 万和 2 万,家庭总收入平均就是 3 万——哪怕两人收入互相牵连(一起加班、一起休假)也照样成立,\"总和的平均 = 平均的总和\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[aX+b]=a\\,E[X]+b\\qquad E[X+Y]=E[X]+E[Y]$$</div><ul><li>推论:线性组合 \\(E\\!\\left[\\sum a_iX_i\\right]=\\sum a_iE[X_i]\\)——保险里\"总赔付期望=各笔期望之和\"的根据。</li><li>独立性只在<strong>乘积</strong> \\(E[XY]\\) 时才用得上;和的期望永远直接拆。</li><li><strong>只对线性成立</strong>:\\(E[g(X)]\\neq g(E[X])\\)(非线性要走 LOTUS);\\(E[X^2]\\ge(E[X])^2\\),两者之差就是方差。</li><li>送分题形态:给 \\(E[X]=4\\) 求 \\(E[3X-2]=10\\),一步线性。</li></ul><p><strong>算一遍</strong>:掷两颗骰子,求点数之和的期望。</p><ul><li>单颗均值 \\(E[X]=3.5\\);直接拆:\\(E[X+Y]=3.5+3.5=7\\),36 种组合一个都不用列。</li><li>就算两颗骰子被粘在一起同步转(完全不独立),答案照样是 7——线性不问独立。</li><li>顺手一个缩放:\\(E[3X-2]=3\\times3.5-2=8.5\\),常数提出、平移直加。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 期望算子的最常用运算性质</li><li>LOTUS — 对照:非线性函数的期望必须换头积分</li><li>独立与乘积期望 — 乘积才需要独立:\\(E[XY]=E[X]E[Y]\\) 的前提</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — 对照:方差相加就要看独立/协方差,期望不用</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"免赔额与保单限额的期望计算\">免赔额与保单限额的期望计算</a> — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "条件分布": {
+  "kind": "c",
+  "en": "ConditionalDistribution",
+  "aliases": [
+   "conditional distribution",
+   "conditional density"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在 \\(Y=y\\) 的切片上,\\(X\\) 的重新归一化分布:<strong>联合分布除以边际</strong>。分母恰好把切片总量除回 1,得到的是正当概率分布,一切矩公式原封不动搬过来用。</p><p><strong>白话</strong>:全校成绩汇总表里只抽出\"三班\"那一行看——人数只剩一个班,各分数段的占比得按这一行自己的总人数重新折算,才能凑回 100%。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid Y}[x\\mid Y=y]=\\frac{f(x,y)}{f_Y(y)}$$</div><ul><li>口诀\"<strong>切片除边际</strong>\":分母 \\(f_Y(y)=\\sum_x f(x,y)\\)(或 \\(\\int f(x,y)\\,dx\\))扮演 \\(P[A]\\) 的归一化角色。</li><li>归一性:\\(\\sum_x \\dfrac{f(x,y)}{f_Y(y)}=\\dfrac{f_Y(y)}{f_Y(y)}=1\\),非负性天然满足——正当分布。</li><li>离散操作:取该行(列),逐项 ÷ 行(列)和;连续同构,换积分。</li><li>在它上面求矩,就得到条件期望、条件方差。</li></ul><p><strong>算一遍</strong>:联合 pmf 四格:\\(f(0,1)=0.2\\)、\\(f(1,1)=0.4\\)、\\(f(0,0)=0.1\\)、\\(f(1,0)=0.3\\),求 \\(Y=1\\) 切片上 \\(X\\) 的分布。</p><ul><li>先算分母(边际):\\(f_Y(1)=0.2+0.4=0.6\\)——这一行的总量。</li><li>逐项除:\\(P[X=0\\mid Y=1]=\\frac{0.2}{0.6}=\\frac13\\),\\(P[X=1\\mid Y=1]=\\frac{0.4}{0.6}=\\frac23\\)。</li><li>自检:\\(\\frac13+\\frac23=1\\) ✓ 切片除边际,总量归 1,正当分布。</li></ul><h4>与其他概念的关系</h4><ul><li>联合分布 — 分子(上游 L11)</li><li>边缘分布 — 分母(上游 L11)</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 同一\"缩样本空间再归一\"动作在分布上的体现</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 在其上求一阶矩</li><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — 在其上求二阶矩再相减</li><li>条件密度函数 — 双连续变量版(下游 L29)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布与联合分布的层面之辨\">二项分布与联合分布的层面之辨</a> — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "条件方差": {
+  "kind": "c",
+  "en": "ConditionalVariance",
+  "aliases": [
+   "conditional variance"
+  ],
+  "level": "advanced",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定条件下 \\(X\\) 的方差:与无条件方差公式同构(二阶矩减一阶矩平方),但<strong>所有期望都换成条件版本</strong>、权重全用条件分布。</p><p><strong>白话</strong>:全国身高的散布里混着\"男女平均本来就差一截\"的成分;只看男性组内部,身高还散不散——在子群里面重新算一遍方差,就是条件方差。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X\\mid Y=y)=E[X^2\\mid Y=y]-\\big(E[X\\mid Y=y]\\big)^2$$</div><ul><li>三步:① 由 \\(f_{X\\mid Y}\\) 求 \\(E[X\\mid Y=y]\\);② 同一条件分布求 \\(E[X^2\\mid Y=y]\\);③ 相减。</li><li>例 14B:\\(f(x,y)=\\frac{x^2+y}{24}\\),求 \\(\\operatorname{Var}(Y\\mid X=1)\\):条件分布 \\((\\tfrac16,\\tfrac26,\\tfrac36)\\),\\(E=\\tfrac43\\)、\\(E[\\cdot^2]=\\tfrac73\\),\\(\\operatorname{Var}=\\tfrac73-\\tfrac{16}9=\\tfrac59\\)。</li><li>\\(\\operatorname{Var}(X\\mid Y=y)\\) 是 \\(y\\) 的函数;\\(\\operatorname{Var}(X\\mid Y)\\) 是随机变量,可再对它求期望——EVVE 第一项 \\(E[\\operatorname{Var}(X\\mid Y)]\\)。</li><li>算 \\(E[\\operatorname{Var}(X\\mid Y)]\\) 含 \\(Y^2\\) 时用 \\(E[Y^2]=\\operatorname{Var}(Y)+E[Y]^2\\),别丢 \\(\\operatorname{Var}(Y)\\)。</li><li>易错:二阶矩误用无条件权重。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,给定\"点数为偶\"(2、4、6 各 \\(\\frac13\\)),求条件方差。</p><ul><li>条件均值:\\(E[X\\mid\\text{偶}]=\\frac{2+4+6}{3}=4\\)。</li><li>条件二阶矩:\\(\\frac{4+16+36}{3}=\\frac{56}{3}\\);相减:\\(\\operatorname{Var}=\\frac{56}{3}-16=\\frac83\\approx2.67\\)。</li><li>对照无条件方差 \\(\\frac{35}{12}\\approx2.92\\)——条件砍掉了一半取值,组内摆动变小了。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> — 权重来源</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 一阶项</li><li>条件矩 — 由一、二阶条件矩组合而成</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 无条件版的同构公式</li><li>全方差公式 — \\(E[\\operatorname{Var}(X\\mid Y)]\\) 是其第一项(下游 L16)</li><li>连续型条件方差 — 连续版(下游 L30)</li></ul><h4>应用视角</h4><ul><li>条件期望分层求解 — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件期望": {
+  "kind": "c",
+  "en": "ConditionalExpectation",
+  "aliases": [
+   "conditional expectation",
+   "conditional mean"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定条件下 \\(X\\) 的平均值:用<strong>条件分布</strong>作权重求出的期望。以 \\(Y=y\\) 为条件时结果里还带着 \\(y\\)——它是 \\(y\\) 的函数;代入具体 \\(y\\) 是一个数,保留 \\(Y\\) 不代值则升级为随机变量。</p><p><strong>白话</strong>:还是算平均,只是换了名单——外卖平均送达 30 分钟,但\"已知在下雨\"就只统计下雨天的单子,重摊出来可能是 45 分钟;条件一换,名单一换,平均跟着换。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X\\mid Y=y]=\\sum_{x}x\\,\\frac{f(x,y)}{f_Y(y)}\\;=\\;\\int_{x} x\\,\\frac{f(x,y)}{f_Y(y)}\\,dx$$</div><ul><li>离散题三步:边际 \\(f_Y(y)\\)(该行/列求和)→ 条件分布(逐项 ÷ 边际)→ 加权平均。</li><li>\\(E[X\\mid Y=y]\\) 是<strong>数</strong>,\\(E[X\\mid Y]\\) 是<strong>随机变量</strong>——Ch16 双重期望的入口。</li><li>直觉:条件把总体切成子群,均值在子群里重算(男性组平均身高 1.75,总体 1.68)。</li><li>对函数同理:\\(E[g(X)\\mid Y=y]\\) 用同一套条件权重。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求\"已知点数为偶\"时的条件期望。</p><ul><li>条件分布:2、4、6 各占 \\(\\frac13\\)(奇数被排除,剩下的重新归一)。</li><li>加权平均:\\(E[X\\mid\\text{偶}]=\\frac{2+4+6}{3}=4\\)——比无条件的 3.5 高,因为条件砍掉了小点数。</li><li>换条件\"点数为奇\" → \\(\\frac{1+3+5}{3}=3\\);条件一换数就换——条件期望是条件的函数。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> — 权重来源</li><li>条件矩 — 条件期望是它的一阶特例</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 无条件对应物</li><li>条件期望是随机变量 — 不代值时的升维理解</li><li>全期望公式 — \\(E[E[X\\mid Y]]=E[X]\\)(下游 L16)</li><li>连续型条件期望 — 连续版(下游 L30)</li></ul><h4>应用视角</h4><ul><li>条件期望分层求解 — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件概率": {
+  "kind": "c",
+  "en": "ConditionalProbability",
+  "aliases": [
+   "conditional probability",
+   "条件机率"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在事件 B 已发生的前提下,事件 A 发生的概率。把样本空间<strong>缩小到 B</strong>(B 成为新的\"全体\"),A 剩下的部分是 \\(A\\cap B\\),再除以 \\(P[B]\\) 归一化。</p><p><strong>白话</strong>:问\"下雨天堵车的概率\",不拿全年当分母——先把下雨的日子挑出来当新的\"全体\",再数其中堵车的占几成。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\mid B]=\\frac{P[A\\cap B]}{P[B]}\\qquad(P[B]\\neq 0)$$</div><ul><li>固定条件 B 后,\\(P[\\cdot\\mid B]\\) 满足与普通概率相同的<strong>三公理</strong>——补集、容斥等规则在\"竖线右边不动\"时照常可用。</li><li>\\(P[A\\mid B]\\neq P[B\\mid A]\\):分母是\"条件\"那一个,写反是高频错。</li><li>直觉:<strong>先缩世界,再归一</strong>;\\(P[B]=0\\) 时无定义。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 掷出 6,\\(B=\\) 点数为偶,求 \\(P[A\\mid B]\\)。</p><ul><li>套定义:\\(P[A\\cap B]=P[\\{6\\}]=\\frac16\\),\\(P[B]=\\frac12\\),相除得 \\(P[A\\mid B]=\\frac13\\)。</li><li>直觉核对:世界缩到 \\(\\{2,4,6\\}\\) 三个等可能点,6 占一席 → \\(\\frac13\\) ✓</li><li>反向对照:\\(P[B\\mid A]=1\\)(掷出 6 必是偶数)——\\(\\frac13\\neq1\\),分母是\"条件\"那一个,写反差很远。</li></ul><h4>与其他概念的关系</h4><ul><li>乘法公式 — 定义两边乘 \\(P[B]\\) 的变形,求交集的主力工具</li><li>事件独立性 — \\(P[A\\mid B]=P[A]\\) 的特例:条件不带来信息</li><li>贝叶斯定理 — 把 \\(P[A\\mid B]\\) 反转成 \\(P[B\\mid A]\\)</li><li>全概率公式 — 用一组条件概率加权拼出无条件概率</li><li>连续型条件概率 — 连续版(密度上的同一动作)</li><li>随机变量的条件分布 — 条件思想进入随机变量后的形态</li></ul><h4>应用视角</h4><ul><li>贝叶斯表格法快解后验 — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "标准化": {
+  "kind": "c",
+  "en": "Standardization",
+  "aliases": [
+   "standardize",
+   "z-score"
+  ],
+  "level": "basic",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把 \\(X\\) <strong>减均值、除标准差</strong>得到标准正态 \\(Z\\),于是任何正态概率都化成 \\(\\Phi\\) 查表——正态章的全部解题动作归于这一招。</p><p><strong>白话</strong>:各国货币先换成美元才好比价——各种正态先换成\"超出平均几个标准差\"(\\(Z\\) 值),就能共用同一张 \\(\\Phi\\) 表读概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$Z=\\frac{X-\\mu}{\\sigma}\\sim N(0,1),\\qquad F_X(x)=P[X\\le x]=\\Phi\\!\\left(\\frac{x-\\mu}{\\sigma}\\right)$$</div><ul><li>口诀:<strong>减 \\(\\mu\\) 除 \\(\\sigma\\) 去查表,乘 \\(\\sigma\\) 加 \\(\\mu\\) 走回来</strong>(正查/反查一对)。</li><li>为何不改概率:\\(\\{X\\le x\\}\\) 与 \\(\\{\\frac{X-\\mu}{\\sigma}\\le\\frac{x-\\mu}{\\sigma}\\}\\) 是<strong>同一个事件</strong>——减常数、除正常数不改不等号方向。</li><li>上尾取补:\\(P[X&gt;x]=1-\\Phi\\!\\left(\\frac{x-\\mu}{\\sigma}\\right)\\);负 \\(z\\) 用 \\(\\Phi(-z)=1-\\Phi(z)\\)。</li><li><strong>除的是 \\(\\sigma\\) 不是 \\(\\sigma^2\\)</strong>:先把 \\(N(\\mu,\\sigma^2)\\) 的第二参数开根号。</li><li>四步套路:认出 \\(\\mu,\\sigma\\) → 减 \\(\\mu\\) 除 \\(\\sigma\\) → 负值用对称 → 上尾取补。</li></ul><p><strong>算一遍</strong>:成年身高 \\(X\\sim N(170,\\ 5^2)\\)(单位 cm),求不超过 180 的比例。</p><ul><li>减 \\(\\mu\\) 除 \\(\\sigma\\):\\(Z=(180-170)/5=2\\)——180 就是\"高出平均 2 个标准差\"。</li><li>查表:\\(\\Phi(2)=0.9772\\),约 97.7% 的人不超过 180。</li><li>概率一点没变,只是把 \\(\\{X\\le180\\}\\) 翻译成同一个事件 \\(\\{Z\\le2\\}\\) 再查表。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 被标准化的对象</li><li><a class=\"net-wl\" data-id=\"标准正态分布\">标准正态分布</a> — 目的地:\\(N(0,1)\\) 才有表</li><li><a class=\"net-wl\" data-id=\"正态的线性组合\">正态的线性组合</a> — 标准化本身就是线性变换 \\(aX+b\\) 的特例</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 逆运算:反查 \\(z_p\\) 再还原</li><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> — CLT 近似后的统一收尾动作</li></ul>"
+ },
+ "标准正态分布": {
+  "kind": "c",
+  "en": "StandardNormalDistribution",
+  "aliases": [
+   "standard normal",
+   "Z distribution"
+  ],
+  "level": "basic",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>均值 0、方差 1 的正态分布 \\(Z\\sim N(0,1)\\):所有正态的\"基准版\"。密度记 \\(\\phi\\)、累积分布记 \\(\\Phi\\)——查表查的就是 \\(\\Phi\\)。</p><p><strong>白话</strong>:\\(N(0,1)\\) 是正态家族的\"度量衡原器\"——表只为这一把尺子印制,其他正态都先折算成它再来查。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\phi(x)=\\frac{e^{-x^2/2}}{\\sqrt{2\\pi}},\\qquad \\Phi(z)=P[Z\\le z]$$</div><ul><li><strong>对称性</strong>:\\(\\phi(-x)=\\phi(x)\\ \\Longrightarrow\\ \\Phi(-z)=1-\\Phi(z)\\)——表通常只列 \\(z\\ge0\\),负值全靠这条。</li><li><strong>\\(\\Phi\\) 是累积不是密度</strong>:表体给的是 \\(P[Z\\le z]\\),别当成 \\(\\phi(z)\\)。</li><li>表最多两位小数,更精细用<a class=\"net-wl\" data-id=\"线性插值\">线性插值</a>(如 \\(z_{0.80}\\approx0.842\\) 由 \\(\\Phi(0.84),\\Phi(0.85)\\) 插值)。</li><li>常背分位:\\(z_{0.90}=1.282\\)、\\(z_{0.95}=1.645\\)、\\(z_{0.975}=1.960\\)、\\(z_{0.99}=2.326\\)。</li></ul><p><strong>算一遍</strong>:查表得 \\(\\Phi(1)=0.8413\\),求 \\(P[Z\\le-1]\\) 和 \\(P[-1\\le Z\\le1]\\)。</p><ul><li>对称补:\\(\\Phi(-1)=1-0.8413=0.1587\\)——表没有负数行也不慌。</li><li>区间相减:\\(P[-1\\le Z\\le1]=0.8413-0.1587=0.6826\\)。</li><li>正好对上 68-95-99.7 法则里的 68% ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 一般版:平移 \\(\\mu\\)、缩放 \\(\\sigma\\) 即得</li><li><a class=\"net-wl\" data-id=\"标准化\">标准化</a> — 把任意正态送回 \\(N(0,1)\\) 的动作</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — \\(\\Phi\\) 是其在标准正态上的具体化</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — \\(z_p\\)(\\(\\Phi(z_p)=p\\))是还原公式的原料</li><li>68-95-99.7法则 — \\(\\Phi(1),\\Phi(2),\\Phi(3)\\) 的速记版</li></ul>"
+ },
+ "样本均值分布": {
+  "kind": "c",
+  "en": "SampleMeanDistribution",
+  "aliases": [
+   "sampling distribution of the sample mean",
+   "sample mean",
+   "standard error"
+  ],
+  "level": "advanced",
+  "chapter": "p-l22",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 个 iid(\\(\\mu,\\sigma^2\\))随机变量的样本均值 \\(\\bar X=\\frac1n\\sum X_i\\) 的分布:期望仍是 \\(\\mu\\)、方差缩成 \\(\\sigma^2/n\\)——这两条是<strong>精确恒等式</strong>(不是近似);\\(n\\) 大时由 CLT 整个分布近似正态。</p><p><strong>白话</strong>:称一次误差大,称 100 次取平均,误差被摊薄——平均数比单个数稳得多,而且\"稳多少\"有精确账:方差直接除以 \\(n\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[\\bar X]=\\mu,\\qquad \\operatorname{Var}(\\bar X)=\\frac{\\sigma^2}{n},\\qquad \\bar X\\ \\approx\\ N\\!\\Big(\\mu,\\ \\frac{\\sigma^2}{n}\\Big)$$</div><ul><li>推导:\\(\\operatorname{Var}(\\bar X)=\\frac{1}{n^2}\\operatorname{Var}(\\sum X_i)=\\frac{n\\sigma^2}{n^2}\\)——独立性把交叉协方差项去掉。</li><li>方差被 \\(n\\) <strong>除小</strong>:样本越大 \\(\\bar X\\) 越贴近 \\(\\mu\\);标准差(标准误)\\(=\\sigma/\\sqrt n\\)。</li><li>标准化 \\(Z=\\dfrac{\\bar X-\\mu}{\\sigma/\\sqrt n}\\) 查表;百分位 \\(\\mu+z_p\\,\\sigma/\\sqrt n\\)。</li><li><strong>与和对照:均除 \\(n\\)、和乘 \\(n\\)</strong>——方差里 \\(n\\) 的位置搞反是本章最大丢分点。</li><li>读题信号:average / mean / 人均、平均每件。</li></ul><p><strong>算一遍</strong>:一台秤单次称量方差 \\(\\sigma^2=36\\)(SD 6 克),称 9 次取平均。</p><ul><li>期望不动:\\(E[\\bar X]=\\mu\\),平均不偏,还是真重量。</li><li>方差摊薄:\\(\\operatorname{Var}(\\bar X)=36/9=4\\),标准误 \\(=\\sqrt4=2\\) 克——比单次的 6 克稳了 \\(\\sqrt9=3\\) 倍。</li><li>对照总和:9 次之和的方差是 \\(36\\times9=324\\)——均除 \\(n\\)、和乘 \\(n\\),位置别反。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> — \\(n\\) 大时分布近似正态的依据</li><li><a class=\"net-wl\" data-id=\"和的正态近似\">和的正态近似</a> — 另一副面孔:\\(S_n=n\\bar X\\),\\(n\\) 位置相反</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — \\(E[\\bar X]=\\mu\\) 的依据</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — 推导中\"独立去交叉项\"的一般规则</li><li><a class=\"net-wl\" data-id=\"正态的线性组合\">正态的线性组合</a> — \\(X_i\\) 本身正态时结论精确、无需 CLT</li><li><a class=\"net-wl\" data-id=\"标准化\">标准化</a> — 分母用标准误 \\(\\sigma/\\sqrt n\\)</li></ul>"
+ },
+ "概率函数": {
+  "kind": "c",
+  "en": "ProbabilityMassFunction",
+  "aliases": [
+   "pmf",
+   "probability function",
+   "probability mass function",
+   "概率质量函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>离散随机变量的刻画工具:一张\"点 → 概率\"的表,\\(p(x)=P[X=x]\\)。离散分布由它完全决定,又叫概率质量函数(pmf)。</p><p><strong>白话</strong>:像一个分成若干扇形的抽奖转盘:每个可能取值占一块扇形,扇形大小就是它的概率,所有扇形拼起来正好一整圈。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$p(x)=P[X=x]\\qquad p(x)\\ge 0,\\quad \\sum_{\\text{all }x}p(x)=1$$</div><ul><li>两条<strong>合法性</strong>要求整块记:每点非负、全部加起来恰为 1(骰子 \\(p(x)=\\tfrac16\\),六项和为 1)。</li><li>概率是<strong>一根根柱子</strong>:高度 \\(=p(x)\\),柱高之和 \\(=1\\);求区间概率就把范围内的柱子加起来。</li><li>cdf 由 pmf 累加:\\(F(x)=\\sum_{t\\le x}p(t)\\),阶梯形、在每个质量点跳高 \\(p(x)\\)。</li><li>与连续的根本差别:离散每点 \\(P[X=x]&gt;0\\),\\(\\le\\) 与 \\(&lt;\\) <strong>不可</strong>随意互换。</li></ul><p><strong>算一遍</strong>:掷一枚均匀骰子,\\(p(x)=\\tfrac16\\)(\\(x=1,\\dots,6\\)),求 \\(P[X\\le2]\\)。</p><ul><li>合法性自检:六根柱子各 \\(\\tfrac16\\ge0\\),总和 \\(=1\\) ✓</li><li>区间概率 = 加柱子:\\(P[X\\le2]=p(1)+p(2)=\\tfrac13\\)。</li><li>对照:\\(P[X&lt;2]=p(1)=\\tfrac16\\ne P[X\\le2]\\)——离散下 \\(&lt;\\) 与 \\(\\le\\) 差一根柱子。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 离散随机变量由 pmf 完全刻画</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续对应物:数柱子 vs 量面积</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — \\(F(x)=\\sum_{t\\le x}p(t)\\):阶梯、跳高=p(x)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 用 pmf 加权求和:\\(E[X]=\\sum x\\,p(x)\\)</li><li><a class=\"net-wl\" data-id=\"离散均匀分布\">离散均匀分布</a> — 最简单的 pmf 实例(各点等概率)</li></ul>"
+ },
+ "概率密度函数": {
+  "kind": "c",
+  "en": "ProbabilityDensityFunction",
+  "aliases": [
+   "pdf",
+   "probability density function",
+   "density function",
+   "密度函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>连续随机变量的刻画工具:概率是密度曲线<strong>下方的面积</strong>,想要区间概率就积分。密度是分布函数的导数 \\(f(x)=F'(x)\\)。</p><p><strong>白话</strong>:把 1 千克沙子撒在数轴上,\\(f(x)\\) 是各处沙层的厚度:某点再厚,单看一个点也没有重量;铲起一段称重(积分)才是那段的概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[a\\le X\\le b]=\\int_a^b f(x)\\,dx\\qquad f(x)\\ge 0,\\quad\\int_{-\\infty}^{\\infty}f(x)\\,dx=1$$</div><ul><li><strong>密度 ≠ 概率</strong>:\\(f(x)\\) 的值可以大于 1(它是\"每单位长度的概率\",像人口密度);只有积分(面积)才是概率。</li><li><strong>连续下单点概率为 0</strong>:\\(P[X=x]=0\\),所以 \\(\\le\\) 与 \\(&lt;\\) 可随意互换——这对离散不成立。</li><li>方法套路:给含未知常数的密度 \\(f=c\\,g(x)\\),先用 \\(\\int f=1\\) 反解 \\(c\\),再积分求所求区间(例 5D:\\(f=x^2/21\\))。</li><li>与 cdf 互逆:\\(f=F'\\)、\\(F(x)=\\int_{-\\infty}^x f(t)\\,dt\\)。</li></ul><p><strong>算一遍</strong>:密度 \\(f(x)=cx\\),\\(0\\le x\\le2\\),先定 \\(c\\) 再求 \\(P[X\\le1]\\)。</p><ul><li>总面积为 1:\\(\\int_0^2 cx\\,dx=2c=1\\Rightarrow c=\\tfrac12\\)。</li><li>区间概率 = 面积:\\(P[X\\le1]=\\int_0^1 \\tfrac{x}{2}\\,dx=\\tfrac14\\)。</li><li>单点没面积:\\(P[X=1]=0\\),所以 \\(P[X&lt;1]=P[X\\le1]\\),随便换。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 连续随机变量的刻画工具</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散对应物:pmf 堆在点上求和,pdf 摊在区间上积分</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 求导/积分互逆:\\(f=F'\\)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 用密度加权积分:\\(E[X]=\\int x\\,f(x)\\,dx\\)</li><li>积分限与支撑 — 密度非零的区域决定积分限</li><li><a class=\"net-wl\" data-id=\"连续均匀分布\">连续均匀分布</a> — 最简单的密度实例(平的)</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "概率母函数": {
+  "kind": "c",
+  "en": "ProbabilityGeneratingFunction",
+  "aliases": [
+   "probability generating function",
+   "PGF"
+  ],
+  "level": "basic",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>对<strong>非负整数</strong>取值的随机变量(计数变量:泊松、二项、几何……),把每个概率 \\(p_k=P[X{=}k]\\) 当系数、配上 \\(t^k\\) 求和得到的函数 \\(P_X(t)=E[t^X]\\)——一个函数装下整张概率表。连续型或取负值的变量不适用。</p><p><strong>白话</strong>:像把整张概率表打成一个 zip 压缩包:\\((p_0,p_1,p_2,\\dots)\\) 全装进一个函数里,之后按不同方式解压——想验总和、想要矩、想反读某个概率,都从这一个包里取。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P_X(t)=E\\!\\left[t^{X}\\right]=\\sum_{k=0}^{\\infty}t^{k}\\,P[X{=}k]$$</div><ul><li>\\(P(1)=1\\) <strong>恒成立</strong>(概率求和为 1)——做完先自检。</li><li>一次打包、三种解压:代值直接算 \\(E[t^X]\\);在 \\(t=1\\) 求导取矩(阶乘矩);在 \\(t=0\\) 求导反读概率。</li><li>独立和相乘:\\(P_{X+Y}=P_XP_Y\\)。</li><li>泊松必记:\\(P(t)=e^{\\lambda(t-1)}\\)(例 33B:\\(\\sum_n t^n\\tfrac{e^{-\\lambda}\\lambda^n}{n!}=e^{-\\lambda}e^{\\lambda t}=e^{\\lambda(t-1)}\\))。</li><li>课本用大写 P 记母函数,与概率 \\(P[\\cdot]\\) 同符号,靠上下文区分。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,反面记 0、正面记 1(各半)。</p><ul><li>打包:\\(P(t)=E[t^X]=0.5t^0+0.5t^1=0.5+0.5t\\)。</li><li>自检:\\(P(1)=1\\) ✓;求导 \\(P'(t)=0.5\\),在 \\(t=1\\) 取值 \\(=0.5=E[X]\\) ✓</li><li>在 \\(t=0\\) 反读:\\(P'(0)/1!=0.5=P[X{=}1]\\)——一个函数,三种解压全通。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 姊妹工具:M 适用任意 RV、取原点矩;P 仅非负整数 RV</li><li>阶乘矩 — 在 1 处求导的产出</li><li>母函数生成概率 — 在 0 处求导反读概率</li><li>独立和的母函数 — 乘性:独立和 → 相乘</li><li>PGF与MGF关系 — \\(P(t)=M(\\ln t)\\) 一键互换</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 最常考母函数 \\(e^{\\lambda(t-1)}\\)</li></ul>"
+ },
+ "次序统计量": {
+  "kind": "c",
+  "en": "OrderStatistic",
+  "aliases": [
+   "order statistic",
+   "order statistics"
+  ],
+  "level": "basic",
+  "chapter": "p-l23",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把 iid 样本 \\(X_1,\\dots,X_n\\) 由小到大排序,排在第 k 位的随机变量记 \\(X_{(k)}\\),称第 k 个次序统计量;\\(X_{(1)}\\) 是最小值、\\(X_{(n)}\\) 是最大值。样本随机,排序结果随之而定,所以每个 \\(X_{(k)}\\) 本身仍是随机变量。</p><p><strong>白话</strong>:发令枪响之前没人知道谁跑第几——\"第 k 名的成绩\"要等比赛跑完才揭晓,所以它本身也是个随机变量。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X_{(1)}\\le X_{(2)}\\le\\cdots\\le X_{(n)},\\qquad X_{(1)}=\\min_i X_i,\\quad X_{(n)}=\\max_i X_i$$</div><ul><li>记号两套并存:有的书写 \\(Y_k\\),有的写 \\(X_{(k)}\\),含义相同。</li><li>全套公式只有一个前提:样本 <strong>iid</strong>(独立同分布)——独立才能把概率连乘,同分布才有公共 \\(F_X,f_X\\)。</li><li>考试重点在两端(maxima / minima);一般第 k 个的公式大纲注明大概率不考。</li><li>读题定位词:the largest / smallest of the claims、the first of n machines to fail(= min)、the last to fail(= max)。</li></ul><p><strong>算一遍</strong>:掷两枚骰子,求最大点数不超过 4 的概率。</p><ul><li>\"最大 \\(\\le4\\)\" = \"两枚都 \\(\\le4\\)\":\\(P=\\left(\\tfrac46\\right)^2=\\tfrac49\\)——独立才允许连乘。</li><li>同理\"最小 \\(&gt;4\\)\" = \"两枚都 \\(&gt;4\\)\":\\(P=\\left(\\tfrac26\\right)^2=\\tfrac19\\)。</li><li>两端就是全部套路:max 走 CDF 连乘、min 走生存函数连乘。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"最大值分布\">最大值分布</a> — k=n 的特例:「全体 ≤ x」→ CDF 连乘 \\(F^n\\)</li><li><a class=\"net-wl\" data-id=\"最小值分布\">最小值分布</a> — k=1 的特例:「全体 &gt; x」→ 生存函数连乘 \\((1-F)^n\\)</li><li><a class=\"net-wl\" data-id=\"第k个次序统计量\">第k个次序统计量</a> — 一般情形的统一密度公式(三堆划分)</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — iid 前提中的\"独立\":概率才允许连乘</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 所有推导都从\"先写 CDF / 生存函数,再求导\"开始</li></ul>"
+ },
+ "正态分布": {
+  "kind": "c",
+  "en": "NormalDistribution",
+  "aliases": [
+   "normal distribution",
+   "Gaussian distribution",
+   "Gaussian"
+  ],
+  "level": "basic",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>钟形、关于均值对称的连续分布,由<strong>均值 \\(\\mu\\)(峰位)与方差 \\(\\sigma^2\\)(胖瘦)完全刻画</strong>,记 \\(X\\sim N(\\mu,\\sigma^2)\\)。大量独立小因素之和都近似正态(身高、测量误差、理赔总额),故为精算最常出现的分布。</p><p><strong>白话</strong>:全班身高为什么是钟形?基因、营养、睡眠……无数小因素各推一把,推来推去大多数人堆在中间、极端者稀少;而这口钟只需两个数就画定——峰在哪(\\(\\mu\\))、胖不胖(\\(\\sigma\\))。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x)=\\frac{e^{-(x-\\mu)^2/2\\sigma^2}}{\\sigma\\sqrt{2\\pi}},\\qquad -\\infty&lt;x&lt;\\infty$$</div><ul><li><strong>记号陷阱</strong>:括号第二参数是<strong>方差 \\(\\sigma^2\\)</strong> 不是标准差——\\(N(5,16)\\) 指方差 16、标准差 4。</li><li>一般正态 = 标准正态平移 \\(\\mu\\)、缩放 \\(\\sigma\\);\\(\\sigma\\) 越大越矮胖,曲线下面积恒为 1。</li><li>密度<strong>没有初等原函数</strong>,\\(P[X\\le x]\\) 无闭式——只能标准化后查 \\(\\Phi\\) 表,这决定了全章解题动作。</li><li>钉板直觉:大量独立 ±1 小扰动之和自然堆出钟形(CLT 的预演)。</li></ul><p><strong>算一遍</strong>:\\(X\\sim N(5,16)\\),求 \\(P[X\\le9]\\)。</p><ul><li>先认参数:第二参数 16 是方差 → \\(\\sigma=4\\)(别拿 16 去除)。</li><li>标准化:\\(z=(9-5)/4=1\\);查表 \\(\\Phi(1)=0.8413\\)。</li><li>密度积不出闭式,查表是唯一出路——这就是\"全章动作归于标准化\"的含义。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"标准正态分布\">标准正态分布</a> — \\(\\mu=0,\\sigma=1\\) 的基准版,表只为它制</li><li><a class=\"net-wl\" data-id=\"标准化\">标准化</a> — 全章命脉:任意正态压成 \\(N(0,1)\\) 查表</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 反向操作:\\(\\xi_p=\\mu+\\sigma z_p\\)</li><li><a class=\"net-wl\" data-id=\"正态的线性组合\">正态的线性组合</a> — 线性折腾后仍正态,只需重算 \\(\\mu,\\sigma^2\\)</li><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> — 为何无处不在:iid 之和的极限形态</li><li><a class=\"net-wl\" data-id=\"二元正态分布\">二元正态分布</a> — 二维推广(L31)</li></ul>"
+ },
+ "正态百分位数": {
+  "kind": "c",
+  "en": "NormalPercentiles",
+  "aliases": [
+   "percentile of normal distribution",
+   "z-value",
+   "quantile of normal"
+  ],
+  "level": "basic",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>标准化的逆运算:给概率 \\(p\\) 求 \\(x\\)。先在表体里<strong>反查</strong>出标准正态分位 \\(z_p\\)(满足 \\(\\Phi(z_p)=p\\)),再放大还原到 \\(X\\)。</p><p><strong>白话</strong>:正查是\"报身高问排名\",这里反过来:\"给排名要身高\"——先在标准表里找到该排名对应的 \\(z\\),再乘 \\(\\sigma\\) 加 \\(\\mu\\) 穿回原来的尺寸。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\xi_p=\\mu+\\sigma z_p,\\qquad \\Phi(z_p)=p$$</div><ul><li>还原是<strong>乘 \\(\\sigma\\) 加 \\(\\mu\\)</strong>,不是除——与正查方向相反。</li><li>查表方向:正查=行列给 \\(z\\)、表体读 \\(\\Phi(z)\\);反查=表体找 \\(p\\)、读回 \\(z_p\\)。</li><li><strong>常背 \\(z\\) 值</strong>:\\(z_{0.90}=1.282\\)、\\(z_{0.95}=1.645\\)、\\(z_{0.975}=1.960\\)、\\(z_{0.99}=2.326\\)。</li><li>表只有两位小数,精细分位用<a class=\"net-wl\" data-id=\"线性插值\">线性插值</a>(\\(z_{0.80}\\approx0.842\\))。</li><li>例:\\(X\\sim N(10,25)\\) 的 67 百分位 \\(=10+0.44\\times5=12.2\\)。</li></ul><p><strong>算一遍</strong>:\\(X\\sim N(10,25)\\),求 95 百分位。</p><ul><li>反查:\\(\\Phi(z)=0.95\\Rightarrow z_{0.95}=1.645\\)(常背值,直接取)。</li><li>还原:\\(\\xi_{0.95}=10+1.645\\times5=18.2\\)——乘 \\(\\sigma=5\\) 加 \\(\\mu=10\\),方向与正查相反。</li><li>自检:18.2 在均值右侧、不到 \\(2\\sigma\\) 处,与\"95% 的位置\"直感相符 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 上位概念:\\(F(\\xi_p)=p\\) 的解</li><li><a class=\"net-wl\" data-id=\"标准正态分布\">标准正态分布</a> — \\(z_p\\) 的来源</li><li><a class=\"net-wl\" data-id=\"标准化\">标准化</a> — 互为正反两程</li><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 所属分布本体</li><li><a class=\"net-wl\" data-id=\"指数分布百分位数\">指数分布百分位数</a> — 对照:指数有闭式,正态只能查表</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"理赔总额的正态近似\">理赔总额的正态近似</a> — CLT 拼理赔总额,连续性修正</li></ul>"
+ },
+ "正态的线性组合": {
+  "kind": "c",
+  "en": "LinearCombinationOfNormals",
+  "aliases": [
+   "linear combination of normal random variables",
+   "sum of independent normals"
+  ],
+  "level": "advanced",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>正态经过任何线性变换、独立正态相加相减,结果<strong>还是正态</strong>——只需算出新分布的均值和方差,又能标准化查表。本章最有威力的性质。</p><p><strong>白话</strong>:苹果重量正态、箱子重量正态,\"苹果 + 箱子\"的总重还是正态——不用重推分布形状,只要记两笔账:均值怎么合、方差怎么合。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$aX+b\\sim N\\!\\big(a\\mu+b,\\ a^2\\sigma^2\\big);\\qquad aX+bY\\sim N\\!\\big(a\\mu_X+b\\mu_Y,\\ \\ a^2\\sigma_X^2+b^2\\sigma_Y^2\\big)\\ (X,Y\\text{ 独立})$$</div><ul><li>均值线性相加;方差用<strong>系数平方</strong> \\(a^2,b^2\\) 加权(不是 \\(a\\sigma^2\\))。</li><li><strong>独立才没有协方差项</strong>:题没说独立就得留 \\(+2ab\\operatorname{Cov}(X,Y)\\)。</li><li><strong>\\(X-Y\\) 的方差仍相加</strong>:\\(\\sigma_X^2+\\sigma_Y^2\\),因为 \\((-1)^2=1\\)——高频坑。</li><li>\\(n\\) 个 iid 正态的样本均值:\\(\\bar X\\sim N(\\mu,\\sigma^2/n)\\),方差是 \\(\\sigma^2/n\\) 不是 \\(\\sigma^2\\)(标准误 \\(\\sigma/\\sqrt n\\))。</li><li>例:\\(X(80,30)+Y(20,10)\\) 独立 ⟹ \\(S\\sim N(100,40)\\),再标准化求 \\(P[S&lt;90]=\\Phi(-1.581)\\approx0.0570\\)。</li></ul><p><strong>算一遍</strong>:独立的 \\(X\\sim N(3,4)\\)、\\(Y\\sim N(1,5)\\),求 \\(P[X-Y\\le5]\\)。</p><ul><li>均值:\\(3-1=2\\);方差:\\(4+5=9\\)——相减方差照样相加,因为 \\((-1)^2=1\\)。</li><li>新分布:\\(X-Y\\sim N(2,9)\\),\\(\\sigma=3\\)。</li><li>标准化收尾:\\(z=(5-2)/3=1\\),\\(\\Phi(1)=0.8413\\)——分布定了,套路照旧。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 封闭于线性运算的分布族</li><li><a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> — 方差合成的一般规则(含协方差项)</li><li><a class=\"net-wl\" data-id=\"协方差\">协方差</a> — 不独立时必须补上的那一项</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 免协方差项的前提</li><li><a class=\"net-wl\" data-id=\"样本均值分布\">样本均值分布</a> — \\(\\bar X\\sim N(\\mu,\\sigma^2/n)\\) 的精确版(无需 CLT)</li><li><a class=\"net-wl\" data-id=\"和的正态近似\">和的正态近似</a> — 非正态之和的近似对应(CLT)</li></ul>"
+ },
+ "泊松分布": {
+  "kind": "c",
+  "en": "PoissonDistribution",
+  "aliases": [
+   "Poisson distribution",
+   "Poisson"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>刻画\"<strong>固定区间内某事件发生几次</strong>\"的单参数计数分布:事故、来电、索赔件数的默认模型。由二项分布在 \\(n\\to\\infty,\\ p\\to 0,\\ np\\to\\lambda\\) 的极限得到,天然适合\"机会极多、每次极小\"的场景。</p><p><strong>白话</strong>:一天有无数个瞬间,每个瞬间来客概率都微乎其微,但平均一天来 \\(\\lambda\\) 个——数\"今天到底来了几个\"就是泊松;只用一个数 \\(\\lambda\\) 就说完了整个分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=k]=\\frac{e^{-\\lambda}\\lambda^{k}}{k!},\\qquad k=0,1,2,\\dots$$</div><ul><li>记 \\(X\\sim\\text{Poisson}(\\lambda)\\),参数 \\(\\lambda&gt;0\\);取值 \\(0,1,2,\\dots\\) <strong>无上限</strong>。</li><li>归一化:\\(\\sum_k e^{-\\lambda}\\lambda^k/k!=e^{-\\lambda}e^{\\lambda}=1\\)(\\(e^{\\lambda}\\) 的泰勒展开)。</li><li>形状随 \\(\\lambda\\) 变:\\(\\lambda\\) 小 → 右偏堆在 0;\\(\\lambda\\) 大 → 趋对称钟形(可正态近似)。</li><li>\"at least \\(k\\)\" 取补:\\(P[X\\ge k]=1-\\sum_{i&lt;k}P[i]\\),尾巴无限长,正面加不完。</li><li>题面信号:\"the number of … per …\"、\"claims occur at a rate of …\"。</li></ul><p><strong>算一遍</strong>:某窗口平均每小时 2 件索赔(\\(\\lambda=2\\)),求一小时内至少 2 件的概率。</p><ul><li>\\(P[0]=e^{-2}\\approx0.135\\);\\(P[1]=2e^{-2}\\approx0.271\\)。</li><li>尾巴无限长,正面加不完,取补:\\(P[X\\ge2]=1-0.135-0.271\\approx0.594\\)。</li><li>自检:超过均值 2 的概率近六成偏高?不高——\\(X\\ge2\\) 含 2 本身,与\"平均 2 件\"相容 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布的矩\">泊松分布的矩</a> — 指纹性质:\\(E[X]=\\operatorname{Var}(X)=\\lambda\\)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 独立泊松相加,参数相加</li><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 恒定速率场景:区间 \\(t\\) 内计数 \\(\\sim\\text{Poisson}(\\lambda t)\\)、稀释 \\(\\lambda p\\)</li><li><a class=\"net-wl\" data-id=\"泊松逼近二项\">泊松逼近二项</a> — 出生证明:\\(n\\) 大 \\(p\\) 小时 \\(\\text{Bin}(n,p)\\approx\\text{Poisson}(np)\\)</li><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 极限来源;有上限 vs 无上限</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 同一泊松过程的另一面:计数用泊松、间隔用指数</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "泊松分布的矩": {
+  "kind": "c",
+  "en": "PoissonMeanAndVariance",
+  "aliases": [
+   "mean and variance of Poisson",
+   "Poisson moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>泊松分布最\"招牌\"的性质:<strong>均值和方差相等,都等于参数 \\(\\lambda\\)</strong>。这是判别一个计数是否泊松、以及由标准差反推参数的关键。</p><p><strong>白话</strong>:泊松只有一个旋钮 \\(\\lambda\\):拧它,平均数和波动大小同时被定死——报出均值就等于报出方差,这是它的\"指纹\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\lambda,\\qquad \\operatorname{Var}(X)=\\lambda,\\qquad SD(X)=\\sqrt{\\lambda}$$</div><ul><li><strong>一个 \\(\\lambda\\) 走天下</strong>:均值是它、方差还是它;题给标准差 \\(s\\) 先平方 \\(\\lambda=s^2\\)(高频坑)。</li><li>为何均值=方差:沿二项极限看,\\(np(1-p)\\xrightarrow{p\\to0} np=\\lambda\\),方差与均值在极限里合二为一。</li><li>反向判别:数据方差明显大于均值(overdispersion)→ 怀疑不是泊松。</li><li>别与二项混:二项是 \\(np\\) vs \\(np(1-p)\\),方差 &lt; 均值。</li></ul><p><strong>算一遍</strong>:题给某泊松计数的标准差是 3,求均值。</p><ul><li>先平方:\\(\\lambda=\\operatorname{Var}=3^2=9\\)——别把 SD 当 \\(\\lambda\\) 直接用。</li><li>于是 \\(E[X]=9\\)、\\(\\operatorname{Var}(X)=9\\):一个 9 走天下。</li><li>反向判别:若数据均值 9 而方差 20(明显偏大),就该怀疑不是泊松。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 所属分布本体</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — \\(E[X]=\\lambda\\) 的上位概念</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — \\(\\operatorname{Var}(X)=\\lambda\\) 的上位概念</li><li>标准差 — \\(SD=\\sqrt{\\lambda}\\);由 SD 反推 \\(\\lambda=SD^2\\)</li><li><a class=\"net-wl\" data-id=\"二项分布的期望与方差\">二项分布的期望与方差</a> — 对照组:\\(np\\) 与 \\(np(1-p)\\),极限下重合</li><li>泊松众数 — 峰的位置 \\(\\lfloor\\lambda\\rfloor\\) 也由同一个 \\(\\lambda\\) 决定</li></ul>"
+ },
+ "泊松可加性": {
+  "kind": "c",
+  "en": "PoissonAdditivity",
+  "aliases": [
+   "additivity of Poisson",
+   "sum of independent Poissons"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>相互独立</strong>的泊松随机变量之和仍是泊松,参数直接相加——合并多个独立泊松源(多路口事故、多天来电、多张保单)时无需卷积。</p><p><strong>白话</strong>:两条互不相干的水管往同一个桶里随机滴水,合起来看还是\"随机滴水\",只是滴速直接相加——不必逐滴对账(卷积)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N_i\\sim\\text{Poisson}(\\lambda_i)\\ \\text{独立}\\quad\\Longrightarrow\\quad \\sum_{i=1}^{n}N_i\\;\\sim\\;\\text{Poisson}\\!\\left(\\sum_{i=1}^{n}\\lambda_i\\right)$$</div><ul><li><strong>前提是独立</strong>:两个计数正相关(如同一天气驱动的两地事故)不能简单把 \\(\\lambda\\) 相加。</li><li>典型用法:\"3 周、每周均值 1.2\" → \\(\\lambda=3.6\\) 再套 pmf,<strong>先换 \\(\\lambda\\) 再算概率</strong>。</li><li>与泊松过程的区间缩放 \\(\\lambda t\\) 是同一件事(把区间拆成小段相加)。</li><li>泊松连\"同参数\"条件都不需要(对比二项/负二项可加性要求同 \\(p\\))。</li></ul><p><strong>算一遍</strong>:两个独立路口,事故率分别为每天 1 起和 2 起,求两口合计一天无事故的概率。</p><ul><li>先合参数:\\(N_1+N_2\\sim\\text{Poisson}(1+2)=\\text{Poisson}(3)\\)。</li><li>套 pmf:\\(P[\\text{合计}=0]=e^{-3}\\approx0.050\\)。</li><li>验算:等于\"各自无事故\"相乘 \\(e^{-1}\\times e^{-2}\\)(独立)✓——参数相加与概率相乘是同一回事。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 规则的宿主分布</li><li><a class=\"net-wl\" data-id=\"泊松过程\">泊松过程</a> — 区间缩放 \\(\\lambda t\\) 即\"逐段相加\"的连续版</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 姊妹规则:须同 \\(p\\)</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 姊妹规则:须同 \\(p\\)</li><li>独立和的母函数 — 证明套路:独立和的 PGF/MGF 相乘</li><li>卷积公式 — 可加性成立时绕开的笨办法</li></ul>"
+ },
+ "泊松过程": {
+  "kind": "c",
+  "en": "PoissonProcess",
+  "aliases": [
+   "Poisson process",
+   "thinning",
+   "rate scaling"
+  ],
+  "level": "advanced",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>事件以<strong>恒定速率 \\(\\lambda\\)</strong>(每单位时间)随机、独立地发生的过程。长度 \\(t\\) 的区间内的计数服从 \\(\\text{Poisson}(\\lambda t)\\);若每个事件再独立地以概率 \\(p\\) 归入某子类,该子类计数服从 \\(\\text{Poisson}(\\lambda p)\\)(稀释/thinning),且不同子类<strong>相互独立</strong>。</p><p><strong>白话</strong>:便利店客人零零星星随机进门、平均每小时 \\(\\lambda\\) 个:改看两小时,就按两小时记账(\\(\\lambda t\\));只数买咖啡的客人,就按占比打折(\\(\\lambda p\\))——口径随便换,\"随机进门\"的性质不变。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N(t)\\sim\\text{Poisson}(\\lambda t),\\qquad N_{\\text{子类}}\\sim\\text{Poisson}(\\lambda p)$$</div><ul><li><strong>先换 \\(\\lambda\\),再代公式</strong>:\"半小时\"\"三天\"\"白色的车\"这类改条件题,参数先换成 \\(\\lambda t\\) 或 \\(\\lambda p\\),概率才开算。</li><li>区间缩放:速率 4/小时、问半小时 → \\(\\lambda t=2\\)。</li><li>稀释:每分钟 10 辆车、白车占 0.2 → 白车 \\(\\sim\\text{Poisson}(2)\\);子类之间独立。</li><li>与指数互为表里:\\(P[\\text{等待}&gt;t]=P[\\,[0,t]\\text{ 内 }0\\text{ 次}\\,]=e^{-\\lambda t}\\)——<strong>泊松管次数,指数管间隔</strong>。</li></ul><p><strong>算一遍</strong>:路口出租车每分钟平均 3 辆,其中 \\(\\tfrac13\\) 是空车,问 2 分钟内等不到空车的概率。</p><ul><li>先稀释:空车速率 \\(=3\\times\\tfrac13=1\\) 辆/分;再缩放:2 分钟 → \\(\\lambda t=2\\)。</li><li>套 pmf:\\(P[\\text{计数}=0]=e^{-2}\\approx0.135\\)。</li><li>这同时就是\"等待时间 \\(&gt;2\\) 分钟\"的概率——泊松管次数、指数管间隔,一体两面。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 固定区间内计数的分布形态</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 同一过程的另一面:相邻事件的等待时间</li><li><a class=\"net-wl\" data-id=\"指数与泊松过程\">指数与泊松过程</a> — 两面关系的专卡(计数↔间隔换算)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 区间拼接 / 多源合并的依据</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — 等到第 \\(n\\) 个事件的总时间(\\(n\\) 段指数间隔之和)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"泊松过程中的次数与等待时间\">泊松过程中的次数与等待时间</a> — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "泊松过程中的次数与等待时间": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:单位时间平均 \\(\\lambda\\) 次索赔,问「某时段恰 k 次」或「下一次还要等多久」——同一过程的两张脸。</p><h4>求解套路</h4><ol><li><strong>数次数</strong> → <a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a>:时段 t 内次数 \\(\\sim\\text{Poisson}(\\lambda t)\\)(速率必须先乘时长)。</li><li><strong>量间隔</strong> → <a class=\"net-wl\" data-id=\"指数分布\">指数分布</a>:相邻事件间隔 \\(\\sim\\text{Exp}(\\text{mean }1/\\lambda)\\);「t 内至少一次」=「等待 \\(\\le t\\)」两算等价。</li><li><a class=\"net-wl\" data-id=\"无记忆性\">无记忆性</a>:已等 s 不影响再等 t 的分布——「旧设备剩余寿命」题直接换新算。</li><li>独立时段次数可加(泊松可加性)。</li></ol><h4>易错</h4><ul><li>\\(\\lambda\\) 是速率还是均值看清题面;时段变了 \\(\\lambda t\\) 要跟着变。</li><li>「第 3 次事件的等待时间」是伽马不是指数(k 个指数之和)。</li></ul>"
+ },
+ "泊松逼近二项": {
+  "kind": "c",
+  "en": "PoissonApproximationToBinomial",
+  "aliases": [
+   "Poisson approximation",
+   "law of rare events"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当试验次数 \\(n\\) 很大、单次成功概率 \\(p\\) 很小、\\(np\\) 适中时,二项分布近似于参数 \\(\\lambda=np\\) 的泊松分布——省掉庞大的组合数计算。</p><p><strong>白话</strong>:1000 张彩票、每张中奖率 0.002,逐张按二项算组合数太笨重;反正\"机会极多、单次极小\",只记住\"平均中 2 张\"这一个数,按泊松查就八九不离十。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\binom{n}{k}p^{k}(1-p)^{n-k}\\;\\approx\\;\\frac{e^{-\\lambda}\\lambda^{k}}{k!},\\qquad \\lambda=np$$</div><ul><li>严格说是极限:\\(n\\to\\infty,\\ p\\to0,\\ np\\to\\lambda\\) 时 \\(\\text{Bin}(n,p)\\to\\text{Poisson}(\\lambda)\\)。</li><li>典型场景:大量保单、每张出险概率极低;大量元件、每个失效概率极低。</li><li>操作就一步:令 \\(\\lambda=np\\),之后全按泊松算。</li><li>副产品解释\"均值=方差\":\\(np(1-p)\\to np\\),二项方差在极限里与均值重合。</li></ul><p><strong>算一遍</strong>:1000 张保单、每张出险概率 0.002,求全年零索赔的概率。</p><ul><li>换参数:\\(\\lambda=np=1000\\times0.002=2\\);按泊松 \\(P[0]=e^{-2}\\approx0.1353\\)。</li><li>精确二项对照:\\(0.998^{1000}\\approx0.1352\\)——几乎重合。</li><li>一步换参免掉组合数;\\(k\\) 再大也照 \\(e^{-2}2^k/k!\\) 算下去。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 被逼近的对象;\\(n\\) 有限时的精确模型</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 逼近的目标;\"机会极多、每次极小\"的极限形态</li><li><a class=\"net-wl\" data-id=\"泊松分布的矩\">泊松分布的矩</a> — 均值=方差性质正是此极限的后果</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 底层构件:\\(n\\) 个小概率伯努利之和</li></ul>"
+ },
+ "独立与不相关": {
+  "kind": "c",
+  "en": "IndependenceVsUncorrelatedness",
+  "aliases": [
+   "independence vs uncorrelatedness",
+   "uncorrelated",
+   "independence implies zero covariance",
+   "uncorrelated vs independent",
+   "独立与零协方差"
+  ],
+  "level": "advanced",
+  "chapter": "p-l13",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>独立与\"协方差为零(不相关)\"是强弱不同的两个概念:<strong>独立 ⇒ Cov=0,但 Cov=0 推不出独立</strong>。协方差只度量线性关系,变量可以有极强的非线性依赖而协方差为零。</p><p><strong>白话</strong>:协方差是把直尺,只量得出\"直线趋势\"。独立是\"彻底不搭界\";不相关只是\"直尺量不出关系\"——弯的关系(比如抛物线)直尺看不见,但关系还在。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X,Y\\ \\text{独立}\\ \\Longrightarrow\\ E[XY]=E[X]E[Y]\\ \\Longrightarrow\\ \\operatorname{Cov}(X,Y)=0;\\qquad \\operatorname{Cov}(X,Y)=0\\ \\not\\!\\!\\Longrightarrow\\ X,Y\\ \\text{独立}$$</div><ul><li>经典反例:\\(X\\) 取 \\(-1,0,1\\) 各 \\(\\tfrac14,\\tfrac12,\\tfrac14\\),令 \\(Y=X^2\\)——\\(Y\\) 完全由 \\(X\\) 决定却 \\(\\operatorname{Cov}=0\\)(\\(E[X]=E[X^3]=0\\)),抛物线关系是纯非线性,线性测度看不见。</li><li>独立解锁全家桶:联合分布可分离、\\(E[XY]=E[X]E[Y]\\)、\\(\\operatorname{Var}(X+Y)=\\operatorname{Var}X+\\operatorname{Var}Y\\)。</li><li>不相关只给小福利:交叉项为零(\\(E[XY]=E[X]E[Y]\\) 这一条成立),但<strong>推不出</strong>联合分布可分离,任意函数 \\(E[g(X)h(Y)]\\) 不再保证分离。</li><li>判独立要回定义:\\(p(x,y)=p_X(x)\\,p_Y(y)\\) 对<strong>所有</strong>格点成立(联合表 = 行列外积)。</li><li>措辞陷阱:题面说 uncorrelated 千万别当 independent 用;说 independent 才能放心用全家桶。</li></ul><p><strong>算一遍</strong>:\\(X\\) 取 \\(-1,0,1\\) 概率 \\(\\tfrac14,\\tfrac12,\\tfrac14\\),\\(Y=X^2\\),逐步验证\"不相关但不独立\"。</p><ul><li>\\(E[X]=-\\tfrac14+0+\\tfrac14=0\\);\\(E[XY]=E[X^3]=0\\) → \\(\\operatorname{Cov}=0-0=0\\):不相关 ✓</li><li>查独立:\\(P[X{=}1,Y{=}1]=\\tfrac14\\),但 \\(P[X{=}1]\\,P[Y{=}1]=\\tfrac14\\times\\tfrac12=\\tfrac18\\),不相等 → 不独立。</li><li>知道 \\(X\\) 就完全知道 \\(Y\\),协方差却是 0——直尺量不出抛物线。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"协方差\">协方差</a> — \"不相关\"即它为零</li><li>事件独立性 — 事件层面的独立概念(上游)</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 联合分布可分离的正式定义</li><li>相关系数 — 不相关 ⟺ \\(\\rho=0\\)</li><li>独立与乘积期望 — 独立 ⇒ Cov=0 的推导枢纽</li><li>零相关即独立(正态特有) — 逆命题唯一成立的场合(二元正态)</li></ul><h4>应用视角</h4><ul><li>独立性判定清单 — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ },
+ "理赔总额的正态近似": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "hard",
+  "chapter": "p-l22",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:n 份独立保单,各自理赔 \\(X_i\\)(任意分布,给均值方差),求总额 \\(S=\\sum X_i\\) 超过某数的概率或分位点。</p><h4>求解套路</h4><ol><li>汇总矩:\\(E[S]=n\\mu\\);独立则 \\(\\mathrm{Var}(S)=n\\sigma^2\\)(相关时用 <a class=\"net-wl\" data-id=\"和的方差\">和的方差</a> 加协方差项)。</li><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> 标准化:\\(P[S&gt;s]\\approx 1-\\Phi\\!\\left(\\frac{s-n\\mu}{\\sigma\\sqrt n}\\right)\\)。</li><li>计数型(整数值)理赔次数 → 加减 0.5 做 <a class=\"net-wl\" data-id=\"连续性修正\">连续性修正</a>。</li><li>反向问「保费定多少使亏损概率 ≤5%」→ 查 <a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> \\(z_{0.95}=1.645\\) 反解。</li></ol><h4>易错</h4><ul><li>方差忘乘 n、或把 \\(\\sigma\\sqrt n\\) 写成 \\(\\sigma n\\)。</li><li>百分位数方向搞反(95th 用 1.645,别用 1.96——那是双侧)。</li></ul>"
+ },
+ "生存函数": {
+  "kind": "c",
+  "en": "SurvivalFunction",
+  "aliases": [
+   "survival function",
+   "尾概率",
+   "尾函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(S(x)=P[X&gt;x]\\):\"活过 x / 损失超过 x\"的概率,与分布函数互补 \\(S=1-F\\)。精算里描述寿命、损失尾部全靠它。</p><p><strong>白话</strong>:全村人排队过一道 80 岁的门槛,\\(S(80)\\) 就是\"迈过去的人占几成\"——F 数的是倒在门槛前的,S 数的是熬过去的,两拨人加起来正好是全村。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$S(x)=P[X&gt;x]=1-F(x)$$</div><ul><li><strong>F 管\"不超过\",S 管\"超过\"</strong>,俩加起来恒等于 1;看到 at least / greater than,先想 S。</li><li>单调<strong>递减</strong>,\\(S(-\\infty)=1\\)、\\(S(\\infty)=0\\)——与 F 的四条性质镜像。</li><li>求\"至少 / 大于\"类问题用它最省事:\\(F(4)=0.8\\Rightarrow S(4)=0.2\\),一步到位。</li><li>保险语境:\"损失超过免赔额 d\"直接读作 \\(S(d)\\)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,问\"至少 5 点\"的概率。</p><ul><li>先看 F:\\(F(4)=P[X\\le4]=\\tfrac46\\)——1 到 4 点占四格。</li><li>取补:\\(S(4)=1-\\tfrac46=\\tfrac26=\\tfrac13\\),正是 5、6 两格。</li><li>题面写 at least 5,直接想 \\(S(4)\\) 一步到位,不用逐点累加。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 互补关系:\\(S=1-F\\),性质全部镜像</li><li>生存函数求期望 — 非负变量 \\(E[X]=\\int_0^\\infty S(x)\\,dx\\) 的捷径</li><li><a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a> — \"损失超过 d 才赔\"就是拿 \\(S(d)\\) 当条件概率分母</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 最常用的生存函数实例:\\(S(x)=e^{-x/\\theta}\\)</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "百分位数": {
+  "kind": "c",
+  "en": "Percentile",
+  "aliases": [
+   "percentile",
+   "quantile",
+   "分位数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(100p\\) 分位数 \\(\\pi_p\\) 是让累积分布函数<strong>首次达到或超过 \\(p\\)</strong> 的最小取值——把\"中位数对半劈\"推广到任意比例 \\(p\\) 的位置度量。严格写法用 \\(\\ge\\),连续、离散通吃。</p><p><strong>白话</strong>:全年级按分数排队,90 分位数就是\"从矮到高数够九成人\"时那条分数线——体检报告说宝宝身高在第 90 百分位,意思是排在他前面的占九成,不是他考了 90 分。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\pi_p=\\min\\{x:\\ F(x)\\ge p\\}\\qquad P[X\\le\\pi_p]\\ge p\\ \\text{ 且 }\\ P[X\\ge\\pi_p]\\ge 1-p$$</div><ul><li>连续且 \\(F\\) 严格递增:直接解 \\(F(\\pi_p)=p\\),\\(\\pi_p=F^{-1}(p)\\) 唯一——考场主形态(先由 \\(f\\) 积出 \\(F\\),注意从支撑下限起积)。</li><li>离散<strong>跳跃</strong>:没有点使 \\(F=p\\) → 取首次 \\(F\\ge p\\) 的跳跃点;<strong>平台</strong>(一整段 \\(F=p\\))→ 分位数不唯一,约定取最小。</li><li>单调搬运:\\(g\\) 严格递增 ⟹ \\(\\pi_p(g(X))=g(\\pi_p(X))\\)(排序不动,分界点直接映射);\\(g\\) 递减则 \\(p\\) 换成 \\(1-p\\)。</li><li>精算落地:偿付能力监管的 99.5% VaR 就是损失分布的 99.5 分位数。</li></ul><p><strong>算一遍</strong>:公交车等待时间在 \\([0,10]\\) 分钟均匀分布,求 70 分位数。</p><ul><li>写出 cdf:\\(F(x)=x/10\\)(等了 \\(x\\) 分钟以内的概率)。</li><li>解 \\(F(\\pi)=0.7\\):\\(\\pi/10=0.7\\Rightarrow\\pi=7\\) 分钟。</li><li>含义对读:七成情况下 7 分钟以内等到车——纵轴 \\(0.7\\) 横切曲线、落回横轴得 \\(7\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 分位数是 cdf 的(广义)反查:纵轴 \\(p\\) 横切、落到横轴</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — \\(p=0.5\\) 特例</li><li>四分位数 — \\(p=0.25/0.75\\) 特例</li><li><a class=\"net-wl\" data-id=\"均匀分布的分位数\">均匀分布的分位数</a> — 下游:均匀分布下的显式解</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 下游:标准化 + 查表</li><li><a class=\"net-wl\" data-id=\"指数分布百分位数\">指数分布百分位数</a> — 下游:指数中位数 \\(\\ln 2/\\lambda\\) 一族</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 分位数函数曲线下面积 = 期望:\\(E[X]=\\int_0^1 F^{-1}(p)\\,dp\\)(第三种量法,积木堆轮廓线)</li></ul>"
+ },
+ "矩": {
+  "kind": "c",
+  "en": "Moment",
+  "aliases": [
+   "moment",
+   "raw moment",
+   "central moment",
+   "原点矩",
+   "中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把期望作用到 \\(X\\) 的幂(原点矩)或偏差的幂(中心矩)得到的一族量,逐阶刻画分布的中心、散度、偏斜与尖峰。名字借自力学的力矩/转动惯量。</p><p><strong>白话</strong>:给分布做体检的一排指标:一阶量\"中心在哪\"、二阶量\"散不散\"、三阶量\"歪不歪\"、四阶量\"尖不尖\"——阶数越高,看的形状细节越细,就像体检单从身高体重一路查到微量元素。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\mu_n'=E[X^n]\\qquad\\qquad \\mu_n=E\\big[(X-\\mu)^n\\big]$$</div><ul><li>一阶原点矩 = 均值 \\(\\mu\\)(first moment);二阶中心矩 = 方差——最常用的两个。</li><li>高阶标准化后给\"形状\":三阶 → 偏度、四阶 → 峰度(各除以 \\(\\sigma\\) 的对应幂,无量纲)。</li><li>力学对应:一阶矩 = 重心,二阶中心矩 = 转动惯量——质量离轴越远越\"难转\",分布越散方差越大。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0,把前两阶矩都算出来。</p><ul><li>一阶原点矩:\\(E[X]=1(0.5)+0(0.5)=0.5\\)——中心(均值)。</li><li>二阶原点矩:\\(E[X^2]=1^2(0.5)+0^2(0.5)=0.5\\);二阶中心矩 \\(E[(X-0.5)^2]=0.5-0.5^2=0.25\\)——散度(方差)。</li><li>同一套\"期望套幂\"的动作,套原值得原点矩、套偏差得中心矩,逐阶往上就是偏度、峰度。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 一切矩都是某个 \\(g(X)\\) 的期望;一阶原点矩即均值</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 二阶中心矩</li><li>偏度 — 三阶(峰度四阶)标准化中心矩,看形状</li><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 在 0 处逐阶求导批量生成原点矩</li><li>联合矩 — 推广到两个变量 \\(E[X^aY^b]\\)</li></ul>"
+ },
+ "矩母函数": {
+  "kind": "c",
+  "en": "MomentGeneratingFunction",
+  "aliases": [
+   "moment generating function",
+   "MGF"
+  ],
+  "level": "basic",
+  "chapter": "p-l32",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量 X 的矩母函数是 \\(M_X(t)=E[e^{tX}]\\):把 X 塞进 \\(e^{tX}\\) 再取期望,得到一个 <strong>t 的函数</strong>(X 已被期望积掉)。分布的全部信息被压进这一个函数——求导取矩、独立和相乘、唯一确定分布,是它的三大用途。</p><p><strong>白话</strong>:把整张概率表压缩成一个\"压缩包\"\\(M(t)\\):信息一点不丢,用法反而更顺手——要均值方差就对包求导(不解压),要合并两个独立变量就把两个包直接相乘,包长什么样还能反查出这是哪个分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$M_X(t)=E\\!\\left[e^{tX}\\right]$$</div><ul><li>离散按概率加权:\\(M_X(t)=\\sum_x e^{tx}\\,p(x)\\);连续积分:\\(M_X(t)=\\int_{-\\infty}^{\\infty} e^{tx} f(x)\\,dx\\)。</li><li>\\(M_X(0)=E[e^0]=1\\) <strong>恒成立</strong>——算完先拿这条自检。</li><li>定义域可能收缩:指数分布 \\(M(t)=\\tfrac{1}{1-\\theta t}\\) 仅在 \\(t&lt;1/\\theta\\) 收敛;题干附的收敛区间本身就是认分布的线索。</li><li>三大用法一句默完:<strong>求导取矩、相乘拼和、认脸识分布</strong>。</li></ul><p><strong>算一遍</strong>:抽奖一半概率得 1 元、一半概率得 2 元,写出奖金 \\(X\\) 的 MGF。</p><ul><li>按定义逐点加权:\\(M(t)=0.5e^{1\\cdot t}+0.5e^{2t}\\)——每个取值 \\(x\\) 变成一项 \\(e^{tx}\\),概率当系数。</li><li>自检:\\(M(0)=0.5+0.5=1\\) ✓(这条恒成立,算完必查)。</li><li>顺手取个矩:\\(M'(t)=0.5e^{t}+e^{2t}\\),\\(M'(0)=0.5+1=1.5\\),正是均值 \\(\\tfrac{1+2}{2}\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li>MGF取矩 — 用途一:在 0 处求 n 次导剥出第 n 阶原点矩</li><li>独立和的MGF — 用途二:独立相加 → MGF 相乘,免卷积</li><li>MGF唯一性 — 用途三:MGF 是分布的指纹,认形状即认分布</li><li>常见分布MGF — 必背速查表(Table 32.1)</li><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 离散侧姊妹工具:\\(P(t)=M(\\ln t)\\)</li><li>LOTUS — 定义本身就是对 \\(g(X)=e^{tX}\\) 取期望</li></ul><h4>应用视角</h4><ul><li>用MGF认分布与拼独立和 — MGF 认脸、取矩、独立和相乘</li></ul>"
+ },
+ "离散均匀分布": {
+  "kind": "c",
+  "en": "DiscreteUniformDistribution",
+  "aliases": [
+   "discrete uniform distribution"
+  ],
+  "level": "basic",
+  "chapter": "p-l15",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在 \\(n\\) 个等距整点(标准形式 \\(1,\\dots,n\\))上<strong>等概率</strong>取值的离散分布,每点概率 \\(1/n\\)。骰子是 \\(n=6\\) 的原型。</p><p><strong>白话</strong>:\\(n\\) 个人抓阄,每根签中签机会一模一样——摇号、点名转盘、骰子全是它;\"均匀\"就是主持人没有偏心,谁也不比谁多一分机会。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x)=\\frac1n\\ (x=1,\\dots,n),\\qquad \\mathrm{E}[N]=\\frac{n+1}{2},\\qquad \\operatorname{Var}(N)=\\frac{n^2-1}{12}$$</div><ul><li>骰子 \\(n=6\\):\\(\\mathrm{E}=3.5\\)、\\(\\operatorname{Var}=35/12\\approx2.92\\)。</li><li>均值仍是\"首尾中点\";方差分母仍是 12,分子换成 \\(n^2-1\\)——别套连续版的 \\((b-a)^2/12\\)。</li><li>连续 vs 离散:平顶密度\"面积当概率\" vs 等高柱子\"逐点点数\"。</li><li>两个独立离散均匀比较(例 15C):枚举格点,每对概率 \\(\\frac1{n\\cdot m}\\),数满足条件的对数。</li></ul><p><strong>算一遍</strong>:三格转盘等概率指向 1、2、3,拿公式和硬算对账。</p><ul><li>公式:\\(E=\\tfrac{3+1}{2}=2\\);\\(\\operatorname{Var}=\\tfrac{3^2-1}{12}=\\tfrac{8}{12}=\\tfrac23\\)。</li><li>硬算:\\(E=\\tfrac{1+2+3}{3}=2\\) ✓;\\(E[X^2]=\\tfrac{1+4+9}{3}=\\tfrac{14}{3}\\),\\(\\operatorname{Var}=\\tfrac{14}{3}-2^2=\\tfrac23\\) ✓</li><li>注意分子是 \\(n^2-1=8\\),不是连续版的 \\((b-a)^2=4\\)——两套公式别串。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"连续均匀分布\">连续均匀分布</a> — 连续对应物</li><li>等可能模型 — 古典概型落到单变量分布上的形态</li><li><a class=\"net-wl\" data-id=\"均匀分布的矩\">均匀分布的矩</a> — 连续版矩公式对照</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 每点 \\(1/n\\) 的最简 pmf</li></ul>"
+ },
+ "第k个次序统计量": {
+  "kind": "c",
+  "en": "KthOrderStatistic",
+  "aliases": [
+   "k-th order statistic",
+   "kth smallest"
+  ],
+  "level": "hard",
+  "chapter": "p-l23",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>iid 样本排序后第 k 小的随机变量 \\(X_{(k)}\\) 的分布;最大(k=n)、最小(k=1)都是特例。密度由\"三堆划分\"给出:要第 k 小恰落在 x,需 k−1 个样本更小、恰 1 个在 x、n−k 个更大。</p><p><strong>白话</strong>:全班 \\(n\\) 个孩子按身高排队,\\(X_{(k)}\\) 就是\"排第 \\(k\\) 位那个孩子\"的身高——每个孩子的身高都随机同分布,但\"第 \\(k\\) 位\"这个<strong>位置</strong>自己也有一套分布,问的不是某个孩子,是那个位置。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X_{(k)}}(x)=\\frac{n!}{(k-1)!\\,1!\\,(n-k)!}\\,\\big(F_X(x)\\big)^{k-1}\\,f_X(x)\\,\\big(1-F_X(x)\\big)^{n-k}$$</div><ul><li>组合意义:系数是把 n 个样本分进「\\(&lt;x\\) / \\(=x\\) / \\(&gt;x\\)」三堆的多项式系数——公式不用背,想马拉松第 k 名就写得出(\\(k-1\\) 人更快、1 人恰在 x、\\(n-k\\) 人更慢)。</li><li>均匀 \\([0,\\theta]\\) 速用:\\(E[X_{(k)}]=\\dfrac{k\\theta}{n+1}\\)(等距分点);特例 max \\(=\\dfrac{n\\theta}{n+1}\\)、min \\(=\\dfrac{\\theta}{n+1}\\)。</li><li>k=n 退化为 \\(nF^{n-1}f\\),k=1 退化为 \\(n(1-F)^{n-1}f\\)。</li><li>SOA 大纲注明一般公式大概率不考,重点仍是 max/min 两端;但多步组合(定 F → 套系数 → 积期望)极易错,如指数均值 1、n=3 取中位数:\\(E=6(\\tfrac14-\\tfrac19)=\\tfrac56\\)。</li></ul><p><strong>算一遍</strong>:三人随机站上 \\([0,1]\\) 的跑道(\\(F(x)=x\\)),问中间那位(\\(k=2\\))平均站在哪。</p><ul><li>速用公式:\\(E[X_{(2)}]=\\dfrac{k\\theta}{n+1}=\\dfrac{2\\times1}{4}=0.5\\)。</li><li>硬算验证:\\(f_{X_{(2)}}=\\tfrac{3!}{1!\\,1!\\,1!}\\,x\\cdot1\\cdot(1-x)=6x(1-x)\\),\\(E=\\int_0^1 6x^2(1-x)\\,dx=6(\\tfrac13-\\tfrac14)=0.5\\) ✓</li><li>三个随机点平均把绳子切成四等段,分点落在 \\(\\tfrac14,\\tfrac24,\\tfrac34\\)——\"等距分点\"直觉对上。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"次序统计量\">次序统计量</a> — 本卡是其一般情形</li><li><a class=\"net-wl\" data-id=\"最大值分布\">最大值分布</a> — k=n 特例</li><li><a class=\"net-wl\" data-id=\"最小值分布\">最小值分布</a> — k=1 特例</li><li><a class=\"net-wl\" data-id=\"多项分布\">多项分布</a> — 三堆划分系数同源(多项式系数)</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — 样本中位数即居中的次序统计量(n 为奇数时 k=(n+1)/2)</li><li><a class=\"net-wl\" data-id=\"连续均匀分布\">连续均匀分布</a> — 均匀情形期望 \\(k\\theta/(n+1)\\) 的底层分布</li></ul>"
+ },
+ "累积分布函数": {
+  "kind": "c",
+  "en": "CumulativeDistributionFunction",
+  "aliases": [
+   "cdf",
+   "distribution function",
+   "分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(F(x)=P[X\\le x]\\):累住\"到 x 为止\"的全部概率。对离散、连续<strong>一视同仁</strong>——知道 F 就等于知道这个随机变量的一切,是求各种范围概率的统一入口。</p><p><strong>白话</strong>:\\(F\\) 像收银机的累计小票:沿数轴从最左端一路扫到 \\(x\\),沿途概率全部记进总账——它报的永远是\"到此为止一共多少\",不是\"这一点是多少\";要某一段的量,拿两张小票相减就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=P[X\\le x]\\qquad P[u&lt;X\\le v]=F(v)-F(u)$$</div><ul><li>四条<strong>必备性质</strong>整块记:非减 · 右连续 · \\(F(-\\infty)=0\\) · \\(F(\\infty)=1\\)。</li><li>连续时 \\(F'(x)=f(x)\\)(光滑 S 型);离散时 \\(F(x)=\\sum_{t\\le x}p(t)\\)(阶梯,跳高 \\(=p(x)\\))。</li><li><strong>\\(F\\) 用 \\(\\le\\) 不是 \\(&lt;\\)</strong>:离散时含端点那一跳;求 \\(P[X&lt;x]\\) 要用跳<strong>前</strong>的值,与 \\(F(x)\\) 差一个 \\(p(x)\\)——差一个跳点答案就错。</li><li>分段 F 求区间概率:直接 \\(F(b)-F(a)\\),先看清端点落在哪一段(例 5A:\\(F(2.5)=1\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求 \\(P[2&lt;X\\le4]\\)。</p><ul><li>两张\"累计小票\":\\(F(4)=\\tfrac46\\)(1 到 4 点),\\(F(2)=\\tfrac26\\)(1、2 点)。</li><li>相减:\\(F(4)-F(2)=\\tfrac26=\\tfrac13\\)——正好数出 \\(\\{3,4\\}\\) 两个点 ✓</li><li>端点自查:区间写法 \\(u&lt;X\\le v\\) 与 \\(F\\) 的 \\(\\le\\) 严丝合缝,右端 4 含、左端 2 不含,一个跳点都不差。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 离散连续通吃的完全刻画</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散:由 pmf 累加,阶梯跳高 \\(=p(x)\\)</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续:求导得密度,\\(f=F'\\)</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — 互补:\\(S=1-F\\),\"F 管不超过,S 管超过\"</li><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 反着用 F:解 \\(F(x)=p\\) 得分位数</li><li>联合累积分布函数 — 二维推广</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "线性插值": {
+  "kind": "c",
+  "en": "LinearInterpolation",
+  "aliases": [
+   "linear interpolation",
+   "插值"
+  ],
+  "level": "basic",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>已知两个点 \\((x_0, y_0)\\)、\\((x_1, y_1)\\),估计中间某处的取值:把两点<strong>连成直线</strong>,按比例取值。</p><div class=\"net-mth\">$$y \\approx y_0 + \\frac{x - x_0}{x_1 - x_0}\\,(y_1 - y_0)$$</div><p><strong>白话</strong>:查地图,已知 8 点在 A 地、10 点在 B 地,问 9 点在哪——假设匀速直线走,取中点。表格只给整格点,格点之间的值就\"拉直线猜\"。</p><h4>关键性质 / 公式</h4><ul><li><strong>反向同式</strong>:由 \\(y\\) 反求 \\(x\\) 就把公式两边互换角色——\\(x \\approx x_0 + \\dfrac{y - y_0}{y_1 - y_0}(x_1 - x_0)\\)。查表反查(\\(p \\to z_p\\))用的正是反向。</li><li>权重解读:\\(y \\approx (1-w)\\,y_0 + w\\,y_1\\),\\(w = \\dfrac{x - x_0}{x_1 - x_0}\\)——离哪个格点近就更信谁。均匀分布分位数 \\((1-p)a + pb\\) 就是这个形态。</li><li>精度:被插函数越接近直线越准;\\(\\Phi(z)\\) 在相邻两位小数格点间近乎线性,插值误差可忽略。</li></ul><p><strong>算一遍</strong>:反查 \\(z_{0.80}\\)(表只给两位小数)。</p><ul><li>夹住:\\(\\Phi(0.84) = 0.7995\\),\\(\\Phi(0.85) = 0.8023\\)。</li><li>权重:\\(w = \\dfrac{0.80 - 0.7995}{0.8023 - 0.7995} = \\dfrac{0.0005}{0.0028} \\approx 0.179\\)。</li><li>插值:\\(z_{0.80} \\approx 0.84 + 0.179 \\times 0.01 = 0.8418\\)(精确值 0.8416,差 0.0002)。</li></ul><h4>考场落点</h4><ul><li><strong>Φ 表反查</strong>:分位数 \\(z_p\\) 落在两格点之间(L21/L09 高频)。</li><li><strong>均匀分布分位数</strong>:\\((1-p)a + pb\\) 本身就是插值(<a class=\"net-wl\" data-id=\"均匀分布的分位数\">均匀分布的分位数</a>)。</li><li><strong>Exam FM</strong>:即期/远期利率表取非整年期、债券收益率试算夹逼后精化,同一招。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"标准正态分布\">标准正态分布</a> — Φ 表两位小数,精细值靠插值</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 反查 \\(z_p\\) 的标配工具</li><li><a class=\"net-wl\" data-id=\"均匀分布的分位数\">均匀分布的分位数</a> — 分位公式即插值形态</li><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 一般分位定义,插值是查表落地手段</li></ul>"
+ },
+ "组合": {
+  "kind": "c",
+  "en": "Combination",
+  "aliases": [
+   "Combinations",
+   "nCr",
+   "组合数",
+   "二项式系数"
+  ],
+  "level": "basic",
+  "chapter": "p-l02",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从 \\(n\\) 个不同对象中取 \\(r\\) 个,<strong>不讲顺序</strong>地选出的方式数。</p><p><strong>白话</strong>:奶茶加料任选两种,\"珍珠 + 椰果\"和\"椰果 + 珍珠\"是同一杯——只问选了哪几样、不问先加哪样,数的就是组合;要是先后有讲究(比赛排名次),那是排列。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$_nC_r=\\binom{n}{r}=\\frac{n!}{r!\\,(n-r)!}$$</div><ul><li>对称性:\\(\\binom{n}{r}=\\binom{n}{n-r}\\)。</li><li>即二项式系数,后续接二项分布。</li><li>计算器用 nCr 键。</li></ul><p><strong>算一遍</strong>:4 种配料(珍珠、椰果、布丁、芋圆)里选 2 种,有几种搭配?</p><ul><li>套公式:\\(\\binom42=\\dfrac{4!}{2!\\,2!}=6\\)。</li><li>枚举核对:珍椰、珍布、珍芋、椰布、椰芋、布芋——正好 6 种 ✓</li><li>对照排列:讲顺序是 \\(4\\times3=12\\),每对被数了 2 次(\\(2!\\)),除回去就是 6——\"组合 = 排列 ÷ 内部排序\"。</li></ul><h4>与其他概念的关系</h4><ul><li>排列 — 讲顺序的对应物,\\(_nP_r=\\,_nC_r\\cdot r!\\)</li><li>等可能模型 — 古典概率里数\"总数 / 有利数\"常用组合</li></ul><h4>应用视角</h4><ul><li>计数与逐步乘链的口径一致 — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "联合均匀分布": {
+  "kind": "c",
+  "en": "JointUniformDistribution",
+  "aliases": [
+   "uniform distribution on a region",
+   "bivariate uniform"
+  ],
+  "level": "basic",
+  "chapter": "p-l25",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\((X,Y)\\) 在区域 R 上均匀分布:密度是常数 \\(1/\\text{Area}(R)\\)(面积的倒数),区域外为 0。独立的 \\(U[0,a]\\times U[0,b]\\) 是矩形特例,密度 \\(1/(ab)\\)。</p><p><strong>白话</strong>:一勺黄油均匀抹满一片吐司,每处厚度一样;吐司越大黄油摊得越薄——厚度就是 \\(1/\\text{面积}\\)。想知道某个角落抹了多少黄油,不用管它在哪,量它占多大面积就够了。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x,y)=\\frac{1}{\\text{Area}(R)}\\quad\\big((x,y)\\in R\\big),\\qquad f(x,y)=0\\ \\text{elsewhere}$$</div><ul><li>为什么是面积倒数:常数密度 c 须满足 \\(c\\cdot\\text{Area}(R)=1\\)——摊得越大、每处越薄。</li><li>矩形特例:独立均匀相乘 \\(f=f_X f_Y=\\dfrac1a\\cdot\\dfrac1b=\\dfrac{1}{ab}\\)。</li><li>密度是常数 ⟹ 概率彻底几何化:落在哪块只看那块<strong>占多大面积</strong>,与位置无关(飞镖直觉)。</li><li>读题关键词:uniformly distributed on/over …。</li></ul><p><strong>算一遍</strong>:\\((X,Y)\\) 均匀落在 \\(2\\times2\\) 的正方形上,求落进左下 \\(1\\times1\\) 小块的概率。</p><ul><li>定密度:\\(\\text{Area}=4\\),\\(f=\\tfrac14\\);自检 \\(\\tfrac14\\times4=1\\) ✓</li><li>区域概率 = 密度 × 面积:\\(P=\\tfrac14\\times1=\\tfrac14\\)。</li><li>恰等于面积比 \\(\\tfrac14\\)——密度是常数,概率彻底几何化,小块搁哪儿都一样。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"连续均匀分布\">连续均匀分布</a> — 一维版;本卡是二维推广</li><li>联合密度函数 — 密度为常数的特例</li><li>几何概率 — 由它派生的\"概率 = 面积比\"算法</li><li>边缘分布是否均匀 — 矩形支撑边缘才均匀,非矩形未必</li><li>连续型独立判据 — 矩形支撑 + 常数密度 ⟹ X⊥Y</li></ul><h4>应用视角</h4><ul><li>联合均匀分布的几何面积法 — 联合均匀下概率 = 面积比,免积分</li></ul>"
+ },
+ "负二项分布": {
+  "kind": "c",
+  "en": "NegativeBinomialDistribution",
+  "aliases": [
+   "negative binomial distribution",
+   "negative binomial",
+   "NB"
+  ],
+  "level": "advanced",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>每次成功概率为 \\(p\\) 的独立重复试验中,<strong>第 \\(k\\) 次成功之前的失败次数</strong> \\(N\\) 所服从的分布。与二项分布互为镜像:二项固定试验数、数成功几次;负二项固定成功数 \\(k\\)、数成功前失败几次。</p><p><strong>白话</strong>:抽卡集齐 3 张 SSR——数的不是一共抽了几次,而是集齐<strong>之前</strong>吃了多少张歪卡:目标(成功数)定死,账本上记的是路上的失败数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\Pr[N=n]=\\binom{k+n-1}{n}p^k(1-p)^n,\\qquad n=0,1,2,\\dots$$</div><ul><li>首原理推导:前 \\(k+n-1\\) 次里恰 \\(k-1\\) 次成功(二项),<strong>最后一次被\"钉死\"是成功</strong>——两段独立相乘;组合数只在前 \\(k+n-1\\) 次里选 \\(n\\) 个失败位。</li><li>参数 \\(k\\) 取正整数、\\(0\\le p\\le 1\\);取值 \\(n=0,1,2,\\dots\\) <strong>无上限</strong>(二项有上限 \\(n\\))。</li><li><strong>约定坑(最易错)</strong>:本卡 \\(N=\\) 失败数(起点 0);另一常见约定取\"第 \\(k\\) 次成功所在的试验序号\" \\(X=N+k\\)(起点 \\(k\\)),pmf 幂次与均值都差一截——读题先定问的是\"失败几次\"还是\"第几次试验\"。</li><li>题面信号:\"until the k-th success / before the third loss\";问\"第 \\(k\\) 次成功恰在第 \\(m\\) 次试验 / 在第 \\(j\\) 次失败之前\"时,用二项首原理直接拆(前 \\(m-1\\) 次 × 最后一次成功)比硬套公式更稳。</li></ul><p><strong>算一遍</strong>:抛硬币(正面算成功,\\(p=0.5\\)),求第 2 次正面之前恰好吃 1 次反面的概率 \\(\\Pr[N=1]\\)。</p><ul><li>套公式:\\(\\binom{2}{1}(0.5)^2(0.5)^1=2\\times0.125=0.25\\)。</li><li>枚举对照:合法序列只有「反正正」「正反正」(最后一次必须是正面),各 \\(1/8\\),合计 \\(2/8=0.25\\) ✓</li><li>组合数 \\(\\binom{2}{1}\\) 只在前两次里挑失败位——正是\"最后一抛被钉死是成功\"的体现。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 镜像对偶:固定试验数数成功 vs 固定成功数数失败;负二项 pmf 也由\"二项 × 最后一抛成功\"推出</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — \\(k=1\\) 特例:等第一次成功前的失败数</li><li><a class=\"net-wl\" data-id=\"伯努利分布\">伯努利分布</a> — 底层单次试验:成功/失败二元</li><li><a class=\"net-wl\" data-id=\"负二项分布的均值方差\">负二项分布的均值方差</a> — \\(E[N]=k(1-p)/p\\)、\\(\\operatorname{Var}=k(1-p)/p^2\\) 及序号换算</li><li><a class=\"net-wl\" data-id=\"负二项分布可加性\">负二项分布可加性</a> — 独立同 \\(p\\) 相加,\\(k\\) 相加</li><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 下游 L33:离散计数分布用 PGF 取矩、证可加性</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项与负二项的固定对调与尾概率对偶\">二项与负二项的固定对调与尾概率对偶</a> — 固定次数问成绩 vs 固定成绩问次数,尾概率互算</li></ul>"
+ },
+ "负二项分布可加性": {
+  "kind": "c",
+  "en": "NegativeBinomialAdditivity",
+  "aliases": [
+   "additivity of negative binomial",
+   "sum of independent negative binomials"
+  ],
+  "level": "basic",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>相互独立、<strong>同一成功概率 \\(p\\)</strong> 的负二项随机变量之和仍是负二项,参数为 \\(\\{\\sum_i k_i,\\ p\\}\\)——\"等 \\(\\sum k_i\\) 次成功\"可拆成一段段独立等待的接力。</p><p><strong>白话</strong>:你在同一个卡池先抽齐 2 张 SSR,朋友接着抽齐 3 张——两人吃的歪卡加起来,和一个人一口气抽齐 5 张吃的歪卡是同一本账;前提是用的<strong>同一个卡池</strong>(同 \\(p\\))。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N_i\\sim \\mathrm{NB}(k_i,\\,p)\\ \\text{独立}\\quad\\Longrightarrow\\quad \\sum_i N_i\\sim \\mathrm{NB}\\Big(\\sum_i k_i,\\ p\\Big)$$</div><ul><li>前提缺一不可:<strong>独立</strong> + <strong>同一个 \\(p\\)</strong>;\\(p\\) 不同不能直接加 \\(k\\)。</li><li>最小例:\\(\\mathrm{NB}(k,p)\\) 本身 = \\(k\\) 段独立几何等待之和(每段等一次成功)。</li><li>用途:和的分布直接写参数,免逐点卷积。</li></ul><p><strong>算一遍</strong>:两个独立几何变量(各数一次正面前的反面数,\\(p=0.5\\))相加,验证和是 \\(\\mathrm{NB}(2,0.5)\\)——算 \\(\\Pr[S=1]\\)。</p><ul><li>卷积硬算:拆法只有 \\((0,1)\\) 和 \\((1,0)\\),\\(0.5\\times0.25+0.25\\times0.5=0.25\\)。</li><li>套 NB 公式:\\(\\binom{2}{1}(0.5)^2(0.5)^1=0.25\\) ✓</li><li>两边对上:参数直接相加(\\(1+1=2\\))就替你做完了整个卷积。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"负二项分布\">负二项分布</a> — 规则的宿主分布</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — 可加性的最小构件:NB = \\(k\\) 个独立几何之和</li><li><a class=\"net-wl\" data-id=\"二项分布可加性\">二项分布可加性</a> — 姊妹规则:同 \\(p\\) 的二项相加 \\(n\\) 相加</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 同类\"参数相加\"规则(泊松连 \\(p\\) 条件都不需要)</li><li>独立和的母函数 — 证明套路:独立和的 PGF/MGF 相乘</li><li>卷积公式 — 可加性成立时绕开的笨办法</li></ul>"
+ },
+ "负二项分布的均值方差": {
+  "kind": "c",
+  "en": "NegativeBinomialMeanAndVariance",
+  "aliases": [
+   "mean and variance of negative binomial",
+   "negative binomial moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l18",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>负二项随机变量(\\(N=\\) 第 \\(k\\) 次成功前的失败数)的期望与方差公式,以及\"失败数 ↔ 试验序号\"的换算规则。</p><p><strong>白话</strong>:每班公交挤得上去的概率是 \\(p\\),要成功上车 \\(k\\) 次,平均得眼睁睁看多少班挤不上的车开走——这两个公式就是给\"白等的车\"记的账;把白等的加上坐上的,才是一共等了几班。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[N]=\\frac{k(1-p)}{p},\\qquad \\operatorname{Var}(N)=\\frac{k(1-p)}{p^2}$$</div><ul><li>记忆:方差 = 均值再除一个 \\(p\\)。</li><li><strong>序号换算</strong>:第 \\(k\\) 次成功的试验序号 \\(=N+k\\),期望须 \\(+k\\)、<strong>方差不变</strong>(平移不改方差);故 \\(E[\\text{序号}]=k+\\dfrac{k(1-p)}{p}=\\dfrac{k}{p}\\)。</li><li>直觉:总试验数期望 \\(k/p\\) = \"平均每 \\(1/p\\) 次出一个成功 × \\(k\\) 个\"(抽卡:\\(p=2\\%\\) 集齐 3 张 SSR 期望 150 抽)。</li><li>\\(k=1\\) 退化为几何:\\(E=\\dfrac{1-p}{p}\\)、\\(\\operatorname{Var}=\\dfrac{1-p}{p^2}\\)。</li></ul><p><strong>算一遍</strong>:抛硬币(\\(p=0.5\\))等 2 次正面,算平均吃几次反面。</p><ul><li>\\(E[N]=\\dfrac{2(0.5)}{0.5}=2\\)——平均吃 2 次反面。</li><li>方差再除一个 \\(p\\):\\(\\operatorname{Var}=2/0.5=4\\)。</li><li>换算试验序号:期望 \\(+k\\) 得 \\(2+2=4=k/p\\) ✓;方差仍是 4——整体平移 2 格,散布不变。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"负二项分布\">负二项分布</a> — 所属分布本体(pmf 与约定见彼)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — \\(E[N]=k(1-p)/p\\) 是期望概念的具体取值</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 平移不变性正是\"序号版方差不变\"的依据</li><li><a class=\"net-wl\" data-id=\"期望的线性\">期望的线性</a> — 序号 \\(=N+k\\) 的期望 \\(+k\\) 即线性性</li><li><a class=\"net-wl\" data-id=\"几何分布\">几何分布</a> — \\(k=1\\) 时的退化公式</li></ul>"
+ },
+ "超几何分布": {
+  "kind": "c",
+  "en": "HypergeometricDistribution",
+  "aliases": [
+   "hypergeometric distribution"
+  ],
+  "level": "advanced",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从 \\(N\\) 个对象(其中 \\(D\\) 个\"次品\")中<strong>不放回</strong>抽 \\(n\\) 个,抽中次品数的分布。因抽走不放回、比例随抽随变,\\(p\\) 不恒定,故<strong>不是二项</strong>——这是与二项的分水岭。</p><p><strong>白话</strong>:一盒 10 颗巧克力里 3 颗有酒心,抓 4 颗不放回——每抓走一颗,盒里的比例就变一次,不能再当\"每次机会均等的独立重复试验\"算;超几何管的就是这种\"越抽池子越小\"的账。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=d]=\\frac{\\dbinom{D}{d}\\dbinom{N-D}{\\,n-d\\,}}{\\dbinom{N}{n}},\\qquad E[X]=n\\frac{D}{N},\\qquad \\operatorname{Var}(X)=n\\frac{D}{N}\\cdot\\frac{N-D}{N}\\cdot\\frac{N-n}{N-1}$$</div><ul><li>pmf 直白读法:分子\"次品选法 × 正品选法\",分母\"总选法\"——纯等可能计数。</li><li>均值与二项完全同款(令 \\(p=D/N\\) 即 \\(np\\));方差比二项多乘<strong>有限总体修正因子</strong> \\(\\frac{N-n}{N-1}&lt;1\\),故不放回方差更小。</li><li>题面信号:without replacement / not replaced → 超几何;with replacement / independently → 二项。</li><li>总体远大于样本时修正因子 \\(\\to1\\),两者数值几乎相同(例 17A 0.9968 vs 例 17B 0.9973)。</li></ul><p><strong>算一遍</strong>:5 个球里 2 个红,不放回抓 2 个,求恰好 1 红。</p><ul><li>pmf:\\(\\dfrac{\\binom{2}{1}\\binom{3}{1}}{\\binom{5}{2}}=\\dfrac{2\\times3}{10}=0.6\\)——分子\"红的选法 × 白的选法\",分母\"总选法\"。</li><li>均值:\\(E[X]=2\\times\\dfrac{2}{5}=0.8\\),和二项(\\(np\\))同款。</li><li>方差:\\(2(0.4)(0.6)\\times\\dfrac{3}{4}=0.36\\),比放回抽(二项)的 \\(0.48\\) 小——有限总体修正因子 \\(\\dfrac{N-n}{N-1}=\\dfrac34\\) 在压方差。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 放回 vs 不放回的对照</li><li><a class=\"net-wl\" data-id=\"组合\">组合</a> — pmf 三个组合数的来源(上游 L02)</li><li>等可能模型 — 分母 \\(\\binom{N}{n}\\) 的等可能选法</li><li><a class=\"net-wl\" data-id=\"二项分布的期望与方差\">二项分布的期望与方差</a> — 均值同款、方差多修正因子</li></ul><h4>应用视角</h4><ul><li>计数与逐步乘链的口径一致 — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "连续均匀分布": {
+  "kind": "c",
+  "en": "ContinuousUniformDistribution",
+  "aliases": [
+   "continuous uniform distribution",
+   "uniform distribution",
+   "rectangular distribution"
+  ],
+  "level": "basic",
+  "chapter": "p-l15",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>区间 \\([a,b]\\) 上每点可能性均等的连续分布,记 \\(X\\sim U(a,b)\\):密度是高 \\(1/(b-a)\\) 的<strong>平顶直线</strong>,概率<strong>正比于区间长度</strong>。最简单的连续分布,保险免赔额/限额题的常客。</p><p><strong>白话</strong>:公交每 10 分钟一班、你随到随等:等待时长在 0 到 10 分钟里对哪一段都不偏心——落在某段的概率只看这段有多长,和它在哪无关。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x)=\\frac{1}{b-a}\\ (a\\le x\\le b),\\qquad F(x)=\\frac{x-a}{b-a},\\qquad \\Pr[c\\le X\\le d]=\\frac{d-c}{b-a}$$</div><ul><li><strong>长度即概率</strong>:看到均匀别急着积分,直接用区间长度之比;子区间超出 \\([a,b]\\) 的部分不计。</li><li>密度积分须为 1、底长 \\(b-a\\),故常值高度只能是 \\(1/(b-a)\\)。</li><li>CDF 从 \\(a\\) 处的 0 <strong>线性</strong>爬到 \\(b\\) 处的 1,斜率恒 \\(1/(b-a)\\)。</li><li>条件到子区间<strong>仍是均匀</strong>:常数密度 ÷ 常数概率还是常数(免赔额/限额题的秒解钥匙)。</li><li>题面信号:uniformly distributed on …;定参套路是\"均值 = 中点\"\"某分位/条件概率 = 某值\"任取两条解 \\(a,b\\)。</li></ul><p><strong>算一遍</strong>:等公交 \\(X\\sim U(0,10)\\)(分钟),求等 2 到 5 分钟的概率。</p><ul><li>密度高度只能是 \\(1/10\\):底 \\(10\\times\\) 高 \\(=1\\)。</li><li>概率即长度比:\\(\\Pr[2\\le X\\le5]=\\dfrac{5-2}{10}=0.3\\),一次积分都不用做。</li><li>越界部分不计:\\(\\Pr[8\\le X\\le12]=\\dfrac{10-8}{10}=0.2\\)——\\([0,10]\\) 之外那截白给。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 平顶密度是其最简示例</li><li><a class=\"net-wl\" data-id=\"均匀分布的矩\">均匀分布的矩</a> — 中点均值、长度²/12 方差</li><li><a class=\"net-wl\" data-id=\"均匀分布的分位数\">均匀分布的分位数</a> — 线性插值分位 + 条件仍均匀</li><li><a class=\"net-wl\" data-id=\"离散均匀分布\">离散均匀分布</a> — 离散对应物</li><li><a class=\"net-wl\" data-id=\"Beta分布\">Beta分布</a> — \\(a=b=1\\) 时退化为 \\(U(0,1)\\) 的推广族</li><li><a class=\"net-wl\" data-id=\"联合均匀分布\">联合均匀分布</a> — 二维版(下游 L25)</li></ul>"
+ },
+ "连续性修正": {
+  "kind": "c",
+  "en": "ContinuityCorrection",
+  "aliases": [
+   "continuity correction",
+   "half-unit correction"
+  ],
+  "level": "advanced",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>用连续的正态去近似<strong>整数值离散</strong>随机变量(二项、泊松、计数)时,把整数 \\(k\\) 摊到区间 \\([k-0.5,\\,k+0.5]\\) 再算——少了它答案会系统性偏差。</p><p><strong>白话</strong>:离散的整数像一排砖,每块砖其实占着 \\([k-0.5,\\,k+0.5]\\) 一整格;用平滑的正态曲线去盖砖,数到 \\(k\\) 就得盖到 \\(k+0.5\\)——不然最后半块砖漏在外头,答案总往一边偏。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X\\le k]\\approx\\Phi\\!\\left(\\frac{k+0.5-\\mu}{\\sigma}\\right),\\qquad P[X\\ge k]\\approx 1-\\Phi\\!\\left(\\frac{k-0.5-\\mu}{\\sigma}\\right)$$</div><ul><li>\\(P[X=k]\\) 用 \\([k-0.5,\\,k+0.5]\\) 的面积。</li><li>边界方向:<strong>含端点(\\(\\le/\\ge\\))往外扩 0.5,不含(\\(&lt;/&gt;\\))往内缩</strong>——拿不准就先把 \\(&gt;k\\) 改写成 \\(\\ge k+1\\) 再外扩。</li><li><strong>数个数才修正</strong>:只有\"离散计数用正态近似\"才加 ±0.5;本身连续的量(损失金额、时间、身高)<strong>不加</strong>,加了反而错。</li><li>题面信号:索赔<strong>件数</strong>/次品数 + \"use the normal approximation\"。</li></ul><p><strong>算一遍</strong>:抛 100 次硬币,正面数 \\(X\\)(\\(\\mu=50\\)、\\(\\sigma=5\\)),正态近似 \\(P[X\\le55]\\)。</p><ul><li>含端点往外扩:\\(55\\to55.5\\);标准化 \\((55.5-50)/5=1.1\\),\\(P\\approx\\Phi(1.1)\\approx0.864\\)。</li><li>不修正就成 \\((55-50)/5=1\\),\\(\\Phi(1)\\approx0.841\\)——第 55 块砖只盖了半块,系统性偏小(精确值 \\(\\approx0.864\\),修正版才对得上)。</li><li>对照:若问的是损失金额这类本身连续的量,直接标准化,加 \\(0.5\\) 反而错。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 拿来近似的连续分布</li><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> — 近似的理论依据</li><li><a class=\"net-wl\" data-id=\"和的正态近似\">和的正态近似</a> — 最常配套的场景:iid 计数之和</li><li><a class=\"net-wl\" data-id=\"二项分布\">二项分布</a> — 被近似的典型离散分布</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 被近似的另一典型</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"理赔总额的正态近似\">理赔总额的正态近似</a> — CLT 拼理赔总额,连续性修正</li></ul>"
+ },
+ "随机变量独立性": {
+  "kind": "c",
+  "en": "IndependenceOfRandomVariables",
+  "aliases": [
+   "independent random variables",
+   "mutual independence"
+  ],
+  "level": "advanced",
+  "chapter": "p-l11",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(X\\) 与 \\(Y\\) 独立 ⟺ 联合分布等于边缘分布的乘积、且对<strong>所有</strong> \\((x,y)\\) 成立——\"知道 \\(X\\) 取什么,不改变 \\(Y\\) 的分布\"。实操判定两条缺一不可:密度可因式分解 <strong>且</strong> 支撑为矩形。</p><p><strong>白话</strong>:两人各摇各的骰子:知道你摇出 6,对我这边每个点数的概率毫无影响——而且这话必须对<strong>所有</strong>组合都成立;有一格不符,独立就破功。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\iff f(x,y)=f_X(x)\\,f_Y(y)\\ \\ \\forall(x,y)\\qquad\\quad f(x_1,\\dots,x_n)=\\prod_{i=1}^{n} f(x_i)$$</div><ul><li><strong>非矩形支撑一票否决</strong>:独立时支撑必为两个一维集合的笛卡尔积(矩形,可含 \\(\\infty\\));\\(0&lt;x&lt;y&lt;1\\)、\\(x+y&lt;1\\) 这类把变量绑在一起的约束,公式再能拆也<strong>一定不独立</strong>——先看支撑再看公式。</li><li>判\"独立\"须每点都验;判\"不独立\"找到一格反例即可(例 11A:\\(p(1,1)=0.40\\neq p_X(1)p_Y(1)=0.42\\))。</li><li>推论:独立 ⟹ \\(E[XY]=E[X]E[Y]\\);逆命题不成立。</li><li>离散同理 \\(p(x,y)=p_X(x)\\,p_Y(y)\\);\\(n\\) 个变量为各自密度连乘。</li></ul><p><strong>算一遍</strong>:联合表 \\(p(0,0)=0.2\\)、\\(p(0,1)=0.3\\)、\\(p(1,0)=0.2\\)、\\(p(1,1)=0.3\\),判独立。</p><ul><li>先求边缘:行加总 \\(p_X(0)=p_X(1)=0.5\\);列加总 \\(p_Y(0)=0.4\\)、\\(p_Y(1)=0.6\\)。</li><li>四格逐一对乘积:\\(0.5\\times0.4=0.2\\) ✓、\\(0.5\\times0.6=0.3\\) ✓(另两格同)——<strong>每格都过</strong>才判独立。</li><li>反过来只需一格:若某格实测 \\(0.25\\neq\\) 乘积 \\(0.2\\),一个反例就判不独立(例 11A 正是如此)。</li></ul><h4>与其他概念的关系</h4><ul><li>事件独立性 — 事件版前身(L03),推广到随机变量</li><li>联合分布 — 判据的左边</li><li>边缘分布 — 判据的右边(乘积)</li><li>独立与乘积期望 — 直接推论(L12)</li><li>连续型独立判据 — 连续版展开(L24)</li><li><a class=\"net-wl\" data-id=\"独立与不相关\">独立与不相关</a> — \"逆不真\"的完整讨论</li></ul><h4>应用视角</h4><ul><li>独立性判定清单 — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
+</body>
+</html>

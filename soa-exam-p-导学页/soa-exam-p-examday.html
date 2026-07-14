@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<!-- 源页: P 考务与冲刺策略(格式/权重/超纲对照/pacing/checklist), 手维护; 壳「冲刺」组挂链。事实依据 SOA 2026-05 Exam P Syllabus PDF 与 SOA 计算器政策页。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · 🎯 考务与冲刺策略</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#a63a3a; --accent-deep:#7c2626; --accent-soft:#f7e8e8; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0; --ok:#1d7a4f; --ok-soft:#e4f1e9;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #4a1d1d);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:62ch;margin:0 0 22px}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600;background:var(--accent-soft);color:var(--accent-deep)}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card p{margin:8px 0}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid3{grid-template-columns:1fr}}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--ok);background:var(--ok-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  .pill-ok{display:inline-block;background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok);
+    border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+  .pill-off{display:inline-block;background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn);
+    border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+  .pill-gap{display:inline-block;background:#fff3d6;color:#8a5c00;border:1px solid var(--hi);
+    border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:12px 16px;margin:12px 0;border:1px solid var(--accent);font-size:15px}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  ul.ck{list-style:none;margin:8px 0;padding:0}
+  ul.ck li{margin:9px 0;padding-left:34px;position:relative;font-size:15.5px}
+  ul.ck li::before{content:"☐";position:absolute;left:6px;top:0;color:var(--accent);font-size:17px}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid #c9d2e0;border-bottom-width:2px;border-radius:6px;
+    padding:1px 7px;font-size:12.5px;white-space:nowrap}
+  mjx-container{max-width:100%}
+  footer{background:#16243d;color:#c4cde0;padding:26px 0;margin-top:30px;font-size:13.5px}
+  footer a{color:var(--hi);text-decoration:none}
+  footer b{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>🎯 考务与冲刺策略</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Exam Strategy · 依据 SOA 2026-05 官方大纲</p>
+    <h1>30 题 · 180 分钟:<em>把力气花在纲上</em></h1>
+    <p class="lead">本页四件事:考试到底长什么样;三大域权重折算成题数;<b>2026 大纲 ↔ 本课程 35 章对照</b>(哪些章已经出纲、别再花时间);最后 4 天与考试当天的执行清单。所有事实取自 SOA 官方 syllabus 与计算器政策页,考前请再瞄一眼官网 Updates。</p>
+  </div>
+</div>
+
+<nav class="modnav" aria-label="本页模块">
+  <a href="#format">考试格式</a>
+  <a href="#weights">权重与题数</a>
+  <a href="#mapping">大纲↔章节对照</a>
+  <a href="#gaps">补丁区</a>
+  <a href="#pacing">三小时怎么花</a>
+  <a href="#checklist">考前清单</a>
+</nav>
+
+<section id="format">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag">Format</span><h2 class="sec-title">考试格式(官方原文要点)</h2></div></div>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>项目</th><th>规则</th><th>对你的含义</th></tr>
+        <tr><td>题量 / 时长</td><td>30 道五选一 MCQ · 3 小时 · Prometric CBT</td><td>平均 6 分钟/题,详见 §05</td></tr>
+        <tr><td>正态表</td><td>考试界面 <b>Exhibit 按钮</b> 内置 PDF 正态表;不允许自带纸质表</td><td>考前练几次「查表 + 插值」手感(<a href="soa-exam-p-ti30xs.html">按键页 §05</a>)</td></tr>
+        <tr><td>Pilot 题</td><td>卷中随机混入少量<b>不计分</b>试测题</td><td>遇到完全没见过的怪题:按流程猜完就走,很可能是 pilot,别让它偷走 15 分钟</td></tr>
+        <tr><td>空题计错</td><td>官方原文:所有未作答题按错误计分</td><td><b>交卷前必须 30/30 全部有答案</b>,纯猜也有 20% 期望</td></tr>
+        <tr><td>答案分布</td><td>无「正确答案均匀分布」的要求,同一字母可以连续出现</td><td>别因为"连着四个 C"就改答案</td></tr>
+        <tr><td>出分</td><td>非正式 pass/fail 于考后 <b>1 小时内</b>发到预约邮箱</td><td>考完当天就知道结果</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="weights">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag">Weights</span><h2 class="sec-title">三大域权重 → 折算成题数</h2></div></div>
+    <p class="sec-sub">2026-05 大纲权重(官方):按 30 题折算,复习时间照这个比例分。</p>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>大纲域</th><th>权重</th><th>≈ 题数</th><th>对应本课程章</th></tr>
+        <tr><td><b>Univariate Random Variables</b> 单变量</td><td><b>44–50%</b></td><td><b>13–15 题</b></td><td>L05–L10 · L15–L21 · 赔付机制(免赔/限额/coinsurance/通胀)</td></tr>
+        <tr><td>General Probability 基础概率</td><td>23–30%</td><td>7–9 题</td><td>L01–L04(集合/组合/条件/贝叶斯)</td></tr>
+        <tr><td>Multivariate 多变量(<b>离散为主</b>)</td><td>23–30%</td><td>7–9 题</td><td>L11–L14 · L16 · L22 CLT · L23 次序统计量</td></tr>
+      </table>
+      <div class="mnemonic"><span class="ic">🧠</span><span class="t"><b>一半的分在单变量</b>——命名分布认脸、数字特征、免赔额限额赔付,是回报率最高的最后冲刺区;基础概率与多变量离散各占四分之一。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="mapping">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag">Syllabus Map</span><h2 class="sec-title">2026 大纲 ↔ 本课程 35 章:哪些已出纲</h2></div></div>
+    <p class="sec-sub">ASM 教材(7th ed)覆盖的是旧大纲。2026 大纲把多元收窄到<b>离散</b> + 次序统计量 + 独立线性组合/CLT,并整体移除了 MGF 与变换。逐类对照(依据大纲 Learning Outcomes 与推荐教材的 exclude 清单):</p>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>课程章</th><th>2026 状态</th><th>说明</th></tr>
+        <tr><td>L01–L23(全部)</td><td><span class="pill-ok">在纲 · 核心</span></td><td>基础概率、单变量全家、离散联合(L11–L14/L16)、CLT(L22)、次序统计量(L23)——冲刺全火力在这里</td></tr>
+        <tr><td>L24–L31 连续联合系</td><td><span class="pill-off">超纲</span></td><td>大纲多元域全部限定 discrete;推荐教材的连续多元章节全部 exclude。<b>对 f(x,y) 做二重积分的题型不再考</b>(独立<b>正态</b>线性组合除外,那是 L21/L22 的活)</td></tr>
+        <tr><td>L32 MGF · L33 PGF</td><td><span class="pill-off">超纲</span></td><td>Learning Outcomes 通篇无 MGF;各推荐教材 MGF 小节全部 exclude</td></tr>
+        <tr><td>L34–L35 变换</td><td><span class="pill-off">超纲</span></td><td>CDF 法 / 密度法 / 雅可比求新分布不在 outcomes 里</td></tr>
+        <tr><td>超几何 · Beta · Gamma</td><td><span class="pill-gap">在纲 · 课程无专章</span></td><td>大纲点名的分布,ASM 旧版没单开章——三张补丁卡见 §04,背完即闭环</td></tr>
+        <tr><td>Coinsurance / 通胀调整赔付</td><td><span class="pill-gap">在纲 · 覆盖较薄</span></td><td>大纲 2e:免赔额 + coinsurance 比例 + 限额 + 通胀的组合赔付;在 <a href="soa-exam-p-e03-payouts-deductible-limit.html">E03</a> 折线框架上加一步「×coinsurance α、损失先 ×(1+r)」即可</td></tr>
+      </table>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最后 4 天纪律:</b>L24–L35 的复习与刷题<b>全部停掉</b>(样题索引页已把这些题标为超纲并默认隐藏);省下的时间投给单变量赔付题与离散联合。E05/E06 串讲页留着,考后学 STAM/FAM 再用。</span></div>
+      <div class="note"><span class="ic">📝</span><span class="t">口径提醒:「连续」没有整体消失——单变量连续分布(均匀/指数/正态/Beta/Gamma)、连续 iid 的次序统计量、正态线性组合、CLT 都<b>在纲</b>;出纲的是「连续<b>联合密度</b>」那一套二重积分与变换。以 SOA 官网当期 syllabus 为准。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="gaps">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag">Patch Cards</span><h2 class="sec-title">补丁区:三张分布卡 + 一本必读小册子</h2></div></div>
+    <p class="sec-sub">大纲点名、课程没单开章的内容——三个分布各一张卡(核心三件套 + 认脸),外加大纲指定必熟悉的《Risk and Insurance》概念速记。</p>
+    <div class="grid3">
+      <div class="card accent">
+        <h3>超几何 Hypergeometric</h3>
+        <p class="dim">N 件里 K 件次品,<b>不放回</b>抽 n 件,数抽到的次品数。题眼:without replacement。</p>
+        <div class="formula"><span class="name">pmf · 期望 · 方差</span>
+          \(P[X=k]=\dfrac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}\)<br>
+          \(E[X]=n\dfrac{K}{N}\),&nbsp; \(\mathrm{Var}=n\dfrac{K}{N}\Big(1-\dfrac{K}{N}\Big)\dfrac{N-n}{N-1}\)
+        </div>
+        <p class="dim">与二项唯一区别:不放回 → 方差多乘修正因子 \(\frac{N-n}{N-1}\)(&lt;1,比二项瘦)。N 很大时 ≈ 二项。</p>
+      </div>
+      <div class="card accent">
+        <h3>Beta(a,b) 于 (0,1)</h3>
+        <p class="dim">「比例 / 概率本身」的分布。题眼:取值限定在 0 到 1 之间、\(x^{a-1}(1-x)^{b-1}\) 形状。</p>
+        <div class="formula"><span class="name">pdf · 期望 · 方差</span>
+          \(f(x)=\dfrac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}x^{a-1}(1-x)^{b-1}\)<br>
+          \(E[X]=\dfrac{a}{a+b}\),&nbsp; \(\mathrm{Var}=\dfrac{ab}{(a+b)^2(a+b+1)}\)
+        </div>
+        <p class="dim">Beta(1,1)=U(0,1);众数 \(\frac{a-1}{a+b-2}\)(a,b&gt;1);L10 例 10A 的 \(cx^2(1-x)\) 就是 Beta(3,2)。整数参数时直接展开多项式积分即可,不必背 Γ。</p>
+      </div>
+      <div class="card accent">
+        <h3>Gamma(α,θ)</h3>
+        <p class="dim">「α 个独立指数(均值 θ)之和」。题眼:等第 α 次事件的总时间。</p>
+        <div class="formula"><span class="name">pdf · 期望 · 方差</span>
+          \(f(x)=\dfrac{x^{\alpha-1}e^{-x/\theta}}{\Gamma(\alpha)\,\theta^{\alpha}}\)<br>
+          \(E[X]=\alpha\theta\),&nbsp; \(\mathrm{Var}=\alpha\theta^2\)
+        </div>
+        <p class="dim">α=1 退化为指数;整数 α 的概率可用泊松过程互化(第 α 次到达在 t 前 ⇔ t 内到达 ≥α 次)。积分口袋公式 \(\int_0^\infty x^n e^{-x/\theta}dx=n!\,\theta^{n+1}\) 见 <a href="soa-exam-p-calculus.html">∫ 速查</a>。</p>
+      </div>
+    </div>
+
+    <div class="card accent">
+      <h3>《Risk and Insurance》必读速记(SOA 官方 study note <a href="../soa-exam-p-risk-and-insurance-p2105.pdf">P-21-05 ↗</a>,16 页)</h3>
+      <p class="dim">大纲原文:「the candidate is expected to be familiar with the concepts introduced in "Risk and Insurance"」。数学部分(频率×严重度、\((X-d)_+\)、混合分布、资金池)课程已全覆盖;下面是<b>课程没讲的概念点</b>,可能出概念判断题:</p>
+      <table class="map">
+        <tr><th>概念</th><th>一句话</th></tr>
+        <tr><td><b>Peril</b>(损因)vs <b>Hazard</b>(危险因素)</td><td>peril = 造成损失的直接原因(火灾/盗窃/心脏病);hazard = 提高损失概率或程度的<b>条件</b>(吸烟、老化电线、住地震带)</td></tr>
+        <tr><td><b>净保费 vs 毛保费</b></td><td>net/benefit premium = 期望赔付 \(E[Y]\);gross premium = 净保费 + 费用与利润加载(小册子例:750 × 130% = 975)</td></tr>
+        <tr><td><b>资金池定理</b></td><td>n 份独立保单:\(\mathrm{SD}=\sqrt n\,\sigma \lt n\sigma\),变异系数 \(\tfrac{\sigma}{\sqrt n\,\mu}\to 0\)——保险公司靠大数摊薄相对风险;买保险<b>不改变</b>损失的期望,买的是消灭方差</td></tr>
+        <tr><td><b>可保风险三条件</b></td><td>①损失足够重大(值得用保费换确定性);②损失定义清晰且<b>非投保人可控</b>;③各保单损失<b>合理独立</b>(不保同一条街所有店铺的火灾)</td></tr>
+        <tr><td><b>免赔额为什么存在</b></td><td>①小额损失不触发理赔,省处理成本;②赔付降低 → 保费便宜;③投保人留有敞口,有动力防损。副作用:可能<b>虚报损失</b>找回免赔额</td></tr>
+        <tr><td><b>限额为什么存在</b></td><td>①护住保险公司偿付能力;②给保险人的风险封顶;③不同限额档位 = 不同价位的产品</td></tr>
+        <tr><td><b>通胀方向题</b> ⭐</td><td>损失按 r 通胀、免赔额/限额<b>固定不涨</b>:固定<b>免赔额</b> → 赔付增速<b>快于</b> r(免赔额被通胀"变相调低");固定<b>限额</b> → 赔付增速<b>慢于</b> r(限额被"变相收紧")。方向背反,考概念判断</td></tr>
+      </table>
+      <div class="note"><span class="ic">📝</span><span class="t">小册子 §VIII 的连续例(15% 住院率 × 指数费用的混合分布、免赔额 5、80% coinsurance)与 E01/E03 套路完全同款——把 <a href="soa-exam-p-e03-payouts-deductible-limit.html">E03</a> 走熟即等效覆盖其计算部分。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="pacing">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag">Pacing</span><h2 class="sec-title">180 分钟怎么花:两轮法</h2></div></div>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>阶段</th><th>预算</th><th>动作</th></tr>
+        <tr><td><b>第一轮</b>(0–110 分钟)</td><td>≤4 分钟/题</td><td>顺序过 30 题:会的当场解决;4 分钟没有思路 → 蒙一个暂定答案 + <b>Flag 标记</b>,立刻走人。目标:第一轮结束时 30 题全有答案、难题都有标记</td></tr>
+        <tr><td><b>第二轮</b>(110–165 分钟)</td><td>剩余 ≈55 分钟</td><td>只回标记题,按「感觉最有戏」的顺序啃;每题上限 8 分钟</td></tr>
+        <tr><td><b>收尾</b>(最后 15 分钟)</td><td>—</td><td>核对:无空题、Flag 全处理;别在最后 3 分钟大改已有把握的答案</td></tr>
+      </table>
+      <div class="note tip"><span class="ic">💡</span><span class="t"><b>止损红线 6 分钟:</b>单题超过 6 分钟还在硬算,大概率方向错了或者它是 pilot——蒙掉标记走人。30 题 × 20% 基础命中,空题才是唯一不可原谅的丢分。</span></div>
+      <div class="note"><span class="ic">📝</span><span class="t">选项利用:五选一常可<b>反代选项</b>(分位数、免赔额参数题)或量纲/范围排除 2–3 个;概率题算出 &gt;1 或 &lt;0 立即回头查积分限。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag">Checklist</span><h2 class="sec-title">考前一天 & 当天清单</h2></div></div>
+    <div class="card accent">
+      <h3>考前一天(7/15)</h3>
+      <ul class="ck">
+        <li>确认 Prometric 预约邮件:考场地址、报到时间(按邮件要求提前到场)</li>
+        <li>证件:与报名姓名<b>完全一致</b>的有效带照片证件(以 SOA/Prometric 邮件要求为准)</li>
+        <li>计算器:TI-30XS MultiView 在允许清单内 ✓;备好新电池或备用机(允许带多台在册型号)</li>
+        <li>过一遍 <a href="soa-exam-p-ti30xs.html">TI-30XS 按键页</a> §05 查表插值 + §06 1-Var Stats,手感留到考场</li>
+        <li>刷题止于晚饭前;晚上只翻 <a href="soa-exam-p-formulas.html">公式总表</a> 星级卡 + §04 三张补丁卡</li>
+      </ul>
+      <h3>考试当天(7/16)</h3>
+      <ul class="ck">
+        <li>进场前:计算器<b>清内存并准备当场演示</b>(TI-30XS:<span class="kbd">2nd</span> <span class="kbd">reset</span> <span class="kbd">2</span>)——官方要求向监考展示</li>
+        <li>随身物品按考场规定入柜;草稿用具由考场提供</li>
+        <li>开考先点一下 <b>Exhibit</b> 确认正态表位置,再开第 1 题</li>
+        <li>按 §05 两轮法执行;情绪波动时默念:pilot 题不计分,空题才丢分</li>
+        <li>考完 1 小时内查邮箱看非正式结果</li>
+      </ul>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>计算器红线:</b>使用不在册型号 = 成绩作废。允许清单(SOA 官方):BA-35 · BA II Plus(含 Professional)· TI-30Xa · TI-30XII(S/B)· TI-30XS/XB MultiView。</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P · 考务与冲刺策略</b> · 手维护源页;事实依据 SOA「Probability Exam – May 2026」Syllabus PDF 与 SOA 计算器政策页(考前请核官网 Updates)。配套:<a href="soa-exam-p-samples.html">📝 官方样题索引</a> · <a href="soa-exam-p-ti30xs.html">⌨ TI-30XS 按键</a> · <a href="soa-exam-p-formulas.html">Σ 公式总表</a></p>
+  </div>
+</footer>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+
+</body>
+</html>

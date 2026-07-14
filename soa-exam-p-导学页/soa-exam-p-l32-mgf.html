@@ -208,6 +208,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -215,7 +227,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L32 · 矩母函数</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -262,7 +274,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -303,6 +314,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>直接按定义加权:\(M(t)=E[e^{tX}]=0.5e^{0}+0.3e^{t}+0.2e^{2t}=0.5+0.3e^{t}+0.2e^{2t}\)。<br>
       代 \(t=3\):\(M(3)=0.5+0.3e^{3}+0.2e^{6}=0.5+6.0257+80.6857=87.21142\)。</p>
       <span class="ans">M(t)=0.5+0.3eᵗ+0.2e²ᵗ　M(3)=87.21142</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 按定义写 MGF</td><td>\(M_X(t)=E[e^{tX}]\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 离散期望:按 pmf 加权求和(LOTUS)</td><td>\(E[e^{tX}]=\sum_x e^{tx}p(x)=0.5+0.3e^{t}+0.2e^{2t}\)</td><td class="xr"><a href="soa-exam-p-l07-mean.html">L07 期望 ↗</a></td></tr>
+        <tr><td>③ 代 \(t=3\) 求值(顺手自检 \(M(0)=1\))</td><td>\(M(3)=0.5+0.3e^{3}+0.2e^{6}=87.21142\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -310,6 +328,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">\(X\) 服从均值 \(\theta\) 的指数分布,\(f(x)=\tfrac1\theta e^{-x/\theta}\ (x\ge0)\)。求 \(M_X(t)\)。</p>
       <p>按定义积分:\(M(t)=\displaystyle\int_0^\infty e^{tx}\,\frac{e^{-x/\theta}}{\theta}\,dx=\int_0^\infty \frac{e^{(t-1/\theta)x}}{\theta}\,dx\)。仅当 \(t-\tfrac1\theta&lt;0\)(即 \(t&lt;\tfrac1\theta\))积分收敛,得 \(M(t)=\dfrac{1}{1-\theta t}\)。</p>
       <span class="ans">M(t)=1/(1−θt),　t &lt; 1/θ</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 按定义写连续 MGF 积分</td><td>\(M(t)=\int_0^\infty e^{tx}f(x)\,dx\)</td><td class="xr"><span class="here">本章</span> · <a href="soa-exam-p-l07-mean.html">L07 期望 ↗</a></td></tr>
+        <tr><td>② 代指数密度、合并指数项</td><td>\(f(x)=\tfrac1\theta e^{-x/\theta}\ \Rightarrow\ \int_0^\infty\tfrac{1}{\theta}e^{(t-1/\theta)x}\,dx\)</td><td class="xr"><a href="soa-exam-p-l20-exponential-distribution.html">L20 指数 ↗</a></td></tr>
+        <tr><td>③ 判收敛条件、积出闭式</td><td>\(t&lt;\tfrac1\theta\) 时收敛,\(M(t)=\tfrac{1}{1-\theta t}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>定义域会变小:</b>指数 MGF 只在 \(t&lt;1/\theta\) 有定义——考试给闭式 MGF 时常附一句 "\(-\infty&lt;t&lt;1/\theta\)",这个收敛区间本身就是提示分布的线索。</span></div>
   </div>
@@ -362,7 +387,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <circle cx="120" cy="94" r="4" fill="#9d174d"/>
           <text x="126" y="108" font-size="10" fill="#9d174d">(0, 1)</text>
           <line x1="72" y1="106" x2="168" y2="82" stroke="var(--hi)" stroke-width="2" stroke-dasharray="4 3"/>
-          <text x="150" y="66" font-size="10" fill="#9d174d">斜率 = M′(0) = E[X]</text>
+          <text x="140" y="82" font-size="10" fill="#9d174d">斜率 = M′(0) = E[X]</text>
         </svg>
         <div class="cap">曲线过 \((0,1)\);\(t=0\) 处<b>切线斜率 = 均值</b></div>
       </div>
@@ -375,6 +400,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       求二阶导:\(M''(t)=\dfrac{(5^2)(3)(4)}{(1-5t)^{5}}=\dfrac{300}{(1-5t)^5}\),故 \(M''(0)=300=E[X^2]\)。<br>
       于是 \(\mathrm{Var}(X)=E[X^2]-(E[X])^2=300-15^{2}=300-225=75\)。</p>
       <span class="ans">E[X]=15　E[X²]=300　Var(X)=75</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 一阶导、代 \(t=0\) 取均值</td><td>\(E[X]=M'(0)=15\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 二阶导、代 \(t=0\) 取二阶矩</td><td>\(E[X^2]=M''(0)=300\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 方差 = 二阶矩减均值平方</td><td>\(\mathrm{Var}(X)=E[X^2]-(E[X])^2=300-225=75\)</td><td class="xr"><a href="soa-exam-p-l08-variance-moments.html">L08 方差 ↗</a></td></tr>
+      </table></div>
     </div>
     <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>最常翻车处:</b>忘了代 \(t=0\)。\(M'(t)\) 还是 \(t\) 的函数,不是 \(E[X]\);必须<b>先求导、后令 \(t=0\)</b>。也别把 \(M''(0)\) 当成方差——那是 \(E[X^2]\),还要减 \((E[X])^2\)。</span></div>
   </div>
@@ -438,6 +470,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>由 Example 32B,\(M_X(t)=\dfrac{1}{1-2t}\),\(M_Y(t)=\dfrac{1}{1-5t}\)。独立相乘:</p>
       <p>$$M_{X+Y}(t)=M_X(t)M_Y(t)=\frac{1}{(1-2t)(1-5t)}$$</p>
       <span class="ans">M_{X+Y}(t) = 1 / [(1−2t)(1−5t)]</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 写出两个指数各自的 MGF</td><td>\(M_X(t)=\tfrac{1}{1-2t},\ \ M_Y(t)=\tfrac{1}{1-5t}\)</td><td class="xr"><span class="here">本章 §01</span> · <a href="soa-exam-p-l20-exponential-distribution.html">L20 指数 ↗</a></td></tr>
+        <tr><td>② 独立 ⇒ 和的 MGF 相乘</td><td>\(M_{X+Y}(t)=M_X(t)\,M_Y(t)=\tfrac{1}{(1-2t)(1-5t)}\)</td><td class="xr"><span class="here">本章 §03</span> · <a href="soa-exam-p-l11-joint-distribution.html">L11 独立 ↗</a></td></tr>
+      </table></div>
     </div>
 
     <div class="card accent">
@@ -596,13 +634,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc">
         <h4>定义 / 取矩</h4>
         <p>\(M_X(t)=E[e^{tX}]\),\(M_X(0)=1\)</p>
-        <p>\(M_X^{(n)}(0)=E[X^n]\)</p>
+        <p><span class="fx-de" data-tip="推导:e^(tX) 泰勒展开逐项取期望,求导 n 次代 t=0 只剩 E[X^n]" tabindex="0">推</span>\(M_X^{(n)}(0)=E[X^n]\)</p>
         <p>\(E[X]=M'(0)\),\(\mathrm{Var}=M''(0)-\big(M'(0)\big)^2\)</p>
         <p>联合 MGF:\(M(t_1,t_2)=E[e^{t_1X+t_2Y}]\),\(\dfrac{\partial^2 M}{\partial t_1\partial t_2}\Big|_{(0,0)}=E[XY]\)</p>
       </div>
       <div class="cc t">
         <h4>独立和 / 唯一性</h4>
-        <p>\(X\perp Y:\ M_{X+Y}=M_XM_Y\)</p>
+        <p><span class="fx-de" data-tip="推导:e^(t(X+Y))=e^(tX)·e^(tY),独立时期望拆成乘积" tabindex="0">推</span>\(X\perp Y:\ M_{X+Y}=M_XM_Y\)</p>
         <p>MGF 唯一确定分布(认形状)</p>
         <p>指数 \(\tfrac{1}{1-\theta t}\) · 伽马 \(\tfrac{1}{(1-\theta t)^\alpha}\)</p>
         <p>泊松 \(e^{\lambda(e^t-1)}\) · 正态 \(e^{\mu t+\sigma^2t^2/2}\) · 二项 \((1-p+pe^t)^n\)</p>
@@ -611,44 +649,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 32 原文用词</span><h2 class="sec-title">矩母函数 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"MGF / 矩 / 独立"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 32</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">moment generating function</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>矩母函数(MGF)</td><td class="root">generate(生成)→ 求导即"生"出各阶矩</td></tr>
-          <tr><td class="en">moment</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>矩</td><td class="root">\(E[X^n]\) 第 \(n\) 阶(原点)矩</td></tr>
-          <tr><td class="en">raw moment</td><td class="ipa">/rɔː/</td><td><span class="pos n">n.</span></td><td>原点矩</td><td class="root">raw=未中心化,\(E[X^n]\);中心矩绕 \(\mu\)</td></tr>
-          <tr><td class="en">derivative</td><td class="ipa">/dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>导数</td><td class="root">\(n\)-th derivative at 0 = 第 \(n\) 阶矩</td></tr>
-          <tr><td class="en">multiplicative</td><td class="ipa">/ˌmʌltɪˈplɪkətɪv/</td><td><span class="pos adj">adj.</span></td><td>乘性的</td><td class="root">独立和 → MGF 相乘</td></tr>
-          <tr><td class="en">unique</td><td class="ipa">/juˈniːk/</td><td><span class="pos adj">adj.</span></td><td>唯一的</td><td class="root">分布 ↔ MGF 一一对应,认形状</td></tr>
-          <tr><td class="en">converge</td><td class="ipa">/kənˈvɜːrdʒ/</td><td><span class="pos v">v.</span></td><td>收敛</td><td class="root">积分 converges 才有定义(定义域)</td></tr>
-          <tr><td class="en">closed form</td><td class="ipa">/kloʊzd/</td><td><span class="pos n">n.</span></td><td>闭式 / 封闭形式</td><td class="root">常见分布 MGF 有 closed form</td></tr>
-          <tr><td class="en">Central Limit Theorem</td><td class="ipa">/ˈsɛntrəl/</td><td><span class="pos n">n.</span></td><td>中心极限定理</td><td class="root">MGF 乘积取极限 → 正态,CLT 之桥</td></tr>
-          <tr><td class="en">joint moment generating function</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合矩母函数</td><td class="root">joint=联合,\(E[e^{t_1X+t_2Y}]\),两变量版 MGF</td></tr>
-          <tr><td class="en">bivariate distribution</td><td class="ipa">/baɪˈvɛəriət/</td><td><span class="pos n">n.</span></td><td>双变量分布</td><td class="root">bi(二)+ variate(变量)→ \((X,Y)\) 联合分布</td></tr>
-          <tr><td class="en">partial derivative</td><td class="ipa">/ˈpɑːrʃəl dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>偏导数</td><td class="root">partial=只对一个变量求;mixed partial 混合偏导 → \(E[XY]\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">the moment generating function of X is …</div><div class="z">X 的矩母函数为……</div></div>
-        <div class="ph"><div class="e">calculate the variance of X</div><div class="z">求 X 的方差</div></div>
-        <div class="ph"><div class="e">find E[X³]</div><div class="z">求 X 的三阶(原点)矩</div></div>
-        <div class="ph"><div class="e">are mutually independent</div><div class="z">(诸变量)相互独立</div></div>
-        <div class="ph"><div class="e">the sum of independent random variables</div><div class="z">独立随机变量之和</div></div>
-        <div class="ph"><div class="e">the mean of the variable is …</div><div class="z">该变量的均值为……</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -688,5 +688,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L09 · 分位数</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -228,29 +298,90 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#def">定义</a>
   <a href="#cont">连续型</a>
   <a href="#disc">离散型</a>
   <a href="#trans">变换</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完分位数你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 说清 \(100p\) 分位数 \(\pi_p\) 的定义:让 \(F(\pi_p)\ge p\) 的<b>最小</b>值,并认出中位数 = 50 分位、四分位数 = 25/75 分位。</p>
-        <p style="margin-bottom:0">✅ 连续型解 \(F(\pi_p)=p\) 求分位数(含中位数)。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义 / 连续</h4>
+        <p>\(\pi_p=\min\{x:F(x)\ge p\}\)</p>
+        <p>连续严增:\(F(\pi_p)=p\)</p>
+        <p>median = 50 分位;\(Q_1\)=25、\(Q_3\)=75 分位</p>
+      </div>
+      <div class="cc t">
+        <h4>离散 / 变换 / 度量</h4>
+        <p>离散跳跃:取首次 \(F\ge p\);平台取 min</p>
+        <p>样本中位数:奇数取中间,偶数取中间两项均值</p>
+        <p><span class="fx-de" data-tip="推导:g 递增保序:X≤π_p ⟺ g(X)≤g(π_p),概率原封搬过去" tabindex="0">推</span>\(g\) 递增:\(\pi_p(g(X))=g(\pi_p)\)</p>
+        <p>range \(=\max-\min\);midrange \(=\dfrac{\min+\max}{2}\)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>说清 <b>\(100p\) 分位数 \(\pi_p\)</b> 的定义:让 \(F(\pi_p)\ge p\) 的<b>最小</b>值,并认出中位数 = 50 分位、四分位数 = 25/75 分位。</li>
+          <li>连续型解 \(F(\pi_p)=p\) 求分位数(含中位数);离散型盯 cdf 的<b>跳跃点</b>,用 \(\ge\) 而非 \(=\) 定位,知道 ASM 对离散<b>分布</b>不定义中位数、只定义<b>样本</b>中位数。</li>
+          <li>会算最小值、最大值、<b>range</b> 和 <b>midrange</b>,并用<b>单调变换</b>搬运分位数。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 离散型盯 cdf 的<b>跳跃点</b>,用 \(\ge\) 而非 \(=\) 定位分位数;知道 ASM 对离散<b>分布</b>不定义中位数、只定义<b>样本</b>中位数。</p>
-        <p style="margin-bottom:0">✅ 会算最小值、最大值、<b>range</b> 和 <b>midrange</b>,并用单调变换搬运分位数。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>标准流程:给 \(f\) → 先积出 \(F\)(注意支撑下限从哪起积)→ 令 \(F(x)=p\) 解方程。</li>
+          <li>反解参数型:给 \(F(x)=x^a\) 这类带参 cdf + 一个分位数值,先解出参数再求另一个分位数(练 9.4);指数分布给中位数反求 \(\lambda\)(练 9.6),顺手背下<b>指数中位数 \(=\ln 2/\lambda\)</b>。</li>
+          <li>"difference between the 30th and 70th percentiles" → 老老实实解两次再相减(练 9.7)。</li>
+          <li>读题看到 <b>sample / 离散取值</b> → 切换到排序取中的样本口径,偶数样本取中间两项平均(练 9.14)。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="range 与 midrange">● range 与 midrange</button><button class="chip" data-card="中位数">● 中位数</button><button class="chip" data-card="四分位数">● 四分位数</button><button class="chip" data-card="百分位数">◆ 百分位数</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 10 / 全章 23)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>9.1</b></td><td>三角密度图读 25 分位(相似三角形)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">三角密度图求分位数的干净入门老真题(110-S85)</td></tr>
+<tr class="kxd" data-kxq="9.1" style="display:none"><td colspan="4"><div class="kx-qtx">Let the continuous random variable \( X \) have the density function \( f(x) \) as shown in the figure below (a straight line rising from the origin \( (0,0) \) to the point \( (a, \tfrac{1}{4}) \), and 0 elsewhere). What is the 25th percentile of the distribution of \( X \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 2 \)</span><span class="kx-opt"><b>(B)</b> \( 4 \)</span><span class="kx-opt"><b>(C)</b> \( 8 \)</span><span class="kx-opt"><b>(D)</b> \( 16 \)</span><span class="kx-opt"><b>(E)</b> \( 32 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;面积为1定右端点a</td><td>\( \tfrac{1}{2}\,a\cdot\tfrac{1}{4}=1\Rightarrow a=8 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;相似三角形面积¼→底取半</td><td>\( \pi_{0.25}=\tfrac{1}{2}(8)=4 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>9.4</b></td><td>反解参数 F=x^a 再求另一分位</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.4" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 套路②反解参数范式题(练 9.4)</td></tr>
+<tr class="kxd" data-kxq="9.4" style="display:none"><td colspan="4"><div class="kx-qtx">A random variable has the following distribution function: \( F(x) = \begin{cases} 0 &amp; x&lt;0 \\ x^a &amp; 0\le x\le 1 \\ 1 &amp; x&gt;1 \end{cases} \). The 30th percentile of the distribution is 0.4. Calculate the 70th percentile of the distribution.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.762274" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;由30分位反解参数a</td><td>\( 0.4^a=0.3\Rightarrow a=\dfrac{\ln 0.3}{\ln 0.4}=1.313964 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;令 F=0.7 求70分位</td><td>\( x^{1.313964}=0.7 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解出 x</td><td>\( x=0.7^{1/1.313964}=0.762274 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.5</b></td><td>指数密度积出 F 求 25 分位(标准流程)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.5" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">标准流程「积 F 令 =p」的代表老真题(110-W96)</td></tr>
+<tr class="kxd" data-kxq="9.5" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) be a continuous random variable with density function \( f(x) = \begin{cases} \tfrac{1}{2}e^{-x/2} &amp; \text{for } x&gt;0 \\ 0, &amp; \text{otherwise} \end{cases} \). Determine the 25th percentile of the distribution of \( X \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \ln\frac{4}{9} \)</span><span class="kx-opt"><b>(B)</b> \( \ln\frac{16}{9} \)</span><span class="kx-opt"><b>(C)</b> \( \ln 4 \)</span><span class="kx-opt"><b>(D)</b> \( 2 \)</span><span class="kx-opt"><b>(E)</b> \( \ln 16 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;积出 cdf</td><td>\( F(x)=\int_0^x \tfrac{1}{2}e^{-u/2}\,du=1-e^{-x/2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;令 F=0.25</td><td>\( e^{-x/2}=0.75 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解 x</td><td>\( x=-2\ln 0.75=2\ln\tfrac{4}{3}=\ln\tfrac{16}{9} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.6</b></td><td>指数分布给中位数反求 λ</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.6" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 套路②:背下指数中位数 =ln2/λ(练 9.6,110-S90)</td></tr>
+<tr class="kxd" data-kxq="9.6" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) be a continuous random variable with density function \( f(x) = \begin{cases} \lambda e^{-\lambda x} &amp; \text{for } x&gt;0 \\ 0, &amp; \text{otherwise} \end{cases} \). If the median of this distribution is \( \tfrac{1}{3} \), then \( \lambda = \)</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{1}{3}\ln 12 \)</span><span class="kx-opt"><b>(B)</b> \( \frac{1}{3}\ln 2 \)</span><span class="kx-opt"><b>(C)</b> \( 2\ln\frac{3}{2} \)</span><span class="kx-opt"><b>(D)</b> \( 3\ln 2 \)</span><span class="kx-opt"><b>(E)</b> \( 3 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;积出 cdf 令中位为½</td><td>\( 1-e^{-\lambda/3}=\tfrac{1}{2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;化简</td><td>\( e^{-\lambda/3}=\tfrac{1}{2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解 λ</td><td>\( \lambda=-3\ln\tfrac{1}{2}=3\ln 2 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.7</b></td><td>30 与 70 分位之差</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q54" type="button" title="展开题目与答案(样题 Q54)">▸</button>Q54</td><td class="dim" style="font-size:13px">§00 套路③招牌样题,解两次分位再相减(S03:22)</td></tr>
+<tr class="kxd kxds" data-kxq="Q54" style="display:none"><td colspan="4"><div class="kx-qtx">An insurer&#x27;s annual weather-related loss, \( X \), is a random variable with density function \( f(x) = \frac{2.5(200)^{2.5}}{x^{3.5}} \) for \( x &gt; 200 \), and \( f(x) = 0 \) otherwise. Calculate the difference between the 30th and 70th percentiles of \( X \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 35</span><span class="kx-opt"><b>(B)</b> 93</span><span class="kx-opt"><b>(C)</b> 124</span><span class="kx-opt"><b>(D)</b> 231</span><span class="kx-opt"><b>(E)</b> 298</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;密度积分得 CDF</td><td>\(F(x)=1-\frac{(200)^{2.5}}{x^{2.5}},\ x>200\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;分位数方程反解</td><td>\(\frac{p}{100}=F(x_p)\Rightarrow x_p=\frac{200}{(1-0.01p)^{0.4}}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求两分位数之差</td><td>\(x_{70}-x_{30}=\frac{200}{0.30^{0.4}}-\frac{200}{0.70^{0.4}}=93.06\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>9.9</b></td><td>免赔额后「已赔付」的 40 分位(条件分位)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.9" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">含免赔额的条件分位数代表题,先解损失分位再减免赔额</td></tr>
+<tr class="kxd" data-kxq="9.9" style="display:none"><td colspan="4"><div class="kx-qtx">Losses on an insurance coverage have the following cumulative distribution function: \( F(x) = \begin{cases} 0 &amp; x&lt;0 \\ 1-e^{-x/1000} &amp; x\ge 0 \end{cases} \). The insurance coverage has a deductible of 100. Calculate the 40th percentile of the payment given that a payment was made.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="510.83" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;条件 cdf 令 =0.4</td><td>\( \dfrac{e^{-0.1}-e^{-x/1000}}{e^{-0.1}}=0.4 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;解损失 40 分位</td><td>\( x=-1000\ln(0.6e^{-0.1})=610.83 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;减去免赔额得赔付分位</td><td>\( 610.83-100=510.83 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.11</b></td><td>替换最大值后样本均值+中位数</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.11" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 中位数稳健性范式:改极值动均值不动中位(练 9.11,110-W96)</td></tr>
+<tr class="kxd" data-kxq="9.11" style="display:none"><td colspan="4"><div class="kx-qtx">The sum of the sample mean and median for ten distinct data points is equal to 20. The largest data point is equal to 15. Calculate the sum of the sample mean and median if the largest data point were replaced by 25.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 20 \)</span><span class="kx-opt"><b>(B)</b> \( 21 \)</span><span class="kx-opt"><b>(C)</b> \( 22 \)</span><span class="kx-opt"><b>(D)</b> \( 30 \)</span><span class="kx-opt"><b>(E)</b> \( 31 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;均值增量:改的是最大值</td><td>\( \Delta\bar{x}=\dfrac{25-15}{10}=1 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;中位数不变(动的是端点)</td><td>\( \text{median 不变} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( 20+1=21 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.14</b></td><td>离散样本中位数的概率函数</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.14" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 套路④离散取中的样本口径代表题(练 9.14,110-S92)</td></tr>
+<tr class="kxd" data-kxq="9.14" style="display:none"><td colspan="4"><div class="kx-qtx">A box contains 5 balls numbered 1, 2, 3, 4, and 5. Three balls are drawn at random and without replacement from the box. If \( X \) is the median of the numbers on the 3 chosen balls, then what is the probability function for \( X \) where nonzero?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( g(x)=0.2 \text{ for } x=1,2,3,4,5 \)</span><span class="kx-opt"><b>(B)</b> \( g(x)=\tfrac{1}{3} \text{ for } x=2,3,4 \)</span><span class="kx-opt"><b>(C)</b> \( g(x)=\begin{cases}\frac{13}{125} &amp; x=1,5\\ \frac{31}{125} &amp; x=2,4\\ \frac{37}{125} &amp; x=3\end{cases} \)</span><span class="kx-opt"><b>(D)</b> \( g(x)=\begin{cases}0.3 &amp; x=2,4\\ 0.4 &amp; x=3\end{cases} \)</span><span class="kx-opt"><b>(E)</b> \( g(x)=\begin{cases}0.1 &amp; x=2,\frac{7}{3},\frac{11}{3},4\\ 0.2 &amp; x=\frac{8}{3},3,\frac{10}{3}\end{cases} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;中位数只能取中间球 2,3,4</td><td>\( X\in\{2,3,4\} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;P(中位=2):含1,2及另一球</td><td>\( \dfrac{3}{\binom{5}{3}}=\dfrac{3}{10}=0.3 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;对称得 P(4)=0.3,补得 P(3)</td><td>\( P(3)=1-2(0.3)=0.4 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.21</b></td><td>均匀分布+单调变换搬未赔付分位</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q504" type="button" title="展开题目与答案(样题 Q504)">▸</button>Q504</td><td class="dim" style="font-size:13px">单调变换把损失分位搬到未赔付额的样题代表(Sample:504)</td></tr>
+<tr class="kxd kxds" data-kxq="Q504" style="display:none"><td colspan="4"><div class="kx-qtx">A construction worker experiences a back injury resulting in a loss on an insurance policy. Losses under the policy are uniformly distributed on the interval [2, 10]. The insurer reimburses the worker for 60% of this loss.
+
+Calculate the 30th percentile of the construction worker&#x27;s unreimbursed loss from the back injury.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1.76</span><span class="kx-opt"><b>(B)</b> 1.80</span><span class="kx-opt"><b>(C)</b> 2.64</span><span class="kx-opt"><b>(D)</b> 3.04</span><span class="kx-opt"><b>(E)</b> 4.40</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;事件换元回X</td><td>\(P(0.4X\le p)=P(X\le2.5p)\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;均匀CDF建方程</td><td>\(0.3=\frac{2.5p-2}{10-2}\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>③&nbsp;解方程</td><td>\(p=\frac{16(11)}{5(20)}=1.76\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q504" style="display:none"><td colspan="4"><div class="kx-qtx">A construction worker experiences a back injury resulting in a loss on an insurance policy. Losses under the policy are uniformly distributed on the interval [2, 10]. The insurer reimburses the worker for 60% of this loss.
+
+Calculate the 30th percentile of the construction worker&#x27;s unreimbursed loss from the back injury.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1.76</span><span class="kx-opt"><b>(B)</b> 1.80</span><span class="kx-opt"><b>(C)</b> 2.64</span><span class="kx-opt"><b>(D)</b> 3.04</span><span class="kx-opt"><b>(E)</b> 4.40</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;事件换元回X</td><td>\(P(0.4X\le p)=P(X\le2.5p)\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;均匀CDF建方程</td><td>\(0.3=\frac{2.5p-2}{10-2}\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15</a></td></tr><tr><td>③&nbsp;解方程</td><td>\(p=\frac{16(11)}{5(20)}=1.76\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>9.23</b></td><td>等腰三角密度几何面积求 30 分位</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q611" type="button" title="展开题目与答案(样题 Q611)">▸</button>Q611</td><td class="dim" style="font-size:13px">三角密度用面积几何法求分位数的样题代表(Sample:611)</td></tr>
+<tr class="kxd kxds" data-kxq="Q611" style="display:none"><td colspan="4"><div class="kx-qtx">An insurer&#x27;s loss severity random variable, \( X \), has density function \( f(x) = c(x - 5) \) for \( 5 \le x \le 8 \); \( f(x) = c(11 - x) \) for \( 8 \le x \le 11 \); \( f(x) = 0 \) otherwise, where \( c \) is a constant.
+Calculate the 30th percentile of the loss severity.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 5.47</span><span class="kx-opt"><b>(B)</b> 6.14</span><span class="kx-opt"><b>(C)</b> 6.80</span><span class="kx-opt"><b>(D)</b> 7.06</span><span class="kx-opt"><b>(E)</b> 7.32</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;密度归一化解常数</td><td>\(c[4.5+4.5]=1\Rightarrow c=\tfrac19\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;左段积分建CDF</td><td>\(F(x)=\int_5^x\tfrac{y-5}{9}dy=\tfrac{(x-5)^2}{18},\ F(8)=0.5\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>③&nbsp;30分位落左段解出</td><td>\(\tfrac{(m-5)^2}{18}=0.3\Rightarrow m=5+\sqrt{5.4}=7.324\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q611" style="display:none"><td colspan="4"><div class="kx-qtx">An insurer&#x27;s loss severity random variable, \( X \), has density function \( f(x) = c(x - 5) \) for \( 5 \le x \le 8 \); \( f(x) = c(11 - x) \) for \( 8 \le x \le 11 \); \( f(x) = 0 \) otherwise, where \( c \) is a constant.
+Calculate the 30th percentile of the loss severity.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 5.47</span><span class="kx-opt"><b>(B)</b> 6.14</span><span class="kx-opt"><b>(C)</b> 6.80</span><span class="kx-opt"><b>(D)</b> 7.06</span><span class="kx-opt"><b>(E)</b> 7.32</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;密度归一化解常数</td><td>\(c[4.5+4.5]=1\Rightarrow c=\tfrac19\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;左段积分建CDF</td><td>\(F(x)=\int_5^x\tfrac{y-5}{9}dy=\tfrac{(x-5)^2}{18},\ F(8)=0.5\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>③&nbsp;30分位落左段解出</td><td>\(\tfrac{(m-5)^2}{18}=0.3\Rightarrow m=5+\sqrt{5.4}=7.324\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 11(同题型二刷备用)· 跳过 2(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -309,7 +440,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <path d="M40,135 C 80,135 95,45 125,45 C 155,45 170,135 210,135" fill="none" stroke="#16243d" stroke-width="2"/>
           <line x1="125" y1="45" x2="125" y2="135" stroke="#4f46e5" stroke-width="1.6" stroke-dasharray="4 3"/>
           <text x="113" y="150" font-size="12" fill="#4f46e5" font-style="italic">&#960;&#8320;&#8342;&#8339;</text>
-          <text x="70" y="118" font-size="11" fill="#3730a3">0.5</text>
+          <text x="82" y="118" font-size="11" fill="#3730a3">0.5</text>
           <text x="150" y="118" font-size="11" fill="#7a8699">0.5</text>
         </svg>
         <div class="cap">密度视角:中位数把 <b>面积对半劈开</b>(左右各 0.5)</div>
@@ -331,6 +462,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>\(\dfrac{x^3-1}{63}=0.5\Rightarrow x^3-1=31.5\Rightarrow x^3=32.5\Rightarrow x=\sqrt[3]{32.5}=3.19125\)。</p>
       <p style="margin-bottom:0">最小值 \(=1\)、最大值 \(=4\),故 \(\text{midrange}=\dfrac{1+4}{2}=2.5\)。</p>
       <span class="ans">中位数 = ∛32.5 ≈ 3.19125　midrange = 2.5</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 由密度积出 cdf</td><td>\(F(x)=\int_1^x\tfrac{u^2}{21}\,du=\tfrac{x^3-1}{63}\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 随机变量 ↗</a></td></tr>
+        <tr><td>② 令 \(F=0.5\) 解中位数(50 分位)</td><td>\(F(\pi_{0.5})=0.5\ \Rightarrow\ x^3=32.5\ \Rightarrow\ x=\sqrt[3]{32.5}\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>③ midrange 只看支撑端点</td><td>\(\text{midrange}=\tfrac{\min+\max}{2}=\tfrac{1+4}{2}=2.5\)</td><td class="xr"><span class="here">本章 §04</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>提醒:</b>midrange 是 \(\dfrac{\min+\max}{2}\)、range 是 \(\max-\min\),两者只看<b>支撑区间端点</b>,与概率大小无关——别和"中位数"混为一谈。</span></div>
 
@@ -423,6 +561,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">设 \(g(x)=(x-5)^3\) 是 \(x\) 的<b>严格递增</b>函数。已知 \(X\) 的 <b>75 分位数是 13</b>。求 \(g(X)=(X-5)^3\) 的 75 分位数。</p>
       <p>因 \(g\) 严格递增,\(g(X)\) 的 75 分位数 \(=g(13)=(13-5)^3=8^3=512\)。</p>
       <span class="ans">75 分位数 = (13−5)³ = 512</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 确认 \(g\) 严格递增</td><td>\(g(x)=(x-5)^3\) 单调递增(立方保序)</td><td class="xr"><span class="here">本章 §04</span></td></tr>
+        <tr><td>② 分位数跟着 \(g\) 走,代入即得</td><td>\(\pi_{0.75}\big(g(X)\big)=g\big(\pi_{0.75}(X)\big)=(13-5)^3=512\)</td><td class="xr"><span class="here">本章 §04</span></td></tr>
+      </table></div>
     </div>
 
     <div class="card accent">
@@ -522,16 +666,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>标准流程:给 \(f\) → 先积出 \(F\)(注意支撑下限从哪起积)→ 令 \(F(x)=p\) 解方程。</li>
-        <li>反解参数型:给 \(F(x)=x^a\) 这类带参 cdf + 一个分位数值,先解出参数再求另一个分位数(练 9.4);指数分布给中位数反求 \(\lambda\)(练 9.6),顺手背下<b>指数中位数 \(=\ln 2/\lambda\)</b>。</li>
-        <li>"difference between the 30th and 70th percentiles" → 老老实实解两次再相减(练 9.7)。</li>
-        <li>读题看到 <b>sample / 离散取值</b> → 切换到排序取中的样本口径,偶数样本取中间两项平均(练 9.14)。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Percentile">Wikipedia · Percentile</a></div><div class="z">几种百分位定义口径(最近秩、插值)并排对照,看完就懂为什么课本坚持用 \(\ge\)。</div><div class="u">en.wikipedia.org/wiki/Percentile</div></div>
@@ -542,104 +676,297 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>\(\ge\) vs \(=\)</b>:离散/跳跃处没有点等于 \(p\),必须用"首次 \(\ge p\)"的最小 \(x\),别硬解 \(F(x)=p\)。</li>
-          <li><b>平台不唯一</b>:\(F\) 有水平段时分位数是一整段,约定取最小值。</li>
-          <li><b>离散分布中位数"未定义"</b>:ASM 只给样本中位数;偶数样本取中间两项<b>平均</b>。</li>
-          <li><b>midrange ≠ median</b>:midrange 只用端点 \(\dfrac{\min+\max}{2}\),和概率无关。</li>
-          <li><b>变换方向</b>:\(g\) 递增才有 \(\pi_p(g(X))=g(\pi_p)\);\(g\) 递减要换成 \(1-p\)。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions(p.166 起)核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 9.1</span>三角形密度图,求 25 分位数。<b>答 (B) 4</b>。</li>
-          <li><span class="ref">练 9.2</span>汽车碰撞损失 \(f(x)=\dfrac{3(500^3)}{(500+x)^4}\),求中位数损失。<b>答 129.96</b>。</li>
-          <li><span class="ref">练 9.4</span>\(F(x)=x^a\) 上 30 分位数为 0.4,求 70 分位数。</li>
-          <li><span class="ref">练 9.6</span>\(f(x)=\lambda e^{-\lambda x}\) 中位数为 \(1/3\),反求 \(\lambda\)。</li>
-          <li><span class="ref">练 9.7</span>\([S03:22]\) 求 30 与 70 分位数之差。</li>
-          <li><span class="ref">练 9.14</span>\([110\text{-}S92:39]\) 3 球样本的中位数(离散/样本)。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>连续 \(F(x)=x^2,\ 0\le x\le1\),求中位数。</li>
-        <li>某分布 \(\min=2,\ \max=10\),求 range 与 midrange。</li>
-        <li>\(g(x)=2x+1\) 递增,\(X\) 的中位数为 5,求 \(g(X)\) 的中位数。</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(x^2=0.5\Rightarrow x=\sqrt{0.5}\approx0.707\);② range \(=8\),midrange \(=6\);③ \(g(5)=2(5)+1=11\)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 分位数</h2></div></div>
-    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>定义 / 连续</h4>
-        <p>\(\pi_p=\min\{x:F(x)\ge p\}\)</p>
-        <p>连续严增:\(F(\pi_p)=p\)</p>
-        <p>median = 50 分位;\(Q_1\)=25、\(Q_3\)=75 分位</p>
-      </div>
-      <div class="cc t">
-        <h4>离散 / 变换 / 度量</h4>
-        <p>离散跳跃:取首次 \(F\ge p\);平台取 min</p>
-        <p>样本中位数:奇数取中间,偶数取中间两项均值</p>
-        <p>\(g\) 递增:\(\pi_p(g(X))=g(\pi_p)\)</p>
-        <p>range \(=\max-\min\);midrange \(=\dfrac{\min+\max}{2}\)</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "range 与 midrange": {
+  "kind": "c",
+  "en": "RangeAndMidrange",
+  "aliases": [
+   "range",
+   "midrange",
+   "极差",
+   "中程数"
+  ],
+  "level": "basic",
+  "chapter": "p-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>range(极差)= 支撑最大值减最小值;midrange(中程数)= 支撑两端点的平均。两者<strong>只看支撑端点</strong>、与概率怎么堆完全无关——midrange 不是中位数。</p><p><strong>白话</strong>:全班最矮 150、最高 190:range 是\"尺子两头的跨度\"40,midrange 是两端点的正中间 170。它俩只看最矮最高两个人站哪,班里其余人怎么挤都不影响——这就是它们和中位数的区别。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{range}=\\max-\\min\\qquad\\qquad \\text{midrange}=\\frac{\\min+\\max}{2}$$</div><ul><li>由支撑区间直接读出:不用积分、不看 \\(F\\) 的形状。</li><li>例 9A:\\(f(x)=x^2/21\\) 于 \\([1,4]\\):midrange \\(=2.5\\),而中位数 \\(=\\sqrt[3]{32.5}\\approx 3.19\\)——概率堆在右边把中位数推右,midrange 纹丝不动。</li></ul><p><strong>算一遍</strong>:全班身高最矮 150 cm、最高 190 cm。</p><ul><li>range \\(=190-150=40\\) cm——两端跨度。</li><li>midrange \\(=(150+190)/2=170\\) cm——端点的中点。</li><li>哪怕全班九成人都高于 185(中位数被推到 185 之上),range 和 midrange 仍是 40 和 170——只认端点,不认概率怎么堆。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — 最易混:中位数看面积对半,midrange 只平均端点</li><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 同章的\"位置度量\"家族,但 range/midrange 不是分位数</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — min/max 是 \\(F\\) 离开 0、到达 1 的位置</li></ul>"
+ },
+ "中位数": {
+  "kind": "c",
+  "en": "Median",
+  "aliases": [
+   "median",
+   "sample median",
+   "样本中位数"
+  ],
+  "level": "basic",
+  "chapter": "p-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>50 分位数——把概率(密度面积)对半劈开的位置。连续型解 \\(F(x)=0.5\\);ASM 对离散<strong>分布</strong>的中位数刻意不定义(可能无解或有一整段解),只定义<strong>样本中位数</strong>(排序取中)。</p><p><strong>白话</strong>:全班按身高排队,站正中间那个人的身高就是中位数——一半人比他矮、一半人比他高。它只管\"人数对半\",不管两头的人有多极端。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(\\pi_{0.5})=0.5\\qquad\\text{(连续型)}$$</div><ul><li>样本中位数:奇数个取排序后中间项;偶数个取中间两项<strong>平均</strong>,如 \\(\\{1,10,5,3,9,7\\}\\) 排序后 \\(=(5+7)/2=6\\)。</li><li>抗极端值:重尾分布下均值被大额索赔拖走,中位数稳得多——\"中位损失\"比\"平均损失\"更代表典型。</li><li>右偏分布:众数 &lt; 中位数 &lt; 均值,中位数居中。</li></ul><p><strong>算一遍</strong>:五个病人的索赔额(万元):1、2、3、4、90。</p><ul><li>排序取中:中位数 \\(=3\\)——一半人赔得比它少、一半比它多。</li><li>均值 \\(=(1+2+3+4+90)/5=20\\),被那笔 90 万拖飞。</li><li>报\"典型赔付\"时 3 比 20 实在得多——中位数抗极端值。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — \\(p=0.5\\) 的特例,定义与解法整套沿用</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 解 \\(F=0.5\\) 的对象</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 另一个\"中心\":均值怕重尾,中位数抗拉扯</li><li><a class=\"net-wl\" data-id=\"众数\">众数</a> — 第三个\"中心\",偏态下三者分离</li><li><a class=\"net-wl\" data-id=\"range 与 midrange\">range 与 midrange</a> — midrange 只看端点,与中位数是两回事</li></ul>"
+ },
+ "众数": {
+  "kind": "c",
+  "en": "Mode",
+  "aliases": [
+   "mode",
+   "most likely value"
+  ],
+  "level": "advanced",
+  "chapter": "p-l10",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>让概率函数取最大值的取值——离散取 pmf 最高点,连续取密度最高峰,即\"最可能出现/最扎堆\"的值。可以不唯一(并列最高全是众数);样本众数 = 样本中出现最频繁的值。</p><p><strong>白话</strong>:班里最常见的鞋码——卖鞋备货就先备它。众数就是\"人最扎堆\"的那个值;它和\"排队正中间\"(中位数)、\"总平均\"(均值)是三种不同口径的\"中心\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{离散}:\\ \\operatorname{mode}=\\arg\\max_x p(x)\\qquad\\qquad \\text{连续}:\\ \\operatorname{mode}=\\arg\\max_x f(x)$$</div><ul><li>连续三步:解 \\(\\dfrac{d}{dx}\\ln f(x)=0\\) 找临界点 → 验 \\(\\dfrac{d^2}{dx^2}\\ln f(x)&lt;0\\) 确认极大 → <strong>必比支撑端点</strong>的密度。</li><li>取 \\(\\ln\\) 不挪峰(对数严格递增、\\(\\arg\\max\\) 不变),把乘积/幂拆成加法;归一化常数求导即消,可直接扔。</li><li>\\(f'\\) 在支撑内无零点(单调密度)→ 众数落在<strong>支撑端点</strong>(如单调递减密度的众数 = 左端点)——最常丢分处。</li><li>例 10A:\\(f(x)=cx^2(1-x)\\) 于 \\((0,1)\\) → mode \\(=2/3\\)(即 Beta(3,2),套 \\(\\frac{\\alpha-1}{\\alpha+\\beta-2}\\) 可秒验)。</li><li>偏态下众数 ≠ 中位数 ≠ 均值;右偏:众数 &lt; 中位数 &lt; 均值。</li></ul><p><strong>算一遍</strong>:五个病人本月就诊次数:0、1、1、1、4。</p><ul><li>数频次:0 出现 1 次、1 出现 3 次、4 出现 1 次 → 众数 \\(=1\\)(最扎堆)。</li><li>三中心对照:中位数(排序取中)\\(=1\\);均值 \\(=7/5=1.4\\),被那个 4 拉高。</li><li>右偏的典型格局在此显形:众数 \\(1\\) ≤ 中位数 \\(1\\) &lt; 均值 \\(1.4\\)——极端值只拽得动均值。</li></ul><h4>与其他概念的关系</h4><ul><li>概率密度函数 — 连续众数 = 密度的 \\(\\arg\\max\\)</li><li>概率函数 — 离散众数 = pmf 的 \\(\\arg\\max\\),逐点比大小</li><li>多峰分布 — 并列最高 → 众数不唯一</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — 三个\"中心\"之一,偏态下分离</li><li>泊松众数 — 下游:泊松 mode \\(=\\lfloor\\lambda\\rfloor\\)</li><li>Beta分布 — 例 10A 本尊,mode 有闭式</li></ul>"
+ },
+ "四分位数": {
+  "kind": "c",
+  "en": "Quartile",
+  "aliases": [
+   "quartile",
+   "first quartile",
+   "third quartile"
+  ],
+  "level": "basic",
+  "chapter": "p-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>25 分位数(第一四分位数 \\(Q_1\\))与 75 分位数(第三四分位数 \\(Q_3\\)):把分布按累积概率切成四等份的位置点,中位数即 \\(Q_2\\)。</p><p><strong>白话</strong>:全班按成绩排队、每 25% 切一刀:\\(Q_1\\) 是垫底四分之一与其余人的分界,\\(Q_3\\) 是挤进前四分之一的门槛,正中间那刀就是中位数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$Q_1=\\pi_{0.25}\\qquad\\qquad Q_3=\\pi_{0.75}$$</div><ul><li>求法与一般分位数完全相同:连续解 \\(F(x)=0.25/0.75\\);离散用 \\(\\ge\\) 取首个跳跃点。</li><li>读题关键词:first quartile / third quartile。</li></ul><p><strong>算一遍</strong>:\\(X\\) 均匀落在 \\((0,100)\\),\\(F(x)=x/100\\)。</p><ul><li>解 \\(F(x)=0.25\\) 得 \\(Q_1=25\\);解 \\(F(x)=0.75\\) 得 \\(Q_3=75\\)。</li><li>核对:\\((0,25)\\)、\\((25,50)\\)、\\((50,75)\\)、\\((75,100)\\) 四段各占 25% 概率——\"四等份\"名副其实,\\(Q_2=50\\) 正是中位数。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — \\(p=0.25/0.75\\) 的特例</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — \\(Q_2\\),同族三兄弟</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 反解的对象</li></ul>"
+ },
+ "均匀分布的分位数": {
+  "kind": "c",
+  "en": "UniformDistributionPercentiles",
+  "aliases": [
+   "percentiles of uniform distribution",
+   "uniform quantiles"
+  ],
+  "level": "advanced",
+  "chapter": "p-l15",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(U(a,b)\\) 的 100\\(p\\) 百分位数是\"沿区间走 \\(p\\) 那么远\"的线性插值 \\((1-p)a+pb\\);且均匀分布<strong>限制到任何子区间后仍是均匀</strong>,中点/长度比工具照用——两者组合可秒解一大类免赔额题。</p><p><strong>白话</strong>:公交每 10 分钟一班、到站时刻全凭运气——\"90% 的人等车不超过几分钟\"就是沿 0 到 10 走九成路:9 分钟。均匀分布的分位数不用解方程,按比例量路程就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\pi_p=(1-p)\\,a+p\\,b$$</div><ul><li>\\(p=0.5\\) 得中位数 = 中点 \\(\\frac{a+b}2\\);\\(p=0.9\\) 得 \\(0.1a+0.9b\\)。</li><li>条件后仍均匀:\\(X\\sim U(a,c)\\) 时 \\(X\\mid(X&lt;b)\\sim U(a,b)\\)、\\(X\\mid(X&gt;b)\\sim U(b,c)\\)(\\(a&lt;b&lt;c\\))——条件密度 = 常数 ÷ 常数,平顶还是平顶。</li><li>免赔额裁左边、限额封右边,剩下照用\"中点求均值、长度比求概率\"。</li><li>定参套路(例 15A):均值 = 中点、条件概率 = 长度比,两条方程解出 \\(a,b\\),再代分位公式(答 \\(\\pi_{0.9}=2720\\))。</li><li>公交直觉:已干等 4 分钟,剩余等待仍均匀于 \\((0,6)\\),平均再等 3 分钟(新中点)。</li></ul><p><strong>算一遍</strong>:等车时间 \\(\\sim U(0,10)\\)。</p><ul><li>90 百分位:\\(\\pi_{0.9}=(1-0.9)\\times0+0.9\\times10=9\\) 分钟——沿区间走九成。</li><li>中位数:\\(p=0.5\\) 得 \\((0+10)/2=5\\),正是中点。</li><li>条件后仍均匀:已知等超 4 分钟,剩余落 \\((4,10)\\) 仍平顶,新中点 7 → 预计总共等 7 分钟。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 一般定义(上游 L09)</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — \\(p=0.5\\) 特例,等于中点</li><li>连续均匀分布 — 本体</li><li>条件分布 — \"条件后仍均匀\"的机制(L14 切块再归一)</li><li>免赔额与正赔付条件 — \"已知产生赔付\" ⟺ 条件化到 \\(X&gt;d\\)</li></ul>"
+ },
+ "指数分布百分位数": {
+  "kind": "c",
+  "en": "ExponentialPercentiles",
+  "aliases": [
+   "percentile of exponential distribution",
+   "exponential median"
+  ],
+  "level": "basic",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>指数分布的分位数有闭式:令 \\(F(\\xi_p)=p\\) 一步解出,无需积分。SOA 很爱直接考中位数或某个百分位。</p><p><strong>白话</strong>:问\"排在前一半的顾客最多等几分钟\"就是在要中位数;别的分布得查表,指数分布掏个对数公式一步报数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\xi_p=-\\theta\\ln(1-p)$$</div><ul><li><strong>中位数</strong>取 \\(p=0.5\\):\\(\\xi_{0.5}=\\theta\\ln 2\\approx 0.693\\,\\theta\\)——永远小于均值(右偏)。</li><li>10 秒推导:\\(1-e^{-\\xi_p/\\theta}=p\\Rightarrow e^{-\\xi_p/\\theta}=1-p\\Rightarrow \\xi_p=-\\theta\\ln(1-p)\\)。</li><li>符号坑:括号里是 \\(1-p\\) 且整体带<strong>负号</strong>(\\(\\ln(1-p)&lt;0\\),结果为正),别丢。</li><li>速率参数化:\\(\\xi_p=-\\ln(1-p)/\\lambda\\)。</li></ul><p><strong>算一遍</strong>:平均等待 \\(\\theta=10\\) 分钟,求中位数(一半人等不到这么久)。</p><ul><li>套公式:\\(\\xi_{0.5}=-10\\ln(0.5)=10\\ln 2\\approx 6.9\\) 分钟。</li><li>中位数 6.9 &lt; 均值 10——一半人 7 分钟内就等到,少数等很久的人把平均拉高(右偏)。</li><li>验算:\\(S(6.9)=e^{-6.9/10}\\approx e^{-0.69}=0.5\\) ✓ 恰好一半人等得更久。</li></ul><h4>与其他概念的关系</h4><ul><li>指数分布 — 所属分布本体</li><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 上位概念:\\(F(\\xi_p)=p\\) 的解</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — 特例 \\(p=0.5\\):\\(\\theta\\ln2\\)</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 解的对象:由 CDF 反解</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 对照:正态分位靠查表 \\(\\mu+\\sigma z_p\\),指数分位有闭式</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 它最重要的数字概括</li><li>概率函数 — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li>概率密度函数 — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li>LOTUS — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li>期望的线性 — 期望算子最常用的运算性质</li><li>方差 — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"期望的横竖两切与求导积分链\">期望的横竖两切与求导积分链</a> — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "期望的横竖两切与求导积分链": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "",
+  "status": "wip",
+  "html": "<h4>场景定位 / 考点用法</h4><p>求 \\(E[X]\\) 的题,一会求导一会积分,看似两套方法,实为一条链:</p><div class=\"net-mth\">$$F \\xrightarrow{\\ 求导\\ } f \\xrightarrow{\\ 加权积分\\ } E[X],\\qquad S=1-F\\ (\\text{减法即得})$$</div><ul><li>\\(F\\) 是概率<strong>存量</strong>(攒到 x 为止攒了多少),\\(f\\) 是<strong>流量</strong>(攒的速度),\\(E[X]\\) 是用 f 加权的汇总。</li><li><strong>题给什么决定走向</strong>,选路决策表:</li></ul><table><thead><tr><th>题给</th><th>走法</th><th>步数</th></tr></thead><tbody><tr><td>\\(f(x)\\)</td><td>\\(\\int x f\\,dx\\)</td><td>1</td></tr><tr><td>\\(F(x)\\),X 非负</td><td>\\(\\int_0^\\infty(1-F)\\,dx\\)</td><td>1(免求导)</td></tr><tr><td>\\(F(x)\\),走常规</td><td>\\(F'=f\\) 再 \\(\\int x f\\,dx\\)</td><td>2(互逆两步,白绕路,别选)</td></tr><tr><td>分段常数 \\(F\\)</td><td>对 \\(1-F\\) 分段\"数长度\"求和</td><td>1</td></tr></tbody></table><h4>关联概念</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 竖切读法:值 × 概率权重加总</li><li>生存函数求期望 — 横切读法:逐层读生存概率</li><li>生存函数 — 横切每层的读数 \\(S(t)=P[X&gt;t]\\)</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 题面最常给的起点;\\(F\\to S\\) 是减法、\\(F\\to f\\) 才要求导</li><li>概率密度函数 — 竖切的权重;f 读<strong>面积</strong>,F/S 读<strong>高度</strong></li><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 积木堆连续版的轮廓线即分位数函数 \\(F^{-1}(p)\\),第三种量法的被积对象</li></ul><h4>题型 / 套路 / 案例</h4><p><strong>积木两切(捷径为何成立)</strong>:被切区域是\"宽=概率、高=取值\"的柱子堆,<strong>不是 f 或 F 的图像</strong>。</p><ul><li>数值锚:X 取 1/2/3,概率 0.5/0.3/0.2。竖切按柱:\\(1(0.5)+2(0.3)+3(0.2)=1.7\\);横切按层:\\(P[X\\ge1]+P[X\\ge2]+P[X\\ge3]=1.0+0.5+0.2=1.7\\)。同一堆积木数两遍,必相等。</li><li>分部积分一行版:\\(f=-S'\\Rightarrow\\int_0^\\infty x(-S')\\,dx=\\big[-xS\\big]_0^\\infty+\\int_0^\\infty S\\,dx=\\int_0^\\infty S\\,dx\\)——求导与积分抵消一次,两公式同源。</li><li>人均寿命口径:按人算=每人寿命×人口占比(竖切);按年算=每年存活率相加(横切),\\(E[\\text{寿命}]=\\sum_t S(t)\\)——\"生存函数\"得名于此。</li><li>免赔额/限额推论:\\(E[\\min(X,k)]=\\int_0^k(1-F)\\,dx\\) 就是横切只数到第 k 层为止。</li></ul><p><strong>面积 2×2(图决定含义,离散/连续只决定 Σ 还是 ∫)</strong>:</p><table><thead><tr><th></th><th>图 1:分布图(概率怎么摊)</th><th>图 2:积木堆(期望怎么堆)</th></tr></thead><tbody><tr><td><strong>离散</strong></td><td>pmf 柱状图:<strong>高度本身=概率</strong>,面积不参与</td><td>宽=p(x)、高=x,总面积=Σx·p(x)=E[X]</td></tr><tr><td><strong>连续</strong></td><td>pdf 曲线:高度=密度,<strong>面积才=概率</strong></td><td>宽=f(x)dx、高=x,总面积=∫x·f(x)dx=E[X]</td></tr></tbody></table><ul><li>唯一真差异在左上格:离散概率直接是柱<strong>高</strong>;连续单点概率为 0,概率只能以<strong>面积</strong>存在。自查口诀:看横轴——横轴是取值 → 分布图;横轴是概率 → 积木堆,面积永远是期望。</li></ul><p><strong>期望的三种写法 = 同一积木堆的三种量法</strong>:</p><ol><li>\\(E[X]=\\int x\\,f(x)\\,dx\\) — 竖切按柱</li><li>\\(E[X]=\\int_0^\\infty S(x)\\,dx\\) — 横切按层(X 非负)</li><li>\\(E[X]=\\int_0^1 F^{-1}(p)\\,dp\\) — 沿概率轴扫轮廓:积木堆连续版按矮到高排砖,轮廓线=分位数函数(见 <a class=\"net-wl\" data-id=\"百分位数\">百分位数</a>),曲线下面积即总面积;不限非负</li></ol><ul><li>算一遍(Uniform(0,2) 三法同锚):① \\(\\int_0^2\\tfrac{x}{2}dx=1\\);② \\(\\int_0^2(1-\\tfrac{x}{2})dx=1\\);③ \\(F^{-1}(p)=2p\\),\\(\\int_0^1 2p\\,dp=1\\) ✓</li></ul><h4>易错点 / 注意事项</h4><ul><li>横竖两切切的不是 F 或 S 曲线下的面积;S 是横切每层的<strong>读数</strong>,不是被切对象。</li><li>捷径前提:X <strong>非负</strong>,且均值有限(边界项 \\(xS(x)\\to0\\) 才消)。</li><li>把 \\(f(x)\\) 当概率是三函数混淆的根源:f 读面积(要积分),F/S 读高度(直接读)。</li><li>本链求导对象是 <strong>x</strong>;MGF取矩 那条链求导对象是 <strong>t</strong>(对 MGF 在 t=0 求导取矩)——两条链别混。</li></ul>"
+ },
+ "正态百分位数": {
+  "kind": "c",
+  "en": "NormalPercentiles",
+  "aliases": [
+   "percentile of normal distribution",
+   "z-value",
+   "quantile of normal"
+  ],
+  "level": "basic",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>标准化的逆运算:给概率 \\(p\\) 求 \\(x\\)。先在表体里<strong>反查</strong>出标准正态分位 \\(z_p\\)(满足 \\(\\Phi(z_p)=p\\)),再放大还原到 \\(X\\)。</p><p><strong>白话</strong>:正查是\"报身高问排名\",这里反过来:\"给排名要身高\"——先在标准表里找到该排名对应的 \\(z\\),再乘 \\(\\sigma\\) 加 \\(\\mu\\) 穿回原来的尺寸。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\xi_p=\\mu+\\sigma z_p,\\qquad \\Phi(z_p)=p$$</div><ul><li>还原是<strong>乘 \\(\\sigma\\) 加 \\(\\mu\\)</strong>,不是除——与正查方向相反。</li><li>查表方向:正查=行列给 \\(z\\)、表体读 \\(\\Phi(z)\\);反查=表体找 \\(p\\)、读回 \\(z_p\\)。</li><li><strong>常背 \\(z\\) 值</strong>:\\(z_{0.90}=1.282\\)、\\(z_{0.95}=1.645\\)、\\(z_{0.975}=1.960\\)、\\(z_{0.99}=2.326\\)。</li><li>表只有两位小数,精细分位用线性插值(\\(z_{0.80}\\approx0.842\\))。</li><li>例:\\(X\\sim N(10,25)\\) 的 67 百分位 \\(=10+0.44\\times5=12.2\\)。</li></ul><p><strong>算一遍</strong>:\\(X\\sim N(10,25)\\),求 95 百分位。</p><ul><li>反查:\\(\\Phi(z)=0.95\\Rightarrow z_{0.95}=1.645\\)(常背值,直接取)。</li><li>还原:\\(\\xi_{0.95}=10+1.645\\times5=18.2\\)——乘 \\(\\sigma=5\\) 加 \\(\\mu=10\\),方向与正查相反。</li><li>自检:18.2 在均值右侧、不到 \\(2\\sigma\\) 处,与\"95% 的位置\"直感相符 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 上位概念:\\(F(\\xi_p)=p\\) 的解</li><li>标准正态分布 — \\(z_p\\) 的来源</li><li>标准化 — 互为正反两程</li><li>正态分布 — 所属分布本体</li><li><a class=\"net-wl\" data-id=\"指数分布百分位数\">指数分布百分位数</a> — 对照:指数有闭式,正态只能查表</li></ul><h4>应用视角</h4><ul><li>理赔总额的正态近似 — CLT 拼理赔总额,连续性修正</li></ul>"
+ },
+ "百分位数": {
+  "kind": "c",
+  "en": "Percentile",
+  "aliases": [
+   "percentile",
+   "quantile",
+   "分位数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(100p\\) 分位数 \\(\\pi_p\\) 是让累积分布函数<strong>首次达到或超过 \\(p\\)</strong> 的最小取值——把\"中位数对半劈\"推广到任意比例 \\(p\\) 的位置度量。严格写法用 \\(\\ge\\),连续、离散通吃。</p><p><strong>白话</strong>:全年级按分数排队,90 分位数就是\"从矮到高数够九成人\"时那条分数线——体检报告说宝宝身高在第 90 百分位,意思是排在他前面的占九成,不是他考了 90 分。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\pi_p=\\min\\{x:\\ F(x)\\ge p\\}\\qquad P[X\\le\\pi_p]\\ge p\\ \\text{ 且 }\\ P[X\\ge\\pi_p]\\ge 1-p$$</div><ul><li>连续且 \\(F\\) 严格递增:直接解 \\(F(\\pi_p)=p\\),\\(\\pi_p=F^{-1}(p)\\) 唯一——考场主形态(先由 \\(f\\) 积出 \\(F\\),注意从支撑下限起积)。</li><li>离散<strong>跳跃</strong>:没有点使 \\(F=p\\) → 取首次 \\(F\\ge p\\) 的跳跃点;<strong>平台</strong>(一整段 \\(F=p\\))→ 分位数不唯一,约定取最小。</li><li>单调搬运:\\(g\\) 严格递增 ⟹ \\(\\pi_p(g(X))=g(\\pi_p(X))\\)(排序不动,分界点直接映射);\\(g\\) 递减则 \\(p\\) 换成 \\(1-p\\)。</li><li>精算落地:偿付能力监管的 99.5% VaR 就是损失分布的 99.5 分位数。</li></ul><p><strong>算一遍</strong>:公交车等待时间在 \\([0,10]\\) 分钟均匀分布,求 70 分位数。</p><ul><li>写出 cdf:\\(F(x)=x/10\\)(等了 \\(x\\) 分钟以内的概率)。</li><li>解 \\(F(\\pi)=0.7\\):\\(\\pi/10=0.7\\Rightarrow\\pi=7\\) 分钟。</li><li>含义对读:七成情况下 7 分钟以内等到车——纵轴 \\(0.7\\) 横切曲线、落回横轴得 \\(7\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 分位数是 cdf 的(广义)反查:纵轴 \\(p\\) 横切、落到横轴</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — \\(p=0.5\\) 特例</li><li><a class=\"net-wl\" data-id=\"四分位数\">四分位数</a> — \\(p=0.25/0.75\\) 特例</li><li><a class=\"net-wl\" data-id=\"均匀分布的分位数\">均匀分布的分位数</a> — 下游:均匀分布下的显式解</li><li><a class=\"net-wl\" data-id=\"正态百分位数\">正态百分位数</a> — 下游:标准化 + 查表</li><li><a class=\"net-wl\" data-id=\"指数分布百分位数\">指数分布百分位数</a> — 下游:指数中位数 \\(\\ln 2/\\lambda\\) 一族</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"期望的横竖两切与求导积分链\">期望的横竖两切与求导积分链</a> — 分位数函数曲线下面积 = 期望:\\(E[X]=\\int_0^1 F^{-1}(p)\\,dp\\)(第三种量法,积木堆轮廓线)</li></ul>"
+ },
+ "累积分布函数": {
+  "kind": "c",
+  "en": "CumulativeDistributionFunction",
+  "aliases": [
+   "cdf",
+   "distribution function",
+   "分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(F(x)=P[X\\le x]\\):累住\"到 x 为止\"的全部概率。对离散、连续<strong>一视同仁</strong>——知道 F 就等于知道这个随机变量的一切,是求各种范围概率的统一入口。</p><p><strong>白话</strong>:\\(F\\) 像收银机的累计小票:沿数轴从最左端一路扫到 \\(x\\),沿途概率全部记进总账——它报的永远是\"到此为止一共多少\",不是\"这一点是多少\";要某一段的量,拿两张小票相减就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=P[X\\le x]\\qquad P[u&lt;X\\le v]=F(v)-F(u)$$</div><ul><li>四条<strong>必备性质</strong>整块记:非减 · 右连续 · \\(F(-\\infty)=0\\) · \\(F(\\infty)=1\\)。</li><li>连续时 \\(F'(x)=f(x)\\)(光滑 S 型);离散时 \\(F(x)=\\sum_{t\\le x}p(t)\\)(阶梯,跳高 \\(=p(x)\\))。</li><li><strong>\\(F\\) 用 \\(\\le\\) 不是 \\(&lt;\\)</strong>:离散时含端点那一跳;求 \\(P[X&lt;x]\\) 要用跳<strong>前</strong>的值,与 \\(F(x)\\) 差一个 \\(p(x)\\)——差一个跳点答案就错。</li><li>分段 F 求区间概率:直接 \\(F(b)-F(a)\\),先看清端点落在哪一段(例 5A:\\(F(2.5)=1\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求 \\(P[2&lt;X\\le4]\\)。</p><ul><li>两张\"累计小票\":\\(F(4)=\\tfrac46\\)(1 到 4 点),\\(F(2)=\\tfrac26\\)(1、2 点)。</li><li>相减:\\(F(4)-F(2)=\\tfrac26=\\tfrac13\\)——正好数出 \\(\\{3,4\\}\\) 两个点 ✓</li><li>端点自查:区间写法 \\(u&lt;X\\le v\\) 与 \\(F\\) 的 \\(\\le\\) 严丝合缝,右端 4 含、左端 2 不含,一个跳点都不差。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 离散连续通吃的完全刻画</li><li>概率函数 — 离散:由 pmf 累加,阶梯跳高 \\(=p(x)\\)</li><li>概率密度函数 — 连续:求导得密度,\\(f=F'\\)</li><li>生存函数 — 互补:\\(S=1-F\\),\"F 管不超过,S 管超过\"</li><li><a class=\"net-wl\" data-id=\"百分位数\">百分位数</a> — 反着用 F:解 \\(F(x)=p\\) 得分位数</li><li>联合累积分布函数 — 二维推广</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"期望的横竖两切与求导积分链\">期望的横竖两切与求导积分链</a> — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab" style="background:linear-gradient(180deg,#f4f3fe,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 9 原文用词</span><h2 class="sec-title">分位数 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"求第几分位"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 9</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">percentile</td><td class="ipa">/pərˈsɛntaɪl/</td><td><span class="pos n">n.</span></td><td>百分位数 / 分位数</td><td class="root">per-cent(每百)→ \(100p\) 分位 \(\pi_p\)</td></tr>
-          <tr><td class="en">median</td><td class="ipa">/ˈmiːdiən/</td><td><span class="pos n">n.</span></td><td>中位数</td><td class="root">medi-(中)→ 50 分位,对半劈</td></tr>
-          <tr><td class="en">quartile</td><td class="ipa">/ˈkwɔːrtaɪl/</td><td><span class="pos n">n.</span></td><td>四分位数</td><td class="root">quart(四分之一)→ 25 / 75 分位</td></tr>
-          <tr><td class="en">minimum</td><td class="ipa">/ˈmɪnɪməm/</td><td><span class="pos n">n.</span></td><td>最小值</td><td class="root">支撑最低点</td></tr>
-          <tr><td class="en">maximum</td><td class="ipa">/ˈmæksɪməm/</td><td><span class="pos n">n.</span></td><td>最大值</td><td class="root">支撑最高点</td></tr>
-          <tr><td class="en">range</td><td class="ipa">/reɪndʒ/</td><td><span class="pos n">n.</span></td><td>极差</td><td class="root">\(\max-\min\)</td></tr>
-          <tr><td class="en">midrange</td><td class="ipa">/ˈmɪdreɪndʒ/</td><td><span class="pos n">n.</span></td><td>中程数</td><td class="root">mid+range → \(\dfrac{\min+\max}{2}\),≠ 中位数</td></tr>
-          <tr><td class="en">cumulative distribution function</td><td class="ipa">/ˈkjuːmjələtɪv/</td><td><span class="pos n">n.</span></td><td>累积分布函数(cdf)</td><td class="root">\(F(x)=P[X\le x]\),分位数从它反解</td></tr>
-          <tr><td class="en">monotonically increasing</td><td class="ipa">/ˌmɒnəˈtɒnɪkli/</td><td><span class="pos adj">adj.</span></td><td>单调递增的</td><td class="root">mono-tone → 变换搬分位数的前提</td></tr>
-          <tr><td class="en">sample median</td><td class="ipa">/ˈsæmpəl ˈmiːdiən/</td><td><span class="pos n">n.</span></td><td>样本中位数</td><td class="root">排序后取中:奇数个取正中间,偶数个取中间两数均值</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">the 75th percentile</div><div class="z">第 75 百分位数(\(p=0.75\))</div></div>
-        <div class="ph"><div class="e">calculate the median</div><div class="z">求中位数(50 分位)</div></div>
-        <div class="ph"><div class="e">first / third quartile</div><div class="z">第一 / 第三四分位数</div></div>
-        <div class="ph"><div class="e">the difference between the 30th and 70th percentiles</div><div class="z">30 与 70 分位数之差</div></div>
-        <div class="ph"><div class="e">is monotonically strictly increasing</div><div class="z">单调严格递增(可搬分位数)</div></div>
-        <div class="ph"><div class="e">the median loss size</div><div class="z">损失额的中位数</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 9</b> · 第九章 Percentiles 分位数</p>
@@ -678,5 +1005,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

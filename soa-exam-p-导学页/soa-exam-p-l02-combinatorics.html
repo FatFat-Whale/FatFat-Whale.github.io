@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L02 · 排列组合</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -227,27 +297,104 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#comb">计数</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#map">对照</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完 Combinatorics 你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 分清 <b>排列(讲顺序)</b> 与 <b>组合(不讲顺序)</b>,正确取舍公式。</p>
-        <p style="margin-bottom:0">✅ 处理 <b>有重复元素</b> 的排列、<b>有/无放回</b> 抽样。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc t">
+        <h4>计数核心</h4>
+        <p>古典概率 \(P=\dfrac{B}{A}\)(等可能;\(A\)=总结果数,\(B\)=有利结果数)</p>
+        <p>排列:\(n!\)(\(n\) 个不同对象排成一排的方式数)</p>
+        <p><span class="fx-de" data-tip="推导:先当全可辨排 n!,组内 k_i! 种排法不可辨,除掉消序" tabindex="0">推</span>相异排列 \(\dfrac{n!}{k_1!\cdots k_j!}\)</p>
+        <p style="font-size:12.5px">(\(n\)=总个数,分 \(j\) 类,\(k_i\)=第 \(i\) 类里彼此相同的个数)</p>
+        <p>有放回计数 \(n^r\)(\(n\) 种选择连选 \(r\) 次,用乘法)</p>
+      </div>
+      <div class="cc t">
+        <h4>组合 / 二项式</h4>
+        <p><span class="fx-de" data-tip="推导:先排列 n!/(n-k)!,选出的 k 个内部顺序无关,再除 k!" tabindex="0">推</span>\(\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}\)(从 \(n\) 个中选 \(k\) 个,不讲顺序)</p>
+        <p>对称:\(\dbinom{n}{k}=\dbinom{n}{n-k}\)</p>
+        <p style="font-size:13px"><span class="fx-de" data-tip="推导:分组计数:分子各组各选各的,分母一次抽 k 个" tabindex="0">推</span>无放回:\(\dfrac{\prod\binom{n_i}{k_i}}{\binom{n}{k}}\)</p>
+        <p style="font-size:12.5px">(\(n_i\)=第 \(i\) 类的总数,\(k_i\)=从该类抽中的个数;上标和=\(n\) 全体,下标和=\(k\) 抽样数)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>分清 <b>排列(讲顺序)</b> 与 <b>组合(不讲顺序)</b> 并正确取舍公式;会处理<b>有重复元素</b>的排列与<b>有 / 无放回</b>抽样。</li>
+          <li>用 <b>有利数 ÷ 总数</b> 把计数结果转成古典概率(等可能模型)。</li>
+          <li>看懂二项式系数 \(\binom{n}{k}\) 与其对称性,为<b>超几何 / 二项分布</b>铺路。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 用 <b>有利数 ÷ 总数</b> 把计数结果转成古典概率。</p>
-        <p style="margin-bottom:0">✅ 看懂二项式系数 \(\binom{n}{k}\) 与其对称性,为超几何 / 二项分布铺路。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>关键词定工具:<b>at random</b> = 等可能模型;<b>with / without replacement</b> 定"乘法 \(n^r\) vs 组合";<b>committee / group / sample</b> → 组合,<b>arrange / seat / order</b> → 排列。</li>
+          <li>高频形态:"\(N\) 件含 \(m\) 件次品,抽 \(k\) 件恰好 \(j\) 件次品"——分子 \(\binom{m}{j}\binom{N-m}{k-j}\)、分母 \(\binom{N}{k}\)(例 2F 型,日后以「超几何分布」之名重现)。</li>
+          <li>陷阱:<b>at least one</b> 别正面枚举,用补集 \(1-P[\text{none}]\) 最快;分子漏"其余选好品"那块,错误答案往往就埋在选项里等你。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="排列">● 排列</button><button class="chip" data-card="组合">● 组合</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 10 / 全章 50)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>2.2</b></td><td>交替约束排列拆两组独立全排列</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.2" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">5-S85:1 排列范式——性别交替把讲顺序拆成两组独立全排列相乘</td></tr>
+<tr class="kxd" data-kxq="2.2" style="display:none"><td colspan="4"><div class="kx-qtx">In a particular softball league each team consists of 5 women and 5 men. In determining a batting order for the 10 players, a woman must bat first, and successive batters must be of opposite sex. How many different batting orders are possible for a team?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 5! \)</span><span class="kx-opt"><b>(B)</b> \( 2(5!) \)</span><span class="kx-opt"><b>(C)</b> \( (5!)^2 \)</span><span class="kx-opt"><b>(D)</b> \( \frac{10!}{2} \)</span><span class="kx-opt"><b>(E)</b> \( 10! \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;交替→性别位固定</td><td>\( \text{女}\to 1,3,5,7,9;\ \text{男}\to \text{偶位} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;两性别各自全排列</td><td>\( \text{女 }5!,\ \text{男 }5! \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;独立相乘</td><td>\( 5!\times 5!=(5!)^2 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.6</b></td><td>组合选队再指定chair(组合×排列)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q185" type="button" title="展开题目与答案(样题 Q185)">▸</button>Q185</td><td class="dim" style="font-size:13px">选4人再指定chair——组合×排列复合套路的招牌样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q185" style="display:none"><td colspan="4"><div class="kx-qtx">Each week, a subcommittee of four individuals is formed from among the members of a committee comprising seven individuals. Two of the four subcommittee members are then assigned to lead the subcommittee, one as chair and the other as secretary.
+
+Calculate the maximum number of consecutive weeks that can elapse without having the subcommittee contain four individuals who have previously served together with the same subcommittee chair.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 70</span><span class="kx-opt"><b>(B)</b> 140</span><span class="kx-opt"><b>(C)</b> 210</span><span class="kx-opt"><b>(D)</b> 420</span><span class="kx-opt"><b>(E)</b> 840</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;选4人的组合数</td><td>\( \binom{7}{4}=35 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;组内指定主席乘法</td><td>\( 35\times 4=140 \)(秘书不影响组成)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;不重复上限即总数</td><td>最多 \( 140 \) 次</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q185" style="display:none"><td colspan="4"><div class="kx-qtx">Each week, a subcommittee of four individuals is formed from among the members of a committee comprising seven individuals. Two of the four subcommittee members are then assigned to lead the subcommittee, one as chair and the other as secretary.
+
+Calculate the maximum number of consecutive weeks that can elapse without having the subcommittee contain four individuals who have previously served together with the same subcommittee chair.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 70</span><span class="kx-opt"><b>(B)</b> 140</span><span class="kx-opt"><b>(C)</b> 210</span><span class="kx-opt"><b>(D)</b> 420</span><span class="kx-opt"><b>(E)</b> 840</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;选4人的组合数</td><td>\( \binom{7}{4}=35 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;组内指定主席乘法</td><td>\( 35\times 4=140 \)(秘书不影响组成)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;不重复上限即总数</td><td>最多 \( 140 \) 次</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>2.8</b></td><td>超几何公式识别MC(次品)</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.8" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">5-S85:35 超几何符号化——例2F型 C(4,k)C(6,3-k)/C(10,3) 的公式辨识</td></tr>
+<tr class="kxd" data-kxq="2.8" style="display:none"><td colspan="4"><div class="kx-qtx">A bin of 10 light bulbs contains 4 that are defective. If 3 bulbs are chosen without replacement from the bin, what is the probability that exactly \( k \) of the bulbs in the sample are defective?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \dfrac{\binom{4}{k}\binom{6}{3-k}}{\binom{10}{3}} \)</span><span class="kx-opt"><b>(B)</b> \( \binom{3}{k}\left(\frac{4}{10}\right)^{k}\left(\frac{6}{10}\right)^{k} \)</span><span class="kx-opt"><b>(C)</b> \( \left(\frac{4}{10}\right)^{k}\left(\frac{6}{10}\right)^{3-k} \)</span><span class="kx-opt"><b>(D)</b> \( \dfrac{\binom{4}{k}}{\binom{10}{4}} \)</span><span class="kx-opt"><b>(E)</b> \( \dfrac{\binom{6}{3-k}}{\binom{10}{3}} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;总数:10选3无放回</td><td>\( \binom{10}{3} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;有利:次品k+好品3−k</td><td>\( \binom{4}{k}\binom{6}{3-k} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;超几何相除</td><td>\( \dfrac{\binom{4}{k}\binom{6}{3-k}}{\binom{10}{3}} \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>2.9</b></td><td>多类型抽样含唯一指定牌</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.9" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">5-S88:16 牌局计数范式——含'黑桃K唯一'分子分类,选项只差一处</td></tr>
+<tr class="kxd" data-kxq="2.9" style="display:none"><td colspan="4"><div class="kx-qtx">What is the probability that a hand of 5 cards chosen randomly and without replacement from a standard deck of 52 cards contains the king of spades, exactly 1 other king, and exactly 2 queens?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \dfrac{\binom{4}{2}\binom{4}{2}\binom{44}{1}}{\binom{52}{5}} \)</span><span class="kx-opt"><b>(B)</b> \( \dfrac{\binom{3}{1}\binom{4}{2}\binom{44}{1}}{\binom{52}{5}} \)</span><span class="kx-opt"><b>(C)</b> \( \dfrac{\binom{7}{3}\binom{44}{1}}{\binom{52}{5}} \)</span><span class="kx-opt"><b>(D)</b> \( \dfrac{\binom{3}{1}\binom{4}{2}\binom{11}{1}}{\binom{52}{5}} \)</span><span class="kx-opt"><b>(E)</b> \( \dfrac{\binom{3}{1}\binom{4}{2}}{\binom{52}{5}} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;黑桃K唯一,另1K选自3</td><td>\( 1\times\binom{3}{1} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;2皇后选自4</td><td>\( \binom{4}{2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;余1张选自44非K非Q</td><td>\( \binom{44}{1} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;除以总数52选5</td><td>\( \dfrac{\binom{3}{1}\binom{4}{2}\binom{44}{1}}{\binom{52}{5}} \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>2.10</b></td><td>补集:至少一色未抽</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.10" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">5-S85:3 补集招牌——'至少一色未抽'反面求三色齐全再取补</td></tr>
+<tr class="kxd" data-kxq="2.10" style="display:none"><td colspan="4"><div class="kx-qtx">An urn contains 3 red balls, 2 green balls, and 1 yellow ball. Three balls are selected at random and without replacement from the urn. What is the probability that at least 1 color is NOT drawn?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{2}{5} \)</span><span class="kx-opt"><b>(B)</b> \( \frac{7}{10} \)</span><span class="kx-opt"><b>(C)</b> \( \frac{5}{6} \)</span><span class="kx-opt"><b>(D)</b> \( \frac{11}{12} \)</span><span class="kx-opt"><b>(E)</b> \( \frac{19}{20} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;补集:先求三色齐全</td><td>\( 3\times 2\times 1=6 \text{ 种} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;总数:6选3</td><td>\( \binom{6}{3}=20 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;取补得至少缺一色</td><td>\( 1-\dfrac{6}{20}=\dfrac{14}{20}=\dfrac{7}{10} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.12</b></td><td>有放回乘法+颜色次序</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.12" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">5-S88:7 有放回范式——各色概率相乘,再乘3!种颜色次序</td></tr>
+<tr class="kxd" data-kxq="2.12" style="display:none"><td colspan="4"><div class="kx-qtx">An urn contains 10 balls: 5 are white, 3 are red, and 2 are black. Three balls are drawn at random, with replacement, from the urn. What is the probability that all 3 balls are different colors?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.03</span><span class="kx-opt"><b>(B)</b> 0.09</span><span class="kx-opt"><b>(C)</b> 0.18</span><span class="kx-opt"><b>(D)</b> 0.40</span><span class="kx-opt"><b>(E)</b> 0.84</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;有放回→各色概率固定</td><td>\( P_W=0.5,\ P_R=0.3,\ P_B=0.2 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;一种顺序三色各一</td><td>\( 0.5\times 0.3\times 0.2=0.03 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;乘3!种颜色次序</td><td>\( 3!\times 0.03=6\times 0.03=0.18 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>2.19</b></td><td>两类型exactly-one概率</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q128" type="button" title="展开题目与答案(样题 Q128)">▸</button>Q128</td><td class="dim" style="font-size:13px">两类型 exactly-one 超几何概率最干净的现行样题(low/high-risk)</td></tr>
+<tr class="kxd kxds" data-kxq="Q128" style="display:none"><td colspan="4"><div class="kx-qtx">In a group of 25 factory workers, 20 are low-risk and five are high-risk.
+
+Two of the 25 factory workers are randomly selected without replacement.
+
+Calculate the probability that exactly one of the two selected factory workers is low-risk.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.160</span><span class="kx-opt"><b>(B)</b> 0.167</span><span class="kx-opt"><b>(C)</b> 0.320</span><span class="kx-opt"><b>(D)</b> 0.333</span><span class="kx-opt"><b>(E)</b> 0.633</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;高低风险各取1超几何</td><td>\(\frac{\binom{20}{1}\binom{5}{1}}{\binom{25}{2}}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;计算</td><td>\(\frac{100}{300}=0.333\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>③&nbsp;顺序乘法两路验证</td><td>\(2\times\frac{20}{25}\cdot\frac{5}{24}=\frac{200}{600}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q128" style="display:none"><td colspan="4"><div class="kx-qtx">In a group of 25 factory workers, 20 are low-risk and five are high-risk.
+
+Two of the 25 factory workers are randomly selected without replacement.
+
+Calculate the probability that exactly one of the two selected factory workers is low-risk.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.160</span><span class="kx-opt"><b>(B)</b> 0.167</span><span class="kx-opt"><b>(C)</b> 0.320</span><span class="kx-opt"><b>(D)</b> 0.333</span><span class="kx-opt"><b>(E)</b> 0.633</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;高低风险各取1超几何</td><td>\(\frac{\binom{20}{1}\binom{5}{1}}{\binom{25}{2}}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;计算</td><td>\(\frac{100}{300}=0.333\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>③&nbsp;顺序乘法两路验证</td><td>\(2\times\frac{20}{25}\cdot\frac{5}{24}=\frac{200}{600}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr></table></div></td></tr>
+<tr><td><b>2.24</b></td><td>三类型exactly超几何(1/2/3)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q196" type="button" title="展开题目与答案(样题 Q196)">▸</button>Q196</td><td class="dim" style="font-size:13px">三类型 exactly(工伤/房主/车)超几何,高频形态最佳代表</td></tr>
+<tr class="kxd kxds" data-kxq="Q196" style="display:none"><td colspan="4"><div class="kx-qtx">Six claims are to be randomly selected from a group of thirteen different claims, which includes two workers compensation claims, four homeowners claims and seven auto claims.
+
+Calculate the probability that the six claims selected will include one workers compensation claim, two homeowners claims and three auto claims.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.025</span><span class="kx-opt"><b>(B)</b> 0.107</span><span class="kx-opt"><b>(C)</b> 0.153</span><span class="kx-opt"><b>(D)</b> 0.245</span><span class="kx-opt"><b>(E)</b> 0.643</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;不放回按类分组计数</td><td>各类取法 \( \binom{2}{1}\binom{4}{2}\binom{7}{3} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;除以总取法</td><td>\( \Big/\binom{13}{6} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;计算</td><td>\( \dfrac{2\cdot 6\cdot 35}{1716}=0.245 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q196" style="display:none"><td colspan="4"><div class="kx-qtx">Six claims are to be randomly selected from a group of thirteen different claims, which includes two workers compensation claims, four homeowners claims and seven auto claims.
+
+Calculate the probability that the six claims selected will include one workers compensation claim, two homeowners claims and three auto claims.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.025</span><span class="kx-opt"><b>(B)</b> 0.107</span><span class="kx-opt"><b>(C)</b> 0.153</span><span class="kx-opt"><b>(D)</b> 0.245</span><span class="kx-opt"><b>(E)</b> 0.643</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;不放回按类分组计数</td><td>各类取法 \( \binom{2}{1}\binom{4}{2}\binom{7}{3} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;除以总取法</td><td>\( \Big/\binom{13}{6} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;计算</td><td>\( \dfrac{2\cdot 6\cdot 35}{1716}=0.245 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>2.38</b></td><td>独立试验at-least-one补集</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q486" type="button" title="展开题目与答案(样题 Q486)">▸</button>Q486</td><td class="dim" style="font-size:13px">独立试验 at-least-one 补集 1-(1-p)^3 的范式样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q486" style="display:none"><td colspan="4"><div class="kx-qtx">A study of fire damage claims is conducted. Claim amounts are mutually independent and each claim amount exceeds 1000 with probability 0.20. Calculate the probability that at least one of three randomly selected claim amounts exceeds 1000.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.472</span><span class="kx-opt"><b>(B)</b> 0.488</span><span class="kx-opt"><b>(C)</b> 0.512</span><span class="kx-opt"><b>(D)</b> 0.528</span><span class="kx-opt"><b>(E)</b> 0.600</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;识别二项分布</td><td>\(N\sim B(3,0.2)\)</td><td class="xr"><a href="soa-exam-p-l17-binomial-distribution.html">L17</a></td></tr><tr><td>②&nbsp;至少一次取补</td><td>\(P(N>0)=1-0.8^3=0.488\)</td><td class="xr"><a href="soa-exam-p-l17-binomial-distribution.html">L17</a></td></tr></table></div></td></tr>
+<tr><td><b>2.44</b></td><td>圆桌相邻排列概率</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q549" type="button" title="展开题目与答案(样题 Q549)">▸</button>Q549</td><td class="dim" style="font-size:13px">座次/相邻排列概率代表(圆桌两左撇子相邻)</td></tr>
+<tr class="kxd kxds" data-kxq="Q549" style="display:none"><td colspan="4"><div class="kx-qtx">Six people are seated randomly around a circular table. Two of the six people are left-handed.
+
+Calculate the probability that the two left-handed people are seated next to each other.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1/6</span><span class="kx-opt"><b>(B)</b> 1/5</span><span class="kx-opt"><b>(C)</b> 1/3</span><span class="kx-opt"><b>(D)</b> 2/5</span><span class="kx-opt"><b>(E)</b> 3/5</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;圆排列总数</td><td>\(5!\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;捆绑法数相邻情形</td><td>\(2\times4!\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;等可能取比值</td><td>\(\frac{2(4!)}{5!}=\tfrac25\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q549" style="display:none"><td colspan="4"><div class="kx-qtx">Six people are seated randomly around a circular table. Two of the six people are left-handed.
+
+Calculate the probability that the two left-handed people are seated next to each other.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1/6</span><span class="kx-opt"><b>(B)</b> 1/5</span><span class="kx-opt"><b>(C)</b> 1/3</span><span class="kx-opt"><b>(D)</b> 2/5</span><span class="kx-opt"><b>(E)</b> 3/5</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;圆排列总数</td><td>\(5!\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;捆绑法数相邻情形</td><td>\(2\times4!\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;等可能取比值</td><td>\(\frac{2(4!)}{5!}=\tfrac25\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 36(同题型二刷备用)· 跳过 4(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -276,20 +423,31 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <details class="more"><summary>展开 · 为什么相异排列要除以 \(k_i!\)</summary>
         <p class="dim">同一类的 \(k_i\) 个相同元素内部怎么换位,排出来都长一个样——每种"看得见"的排列在 \(n!\) 里被重复数了 \(k_1!\,k_2!\cdots k_j!\) 次,除回去即得相异排列数。</p>
       </details>
-      <div class="grid2" style="margin-top:6px">
         <div class="ex">
           <div class="ex-h"><span class="badge">例 2A/2B</span><span class="src" style="margin:0">p.26</span></div>
           <p class="q">A、C、E、F 随机排成 4 字母串。</p>
           <p>总排列 \(=4!=24\)。其中能拼成英文词的只有 FACE、CAFE 两种,故"拼成正确单词"的概率 \(=2/24\)。</p>
           <span class="ans">24 种 · P = 1/12</span>
+          <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+          <table>
+            <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+            <tr><td>① 总数:4 字母全排列(讲顺序)</td><td>\(A=n!=4!=24\)</td><td class="xr"><span class="here">本章</span></td></tr>
+            <tr><td>② 有利数:枚举能拼成的英文词</td><td>\(B=2\)(FACE、CAFE)</td><td class="xr"><span class="here">本章</span></td></tr>
+            <tr><td>③ 等可能 → 古典概率相除</td><td>\(P=\dfrac{B}{A}=\dfrac{2}{24}=\dfrac{1}{12}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          </table></div>
         </div>
         <div class="ex">
           <div class="ex-h"><span class="badge">例 2C</span><span class="src" style="margin:0">p.26</span></div>
           <p class="q">集合 \(\{1,1,2,2,2,3,4\}\) 有多少种相异排列?</p>
           <p>7 个元素,含两个 1、三个 2,需除掉重复:<br>\(\dfrac{7!}{2!\,3!\,1!\,1!}\)。</p>
           <span class="ans">= 420</span>
+          <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+          <table>
+            <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+            <tr><td>① 识别重复元素的类别与个数</td><td>\(n=7\);两个 1(\(k_1=2\))、三个 2(\(k_2=3\))</td><td class="xr"><span class="here">本章</span></td></tr>
+            <tr><td>② 套相异排列公式(除掉类内排序)</td><td>\(\dfrac{n!}{k_1!\,k_2!\cdots k_j!}=\dfrac{7!}{2!\,3!}=420\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          </table></div>
         </div>
-      </div>
       <div class="note tip"><span class="ic">🔁</span><span class="t"><b>有放回选取</b>用乘法:如"9 人部门每月随机选 1 人吃饭,连选 3 月"总数 \(=9^3\)(例 2D),它本身已含顺序、不再乘别的;求"三类(2+3+4 人)各来一位"时,分子 \(2\times3\times4\) 只对应一种类别次序,才要再乘 \(3!\) 种可发生的顺序。</span></div>
     </div>
 
@@ -301,20 +459,31 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         $$\binom{n}{k}=\frac{n!}{k!\,(n-k)!}\qquad\text{对称性}\quad \binom{n}{k}=\binom{n}{n-k}$$</div>
       <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>讲序排列,不讲序组合</b> — 拿到题先问一句「换个顺序算不算新结果?」算 → 排列;不算 → 组合。</span></div>
       <p class="dim">从 \(n\) 个里选 \(k\) 个、<b>不计顺序</b>。先按排列选(\(n(n-1)\cdots(n-k+1)\)),再除掉 \(k\) 个的内部排列 \(k!\)。</p>
-      <div class="grid2" style="margin-top:6px">
         <div class="ex">
           <div class="ex-h"><span class="badge">例 2E</span><span class="src" style="margin:0">p.27</span></div>
           <p class="q">6 名员工选 3 名组队,有几种?</p>
           <p>\(\dbinom{6}{3}=\dfrac{6!}{3!\,3!}=\dfrac{720}{36}\)。</p>
           <span class="ans">= 20</span>
+          <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+          <table>
+            <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+            <tr><td>① 判定"组队"换序不算新结果 → 组合</td><td>讲序排列,不讲序组合</td><td class="xr"><span class="here">本章</span></td></tr>
+            <tr><td>② 套二项式系数</td><td>\(\dbinom{n}{k}=\dfrac{n!}{k!\,(n-k)!}\ \Rightarrow\ \dbinom{6}{3}=20\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          </table></div>
         </div>
         <div class="ex">
           <div class="ex-h"><span class="badge">例 2F</span><span class="src" style="margin:0">p.27</span></div>
           <p class="q">50 辆车含 4 辆次品,8 人各买 1 辆。恰好 2 人买到次品的概率?</p>
           <p>有利:6 人买好车 + 2 人买次品 \(=\dbinom{46}{6}\dbinom{4}{2}\);总数 \(=\dbinom{50}{8}\)。</p>
           <span class="ans">≈ 0.1047</span>
+          <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+          <table>
+            <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+            <tr><td>① 总数:50 选 8(无放回、不讲序)</td><td>\(A=\dbinom{50}{8}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+            <tr><td>② 有利数:次品、好车两类都写全</td><td>\(B=\dbinom{4}{2}\dbinom{46}{6}\)(自检:上标和 \(=50\)、下标和 \(=8\))</td><td class="xr"><span class="here">本章</span></td></tr>
+            <tr><td>③ 套无放回多类型通用式相除</td><td>\(P=\dfrac{\prod_i\binom{n_i}{k_i}}{\binom{n}{k}}=\dfrac{\binom{4}{2}\binom{46}{6}}{\binom{50}{8}}\approx0.1047\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          </table></div>
         </div>
-      </div>
       <div class="formula star"><span class="name"><span class="must">★ 必背</span>无放回抽样:多类型选取的通用式(为超几何铺路)</span>
         $$P=\frac{\prod_{i=1}^{j}\binom{n_i}{k_i}}{\binom{n}{k}}\qquad \sum k_i=k,\ \sum n_i=n$$</div>
       <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>上标和 = n,下标和 = k</b> — 无放回分子的自检口诀:哪一类漏写了,一加就露馅。</span></div>
@@ -407,15 +576,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>关键词定工具:<b>at random</b> = 等可能模型;<b>with / without replacement</b> 定"乘法 \(n^r\) vs 组合";<b>committee / group / sample</b> → 组合,<b>arrange / seat / order</b> → 排列。</li>
-        <li>高频形态:"\(N\) 件含 \(m\) 件次品,抽 \(k\) 件恰好 \(j\) 件次品"——分子 \(\binom{m}{j}\binom{N-m}{k-j}\)、分母 \(\binom{N}{k}\)(例 2F 型,日后以「超几何分布」之名重现)。</li>
-        <li>陷阱:<b>at least one</b> 别正面枚举,用补集 \(1-P[\text{none}]\) 最快;分子漏"其余选好品"那块,错误答案往往就埋在选项里等你。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Combination">Wikipedia · Combination</a></div><div class="z">排列与组合的关系、二项式系数的全部常用恒等式,一页看全,补齐对称性的来龙去脉。</div><div class="u">en.wikipedia.org/wiki/Combination</div></div>
@@ -426,140 +586,208 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="map">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-pre">课本 ↔ 视频</span><h2 class="sec-title">本章 3 个视频 · 对照表</h2></div></div>
-    <p class="sec-sub">概念课放慢到 1.2x 吃透定义,习题课 1.5x 过题。</p>
-    <table class="map">
-      <thead><tr><th style="width:38%">视频</th><th style="width:13%">倍速</th><th>对应课本 / 重点</th></tr></thead>
-      <tbody>
-        <tr><td>Ch2 Combinatorics|知识点讲解</td><td><span class="spd spd-a">1.2x</span></td><td>p.25–27:古典概率、排列、组合、二项式系数</td></tr>
-        <tr><td>Ch2 Combinatorics|习题 Part1</td><td><span class="spd spd-b">1.5x</span></td><td>排列 / 相异排列(配例 2A–2C)</td></tr>
-        <tr><td>Ch2 Combinatorics|习题 Part2</td><td><span class="spd spd-b">1.5x</span></td><td>组合 / 无放回抽样(配例 2E–2F)</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
 
-<section id="test" style="background:linear-gradient(180deg,#eefaf9,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测(Combinatorics)</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>排列 vs 组合</b>:先问"顺序重不重要"。重要→排列,不重要→组合。</li>
-          <li><b>组合抽样漏项</b>:无放回题分子要把"其余都选好的"那块也写上。</li>
-          <li><b>检验法</b>:分子各二项式上标之和应 \(=n\)、下标之和应 \(=k\)。</li>
-          <li><b>有放回用乘法</b>:连续选取是 \(n^r\),不是组合。</li>
-          <li><b>重复元素要除</b>:相异排列除以各重复数的阶乘 \(k_i!\)。</li>
-        </ul>
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 2.1</span>四色球各取若干,样本计数。</li>
-          <li><span class="ref">练 2.5</span>7 男 3 女选 5,含 3 男 2 女的概率。</li>
-          <li><span class="ref">练 2.8</span>10 灯泡含 4 次品,抽 3 恰 \(k\) 次品。</li>
-          <li><span class="ref">练 2.12</span>有放回抽 3 球,三色各一的概率。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>从 8 人里选 3 人排成一排领奖(讲名次),多少种?用排列还是组合?</li>
-        <li>\(\binom{10}{2}\) 等于多少?用对称性它还等于 \(\binom{10}{?}\)。</li>
-        <li>\(\{A,A,B,C\}\) 有多少种相异排列?</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① 排列,\(8\times7\times6=336\);② \(45\),且 \(=\binom{10}{8}\);③ \(\dfrac{4!}{2!}=12\)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · Combinatorics</h2></div></div>
-    <p class="sec-sub">学完这章,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc t">
-        <h4>计数核心</h4>
-        <p>古典概率 \(P=\dfrac{B}{A}\)(等可能)</p>
-        <p>排列:\(n!\)</p>
-        <p>相异排列 \(\dfrac{n!}{k_1!\cdots k_j!}\)</p>
-        <p>有放回计数 \(n^r\)(用乘法)</p>
-      </div>
-      <div class="cc t">
-        <h4>组合 / 二项式</h4>
-        <p>\(\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}\)</p>
-        <p>对称:\(\dbinom{n}{k}=\dbinom{n}{n-k}\)</p>
-        <p style="font-size:13px">无放回:\(\dfrac{\prod\binom{n_i}{k_i}}{\binom{n}{k}}\)</p>
-        <p style="font-size:12.5px">(上标和=\(n\),下标和=\(k\))</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "排列": {
+  "kind": "c",
+  "en": "Permutation",
+  "aliases": [
+   "Permutations",
+   "nPr",
+   "排列数"
+  ],
+  "level": "basic",
+  "chapter": "p-l02",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从 \\(n\\) 个不同对象中取 \\(r\\) 个,<strong>讲究顺序</strong>地排成一列的方式数。顺序不同视为不同方案。</p><p><strong>白话</strong>:领奖台思维——金牌银牌不能互换,\"甲金乙银\"和\"乙金甲银\"是两回事;排列数的就是这种\"谁站哪个位置都要分清\"的方案数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$_nP_r=\\frac{n!}{(n-r)!}$$</div><ul><li>全排列 \\(_nP_n=n!\\)。</li><li>与组合的换算:\\(_nP_r=\\,_nC_r\\cdot r!\\)。</li><li>计算器用 nPr 键。</li></ul><p><strong>算一遍</strong>:4 人赛跑,金、银牌有几种颁法。</p><ul><li>金牌 4 人里选 1,银牌剩 3 人里选 1:\\(_4P_2=\\frac{4!}{2!}=4\\times3=12\\) 种。</li><li>对照组合:不分金银、只挑 2 人进领奖台 → \\(_4C_2=6\\) 种。</li><li>换算核对:\\(12=6\\times 2!\\) ✓ 每一对人有 2 种颁奖顺序——排列 = 组合 × 内部排法。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"组合\">组合</a> — 不讲顺序的对应物,差一个 \\(r!\\)</li><li><a class=\"net-wl\" data-id=\"等可能模型\">等可能模型</a> — 古典概率里数\"总数 / 有利数\"常用排列</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"计数与逐步乘链的口径一致\">计数与逐步乘链的口径一致</a> — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "等可能模型": {
+  "kind": "c",
+  "en": "EquallyLikelyOutcomes",
+  "aliases": [
+   "古典概率",
+   "等可能概型",
+   "classical probability",
+   "equally likely"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当样本空间的所有基本结果<strong>等可能</strong>时,事件概率 = 有利结果数 ÷ 总结果数。即古典概率模型。</p><p><strong>白话</strong>:抽奖箱里每张券手感一模一样、谁被摸到全凭运气,这时概率就退化成数数:中奖券几张、箱里总共几张,一除完事——前提是\"每张券机会均等\",券有大小厚薄之分就不能这么数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[E]=\\frac{\\#E}{\\#\\Omega}$$</div><p>解题三步:① 确定样本空间(总数)② 数有利结果 ③ 相除。分子、分母常用排列 / 组合来计数。</p><ul><li><strong>等可能是「比例=概率」的开关</strong>:比例背后是加法——\\(N\\) 个结果各摊 \\(\\frac1N\\),数 \\(k\\) 个有利 = 加 \\(k\\) 份 \\(\\frac1N\\)。等可能才让\"数个数\"与\"加概率\"是同一件事;分子分母也因此必须在<strong>同一个</strong>等可能样本空间里数(口径一致)。</li><li><strong>它是正牌概率,不是近似</strong>:\\(P[E]=\\#E/\\#\\Omega\\) 自动满足三条 概率公理(\\(P[\\Omega]=1\\)、非负、互斥可加)——古典概型是概率的第一个具体模型(有限 \\(\\Omega\\) + 均匀赋值),不是\"不太正宗的比例\"。</li><li><strong>反例记边界</strong>:\"明天要么下雨要么不下,所以下雨 50%\"——数数没错,错在两个结果不等可能。题面的 at random / well-shuffled / fair 就是在给你等可能许可证。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求掷出偶数的概率。</p><ul><li>样本空间:\\(\\Omega=\\{1,2,3,4,5,6\\}\\),共 6 个等可能结果。</li><li>数有利结果:偶数 \\(\\{2,4,6\\}\\),共 3 个。</li><li>相除:\\(P=\\tfrac36=\\tfrac12\\)——骰子六面均匀是\"等可能\"前提,灌了铅就不能这么算。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"排列\">排列</a> — 讲顺序时的计数工具</li><li><a class=\"net-wl\" data-id=\"组合\">组合</a> — 不讲顺序时的计数工具</li><li>概率公理 — 古典概率是满足三公理的一种具体赋值</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"计数与逐步乘链的口径一致\">计数与逐步乘链的口径一致</a> — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "组合": {
+  "kind": "c",
+  "en": "Combination",
+  "aliases": [
+   "Combinations",
+   "nCr",
+   "组合数",
+   "二项式系数"
+  ],
+  "level": "basic",
+  "chapter": "p-l02",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从 \\(n\\) 个不同对象中取 \\(r\\) 个,<strong>不讲顺序</strong>地选出的方式数。</p><p><strong>白话</strong>:奶茶加料任选两种,\"珍珠 + 椰果\"和\"椰果 + 珍珠\"是同一杯——只问选了哪几样、不问先加哪样,数的就是组合;要是先后有讲究(比赛排名次),那是排列。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$_nC_r=\\binom{n}{r}=\\frac{n!}{r!\\,(n-r)!}$$</div><ul><li>对称性:\\(\\binom{n}{r}=\\binom{n}{n-r}\\)。</li><li>即二项式系数,后续接二项分布。</li><li>计算器用 nCr 键。</li></ul><p><strong>算一遍</strong>:4 种配料(珍珠、椰果、布丁、芋圆)里选 2 种,有几种搭配?</p><ul><li>套公式:\\(\\binom42=\\dfrac{4!}{2!\\,2!}=6\\)。</li><li>枚举核对:珍椰、珍布、珍芋、椰布、椰芋、布芋——正好 6 种 ✓</li><li>对照排列:讲顺序是 \\(4\\times3=12\\),每对被数了 2 次(\\(2!\\)),除回去就是 6——\"组合 = 排列 ÷ 内部排序\"。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"排列\">排列</a> — 讲顺序的对应物,\\(_nP_r=\\,_nC_r\\cdot r!\\)</li><li><a class=\"net-wl\" data-id=\"等可能模型\">等可能模型</a> — 古典概率里数\"总数 / 有利数\"常用组合</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"计数与逐步乘链的口径一致\">计数与逐步乘链的口径一致</a> — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "计数与逐步乘链的口径一致": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "basic",
+  "chapter": "p-l02",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:hand / committee / sample 抽牌抽人,\"无放回 + 指定若干类恰好几个\"(如 52 张牌抽 5 张,要黑桃K + 恰 1 其他K + 恰 2 Q)。这类题的经典迷惑:「无放回是不是要讲顺序?分子基数是不是 52?」</p><h4>两套合法框架(选一套,别混)</h4><ol><li><strong>计数框架(默认首选)</strong>:\\(P=\\dfrac{\\#\\text{有利手牌}}{\\#\\text{全部手牌}}\\)——分子分母都在<strong>数种类</strong>。手牌是集合,无序;分子只在各小池子里挑(超几何分布 的分组模板),\\(52\\) 这个基数只出现在分母 \\(\\binom{52}{5}\\):</li></ol><div class=\"net-mth\">$$P=\\frac{\\binom11\\binom31\\binom42\\binom{44}1}{\\binom{52}{5}}=\\frac{792}{2{,}598{,}960}\\approx 0.0003$$</div><ol><li><strong>逐步乘链框架</strong>:按抽出顺序逐张乘概率,分母 \\(52,51,50,\\dots\\) 缩池,<strong>最后必须乘类型顺序数</strong>(相异排列,见 <a class=\"net-wl\" data-id=\"排列\">排列</a>):</li></ol><div class=\"net-mth\">$$\\Big(\\tfrac1{52}\\cdot\\tfrac3{51}\\cdot\\tfrac4{50}\\cdot\\tfrac3{49}\\cdot\\tfrac{44}{48}\\Big)\\times\\frac{5!}{1!\\,1!\\,2!\\,1!}\\approx 0.0003$$</div><p>两套答案恒等:计数框架 = 乘链框架上下同消 \\(5!\\) 的结果。</p><h4>核心原则与易错</h4><ul><li><strong>口径一致</strong>:要么全程数种类(组合/组合),要么全程逐步概率(乘链×顺序数)。<strong>分子算概率、分母数种类的混搭必错</strong>——典型错法:分子每张牌都用基数 52(把\"从 52 里抽到K的机会\"当计数),分母却用 \\(\\binom{52}{5}\\)。</li><li>「无放回」≠「讲顺序」:无放回只说明不重复;顺序看事件本身——问\"手里<strong>有</strong>什么\"就无序,问\"<strong>先后</strong>抽到什么\"才有序。</li><li>指定具体某张牌(黑桃K)只是限定集合成员,与顺序无关——它把「4 张K选 2」拆成「黑桃K必进 \\(\\binom11\\) + 其余 3 选 1」。</li></ul><h4>判别信号词</h4><ul><li>hand / committee / group / sample / contains → 最终拿到一堆东西 → <strong>计数框架</strong>。</li><li>first card…second card… / in order / successively → 过程按顺序发生 → <strong>逐步乘链</strong>(或排列计数)。</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab" style="background:linear-gradient(180deg,#eefaf9,#f5f6f9 220px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">背诵 · Lesson 2 原文用词</span><h2 class="sec-title">Combinatorics 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须会(中↔英双向),B 类看见就懂,C 类短语整块记。</p>
-
-    <div class="card accent">
-      <h3>A · 计数术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 2</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">permutation</td><td class="ipa">/ˌpɜːrmjuˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>排列(讲顺序)</td><td class="root">per-+mut(变,同 mutate)→ 换序</td></tr>
-          <tr><td class="en">combination</td><td class="ipa">/ˌkɒmbɪˈneɪʃən/</td><td><span class="pos n">n.</span></td><td>组合(不讲顺序)</td><td class="root">com-(共)+bin(合)→ 组到一起</td></tr>
-          <tr><td class="en">factorial</td><td class="ipa">/fækˈtɔːriəl/</td><td><span class="pos n">n.</span></td><td>阶乘 \(n!\)</td><td class="root">factor(因子)相乘</td></tr>
-          <tr><td class="en">binomial coefficient</td><td class="ipa">/baɪˈnoʊmiəl ˌkoʊɪˈfɪʃənt/</td><td><span class="pos n">n.</span></td><td>二项式系数 \(\binom{n}{k}\)</td><td class="root">bi-(二)+nomial(项)</td></tr>
-          <tr><td class="en">ordering</td><td class="ipa">/ˈɔːrdərɪŋ/</td><td><span class="pos n">n.</span></td><td>排序;次序</td><td class="root">order(顺序)→ 排列的本质</td></tr>
-          <tr><td class="en">random sample</td><td class="ipa">/ˈrændəm ˈsæmpəl/</td><td><span class="pos n">n.</span></td><td>随机样本</td><td class="root">从集合里"抽样"</td></tr>
-          <tr><td class="en">replacement</td><td class="ipa">/rɪˈpleɪsmənt/</td><td><span class="pos n">n.</span></td><td>放回</td><td class="root">re-+place(放回原处)</td></tr>
-          <tr><td class="en">denomination</td><td class="ipa">/dɪˌnɒmɪˈneɪʃən/</td><td><span class="pos n">n.</span></td><td>(牌的)点数;面额</td><td class="root">抽牌题:same denomination=同点数</td></tr>
-          <tr><td class="en">distinct</td><td class="ipa">/dɪˈstɪŋkt/</td><td><span class="pos adj">adj.</span></td><td>相异的;不同的</td><td class="root">distinct permutations=相异排列</td></tr>
-          <tr><td class="en">subset</td><td class="ipa">/ˈsʌbsɛt/</td><td><span class="pos n">n.</span></td><td>子集(选取的组合)</td><td class="root">选 k 个=一个 size-k 子集</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card accent">
-      <h3>B · 高频通用学术词</h3>
-      <div class="src">非术语,但课本/考题反复出现</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点</th></tr></thead>
-        <tbody>
-          <tr><td class="en">select</td><td class="ipa">/sɪˈlɛkt/</td><td><span class="pos v">v.</span></td><td>选取</td><td class="root">se-+lect(挑,同 elect)</td></tr>
-          <tr><td class="en">arrange</td><td class="ipa">/əˈreɪndʒ/</td><td><span class="pos v">v.</span></td><td>排列;安排</td><td class="root">range(排序)→ 排列题动词</td></tr>
-          <tr><td class="en">random</td><td class="ipa">/ˈrændəm/</td><td><span class="pos adj">adj.</span></td><td>随机的</td><td class="root">at random=随机地</td></tr>
-          <tr><td class="en">calculate</td><td class="ipa">/ˈkælkjuleɪt/</td><td><span class="pos v">v.</span></td><td>计算</td><td class="root">考题最高频指令</td></tr>
-          <tr><td class="en">determine</td><td class="ipa">/dɪˈtɜːrmɪn/</td><td><span class="pos v">v.</span></td><td>求出;确定</td><td class="root">同 calculate</td></tr>
-          <tr><td class="en">illustrate</td><td class="ipa">/ˈɪləstreɪt/</td><td><span class="pos v">v.</span></td><td>举例说明</td><td class="root">lustr(光)→ 照亮说明</td></tr>
-          <tr><td class="en">consider</td><td class="ipa">/kənˈsɪdər/</td><td><span class="pos v">v.</span></td><td>考虑;研究</td><td class="root">"Let's consider…"</td></tr>
-          <tr><td class="en">occur</td><td class="ipa">/əˈkɜːr/</td><td><span class="pos v">v.</span></td><td>发生</td><td class="root">oc-+cur(跑)</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">at random</div><div class="z">随机地</div></div>
-        <div class="ph"><div class="e">with / without replacement</div><div class="z">有放回 / 无放回</div></div>
-        <div class="ph"><div class="e">selected at random</div><div class="z">随机选取的</div></div>
-        <div class="ph"><div class="e">at least one</div><div class="z">至少一个</div></div>
-        <div class="ph"><div class="e">exactly two</div><div class="z">恰好两个</div></div>
-        <div class="ph"><div class="e">at most</div><div class="z">至多;不超过</div></div>
-        <div class="ph"><div class="e">it follows that</div><div class="z">由此可得</div></div>
-        <div class="ph"><div class="e">calculate the probability that …</div><div class="z">求……的概率</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 2</b> · 第二章 Combinatorics 排列组合</p>
@@ -598,5 +826,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

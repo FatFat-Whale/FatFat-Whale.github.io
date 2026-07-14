@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L27 · 连续型联合矩</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -235,7 +247,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -361,6 +372,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       $$E[X+Y]=\int_0^1\!\int_0^1 1.2\,(x+y)(x^2+y)\,dy\,dx=\int_0^1\!\int_0^1 1.2\,(x^3+xy+x^2y+y^2)\,dy\,dx.$$
       先对 \(y\) 积:\(\int_0^1(\cdots)\,dy=x^3+\tfrac12 x+\tfrac12 x^2+\tfrac13\);再对 \(x\) 积:\(1.2\big(\tfrac14+\tfrac14+\tfrac16+\tfrac13\big)=1.2\).</p>
       <span class="ans">E[X+Y] = 1.2</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 套联合矩定义,取 \(g(x,y)=x+y\)</td><td>\(E[g(X,Y)]=\displaystyle\iint g(x,y)\,f(x,y)\,dx\,dy\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 支撑是单位正方形 → 定积分限</td><td>\(\int_0^1\!\int_0^1(\cdots)\,dy\,dx\)</td><td class="xr"><a href="soa-exam-p-l24-joint-continuous.html">L24 联合连续 ↗</a></td></tr>
+        <tr><td>③ 先 \(y\) 后 \(x\) 逐层积分</td><td>\(1.2\big(\tfrac14+\tfrac14+\tfrac16+\tfrac13\big)=1.2\)</td><td class="xr"><a href="soa-exam-p-l24-joint-continuous.html">L24 联合连续 ↗</a></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -369,6 +387,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>支撑非矩形,\(x\) 从 0 积到 \(y\),<b>不能拆</b>:
       $$E[XY^2]=\int_0^1\!\int_0^{y} 2\,xy^2\,dx\,dy=\int_0^1 2y^2\cdot\frac{x^2}{2}\Big|_0^{y}\,dy=\int_0^1 y^4\,dy=\frac15.$$</p>
       <span class="ans">E[XY²] = 1/5</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 看支撑:三角形(\(x\) 上限含 \(y\))→ 不独立,矩<b>不能拆</b></td><td>独立需密度可分解<b>且</b>支撑为矩形</td><td class="xr"><a href="soa-exam-p-l24-joint-continuous.html">L24 独立判据 ↗</a></td></tr>
+        <tr><td>② 联合矩定义 + 按区域定限:内层 \(x\) 从 0 积到 \(y\)</td><td>\(E[XY^2]=\int_0^1\!\int_0^{y}2\,xy^2\,dx\,dy\)</td><td class="xr"><span class="here">本章</span> · <a href="soa-exam-p-l24-joint-continuous.html">L24 联合连续 ↗</a></td></tr>
+        <tr><td>③ 逐层积分:先 \(x\) 后 \(y\)</td><td>\(\int_0^1 y^4\,dy=\tfrac15\)</td><td class="xr"><a href="soa-exam-p-l24-joint-continuous.html">L24 联合连续 ↗</a></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -378,6 +403,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       $$E[XY^2]=E[X]\,E[Y^2]=\Big(\tfrac12\Big)\Big(\tfrac13\Big)=\frac16.$$
       对比 27B:同样问 \(E[XY^2]\),换成三角形支撑就<b>不能</b>这么拆。</p>
       <span class="ans">E[XY²] = 1/6</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 密度可分解 + 矩形支撑 → <b>独立</b></td><td>\(f(x,y)=1=f_X(x)\,f_Y(y)\),支撑 \([0,1]^2\)</td><td class="xr"><a href="soa-exam-p-l24-joint-continuous.html">L24 独立判据 ↗</a></td></tr>
+        <tr><td>② 独立 ⇒ 矩直接拆开</td><td>\(E[XY^2]=E[X]\,E[Y^2]\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 各算单变量矩(均匀 \([0,1]\))</td><td>\(E[X]=\tfrac12,\ \ E[Y^2]=\int_0^1 y^2\,dy=\tfrac13\)</td><td class="xr"><a href="soa-exam-p-l15-uniform-distribution.html">L15 均匀 ↗</a> · <a href="soa-exam-p-l07-mean.html">L07 期望 ↗</a></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>27B vs 27C 的教训:</b>能否用 \(E[XY^2]=E[X]E[Y^2]\) 这条捷径,<b>只看独立性</b>,不看密度长得像不像。支撑一旦是三角形(\(x\) 上限含 \(y\)),先默认不独立,老实二重积分。</span></div>
   </div>
@@ -526,40 +558,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 27 原文用词</span><h2 class="sec-title">连续型联合矩 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"联合密度 / 独立 / 求期望"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 27</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">\(f(x,y)\),对它二重积分得概率/期望</td></tr>
-          <tr><td class="en">joint moment</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>联合矩</td><td class="root">\(E[X^mY^n]\);\(E[XY]\) 是最常用的一个</td></tr>
-          <tr><td class="en">double-integrate</td><td class="ipa">/ˈdʌbəl ˈɪntɪɡreɪt/</td><td><span class="pos v">v.</span></td><td>二重积分</td><td class="root">离散求和的连续对应;\(\iint\cdots dx\,dy\)</td></tr>
-          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边际密度</td><td class="root">\(f_X(x)=\int f(x,y)\,dy\),抽掉另一变量</td></tr>
-          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">\(f=f_Xf_Y\) 且支撑矩形 → 乘积期望可拆</td></tr>
-          <tr><td class="en">factored</td><td class="ipa">/ˈfæktərd/</td><td><span class="pos adj">adj.</span></td><td>可因式分解的</td><td class="root">密度写成"含 \(x\)"×"含 \(y\)",独立的信号</td></tr>
-          <tr><td class="en">support (region)</td><td class="ipa">/səˈpɔːrt/</td><td><span class="pos n">n.</span></td><td>支撑(区域)</td><td class="root">\(f&gt;0\) 的区域,决定积分上下限</td></tr>
-          <tr><td class="en">expected value</td><td class="ipa">/ɪkˈspɛktɪd/</td><td><span class="pos n">n.</span></td><td>期望值</td><td class="root">\(E[\cdot]\),对密度加权积分</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">joint density function</div><div class="z">联合密度函数(给出 \(f(x,y)\))</div></div>
-        <div class="ph"><div class="e">Calculate E[XY²].</div><div class="z">求 \(E[XY^2]\)</div></div>
-        <div class="ph"><div class="e">the variables are independent</div><div class="z">两变量独立(可拆乘积期望)</div></div>
-        <div class="ph"><div class="e">nonzero only on …</div><div class="z">仅在……上非零(即支撑范围)</div></div>
-        <div class="ph"><div class="e">can be factored into …</div><div class="z">能因式分解成……(判独立)</div></div>
-        <div class="ph"><div class="e">over the joint density</div><div class="z">对联合密度(积分)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -599,5 +597,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

@@ -183,6 +183,63 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+  .modal-mask{position:fixed;inset:0;background:rgba(22,36,61,.45);z-index:80;
+              display:none;align-items:flex-start;justify-content:center;padding:6vh 16px 4vh;overflow-y:auto}
+  .modal-mask.open{display:flex}
+  .modal{background:#fff;border-radius:12px;max-width:660px;width:100%;
+         box-shadow:0 18px 60px rgba(0,0,0,.28);border-top:4px solid var(--accent)}
+  .m-head{padding:18px 24px 10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .m-title{font-family:var(--serif);font-size:21px;font-weight:700;margin:0}
+  .m-en{font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+  .m-meta{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .m-tag{font-family:var(--mono);font-size:11px;background:#eef1f6;color:var(--ink-soft);border-radius:8px;padding:1px 8px}
+  .m-tag.lv-basic{background:#e4f1e9;color:#1d7a4f}
+  .m-tag.lv-advanced{background:#e4eeff;color:#1d4ed8}
+  .m-tag.lv-hard{background:var(--warn-soft);color:var(--warn)}
+  .m-tag a{color:inherit;text-decoration:none}
+  .m-close{font:inherit;border:0;background:none;font-size:20px;color:var(--mute);cursor:pointer;line-height:1}
+  .m-close:hover{color:var(--ink)}
+  .m-back{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .m-back:empty{display:none}
+  .m-body{padding:14px 24px 22px;font-size:15px;max-height:66vh;overflow-y:auto}
+  .m-body h3{font-size:16.5px;margin:16px 0 6px;color:var(--accent-deep)}
+  .m-body h4{font-size:15px;margin:12px 0 4px}
+  .m-body ul{margin:6px 0;padding-left:20px}
+  .m-body li{margin:3px 0}
+  .m-body p{margin:8px 0}
+  .m-body .mblock{overflow-x:auto;padding:4px 2px;margin:8px 0}
+  .m-body .aka{font-size:12.5px;color:var(--mute)}
+  .wl{font:inherit;border:0;padding:0;background:none;cursor:pointer;color:var(--accent-deep);border-bottom:1px dashed var(--accent);font-size:inherit}
+  .wl:hover{background:var(--accent-soft)}
+  @media(max-width:640px){.m-body{max-height:70vh}}
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 <style>
   .fx-wrap{padding:34px 22px 46px;max-width:940px;margin:0 auto}
@@ -197,20 +254,20 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </head>
 <body>
 <div class="fx-wrap"><h2 class="fx-title">Σ 公式总表 · 全 35 章速查卡</h2>
-<p class="fx-sub">自动聚合各章「公式速查卡」;点章名跳原章。改章后重跑 build-exam-p-book.py 刷新。</p>
+<p class="fx-sub">自动聚合各章「公式速查卡」;点章名跳原章。<span class="fx-de" data-tip="需懂推导:能从定义/事件逻辑现场重导;悬停或点击徽章看该公式的推导句" tabindex="0">推</span>= 需懂推导(能现场重导);无标 = 背诵即可。改章后重跑 build-exam-p-book.py 刷新。</p>
 <div class="fx-ch" data-l="l01" style="--accent:#e6a100;--accent-deep:#9a6f00;--accent-soft:#fff7da;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#e6a100">L01</span><a class="fxlink" href="soa-exam-p-l01-sets.html">Sets 集合</a></h3><div class="cheat">
       <div class="cc">
         <h4>集合运算</h4>
-        <p>\((A\cup B)'=A'\cap B'\)</p>
-        <p>\((A\cap B)'=A'\cup B'\)</p>
+        <p><span class="fx-de" data-tip="推导:都不发生=每个都不发生:落在并集外⟺同时落在两集之外" tabindex="0">推</span>\((A\cup B)'=A'\cap B'\)</p>
+        <p><span class="fx-de" data-tip="推导:非同时发生=至少缺一个:取补把∩换∪、各集取补" tabindex="0">推</span>\((A\cap B)'=A'\cup B'\)</p>
         <p>分配律 \(A\cup(B\cap C)=(A\cup B)\cap(A\cup C)\)</p>
         <p>互斥:\(A\cap B=\varnothing\)</p>
       </div>
       <div class="cc t">
         <h4>概率 / 容斥</h4>
         <p>\(P[A']=1-P[A]\)</p>
-        <p>\(P[A\cup B]=P[A]+P[B]-P[A\cap B]\)</p>
-        <p style="font-size:13px">\(P[A\cup B\cup C]=\sum P-\sum P_{两两}+P_{三}\)</p>
+        <p><span class="fx-de" data-tip="推导:直接相加把重叠区 A∩B 数了两次,扣回一次" tabindex="0">推</span>\(P[A\cup B]=P[A]+P[B]-P[A\cap B]\)</p>
+        <p style="font-size:13px"><span class="fx-de" data-tip="推导:两两重叠各多数一次全扣掉,三重区被加3减3,再加回一次" tabindex="0">推</span>\(P[A\cup B\cup C]=\sum P-\sum P_{两两}+P_{三}\)</p>
         <p>公理:\(P[\Omega]=1,\ P[A]\ge 0\)</p>
       </div>
     </div></div>
@@ -219,14 +276,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>计数核心</h4>
         <p>古典概率 \(P=\dfrac{B}{A}\)(等可能)</p>
         <p>排列:\(n!\)</p>
-        <p>相异排列 \(\dfrac{n!}{k_1!\cdots k_j!}\)</p>
+        <p><span class="fx-de" data-tip="推导:先当全可辨排 n!,组内 k_i! 种排法不可辨,除掉消序" tabindex="0">推</span>相异排列 \(\dfrac{n!}{k_1!\cdots k_j!}\)</p>
         <p>有放回计数 \(n^r\)(用乘法)</p>
       </div>
       <div class="cc t">
         <h4>组合 / 二项式</h4>
-        <p>\(\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}\)</p>
+        <p><span class="fx-de" data-tip="推导:先排列 n!/(n-k)!,选出的 k 个内部顺序无关,再除 k!" tabindex="0">推</span>\(\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}\)</p>
         <p>对称:\(\dbinom{n}{k}=\dbinom{n}{n-k}\)</p>
-        <p style="font-size:13px">无放回:\(\dfrac{\prod\binom{n_i}{k_i}}{\binom{n}{k}}\)</p>
+        <p style="font-size:13px"><span class="fx-de" data-tip="推导:分组计数:分子各组各选各的,分母一次抽 k 个" tabindex="0">推</span>无放回:\(\dfrac{\prod\binom{n_i}{k_i}}{\binom{n}{k}}\)</p>
         <p style="font-size:12.5px">(上标和=\(n\),下标和=\(k\))</p>
       </div>
     </div></div>
@@ -234,13 +291,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc">
         <h4>条件 / 乘法</h4>
         <p>\(P[A\mid B]=\dfrac{P[A\cap B]}{P[B]}\)</p>
-        <p>\(P[A\cap B]=P[B]P[A\mid B]=P[A]P[B\mid A]\)</p>
+        <p><span class="fx-de" data-tip="推导:条件概率定义 P[A|B]=P[A∩B]/P[B] 移项即得,两侧对称" tabindex="0">推</span>\(P[A\cap B]=P[B]P[A\mid B]=P[A]P[B\mid A]\)</p>
         <p>\(P[\cdot\mid B]\) 满足三公理</p>
       </div>
       <div class="cc t">
         <h4>独立性</h4>
         <p>独立:\(P[A\cap B]=P[A]P[B]\)</p>
-        <p>\(\Leftrightarrow P[A\mid B]=P[A]\)</p>
+        <p><span class="fx-de" data-tip="推导:把 P[A∩B]=P[A]P[B] 代入条件定义:B 不改变 A 的概率" tabindex="0">推</span>\(\Leftrightarrow P[A\mid B]=P[A]\)</p>
         <p>补集也独立;相互独立 \(\Rightarrow\) 两两独立(反之不成立)</p>
         <p>互斥:\(P[A\cap B]=0\)(≠ 独立)</p>
       </div>
@@ -249,12 +306,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc">
         <h4>全概率</h4>
         <p>\(B_i\) 互斥 + 完备(并集 \(=\Omega\))</p>
-        <p>\(P[A]=\sum_i P[B_i]P[A\mid B_i]\)</p>
+        <p><span class="fx-de" data-tip="推导:B_i 切干净 Ω:A 分成互斥的 A∩B_i,逐块乘法公式相加" tabindex="0">推</span>\(P[A]=\sum_i P[B_i]P[A\mid B_i]\)</p>
         <p>每支路径概率 \(=P[B_i]P[A\mid B_i]\),含 A 的路径全加</p>
       </div>
       <div class="cc t">
         <h4>贝叶斯</h4>
-        <p>\(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\)</p>
+        <p><span class="fx-de" data-tip="推导:P[A_j∩B] 两种拆法相等(两次乘法公式),分母是全概率展开" tabindex="0">推</span>\(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\)</p>
         <p>分子 = 分母求和的第 \(j\) 项</p>
         <p>先验 \(P[A_i]\) → 后验 \(P[A_i\mid B]\)</p>
         <p>只需相对权重(乘常数不影响)</p>
@@ -323,16 +380,16 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 <div class="fx-ch" data-l="l08" style="--accent:#0891b2;--accent-deep:#0e7490;--accent-soft:#ddf1f6;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#0891b2">L08</span><a class="fxlink" href="soa-exam-p-l08-variance-moments.html">Variance and Other Moments 方差与矩</a></h3><div class="cheat">
       <div class="cc">
         <h4>方差 / 标准差</h4>
-        <p>\(\operatorname{Var}(X)=E[(X-\mu)^2]=E[X^2]-\mu^2\)</p>
+        <p><span class="fx-de" data-tip="推导:展开 (X-μ)²=X²-2μX+μ²,取期望后 -2μ²+μ²=-μ²" tabindex="0">推</span>\(\operatorname{Var}(X)=E[(X-\mu)^2]=E[X^2]-\mu^2\)</p>
         <p>\(\sigma=\sqrt{\operatorname{Var}(X)}\)</p>
         <p>变异系数 \(\mathrm{CV}=\sigma/\mu\)</p>
         <p>偏度 \(=E[(X-\mu)^3]/\sigma^3\);峰度 \(=E[(X-\mu)^4]/\sigma^4\)</p>
       </div>
       <div class="cc t">
         <h4>线性变换 / 可加</h4>
-        <p>\(\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)\)</p>
+        <p><span class="fx-de" data-tip="推导:平移 b 在 X-μ 里消掉不改离散度,a 提出成平方" tabindex="0">推</span>\(\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)\)</p>
         <p>\(\operatorname{SD}(aX+b)=|a|\sigma\)</p>
-        <p>独立:\(\operatorname{Var}(\sum X_i)=\sum\operatorname{Var}(X_i)\)</p>
+        <p><span class="fx-de" data-tip="推导:展开和的平方,独立时交叉项 2Cov=0,只剩各自方差" tabindex="0">推</span>独立:\(\operatorname{Var}(\sum X_i)=\sum\operatorname{Var}(X_i)\)</p>
         <p>Bernoulli:\(\operatorname{Var}(X)=(b-a)^2p(1-p)\)</p>
       </div>
     </div></div>
@@ -347,7 +404,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>离散 / 变换 / 度量</h4>
         <p>离散跳跃:取首次 \(F\ge p\);平台取 min</p>
         <p>样本中位数:奇数取中间,偶数取中间两项均值</p>
-        <p>\(g\) 递增:\(\pi_p(g(X))=g(\pi_p)\)</p>
+        <p><span class="fx-de" data-tip="推导:g 递增保序:X≤π_p ⟺ g(X)≤g(π_p),概率原封搬过去" tabindex="0">推</span>\(g\) 递增:\(\pi_p(g(X))=g(\pi_p)\)</p>
         <p>range \(=\max-\min\);midrange \(=\dfrac{\min+\max}{2}\)</p>
       </div>
     </div></div>
@@ -360,7 +417,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       </div>
       <div class="cc t">
         <h4>连续求法</h4>
-        <p>解 \(\dfrac{d}{dx}\ln f(x)=0\) 找临界点</p>
+        <p><span class="fx-de" data-tip="推导:ln 单调不动 argmax,乘积/指数变加减,求导省力" tabindex="0">推</span>解 \(\dfrac{d}{dx}\ln f(x)=0\) 找临界点</p>
         <p>验 \(\dfrac{d^2}{dx^2}\ln f&lt;0\) 为极大</p>
         <p>常数因子可略;<b>务必比支撑端点</b></p>
         <p>众数 ≠ 均值 ≠ 中位数(偏态分离)</p>
@@ -371,7 +428,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>联合 / 边缘</h4>
         <p>联合 pmf/pdf:\(p(x,y)\) / \(f(x,y)\ge0\),\(\sum\sum p=\iint f=1\)</p>
         <p>联合 cdf:\(F(x,y)=P[X\le x,Y\le y]\)</p>
-        <p>矩形:\(F(b,d)-F(a,d)-F(b,c)+F(a,c)\)</p>
+        <p><span class="fx-de" data-tip="推导:2D 容斥:大角块减两边条,角块 F(a,c) 被减两次加回一次" tabindex="0">推</span>矩形:\(F(b,d)-F(a,d)-F(b,c)+F(a,c)\)</p>
         <p>边缘:\(p_X(x)=\sum_y p\);\(f_X(x)=\int f\,dy\)</p>
       </div>
       <div class="cc t">
@@ -394,7 +451,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc t">
         <h4>线性 vs 独立</h4>
         <p>\(E[aX+bY]=aE[X]+bE[Y]\)(<b>恒</b>)</p>
-        <p>独立 \(\Rightarrow E[XY]=E[X]E[Y]\)</p>
+        <p><span class="fx-de" data-tip="推导:独立时 f(x,y)=f_X·f_Y,二重积分拆成两个单积分相乘" tabindex="0">推</span>独立 \(\Rightarrow E[XY]=E[X]E[Y]\)</p>
         <p>独立 \(\Rightarrow E[g(X)h(Y)]=E[g(X)]E[h(Y)]\)</p>
         <p>加法随便拆,乘法看独立;逆命题不成立</p>
       </div>
@@ -403,8 +460,8 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc">
         <h4>定义 / 捷径 / 方差和</h4>
         <p>\(\operatorname{Cov}(X,Y)=E[(X-\mu_X)(Y-\mu_Y)]\)</p>
-        <p>\(=E[XY]-E[X]E[Y]\)</p>
-        <p>\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)</p>
+        <p><span class="fx-de" data-tip="推导:展开 (X-μ_X)(Y-μ_Y) 四项,取期望后三项合并成 -E[X]E[Y]" tabindex="0">推</span>\(=E[XY]-E[X]E[Y]\)</p>
+        <p><span class="fx-de" data-tip="推导:展开 (X±Y)²,交叉项 ±2E[(X-μ_X)(Y-μ_Y)]=±2Cov" tabindex="0">推</span>\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)</p>
         <p>\(\operatorname{Var}(aX+bY)=a^2\operatorname{Var}X+b^2\operatorname{Var}Y+2ab\operatorname{Cov}\)</p>
       </div>
       <div class="cc t">
@@ -425,7 +482,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       </div>
       <div class="cc t">
         <h4>条件方差 / 通往双重期望</h4>
-        <p>\(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-\big(E[X\mid Y=y]\big)^2\)</p>
+        <p><span class="fx-de" data-tip="推导:Var 捷径在条件分布上照用,μ 换成条件均值" tabindex="0">推</span>\(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-\big(E[X\mid Y=y]\big)^2\)</p>
         <p>\(E[X\mid Y=y]\) 是数;\(E[X\mid Y]\) 是随机变量</p>
         <p>Ch16:\(E\big[E[X\mid Y]\big]=E[X]\)</p>
         <p>Ch16:\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
@@ -451,7 +508,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc">
         <h4>全期望(塔式)</h4>
         <p>\(E[g(X)]=E_Y\big[E_X[g(X)\mid Y]\big]\)</p>
-        <p>\(E[X]=E\big[E[X\mid Y]\big]\)</p>
+        <p><span class="fx-de" data-tip="推导:按 Y 分组算组内均值,再按组权重加权:分组平均=总平均" tabindex="0">推</span>\(E[X]=E\big[E[X\mid Y]\big]\)</p>
         <p>先内层对 \(X\)、后外层对 \(Y\)</p>
         <p>用途:分段 / 免赔额 / 混合分布</p>
       </div>
@@ -459,24 +516,24 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>全方差(EVVE)</h4>
         <p>\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
         <p>E-of-V + <b>V-of-E</b>(勿漏第二项)</p>
-        <p>\(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\)</p>
+        <p><span class="fx-de" data-tip="推导:Var 捷径 Var=E[Y²]-E[Y]² 移项" tabindex="0">推</span>\(E[Y^2]=\operatorname{Var}(Y)+E[Y]^2\)</p>
         <p>\(\operatorname{Var}(aY)=a^2\operatorname{Var}(Y)\)</p>
       </div>
     </div></div>
 <div class="fx-ch" data-l="l17" style="--accent:#a21caf;--accent-deep:#86198f;--accent-soft:#f8e4f7;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#a21caf">L17</span><a class="fxlink" href="soa-exam-p-l17-binomial-distribution.html">Binomial Distribution 二项分布</a></h3><div class="cheat">
       <div class="cc">
         <h4>二项 Binomial(n, p)</h4>
-        <p>\(P[X=k]=\binom{n}{k}p^k(1-p)^{n-k}\)</p>
+        <p><span class="fx-de" data-tip="推导:指定某 k 次成功的序列概率 p^k(1-p)^{n-k},乘上选哪 k 次 C(n,k)" tabindex="0">推</span>\(P[X=k]=\binom{n}{k}p^k(1-p)^{n-k}\)</p>
         <p>\(E[X]=np\)</p>
         <p>\(\operatorname{Var}(X)=np(1-p)\)</p>
-        <p>伯努利 = \(n=1\);至少一次 \(=1-(1-p)^n\)</p>
+        <p><span class="fx-de" data-tip="推导:『至少一次』取补:反面是『全失败』,独立连乘 (1-p)^n" tabindex="0">推</span>伯努利 = \(n=1\);至少一次 \(=1-(1-p)^n\)</p>
         <p>同 \(p\) 独立二项之和仍二项</p>
       </div>
       <div class="cc t">
         <h4>超几何 &amp; 多项</h4>
-        <p>超几何:\(P[X=d]=\dfrac{\binom{D}{d}\binom{N-D}{n-d}}{\binom{N}{n}}\)</p>
+        <p><span class="fx-de" data-tip="推导:分组计数:D 里选 d、其余 N-D 里选 n-d,除以总选法 C(N,n)" tabindex="0">推</span>超几何:\(P[X=d]=\dfrac{\binom{D}{d}\binom{N-D}{n-d}}{\binom{N}{n}}\)</p>
         <p>\(E=n\tfrac{D}{N}\),\(\operatorname{Var}=n\tfrac{D}{N}\tfrac{N-D}{N}\tfrac{N-n}{N-1}\)</p>
-        <p>多项:\(\dfrac{n!}{i_0!\cdots i_{k-1}!}p_0^{i_0}\cdots p_{k-1}^{i_{k-1}}\)</p>
+        <p><span class="fx-de" data-tip="推导:相异排列分堆 n!/∏i_j! 种序列,每种概率 ∏p_j^(i_j)" tabindex="0">推</span>多项:\(\dfrac{n!}{i_0!\cdots i_{k-1}!}p_0^{i_0}\cdots p_{k-1}^{i_{k-1}}\)</p>
         <p>分量 \(X_j\sim\text{Bin}(n,p_j)\),\(\operatorname{Cov}(X_i,X_j)=-np_ip_j\)</p>
         <p>放回→二项 · 不放回→超几何</p>
       </div>
@@ -484,15 +541,15 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 <div class="fx-ch" data-l="l18" style="--accent:#0284c7;--accent-deep:#075985;--accent-soft:#ddeefb;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#0284c7">L18</span><a class="fxlink" href="soa-exam-p-l18-negative-binomial.html">Negative Binomial Distribution 负二项分布</a></h3><div class="cheat">
       <div class="cc">
         <h4>负二项(N = 失败数,起点 0)</h4>
-        <p>\(\Pr(N=n)=\dbinom{k+n-1}{n}p^k(1-p)^n\)</p>
+        <p><span class="fx-de" data-tip="推导:末次必成功:前 k+n-1 次里摆 n 次失败 C(k+n-1,n),概率连乘" tabindex="0">推</span>\(\Pr(N=n)=\dbinom{k+n-1}{n}p^k(1-p)^n\)</p>
         <p>\(E[N]=\dfrac{k(1-p)}{p}\),\(\operatorname{Var}(N)=\dfrac{k(1-p)}{p^2}\)</p>
         <p>试验序号 \(=N+k\);独立同 \(p\) 相加 \(\Rightarrow\) \(k\) 相加</p>
       </div>
       <div class="cc t">
         <h4>几何(k = 1 特例)</h4>
-        <p>\(P[n]=p(1-p)^n\)(起点 0)/ \(p(1-p)^{n-1}\)(起点 1)</p>
+        <p><span class="fx-de" data-tip="推导:序列『若干失败+一次成功』连乘;失败数起点0/试验数起点1差个位移" tabindex="0">推</span>\(P[n]=p(1-p)^n\)(起点 0)/ \(p(1-p)^{n-1}\)(起点 1)</p>
         <p>\(E=\dfrac{1-p}{p}\)(起点 0)/ \(\dfrac{1}{p}\)(起点 1),\(\operatorname{Var}=\dfrac{1-p}{p^2}\)</p>
-        <p>\(\Pr(N\ge n)=(1-p)^n\);无记忆 \(E[N-n\mid N\ge n]=E[N]\)</p>
+        <p><span class="fx-de" data-tip="推导:失败数≥n ⟺ 前 n 次全失败,独立连乘" tabindex="0">推</span>\(\Pr(N\ge n)=(1-p)^n\);无记忆 \(E[N-n\mid N\ge n]=E[N]\)</p>
       </div>
     </div></div>
 <div class="fx-ch" data-l="l19" style="--accent:#16a34a;--accent-deep:#15803d;--accent-soft:#e2f6e8;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#16a34a">L19</span><a class="fxlink" href="soa-exam-p-l19-poisson-distribution.html">Poisson Distribution 泊松分布</a></h3><div class="cheat">
@@ -522,7 +579,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       </div>
       <div class="cc t">
         <h4>关键性质</h4>
-        <p>百分位:\(\xi_p=-\theta\ln(1-p)\);中位 \(=\theta\ln 2\)</p>
+        <p><span class="fx-de" data-tip="推导:解 F(ξ)=1-e^(-ξ/θ)=p:移项取对数,负号进 ln" tabindex="0">推</span>百分位:\(\xi_p=-\theta\ln(1-p)\);中位 \(=\theta\ln 2\)</p>
         <p>无记忆:\(P[X>s+t\mid X>s]=P[X>t]\)</p>
         <p>超额部分仍 \(\sim\text{Exp}(\theta)\)</p>
         <p>\(n\) 个独立指数之和 \(=\text{Gamma}(n,\theta)\),均值 \(n\theta\)、方差 \(n\theta^2\)</p>
@@ -532,16 +589,16 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc">
         <h4>密度 / 标准化</h4>
         <p>\(f(x)=\dfrac{e^{-(x-\mu)^2/2\sigma^2}}{\sigma\sqrt{2\pi}}\)</p>
-        <p>\(Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)\)</p>
+        <p><span class="fx-de" data-tip="推导:线性变换:减 μ 平移到 0,除 σ 缩放到单位差,正态形状不变" tabindex="0">推</span>\(Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)\)</p>
         <p>\(P[X\le x]=\Phi\!\big(\tfrac{x-\mu}{\sigma}\big)\)</p>
-        <p>\(\Phi(-z)=1-\Phi(z)\)(表查累积)</p>
+        <p><span class="fx-de" data-tip="推导:标准正态关于 0 对称:左尾 P[Z≤-z]=右尾 P[Z≥z]" tabindex="0">推</span>\(\Phi(-z)=1-\Phi(z)\)(表查累积)</p>
         <p>百分位:\(\xi_p=\mu+\sigma z_p\)</p>
       </div>
       <div class="cc t">
         <h4>线性组合 / 法则</h4>
         <p>\(aX+b\sim N(a\mu+b,\,a^2\sigma^2)\)</p>
         <p>独立:\(aX+bY\sim N(a\mu_X+b\mu_Y,\,a^2\sigma_X^2+b^2\sigma_Y^2)\)</p>
-        <p>\(\mathrm{Var}(X-Y)=\sigma_X^2+\sigma_Y^2\);\(\mathrm{Var}(\bar X)=\sigma^2/n\)</p>
+        <p><span class="fx-de" data-tip="推导:Var 提出系数平方 (-1)²=1:减号在方差里变加号(独立无交叉项)" tabindex="0">推</span>\(\mathrm{Var}(X-Y)=\sigma_X^2+\sigma_Y^2\);\(\mathrm{Var}(\bar X)=\sigma^2/n\)</p>
         <p>68–95–99.7(\(\pm1,2,3\,\sigma\))</p>
         <p>离散近似:\(P[X\le k]\approx\Phi\!\big(\tfrac{k+0.5-\mu}{\sigma}\big)\)</p>
         <p>常用 \(z\):\(1.282/1.645/1.960/2.326\)</p>
@@ -551,7 +608,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 <div class="fx-ch" data-l="l22" style="--accent:#b45309;--accent-deep:#8a3d06;--accent-soft:#fbecd9;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#b45309">L22</span><a class="fxlink" href="soa-exam-p-l22-central-limit-theorem.html">Central Limit Theorem 中心极限定理</a></h3><div class="cheat">
       <div class="cc">
         <h4>和 与 均值</h4>
-        <p>\(\bar X\approx N\!\big(\mu,\ \sigma^2/n\big)\)</p>
+        <p><span class="fx-de" data-tip="推导:E 线性不变;独立方差可加得 nσ²,除以 n² 剩 σ²/n" tabindex="0">推</span>\(\bar X\approx N\!\big(\mu,\ \sigma^2/n\big)\)</p>
         <p>\(S_n=\sum X_i\approx N\!\big(n\mu,\ n\sigma^2\big)\)</p>
         <p>标准化 \(Z=\dfrac{\bar X-\mu}{\sigma/\sqrt n}=\dfrac{S_n-n\mu}{\sqrt n\,\sigma}\)</p>
         <p>百分位 \(\mu+z_p\sigma\)(换该量的 \(\sigma\))</p>
@@ -568,14 +625,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 <div class="fx-ch" data-l="l23" style="--accent:#0d9488;--accent-deep:#0b6b60;--accent-soft:#ddf1ef;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#0d9488">L23</span><a class="fxlink" href="soa-exam-p-l23-order-statistics.html">Order Statistics 次序统计量</a></h3><div class="cheat">
       <div class="cc">
         <h4>最大 / 最小</h4>
-        <p>最大:\(F_Y=(F_X)^n\),\(f_Y=n(F_X)^{n-1}f_X\)</p>
-        <p>最小:\(F_Y=1-(1-F_X)^n\)</p>
+        <p><span class="fx-de" data-tip="推导:max≤x ⟺ 全体≤x(AND),独立连乘各自 F;链式求导得密度" tabindex="0">推</span>最大:\(F_Y=(F_X)^n\),\(f_Y=n(F_X)^{n-1}f_X\)</p>
+        <p><span class="fx-de" data-tip="推导:min>x ⟺ 全体>x,连乘生存函数;要 CDF 取补" tabindex="0">推</span>最小:\(F_Y=1-(1-F_X)^n\)</p>
         <p>　　　\(f_Y=n(1-F_X)^{n-1}f_X\)</p>
-        <p>指数最小 \(\sim\text{Exp}(\theta/n)\)</p>
+        <p><span class="fx-de" data-tip="推导:S_min=(e^(-x/θ))^n=e^(-nx/θ):仍是指数,均值缩成 θ/n" tabindex="0">推</span>指数最小 \(\sim\text{Exp}(\theta/n)\)</p>
       </div>
       <div class="cc t">
         <h4>第 k 个 / 均匀</h4>
-        <p>\(f_{X_{(k)}}=\dfrac{n!}{(k-1)!\,1!\,(n-k)!}F^{k-1}f(1-F)^{n-k}\)</p>
+        <p><span class="fx-de" data-tip="推导:三堆划分:k-1 个在左、1 个落点、n-k 个在右,多项系数×各堆概率" tabindex="0">推</span>\(f_{X_{(k)}}=\dfrac{n!}{(k-1)!\,1!\,(n-k)!}F^{k-1}f(1-F)^{n-k}\)</p>
         <p>均匀 \([0,\theta]\):\(E[X_{(k)}]=\dfrac{k\theta}{n+1}\)</p>
         <p>判别:max→全 \(\le x\);min→全 \(>x\)</p>
       </div>
@@ -646,13 +703,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 <div class="fx-ch" data-l="l28" style="--accent:#4f46e5;--accent-deep:#3730a3;--accent-soft:#e8e7fc;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#4f46e5">L28</span><a class="fxlink" href="soa-exam-p-l28-covariance-continuous.html">Covariance 协方差(连续)</a></h3><div class="cheat">
       <div class="cc">
         <h4>协方差 / 期望</h4>
-        <p>\(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]\)</p>
+        <p><span class="fx-de" data-tip="推导:展开中心化乘积取期望,三项合并成 -E[X]E[Y](同 L13)" tabindex="0">推</span>\(\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]\)</p>
         <p>\(E[XY]=\iint xy\,f(x,y)\,dx\,dy\)</p>
         <p>\(E[X]=\iint x\,f\,dx\,dy,\ E[Y]=\iint y\,f\,dx\,dy\)</p>
       </div>
       <div class="cc t">
         <h4>方差 / 相关</h4>
-        <p>\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)</p>
+        <p><span class="fx-de" data-tip="推导:展开 (X±Y)²,交叉项 ±2Cov,与离散同一推导" tabindex="0">推</span>\(\operatorname{Var}(X\pm Y)=\operatorname{Var}X+\operatorname{Var}Y\pm2\operatorname{Cov}\)</p>
         <p>\(\operatorname{Var}(\sum c_iX_i)=\sum c_i^2\operatorname{Var}X_i+2\sum_{i&lt;j}c_ic_j\operatorname{Cov}\)</p>
         <p>\(\rho=\dfrac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}\in[-1,1]\)</p>
         <p>独立 \(\Rightarrow \operatorname{Cov}=0\)(反之不真)</p>
@@ -663,14 +720,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>条件密度 / 全概率</h4>
         <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\)</p>
         <p>\(P[X\in A\mid Y=y]=\int_A f_{X\mid Y}\,dx\)</p>
-        <p>\(f_X(x)=\int f_{X\mid Y}(x\mid y)f_Y(y)\,dy\)</p>
+        <p><span class="fx-de" data-tip="推导:条件密度定义 f=f_(X|Y)·f_Y 两边对 y 积分,把 Y 积掉" tabindex="0">推</span>\(f_X(x)=\int f_{X\mid Y}(x\mid y)f_Y(y)\,dy\)</p>
         <p>固定 \(y\):\(\int f_{X\mid Y}\,dx=1\)</p>
       </div>
       <div class="cc t">
         <h4>独立 / 贝叶斯</h4>
         <p>独立:\(f_{X\mid Y}=f_X \Leftrightarrow f=f_Xf_Y\)</p>
-        <p>合成:\(f(x,y)=f_{Y\mid X}(y\mid x)f_X(x)\)</p>
-        <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f_X(x)f_{Y\mid X}(y\mid x)}{\int f_X(w)f_{Y\mid X}(y\mid w)\,dw}\)</p>
+        <p><span class="fx-de" data-tip="推导:条件密度定义移项:联合=条件×边缘(乘法公式连续版)" tabindex="0">推</span>合成:\(f(x,y)=f_{Y\mid X}(y\mid x)f_X(x)\)</p>
+        <p><span class="fx-de" data-tip="推导:分子=联合密度的一种拆法,分母=同一联合积掉 x 归一化" tabindex="0">推</span>\(f_{X\mid Y}(x\mid y)=\dfrac{f_X(x)f_{Y\mid X}(y\mid x)}{\int f_X(w)f_{Y\mid X}(y\mid w)\,dw}\)</p>
         <p>支撑域耦合 ⇒ 不独立</p>
       </div>
     </div></div>
@@ -679,13 +736,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>条件密度 / 条件矩</h4>
         <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\)</p>
         <p>\(E[g(X)\mid Y=y]=\displaystyle\int g(x)\,f_{X\mid Y}(x\mid y)\,dx\)</p>
-        <p>\(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-(E[X\mid Y=y])^2\)</p>
+        <p><span class="fx-de" data-tip="推导:Var 捷径在条件分布上照用,均值换条件均值" tabindex="0">推</span>\(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-(E[X\mid Y=y])^2\)</p>
         <p>省力:分子先积,\(f_Y(y)\) 最后除</p>
       </div>
       <div class="cc t">
         <h4>接 Ch16(连续版)</h4>
         <p>\(E[X\mid Y]\)、\(\operatorname{Var}(X\mid Y)\) 是 \(Y\) 的随机变量</p>
-        <p>双重期望:\(E[X]=E[E[X\mid Y]]\)</p>
+        <p><span class="fx-de" data-tip="推导:按 Y=y 分组的组内均值,再对 Y 加权平均(同 L16)" tabindex="0">推</span>双重期望:\(E[X]=E[E[X\mid Y]]\)</p>
         <p>全方差:\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
       </div>
     </div></div>
@@ -709,13 +766,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc">
         <h4>定义 / 取矩</h4>
         <p>\(M_X(t)=E[e^{tX}]\),\(M_X(0)=1\)</p>
-        <p>\(M_X^{(n)}(0)=E[X^n]\)</p>
+        <p><span class="fx-de" data-tip="推导:e^(tX) 泰勒展开逐项取期望,求导 n 次代 t=0 只剩 E[X^n]" tabindex="0">推</span>\(M_X^{(n)}(0)=E[X^n]\)</p>
         <p>\(E[X]=M'(0)\),\(\mathrm{Var}=M''(0)-\big(M'(0)\big)^2\)</p>
         <p>联合 MGF:\(M(t_1,t_2)=E[e^{t_1X+t_2Y}]\),\(\dfrac{\partial^2 M}{\partial t_1\partial t_2}\Big|_{(0,0)}=E[XY]\)</p>
       </div>
       <div class="cc t">
         <h4>独立和 / 唯一性</h4>
-        <p>\(X\perp Y:\ M_{X+Y}=M_XM_Y\)</p>
+        <p><span class="fx-de" data-tip="推导:e^(t(X+Y))=e^(tX)·e^(tY),独立时期望拆成乘积" tabindex="0">推</span>\(X\perp Y:\ M_{X+Y}=M_XM_Y\)</p>
         <p>MGF 唯一确定分布(认形状)</p>
         <p>指数 \(\tfrac{1}{1-\theta t}\) · 伽马 \(\tfrac{1}{(1-\theta t)^\alpha}\)</p>
         <p>泊松 \(e^{\lambda(e^t-1)}\) · 正态 \(e^{\mu t+\sigma^2t^2/2}\) · 二项 \((1-p+pe^t)^n\)</p>
@@ -726,12 +783,12 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>定义 / 求值</h4>
         <p>\(P_X(t)=E[t^X]=\sum_k t^k p_k\)</p>
         <p>\(P(1)=1\)(自检)</p>
-        <p>\(P(0)=p_0\);\(P[X{=}k]=\dfrac{P^{(k)}(0)}{k!}\)</p>
+        <p><span class="fx-de" data-tip="推导:P(t)=Σp_k t^k 是幂级数:系数=k 阶导在 0 点除 k!" tabindex="0">推</span>\(P(0)=p_0\);\(P[X{=}k]=\dfrac{P^{(k)}(0)}{k!}\)</p>
         <p>限非负整数 RV</p>
       </div>
       <div class="cc t">
         <h4>矩 / 独立和 / MGF</h4>
-        <p>\(P'(1)=E[X]\),\(P''(1)=E[X(X{-}1)]\)</p>
+        <p><span class="fx-de" data-tip="推导:逐项求导 Σk·p_k·t^(k-1),代 t=1 得 Σk·p_k=E[X]" tabindex="0">推</span>\(P'(1)=E[X]\),\(P''(1)=E[X(X{-}1)]\)</p>
         <p>\(\operatorname{Var}=P''(1)+P'(1)-\big(P'(1)\big)^2\)</p>
         <p>独立和:\(P_{X+Y}=P_X\,P_Y\)</p>
         <p>\(P(t)=M(\ln t)\);泊松 \(P(t)=e^{\lambda(t-1)}\)</p>
@@ -740,14 +797,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 <div class="fx-ch" data-l="l34" style="--accent:#b45309;--accent-deep:#8a3d06;--accent-soft:#fbecd9;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#b45309">L34</span><a class="fxlink" href="soa-exam-p-l34-transformations.html">Transformations 变换</a></h3><div class="cheat">
       <div class="cc">
         <h4>cdf 法(通用)</h4>
-        <p>\(F_Y(y)=\Pr\big(g(X)\le y\big)\)</p>
+        <p><span class="fx-de" data-tip="推导:新变量 CDF 就是事件概率:把 g(X)≤y 解成 X 的区间,用 F_X 表达" tabindex="0">推</span>\(F_Y(y)=\Pr\big(g(X)\le y\big)\)</p>
         <p>\(g\!\uparrow:\ F_Y(y)=F_X\big(g^{-1}(y)\big)\)</p>
-        <p>\(g\!\downarrow:\ F_Y(y)=1-F_X\big(g^{-1}(y)\big)\)</p>
+        <p><span class="fx-de" data-tip="推导:g 递减翻不等号:g(X)≤y ⟺ X≥g^(-1)(y),概率=1-F_X" tabindex="0">推</span>\(g\!\downarrow:\ F_Y(y)=1-F_X\big(g^{-1}(y)\big)\)</p>
         <p>再 \(f_Y(y)=\dfrac{d}{dy}F_Y(y)\)</p>
       </div>
       <div class="cc t">
         <h4>密度法(单调 / 分支)</h4>
-        <p>单调:\(f_Y(y)=f_X\big(g^{-1}(y)\big)\,\big|\tfrac{d}{dy}g^{-1}(y)\big|\)</p>
+        <p><span class="fx-de" data-tip="推导:对 F_Y=F_X(g^(-1)(y)) 链式求导,|dg^(-1)/dy| 是链式项(取绝对值防负)" tabindex="0">推</span>单调:\(f_Y(y)=f_X\big(g^{-1}(y)\big)\,\big|\tfrac{d}{dy}g^{-1}(y)\big|\)</p>
         <p>雅可比 \(\big|\tfrac{dx}{dy}\big|\) <b>取绝对值</b></p>
         <p>非单调:\(f_Y(y)=\sum_i f_X(h_i(y))\,|h_i'(y)|\)</p>
         <p><b>支撑随变换改</b> · \(x\) 全代成 \(g^{-1}(y)\)</p>

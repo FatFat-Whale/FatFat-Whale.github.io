@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<!-- 源页: TI-30XS MultiView 按键速查(Exam P 考场计算器), 手维护; 壳「速查」组挂链。键位依据 TI 官方 Guidebook (2019)。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · ⌨ TI-30XS 按键速查</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#206a42; --accent-deep:#134d2e; --accent-soft:#e4f1e9; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #17402b);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:62ch;margin:0 0 22px}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px;
+    background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card p{margin:8px 0}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid #c9d2e0;border-bottom-width:2px;border-radius:6px;
+    padding:1px 7px;font-size:12.5px;white-space:nowrap;color:var(--ink)}
+  .kbd.k2{background:#fff3d6;border-color:#e3c86a}
+  .keys{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:13.5px;margin:8px 0;line-height:2.1}
+  .keys .arr{color:var(--mute);font-family:var(--mono);padding:0 2px}
+  .keys .res{font-family:var(--mono);font-weight:700;color:var(--accent-deep);background:var(--accent-soft);
+    border-radius:6px;padding:1px 8px}
+  .scr{font-family:var(--mono);font-size:13px;background:#dfe8d8;color:#22371f;border:1px solid #b9c7ae;
+    border-radius:7px;padding:6px 12px;display:inline-block;margin:4px 0}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  footer{background:#16243d;color:#c4cde0;padding:26px 0;margin-top:30px;font-size:13.5px}
+  footer a{color:var(--hi);text-decoration:none}
+  footer b{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>⌨ TI-30XS 按键速查</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">工具页 · TI-30XS MultiView · 手维护源页</p>
+    <h1>考场计算器<em>按键流 TI-30XS</em></h1>
+    <p class="lead">Exam P 的计算只有五类动作:<b>组合数</b>、<b>幂与 \(e^x\)</b>、<b>查表插值</b>、<b>离散期望方差(1-Var Stats 神技)</b>、<b>链式多步</b>。本页把每类公式翻译成确切按键序列,数值例全部对得上导学页例题。键位依据 TI 官方 Guidebook;<span class="kbd k2">黄键</span> 表示先按 <span class="kbd">2nd</span> 的第二功能。</p>
+  </div>
+</div>
+
+<div class="chainbar"><div class="chain">
+  <span class="lbl">配套</span>
+  <a href="soa-exam-p-l02-combinatorics.html">L02 组合</a>
+  <a href="soa-exam-p-l17-binomial-distribution.html">L17 二项</a>
+  <a href="soa-exam-p-l19-poisson-distribution.html">L19 泊松</a>
+  <a href="soa-exam-p-l21-normal-distribution.html">L21 正态</a>
+  <a href="soa-exam-p-calculus.html">∫ 微积分速查</a>
+  <a href="soa-exam-p-formulas.html">Σ 公式总表</a>
+</div></div>
+
+<nav class="modnav" aria-label="本页模块">
+  <a href="#setup">考前设置</a>
+  <a href="#keys">键位地图</a>
+  <a href="#comb">计数</a>
+  <a href="#disc">离散分布</a>
+  <a href="#cont">连续与查表</a>
+  <a href="#stat">1-Var 神技</a>
+  <a href="#tools">进阶工具</a>
+  <a href="#limits">做不了的 &amp; 坑</a>
+</nav>
+
+<section id="setup">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Setup</span><h2 class="sec-title">考前 60 秒设置</h2></div></div>
+    <p class="sec-sub">Prometric 考场发的(或自带被重置的)TI-30XS 开机就是出厂态,确认三件事即可。</p>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>动作</th><th>按键</th><th>说明</th></tr>
+        <tr><td>确认模式</td><td class="keys"><span class="kbd">mode</span></td><td>四行依次高亮 <b>DEG · NORM · FLOAT · MATHPRINT</b> 即出厂默认;Exam P 用不到角度制,别碰 RAD/DEG。改完 <span class="kbd">clear</span> 回主屏。</td></tr>
+        <tr><td>整机重置</td><td class="keys"><span class="kbd">2nd</span><span class="kbd k2">reset</span><span class="kbd">2</span></td><td>清内存回默认。考场若要求 reset 就是这三键。</td></tr>
+        <tr><td>只清变量</td><td class="keys"><span class="kbd">2nd</span><span class="kbd k2">clear var</span><span class="kbd">1</span></td><td>清 x–c 七个变量,不动数据表。</td></tr>
+      </table>
+      <div class="note tip"><span class="ic">💡</span><span class="t"><b>历史回看是免费草稿纸:</b>按 <span class="kbd">⬆</span> 滚动之前的算式,<span class="kbd">enter</span> 把旧式子粘回底行改着用——长题多步验算不用重敲。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="keys">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">Key Map</span><h2 class="sec-title">十个键位吃下全场</h2></div></div>
+    <div class="card">
+      <table class="map">
+        <tr><th>要算什么</th><th>按键</th><th>菜单 / 说明</th></tr>
+        <tr><td>\(nCr,\ nPr,\ n!\)</td><td class="keys"><span class="kbd">prb</span></td><td>菜单 <b>1:nPr · 2:nCr · 3:!</b>(RAND 页考试用不到)</td></tr>
+        <tr><td>\(e^x\)</td><td class="keys"><span class="kbd">2nd</span><span class="kbd k2">e<sup>x</sup></span></td><td>在 <span class="kbd">ln</span> 键上方;MathPrint 下指数进模板,输完按 <span class="kbd">▶</span> 跳出</td></tr>
+        <tr><td>任意次幂 / 根</td><td class="keys"><span class="kbd">^</span><span class="arr">·</span><span class="kbd">2nd</span><span class="kbd k2">ˣ√</span></td><td>平方与平方根另有 <span class="kbd">x²</span> 与 <span class="kbd">2nd</span><span class="kbd k2">√</span></td></tr>
+        <tr><td>负数</td><td class="keys"><span class="kbd">(-)</span></td><td>负号键,<b>不是</b>减号 <span class="kbd">−</span></td></tr>
+        <tr><td>上一个结果</td><td class="keys"><span class="kbd">2nd</span><span class="kbd k2">ans</span></td><td>直接按运算符开头(如 <span class="kbd">×</span>)也会自动带出 <b>Ans</b></td></tr>
+        <tr><td>存 / 取变量</td><td class="keys"><span class="kbd">sto→</span><span class="arr">+</span><span class="kbd">x<sub>abc</sub></span></td><td>变量键连按在 x y z t a b c 间轮换;取值按变量键或 <span class="kbd">2nd</span><span class="kbd k2">recall</span></td></tr>
+        <tr><td>分数 ↔ 小数</td><td class="keys"><span class="kbd">◄►</span></td><td>答案切换键:精确形式(分数 / 根式)与小数互转</td></tr>
+        <tr><td>数据表</td><td class="keys"><span class="kbd">data</span></td><td>L1/L2/L3 各 42 行;连按两次出 <b>CLEAR/FORMULA</b> 菜单</td></tr>
+        <tr><td>统计</td><td class="keys"><span class="kbd">2nd</span><span class="kbd k2">stat</span></td><td><b>1:1-Var Stats</b>;算完后菜单多出 <b>3:StatVars</b> 可取值回表达式</td></tr>
+        <tr><td>函数表</td><td class="keys"><span class="kbd">table</span></td><td>输 \(y=f(x)\),Auto 或 Ask-x 批量取值</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="comb">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Counting</span><h2 class="sec-title">计数三键:C · P · 阶乘</h2></div></div>
+    <p class="sec-sub">对应 <a href="soa-exam-p-l02-combinatorics.html">L02 组合计数</a>。语法是「n 在前、菜单键在中、r 在后」。</p>
+    <div class="card accent">
+      <p>\(\dbinom{52}{5}=2{,}598{,}960\)(52 张牌抽 5 张):</p>
+      <p class="keys"><span class="kbd">5</span><span class="kbd">2</span><span class="kbd">prb</span><span class="kbd">2</span><span class="kbd">5</span><span class="kbd">enter</span><span class="arr">→</span><span class="res">2,598,960</span></p>
+      <p>\(4!=24\):<span class="keys" style="display:inline-flex"><span class="kbd">4</span><span class="kbd">prb</span><span class="kbd">3</span><span class="kbd">enter</span></span> &nbsp; \(\;{}_{8}P_{3}=336\):<span class="keys" style="display:inline-flex"><span class="kbd">8</span><span class="kbd">prb</span><span class="kbd">1</span><span class="kbd">3</span><span class="kbd">enter</span></span></p>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>优先级坑:</b>幂(第 5 级)先于 nCr/nPr(第 7 级)算——<b>10 nCr 3<sup>2</sup> 会算成 10 nCr 9</b>。参数带运算时给参数加括号:<b>(10) nCr (3²)</b> 才是 \(\binom{10}{9}\) 的反面写法。阶乘只保证<b>正整数 ≤ 69</b>;\(0!=1\) 直接手记,别指望按键。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="disc">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">Discrete pmf</span><h2 class="sec-title">离散分布 pmf:公式 → 按键流</h2></div></div>
+    <p class="sec-sub">三兄弟各走一遍,数字与 <a href="soa-exam-p-e02-distributions-l15-l23.html">E02 奶茶店串讲</a> 完全一致,可互相对账。</p>
+
+    <div class="card accent">
+      <h3>二项 · \(P[X=3]=\dbinom{10}{3}(0.3)^3(0.7)^7\)(<a href="soa-exam-p-l17-binomial-distribution.html">L17</a>)</h3>
+      <p class="keys"><span class="kbd">1</span><span class="kbd">0</span><span class="kbd">prb</span><span class="kbd">2</span><span class="kbd">3</span><span class="kbd">×</span><span class="kbd">.</span><span class="kbd">3</span><span class="kbd">^</span><span class="kbd">3</span><span class="kbd">▶</span><span class="kbd">×</span><span class="kbd">.</span><span class="kbd">7</span><span class="kbd">^</span><span class="kbd">7</span><span class="kbd">enter</span><span class="arr">→</span><span class="res">0.2668279</span></p>
+      <p class="dim">nCr 优先级低于乘法?不——乘法在第 8 级,nCr 第 7 级,<b>nCr 先算</b>,所以这串不用括号。MathPrint 下 <span class="kbd">^</span> 进上标模板,输完指数按 <span class="kbd">▶</span> 回到基线再乘。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>负二项 · \(P[N=5]=\dbinom{4}{2}(0.3)^3(0.7)^2\)(第 5 杯出第 3 单大杯,<a href="soa-exam-p-l18-negative-binomial.html">L18</a>)</h3>
+      <p class="keys"><span class="kbd">4</span><span class="kbd">prb</span><span class="kbd">2</span><span class="kbd">2</span><span class="kbd">×</span><span class="kbd">.</span><span class="kbd">3</span><span class="kbd">^</span><span class="kbd">3</span><span class="kbd">▶</span><span class="kbd">×</span><span class="kbd">.</span><span class="kbd">7</span><span class="kbd">^</span><span class="kbd">2</span><span class="kbd">enter</span><span class="arr">→</span><span class="res">0.079380</span></p>
+      <p class="dim">套路与二项同一条流水线,只是组合数换成「前 \(n-1\) 次里挑 \(r-1\) 次成功」。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>泊松 · \(P[N=2]=e^{-3}\dfrac{3^2}{2!}\)(λ=3,<a href="soa-exam-p-l19-poisson-distribution.html">L19</a>)</h3>
+      <p class="keys"><span class="kbd">2nd</span><span class="kbd k2">e<sup>x</sup></span><span class="kbd">(-)</span><span class="kbd">3</span><span class="kbd">▶</span><span class="kbd">×</span><span class="kbd">3</span><span class="kbd">x²</span><span class="kbd">÷</span><span class="kbd">2</span><span class="kbd">prb</span><span class="kbd">3</span><span class="kbd">enter</span><span class="arr">→</span><span class="res">0.224042</span></p>
+      <p class="dim">指数上必须用负号键 <span class="kbd">(-)</span>;e 的指数在模板里输完记得 <span class="kbd">▶</span> 跳出再乘。连算 \(P[N=0..k]\) 累加时,逐项按完直接 <span class="kbd">+</span> 接着敲,Ans 自动串链。</p>
+    </div>
+  </div>
+</section>
+
+<section id="cont">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">Continuous &amp; Table</span><h2 class="sec-title">连续分布与正态查表插值</h2></div></div>
+
+    <div class="card accent">
+      <h3>指数 · \(S(t)=e^{-t/\theta}\)(θ=10,问 \(P[T\le 5]\),<a href="soa-exam-p-l20-exponential-distribution.html">L20</a>)</h3>
+      <p class="keys"><span class="kbd">1</span><span class="kbd">−</span><span class="kbd">2nd</span><span class="kbd k2">e<sup>x</sup></span><span class="kbd">(-)</span><span class="kbd">5</span><span class="kbd">÷</span><span class="kbd">1</span><span class="kbd">0</span><span class="kbd">▶</span><span class="kbd">enter</span><span class="arr">→</span><span class="res">0.393469</span></p>
+      <p class="dim">均匀分布(L15)不需要按键流:概率 = 长度比,期望方差套 \(\frac{a+b}2\)、\(\frac{(b-a)^2}{12}\),一步除法而已。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>正态 · 计算器<b>没有</b> \(\Phi\),考场给表:查表 + 线性插值(<a href="soa-exam-p-l21-normal-distribution.html">L21</a> · <a href="soa-exam-p-l09-percentiles.html">L09</a>)</h3>
+      <p>例 22A 要 \(\Phi(1.414)\):表上 \(\Phi(1.41)=0.9207\)、\(\Phi(1.42)=0.9222\),插 \(0.4\) 格:</p>
+      <p class="keys"><span class="kbd">.</span><span class="kbd">9</span><span class="kbd">2</span><span class="kbd">0</span><span class="kbd">7</span><span class="kbd">+</span><span class="kbd">.</span><span class="kbd">4</span><span class="kbd">×</span><span class="kbd">(</span><span class="kbd">.</span><span class="kbd">9</span><span class="kbd">2</span><span class="kbd">2</span><span class="kbd">2</span><span class="kbd">−</span><span class="kbd">.</span><span class="kbd">9</span><span class="kbd">2</span><span class="kbd">0</span><span class="kbd">7</span><span class="kbd">)</span><span class="kbd">enter</span><span class="arr">→</span><span class="res">0.9213</span><span class="arr">,与例 22A 一致</span></p>
+      <div class="mnemonic"><span class="ic">🧠</span><span class="t"><b>插值口诀:左端 + 比例 ×(右 − 左)</b>。反查分位数同一招,只是横竖互换:夹住目标概率的两行,反着插 z。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="stat">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">1-Var Stats</span><h2 class="sec-title">神技:概率当频数,E[X] / Var / E[X²] 一次全出</h2></div></div>
+    <p class="sec-sub">官方 Guidebook 原文:「Non-integer frequency elements are valid… parts that add up to 1」——<b>FRQ 列直接输概率是 TI 认可的用法</b>。离散分布的期望方差从此不用手摊加权和。</p>
+
+    <div class="card accent">
+      <h3>骑手意外险赔付表(与 <a href="soa-exam-p-e01-scenario-l07-l13.html">E01</a> / L07 / L08 例题同数):\(x=0,1,4\),\(p=0.5,0.4,0.1\)</h3>
+      <table class="map">
+        <tr><th>#</th><th>按键</th><th>屏幕 / 说明</th></tr>
+        <tr><td>1</td><td class="keys"><span class="kbd">data</span><span class="kbd">data</span><span class="kbd">4</span></td><td>先 <b>Clear ALL</b> 清旧数据</td></tr>
+        <tr><td>2</td><td class="keys"><span class="kbd">0</span><span class="kbd">⬇</span><span class="kbd">1</span><span class="kbd">⬇</span><span class="kbd">4</span><span class="kbd">enter</span><span class="arr">;</span><span class="kbd">▶</span><span class="arr">切到 L2:</span><span class="kbd">.</span><span class="kbd">5</span><span class="kbd">⬇</span><span class="kbd">.</span><span class="kbd">4</span><span class="kbd">⬇</span><span class="kbd">.</span><span class="kbd">1</span><span class="kbd">enter</span></td><td>L1 = 取值,L2 = 概率</td></tr>
+        <tr><td>3</td><td class="keys"><span class="kbd">2nd</span><span class="kbd k2">stat</span><span class="kbd">1</span></td><td>选 <b>1-Var Stats</b></td></tr>
+        <tr><td>4</td><td class="keys"><span class="arr">DATA:</span><span class="kbd">L1</span><span class="arr">FRQ:</span><span class="kbd">L2</span><span class="arr">→ CALC</span><span class="kbd">enter</span></td><td><span class="scr">x̄=0.8 &nbsp; σx=1.16619 &nbsp; Σx²=2</span></td></tr>
+      </table>
+      <table class="map">
+        <tr><th>读数</th><th>就是</th><th>本例</th></tr>
+        <tr><td>\(\bar x\)</td><td>\(E[X]\)(权和 =1 时的加权均值)</td><td><b>0.8</b>,对上 Q1</td></tr>
+        <tr><td>\(\sigma x\)</td><td>标准差 \(\;\Rightarrow\;\sigma x^2=\mathrm{Var}\):按 <span class="kbd">x²</span> 即得</td><td>\(1.16619^2=\)<b>1.36</b>,对上 Q3</td></tr>
+        <tr><td>\(\Sigma x^2\)</td><td>\(E[X^2]\)(概率加权的平方和)</td><td><b>2.0</b>,验 \(2-0.8^2=1.36\) ✓</td></tr>
+      </table>
+      <div class="note"><span class="ic">📝</span><span class="t"><b>Sx 显示 Error 是正常的</b>——样本标准差对非整数频数无定义,我们要的是总体 σx。算完后 <span class="kbd">2nd</span><span class="kbd k2">stat</span><span class="kbd">3</span> 进 <b>StatVars</b>,可把 x̄、σx 直接选进表达式接着算(如 CV=σ÷μ)。</span></div>
+      <div class="note tip"><span class="ic">💡</span><span class="t"><b>什么时候用:</b>三值以上的离散表、要同时报 E 和 Var、或者算完 E[X] 还要 E[X²] 验算——一次录入全出,比手摊 \(\sum x_i p_i\) 快且不易抄错。两值的伯努利型别麻烦它,直接 \((b-a)^2pq\) 口算(L08 捷径)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">Power Tools</span><h2 class="sec-title">进阶三件套:变量 · 函数表 · 常数 K</h2></div></div>
+
+    <div class="card">
+      <h3>sto→ 变量:中间量存起来,长题不重敲</h3>
+      <p>例:把 \(z=1.414\) 的插值结果存进 x,再算 \(1-\Phi\):</p>
+      <p class="keys"><span class="arr">(接 §05 结果)</span><span class="kbd">sto→</span><span class="kbd">x<sub>abc</sub></span><span class="kbd">enter</span><span class="arr">;然后</span><span class="kbd">1</span><span class="kbd">−</span><span class="kbd">x<sub>abc</sub></span><span class="kbd">enter</span><span class="arr">→</span><span class="res">0.0787</span></p>
+      <p class="dim">七个变量 x y z t a b c 随便用;条件概率的分子分母、全概率的各路径乘积,各存一个再除,比抄纸上稳。</p>
+    </div>
+
+    <div class="card">
+      <h3>函数表 table:一条 pmf / 生存函数批量取值</h3>
+      <p class="keys"><span class="kbd">table</span><span class="arr">输入</span><span class="scr">y = e^(-x/10)</span><span class="kbd">enter</span><span class="arr">选</span><span class="kbd">Ask-x</span><span class="arr">依次问 5 / 10 / 15 →</span><span class="res">0.6065 · 0.3679 · 0.2231</span></p>
+      <p class="dim">适合「同一分布问三个点」的题;Auto 模式给 Start/Step 自动列表。</p>
+    </div>
+
+    <div class="card">
+      <h3>常数 K:重复操作一键连打(几何尾概率链)</h3>
+      <p class="keys"><span class="kbd">2nd</span><span class="kbd k2">K</span><span class="arr">定义</span><span class="scr">K = ×0.7</span><span class="kbd">enter</span><span class="arr">;输</span><span class="kbd">1</span><span class="kbd">enter</span><span class="kbd">enter</span><span class="kbd">enter</span><span class="arr">→</span><span class="res">0.7 · 0.49 · 0.343</span></p>
+      <p class="dim">每按一次 <span class="kbd">enter</span> 对上一结果再乘 0.7——几何分布 \(q^k\) 尾概率、连乘折扣一路点出来。再按 <span class="kbd">2nd</span><span class="kbd k2">K</span> 关闭(指示行的 K 消失)。</p>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">Limits &amp; Traps</span><h2 class="sec-title">它做不了的,和最容易翻车的</h2></div></div>
+
+    <div class="card accent">
+      <h3>做不了 → 考场对策</h3>
+      <table class="map">
+        <tr><th>没有的功能</th><th>对策</th></tr>
+        <tr><td>正态 CDF \(\Phi(z)\)</td><td>考试界面给正态表:查表 + 插值(§05),口诀「左端 + 比例 × 差」</td></tr>
+        <tr><td>积分 \(\int\)</td><td>手算:口袋结果 \(\int_0^\infty x^n e^{-x/\theta}dx=n!\,\theta^{n+1}\) 等见 <a href="soa-exam-p-calculus.html">∫ 微积分速查</a></td></tr>
+        <tr><td>求和 \(\Sigma\)</td><td>几何级数闭式 \(\frac{a}{1-r}\);泊松尾部逐项加(Ans 串链)</td></tr>
+        <tr><td>分布函数库(binompdf 等)</td><td>没有就没有——pmf 按 §04 流水线敲,反而不容易按错菜单</td></tr>
+      </table>
+    </div>
+
+    <div class="card accent">
+      <h3>高频翻车点</h3>
+      <table class="map">
+        <tr><th>坑</th><th>症状</th><th>正确姿势</th></tr>
+        <tr><td><span class="kbd">(-)</span> vs <span class="kbd">−</span></td><td>e 的负指数按成减号 → Syntax Error</td><td>指数、开头负数一律负号键 <span class="kbd">(-)</span></td></tr>
+        <tr><td>MathPrint 模板没跳出</td><td>\(e^{-3}\times 9\) 全被吸进指数 → 结果离谱</td><td>指数 / 分数输完先按 <span class="kbd">▶</span> 再接运算</td></tr>
+        <tr><td>幂先于 nCr</td><td>10 nCr 3² 算成 10 nCr 9</td><td>参数含运算就加括号</td></tr>
+        <tr><td>^ 右结合(MathPrint)</td><td>\(2\hat{\ }3\hat{\ }2=512\) 不是 64</td><td>想要 \((2^3)^2\) 自己加括号</td></tr>
+        <tr><td>Sx = Error</td><td>1-Var 用概率作 FRQ 后 Sx 报错</td><td>正常现象,读 σx 就对(§06)</td></tr>
+        <tr><td>阶乘键域</td><td>\(0!\)、非整数、&gt;69 不保证</td><td>\(0!=1\) 手记;大数用组合数直接 nCr</td></tr>
+        <tr><td>忘了 K 还开着</td><td>随手 enter 结果被偷偷 ×0.7</td><td>看指示行有无 <b>K</b>;用完立刻关</td></tr>
+      </table>
+      <div class="mnemonic"><span class="ic">🧠</span><span class="t"><b>教材红框同款忠告:</b>能精确算就别近似、能口算的别开数据表——计算器是流水线,<b>先在纸上写对公式,再翻译成按键</b>,顺序反了必翻车。</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P · TI-30XS MultiView 按键速查</b> · 手维护源页;键位依据 TI-30XS MultiView Guidebook (Texas Instruments, 2019)。配合 <a href="soa-exam-p-formulas.html">Σ 公式总表</a> 与 <a href="soa-exam-p-calculus.html">∫ 微积分速查</a> 使用。</p>
+  </div>
+</footer>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+
+</body>
+</html>

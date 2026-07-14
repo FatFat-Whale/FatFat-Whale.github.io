@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<!--
+  Exam P 习题串讲 E06:变换与母函数工具箱(L32/33/34/35)。
+  概念卡弹窗内容是构建时快照:概念卡 .md 修改后重跑
+      python3 _Meta/tools/build-exam-p-e01-cards.py
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · E06 变换与母函数工具箱 L32–L35</title>
+<script>
+MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --accent:#6d28d9; --accent-deep:#4c1d95; --accent-soft:#f0eafc; --hi:#ffd23f;
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#fbfaf7; --card:#ffffff; --line:#e2e0d8; --grid:#f0efe9;
+    --pos:#0e8a6d; --pos-fill:rgba(14,138,109,.12);
+    --neg:#bb2649; --neg-fill:rgba(187,38,73,.10);
+    --blue:#3b66c4; --blue-fill:rgba(59,102,196,.10);
+    --disc:#5b53c4; --disc-soft:#edebfa;
+    --cont:#b8860b; --cont-soft:#f7efdc;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC","Noto Serif SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       line-height:1.8;font-size:16px;-webkit-font-smoothing:antialiased}
+  .bar{background:linear-gradient(180deg,#16243d,#1d3050);color:#fff;border-bottom:3px solid var(--hi);
+       padding:14px 24px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:17px}
+  .bar .logo b{color:var(--hi)}
+  .bar .tagline{font-family:var(--mono);font-size:12px;color:#cdd6e6}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 24px 90px}
+  h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.35}
+  h1{font-size:29px;margin:0 0 8px}
+  h1 em{font-style:normal;color:var(--accent-deep)}
+  h2{font-size:22px;margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
+  .act-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--mute);margin-top:40px}
+  .thesis{color:var(--ink-soft);max-width:46em;margin:0 0 6px}
+  .thesis strong{color:var(--ink)}
+  .howto{font-size:14px;color:var(--accent-deep);background:var(--accent-soft);
+         border-radius:8px;padding:8px 14px;margin:14px 0 4px;max-width:46em}
+  .chain{font-size:13.5px;color:var(--mute);margin:10px 0 0}
+  .chain a{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .chain a:hover{border-bottom-color:var(--accent-deep)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:8px;
+     padding:20px 24px 16px;margin:24px 0}
+  .q-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .q-no{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--accent);white-space:nowrap}
+  .q-title{font-weight:700;font-size:17px}
+  .chips{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid rgba(109,40,217,.35);border-radius:10px;padding:1px 9px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:#e2d6f8}
+  .chip::after{content:" ▸";opacity:.6}
+  .scene{color:var(--ink-soft);font-size:15px;margin:4px 0 8px}
+  .scene::before{content:"场景 · ";color:var(--ink);font-weight:600}
+  .ask{margin:8px 0;font-weight:600}
+  .ask::before{content:"问:";color:var(--accent)}
+  .solve{margin:8px 0 4px}
+  .solve ol{margin:6px 0;padding-left:22px}
+  .solve li{margin:4px 0}
+  .takeaway{border-left:3px solid var(--pos);padding:2px 0 2px 12px;font-size:14.5px;margin:12px 0 4px}
+  .takeaway strong{color:var(--pos)}
+  .warn{border-left-color:var(--neg)}
+  .warn strong{color:var(--neg)}
+  var,.f{font-family:Georgia,"Times New Roman",serif;font-style:italic}
+  .formula{font-family:Georgia,"Times New Roman",serif;background:var(--accent-soft);border-radius:6px;
+           padding:8px 14px;margin:10px 0;overflow-x:auto;font-size:15.5px}
+  table{border-collapse:collapse;margin:12px 0;font-size:14.5px;font-variant-numeric:tabular-nums}
+  th,td{padding:6px 12px;border:1px solid var(--line);text-align:center}
+  th{font-size:13px;color:var(--mute);font-weight:600;background:var(--grid)}
+  td.hl-pos{background:var(--pos-fill);font-weight:600}
+  td.hl-disc{background:var(--disc-soft)}
+  td.hl-cont{background:var(--cont-soft)}
+  .tbl-wrap{overflow-x:auto}
+  table.map td{text-align:left}
+  table.map td:first-child{white-space:nowrap;font-weight:600}
+  figure{margin:16px 0 4px}
+  figure svg{display:block;margin:0 auto;max-width:100%}
+  figcaption{font-size:13px;color:var(--mute);margin-top:6px;text-align:center}
+  svg text{font-family:var(--sans);fill:var(--ink-soft);font-size:11px}
+  svg text.dark{fill:var(--ink);font-weight:600}
+  svg text.small{font-size:9.5px;fill:var(--mute)}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  @media(max-width:640px){.chips{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="logo">Exam&nbsp;P · <b>习题串讲</b></span>
+  <span class="tagline">E06 · MGF / PGF / CDF &amp; Jacobian toolbox · L32–L35</span>
+</div>
+
+<div class="wrap">
+  <h1>四件工具一只箱:<em>变换与母函数 L32–L35</em></h1>
+  <p class="thesis">L32–L35 四章其实是<strong>一只工具箱</strong>:MGF 是分布的指纹机(认脸、取矩、拼独立和),PGF 是离散计数的专用款,CDF 法是万能变换器,密度法/雅可比是单调变换的直通车。考点从来不是"背工具",而是<strong>什么时候掏哪件</strong>——这一页先立决策流程图,再把工具两两对比,然后进"奶茶店数据加工厂"把五类题各掏一件工具算到底。</p>
+  <p class="howto">💡 概念标签可点弹卡;所有数字手算可验;E02 管"认分布",本页管"分布怎么加工出新分布"。</p>
+  <p class="chain">配套章节:
+    <a href="soa-exam-p-l32-mgf.html">L32 矩母函数</a> ·
+    <a href="soa-exam-p-l33-pgf.html">L33 概率母函数</a> ·
+    <a href="soa-exam-p-l34-transformations.html">L34 单变量变换</a> ·
+    <a href="soa-exam-p-l35-transformations-multivariate.html">L35 多变量变换</a></p>
+
+  <div class="act-tag">第一幕 · 全景</div>
+  <h2>先问题目要什么,再开箱掏工具</h2>
+
+  <figure><svg viewBox="0 0 860 340" role="img" aria-label="工具箱决策流程图:按题目问什么选 MGF、PGF、密度法、CDF 法或雅可比法">
+    <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6d28d9"/></marker></defs>
+    <!-- 根节点 -->
+    <rect x="12" y="148" width="124" height="52" rx="9" fill="#4c1d95"/>
+    <text x="74" y="180" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700">题目问什么?</text>
+    <!-- 主干 -->
+    <line x1="136" y1="174" x2="164" y2="174" stroke="#6d28d9" stroke-width="1.6"/>
+    <line x1="164" y1="33" x2="164" y2="309" stroke="#6d28d9" stroke-width="1.6"/>
+    <line x1="164" y1="33" x2="186" y2="33" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="164" y1="95" x2="186" y2="95" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="164" y1="157" x2="186" y2="157" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="164" y1="219" x2="186" y2="219" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="164" y1="309" x2="186" y2="309" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <!-- 条件列 -->
+    <rect x="196" y="12" width="190" height="42" rx="8" fill="#fff" stroke="#c9b8ec" stroke-width="1.4"/>
+    <text x="291" y="37" text-anchor="middle" class="dark">要各阶矩 E[Xᵏ]</text>
+    <rect x="196" y="74" width="190" height="42" rx="8" fill="#fff" stroke="#c9b8ec" stroke-width="1.4"/>
+    <text x="291" y="99" text-anchor="middle" class="dark">给了 M(t),要认分布</text>
+    <rect x="196" y="136" width="190" height="42" rx="8" fill="#fff" stroke="#c9b8ec" stroke-width="1.4"/>
+    <text x="291" y="161" text-anchor="middle" class="dark">独立变量求和 X+Y</text>
+    <rect x="196" y="198" width="190" height="42" rx="8" fill="#fff" stroke="#c9b8ec" stroke-width="1.4"/>
+    <text x="291" y="223" text-anchor="middle" class="dark">求 Y=g(X) 的分布</text>
+    <rect x="196" y="288" width="190" height="42" rx="8" fill="#fff" stroke="#c9b8ec" stroke-width="1.4"/>
+    <text x="291" y="313" text-anchor="middle" class="dark">二维 (X,Y) 换新变量</text>
+    <!-- 条件 → 工具 -->
+    <line x1="386" y1="33" x2="458" y2="33" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="386" y1="95" x2="458" y2="95" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="386" y1="157" x2="458" y2="157" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="386" y1="219" x2="426" y2="219" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="386" y1="309" x2="458" y2="309" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <!-- 工具列 -->
+    <rect x="470" y="10" width="250" height="46" rx="8" fill="#f0eafc" stroke="#6d28d9" stroke-width="1.4"/>
+    <text x="595" y="29" text-anchor="middle" class="dark">MGF:在 t=0 求导取矩</text>
+    <text x="595" y="45" text-anchor="middle" class="small">PGF:在 z=1 求导取阶乘矩</text>
+    <rect x="470" y="74" width="250" height="42" rx="8" fill="#f0eafc" stroke="#6d28d9" stroke-width="1.4"/>
+    <text x="595" y="99" text-anchor="middle" class="dark">查 MGF 速查表,比对指纹</text>
+    <rect x="470" y="136" width="250" height="42" rx="8" fill="#f0eafc" stroke="#6d28d9" stroke-width="1.4"/>
+    <text x="595" y="161" text-anchor="middle" class="dark">MGF 相乘,乘完再认脸</text>
+    <rect x="470" y="288" width="250" height="42" rx="8" fill="#f0eafc" stroke="#6d28d9" stroke-width="1.4"/>
+    <text x="595" y="313" text-anchor="middle" class="dark">雅可比法:f·|J|,再积边际</text>
+    <!-- 单调判定支路 -->
+    <rect x="436" y="200" width="104" height="38" rx="19" fill="#fff" stroke="#c9b8ec" stroke-width="1.4"/>
+    <text x="488" y="223" text-anchor="middle" class="dark">g 单调?</text>
+    <polyline points="540,219 566,219 566,200 590,200" fill="none" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <polyline points="540,219 566,219 566,252 590,252" fill="none" stroke="#6d28d9" stroke-width="1.6" marker-end="url(#arr)"/>
+    <text x="576" y="190" class="small">是</text>
+    <text x="576" y="243" class="small">否</text>
+    <rect x="600" y="178" width="248" height="44" rx="8" fill="#f0eafc" stroke="#6d28d9" stroke-width="1.4"/>
+    <text x="724" y="196" text-anchor="middle" class="dark">密度法(直通车)</text>
+    <text x="724" y="212" text-anchor="middle" class="small">一步到位,别忘乘 |dx/dy|</text>
+    <rect x="600" y="230" width="248" height="44" rx="8" fill="#f0eafc" stroke="#6d28d9" stroke-width="1.4"/>
+    <text x="724" y="248" text-anchor="middle" class="dark">CDF 法(万能)</text>
+    <text x="724" y="264" text-anchor="middle" class="small">先算 F(y)=P[g(X)≤y],再求导</text>
+  </svg><figcaption>决策先行:考点不是背工具,而是"题目问什么 → 掏哪件"。母函数管矩 / 认脸 / 独立和,变换法管"加工出来的新变量"的分布。</figcaption></figure>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">全景</span><span class="q-title">四件工具,一句话身份</span>
+      <span class="chips"><button class="chip" data-card="矩母函数">MGF · L32</button><button class="chip" data-card="概率母函数">PGF · L33</button><button class="chip" data-card="分布函数法">CDF 法 · L34</button><button class="chip" data-card="多变量变换的雅可比法">雅可比 · L35</button></span></div>
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th>工具</th><th>一句话身份</th><th>输入 → 输出</th><th>题眼词</th></tr>
+      <tr><td>MGF</td><td>分布的指纹 + 取矩机器:$M(t)=E[e^{tX}]$</td><td>分布 → 一条 $t$ 的函数;反向比对可认脸</td><td>moment generating function · independent · sum</td></tr>
+      <tr><td>PGF</td><td>离散计数专用母函数:$P(z)=E[z^N]$</td><td>计数分布 → $z$ 的级数,系数就是概率</td><td>probability generating function · P[N=k]</td></tr>
+      <tr><td>CDF 法</td><td>万能变换器:先算概率再求导</td><td>$Y=g(X)$ → 先 $F_Y$ 再 $f_Y$</td><td>distribution of Y = … · 非单调($X^2$ 型)</td></tr>
+      <tr><td>密度法(雅可比)</td><td>单调变换直通车,一步出密度</td><td>单调 $g$ → $f_Y=f_X(g^{-1})\cdot|dx/dy|$</td><td>one-to-one · strictly increasing / monotone</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>工具互相咬合:</strong>$P(z)=M(\ln z)$ 两台母函数机随时互换;独立和 = MGF 相乘;卷积公式 = 雅可比法积掉一维的特例。四章一箱,不是四个孤岛。</div>
+  </div>
+
+  <div class="act-tag">第二幕 · 分组对比</div>
+  <h2>两两放一起,差别才看得见</h2>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比A</span><span class="q-title">MGF vs PGF:同一族机器的两个型号</span>
+      <span class="chips"><button class="chip" data-card="矩母函数">MGF · L32</button><button class="chip" data-card="概率母函数">PGF · L33</button><button class="chip" data-card="PGF与MGF关系">互换 · L33</button><button class="chip" data-card="MGF取矩">取矩 · L32</button></span></div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th style="width:18%"></th><th>MGF</th><th>PGF</th></tr>
+      <tr><td><b>定义</b></td><td>$M(t)=E[e^{tX}]$</td><td>$P(z)=E[z^N]$</td></tr>
+      <tr><td><b>适用对象</b></td><td>任意分布(离散、连续通吃)</td><td class="hl-disc">非负整数计数 $N$</td></tr>
+      <tr><td><b>取矩位置</b></td><td class="hl-pos">$t=0$:$M^{(k)}(0)=E[X^k]$(原点矩)</td><td class="hl-pos">$z=1$:$P'(1)=E[N]$,$P''(1)=E[N(N-1)]$(阶乘矩)</td></tr>
+      <tr><td><b>取单点概率</b></td><td>一般取不出</td><td>$z=0$:$P[N=k]=P^{(k)}(0)/k!$</td></tr>
+      <tr><td><b>互换</b></td><td>$M(t)=P(e^t)$</td><td>$P(z)=M(\ln z)$</td></tr>
+      <tr><td><b>专长</b></td><td>认分布、独立和相乘、连续分布取矩</td><td>数杯数/件数:挖单点概率 + 阶乘矩</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>位置别记反:</strong>MGF 在 <b>0</b> 求导、PGF 在 <b>1</b> 求导取矩;PGF 另有一头在 <b>0</b> 求导挖概率。方差走 PGF 时用 $\operatorname{Var}=P''(1)+P'(1)-P'(1)^2$,阶乘矩要补回去。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比B</span><span class="q-title">CDF 法 vs 密度法:万能钥匙 vs 直通车</span>
+      <span class="chips"><button class="chip" data-card="分布函数法">CDF 法 · L34</button><button class="chip" data-card="单调变换密度法">密度法 · L34</button><button class="chip" data-card="非单调变换">非单调 · L34</button></span></div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th style="width:18%"></th><th>CDF 法</th><th>密度法</th></tr>
+      <tr><td><b>适用条件</b></td><td class="hl-pos">任何 $g(X)$ 都行(万能)</td><td>仅当 $g$ 在支撑上单调(一一对应)</td></tr>
+      <tr><td><b>步骤</b></td><td>① 写 $F_Y(y)=P[g(X)\le y]$ ② 翻译回 $X$ 的区间 ③ 代 $F_X$ ④ 求导</td><td>① 求反函数 $x=g^{-1}(y)$ ② $f_Y(y)=f_X\bigl(g^{-1}(y)\bigr)\left|\dfrac{dx}{dy}\right|$ ③ 定新支撑</td></tr>
+      <tr><td><b>关键因子</b></td><td>求导时链式法则自动带出</td><td class="hl-cont">手动乘 $|dx/dy|$——忘乘是头号丢分</td></tr>
+      <tr><td><b>何时必须用</b></td><td>非单调:$Y=X^2$(支撑跨 0)、$Y=|X|$、$\min/\max$ 型</td><td>—(单调时两法皆可,密度法更快)</td></tr>
+      <tr><td><b>代价</b></td><td>要动一次积分/区间翻译,步骤多</td><td>一步公式,但用错场合直接翻车</td></tr>
+    </table>
+    </div>
+    <div class="takeaway warn"><strong>先问单调性再上车:</strong>非单调硬套密度法会漏反函数分支(见 Q4 第 ④ 步);拿不准就走 CDF 法,慢一点但不会错。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">速查</span><span class="q-title">常见分布 MGF:认脸特征表</span>
+      <span class="chips"><button class="chip" data-card="常见分布MGF">速查表 · L32</button><button class="chip" data-card="MGF唯一性">唯一性 · L32</button></span></div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>分布</th><th>$M(t)$</th><th>认脸特征</th><th>顺手矩</th></tr>
+      <tr><td>伯努利$(p)$</td><td>$1-p+pe^t$</td><td>两项:常数 + $pe^t$</td><td>$E=p$</td></tr>
+      <tr><td>二项$(n,p)$</td><td>$(1-p+pe^t)^n$</td><td>括号的 $n$ 次方</td><td>$E=np$</td></tr>
+      <tr><td>泊松$(\lambda)$</td><td>$e^{\lambda(e^t-1)}$</td><td class="hl-disc">$e$ 的指数里还有 $e^t$</td><td>$E=\operatorname{Var}=\lambda$</td></tr>
+      <tr><td>几何$(p)$(数失败)</td><td>$\dfrac{p}{1-(1-p)e^t}$</td><td>分式,分母含 $e^t$</td><td>$E=(1-p)/p$</td></tr>
+      <tr><td>指数$(\theta)$</td><td>$(1-\theta t)^{-1}$</td><td class="hl-cont">$(1-\theta t)$ 的 $-1$ 次幂</td><td>$E=\theta$</td></tr>
+      <tr><td>伽马$(\alpha,\theta)$</td><td>$(1-\theta t)^{-\alpha}$</td><td class="hl-cont">$(1-\theta t)$ 的 $-\alpha$ 次幂</td><td>$E=\alpha\theta$,$\operatorname{Var}=\alpha\theta^2$</td></tr>
+      <tr><td>正态$(\mu,\sigma^2)$</td><td>$e^{\mu t+\sigma^2 t^2/2}$</td><td>指数里是 $t$ 的二次式</td><td>独立和:$\mu$ 加、$\sigma^2$ 加</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>唯一性是底气:</strong>MGF 与分布一一对应——指纹对上,分布就定死。所以"认脸"不是投机,是定理背书的正规解法。</div>
+  </div>
+
+  <div class="act-tag">第三幕 · 贯穿场景</div>
+  <h2>奶茶店数据加工厂:五类题各掏一件工具</h2>
+  <p class="thesis">你给「醒狮奶茶」当数据分析:总店 + 东西两家分店,原始数据是销量、营业额、差评数;老板要的全是<strong>加工后的量</strong>——认分布、合并、换口径、算总额。每一问先说掏哪件工具,再动笔。</p>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q1</span><span class="q-title">MGF 取矩:给指纹认人,顺手要均值方差</span>
+      <span class="chips"><button class="chip" data-card="MGF取矩">取矩 · L32</button><button class="chip" data-card="常见分布MGF">速查表 · L32</button><button class="chip" data-card="MGF唯一性">唯一性 · L32</button></span></div>
+    <p class="scene">总店月度原料成本 $X$(千元)建模出来的 MGF 是 $M(t)=(1-3t)^{-2}$。</p>
+    <p class="ask">这是什么分布?均值与方差各多少?</p>
+    <div class="solve"><ol>
+      <li><b>认脸</b>:$(1-\theta t)^{-\alpha}$ 负幂型 → 伽马,$\theta=3$、$\alpha=2$——MGF 唯一性保证指纹对上分布就定死。</li>
+      <li><b>在 $t=0$ 求导取矩</b>:$M'(t)=6(1-3t)^{-3}\Rightarrow E[X]=M'(0)=\mathbf{6}$;$M''(t)=54(1-3t)^{-4}\Rightarrow E[X^2]=M''(0)=54$。</li>
+      <li><b>方差</b>:$\operatorname{Var}(X)=54-6^2=\mathbf{18}$。对账:伽马公式 $\alpha\theta=6$ ✓、$\alpha\theta^2=18$ ✓——认脸后套公式与求导殊途同归。</li>
+    </ol></div>
+    <div class="takeaway"><strong>先认脸再取矩:</strong>认出分布直接抄矩公式,省两次求导;认不出脸,再老老实实在 $t=0$ 逐阶求导。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q2</span><span class="q-title">独立和:MGF 相乘,两家店并成一家</span>
+      <span class="chips"><button class="chip" data-card="独立和的MGF">独立和 · L32</button><button class="chip" data-card="MGF唯一性">唯一性 · L32</button><button class="chip" data-card="常见分布MGF">速查表 · L32</button></span></div>
+    <p class="scene">东店日销杯数 $N_1\sim\text{Poisson}(4)$、西店 $N_2\sim\text{Poisson}(6)$,相互独立。</p>
+    <p class="ask">全公司日销 $S=N_1+N_2$ 服从什么分布?恰好卖出 8 杯的概率?</p>
+    <div class="solve"><ol>
+      <li><b>各写 MGF</b>:$M_{N_1}(t)=e^{4(e^t-1)}$,$M_{N_2}(t)=e^{6(e^t-1)}$。</li>
+      <li><b>独立 → 相乘</b>:$M_S(t)=e^{4(e^t-1)}\cdot e^{6(e^t-1)}=e^{10(e^t-1)}$。</li>
+      <li><b>乘完认脸</b>:还是"$e$ 的指数里有 $e^t$" → $S\sim\text{Poisson}(10)$,$E[S]=\operatorname{Var}(S)=10$。</li>
+      <li><b>要的概率</b>:$P[S=8]=e^{-10}\dfrac{10^8}{8!}\approx\mathbf{0.1126}$。</li>
+    </ol></div>
+    <div class="takeaway"><strong>独立和三步:</strong>各写 MGF → 相乘 → 认脸。"泊松相加参数直接加"这类可加性结论,全是这条流水线的产物。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q3</span><span class="q-title">PGF:差评计数,一头挖概率一头挖矩</span>
+      <span class="chips"><button class="chip" data-card="概率母函数">PGF · L33</button><button class="chip" data-card="PGF与MGF关系">互换 · L33</button></span></div>
+    <p class="scene">新品上线,每日差评数 $N$ 的 PGF 是 $P(z)=e^{3(z-1)}$。</p>
+    <p class="ask">$P[N=2]$ 是多少?平均每天几条差评?</p>
+    <div class="solve"><ol>
+      <li><b>认脸</b>:$e^{\lambda(z-1)}$ → $N\sim\text{Poisson}(3)$。与 MGF 速查表互通:$P(z)=M(\ln z)$,把速查表里的 $e^t$ 全换成 $z$ 就是 PGF 版。</li>
+      <li><b>单点概率在 $z=0$</b>:$P''(z)=9e^{3(z-1)}$,$P[N=2]=\dfrac{P''(0)}{2!}=\dfrac{9e^{-3}}{2}=4.5e^{-3}\approx\mathbf{0.224}$;对账泊松公式 $e^{-3}3^2/2!$ ✓。</li>
+      <li><b>矩在 $z=1$</b>:$E[N]=P'(1)=\mathbf{3}$;再进一层 $P''(1)=9=E[N(N-1)]$ → $\operatorname{Var}=9+3-3^2=3$ ✓ 泊松均值=方差。</li>
+    </ol></div>
+    <div class="takeaway"><strong>PGF 两头忙:</strong>$z=0$ 挖单点概率、$z=1$ 挖阶乘矩——两个位置各管一摊,记反了两头全错。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q4</span><span class="q-title">单变量变换:换口径走直通车,罚分绕万能道</span>
+      <span class="chips"><button class="chip" data-card="单调变换密度法">密度法 · L34</button><button class="chip" data-card="非单调变换">非单调 · L34</button><button class="chip" data-card="分布函数法">CDF 法 · L34</button></span></div>
+    <p class="scene">日营业额 $X\sim U(0,10)$(千元)。两笔加工:① 折算口径 $Y=8X+2$(汇率 ×8,再加固定补贴 2);② 绩效罚分 $W=(X-5)^2$(偏离日目标 5 千元的平方惩罚)。</p>
+    <p class="ask">$Y$ 与 $W$ 的密度各是什么?为什么两条路不一样?</p>
+    <div class="solve"><ol>
+      <li><b>$Y=8X+2$ 单调递增 → 密度法直通车</b>:$x=\dfrac{y-2}{8}$,$\left|\dfrac{dx}{dy}\right|=\dfrac18$,$f_Y(y)=\dfrac1{10}\cdot\dfrac18=\dfrac1{80}$,$2\lt y\lt 82$——均匀加工完还是均匀:$Y\sim U(2,82)$。</li>
+      <li><b>$W=(X-5)^2$ 在 $(0,10)$ 上先降后升,非单调 → 直通车此路不通,换 CDF 法</b>:$F_W(w)=P\bigl[(X-5)^2\le w\bigr]=P\bigl[5-\sqrt w\le X\le 5+\sqrt w\bigr]=\dfrac{2\sqrt w}{10}=\dfrac{\sqrt w}{5}$,$0\le w\le 25$。</li>
+      <li><b>求导出密度</b>:$f_W(w)=\dfrac1{10\sqrt w}$。对账:$\displaystyle\int_0^{25}\frac{dw}{10\sqrt w}=\frac{2\sqrt{25}}{10}=1$ ✓;$E[W]=\displaystyle\int_0^{25}\frac{w\,dw}{10\sqrt w}=\frac{25}{3}\approx 8.33$,恰等于 $\operatorname{Var}(X)=\dfrac{100}{12}$ ✓(因为 $E[X]=5$ 正是目标值)。</li>
+      <li><b>硬套密度法会怎样</b>:反函数有两支 $x=5\pm\sqrt w$,各贡献 $\dfrac1{10}\cdot\dfrac1{2\sqrt w}$,<b>逐支求和</b>才得 $\dfrac1{10\sqrt w}$——漏一支就少一半。非单调不是不能用密度法,是必须记得分支求和;懒得数支就走 CDF 法。</li>
+    </ol></div>
+    <div class="takeaway warn"><strong>见平方就警觉:</strong>$X^2$、$|X|$、$(X-c)^2$ 都是非单调信号,先画一眼 $g$ 的形状再选路;CDF 法翻译区间时别忘"两侧夹"。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q5</span><span class="q-title">多变量变换:雅可比走一遍卷积,MGF 来对账</span>
+      <span class="chips"><button class="chip" data-card="多变量变换的雅可比法">雅可比法 · L35</button><button class="chip" data-card="雅可比因子">|J| 因子 · L35</button><button class="chip" data-card="卷积公式">卷积 · L35</button></span></div>
+    <p class="scene">两家分店日净利独立同分布,$X,Y\sim\text{Exp}(\theta=2)$(千元)。老板要总利润 $S=X+Y$ 的<b>完整密度</b>,不只均值。</p>
+    <p class="ask">用雅可比法把卷积走一遍,$S$ 服从什么分布?</p>
+    <div class="solve"><ol>
+      <li><b>二维换元</b>:令 $S=X+Y$、$T=X$;逆变换 $x=t$、$y=s-t$;雅可比 $|J|=\left|\dfrac{\partial(x,y)}{\partial(s,t)}\right|=|x_s y_t-x_t y_s|=|0\cdot(-1)-1\cdot 1|=1$。</li>
+      <li><b>联合密度</b>:$f_{S,T}(s,t)=f_X(t)\,f_Y(s-t)\cdot 1=\dfrac12 e^{-t/2}\cdot\dfrac12 e^{-(s-t)/2}=\dfrac14 e^{-s/2}$;支撑由 $x\gt 0,\ y\gt 0$ 翻译成 $0\lt t\lt s$——<b>支撑是雅可比法最容易丢的一步</b>。</li>
+      <li><b>积掉 $T$ 得边际</b>(这正是卷积公式):$f_S(s)=\displaystyle\int_0^s\frac14 e^{-s/2}\,dt=\frac{s}{4}e^{-s/2}$,$s\gt 0$——伽马 $\alpha=2$、$\theta=2$,$E[S]=4$。</li>
+      <li><b>掏工具 1 对账</b>:$M_S(t)=\bigl[(1-2t)^{-1}\bigr]^2=(1-2t)^{-2}$ → 伽马$(2,2)$ ✓——雅可比和 MGF 在同一个答案上握手,工具箱闭环。</li>
+    </ol></div>
+    <div class="takeaway"><strong>卷积 = 雅可比 + 积边际:</strong>换元 → 乘 $|J|$ → 定支撑 → 积掉多余维。若要的是比值 $R=X/Y$,同一套路换逆变换即可(那时 $|J|$ 就不再是 1 了)。</div>
+  </div>
+
+  <div class="act-tag">收官 · 速查</div>
+  <h2>读题 30 秒:题面信号 → 掏哪件 → 第一步</h2>
+  <div class="q">
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th style="width:34%">题面信号</th><th style="width:22%">掏哪件工具</th><th>第一步动作</th></tr>
+      <tr><td>"$M(t)$ given … find $E[X^k]$ / Var"</td><td>MGF 取矩</td><td>先试认脸抄矩公式;认不出在 $t=0$ 逐阶求导</td></tr>
+      <tr><td>"pgf $P(z)$ … find $P[N=k]$"</td><td>PGF</td><td>$z=0$ 处 $k$ 阶导 ÷ $k!$;要均值改在 $z=1$ 求导</td></tr>
+      <tr><td>"X, Y independent … distribution of X+Y"</td><td>MGF 相乘</td><td>各写 MGF → 相乘 → 与速查表比对认脸</td></tr>
+      <tr><td>"$Y=g(X)$,$g$ 单调(线性、$e^X$、$\ln X$)"</td><td>密度法</td><td>求反函数,$f_X(g^{-1})\cdot|dx/dy|$,别忘因子和新支撑</td></tr>
+      <tr><td>"$Y=X^2$、$|X|$ 等非单调"</td><td>CDF 法</td><td>把 $\{g(X)\le y\}$ 翻译回 $X$ 的区间(注意两侧夹)</td></tr>
+      <tr><td>"joint density … distribution of $X+Y$ / $X/Y$"</td><td>雅可比法</td><td>补一个凑数变量 → 逆变换 → $|J|$ → 定支撑 → 积边际</td></tr>
+    </table>
+    </div>
+    <p style="color:var(--mute);font-size:14px">自测:把 Q1 的 MGF 换成 $(1-2t)^{-3}$、Q4 的日目标换成 4 千元、Q5 改求 $R=X/Y$,重走一遍——每题先说出"掏哪件",再动笔。</p>
+  </div>
+
+</div>
+
+<!-- ===== 概念卡弹窗 ===== -->
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
+      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
+    </div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
+    </div>
+  </div>
+</div>
+<!--CARD_POPUP_HTML_END-->
+
+<footer style="text-align:center;color:var(--mute);font-size:12.5px;padding:20px 0 40px">
+  E06 习题串讲 · 自编场景(非 ASM 原题)· 概念卡快照自 <span style="font-family:var(--mono)">10-Finance/Concepts/</span>,卡片更新后重跑 build-exam-p-e01-cards.py
+</footer>
+
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "LOTUS": {
+  "kind": "c",
+  "en": "LawOfTheUnconsciousStatistician",
+  "aliases": [
+   "Law of the Unconscious Statistician",
+   "LOTUS",
+   "无意识统计学家定律"
+  ],
+  "level": "advanced",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求 \\(g(X)\\)(如 \\(X^2\\)、\\(e^X\\))的期望<strong>不必先求 \\(g(X)\\) 的分布</strong>:把 \\(x\\) 换成 \\(g(x)\\),权重 \\(p(x)\\)/\\(f(x)\\) 原地不动。名字是玩笑——人人不假思索地当定义用,其实它是一条需要证明的定理。</p><p><strong>白话</strong>:全班身高的平均 → 全班 BMI 的平均,不用重新统计\"BMI 的分布\"——还是按人头(原概率)加权,只把每人报的数从身高换成 BMI。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[g(X)]=\\sum_x g(x)\\,p(x)\\qquad\\text{或}\\qquad E[g(X)]=\\int_{-\\infty}^{\\infty}g(x)\\,f(x)\\,dx$$</div><ul><li><strong>换头不换权</strong>:头(\\(x\\))换成 \\(g(x)\\),权(\\(p\\)/\\(f\\))一动不动。</li><li>方差、矩、矩母函数全靠它:\\(E[X^2]=\\int x^2 f\\,dx\\)、\\(E[e^{tX}]=\\int e^{tx}f\\,dx\\)。</li><li>与最大陷阱配套:非线性时 \\(E[g(X)]\\neq g(E[X])\\)(\\(E[X^2]\\neq(E[X])^2\\),差值正是方差);凸函数由 Jensen 有 \\(E[g(X)]\\ge g(E[X])\\)。</li><li>见 \\(X^2\\)、\\(1/X\\)、\\(e^X\\) 必须 LOTUS 老老实实积,<strong>严禁把期望塞进函数里</strong>。</li></ul><p><strong>算一遍</strong>:地砖边长 \\(X\\) 一半是 1 米、一半是 2 米,求平均面积 \\(E[X^2]\\)。</p><ul><li>每种砖各自算面积:\\(1^2=1\\)、\\(2^2=4\\);按\"各占一半\"加权:\\(E[X^2]=1(0.5)+4(0.5)=2.5\\) 平方米。权重没动,只把报的数从边长换成面积——这就是 LOTUS。</li><li>错法对照:先平均边长(1.5 米)再平方,得 \\(2.25\\)——<strong>平均面积 ≠\"平均边长\"的面积</strong>,这就是 \\(E[g(X)]\\neq g(E[X])\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 把定义从 \\(X\\) 推广到 \\(X\\) 的函数</li><li><a class=\"net-wl\" data-id=\"矩\">矩</a> — \\(E[X^k]\\) 全部由它计算</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — \\(E[X^2]-(E[X])^2\\) 里的 \\(E[X^2]\\) 来自 LOTUS</li><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — \\(E[e^{tX}]\\) 也是一次 LOTUS</li><li>期望的线性 — 对照:线性函数期望可直接穿透,无需 LOTUS</li></ul>"
+ },
+ "MGF取矩": {
+  "kind": "c",
+  "en": "MomentsFromMGF",
+  "aliases": [
+   "moments from MGF",
+   "generating moments",
+   "raw moment extraction"
+  ],
+  "level": "advanced",
+  "chapter": "p-l32",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>矩母函数的取矩性质:对 t 求 n 次导、<strong>再令 t=0</strong>,恰好吐出第 n 阶原点矩 \\(E[X^n]\\)。\"矩母\"之名由此而来——求期望方差不必积分,求导代零即可。</p><p><strong>白话</strong>:\\(M(t)\\) 的泰勒展开像一排抽屉,第 \\(n\\) 个抽屉装着 \\(E[X^n]\\)(除以 \\(n!\\))。求导 \\(n\\) 次 = 拆掉前面 \\(n{-}1\\) 个抽屉;代 \\(t=0\\) = 把后面的抽屉全部清零——恰好只剩你要的那一阶矩。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$M_X^{(n)}(0)=E\\!\\left[X^{n}\\right]\\qquad\\Longrightarrow\\qquad E[X]=M'_X(0),\\ \\ E[X^2]=M''_X(0)$$</div><ul><li>口诀:<strong>先求导、后代零</strong>——导完还是 t 的函数,代 \\(t=0\\) 才是矩。</li><li>方差随之而来:\\(\\mathrm{Var}(X)=M''(0)-\\big(M'(0)\\big)^2\\);\\(M''(0)\\) 是 \\(E[X^2]\\) <strong>不是方差</strong>(高频错)。</li><li>原理:\\(e^{tX}\\) 展开取期望得 \\(M(t)=1+tE[X]+\\tfrac{t^2}{2!}E[X^2]+\\cdots\\),求 n 次导后代 \\(t=0\\),其余项全部消失,只剩 \\(E[X^n]\\)。</li><li>若 MGF 形状恰是常见分布,直接抄该分布均值/方差更快:\\((1-5t)^{-3}\\) 是伽马 \\(\\alpha=3,\\ \\theta=5\\),\\(E[X]=\\alpha\\theta=15\\)。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0(各占一半)。它的 MGF 是 \\(M(t)=E[e^{tX}]=0.5e^{0}+0.5e^{t}=0.5+0.5e^{t}\\)。</p><ul><li>求一次导:\\(M'(t)=0.5e^{t}\\),代 \\(t=0\\) → \\(M'(0)=0.5\\)。硬币的均值正是 \\(0.5\\) ✓</li><li>再求一次:\\(M''(t)=0.5e^{t}\\),\\(M''(0)=0.5=E[X^2]\\);\\(\\mathrm{Var}=0.5-0.5^2=0.25\\),和公式 \\(pq=0.5\\times0.5\\) 对上 ✓</li><li>全程没做一次积分——\"求导代零\"就把矩掏出来了。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 本性质的载体</li><li><a class=\"net-wl\" data-id=\"矩\">矩</a> — 产出物:第 n 阶原点矩 \\(E[X^n]\\)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — \\(E[X]=M'(0)\\):MGF 曲线在 \\(t=0\\) 处的切线斜率</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — \\(\\mathrm{Var}=M''(0)-(M'(0))^2\\)</li><li><a class=\"net-wl\" data-id=\"阶乘矩\">阶乘矩</a> — PGF 侧平行物:在 1 处求导得阶乘矩,本条在 0 处得原点矩</li><li><a class=\"net-wl\" data-id=\"常见分布MGF\">常见分布MGF</a> — 认出形状可免求导直接抄矩</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"用MGF认分布与拼独立和\">用MGF认分布与拼独立和</a> — MGF 认脸、取矩、独立和相乘</li></ul>"
+ },
+ "MGF唯一性": {
+  "kind": "c",
+  "en": "MGFUniqueness",
+  "aliases": [
+   "uniqueness of MGF",
+   "uniqueness theorem"
+  ],
+  "level": "advanced",
+  "chapter": "p-l32",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>每个分布有唯一的 MGF;反过来,两个随机变量的 MGF 处处相等,则它们同分布。MGF 因而是\"认分布的指纹\"——把 MGF 化简成认识的形状,就识别了分布,不必做卷积。</p><p><strong>白话</strong>:核对身份证号:两个号码一模一样,就是同一个人,不用再见面比长相。算出来的 MGF 和字典里某个分布的\"号码\"完全对上,分布的身份当场就定了。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$M_X(t)=M_Y(t)\\ \\ \\text{处处相等}\\quad\\Longleftrightarrow\\quad X,\\,Y\\ \\text{同分布}$$</div><ul><li>考法:给闭式 MGF → 对照常见分布表认形状;收敛区间(如 \\(t&lt;1/\\theta\\))也是线索。</li><li>配合独立和相乘读出和的分布:独立同参指数之和→伽马;独立正态之和→正态(\\(\\mu\\) 相加、\\(\\sigma^2\\) 相加);独立泊松之和→泊松(\\(\\lambda\\) 相加);同 p 二项之和→二项。</li><li>直觉:MGF 是分布的<strong>条形码</strong>,扫码即识别——看到 \\((1-5t)^{-3}\\) 立刻读出伽马 \\(\\alpha=3,\\ \\theta=5\\),连均值 \\(\\alpha\\theta=15\\) 都不用求导。</li><li>深一层:独立和的 MGF 乘积取极限逼近正态 MGF \\(e^{\\mu t+\\sigma^2t^2/2}\\),这正是 CLT 证明背后的思路。</li></ul><p><strong>算一遍</strong>:抛两枚独立公平硬币(各记 0/1),它们的和是什么分布?</p><ul><li>单枚 MGF:\\(0.5+0.5e^{t}\\);独立相加 → MGF 相乘:\\((0.5+0.5e^{t})^2\\)。</li><li>翻字典对形状:这正是二项 \\(B(n{=}2,p{=}0.5)\\) 的 MGF \\((q+pe^{t})^{n}\\)。</li><li>由唯一性断定和服从 \\(B(2,0.5)\\)——一张卷积表都没列。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 唯一性是它三大用途之一</li><li><a class=\"net-wl\" data-id=\"独立和的MGF\">独立和的MGF</a> — 相乘之后靠唯一性认出和的分布</li><li><a class=\"net-wl\" data-id=\"常见分布MGF\">常见分布MGF</a> — 认形状用的对照字典</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — \"独立泊松和仍泊松\"用唯一性一行可证</li><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> — 证明思路:MGF 乘积取极限逼近正态</li><li><a class=\"net-wl\" data-id=\"MGF取矩\">MGF取矩</a> — 认出分布后可免求导直接抄矩</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"用MGF认分布与拼独立和\">用MGF认分布与拼独立和</a> — MGF 认脸、取矩、独立和相乘</li></ul>"
+ },
+ "PGF与MGF关系": {
+  "kind": "c",
+  "en": "PGFMGFRelation",
+  "aliases": [
+   "PGF-MGF relation",
+   "change of variable between PGF and MGF"
+  ],
+  "level": "advanced",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>概率母函数与矩母函数只差一个变量替换:\\(P(t)=M(\\ln t)\\)、\\(M(t)=P(e^t)\\)。会一个就会另一个;考试给 PGF 问 MGF 相关量(或反之)时,用它\"换轨\"。</p><p><strong>白话</strong>:同一个温度,摄氏和华氏是两种记法,换算一下就能互相翻译,不用重新测量——PGF 和 MGF 也是同一份分布信息的两套坐标,把 \\(t\\) 换成 \\(e^t\\)(或反过来取 \\(\\ln\\))就完成翻译。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P(t)=M(\\ln t),\\qquad M(t)=P(e^{t})$$</div><ul><li>一行推导:\\(P(t)=E[t^X]=E[e^{X\\ln t}]=M(\\ln t)\\)。</li><li>求值点对应:M 侧 \\(t=0\\) ↔ P 侧 \\(t=1\\)(因 \\(e^0=1\\)),故 \\(M'(0)=P'(1)=E[X]\\)。</li><li>分工对照:M 取<strong>原点矩</strong>(0 处求导)、适用任意 RV;P 取<strong>阶乘矩</strong>(1 处)+ 反读概率(0 处)、仅非负整数 RV。</li><li>例:泊松 \\(P(t)=e^{\\lambda(t-1)}\\) ↔ \\(M(t)=e^{\\lambda(e^t-1)}\\),把 t 换成 \\(e^t\\) 即得。</li></ul><p><strong>算一遍</strong>:公平硬币记 0/1,已知 \\(M(t)=0.5+0.5e^{t}\\),求 PGF。</p><ul><li>换轨:\\(P(t)=M(\\ln t)=0.5+0.5e^{\\ln t}=0.5+0.5t\\)——一步代入完成翻译。</li><li>求值点核对:\\(P'(t)=0.5\\),\\(P'(1)=0.5\\);M 侧 \\(M'(0)=0.5\\),两边都给出 \\(E[X]=0.5\\) ✓</li><li>反向也通:把 \\(P(t)=0.5+0.5t\\) 里的 \\(t\\) 换成 \\(e^{t}\\),立刻回到 \\(M(t)\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 关系一端(离散计数侧)</li><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 关系另一端(通用侧)</li><li><a class=\"net-wl\" data-id=\"MGF取矩\">MGF取矩</a> — M 侧读法:0 处求导得原点矩</li><li><a class=\"net-wl\" data-id=\"阶乘矩\">阶乘矩</a> — P 侧读法:1 处求导得阶乘矩</li><li><a class=\"net-wl\" data-id=\"LOTUS\">LOTUS</a> — 推导即对 \\(e^{X\\ln t}\\) 取期望</li></ul>"
+ },
+ "中心极限定理": {
+  "kind": "c",
+  "en": "CentralLimitTheorem",
+  "aliases": [
+   "central limit theorem",
+   "CLT"
+  ],
+  "level": "hard",
+  "chapter": "p-l22",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 个独立同分布(iid)、共同均值 \\(\\mu\\)、方差 \\(\\sigma^2\\)(有限非零)的随机变量,\\(n\\to\\infty\\) 时标准化后的样本均值<strong>收敛到标准正态——与原分布形状无关</strong>。保险公司的总赔付、总保费、总索赔次数全靠它用一张正态表算。</p><p><strong>白话</strong>:一个人某天迟到几分钟很随机、分布形状也许很怪,但他 100 天的<strong>平均</strong>迟到时间稳稳落在一个钟形范围里——加总/取平均会把个体的怪脾气抹平,最后都长成同一张\"钟形脸\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\frac{\\sqrt n\\,(\\bar X-\\mu)}{\\sigma}=\\frac{\\bar X-\\mu}{\\sigma/\\sqrt n}\\ \\xrightarrow[\\ n\\to\\infty\\ ]{}\\ N(0,1)$$</div><ul><li>大样本实操:把 \\(\\bar X\\) 当 \\(N(\\mu,\\ \\sigma^2/n)\\)、和 \\(S_n\\) 当 \\(N(n\\mu,\\ n\\sigma^2)\\) 用。</li><li><strong>解题三步</strong>:算 \\(\\mu,\\sigma^2\\) → 标准化 → 查 \\(\\Phi\\) 表;百分位 \\(\\mu+z_p\\sigma\\)(\\(\\sigma\\) 换成该量自己的标准差)。</li><li>为何与原分布无关:相加时各 \\(X_i\\) 的\"怪形状\"在一次次卷积中被抹平,只有均值与方差存活;严格证明走 MGF——标准化和的 MGF 收敛到 \\(e^{t^2/2}\\)。Exam P 不考证明,只考会用。</li><li>骰子直觉:掷 30 颗取平均,\"中间凑法多、极端凑法少\"自然堆出钟形,与单颗的平分布无关。</li><li>前提别丢:<strong>iid + 方差有限</strong>;整数计数近似还要配连续性修正。</li></ul><p><strong>算一遍</strong>:抛 100 次公平硬币,正面总数 \\(S\\) 落在 45–55 的概率约多少?</p><ul><li>单次:\\(\\mu=0.5\\)、\\(\\sigma^2=0.25\\);总和近似 \\(S\\approx N(100\\times0.5,\\ 100\\times0.25)=N(50,\\,25)\\),标准差 \\(5\\)。</li><li>45–55 正是 \\(50\\pm1\\sigma\\),按 68-95-99.7 法则 → 约 \\(68\\%\\)。</li><li>硬币单次只有 0/1 两个值、毫无钟形,可 100 次的总数已像正态——\"与原分布形状无关\"落地。</li></ul><h4>与其他概念的关系</h4><ul><li>样本均值分布 — \"均值面孔\":\\(\\bar X\\approx N(\\mu,\\sigma^2/n)\\)</li><li>和的正态近似 — \"总量面孔\":\\(S_n\\approx N(n\\mu,n\\sigma^2)\\)</li><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — 极限的目的地;正态无处不在的原因</li><li>标准化 — 近似之后的统一收尾动作</li><li>连续性修正 — 离散计数近似时的配套校准</li><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 严格证明的工具(MGF 收敛 + 唯一性)</li></ul><h4>应用视角</h4><ul><li>理赔总额的正态近似 — CLT 拼理赔总额,连续性修正</li></ul>"
+ },
+ "伽马分布": {
+  "kind": "c",
+  "en": "GammaDistribution",
+  "aliases": [
+   "gamma distribution",
+   "Erlang distribution"
+  ],
+  "level": "advanced",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(n\\) 个独立、同均值 \\(\\theta\\) 的指数随机变量之和 \\(Y=\\sum_{i=1}^n X_i\\) 服从参数 \\((n,\\theta)\\) 的伽马分布——\"接力等 \\(n\\) 次事件\"的总时间。\\(n=1\\) 时退化回指数分布。</p><p><strong>白话</strong>:等一趟公交平均 \\(\\theta\\) 分钟(指数);今天要连换 \\(n\\) 趟车,把 \\(n\\) 段等待接起来的<strong>总</strong>等待时间,分布就是伽马。等一段是指数,接力等 \\(n\\) 段是伽马。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Y(x)=\\frac{x^{\\,n-1}e^{-x/\\theta}}{\\Gamma(n)\\,\\theta^{\\,n}},\\qquad E[Y]=n\\theta,\\quad \\operatorname{Var}(Y)=n\\theta^2$$</div><ul><li>\\(\\Gamma(n)=(n-1)!\\)(正整数 \\(n\\));均值方差是单个指数的 \\(n\\) 倍(iid 之和的常识)。</li><li><strong>考试策略</strong>:真让你算伽马 CDF 的题很少,更多是\"认出这是伽马,直接用 \\(E=n\\theta\\)、\\(\\operatorname{Var}=n\\theta^2\\)\"。</li><li>伽马 CDF 无一般闭式;\\(n\\) 为小整数时可分部积分手算(如两步审批例:\\(n=2,\\theta=3\\) 求 \\(F_Y(5)\\))。</li><li>泊松过程视角:速率 \\(\\lambda\\) 下等到第 \\(n\\) 个事件的时间 \\(\\sim\\text{Gamma}(n,1/\\lambda)\\)。</li></ul><p><strong>算一遍</strong>:每关审批平均耗 3 天(指数 \\(\\theta=3\\)),文件要连过 2 关(\\(n=2\\))。</p><ul><li>总耗时 \\(Y\\sim\\text{Gamma}(2,3)\\):\\(E[Y]=2\\times 3=6\\) 天。</li><li>\\(\\operatorname{Var}=2\\times 3^2=18\\),标准差 \\(\\approx 4.2\\) 天——单关的均值和方差各乘 2,iid 之和的常识。</li><li>若只有 1 关:\\(\\text{Gamma}(1,3)\\) 就是均值 3 的指数——特例验证 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 构件与特例:\\(n=1\\) 即指数</li><li>泊松过程 — 第 \\(n\\) 个事件的到达时间</li><li>期望的线性 — \\(E[Y]=n\\theta\\) 的依据</li><li>和的方差 — 独立和方差相加:\\(\\operatorname{Var}=n\\theta^2\\)</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 密度的原始推法:指数密度自卷 \\(n\\) 次</li></ul>"
+ },
+ "分布函数法": {
+  "kind": "c",
+  "en": "DistributionFunctionTechnique",
+  "aliases": [
+   "distribution function technique",
+   "CDF method"
+  ],
+  "level": "advanced",
+  "chapter": "p-l34",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求 \\(Y=g(X)\\) 分布的通用方法:先写 \\(F_Y(y)=P[g(X)\\le y]\\),把关于 Y 的事件<strong>反解成关于 X 的事件</strong>、用已知的 \\(F_X\\) 表达,最后对 y 求导得密度。不靠记公式,单调、非单调都适用——最稳妥的起手式。</p><p><strong>白话</strong>:手里只有\"身高\"的老账本,想查\"身高平方\"的分布——不用新建账本:问\"平方 ≤ 4 的有多少人\"就翻译成\"身高 ≤ 2 的有多少人\",每个新问题都翻旧账回答。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F_Y(y)=\\Pr\\big(g(X)\\le y\\big)=\\begin{cases}F_X\\big(g^{-1}(y)\\big), &amp; g\\ \\text{单调递增}\\\\[4pt]1-F_X\\big(g^{-1}(y)\\big), &amp; g\\ \\text{单调递减(}X\\text{ 连续)}\\end{cases}$$</div><ul><li>口诀:<strong>先问落在哪,再反解回 X</strong>——关于 Y 的新问题,全部翻译成 X 的旧问题。</li><li>递减变换不等号翻向:\\(g(X)\\le y\\iff X\\ge g^{-1}(y)\\);离散时还要补 \\(\\Pr[X=g^{-1}(y)]\\),连续时该项为 0 可丢。</li><li>非单调时 \\(\\{g(X)\\le y\\}\\) 拆成几段 X 区间的并(如 \\(X^2\\le y\\iff-\\sqrt y\\le X\\le\\sqrt y\\))。</li><li>最后 \\(f_Y(y)=\\tfrac{d}{dy}F_Y(y)\\);支撑区间外 \\(F_Y=0\\) 或 1。</li><li>例 34A:\\(f=2x\\)(0≤x≤1)、\\(Y=X^2+1\\) → \\(F_Y(y)=y-1\\)(1≤y≤2),即 Uniform(1,2)。</li></ul><p><strong>算一遍</strong>:\\(X\\) 均匀落在 \\((0,1)\\),求 \\(Y=X^2\\) 的分布。</p><ul><li>翻译回 X:\\(F_Y(y)=P[X^2\\le y]=P[X\\le\\sqrt y]=\\sqrt y\\)(均匀分布的 cdf 就是区间长度)。</li><li>求导得密度:\\(f_Y(y)=\\dfrac{1}{2\\sqrt y}\\),\\(0&lt;y&lt;1\\)——小值处密度堆高,平方把小数压得更小。</li><li>抽查一点:\\(P[Y\\le 0.25]=\\sqrt{0.25}=0.5\\),恰等于 \\(P[X\\le 0.5]\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 方法的主角:先求 F 再求导</li><li><a class=\"net-wl\" data-id=\"单调变换密度法\">单调变换密度法</a> — 单调时的一步捷径,是本法求导后的封装</li><li><a class=\"net-wl\" data-id=\"非单调变换\">非单调变换</a> — 本法强迫把区间拆对,处理 many-to-one 最稳</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 最终产出</li><li><a class=\"net-wl\" data-id=\"次序统计量\">次序统计量</a> — 同源手法:max/min 分布同样先写 cdf 再求导</li><li><a class=\"net-wl\" data-id=\"最大值分布\">最大值分布</a> — cdf 法的经典应用场景</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"变换求分布的分布函数法实战\">变换求分布的分布函数法实战</a> — Y=g(X) 求分布:CDF 万能法与密度法选路</li></ul>"
+ },
+ "单调变换密度法": {
+  "kind": "c",
+  "en": "ChangeOfVariableTechnique",
+  "aliases": [
+   "change of variable technique",
+   "density transformation formula"
+  ],
+  "level": "advanced",
+  "chapter": "p-l34",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>g 单调时求 \\(Y=g(X)\\) 密度的一步公式:新密度 = 旧密度在对应点取值 × 反函数导数的<strong>绝对值</strong>(雅可比)。绝对值保证密度非负,递增递减共用同一条式子。</p><p><strong>白话</strong>:在橡皮筋上画好均匀刻度再去拉:哪段被拉长,刻度就变稀(密度变小);哪段被压缩,刻度就挤密。\\(|dx/dy|\\) 记的就是每处被拉伸了多少倍,新密度 = 旧密度 × 这个伸缩账。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Y(y)=f_X\\big(h(y)\\big)\\,\\big|h'(y)\\big|,\\qquad h(y)=g^{-1}(y)$$</div><ul><li>等价记法:\\(f_Y(y)=f_X(x)\\left|\\tfrac{dx}{dy}\\right|\\Big|_{x=g^{-1}(y)}\\)。</li><li>口诀:<strong>换点、乘拉伸、改地盘</strong>——\\(f_X\\) 代新点、乘 \\(|dx/dy|\\)、支撑映成 y 的范围,三件套缺一不可。</li><li>来源:对 \\(F_Y(y)=F_X(h(y))\\) 用链式法则求导;g 递减时 \\(h'&lt;0\\) 且 cdf 用 \\(1-F_X\\),两个负号合并成绝对值。</li><li>三个必检项:①雅可比取绝对值;②支撑要换,别照抄 x 的区间;③ \\(f_X\\) 里的 x 全代成 \\(g^{-1}(y)\\),不能留 x。</li><li>例 34B:\\(f=2x\\)、\\(Y=X^2+1\\) → \\(f_Y(y)=2\\sqrt{y-1}\\cdot\\tfrac{1}{2\\sqrt{y-1}}=1\\)(1≤y≤2,变成均匀)。</li></ul><p><strong>算一遍</strong>:\\(X\\) 均匀落在 \\((0,1)\\)(密度 1),把橡皮筋拉长一倍:\\(Y=2X\\)。</p><ul><li>反解:\\(h(y)=y/2\\),伸缩账 \\(|h'(y)|=\\tfrac12\\)。</li><li>套式:\\(f_Y(y)=f_X(y/2)\\times\\tfrac12=1\\times\\tfrac12=\\tfrac12\\);地盘换成 \\(0&lt;y&lt;2\\)。</li><li>核对:区间拉长一倍、密度恰好减半,总面积 \\(2\\times\\tfrac12=1\\) ✓——换点、乘拉伸、改地盘三件套齐了。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"分布函数法\">分布函数法</a> — 母方法:拿不准(递减/非单调)时退回 cdf 法最稳</li><li><a class=\"net-wl\" data-id=\"雅可比因子\">雅可比因子</a> — 公式里的伸缩因子 \\(|dx/dy|\\)</li><li><a class=\"net-wl\" data-id=\"非单调变换\">非单调变换</a> — 一一对应失效时的推广:按分支相加</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — \"支撑随变换改\"是同一纪律</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 变换的输入与产出</li><li><a class=\"net-wl\" data-id=\"多变量变换的雅可比法\">多变量变换的雅可比法</a> — 二维推广(L35)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"变换求分布的分布函数法实战\">变换求分布的分布函数法实战</a> — Y=g(X) 求分布:CDF 万能法与密度法选路</li></ul>"
+ },
+ "卷积公式": {
+  "kind": "c",
+  "en": "ConvolutionFormula",
+  "aliases": [
+   "convolution",
+   "sum of two random variables"
+  ],
+  "level": "hard",
+  "chapter": "p-l35",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求和 \\(Z=X+Y\\) 密度的公式:固定 z,沿直线 \\(x+y=z\\) 把联合密度\"扫一遍\"积分。它是雅可比法取 \\(W=Y\\) 的特例(\\(|J|=1\\));X、Y <strong>独立</strong>时联合密度拆成边缘乘积,得经典卷积 \\(f_X*f_Y\\)。</p><p><strong>白话</strong>:两颗骰子点数和是 7 的概率,就是把 \\((1,6)(2,5)\\dots(6,1)\\) 所有拆法逐个加起来;连续版一模一样——和固定成 \\(z\\),沿\"所有拆法\"\\((z-w,\\,w)\\) 扫一遍,求和换成积分。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Z(z)=\\int_{-\\infty}^{\\infty} f_{X,Y}(z-w,\\,w)\\,dw\\;\\xrightarrow{\\ X\\perp Y\\ }\\;f_Z(z)=\\int_{-\\infty}^{\\infty} f_X(z-w)\\,f_Y(w)\\,dw$$</div><ul><li>一般式对任意联合密度成立(不需独立);只有拆成 \\(f_X\\,f_Y\\) 那一步需要<strong>独立</strong>——非独立不能拆。</li><li><strong>积分限随支撑变</strong>:只在 \\(f_X(z-w)\\) 与 \\(f_Y(w)\\) 同时非零处积,不是无脑 \\(-\\infty\\) 到 \\(\\infty\\)(最高频错)。</li><li>画支撑、按 z 切竖条:uniform 和的密度是三角形/梯形,分段别漏。</li><li>先想 MGF:独立和能靠 MGF 相乘认形就秒杀(指数和→伽马、正态和→正态);认不出闭式才动手卷积。</li><li>\\(Z=aX+bY\\)(如 2X+Y)同理:先补 W 再积。</li></ul><p><strong>算一遍</strong>:\\(X,Y\\) 独立均匀于 \\((0,1)\\),求 \\(Z=X+Y\\) 在 \\(z=0.5\\) 处的密度。</p><ul><li>先定非零范围:需 \\(0&lt;w&lt;1\\) 且 \\(0&lt;0.5-w&lt;1\\),交出 \\(0&lt;w&lt;0.5\\)——限被支撑收窄,不是全轴。</li><li>积分:\\(f_Z(0.5)=\\int_0^{0.5}1\\times1\\,dw=0.5\\)。</li><li>逐点扫遍得 \\(f_Z(z)=z\\)(\\(0&lt;z&lt;1\\) 段)——\"两个均匀之和是三角形\"对上 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"多变量变换的雅可比法\">多变量变换的雅可比法</a> — 母方法:取 W=Y、\\(|J|=1\\) 的特化</li><li><a class=\"net-wl\" data-id=\"独立和的MGF\">独立和的MGF</a> — 替代路线:相乘认形免卷积</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 离散镜像:PGF 相乘 = 多项式自动卷积</li><li><a class=\"net-wl\" data-id=\"连续型独立性\">连续型独立性</a> — 拆 \\(f_X\\,f_Y\\) 的前提</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — 上下限纪律的来源</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 一般式的输入</li></ul>"
+ },
+ "变换求分布的分布函数法实战": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "hard",
+  "chapter": "p-l34",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:已知 X 的分布,求 \\(Y=g(X)\\)(或 max/min)的 pdf/cdf——万能起手式只有一个。</p><h4>求解套路</h4><ol><li><strong>万能起手</strong>:<a class=\"net-wl\" data-id=\"分布函数法\">分布函数法</a> \\(F_Y(y)=P[g(X)\\le y]\\),把事件反解成 X 的区间再代 \\(F_X\\),最后求导。</li><li>g 严格单调时抄近道:<a class=\"net-wl\" data-id=\"单调变换密度法\">单调变换密度法</a> \\(f_Y(y)=f_X(g^{-1}(y))\\cdot|\\,dx/dy\\,|\\)——<a class=\"net-wl\" data-id=\"雅可比因子\">雅可比因子</a> 别丢绝对值。</li><li>g 非单调(如 \\(Y=X^2\\)):分支求和,每支各带自己的反函数与因子,见 <a class=\"net-wl\" data-id=\"非单调变换\">非单调变换</a>。</li><li>n 个独立同分布的极值:\\(F_{\\max}=F^n\\)、\\(S_{\\min}=S^n\\)(<a class=\"net-wl\" data-id=\"最大值分布\">最大值分布</a> / 最小值分布),本质也是分布函数法。</li></ol><h4>易错</h4><ul><li>忘记因子 \\(|dx/dy|\\) 或忘加绝对值。</li><li>反解区间方向错(g 递减时不等号要翻)。</li><li>新变量支撑不更新(y 的取值范围跟着 g 变)。</li></ul>"
+ },
+ "多变量变换的雅可比法": {
+  "kind": "c",
+  "en": "MultivariateChangeOfVariables",
+  "aliases": [
+   "Jacobian method",
+   "bivariate transformation",
+   "multivariate transformation"
+  ],
+  "level": "hard",
+  "chapter": "p-l35",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>已知 \\((X,Y)\\) 的联合密度,求 \\(Z=g(X,Y)\\)(商/积/和等)的密度:<strong>补一个辅助变量 W</strong> 把\"二维→一维\"凑成一一对应的\"二维→二维\",解出逆变换、乘雅可比行列式的绝对值得 \\(f_{Z,W}\\),最后把 W 积掉。W 只是脚手架。</p><p><strong>白话</strong>:只问\"两数之比\"等于问一维信息,没法从二维地图上唯一定位——先拉个陪跑变量凑满两个坐标,把整张地图换到新坐标系(每小块面积怎么缩放由 \\(|J|\\) 记账),换完再把陪跑的积掉,脚手架拆走。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{Z,W}(z,w)=f_{X,Y}\\big(h_1(z,w),\\,h_2(z,w)\\big)\\,\\lvert J\\rvert,\\qquad f_Z(z)=\\int f_{Z,W}(z,w)\\,dw$$</div><ul><li>六步:补 W(取 X 或 Y 最省事)→ 解逆变换 \\(x=h_1,\\ y=h_2\\) → 算 J(逆变换偏导行列式)→ 乘 \\(|J|\\) 换密度 → 换定义域(常要分段)→ 积掉 W。</li><li>口诀:<strong>补一个、逆回去、乘 |J|、积掉它</strong>。</li><li>定义域拆段最费神:先在 (z,w) 平面画出支撑,再按 z 切竖条定积分限。</li><li>例 35A:\\(Z=X/Y\\),X~U[0,1]、Y~U[1,2] → \\(f_Z=1.5\\)(0≤z≤0.5)、\\(\\tfrac{1/z^2-1}{2}\\)(0.5≤z≤1),以 z=0.5 为界拆段。</li><li>原理:面积微元 \\(dx\\,dy=|J|\\,dz\\,dw\\),密度乘 \\(|J|\\) 恰好让每小块概率(密度 × 面积)不变——二重积分换元公式的概率版。</li></ul><p><strong>算一遍</strong>:用六步法推 \\(Z=X+Y\\),检验它退化成卷积。</p><ul><li>补一个:取 \\(W=Y\\);逆回去:\\(x=z-w\\)、\\(y=w\\)。</li><li>乘 \\(|J|\\):偏导 \\(\\partial x/\\partial z=1\\)、\\(\\partial x/\\partial w=-1\\)、\\(\\partial y/\\partial z=0\\)、\\(\\partial y/\\partial w=1\\),行列式 \\(J=1\\times1-(-1)\\times0=1\\)。</li><li>积掉它:\\(f_Z(z)=\\int f_{X,Y}(z-w,\\,w)\\,dw\\)——正好落回卷积公式,特例对上 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"雅可比行列式\">雅可比行列式</a> — 核心因子:逆变换偏导行列式,取绝对值</li><li><a class=\"net-wl\" data-id=\"单调变换密度法\">单调变换密度法</a> — 一维原型,本法是其二维推广</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 特化:\\(Z=X+Y\\) 取 W=Y 时 \\(|J|=1\\)</li><li><a class=\"net-wl\" data-id=\"常见二元变换\">常见二元变换</a> — 商/积/和的标准 W 选法与 |J| 速查</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 输入</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 收尾一步:积掉 W 即边缘化</li></ul>"
+ },
+ "常见二元变换": {
+  "kind": "c",
+  "en": "CommonBivariateTransformations",
+  "aliases": [
+   "quotient product sum transformations",
+   "common bivariate transforms"
+  ],
+  "level": "advanced",
+  "chapter": "p-l35",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>三大常考二元变换——商 \\(X/Y\\)、积 \\(XY\\)、和 \\(X+Y\\)——的标准操作速查:各自怎么补 W、逆变换长什么样、\\(|J|\\) 是多少。设置背熟,雅可比法就只剩画支撑和机械积分。</p><p><strong>白话</strong>:像后厨的三包预制菜——商、积、和这三道常点的菜,补哪个 W、逆变换、\\(|J|\\) 都提前配好装袋;真正上灶只剩画支撑、定积分限那一道现炒工序。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$Z=\\frac XY:\\ x=zw,\\ \\lvert J\\rvert=w\\qquad\\quad Z=XY:\\ x=\\frac zw,\\ \\lvert J\\rvert=\\frac1w\\qquad\\quad Z=X+Y:\\ x=z-w,\\ \\lvert J\\rvert=1$$</div><ul><li>三者都取 \\(W=Y\\)(商取 W=Y 使 \\(x=zw\\) 最干净;积取 W=X 或 W=Y 皆可)。</li><li>和的 \\(|J|=1\\) → 直接特化成卷积公式。</li><li>换定义域仍是主要工作量:把 x,y 的范围翻译成 z,w 的范围,常按 z 分段(例 35A 以 z=0.5 为界)。</li><li>例 35.1:\\(Z=XY\\)、\\(f=x+y\\)(单位方)→ \\(f_{Z,W}=\\tfrac{z}{w^2}+1\\)(0≤z≤w≤1),积掉 w 得 \\(f_Z=2(1-z)\\)。</li></ul><p><strong>算一遍</strong>:亲手验一格速查表——商 \\(Z=X/Y\\)、取 \\(W=Y\\)。</p><ul><li>逆回去:\\(x=zw\\)、\\(y=w\\)。</li><li>算行列式:\\(\\partial x/\\partial z=w\\)、\\(\\partial x/\\partial w=z\\)、\\(\\partial y/\\partial z=0\\)、\\(\\partial y/\\partial w=1\\),\\(J=w\\times1-z\\times0=w\\)——与表中 \\(|J|=w\\) 对上 ✓</li><li>换验\"和\"那格:\\(x=z-w\\)、\\(y=w\\) 同法得 \\(J=1\\)——正是卷积公式免乘因子的来历。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"多变量变换的雅可比法\">多变量变换的雅可比法</a> — 通用流程;本卡是它的三份\"预制件\"</li><li><a class=\"net-wl\" data-id=\"雅可比行列式\">雅可比行列式</a> — 三个 |J| 的来源:逆变换偏导行列式</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — \"和\"一行的直接特化</li><li>联合均匀分布 — 高频搭配:均匀源密度让难点只剩定义域</li><li>区域概率与积分限 — 换定义域、按 z 切竖条是同一门功夫</li></ul>"
+ },
+ "常见分布MGF": {
+  "kind": "c",
+  "en": "CommonDistributionMGFs",
+  "aliases": [
+   "MGFs of common distributions",
+   "MGF table",
+   "Table 32.1"
+  ],
+  "level": "basic",
+  "chapter": "p-l32",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>常见分布 MGF 的必背速查表(ASM Table 32.1)。考试给一个闭式 MGF,考的往往是\"认不认得出它是谁\"——由唯一性,认出形状 = 认出分布,均值方差随之免费得到。</p><p><strong>白话</strong>:像认车标——看到 logo 就知道是哪家的车,不用拆开发动机验;背熟这张\"车标表\",看到 MGF 的形状就直接报出分布和参数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{二项 }(1-p+pe^{t})^{n}\\qquad \\text{泊松 }e^{\\lambda(e^{t}-1)}\\qquad \\text{指数 }\\frac{1}{1-\\theta t}\\qquad \\text{伽马 }\\frac{1}{(1-\\theta t)^{\\alpha}}\\qquad \\text{正态 }e^{\\mu t+\\sigma^{2}t^{2}/2}$$</div><ul><li>几何:\\(\\dfrac{pe^{t}}{1-(1-p)e^{t}}\\);均匀 \\((a,b)\\):\\(\\dfrac{e^{tb}-e^{ta}}{t(b-a)}\\)(\\(t\\neq0\\))。</li><li>指数/伽马按均值 \\(\\theta\\) 参数化;速率 \\(\\lambda=1/\\theta\\) 时 \\(\\tfrac{1}{1-\\theta t}=\\tfrac{\\lambda}{\\lambda-t}\\),两写法等价。</li><li>定义域:指数/伽马仅 \\(t&lt;1/\\theta\\);二项/泊松/正态对所有 t 有定义。</li><li>认形做加法:\\(\\tfrac{1}{(1-\\theta t)^{n}}\\) = n 个均值 θ 的独立指数之和(伽马);\\(e^{\\mu t+\\sigma^2t^2/2}\\) = 正态,独立相加时 \\(\\mu\\)、\\(\\sigma^2\\) 各自相加。</li></ul><p><strong>算一遍</strong>:题目给 \\(M(t)=e^{3(e^{t}-1)}\\),问均值和方差。</p><ul><li>对表认形:和 \\(e^{\\lambda(e^{t}-1)}\\) 一模一样 → 这是泊松,\\(\\lambda=3\\)。</li><li>泊松的均值方差都是 \\(\\lambda\\) → 均值 3、方差 3,一次导数都不用求。</li><li>再练一个:\\(\\tfrac{1}{(1-2t)^{5}}\\) → 伽马(5 个均值 2 的指数之和),均值 \\(5\\times2=10\\)——认出车标,参数白送。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 表中每一项都是定义 \\(E[e^{tX}]\\) 的闭式结果</li><li><a class=\"net-wl\" data-id=\"MGF唯一性\">MGF唯一性</a> — 有唯一性背书,这张表才能当\"字典\"查</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — \\(\\tfrac{1}{1-\\theta t}\\),定义域 \\(t&lt;1/\\theta\\)</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — \\(\\tfrac{1}{(1-\\theta t)^\\alpha}\\):指数 MGF 的 α 次方</li><li><a class=\"net-wl\" data-id=\"正态分布\">正态分布</a> — \\(e^{\\mu t+\\sigma^2 t^2/2}\\)</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — \\(e^{\\lambda(e^t-1)}\\)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"用MGF认分布与拼独立和\">用MGF认分布与拼独立和</a> — MGF 认脸、取矩、独立和相乘</li></ul>"
+ },
+ "指数分布": {
+  "kind": "c",
+  "en": "ExponentialDistribution",
+  "aliases": [
+   "exponential distribution",
+   "exponential"
+  ],
+  "level": "basic",
+  "chapter": "p-l20",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>描述\"<strong>下一次事件到来前要等多久</strong>\"的连续分布(\\(x\\ge 0\\)):寿命、等待时间、保险损失额的默认模型。事件以恒定速率随机来临,等待密度从峰值起持续衰减——刚开始最可能马上来,越拖概率越小。Exam P 最高频的连续分布。</p><p><strong>白话</strong>:路边等出租车——空车随时可能冒出来,最可能的是马上就来,\"恰好等满 10 分钟才来\"比\"1 分钟内来\"更稀罕;它就是给这种\"等多久\"画像的分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=1-e^{-x/\\theta},\\qquad f(x)=\\frac{e^{-x/\\theta}}{\\theta},\\qquad S(x)=e^{-x/\\theta}\\quad(x\\ge 0)$$</div><ul><li><strong>两套参数化</strong>:\\(\\theta\\) 是<strong>均值</strong>(尺度参数,ASM/损失模型常用);\\(\\lambda=1/\\theta\\) 是<strong>速率</strong>(SOA 常用),此时 \\(f(x)=\\lambda e^{-\\lambda x}\\)、\\(S(x)=e^{-\\lambda x}\\)。读题先认清给的是 mean 还是 rate,\\(\\lambda\\theta=1\\)。</li><li>生存函数 \\(S(x)=e^{-x/\\theta}\\)(\"活过 \\(x\\) / 等待超过 \\(x\\)\")是做题最常用的形态;\"loss exceeds …\"直接上 \\(S\\)。</li><li>\"至少一次 in \\(t\\)\":\\(P[X\\le t]=1-e^{-t/\\theta}\\),别去积分密度。</li><li>下游预告(L23):独立指数取<strong>最小值</strong>仍是指数,速率相加。</li></ul><p><strong>算一遍</strong>:灯泡寿命服从均值 \\(\\theta=2\\) 年的指数分布,求它活过 2 年的概率。</p><ul><li>直接上生存函数:\\(S(2)=e^{-2/2}=e^{-1}\\approx0.37\\)——只有约三分之一能活过自己的\"平均寿命\"。</li><li>反面:活不过 2 年 \\(F(2)=1-e^{-1}\\approx0.63\\),多数灯泡死在均值之前——右偏分布,少数长寿者把平均拉高。</li><li>换速率写法验一下:\\(\\lambda=1/2\\),\\(S(2)=e^{-\\lambda\\cdot2}=e^{-1}\\) ✓ 两套参数化同一结果。</li></ul><h4>与其他概念的关系</h4><ul><li>指数分布的矩 — \\(E[X]=\\theta\\)、\\(\\operatorname{Var}=\\theta^2\\):方差=均值²</li><li>指数分布百分位数 — 闭式分位 \\(\\xi_p=-\\theta\\ln(1-p)\\)</li><li>无记忆性 — 灵魂性质:已等多久不影响剩余等待</li><li>指数与泊松过程 — 泊松管次数、指数管间隔:同一过程的两面</li><li><a class=\"net-wl\" data-id=\"伽马分布\">伽马分布</a> — \\(n\\) 个独立同均值指数之和</li><li>几何分布 — 离散镜像:各自阵营唯一的无记忆分布</li></ul><h4>应用视角</h4><ul><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li><li>泊松过程中的次数与等待时间 — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "方差": {
+  "kind": "c",
+  "en": "Variance",
+  "aliases": [
+   "variance",
+   "Var",
+   "二阶中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量取值围绕均值摆动幅度的度量:偏差平方的期望(即二阶中心矩),记 \\(\\operatorname{Var}(X)\\) 或 \\(\\sigma^2\\)。方差 \\(\\ge 0\\),越大分布越分散;为 0 当且仅当 \\(X\\) 几乎处处是常数。</p><p><strong>白话</strong>:两个班平均分都是 80,一个班人人 78–82,另一个班一半 60 一半 100——平均分看不出差别,方差看得出:它算的是\"每个人离平均有多远\"的平均账(按平方记)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=E\\big[(X-\\mu)^2\\big]=E[X^2]-\\mu^2$$</div><ul><li>计算式\"<strong>平方的平均 − 平均的平方</strong>\"是解题主力:先算 \\(E[X]\\)、\\(E[X^2]\\) 两个原点矩,一减即出。</li><li><strong>平移不散,缩放平方</strong>:\\(\\operatorname{Var}(aX+b)=a^2\\operatorname{Var}(X)\\);负号平方后消失,\\(\\operatorname{Var}(-X)=\\operatorname{Var}(X)\\)。</li><li><strong>独立才可加</strong>:\\(\\operatorname{Var}(\\sum X_i)=\\sum\\operatorname{Var}(X_i)\\)(i.i.d. 时 \\(=n\\operatorname{Var}(X)\\));独立时 \\(\\operatorname{Var}(X-Y)\\) 也是\"加\"(系数 \\((-1)^2=1\\))。</li><li>两点分布捷径:取 \\(a\\)(概率 \\(p\\))、\\(b\\)(概率 \\(1-p\\))时 \\(\\operatorname{Var}(X)=(b-a)^2p(1-p)\\)。</li><li>绕任意点:\\(E[(X-c)^2]=\\operatorname{Var}(X)+(\\mu-c)^2\\),仅 \\(c=\\mu\\) 时等于方差(平行轴定理)。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0(各占一半),求方差。</p><ul><li>两个原点矩:\\(E[X]=0.5\\);\\(E[X^2]=0^2(0.5)+1^2(0.5)=0.5\\)。</li><li>一减即出:\\(\\operatorname{Var}=0.5-0.5^2=0.25\\),标准差 \\(0.5\\)。</li><li>两点捷径验算:\\((1-0)^2\\times0.5\\times0.5=0.25\\) ✓ 两条路同一答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 两个原点矩一减出方差;期望是线性算子、方差不是</li><li><a class=\"net-wl\" data-id=\"矩\">矩</a> — 方差 = 二阶中心矩,矩家族一员</li><li>标准差 — 方差的正平方根,单位还原</li><li>伯努利分布 — 两点捷径的来源:\\(\\operatorname{Var}(N)=p(1-p)\\) 套缩放律</li><li>和的方差 — 不独立时的一般公式(补协方差项)</li><li>协方差 — 度量两变量联动,修正和的方差</li></ul>"
+ },
+ "最大值分布": {
+  "kind": "c",
+  "en": "SampleMaximum",
+  "aliases": [
+   "distribution of the maximum",
+   "maxima",
+   "largest order statistic"
+  ],
+  "level": "advanced",
+  "chapter": "p-l23",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>n 个 iid 随机变量的最大值 \\(Y=\\max(X_1,\\dots,X_n)=X_{(n)}\\) 的分布。核心等价一步:「最大 ≤ x」⟺「每一个 \\(X_i\\) 都 ≤ x」,独立性让 CDF 直接连乘 n 次。</p><p><strong>白话</strong>:聚会几点能开席看最晚到的那个人——\"最晚的人 8 点前到\"等于\"每个人都 8 点前到\";人越多,全员按时越难,开席时间被拖得越晚。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F_{\\max}(x)=\\big(F_X(x)\\big)^n,\\qquad f_{\\max}(x)=n\\big(F_X(x)\\big)^{n-1}f_X(x)$$</div><ul><li>推导:\\(\\Pr[\\max\\le x]=\\prod_{i}\\Pr[X_i\\le x]=F^n\\);对 x 用链式法则求导得 pdf,<strong>末尾的 \\(f_X\\) 最易漏</strong>。</li><li>密度右移:取最大把概率质量推向右尾;\\([F]^n\\le F\\),CDF 爬升更晚。</li><li>均匀 \\([0,\\theta]\\) 速用:\\(E[X_{(n)}]=\\dfrac{n\\theta}{n+1}\\)。</li><li>求期望对<strong>密度</strong>积 \\(E[Y]=\\int x\\,f_{\\max}\\,dx\\),别对 CDF 积。</li><li>非同分布时不套公式,老实逐个乘 \\(\\Pr[X_i\\le x]\\)。</li></ul><p><strong>算一遍</strong>:掷两颗骰子取较大点数,求 \\(P[\\max\\le 2]\\)。</p><ul><li>单颗 \\(\\le 2\\) 的概率是 \\(2/6=1/3\\);两颗都 \\(\\le 2\\):\\((1/3)^2=1/9\\)——这就是 \\(F^2\\)。</li><li>对照单颗的 \\(1/3\\):取最大后\"小值\"难出现得多,概率质量被推向右尾。</li><li>连续版验感觉:iid 均匀 \\([0,1]\\) 取 \\(n=2\\),\\(E[\\max]=\\frac{2}{3}\\)(公式 \\(\\frac{n\\theta}{n+1}\\))——比单个的均值 \\(\\frac12\\) 右移。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"次序统计量\">次序统计量</a> — 本卡是 k=n 的特例</li><li>最小值分布 — 对偶:min 走生存函数连乘 \\((1-F)^n\\),写反是头号错</li><li>第k个次序统计量 — 一般公式取 k=n 退回本式</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — \"先写 CDF 再求导\"的直接应用</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 连乘的合法性来源</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"变换求分布的分布函数法实战\">变换求分布的分布函数法实战</a> — Y=g(X) 求分布:CDF 万能法与密度法选路</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 它最重要的数字概括</li><li>概率函数 — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li><a class=\"net-wl\" data-id=\"LOTUS\">LOTUS</a> — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li>期望的线性 — 期望算子最常用的运算性质</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "概率密度函数": {
+  "kind": "c",
+  "en": "ProbabilityDensityFunction",
+  "aliases": [
+   "pdf",
+   "probability density function",
+   "density function",
+   "密度函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>连续随机变量的刻画工具:概率是密度曲线<strong>下方的面积</strong>,想要区间概率就积分。密度是分布函数的导数 \\(f(x)=F'(x)\\)。</p><p><strong>白话</strong>:把 1 千克沙子撒在数轴上,\\(f(x)\\) 是各处沙层的厚度:某点再厚,单看一个点也没有重量;铲起一段称重(积分)才是那段的概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[a\\le X\\le b]=\\int_a^b f(x)\\,dx\\qquad f(x)\\ge 0,\\quad\\int_{-\\infty}^{\\infty}f(x)\\,dx=1$$</div><ul><li><strong>密度 ≠ 概率</strong>:\\(f(x)\\) 的值可以大于 1(它是\"每单位长度的概率\",像人口密度);只有积分(面积)才是概率。</li><li><strong>连续下单点概率为 0</strong>:\\(P[X=x]=0\\),所以 \\(\\le\\) 与 \\(&lt;\\) 可随意互换——这对离散不成立。</li><li>方法套路:给含未知常数的密度 \\(f=c\\,g(x)\\),先用 \\(\\int f=1\\) 反解 \\(c\\),再积分求所求区间(例 5D:\\(f=x^2/21\\))。</li><li>与 cdf 互逆:\\(f=F'\\)、\\(F(x)=\\int_{-\\infty}^x f(t)\\,dt\\)。</li></ul><p><strong>算一遍</strong>:密度 \\(f(x)=cx\\),\\(0\\le x\\le2\\),先定 \\(c\\) 再求 \\(P[X\\le1]\\)。</p><ul><li>总面积为 1:\\(\\int_0^2 cx\\,dx=2c=1\\Rightarrow c=\\tfrac12\\)。</li><li>区间概率 = 面积:\\(P[X\\le1]=\\int_0^1 \\tfrac{x}{2}\\,dx=\\tfrac14\\)。</li><li>单点没面积:\\(P[X=1]=0\\),所以 \\(P[X&lt;1]=P[X\\le1]\\),随便换。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 连续随机变量的刻画工具</li><li>概率函数 — 离散对应物:pmf 堆在点上求和,pdf 摊在区间上积分</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 求导/积分互逆:\\(f=F'\\)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 用密度加权积分:\\(E[X]=\\int x\\,f(x)\\,dx\\)</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — 密度非零的区域决定积分限</li><li>连续均匀分布 — 最简单的密度实例(平的)</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "概率母函数": {
+  "kind": "c",
+  "en": "ProbabilityGeneratingFunction",
+  "aliases": [
+   "probability generating function",
+   "PGF"
+  ],
+  "level": "basic",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>对<strong>非负整数</strong>取值的随机变量(计数变量:泊松、二项、几何……),把每个概率 \\(p_k=P[X{=}k]\\) 当系数、配上 \\(t^k\\) 求和得到的函数 \\(P_X(t)=E[t^X]\\)——一个函数装下整张概率表。连续型或取负值的变量不适用。</p><p><strong>白话</strong>:像把整张概率表打成一个 zip 压缩包:\\((p_0,p_1,p_2,\\dots)\\) 全装进一个函数里,之后按不同方式解压——想验总和、想要矩、想反读某个概率,都从这一个包里取。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P_X(t)=E\\!\\left[t^{X}\\right]=\\sum_{k=0}^{\\infty}t^{k}\\,P[X{=}k]$$</div><ul><li>\\(P(1)=1\\) <strong>恒成立</strong>(概率求和为 1)——做完先自检。</li><li>一次打包、三种解压:代值直接算 \\(E[t^X]\\);在 \\(t=1\\) 求导取矩(阶乘矩);在 \\(t=0\\) 求导反读概率。</li><li>独立和相乘:\\(P_{X+Y}=P_XP_Y\\)。</li><li>泊松必记:\\(P(t)=e^{\\lambda(t-1)}\\)(例 33B:\\(\\sum_n t^n\\tfrac{e^{-\\lambda}\\lambda^n}{n!}=e^{-\\lambda}e^{\\lambda t}=e^{\\lambda(t-1)}\\))。</li><li>课本用大写 P 记母函数,与概率 \\(P[\\cdot]\\) 同符号,靠上下文区分。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,反面记 0、正面记 1(各半)。</p><ul><li>打包:\\(P(t)=E[t^X]=0.5t^0+0.5t^1=0.5+0.5t\\)。</li><li>自检:\\(P(1)=1\\) ✓;求导 \\(P'(t)=0.5\\),在 \\(t=1\\) 取值 \\(=0.5=E[X]\\) ✓</li><li>在 \\(t=0\\) 反读:\\(P'(0)/1!=0.5=P[X{=}1]\\)——一个函数,三种解压全通。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 姊妹工具:M 适用任意 RV、取原点矩;P 仅非负整数 RV</li><li><a class=\"net-wl\" data-id=\"阶乘矩\">阶乘矩</a> — 在 1 处求导的产出</li><li><a class=\"net-wl\" data-id=\"母函数生成概率\">母函数生成概率</a> — 在 0 处求导反读概率</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 乘性:独立和 → 相乘</li><li><a class=\"net-wl\" data-id=\"PGF与MGF关系\">PGF与MGF关系</a> — \\(P(t)=M(\\ln t)\\) 一键互换</li><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 最常考母函数 \\(e^{\\lambda(t-1)}\\)</li></ul>"
+ },
+ "次序统计量": {
+  "kind": "c",
+  "en": "OrderStatistic",
+  "aliases": [
+   "order statistic",
+   "order statistics"
+  ],
+  "level": "basic",
+  "chapter": "p-l23",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把 iid 样本 \\(X_1,\\dots,X_n\\) 由小到大排序,排在第 k 位的随机变量记 \\(X_{(k)}\\),称第 k 个次序统计量;\\(X_{(1)}\\) 是最小值、\\(X_{(n)}\\) 是最大值。样本随机,排序结果随之而定,所以每个 \\(X_{(k)}\\) 本身仍是随机变量。</p><p><strong>白话</strong>:发令枪响之前没人知道谁跑第几——\"第 k 名的成绩\"要等比赛跑完才揭晓,所以它本身也是个随机变量。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X_{(1)}\\le X_{(2)}\\le\\cdots\\le X_{(n)},\\qquad X_{(1)}=\\min_i X_i,\\quad X_{(n)}=\\max_i X_i$$</div><ul><li>记号两套并存:有的书写 \\(Y_k\\),有的写 \\(X_{(k)}\\),含义相同。</li><li>全套公式只有一个前提:样本 <strong>iid</strong>(独立同分布)——独立才能把概率连乘,同分布才有公共 \\(F_X,f_X\\)。</li><li>考试重点在两端(maxima / minima);一般第 k 个的公式大纲注明大概率不考。</li><li>读题定位词:the largest / smallest of the claims、the first of n machines to fail(= min)、the last to fail(= max)。</li></ul><p><strong>算一遍</strong>:掷两枚骰子,求最大点数不超过 4 的概率。</p><ul><li>\"最大 \\(\\le4\\)\" = \"两枚都 \\(\\le4\\)\":\\(P=\\left(\\tfrac46\\right)^2=\\tfrac49\\)——独立才允许连乘。</li><li>同理\"最小 \\(&gt;4\\)\" = \"两枚都 \\(&gt;4\\)\":\\(P=\\left(\\tfrac26\\right)^2=\\tfrac19\\)。</li><li>两端就是全部套路:max 走 CDF 连乘、min 走生存函数连乘。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"最大值分布\">最大值分布</a> — k=n 的特例:「全体 ≤ x」→ CDF 连乘 \\(F^n\\)</li><li>最小值分布 — k=1 的特例:「全体 &gt; x」→ 生存函数连乘 \\((1-F)^n\\)</li><li>第k个次序统计量 — 一般情形的统一密度公式(三堆划分)</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — iid 前提中的\"独立\":概率才允许连乘</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 所有推导都从\"先写 CDF / 生存函数,再求导\"开始</li></ul>"
+ },
+ "正态分布": {
+  "kind": "c",
+  "en": "NormalDistribution",
+  "aliases": [
+   "normal distribution",
+   "Gaussian distribution",
+   "Gaussian"
+  ],
+  "level": "basic",
+  "chapter": "p-l21",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>钟形、关于均值对称的连续分布,由<strong>均值 \\(\\mu\\)(峰位)与方差 \\(\\sigma^2\\)(胖瘦)完全刻画</strong>,记 \\(X\\sim N(\\mu,\\sigma^2)\\)。大量独立小因素之和都近似正态(身高、测量误差、理赔总额),故为精算最常出现的分布。</p><p><strong>白话</strong>:全班身高为什么是钟形?基因、营养、睡眠……无数小因素各推一把,推来推去大多数人堆在中间、极端者稀少;而这口钟只需两个数就画定——峰在哪(\\(\\mu\\))、胖不胖(\\(\\sigma\\))。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x)=\\frac{e^{-(x-\\mu)^2/2\\sigma^2}}{\\sigma\\sqrt{2\\pi}},\\qquad -\\infty&lt;x&lt;\\infty$$</div><ul><li><strong>记号陷阱</strong>:括号第二参数是<strong>方差 \\(\\sigma^2\\)</strong> 不是标准差——\\(N(5,16)\\) 指方差 16、标准差 4。</li><li>一般正态 = 标准正态平移 \\(\\mu\\)、缩放 \\(\\sigma\\);\\(\\sigma\\) 越大越矮胖,曲线下面积恒为 1。</li><li>密度<strong>没有初等原函数</strong>,\\(P[X\\le x]\\) 无闭式——只能标准化后查 \\(\\Phi\\) 表,这决定了全章解题动作。</li><li>钉板直觉:大量独立 ±1 小扰动之和自然堆出钟形(CLT 的预演)。</li></ul><p><strong>算一遍</strong>:\\(X\\sim N(5,16)\\),求 \\(P[X\\le9]\\)。</p><ul><li>先认参数:第二参数 16 是方差 → \\(\\sigma=4\\)(别拿 16 去除)。</li><li>标准化:\\(z=(9-5)/4=1\\);查表 \\(\\Phi(1)=0.8413\\)。</li><li>密度积不出闭式,查表是唯一出路——这就是\"全章动作归于标准化\"的含义。</li></ul><h4>与其他概念的关系</h4><ul><li>标准正态分布 — \\(\\mu=0,\\sigma=1\\) 的基准版,表只为它制</li><li>标准化 — 全章命脉:任意正态压成 \\(N(0,1)\\) 查表</li><li>正态百分位数 — 反向操作:\\(\\xi_p=\\mu+\\sigma z_p\\)</li><li>正态的线性组合 — 线性折腾后仍正态,只需重算 \\(\\mu,\\sigma^2\\)</li><li><a class=\"net-wl\" data-id=\"中心极限定理\">中心极限定理</a> — 为何无处不在:iid 之和的极限形态</li><li>二元正态分布 — 二维推广(L31)</li></ul>"
+ },
+ "母函数生成概率": {
+  "kind": "c",
+  "en": "ProbabilitiesFromPGF",
+  "aliases": [
+   "recovering probabilities from PGF",
+   "coefficient of t^k"
+  ],
+  "level": "basic",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从概率母函数反读概率:PGF 是幂级数 \\(\\sum_k p_k t^k\\),第 k 项系数就是 \\(p_k\\)——在 \\(t=0\\) 处求 k 阶导、除以 \\(k!\\) 即得 \\(P[X{=}k]\\)。</p><p><strong>白话</strong>:像从一叠牌里点第 \\(k\\) 张:求 \\(k\\) 次导把上面 \\(k\\) 张之前的牌掀走,代 \\(t=0\\) 把下面的牌全压住,手里恰好剩第 \\(k\\) 张——再除以洗进去的 \\(k!\\) 还原成 \\(p_k\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X{=}k]=\\frac{P^{(k)}(0)}{k!}\\qquad\\text{特别地 }P(0)=p_0$$</div><ul><li>原理:\\(P(t)=p_0+p_1t+p_2t^2+\\cdots\\),第 k 阶导在 0 处只剩 \\(k!\\,p_k\\) 一项。</li><li><strong>别漏除以 \\(k!\\)</strong>(高频错)。</li><li>求概率在 \\(t=0\\)、求矩在 \\(t=1\\)——两个求值点一头一尾,别记反。</li><li>也可直接展开幂级数找 \\(t^k\\) 系数(如泊松母函数中 \\(t^2\\) 系数即 \\(P[X{=}2]\\),有时更快)。</li></ul><p><strong>算一遍</strong>:抛两枚硬币记正面数,\\(P(t)=0.25+0.5t+0.25t^2\\),反读全部概率。</p><ul><li>直接代零:\\(P(0)=0.25=p_0\\)(两枚全反)✓</li><li>一阶:\\(P'(t)=0.5+0.5t\\),\\(P'(0)/1!=0.5=p_1\\) ✓</li><li>二阶:\\(P''(t)=0.5\\),\\(P''(0)/2!=0.25=p_2\\)——漏除 \\(2!\\) 会错报成 0.5。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 反读的对象;此功能正是\"母(生成)函数\"名字的由来</li><li><a class=\"net-wl\" data-id=\"阶乘矩\">阶乘矩</a> — 同一函数的另一读法:换到 \\(t=1\\) 求值点</li><li>概率函数 — 产出物:离散 pmf 的逐点值</li><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — MGF 无此直接反读功能,PGF 独有</li></ul>"
+ },
+ "泊松分布": {
+  "kind": "c",
+  "en": "PoissonDistribution",
+  "aliases": [
+   "Poisson distribution",
+   "Poisson"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>刻画\"<strong>固定区间内某事件发生几次</strong>\"的单参数计数分布:事故、来电、索赔件数的默认模型。由二项分布在 \\(n\\to\\infty,\\ p\\to 0,\\ np\\to\\lambda\\) 的极限得到,天然适合\"机会极多、每次极小\"的场景。</p><p><strong>白话</strong>:一天有无数个瞬间,每个瞬间来客概率都微乎其微,但平均一天来 \\(\\lambda\\) 个——数\"今天到底来了几个\"就是泊松;只用一个数 \\(\\lambda\\) 就说完了整个分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X=k]=\\frac{e^{-\\lambda}\\lambda^{k}}{k!},\\qquad k=0,1,2,\\dots$$</div><ul><li>记 \\(X\\sim\\text{Poisson}(\\lambda)\\),参数 \\(\\lambda&gt;0\\);取值 \\(0,1,2,\\dots\\) <strong>无上限</strong>。</li><li>归一化:\\(\\sum_k e^{-\\lambda}\\lambda^k/k!=e^{-\\lambda}e^{\\lambda}=1\\)(\\(e^{\\lambda}\\) 的泰勒展开)。</li><li>形状随 \\(\\lambda\\) 变:\\(\\lambda\\) 小 → 右偏堆在 0;\\(\\lambda\\) 大 → 趋对称钟形(可正态近似)。</li><li>\"at least \\(k\\)\" 取补:\\(P[X\\ge k]=1-\\sum_{i&lt;k}P[i]\\),尾巴无限长,正面加不完。</li><li>题面信号:\"the number of … per …\"、\"claims occur at a rate of …\"。</li></ul><p><strong>算一遍</strong>:某窗口平均每小时 2 件索赔(\\(\\lambda=2\\)),求一小时内至少 2 件的概率。</p><ul><li>\\(P[0]=e^{-2}\\approx0.135\\);\\(P[1]=2e^{-2}\\approx0.271\\)。</li><li>尾巴无限长,正面加不完,取补:\\(P[X\\ge2]=1-0.135-0.271\\approx0.594\\)。</li><li>自检:超过均值 2 的概率近六成偏高?不高——\\(X\\ge2\\) 含 2 本身,与\"平均 2 件\"相容 ✓</li></ul><h4>与其他概念的关系</h4><ul><li>泊松分布的矩 — 指纹性质:\\(E[X]=\\operatorname{Var}(X)=\\lambda\\)</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 独立泊松相加,参数相加</li><li>泊松过程 — 恒定速率场景:区间 \\(t\\) 内计数 \\(\\sim\\text{Poisson}(\\lambda t)\\)、稀释 \\(\\lambda p\\)</li><li>泊松逼近二项 — 出生证明:\\(n\\) 大 \\(p\\) 小时 \\(\\text{Bin}(n,p)\\approx\\text{Poisson}(np)\\)</li><li>二项分布 — 极限来源;有上限 vs 无上限</li><li><a class=\"net-wl\" data-id=\"指数分布\">指数分布</a> — 同一泊松过程的另一面:计数用泊松、间隔用指数</li></ul><h4>应用视角</h4><ul><li>泊松过程中的次数与等待时间 — 数次数用泊松、等时间用指数的换视角</li></ul>"
+ },
+ "泊松可加性": {
+  "kind": "c",
+  "en": "PoissonAdditivity",
+  "aliases": [
+   "additivity of Poisson",
+   "sum of independent Poissons"
+  ],
+  "level": "basic",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>相互独立</strong>的泊松随机变量之和仍是泊松,参数直接相加——合并多个独立泊松源(多路口事故、多天来电、多张保单)时无需卷积。</p><p><strong>白话</strong>:两条互不相干的水管往同一个桶里随机滴水,合起来看还是\"随机滴水\",只是滴速直接相加——不必逐滴对账(卷积)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$N_i\\sim\\text{Poisson}(\\lambda_i)\\ \\text{独立}\\quad\\Longrightarrow\\quad \\sum_{i=1}^{n}N_i\\;\\sim\\;\\text{Poisson}\\!\\left(\\sum_{i=1}^{n}\\lambda_i\\right)$$</div><ul><li><strong>前提是独立</strong>:两个计数正相关(如同一天气驱动的两地事故)不能简单把 \\(\\lambda\\) 相加。</li><li>典型用法:\"3 周、每周均值 1.2\" → \\(\\lambda=3.6\\) 再套 pmf,<strong>先换 \\(\\lambda\\) 再算概率</strong>。</li><li>与泊松过程的区间缩放 \\(\\lambda t\\) 是同一件事(把区间拆成小段相加)。</li><li>泊松连\"同参数\"条件都不需要(对比二项/负二项可加性要求同 \\(p\\))。</li></ul><p><strong>算一遍</strong>:两个独立路口,事故率分别为每天 1 起和 2 起,求两口合计一天无事故的概率。</p><ul><li>先合参数:\\(N_1+N_2\\sim\\text{Poisson}(1+2)=\\text{Poisson}(3)\\)。</li><li>套 pmf:\\(P[\\text{合计}=0]=e^{-3}\\approx0.050\\)。</li><li>验算:等于\"各自无事故\"相乘 \\(e^{-1}\\times e^{-2}\\)(独立)✓——参数相加与概率相乘是同一回事。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"泊松分布\">泊松分布</a> — 规则的宿主分布</li><li>泊松过程 — 区间缩放 \\(\\lambda t\\) 即\"逐段相加\"的连续版</li><li>二项分布可加性 — 姊妹规则:须同 \\(p\\)</li><li>负二项分布可加性 — 姊妹规则:须同 \\(p\\)</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — 证明套路:独立和的 PGF/MGF 相乘</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 可加性成立时绕开的笨办法</li></ul>"
+ },
+ "独立与乘积期望": {
+  "kind": "c",
+  "en": "ExpectationOfProductOfIndependentVariables",
+  "aliases": [
+   "product of independent expectations",
+   "multiplication rule for expectations",
+   "expectation of product",
+   "product of expectations",
+   "独立时积的期望"
+  ],
+  "level": "advanced",
+  "chapter": "p-l27",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当 \\(X\\perp Y\\)(密度可因式分解且支撑矩形)时,乘积的期望才等于期望的乘积:\\(E[g(X)h(Y)]=E[g(X)]\\,E[h(Y)]\\)。二重积分自动拆成两个一重积分之积,不必真积二维。</p><p><strong>白话</strong>:两台没串线的抽奖机,\"两边奖金乘起来\"的平均 = 你那台的平均 × 我这台的平均——因为你抽到什么完全不影响我。但只要机器串了线(一台出大奖另一台就收紧),这么乘就是错的。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\;\\Longrightarrow\\;E[g(X)\\,h(Y)]=E[g(X)]\\,E[h(Y)]$$</div><ul><li>特例:\\(E[XY]=E[X]E[Y]\\)、\\(E[XY^2]=E[X]E[Y^2]\\)。</li><li>为什么能拆:独立时 \\(f=f_Xf_Y\\) 且支撑矩形,内外层积分互不牵扯,直接分离;支撑一旦耦合(内层限含外层变量),这步分离就做不了。</li><li>最大陷阱:未验独立就拆——支撑 \\(0\\le x\\le y\\le1\\) 时即便密度形式可拆也不独立,必须老实二重积分(27B 三角:\\(1/5\\) vs 27C 矩形:\\(1/6\\))。</li><li>方向注意:独立 ⟹ 可拆;反过来 \\(E[XY]=E[X]E[Y]\\)(零协方差)推不回独立。</li></ul><p><strong>算一遍</strong>:抛两枚互不相干的硬币,正面记 1、反面记 0,求 \\(E[XY]\\)。</p><ul><li>硬算:\\(XY=1\\) 只在\"双正面\"发生,概率 \\(\\tfrac12\\times\\tfrac12=\\tfrac14\\),所以 \\(E[XY]=\\tfrac14\\)。</li><li>拆开算:\\(E[X]=0.5\\)、\\(E[Y]=0.5\\),相乘得 \\(0.25\\)——两条路对上 ✓</li><li>前提是两枚硬币独立;若绑在一根轴上同起同落,\\(E[XY]=0.5\\neq0.25\\),拆法立刻失效。</li></ul><h4>与其他概念的关系</h4><ul><li>连续型独立判据 — 前提怎么验:因式分解 + 矩形支撑</li><li>连续型联合矩 — 应用场景:\\(E[XY]\\) 等联合矩的捷径</li><li>独立与不相关 — 直接推论:独立 ⟹ Cov=0;反向不成立</li><li>期望的线性 — 对照:加法恒可拆,乘法要独立</li></ul>"
+ },
+ "独立和的MGF": {
+  "kind": "c",
+  "en": "MGFOfIndependentSum",
+  "aliases": [
+   "MGF of sum of independent random variables",
+   "multiplicative property of MGF"
+  ],
+  "level": "advanced",
+  "chapter": "p-l32",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>独立随机变量之和的 MGF 等于各自 MGF 的乘积——\"加法变乘法\",免掉卷积积分。<strong>独立是前提</strong>,不独立时期望不能拆成乘积。</p><p><strong>白话</strong>:MGF 像每个分布的\"指纹\"。俩人各自独立,想知道\"总和\"这个新人的指纹,不用给他重新做全套体检(卷积硬算)——把两枚指纹直接相乘就是,乘完认得出是谁的指纹,和的分布就水落石出。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\ \\Longrightarrow\\ M_{X+Y}(t)=M_X(t)\\,M_Y(t)$$</div><ul><li>一行推导:\\(M_{X+Y}(t)=E[e^{t(X+Y)}]=E[e^{tX}e^{tY}]\\overset{\\text{独立}}{=}E[e^{tX}]\\,E[e^{tY}]\\)。</li><li>配合唯一性:乘积化简后认形状,直接读出和的分布——指数和→伽马、正态和→正态、泊松和→泊松。</li><li>n 个独立同分布相加:\\(M(t)^n\\)。如 \\(\\tfrac{1}{(1-\\theta t)^n}\\) 恰是 n 个均值 θ 的独立指数之和(伽马)。</li><li>例 32D:指数(均值 2)+ 指数(均值 5)独立 → \\(M_{X+Y}(t)=\\tfrac{1}{(1-2t)(1-5t)}\\)。</li></ul><p><strong>算一遍</strong>:独立抛两枚硬币(正面 1、反面 0),求两枚之和的 MGF。</p><ul><li>单枚:\\(M(t)=0.5+0.5e^{t}\\);独立相加 → 相乘:\\((0.5+0.5e^{t})^2=0.25+0.5e^{t}+0.25e^{2t}\\)。</li><li>按\"系数 × \\(e^{kt}\\)\"读回分布:和为 0 概率 \\(0.25\\)、为 1 概率 \\(0.5\\)、为 2 概率 \\(0.25\\)。</li><li>和直接数\"两正/一正/零正\"的结果一模一样——乘法自动帮你配齐了所有凑法 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 所属工具</li><li><a class=\"net-wl\" data-id=\"MGF唯一性\">MGF唯一性</a> — 配套用法:相乘之后认形状读出和的分布</li><li><a class=\"net-wl\" data-id=\"独立和的母函数\">独立和的母函数</a> — PGF 侧平行结论 \\(P_{X+Y}=P_XP_Y\\)</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 成立前提</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 推导的关键一步:独立时乘积的期望拆开</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 硬算和分布的替代路线;MGF 相乘认形可免卷积</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"用MGF认分布与拼独立和\">用MGF认分布与拼独立和</a> — MGF 认脸、取矩、独立和相乘</li></ul>"
+ },
+ "独立和的母函数": {
+  "kind": "c",
+  "en": "PGFOfIndependentSum",
+  "aliases": [
+   "PGF of sum of independent random variables",
+   "multiplicative property of PGF"
+  ],
+  "level": "advanced",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>独立(非负整数)随机变量之和的母函数等于各自母函数的乘积。多项式乘法恰好把\"指数相加、系数相乘再汇总\"全做了——<strong>多项式乘法 = 自动卷积</strong>,这正是\"独立和相乘\"的直觉。</p><p><strong>白话</strong>:把每个变量的\"概率价目表\"编成一个多项式(取几记在 \\(t\\) 的指数上,概率记在系数上)。两个独立变量相加,不用自己逐项枚举\"凑出每种总数的所有搭配\"——两张价目表一乘,乘法自动替你配对、归总。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\ \\Longrightarrow\\ P_{X+Y}(t)=P_X(t)\\,P_Y(t)$$</div><ul><li>一行推导:\\(E[t^{X+Y}]=E[t^X t^Y]\\overset{\\text{独立}}{=}E[t^X]\\,E[t^Y]\\)。</li><li>独立泊松和:\\(e^{\\lambda_1(t-1)}e^{\\lambda_2(t-1)}=e^{(\\lambda_1+\\lambda_2)(t-1)}\\),仍是泊松——认形状秒答。</li><li>骰子直觉:两颗骰子各记成 \\(\\tfrac16(t+t^2+\\cdots+t^6)\\),相乘后 \\(t^7\\) 的系数自动等于\"和为 7\"的概率 \\(6/36\\)。</li><li>独立是前提;与 MGF 的乘性完全平行。</li></ul><p><strong>算一遍</strong>:独立抛两枚硬币(正面 1、反面 0),用 PGF 求两枚之和的分布。</p><ul><li>单枚:\\(P(t)=0.5+0.5t\\);独立相加 → 相乘:\\((0.5+0.5t)^2=0.25+0.5t+0.25t^2\\)。</li><li>按\"\\(t\\) 的指数 = 取值、系数 = 概率\"读回:和为 0、1、2 的概率是 \\(0.25,\\,0.5,\\,0.25\\)。</li><li>与直接数\"零正/一正/两正\"完全一致——多项式乘法就是自动卷积 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 所属工具</li><li><a class=\"net-wl\" data-id=\"独立和的MGF\">独立和的MGF</a> — MGF 侧平行结论;\\(P(t)=M(\\ln t)\\) 下是同一件事</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 成立前提</li><li><a class=\"net-wl\" data-id=\"泊松可加性\">泊松可加性</a> — 由母函数相乘一行可证</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — 连续版硬算;PGF 相乘是离散卷积的自动化</li></ul>"
+ },
+ "用MGF认分布与拼独立和": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "hard",
+  "chapter": "p-l32",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:给 \\(M_X(t)\\) 认分布/求矩;或给独立 \\(X,Y\\) 求 \\(X+Y\\) 的分布——MGF 是指纹。</p><h4>求解套路</h4><ol><li><strong>认脸</strong>:把给定 MGF 与 <a class=\"net-wl\" data-id=\"常见分布MGF\">常见分布MGF</a> 表逐一比形(指数底、幂次、参数位置),<a class=\"net-wl\" data-id=\"MGF唯一性\">MGF唯一性</a> 保证认对即答案。</li><li><strong>取矩</strong>:\\(E[X^n]=M^{(n)}(0)\\);更快的路是展开 \\(M(t)=\\sum \\frac{E[X^n]}{n!}t^n\\) 读系数,见 <a class=\"net-wl\" data-id=\"MGF取矩\">MGF取矩</a>。</li><li><strong>拼和</strong>:独立 ⇒ \\(M_{X+Y}(t)=M_X(t)M_Y(t)\\)——乘完再认脸(泊松+泊松=泊松、伽马同率可加……),见 <a class=\"net-wl\" data-id=\"独立和的MGF\">独立和的MGF</a>。</li><li>线性变换:\\(M_{aX+b}(t)=e^{bt}M_X(at)\\),先剥壳再认。</li></ol><h4>易错</h4><ul><li>在 \\(t\\neq 0\\) 处求导取矩(必须 \\(t=0\\))。</li><li>不独立硬乘 MGF。</li></ul>"
+ },
+ "矩": {
+  "kind": "c",
+  "en": "Moment",
+  "aliases": [
+   "moment",
+   "raw moment",
+   "central moment",
+   "原点矩",
+   "中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把期望作用到 \\(X\\) 的幂(原点矩)或偏差的幂(中心矩)得到的一族量,逐阶刻画分布的中心、散度、偏斜与尖峰。名字借自力学的力矩/转动惯量。</p><p><strong>白话</strong>:给分布做体检的一排指标:一阶量\"中心在哪\"、二阶量\"散不散\"、三阶量\"歪不歪\"、四阶量\"尖不尖\"——阶数越高,看的形状细节越细,就像体检单从身高体重一路查到微量元素。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\mu_n'=E[X^n]\\qquad\\qquad \\mu_n=E\\big[(X-\\mu)^n\\big]$$</div><ul><li>一阶原点矩 = 均值 \\(\\mu\\)(first moment);二阶中心矩 = 方差——最常用的两个。</li><li>高阶标准化后给\"形状\":三阶 → 偏度、四阶 → 峰度(各除以 \\(\\sigma\\) 的对应幂,无量纲)。</li><li>力学对应:一阶矩 = 重心,二阶中心矩 = 转动惯量——质量离轴越远越\"难转\",分布越散方差越大。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0,把前两阶矩都算出来。</p><ul><li>一阶原点矩:\\(E[X]=1(0.5)+0(0.5)=0.5\\)——中心(均值)。</li><li>二阶原点矩:\\(E[X^2]=1^2(0.5)+0^2(0.5)=0.5\\);二阶中心矩 \\(E[(X-0.5)^2]=0.5-0.5^2=0.25\\)——散度(方差)。</li><li>同一套\"期望套幂\"的动作,套原值得原点矩、套偏差得中心矩,逐阶往上就是偏度、峰度。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 一切矩都是某个 \\(g(X)\\) 的期望;一阶原点矩即均值</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 二阶中心矩</li><li>偏度 — 三阶(峰度四阶)标准化中心矩,看形状</li><li><a class=\"net-wl\" data-id=\"矩母函数\">矩母函数</a> — 在 0 处逐阶求导批量生成原点矩</li><li>联合矩 — 推广到两个变量 \\(E[X^aY^b]\\)</li></ul>"
+ },
+ "矩母函数": {
+  "kind": "c",
+  "en": "MomentGeneratingFunction",
+  "aliases": [
+   "moment generating function",
+   "MGF"
+  ],
+  "level": "basic",
+  "chapter": "p-l32",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量 X 的矩母函数是 \\(M_X(t)=E[e^{tX}]\\):把 X 塞进 \\(e^{tX}\\) 再取期望,得到一个 <strong>t 的函数</strong>(X 已被期望积掉)。分布的全部信息被压进这一个函数——求导取矩、独立和相乘、唯一确定分布,是它的三大用途。</p><p><strong>白话</strong>:把整张概率表压缩成一个\"压缩包\"\\(M(t)\\):信息一点不丢,用法反而更顺手——要均值方差就对包求导(不解压),要合并两个独立变量就把两个包直接相乘,包长什么样还能反查出这是哪个分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$M_X(t)=E\\!\\left[e^{tX}\\right]$$</div><ul><li>离散按概率加权:\\(M_X(t)=\\sum_x e^{tx}\\,p(x)\\);连续积分:\\(M_X(t)=\\int_{-\\infty}^{\\infty} e^{tx} f(x)\\,dx\\)。</li><li>\\(M_X(0)=E[e^0]=1\\) <strong>恒成立</strong>——算完先拿这条自检。</li><li>定义域可能收缩:指数分布 \\(M(t)=\\tfrac{1}{1-\\theta t}\\) 仅在 \\(t&lt;1/\\theta\\) 收敛;题干附的收敛区间本身就是认分布的线索。</li><li>三大用法一句默完:<strong>求导取矩、相乘拼和、认脸识分布</strong>。</li></ul><p><strong>算一遍</strong>:抽奖一半概率得 1 元、一半概率得 2 元,写出奖金 \\(X\\) 的 MGF。</p><ul><li>按定义逐点加权:\\(M(t)=0.5e^{1\\cdot t}+0.5e^{2t}\\)——每个取值 \\(x\\) 变成一项 \\(e^{tx}\\),概率当系数。</li><li>自检:\\(M(0)=0.5+0.5=1\\) ✓(这条恒成立,算完必查)。</li><li>顺手取个矩:\\(M'(t)=0.5e^{t}+e^{2t}\\),\\(M'(0)=0.5+1=1.5\\),正是均值 \\(\\tfrac{1+2}{2}\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"MGF取矩\">MGF取矩</a> — 用途一:在 0 处求 n 次导剥出第 n 阶原点矩</li><li><a class=\"net-wl\" data-id=\"独立和的MGF\">独立和的MGF</a> — 用途二:独立相加 → MGF 相乘,免卷积</li><li><a class=\"net-wl\" data-id=\"MGF唯一性\">MGF唯一性</a> — 用途三:MGF 是分布的指纹,认形状即认分布</li><li><a class=\"net-wl\" data-id=\"常见分布MGF\">常见分布MGF</a> — 必背速查表(Table 32.1)</li><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 离散侧姊妹工具:\\(P(t)=M(\\ln t)\\)</li><li><a class=\"net-wl\" data-id=\"LOTUS\">LOTUS</a> — 定义本身就是对 \\(g(X)=e^{tX}\\) 取期望</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"用MGF认分布与拼独立和\">用MGF认分布与拼独立和</a> — MGF 认脸、取矩、独立和相乘</li></ul>"
+ },
+ "积分限与支撑": {
+  "kind": "c",
+  "en": "LimitsOfIntegration",
+  "aliases": [
+   "limits of integration",
+   "support",
+   "integration bounds"
+  ],
+  "level": "advanced",
+  "chapter": "p-l26",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>二维积分(区域概率、边缘密度、联合矩)的积分限不是抄 \\(\\pm\\infty\\) 或 0 到 1,而是由<strong>支撑</strong>(\\(f&gt;0\\) 的区域)决定;支撑非矩形时,内层变量的上下限是外层变量的函数。先画支撑再定限。</p><p><strong>白话</strong>:二重积分像逐行扫地:密度只铺在\"支撑\"这块地毯上,扫哪一行,就只扫这一行压在地毯上的那一段。地毯是三角形时,每行的起扫点和收扫点都不一样——所以内层积分限得写成外层变量的函数,不能一律抄 0 到 1。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{支撑 } 0\\le x\\le y\\le 1:\\qquad \\int_0^1\\!\\!\\int_x^1 f\\,dy\\,dx\\;=\\;\\int_0^1\\!\\!\\int_0^{y} f\\,dx\\,dy$$</div><ul><li>铁律:<strong>外层常数,内层可变</strong>——内层限只能含常数或外层变量;积完还剩内层变量 = 必错。</li><li>流程:画支撑(∩ 目标区域)→ 固定外层变量 → 读出内层变量在支撑内扫过的区间。</li><li>常见支撑形状:三角 \\(0&lt;x&lt;y&lt;1\\)(内层 x:0→y)、抛物 \\(x^2\\le y\\le x\\)、半圆(\\(y:\\pm\\sqrt{1-x^2}\\),真题 26.8 把\"限随变量变\"演到极致)。</li><li>同一约束的两个后果:支撑绑住两变量(非矩形)⟹ 积分限耦合,同时也 ⟹ 不独立。</li><li>题面一句 \"for \\(0&lt;x&lt;y&lt;1\\)\" 就是全部机关;L24–L27 九成失分在这。</li></ul><p><strong>算一遍</strong>:\\(f(x,y)=2\\) 铺在三角支撑 \\(0\\le x\\le y\\le1\\) 上,验证总概率是 1。</p><ul><li>画支撑:单位正方形的对角线上半三角,面积 \\(\\tfrac12\\);外层取 \\(x\\),固定一竖条后 \\(y\\) 只能从 \\(x\\) 扫到 \\(1\\)。</li><li>算:\\(\\int_0^1\\!\\int_x^1 2\\,dy\\,dx=\\int_0^1 2(1-x)\\,dx=2\\big(1-\\tfrac12\\big)=1\\) ✓(高 2 × 底面积 \\(\\tfrac12\\))。</li><li>错法对照:照抄矩形限 \\(\\int_0^1\\!\\int_0^1 2\\,dy\\,dx=2\\)——把地毯外的空地也扫了,总概率爆表。</li></ul><h4>与其他概念的关系</h4><ul><li>区域概率与积分限 — 区域概率场景下的具体应用(L24)</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 边缘积分的限同样由支撑读出(L26)</li><li>连续型联合矩 — 联合矩二重积分的限同样由支撑定(L27)</li><li>连续型独立判据 — 非矩形支撑既毁常数积分限、也毁独立</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 支撑 = 联合密度非零的区域</li></ul>"
+ },
+ "累积分布函数": {
+  "kind": "c",
+  "en": "CumulativeDistributionFunction",
+  "aliases": [
+   "cdf",
+   "distribution function",
+   "分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(F(x)=P[X\\le x]\\):累住\"到 x 为止\"的全部概率。对离散、连续<strong>一视同仁</strong>——知道 F 就等于知道这个随机变量的一切,是求各种范围概率的统一入口。</p><p><strong>白话</strong>:\\(F\\) 像收银机的累计小票:沿数轴从最左端一路扫到 \\(x\\),沿途概率全部记进总账——它报的永远是\"到此为止一共多少\",不是\"这一点是多少\";要某一段的量,拿两张小票相减就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=P[X\\le x]\\qquad P[u&lt;X\\le v]=F(v)-F(u)$$</div><ul><li>四条<strong>必备性质</strong>整块记:非减 · 右连续 · \\(F(-\\infty)=0\\) · \\(F(\\infty)=1\\)。</li><li>连续时 \\(F'(x)=f(x)\\)(光滑 S 型);离散时 \\(F(x)=\\sum_{t\\le x}p(t)\\)(阶梯,跳高 \\(=p(x)\\))。</li><li><strong>\\(F\\) 用 \\(\\le\\) 不是 \\(&lt;\\)</strong>:离散时含端点那一跳;求 \\(P[X&lt;x]\\) 要用跳<strong>前</strong>的值,与 \\(F(x)\\) 差一个 \\(p(x)\\)——差一个跳点答案就错。</li><li>分段 F 求区间概率:直接 \\(F(b)-F(a)\\),先看清端点落在哪一段(例 5A:\\(F(2.5)=1\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求 \\(P[2&lt;X\\le4]\\)。</p><ul><li>两张\"累计小票\":\\(F(4)=\\tfrac46\\)(1 到 4 点),\\(F(2)=\\tfrac26\\)(1、2 点)。</li><li>相减:\\(F(4)-F(2)=\\tfrac26=\\tfrac13\\)——正好数出 \\(\\{3,4\\}\\) 两个点 ✓</li><li>端点自查:区间写法 \\(u&lt;X\\le v\\) 与 \\(F\\) 的 \\(\\le\\) 严丝合缝,右端 4 含、左端 2 不含,一个跳点都不差。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 离散连续通吃的完全刻画</li><li>概率函数 — 离散:由 pmf 累加,阶梯跳高 \\(=p(x)\\)</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续:求导得密度,\\(f=F'\\)</li><li>生存函数 — 互补:\\(S=1-F\\),\"F 管不超过,S 管超过\"</li><li>百分位数 — 反着用 F:解 \\(F(x)=p\\) 得分位数</li><li>联合累积分布函数 — 二维推广</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "联合密度函数": {
+  "kind": "c",
+  "en": "JointProbabilityDensityFunction",
+  "aliases": [
+   "joint density function",
+   "joint pdf"
+  ],
+  "level": "basic",
+  "chapter": "p-l24",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>两个连续随机变量一起看时的密度 \\(f(x,y)\\):区域上的概率由它在该区域上的二重积分给出。连续世界单点、单条线的概率为 0,只谈区域概率。</p><p><strong>白话</strong>:像地图上的人口密度图:\\(f(x,y)\\) 报的是\"这一带每平方公里住多少概率\",某片城区的总人口 = 密度在那片地上加总(二重积分);一个门牌号、一条街道没有面积,自然住不下任何\"人口\"——单点单线概率为 0。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x,y)\\ge 0\\qquad\\text{且}\\qquad \\iint_{\\mathbb{R}^2} f(x,y)\\,dy\\,dx=1$$</div><ul><li>两条性质就是全部定义:处处非负 + 全平面积分为 1(密度曲面下总体积 = 1)。</li><li>反解常数 k 的固定套路:令 \\(\\iint_{\\text{支撑}} f=1\\) 解出 k,最后检查 \\(f\\ge0\\)。</li><li>直觉:一张盖在平面上的\"帐篷\",区域概率 = 帐篷在那块地皮上方的体积;地皮没面积(点、线)就没体积。</li><li>离散版对照(L11):格子概率<strong>相加</strong> ↔ 密度<strong>积分</strong>,联合/边缘/条件/独立整套语言原样平移。</li></ul><p><strong>算一遍</strong>:\\(f(x,y)=kxy\\) 铺在 \\([0,1]\\times[0,1]\\) 上,先反解 \\(k\\) 再用一次。</p><ul><li>归一化:\\(\\int_0^1\\!\\int_0^1 kxy\\,dy\\,dx=k\\cdot\\tfrac12\\cdot\\tfrac12=\\tfrac k4=1\\Rightarrow k=4\\);顺检 \\(f\\ge0\\) ✓</li><li>用它算区域概率:\\(P[X\\le\\tfrac12,\\ Y\\le\\tfrac12]=\\int_0^{1/2}\\!\\int_0^{1/2}4xy\\,dy\\,dx=4\\cdot\\tfrac18\\cdot\\tfrac18=\\tfrac1{16}\\)。</li><li>比面积比 \\(\\tfrac14\\) 小得多——左下角\"帐篷\"矮,概率跟着体积走,不跟面积走。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 一维版;本卡是它的二维推广</li><li>联合分布 — 离散版联合分布的连续对应</li><li>区域概率与积分限 — 用密度算区域概率的操作面</li><li>联合累积分布函数 — 互为微积分对偶:\\(f=\\partial^2F/\\partial x\\,\\partial y\\)</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 积掉一个变量得到的单变量密度</li><li>联合均匀分布 — 密度为常数的特例</li></ul>"
+ },
+ "边缘密度-连续": {
+  "kind": "c",
+  "en": "MarginalProbabilityDensityFunction",
+  "aliases": [
+   "marginal density",
+   "marginal pdf"
+  ],
+  "level": "basic",
+  "chapter": "p-l26",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>已知联合密度 \\(f(x,y)\\),想单看其中一个变量的分布,就把另一个变量沿支撑<strong>积分掉</strong>,剩下的单变量密度叫边缘密度。几何直觉:把密度山沿要丢的方向压扁投影。</p><p><strong>白话</strong>:一栋楼有\"每层每户\"的用电明细(联合),只想知道\"每层总用电\"(单看楼层),就把同层各户加总——连续版没法逐户点名,加总换成积分,得到的\"每层账\"就是边缘密度。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_X(x)=\\int_{-\\infty}^{\\infty} f(x,y)\\,dy,\\qquad f_Y(y)=\\int_{-\\infty}^{\\infty} f(x,y)\\,dx$$</div><ul><li>口诀:<strong>要谁留谁,另一个积掉</strong>——结果只准剩保留变量,且必须附上定义域。</li><li>\\(\\pm\\infty\\) 只是形式,真正的上下限由支撑决定:积分只在 \\(f&gt;0\\) 的区域进行。</li><li>三重自检:结果只含保留变量;写清有效区间;\\(\\int f_X\\,dx=1\\) 复核。</li><li>\"边缘\"得名于离散版:联合分布表的行/列合计写在<strong>页边(margin)</strong>;连续版把行求和换成沿 y 积分。</li><li>例 26A:\\(f=2\\) 于 \\(0\\le x\\le y\\le1\\) → \\(f_X=2(1-x)\\)、\\(f_Y=2y\\)(三角支撑,限随变量变)。</li></ul><p><strong>算一遍</strong>:单位正方形上 \\(f(x,y)=x+y\\),求 \\(f_X\\)。</p><ul><li>要 \\(x\\) 留 \\(x\\),把 \\(y\\) 积掉:\\(f_X(x)=\\int_0^1(x+y)\\,dy=x+\\tfrac12\\),附上定义域 \\(0\\le x\\le1\\)。</li><li>自检一:结果只含保留变量 \\(x\\) ✓</li><li>自检二:\\(\\int_0^1\\big(x+\\tfrac12\\big)dx=\\tfrac12+\\tfrac12=1\\) ✓——积出来不归一就是哪步限写错了。</li></ul><h4>与其他概念的关系</h4><ul><li>边缘分布 — 离散版(行/列求和);本卡是连续对应</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 输入对象:被积掉的是它</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — 本章唯一大坑:非矩形支撑上限随变量变</li><li>连续型独立判据 — 独立 ⟺ \\(f=f_X\\,f_Y\\) 且支撑矩形</li><li>边缘分布是否均匀 — 联合均匀情形下边缘形状的专题</li></ul>"
+ },
+ "连续型独立性": {
+  "kind": "c",
+  "en": "IndependenceContinuous",
+  "aliases": [
+   "independence of continuous random variables",
+   "density factorization"
+  ],
+  "level": "advanced",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\"给定 \\(Y=y\\) 完全不改变 \\(X\\) 的分布\"即独立:条件密度与所给 \\(y\\) 无关、等于无条件边缘;等价于联合密度可拆成两个边缘之积。</p><p><strong>白话</strong>:独立就是\"打听了也白打听\"——知道了 \\(Y\\) 的值,\\(X\\) 的分布一丝没变;密度山不管沿哪个 \\(y\\) 切片,每片(归一后)长得都和整体边缘一模一样。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid Y}(x\\mid y)=f_X(x)\\;\\Longleftrightarrow\\;f(x,y)=f_X(x)\\,f_Y(y)$$</div><ul><li>暗坑:<strong>支撑域耦合</strong>(如 \\(0\\le x\\le y\\le1\\),\\(x\\) 的范围随 \\(y\\) 变)\\(\\Rightarrow\\) 一定不独立——哪怕密度公式看似可乘。判独立<strong>先看支撑</strong>再看公式能否拆积。</li><li>完整判据两条缺一不可:密度可拆成 \\(x\\) 的函数 × \\(y\\) 的函数,<strong>且</strong>支撑为矩形。</li><li>独立的红利:\\(\\operatorname{Cov}=0\\)、条件矩 = 无条件矩,条件计算全部退化。</li></ul><p><strong>算一遍</strong>:单位正方形上 \\(f(x,y)=4xy\\),验证 \\(X\\perp Y\\)。</p><ul><li>支撑先过关:正方形是矩形 ✓;边缘:\\(f_X(x)=\\int_0^1 4xy\\,dy=2x\\),同理 \\(f_Y(y)=2y\\)。</li><li>乘回去:\\(2x\\cdot2y=4xy\\) = 联合 ✓</li><li>条件视角:\\(f_{X\\mid Y}(x\\mid y)=\\dfrac{4xy}{2y}=2x\\)——\\(y\\) 消失了,给不给 \\(Y\\) 都一样,这就是独立;同一公式若把支撑改成 \\(0\\le x\\le y\\le1\\),支撑耦合,立刻不独立。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 一般定义;本卡是密度语言的连续版</li><li>连续型独立判据 — 可拆性 + 矩形支撑的操作化检查</li><li>条件密度函数 — 判据左边:条件 = 边缘</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 判据右边的两个因子</li><li>独立与不相关 — 独立的单向推论</li></ul>"
+ },
+ "阶乘矩": {
+  "kind": "c",
+  "en": "FactorialMoment",
+  "aliases": [
+   "factorial moment",
+   "descending factorial moment"
+  ],
+  "level": "advanced",
+  "chapter": "p-l33",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>第 n 阶阶乘矩是下降阶乘的期望 \\(\\mu_{(n)}=E[X(X{-}1)\\cdots(X{-}n{+}1)]\\),由概率母函数在 \\(t=1\\) 处求 n 次导生成。它是离散分布\"天生顺手\"的矩——求期望方差都经它中转。</p><p><strong>白话</strong>:问一群家庭\"从家里挑 2 个不同的人排队,有几种排法\"的平均——那是 \\(E[X(X{-}1)]\\) 而不是 \\(E[X^2]\\);阶乘矩就是这种\"选人排队数\"的平均,PGF 求导天生吐出的正是它。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P'(1)=E[X],\\qquad P''(1)=E[X(X{-}1)],\\qquad P^{(n)}(1)=\\mu_{(n)}$$</div><ul><li>求方差:\\(E[X^2]=P''(1)+P'(1)\\),故 \\(\\operatorname{Var}(X)=P''(1)+P'(1)-\\big(P'(1)\\big)^2\\)。</li><li>\\(P''(1)\\) 给的是 \\(E[X(X{-}1)]\\),<strong>不是</strong> \\(E[X^2]\\)——最高频错。</li><li>原理:对 \\(\\sum_k p_k t^k\\) 逐项求 n 次导,指数每导一次\"下降\"一次,代 \\(t=1\\) 后 \\(t^{k-n}\\) 全变 1,剩下降阶乘的期望。</li><li>泊松验证:\\(P(t)=e^{\\lambda(t-1)}\\),\\(P'(1)=\\lambda\\),\\(P''(1)=\\lambda^2\\),\\(\\operatorname{Var}=\\lambda^2+\\lambda-\\lambda^2=\\lambda\\)。✔</li></ul><p><strong>算一遍</strong>:抛一枚硬币(\\(X\\) 取 \\(0/1\\) 各半),\\(P(t)=0.5+0.5t\\)。</p><ul><li>一阶:\\(P'(t)=0.5\\),\\(P'(1)=0.5=E[X]\\) ✓</li><li>二阶:\\(P''(t)=0\\),即 \\(E[X(X{-}1)]=0\\)——\\(0/1\\) 变量乘\"自己减一\"恒为零,合理。</li><li>中转求方差:\\(E[X^2]=P''(1)+P'(1)=0.5\\),\\(\\operatorname{Var}=0.5-0.25=0.25=pq\\) ✓;注意 \\(P''(1)\\) 本身<strong>不是</strong> \\(E[X^2]\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率母函数\">概率母函数</a> — 生成载体:在 1 处求导</li><li><a class=\"net-wl\" data-id=\"矩\">矩</a> — 对照:原点矩是幂的期望 \\(E[X^n]\\),阶乘矩是下降阶乘的期望</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 经 \\(E[X^2]=P''(1)+P'(1)\\) 中转求得</li><li><a class=\"net-wl\" data-id=\"MGF取矩\">MGF取矩</a> — MGF 侧平行:在 0 处求导得原点矩</li><li>泊松分布的矩 — 标准验证例:泊松各阶阶乘矩为 \\(\\lambda^n\\)</li></ul>"
+ },
+ "随机变量独立性": {
+  "kind": "c",
+  "en": "IndependenceOfRandomVariables",
+  "aliases": [
+   "independent random variables",
+   "mutual independence"
+  ],
+  "level": "advanced",
+  "chapter": "p-l11",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(X\\) 与 \\(Y\\) 独立 ⟺ 联合分布等于边缘分布的乘积、且对<strong>所有</strong> \\((x,y)\\) 成立——\"知道 \\(X\\) 取什么,不改变 \\(Y\\) 的分布\"。实操判定两条缺一不可:密度可因式分解 <strong>且</strong> 支撑为矩形。</p><p><strong>白话</strong>:两人各摇各的骰子:知道你摇出 6,对我这边每个点数的概率毫无影响——而且这话必须对<strong>所有</strong>组合都成立;有一格不符,独立就破功。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\iff f(x,y)=f_X(x)\\,f_Y(y)\\ \\ \\forall(x,y)\\qquad\\quad f(x_1,\\dots,x_n)=\\prod_{i=1}^{n} f(x_i)$$</div><ul><li><strong>非矩形支撑一票否决</strong>:独立时支撑必为两个一维集合的笛卡尔积(矩形,可含 \\(\\infty\\));\\(0&lt;x&lt;y&lt;1\\)、\\(x+y&lt;1\\) 这类把变量绑在一起的约束,公式再能拆也<strong>一定不独立</strong>——先看支撑再看公式。</li><li>判\"独立\"须每点都验;判\"不独立\"找到一格反例即可(例 11A:\\(p(1,1)=0.40\\neq p_X(1)p_Y(1)=0.42\\))。</li><li>推论:独立 ⟹ \\(E[XY]=E[X]E[Y]\\);逆命题不成立。</li><li>离散同理 \\(p(x,y)=p_X(x)\\,p_Y(y)\\);\\(n\\) 个变量为各自密度连乘。</li></ul><p><strong>算一遍</strong>:联合表 \\(p(0,0)=0.2\\)、\\(p(0,1)=0.3\\)、\\(p(1,0)=0.2\\)、\\(p(1,1)=0.3\\),判独立。</p><ul><li>先求边缘:行加总 \\(p_X(0)=p_X(1)=0.5\\);列加总 \\(p_Y(0)=0.4\\)、\\(p_Y(1)=0.6\\)。</li><li>四格逐一对乘积:\\(0.5\\times0.4=0.2\\) ✓、\\(0.5\\times0.6=0.3\\) ✓(另两格同)——<strong>每格都过</strong>才判独立。</li><li>反过来只需一格:若某格实测 \\(0.25\\neq\\) 乘积 \\(0.2\\),一个反例就判不独立(例 11A 正是如此)。</li></ul><h4>与其他概念的关系</h4><ul><li>事件独立性 — 事件版前身(L03),推广到随机变量</li><li>联合分布 — 判据的左边</li><li>边缘分布 — 判据的右边(乘积)</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 直接推论(L12)</li><li>连续型独立判据 — 连续版展开(L24)</li><li>独立与不相关 — \"逆不真\"的完整讨论</li></ul><h4>应用视角</h4><ul><li>独立性判定清单 — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ },
+ "雅可比因子": {
+  "kind": "c",
+  "en": "JacobianFactor",
+  "aliases": [
+   "Jacobian",
+   "scaling factor"
+  ],
+  "level": "basic",
+  "chapter": "p-l34",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>单变量密度换元中乘的伸缩因子 \\(|dx/dy|=|h'(y)|\\)(反函数导数的绝对值)。概率是面积:变换把区间拉宽几倍,密度高度就得压低几倍——雅可比把\"格子大小变了\"补偿回来。</p><p><strong>白话</strong>:一杯水从窄杯倒进宽一倍的杯子,水量没变,水位自动降一半——雅可比因子就是那个\"降一半\",替你记着容器变宽了多少、高度该补偿多少。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\left|\\frac{dx}{dy}\\right|=\\big|h'(y)\\big|,\\qquad h=g^{-1}$$</div><ul><li><strong>恒取绝对值</strong>:g 递减时 \\(h'&lt;0\\),漏绝对值会得出负密度,必错。</li><li>直觉:米换厘米 \\(Y=100X\\),\"1.7 米附近\"的概率质量摊到宽 100 倍的区间上,高度必须除以 100——\\(\\tfrac1{100}=\\big|\\tfrac{dx}{dy}\\big|\\)。</li><li>非线性变换 = 每点拉伸倍数不一样,\\(|dx/dy|\\) 是 y 的函数(如 \\(Y=X^2+1\\) 时为 \\(\\tfrac{1}{2\\sqrt{y-1}}\\))。</li><li>选项间差别常常就在一个雅可比因子上——先检查它可秒排错误选项。</li></ul><p><strong>算一遍</strong>:\\(X\\) 在 \\((0,1)\\) 上均匀(\\(f_X=1\\)),令 \\(Y=2X\\),求 \\(f_Y\\)。</p><ul><li>写逆变换:\\(x=y/2\\),雅可比因子 \\(|dx/dy|=1/2\\)——区间被拉宽 2 倍。</li><li>套公式:\\(f_Y(y)=f_X(y/2)\\times\\tfrac12=1\\times0.5=0.5\\),支撑 \\(0&lt;y&lt;2\\)。</li><li>验收:宽 \\(2\\times\\) 高 \\(0.5=\\) 面积 \\(1\\) ✓——不乘这个 \\(1/2\\),总概率会变成 2,必错。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"单调变换密度法\">单调变换密度法</a> — 它服务的公式:\\(f_Y=f_X(h(y))\\,|h'(y)|\\)</li><li><a class=\"net-wl\" data-id=\"非单调变换\">非单调变换</a> — 每个分支各带一个 \\(|h_i'(y)|\\)</li><li><a class=\"net-wl\" data-id=\"雅可比行列式\">雅可比行列式</a> — 二维推广:\\(|dx/dy|\\) 是 1×1 行列式的特例</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 保证换元后仍是合法密度(非负、积分为 1)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"变换求分布的分布函数法实战\">变换求分布的分布函数法实战</a> — Y=g(X) 求分布:CDF 万能法与密度法选路</li></ul>"
+ },
+ "雅可比行列式": {
+  "kind": "c",
+  "en": "JacobianDeterminant",
+  "aliases": [
+   "Jacobian",
+   "Jacobian determinant"
+  ],
+  "level": "basic",
+  "chapter": "p-l35",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>二维密度换元中乘的<strong>面积缩放因子</strong>:逆变换 \\(x=h_1(z,w),\\ y=h_2(z,w)\\) 的偏导矩阵行列式 J。面积微元满足 \\(dx\\,dy=|J|\\,dz\\,dw\\),密度乘 \\(|J|\\) 让每小块概率(密度 × 面积)在换元后保持不变。</p><p><strong>白话</strong>:擀面团——饼被擀大几倍,厚度就自动变薄几倍,面的总量一克不差;\\(|J|\\) 就是记\"每小块被擀大了几倍\"的账本,密度(厚度)照着它补偿。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$J=\\det\\!\\begin{pmatrix}\\dfrac{\\partial x}{\\partial z}&amp;\\dfrac{\\partial x}{\\partial w}\\\\[6pt]\\dfrac{\\partial y}{\\partial z}&amp;\\dfrac{\\partial y}{\\partial w}\\end{pmatrix}=\\frac{\\partial x}{\\partial z}\\frac{\\partial y}{\\partial w}-\\frac{\\partial x}{\\partial w}\\frac{\\partial y}{\\partial z}$$</div><ul><li>用<strong>逆变换</strong>(x,y 对 z,w)的偏导,不是正变换的——搞反了差个倒数(高频错)。</li><li>密度里乘 \\(|J|\\),<strong>取绝对值</strong>:面积缩放因子不能为负。</li><li>2×2 行列式 \\(ad-bc\\);先写逆变换再机械求偏导,少心算。</li><li>速查:和 \\(x=z-w\\) → \\(J=1\\);商 \\(x=zw\\) → \\(J=w\\);积 \\(x=z/w\\) → \\(J=1/w\\)。</li></ul><p><strong>算一遍</strong>:令 \\(Z=X+Y,\\ W=X-Y\\)(和与差),求要乘的 \\(|J|\\)。</p><ul><li>先写逆变换:\\(x=\\tfrac{z+w}{2},\\ y=\\tfrac{z-w}{2}\\)——四个偏导全是 \\(\\pm\\tfrac12\\)。</li><li>算行列式:\\(J=\\tfrac12\\cdot(-\\tfrac12)-\\tfrac12\\cdot\\tfrac12=-\\tfrac12\\),取绝对值得 \\(|J|=\\tfrac12\\)。</li><li>收尾:\\(f_{Z,W}=f_{X,Y}\\times\\tfrac12\\)——这套变换把每小块面积放大 2 倍,密度砍半,每块概率不变。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"多变量变换的雅可比法\">多变量变换的雅可比法</a> — 它服务的方法:\\(f_{Z,W}=f_{X,Y}\\,|J|\\)</li><li><a class=\"net-wl\" data-id=\"雅可比因子\">雅可比因子</a> — 一维特例:\\(|dx/dy|\\) 就是 1×1 的它</li><li><a class=\"net-wl\" data-id=\"常见二元变换\">常见二元变换</a> — 三大常见变换的 |J| 结果表</li><li><a class=\"net-wl\" data-id=\"卷积公式\">卷积公式</a> — \\(J=1\\) 的特例场景(和的变换)</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 换元作用的对象</li></ul>"
+ },
+ "非单调变换": {
+  "kind": "c",
+  "en": "ManyToOneTransformation",
+  "aliases": [
+   "many-to-one transformation",
+   "non-monotonic transformation"
+  ],
+  "level": "hard",
+  "chapter": "p-l34",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当 g 不是一一对应(many-to-one),多个 x 映到同一个 y——典型如 \\(Y=X^2\\) 且 X 的支撑跨过 0。此时对 g 的<strong>每个单调分支</strong>分别套密度法,再把各分支密度<strong>全部相加</strong>;漏一支错一半。</p><p><strong>白话</strong>:两条路都通向同一个村口,数\"到村口的人流\"就得把两条路上的人<strong>都</strong>加起来;每个 y 有几条来路(几个 x 映到它),它的密度就收几份贡献,只数一条路人就少了一半。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_Y(y)=\\sum_{i}f_X\\big(h_i(y)\\big)\\,\\big|h_i'(y)\\big|$$</div><ul><li>每个 \\(h_i\\) 是 g 在某单调区间上的反函数(一个\"分支\");每个 y 有几个\"来路\"就算几份密度。</li><li>识别:\\(Y=X^2\\)、\\(Y=(X-a)^2\\)、\\(Y=|X|\\) 且支撑<strong>跨过对称中心</strong>(如 −1&lt;x&lt;1 跨过 0)→ 必拆分支;支撑只在单调一侧则退化为单分支。</li><li>cdf 法里体现为区间拆并:\\(F_Y(y)=\\Pr(-\\sqrt y\\le X\\le\\sqrt y)\\),最稳、不易漏支。</li><li>例 34C:\\(f=2x\\)、\\(Y=(X-0.5)^2\\) → 两支 \\(h_{1,2}(y)=0.5\\pm\\sqrt y\\) 相加得 \\(f_Y=1/\\sqrt y\\)(0≤y≤0.25)。</li><li>习题 34.5:\\(f=1-|x|\\)(−1&lt;x&lt;1)、\\(Y=X^2\\) → \\(f_Y=1/\\sqrt y-1\\)(0&lt;y&lt;1)。</li></ul><p><strong>算一遍</strong>:\\(X\\) 在 \\((-1,1)\\) 上均匀(\\(f_X=\\tfrac12\\)),令 \\(Y=X^2\\),求 \\(f_Y\\)。</p><ul><li>每个 \\(y\\) 有两条来路:\\(x=+\\sqrt y\\) 和 \\(x=-\\sqrt y\\),各带因子 \\(|h_i'(y)|=\\tfrac{1}{2\\sqrt y}\\)。</li><li>两支相加:\\(f_Y(y)=\\tfrac12\\cdot\\tfrac{1}{2\\sqrt y}+\\tfrac12\\cdot\\tfrac{1}{2\\sqrt y}=\\tfrac{1}{2\\sqrt y}\\),支撑 \\(0&lt;y&lt;1\\)。</li><li>验收:\\(\\int_0^1\\tfrac{1}{2\\sqrt y}\\,dy=\\sqrt y\\big|_0^1=1\\) ✓;漏一支积分只剩 \\(0.5\\),立刻露馅。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"单调变换密度法\">单调变换密度法</a> — 单分支基础式,本概念对每支各套一次再求和</li><li><a class=\"net-wl\" data-id=\"分布函数法\">分布函数法</a> — 最稳替代:强迫把 \\(\\{g(X)\\le y\\}\\) 的区间拆对</li><li><a class=\"net-wl\" data-id=\"雅可比因子\">雅可比因子</a> — 每个分支各乘各的 \\(|h_i'(y)|\\)</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — 有几支、是否退化,全由支撑是否跨对称中心决定</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 相加后的合并密度仍须非负、积分为 1</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"变换求分布的分布函数法实战\">变换求分布的分布函数法实战</a> — Y=g(X) 求分布:CDF 万能法与密度法选路</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
+</body>
+</html>

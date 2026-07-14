@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!-- 源页: 微积分速查(求导/积分/分部/变限/二重/级数 + 考点映射), 手维护; 壳「速查」组挂链。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · Σ′ 微积分速查</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#475569; --accent-deep:#293241; --accent-soft:#e8ecf3; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .bar nav{display:flex;gap:2px}
+  .bar nav a{color:#c4cde0;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:7px}
+  .bar nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+  @media(max-width:720px){.bar nav{display:none}.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(58,51,143,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  .spd{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .spd-a{background:var(--accent-soft);color:var(--accent-deep)}
+  .spd-b{background:#eef1f6;color:#46566f}
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;P · <b>Σ′ 微积分速查</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">工具页 · 全书通用 · 手维护源页</p>
+    <h1>微积分<em>速查 Calculus Toolkit</em></h1>
+    <p class="lead">Exam P 的公式几乎全靠这一页的动作组装:pdf 与 CDF 互推靠<b>求导/积分</b>,期望方差靠<b>定积分</b>,MGF 取矩靠<b>在 0 处求导</b>,联合分布靠<b>二重积分</b>。每条都标了"考试哪里用"。FM 用得少而集中,见末节。</p>
+  </div>
+</div>
+
+<nav class="modnav" aria-label="本页模块">
+  <a href="#deriv">求导</a>
+  <a href="#integ">积分</a>
+  <a href="#parts">分部积分</a>
+  <a href="#ftc">变限求导</a>
+  <a href="#double">二重积分</a>
+  <a href="#series">级数</a>
+  <a href="#map">考点映射</a>
+  <a href="#fm">FM 落点</a>
+</nav>
+
+<section id="deriv">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Derivatives</span><h2 class="sec-title">求导速查</h2></div></div>
+    <div class="card accent">
+      <h3>基本规则</h3>
+      <table class="map">
+        <thead><tr><th style="width:34%">公式</th><th style="width:30%">名字</th><th>考试落点</th></tr></thead>
+        <tbody>
+          <tr><td>\((x^n)' = n x^{n-1}\)</td><td>幂法则</td><td>多项式密度求众数、Beta 型密度</td></tr>
+          <tr><td>\((e^{ax})' = a\,e^{ax}\)</td><td>指数</td><td>指数/泊松族无处不在;注意链出的 \(a\)</td></tr>
+          <tr><td>\((\ln x)' = 1/x\)</td><td>对数</td><td>由 \(F\) 反解分位数后校验;对数变换密度</td></tr>
+          <tr><td>\((uv)' = u'v + uv'\)</td><td>乘积法则</td><td>\(x e^{-x}\) 型密度求众数、MGF 二阶导</td></tr>
+          <tr><td>\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^2}\)</td><td>商法则</td><td>比值型 MGF(如几何/负二项)求导取矩</td></tr>
+          <tr><td>\(\big(f(g(x))\big)' = f'(g)\,g'(x)\)</td><td>链式法则</td><td>变换密度法 \(f_Y = f_X(g^{-1})\left|\frac{dg^{-1}}{dy}\right|\) 的那个"内导"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="formula star"><span class="name"><span class="must">★ 必背</span>本课程最常做的三次求导</span>
+      $$F'(x) = f(x) \qquad S'(x) = -f(x) \qquad M^{(n)}(0) = E[X^n]$$</div>
+    <div class="note tip"><span class="ic">🗝️</span><span class="t"><b>一句话:CDF 求导得密度,生存函数求导带负号,MGF 在 0 处求 n 阶导得 n 阶矩。</b>这三条覆盖了全书 80% 的求导动作——分布函数法(L34)、生存函数(L07)、MGF 取矩(L32)。</span></div>
+    <div class="card">
+      <h3>求众数(mode)的标准流程</h3>
+      <p>① 对密度 \(f(x)\) 求导(常先取 \(\ln f\) 再求导,乘积变加法);② 解 \(f'(x)=0\);③ <b>查端点</b>——定义域边界可能才是最大值(L10 的坑)。</p>
+    </div>
+  </div>
+</section>
+
+<section id="integ">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">Integrals</span><h2 class="sec-title">积分速查</h2></div></div>
+    <div class="card accent">
+      <h3>基本反导</h3>
+      <table class="map">
+        <thead><tr><th style="width:38%">公式</th><th>考试落点</th></tr></thead>
+        <tbody>
+          <tr><td>\(\displaystyle\int x^n\,dx = \frac{x^{n+1}}{n+1}\;(n\neq-1)\)</td><td>多项式密度归一化、均匀/Beta 型期望</td></tr>
+          <tr><td>\(\displaystyle\int \frac{1}{x}\,dx = \ln|x|\)</td><td>密度 \(\propto 1/x^k\) 的 Pareto 型;\(n=-1\) 特例别硬套幂法则</td></tr>
+          <tr><td>\(\displaystyle\int e^{ax}\,dx = \frac{e^{ax}}{a}\)</td><td>指数族一切计算;<b>除以 \(a\)</b> 别忘</td></tr>
+          <tr><td>\(\displaystyle\int \ln x\,dx = x\ln x - x\)</td><td>偶见于对数密度的期望</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="formula star"><span class="name"><span class="must">★ 必背</span>Gamma 技巧(全书最重要积分)</span>
+      $$\int_0^{\infty} x^{n} e^{-x/\theta}\,dx = n!\,\theta^{\,n+1}$$</div>
+    <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>「n 阶乘 θ 的 n+1 次」</b>——看到 \(\int_0^\infty x^n e^{-x/\theta}\) 直接写答案,不做分部积分。特例:\(\int_0^\infty e^{-x/\theta} = \theta\),\(\int_0^\infty x e^{-x/\theta} = \theta^2\),\(\int_0^\infty x^2 e^{-x/\theta} = 2\theta^3\)。速率版(\(e^{-ax}\)):\(\int_0^\infty x^n e^{-ax} dx = n!/a^{n+1}\)。</span></div>
+    <p class="dim">这一条就是指数分布全部矩的来源:\(E[X^n] = \frac{1}{\theta}\int_0^\infty x^n e^{-x/\theta} dx = n!\,\theta^n\)(L20);Gamma 分布归一化、MGF 推导(L32)同源。</p>
+    <div class="card">
+      <h3>期望的两种积分写法(L07 横竖两切)</h3>
+      <div class="formula"><span class="name">定义式(竖切) vs 生存捷径(横切)</span>
+        $$E[X] = \int_0^{\infty} x\,f(x)\,dx \qquad\Longleftrightarrow\qquad E[X] = \int_0^{\infty} S(x)\,dx\ \ (X\ge0)$$</div>
+      <p class="dim">带免赔额/限额的赔付期望,横切版常少算一半的功夫:\(E[\min(X,u)] = \int_0^{u} S(x)dx\)、\(E[(X-d)_+] = \int_d^{\infty} S(x)dx\)。</p>
+    </div>
+  </div>
+</section>
+
+<section id="parts">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">Integration by Parts</span><h2 class="sec-title">分部积分与表格法</h2></div></div>
+    <div class="formula star"><span class="name"><span class="must">★ 必背</span>Integration by parts</span>
+      $$\int u\,dv = uv - \int v\,du$$</div>
+    <div class="card accent">
+      <h3>表格法(tabular):\(x^n e^{ax}\) 型一次成型</h3>
+      <p>左列对 \(x^n\) <b>连续求导到 0</b>,右列对 \(e^{ax}\) <b>连续积分</b>,斜线相乘、符号 \(+,-,+,\dots\) 交替相加。</p>
+      <table class="map">
+        <thead><tr><th style="width:20%">符号</th><th style="width:30%">求导列(u)</th><th>积分列(dv)</th></tr></thead>
+        <tbody>
+          <tr><td>\(+\)</td><td>\(x^2\)</td><td>\(e^{-x}\to -e^{-x}\)</td></tr>
+          <tr><td>\(-\)</td><td>\(2x\)</td><td>\(\to e^{-x}\)</td></tr>
+          <tr><td>\(+\)</td><td>\(2\)</td><td>\(\to -e^{-x}\)</td></tr>
+        </tbody>
+      </table>
+      <p class="dim">得 \(\int x^2 e^{-x} dx = -(x^2+2x+2)e^{-x}+C\)。<b>算一遍</b>(定积分):代 \(0\to\infty\),\(\infty\) 端指数压死多项式取 0,\(x=0\) 端得 \(2\) → \(\int_0^\infty x^2 e^{-x} dx = 2 = 2!\),和 Gamma 技巧对上。</p>
+    </div>
+    <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>有限区间没有捷径</b>:\(\int_0^{d} x e^{-x/\theta} dx\)(免赔额题常见)不能套 Gamma 技巧,老老实实表格法,或改用横切 \(\int S\) 绕开。</span></div>
+  </div>
+</section>
+
+<section id="ftc">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">FTC &amp; Leibniz</span><h2 class="sec-title">变限积分求导</h2></div></div>
+    <div class="formula star"><span class="name"><span class="must">★ 必背</span>微积分基本定理 + 变限法则</span>
+      $$\frac{d}{dx}\int_a^{x} f(t)\,dt = f(x) \qquad\qquad \frac{d}{dx}\int_{u(x)}^{v(x)} f(t)\,dt = f(v)\,v' - f(u)\,u'$$</div>
+    <table class="map">
+      <thead><tr><th style="width:44%">动作</th><th>哪里用</th></tr></thead>
+      <tbody>
+        <tr><td>\(F(x)=\int_{-\infty}^x f\) 求导回 \(f\)</td><td>分布函数法(L34):先算 \(F_Y\),再求导得 \(f_Y\)</td></tr>
+        <tr><td>上限是函数:\(\frac{d}{dy}\int_0^{g(y)} f = f(g)\,g'\)</td><td>变换题 \(Y=g(X)\) 中 \(F_Y(y)=F_X(g^{-1}(y))\) 求导,链式自动冒出雅可比因子(L34)</td></tr>
+        <tr><td>对参数求导:\(\frac{d}{dd}\int_d^\infty (x-d)f\,dx = -\int_d^\infty f\,dx\)</td><td>免赔额 \(d\) 的敏感度/反解 \(d\) 类题</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="double">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">Double Integrals</span><h2 class="sec-title">二重积分要点(联合分布主战场)</h2></div></div>
+    <div class="card accent">
+      <h3>三步纪律</h3>
+      <ol class="dim routine">
+        <li><b>先画区域</b>:支撑集 ∩ 事件区域,链式不等式(\(0&lt;x&lt;y&lt;1\))就是边界线。</li>
+        <li><b>定内外次序</b>:内层变量的上下限可以含外层变量,外层必须是常数。竖切 \(\int_x\) 外 \(\int_y\) 内,或横切反之——选让内层限"干净"的方向。</li>
+        <li><b>换序要换限</b>:\(\int_0^1\!\!\int_x^1 \cdots dy\,dx = \int_0^1\!\!\int_0^y \cdots dx\,dy\)——限从图上重读,别照抄。</li>
+      </ol>
+    </div>
+    <div class="formula"><span class="name">常用套件</span>
+      $$P[(X,Y)\in A] = \iint_A f(x,y)\,dA \qquad f_X(x) = \int f(x,y)\,dy \qquad E[g] = \iint g\,f\,dA$$</div>
+    <div class="note tip"><span class="ic">🗝️</span><span class="t"><b>联合均匀先算面积</b>:密度为常数时一切概率 = 目标面积 ÷ 总面积(L25),几何法免积分。真要积分再动笔。</span></div>
+  </div>
+</section>
+
+<section id="series">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-accent">Series</span><h2 class="sec-title">级数速查(离散侧的"积分")</h2></div></div>
+    <table class="map">
+      <thead><tr><th style="width:40%">公式(\(|r|&lt;1\))</th><th>考试落点</th></tr></thead>
+      <tbody>
+        <tr><td>\(\displaystyle\sum_{n=0}^{\infty} r^n = \frac{1}{1-r}\)</td><td>几何分布归一化/尾概率(L18)、PGF 求值(L33)</td></tr>
+        <tr><td>\(\displaystyle\sum_{n=1}^{\infty} n r^{n-1} = \frac{1}{(1-r)^2}\)</td><td>几何分布均值——上式逐项求导即得</td></tr>
+        <tr><td>\(\displaystyle\sum_{n=0}^{\infty} \frac{x^n}{n!} = e^{x}\)</td><td>泊松归一化、泊松 MGF/PGF(L19/L32/L33)</td></tr>
+        <tr><td>\(\displaystyle\sum_{k=0}^{n} \binom{n}{k} a^k b^{n-k} = (a+b)^n\)</td><td>二项归一化、二项 MGF \((1-p+pe^t)^n\)(L17/L32)</td></tr>
+      </tbody>
+    </table>
+    <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>级数求导 = 离散版分部积分</b>:想要 \(\sum n r^n\) 这类带 \(n\) 的和,对 \(\sum r^n\) 逐项求导再乘 \(r\)——几何/负二项的矩都这么来。</span></div>
+  </div>
+</section>
+
+<section id="map">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">Cheat Map</span><h2 class="sec-title">考点映射:哪类题 → 哪个动作</h2></div></div>
+    <table class="map">
+      <thead><tr><th style="width:30%">题型</th><th style="width:38%">微积分动作</th><th>章</th></tr></thead>
+      <tbody>
+        <tr><td>给 \(f\) 含常数 \(k\)</td><td>\(\int f = 1\) 解 \(k\)(归一化)</td><td>L05/L09</td></tr>
+        <tr><td>给 \(F\) 求概率/密度</td><td>区间作差;求导得 \(f\)</td><td>L05</td></tr>
+        <tr><td>求期望/方差(连续)</td><td>\(\int x f\)、\(\int x^2 f\);非负变量可 \(\int S\)</td><td>L07/L08</td></tr>
+        <tr><td>免赔额/限额赔付</td><td>\(\int_d^\infty (x-d) f\,dx\) 或横切 \(\int_d^\infty S\)</td><td>L15/L16/L20</td></tr>
+        <tr><td>求众数</td><td>\(f'=0\) + 查端点</td><td>L10</td></tr>
+        <tr><td>求分位数</td><td>解 \(F(x)=p\)(积分后反解)</td><td>L09</td></tr>
+        <tr><td>MGF/PGF 取矩</td><td>在 0/1 处求导:\(M^{(n)}(0)=E[X^n]\)、\(P'(1)=E[N]\)</td><td>L32/L33</td></tr>
+        <tr><td>变换 \(Y=g(X)\)</td><td>CDF 法:算 \(F_Y\) 再求导;密度法:乘 \(|dx/dy|\)</td><td>L34/L35</td></tr>
+        <tr><td>联合分布概率/矩</td><td>二重积分:画区域 → 定限 → 必要时换序</td><td>L24–L30</td></tr>
+        <tr><td>边际/条件密度</td><td>对另一变量积分;条件 = 联合 ÷ 边际</td><td>L26/L29</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="fm">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">Exam FM</span><h2 class="sec-title">FM 的微积分落点(仅两处)</h2></div></div>
+    <div class="card accent">
+      <h3>利息力(L01)与久期(L08)</h3>
+      <div class="formula"><span class="name">Force of interest · 从余额函数到累积因子</span>
+        $$\delta_t = \frac{A'(t)}{A(t)} = \frac{d}{dt}\ln A(t) \qquad\qquad AV = \exp\!\Big(\int_{t_1}^{t_2} \delta_t\,dt\Big)$$</div>
+      <div class="formula"><span class="name">Duration · 价格对利率的导数</span>
+        $$D_{mod} = -\frac{P'(i)}{P(i)} \qquad\qquad \frac{\Delta P}{P} \approx -D_{mod}\,\Delta i + \frac{1}{2}C\,(\Delta i)^2$$</div>
+      <p class="dim">FM 只考"会积 \(\delta_t\)(多为多项式/\(\frac{a}{1+at}\) 型,后者积出 \(\ln\))"和"理解 \(P'(i)\)、\(P''(i)\) 是久期凸性的来源",不考复杂积分技巧。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam P · 微积分速查</b> · 手维护源页;公式增补直接改本页。配合 <a href="soa-exam-p-formulas.html">Σ 公式总表</a> 使用。</p>
+  </div>
+</footer>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+
+</body>
+</html>

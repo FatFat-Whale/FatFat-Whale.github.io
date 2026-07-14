@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L31 · 二元正态分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -234,7 +246,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -336,7 +347,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
             <ellipse rx="30" ry="12" fill="#16a34a" fill-opacity="0.16" stroke="#16a34a" stroke-width="1"/>
           </g>
           <line x1="45" y1="118" x2="195" y2="40" stroke="#15803d" stroke-width="2"/>
-          <text x="150" y="60" font-size="10" fill="#15803d">E[X|Y=y]</text>
+          <text x="146" y="36" font-size="10" fill="#15803d">E[X|Y=y]</text>
         </svg>
         <div class="cap"><b>条件均值 = 回归线</b>:随 \(y\) 线性上升,斜率 \(\rho\sigma_X/\sigma_Y\)</div>
       </div>
@@ -363,6 +374,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       条件方差 \(=\sigma_W^2(1-\rho^2)=400(1-0.7^2)=204\)。<br>
       故 \(P[W&lt;180\mid H=72]=\Phi\!\Big(\dfrac{180-168.4}{\sqrt{204}}\Big)=\Phi(0.812)=0.792\)。</p>
       <span class="ans">P[W&lt;180 | H=72] ≈ 0.792</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 条件均值:代 (31.1),沿回归线挪均值</td><td>\(E[W\mid H=h]=\mu_W+\rho\tfrac{\sigma_W}{\sigma_H}(h-\mu_H)=168.4\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 条件方差:代 (31.2),乘 \(1-\rho^2\),与 \(h\) 无关</td><td>\(\operatorname{Var}(W\mid H)=\sigma_W^2(1-\rho^2)=400(1-0.49)=204\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 条件分布仍是正态 → 标准化查 \(\Phi\) 表</td><td>\(P[W&lt;180\mid H=72]=\Phi\!\big(\tfrac{180-168.4}{\sqrt{204}}\big)=\Phi(0.812)\)</td><td class="xr"><span class="here">本章</span> · <a href="soa-exam-p-l21-normal-distribution.html">L21 正态 ↗</a></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>套路:</b>条件题三步——① 代 (31.1) 算条件均值;② 代 (31.2) 算条件方差(<b>别忘 \(1-\rho^2\)</b>);③ 标准化查 \(\Phi\)。方差里绝不出现 \(y\)。</span></div>
   </div>
@@ -526,40 +544,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 31 原文用词</span><h2 class="sec-title">二元正态 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"条件/相关"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 31</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">bivariate normal distribution</td><td class="ipa">/baɪˈvɛəriət/</td><td><span class="pos n">n.</span></td><td>二元正态分布</td><td class="root">bi-(二)+variate(变量)→ 两个正态变量的联合</td></tr>
-          <tr><td class="en">marginal distribution</td><td class="ipa">/ˈmɑːdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘分布</td><td class="root">单看 \(X\) 或 \(Y\) 自己的分布,二元正态里各自正态</td></tr>
-          <tr><td class="en">conditional distribution</td><td class="ipa">/kənˈdɪʃənəl/</td><td><span class="pos n">n.</span></td><td>条件分布</td><td class="root">给定 \(Y=y\) 后 \(X\) 的分布,仍正态</td></tr>
-          <tr><td class="en">correlation coefficient</td><td class="ipa">/ˌkɒrəˈleɪʃən/</td><td><span class="pos n">n.</span></td><td>相关系数 \(\rho\)</td><td class="root">\(\rho=\sigma_{XY}/(\sigma_X\sigma_Y)\),\(-1\le\rho\le1\)</td></tr>
-          <tr><td class="en">covariance</td><td class="ipa">/ˌkoʊˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>协方差 \(\sigma_{XY}\)</td><td class="root">co-(共)+variance;\(=\rho\sigma_X\sigma_Y\)</td></tr>
-          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">二元正态里 \(\Leftrightarrow\rho=0\)</td></tr>
-          <tr><td class="en">linear combination</td><td class="ipa">/ˈlɪniər/</td><td><span class="pos n">n.</span></td><td>线性组合</td><td class="root">\(aX+bY\);二元正态的线性组合仍正态</td></tr>
-          <tr><td class="en">standard deviation</td><td class="ipa">/ˌdiːviˈeɪʃən/</td><td><span class="pos n">n.</span></td><td>标准差 \(\sigma\)</td><td class="root">方差开方;条件标准差 \(\sigma_X\sqrt{1-\rho^2}\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">follow a bivariate normal distribution</div><div class="z">服从二元正态分布</div></div>
-        <div class="ph"><div class="e">with correlation (coefficient) ρ …</div><div class="z">相关系数为 ρ……</div></div>
-        <div class="ph"><div class="e">conditional variance of X given Y</div><div class="z">给定 Y 时 X 的条件方差</div></div>
-        <div class="ph"><div class="e">E[X | Y = y]</div><div class="z">给定 Y=y 时 X 的期望(条件均值)</div></div>
-        <div class="ph"><div class="e">common variance …</div><div class="z">公共(相同)方差……</div></div>
-        <div class="ph"><div class="e">a linear function of x</div><div class="z">x 的线性函数(暗示条件均值)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -599,5 +583,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

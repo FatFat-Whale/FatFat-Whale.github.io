@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<!--
+  Exam P 习题串讲 E04:条件与更新全景(L01–L04 / L06 / L14 / L16)。
+  概念卡弹窗内容是构建时快照:概念卡 .md 修改后重跑
+      python3 _Meta/tools/build-exam-p-e01-cards.py
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam P · E04 你是核保员:条件与更新全景 L01–L16</title>
+<script>
+MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --accent:#9d174d; --accent-deep:#6b1035; --accent-soft:#fbe8ef; --hi:#ffd23f;
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#fbfaf7; --card:#ffffff; --line:#e2e0d8; --grid:#f0efe9;
+    --pos:#0e8a6d; --pos-fill:rgba(14,138,109,.12);
+    --neg:#bb2649; --neg-fill:rgba(187,38,73,.10);
+    --blue:#3b66c4; --blue-fill:rgba(59,102,196,.10);
+    --disc:#5b53c4; --disc-soft:#edebfa;
+    --cont:#b8860b; --cont-soft:#f7efdc;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC","Noto Serif SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       line-height:1.8;font-size:16px;-webkit-font-smoothing:antialiased}
+  .bar{background:linear-gradient(180deg,#16243d,#1d3050);color:#fff;border-bottom:3px solid var(--hi);
+       padding:14px 24px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:17px}
+  .bar .logo b{color:var(--hi)}
+  .bar .tagline{font-family:var(--mono);font-size:12px;color:#cdd6e6}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 24px 90px}
+  h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.35}
+  h1{font-size:29px;margin:0 0 8px}
+  h1 em{font-style:normal;color:var(--accent-deep)}
+  h2{font-size:22px;margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
+  .act-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--mute);margin-top:40px}
+  .thesis{color:var(--ink-soft);max-width:46em;margin:0 0 6px}
+  .thesis strong{color:var(--ink)}
+  .howto{font-size:14px;color:var(--accent-deep);background:var(--accent-soft);
+         border-radius:8px;padding:8px 14px;margin:14px 0 4px;max-width:46em}
+  .chain{font-size:13.5px;color:var(--mute);margin:10px 0 0}
+  .chain a{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .chain a:hover{border-bottom-color:var(--accent-deep)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:8px;
+     padding:20px 24px 16px;margin:24px 0}
+  .q-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .q-no{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--accent);white-space:nowrap}
+  .q-title{font-weight:700;font-size:17px}
+  .chips{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid rgba(157,23,77,.35);border-radius:10px;padding:1px 9px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:#f5d5e3}
+  .chip::after{content:" ▸";opacity:.6}
+  .scene{color:var(--ink-soft);font-size:15px;margin:4px 0 8px}
+  .scene::before{content:"场景 · ";color:var(--ink);font-weight:600}
+  .ask{margin:8px 0;font-weight:600}
+  .ask::before{content:"问:";color:var(--accent)}
+  .solve{margin:8px 0 4px}
+  .solve ol{margin:6px 0;padding-left:22px}
+  .solve li{margin:4px 0}
+  .takeaway{border-left:3px solid var(--pos);padding:2px 0 2px 12px;font-size:14.5px;margin:12px 0 4px}
+  .takeaway strong{color:var(--pos)}
+  .warn{border-left-color:var(--neg)}
+  .warn strong{color:var(--neg)}
+  var,.f{font-family:Georgia,"Times New Roman",serif;font-style:italic}
+  .formula{font-family:Georgia,"Times New Roman",serif;background:var(--accent-soft);border-radius:6px;
+           padding:8px 14px;margin:10px 0;overflow-x:auto;font-size:15.5px}
+  table{border-collapse:collapse;margin:12px 0;font-size:14.5px;font-variant-numeric:tabular-nums}
+  th,td{padding:6px 12px;border:1px solid var(--line);text-align:center}
+  th{font-size:13px;color:var(--mute);font-weight:600;background:var(--grid)}
+  td.hl-pos{background:var(--pos-fill);font-weight:600}
+  td.hl-disc{background:var(--disc-soft)}
+  td.hl-cont{background:var(--cont-soft)}
+  .tbl-wrap{overflow-x:auto}
+  table.map td{text-align:left}
+  table.map td:first-child{white-space:nowrap;font-weight:600}
+  figure{margin:16px 0 4px}
+  figure svg{display:block;margin:0 auto;max-width:100%}
+  figcaption{font-size:13px;color:var(--mute);margin-top:6px;text-align:center}
+  svg text{font-family:var(--sans);fill:var(--ink-soft);font-size:11px}
+  svg text.dark{fill:var(--ink);font-weight:600}
+  svg text.small{font-size:9.5px;fill:var(--mute)}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  @media(max-width:640px){.chips{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="logo">Exam&nbsp;P · <b>习题串讲</b></span>
+  <span class="tagline">E04 · conditioning, one move seven faces · L01/02/03/04/06/14/16</span>
+</div>
+
+<div class="wrap">
+  <h1>你是核保员:<em>条件与更新全景 L01–L16</em></h1>
+  <p class="thesis">从 L03 到 L16 看似散落的七个考点——条件概率、全概率、贝叶斯、条件 pmf、条件密度、条件期望、塔式——其实全书只有<strong>一个动作</strong>:条件 B 一到,B 外的世界作废,剩下的概率整体 ÷ P[B] 重新归一。这一页先看清这个动作,再分组辨析最易混的独立/互斥与正反两个方向,最后你坐上核保员的位子,用一池骑手把七副面孔逐一召唤。</p>
+  <p class="howto">💡 概念标签可点弹卡;所有数字手算可验;记住一句话:<b>条件化 = 砍掉样本空间,再归一</b>——七副面孔都是它。</p>
+  <p class="chain">配套章节:
+    <a href="soa-exam-p-l01-sets.html">L01 集合</a> ·
+    <a href="soa-exam-p-l02-combinatorics.html">L02 计数</a> ·
+    <a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率</a> ·
+    <a href="soa-exam-p-l04-bayes-theorem.html">L04 贝叶斯</a> ·
+    <a href="soa-exam-p-l06-conditional-probability-rv.html">L06 随机变量条件概率</a> ·
+    <a href="soa-exam-p-l14-conditional-moments.html">L14 条件矩</a> ·
+    <a href="soa-exam-p-l16-double-expectation.html">L16 双重期望</a></p>
+
+  <div class="act-tag">第一幕 · 全景</div>
+  <h2>整个主题就一个动作:砍,再归一</h2>
+
+  <figure><svg viewBox="0 0 640 200" role="img" aria-label="条件化示意:样本空间被条件B砍剩一块,剩余概率整体除以P[B]重新归一">
+    <defs><clipPath id="clipB"><rect x="134" y="42" width="110" height="122"/></clipPath></defs>
+    <text x="24" y="30" class="dark">Ω 全体(条件到来之前)</text>
+    <rect x="24" y="42" width="220" height="122" fill="#ffffff" stroke="#16243d" stroke-width="1.5"/>
+    <rect x="134" y="42" width="110" height="122" fill="#9d174d" fill-opacity="0.08"/>
+    <line x1="134" y1="42" x2="134" y2="164" stroke="#9d174d" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <circle cx="134" cy="110" r="42" fill="rgba(59,102,196,.08)" stroke="#3b66c4" stroke-width="2"/>
+    <circle cx="134" cy="110" r="42" clip-path="url(#clipB)" fill="#9d174d" fill-opacity="0.28"/>
+    <text x="106" y="104" text-anchor="middle" class="dark">A</text>
+    <text x="143" y="114" class="small">A∩B</text>
+    <text x="226" y="60" text-anchor="middle" class="dark">B</text>
+    <line x1="258" y1="103" x2="362" y2="103" stroke="#16243d" stroke-width="1.5"/>
+    <polygon points="372,103 362,98 362,108" fill="#16243d"/>
+    <text x="316" y="88" text-anchor="middle" class="small">砍掉 B 外的一切</text>
+    <text x="316" y="124" text-anchor="middle" class="small">剩下的 ÷ P[B] 归一</text>
+    <text x="396" y="30" class="dark">条件世界:B 就是新的 Ω</text>
+    <rect x="396" y="42" width="180" height="122" fill="#fbe8ef" stroke="#16243d" stroke-width="1.5"/>
+    <path d="M396 66 A44 44 0 0 1 396 154 Z" fill="#9d174d" fill-opacity="0.25"/>
+    <path d="M396 66 A44 44 0 0 1 396 154" fill="none" stroke="#3b66c4" stroke-width="2"/>
+    <text x="404" y="114" class="dark">A|B</text>
+    <text x="500" y="114" text-anchor="middle" class="small">面积全体 ×1/P[B]</text>
+  </svg><figcaption>条件化的全部内容:B 一发生,B 外作废;B 内的一切<b>原比例保留</b>,统一 ÷ P[B],让新世界的总概率回到 1。</figcaption></figure>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">全景</span><span class="q-title">一个动作,七副面孔</span>
+      <span class="chips"><button class="chip" data-card="条件概率">条件概率 · L03</button><button class="chip" data-card="随机变量的条件分布">条件分布 · L06</button><button class="chip" data-card="全期望公式">全期望 · L16</button></span></div>
+    <p><b>动作本尊</b>(全书通用):</p>
+    <div class="formula">$$P[A\mid B]=\frac{P[A\cap B]}{P[B]}$$</div>
+    <p><b>白话</b>:分子是"B 世界里还活着的 A",分母是"新世界的总地盘"——除一下,只是让新世界的概率总和回到 1,B 内各事件的<b>相对比例一丝没动</b>。</p>
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th>面孔</th><th>公式</th><th>同一动作的哪个化身</th></tr>
+      <tr><td>条件概率 · L03</td><td>$P[A\mid B]=\dfrac{P[A\cap B]}{P[B]}$</td><td>动作本尊:留下 B 内的 A,除以新地盘</td></tr>
+      <tr><td>全概率 · L04</td><td>$P[A]=\sum_i P[B_i]\,P[A\mid B_i]$</td><td>反向拼图:各条件世界的答案按地盘大小加权拼回全局</td></tr>
+      <tr><td>贝叶斯 · L04</td><td>$P[B_k\mid A]=\dfrac{P[B_k]\,P[A\mid B_k]}{\sum_i P[B_i]\,P[A\mid B_i]}$</td><td>方向翻转:同一块 $P[B_k\cap A]$,换个分母重新归一</td></tr>
+      <tr><td>条件 pmf · L06</td><td>$p_{X\mid X&gt;d}(x)=\dfrac{p(x)}{P[X&gt;d]}$</td><td>砍支撑:留下的每根柱子同除以幸存概率</td></tr>
+      <tr><td>条件密度 · L14</td><td>$f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}$</td><td>切薄片:联合密度切一刀,除以这片的总量</td></tr>
+      <tr><td>条件期望 · L14</td><td>$E[X\mid B]=\sum_x x\,p_{X\mid B}(x)$</td><td>条件世界里照常算平均——先砍再归一,然后一切照旧</td></tr>
+      <tr><td>塔式 · L16</td><td>$E[X]=E\bigl[E[X\mid Y]\bigr]$</td><td>全概率的期望版:各世界的平均再按地盘加权平均</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>一条主线背到底:</strong>前三副面孔管"事件"(砍、拼、翻),后四副把同一动作照进"随机变量"(砍 pmf、砍密度、条件世界算平均、平均再拼回)。考纲七个考点,肌肉只有一块。</div>
+  </div>
+
+  <div class="act-tag">第二幕 · 分组对比</div>
+  <h2>三对最易混:先分清,再动手</h2>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">辨析①</span><span class="q-title">互斥 vs 独立:势不两立 ≠ 互不打听</span>
+      <span class="chips"><button class="chip" data-card="互斥事件">互斥 · L01</button><button class="chip" data-card="事件独立性">独立 · L03</button><button class="chip" data-card="条件概率">条件概率 · L03</button></span></div>
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th></th><th>互斥(mutually exclusive)</th><th>独立(independent)</th></tr>
+      <tr><td>定义</td><td>$A\cap B=\varnothing$,即 $P[A\cap B]=0$</td><td>$P[A\cap B]=P[A]\,P[B]$</td></tr>
+      <tr><td>白话</td><td><b>势不两立</b>:一个发生,另一个必没发生</td><td><b>互不打听</b>:知道 B 发生了,对 A 的看法丝毫不变</td></tr>
+      <tr><td>条件概率视角</td><td>$P[A\mid B]=0$——B 一发生 A 判死刑</td><td>$P[A\mid B]=P[A]$——条件化前后 A 的概率不动</td></tr>
+      <tr><td>关系强弱</td><td>是<b>极强的负关联</b>,不是"没关系"</td><td>才是真正的"没关系"</td></tr>
+    </table>
+    </div>
+    <div class="solve"><ol>
+      <li><b>一句话判死</b>:若 $A$、$B$ 互斥且 $P[A]&gt;0$、$P[B]&gt;0$,则 $P[A\cap B]=0\neq P[A]P[B]&gt;0$ —— <b>互斥 + 都可能发生 ⇒ 一定不独立</b>。</li>
+      <li><b>数值验一遍</b>:$P[A]=0.3$、$P[B]=0.4$ 且互斥 → $P[A\cap B]=0$,而独立要求 $0.3\times0.4=0.12$。$0\neq0.12$,判完。</li>
+    </ol></div>
+    <div class="takeaway warn"><strong>考场高频陷阱:</strong>题干给 "mutually exclusive" 却下意识用乘法 $P[A]P[B]$ 算交集——互斥的交集概率是 0,乘法公式 $P[A\cap B]=P[A]P[B]$ 只属于独立。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">辨析②</span><span class="q-title">全概率是正向加权,贝叶斯是逆向行树</span>
+      <span class="chips"><button class="chip" data-card="全概率公式">全概率 · L04</button><button class="chip" data-card="贝叶斯定理">贝叶斯 · L04</button></span></div>
+
+    <figure><svg viewBox="0 0 540 190" role="img" aria-label="两层树:根节点Ω分到三个分组B1到B3,每组再引出事件A,右侧是路径乘积">
+      <text x="134" y="16" text-anchor="middle" class="small">先验(分地盘)</text>
+      <text x="307" y="16" text-anchor="middle" class="small">似然(条件世界里 A 的概率)</text>
+      <text x="408" y="16" class="small">路径乘积</text>
+      <text x="40" y="109" text-anchor="middle" class="dark">Ω</text>
+      <line x1="56" y1="101" x2="208" y2="47" stroke="#46566f" stroke-width="1.4"/>
+      <line x1="56" y1="105" x2="208" y2="105" stroke="#46566f" stroke-width="1.4"/>
+      <line x1="56" y1="109" x2="208" y2="163" stroke="#46566f" stroke-width="1.4"/>
+      <text x="120" y="62" text-anchor="middle">P[B₁]</text>
+      <text x="132" y="95" text-anchor="middle">P[B₂]</text>
+      <text x="116" y="155" text-anchor="middle">P[B₃]</text>
+      <text x="224" y="49" text-anchor="middle" class="dark">B₁</text>
+      <text x="224" y="109" text-anchor="middle" class="dark">B₂</text>
+      <text x="224" y="169" text-anchor="middle" class="dark">B₃</text>
+      <line x1="240" y1="45" x2="374" y2="45" stroke="#46566f" stroke-width="1.4"/>
+      <line x1="240" y1="105" x2="374" y2="105" stroke="#46566f" stroke-width="1.4"/>
+      <line x1="240" y1="165" x2="374" y2="165" stroke="#46566f" stroke-width="1.4"/>
+      <text x="307" y="35" text-anchor="middle">P[A|B₁]</text>
+      <text x="307" y="95" text-anchor="middle">P[A|B₂]</text>
+      <text x="307" y="155" text-anchor="middle">P[A|B₃]</text>
+      <text x="386" y="49" text-anchor="middle" class="dark">A</text>
+      <text x="386" y="109" text-anchor="middle" class="dark">A</text>
+      <text x="386" y="169" text-anchor="middle" class="dark">A</text>
+      <text x="408" y="49" fill="#6b1035">P[B₁]·P[A|B₁]</text>
+      <text x="408" y="109" fill="#6b1035">P[B₂]·P[A|B₂]</text>
+      <text x="408" y="169" fill="#6b1035">P[B₃]·P[A|B₃]</text>
+    </svg><figcaption>两层树:第一层按先验分地盘,第二层在各条件世界里给出 A 的出险率。<b>全概率 = 三条路径乘积之和;贝叶斯 = 目标那条路径 ÷ 总和</b>(沿树逆行)。</figcaption></figure>
+
+    <div class="formula">$$P[A]=\sum_i P[B_i]\,P[A\mid B_i]\qquad\text{(正向:加权平均)}$$</div>
+    <p><b>白话</b>:整体的 A 概率,就是各组 A 概率按"组的人口占比"加权平均——没有任何新内容,只是把砍出来的各个世界<b>拼回去</b>。</p>
+    <div class="formula">$$P[B_k\mid A]=\frac{P[B_k]\,P[A\mid B_k]}{\sum_i P[B_i]\,P[A\mid B_i]}\qquad\text{(逆向:一条路径 ÷ 全部路径)}$$</div>
+    <p><b>白话</b>:已知 A 发生了,问"走的是哪条路来的"——分子是目标路径的重量,分母是所有能到达 A 的路径总重量。它不是新公式,是条件概率定义在"A 当条件"方向上的重写。</p>
+    <div class="takeaway"><strong>方向感:</strong>全概率从"因"算"果"(正着走树),贝叶斯从"果"猜"因"(逆着走树);两者共用同一批路径乘积,算一次全概率,贝叶斯的分母就白送了。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">辨析③</span><span class="q-title">贝叶斯表格法:先验 × 似然 → 归一</span>
+      <span class="chips"><button class="chip" data-card="贝叶斯定理">贝叶斯 · L04</button><button class="chip" data-card="先验后验概率">先验后验 · L04</button></span></div>
+    <p class="scene">口袋里两枚硬币:一枚均匀,一枚双头。随手摸一枚掷出——正面。它是双头币的概率?</p>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>假设</th><th>先验</th><th>似然 P[正面|假设]</th><th>乘积</th><th>后验(÷0.75)</th></tr>
+      <tr><td>双头币</td><td>0.5</td><td>1</td><td>0.50</td><td class="hl-pos">2/3</td></tr>
+      <tr><td>均匀币</td><td>0.5</td><td>0.5</td><td>0.25</td><td>1/3</td></tr>
+      <tr><td>合计</td><td>1</td><td>—</td><td>0.75</td><td>1</td></tr>
+    </table>
+    </div>
+    <div class="solve"><ol>
+      <li><b>抄先验</b>:摸哪枚是五五开,各 0.5。</li>
+      <li><b>乘似然</b>:双头币掷正面概率 1,均匀币 0.5 → 乘积列 0.50 / 0.25。</li>
+      <li><b>列和归一</b>:$0.50+0.25=0.75$;后验 $=0.50/0.75=\mathbf{2/3}$ 与 $0.25/0.75=1/3$。</li>
+    </ol></div>
+    <p><b>白话</b>:乘积列就是上面那棵树每条路径的"粗重量";归一那一步,就是把重量表压成概率表——又是那个动作:砍到"正面已发生"的世界,再 ÷ 总量。</p>
+    <div class="takeaway"><strong>考场标配三步:</strong>抄先验 → 乘似然 → 列和归一。贝叶斯题永远不用背公式,画这张三列表,机械填数就出答案。</div>
+  </div>
+
+  <div class="act-tag">第三幕 · 贯穿场景 · 你是核保员</div>
+  <h2>底座:200 名骑手,三档风险</h2>
+  <p class="thesis">你是一家保险公司的核保员,接手一池 <strong>200 名外卖骑手</strong>的意外险组合:<strong>低风险 100 人、中风险 60 人、高风险 40 人</strong>(先验占比 0.5 / 0.3 / 0.2),历史年出险率分别 <strong>2% / 5% / 10%</strong>。下面五问,每问召唤一副面孔。</p>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q1</span><span class="q-title">集合与容斥:两样都买的有几人</span>
+      <span class="chips"><button class="chip" data-card="容斥原理">容斥 · L01</button><button class="chip" data-card="德摩根定律">德摩根 · L01</button><button class="chip" data-card="概率公理">概率公理 · L01</button></span></div>
+    <p class="scene">200 人里,120 人加购了第三者责任险(记 $A$),90 人加购了人身意外险(记 $B$),30 人两样附加险<b>都没买</b>。</p>
+    <p class="ask">既买 $A$ 又买 $B$ 的有多少人?</p>
+    <div class="solve"><ol>
+      <li><b>先翻译"都没买"</b>(德摩根):$A^c\cap B^c=(A\cup B)^c$ → 至少买一样的 $|A\cup B|=200-30=170$。</li>
+      <li><b>容斥</b>:$|A\cap B|=|A|+|B|-|A\cup B|=120+90-170=\mathbf{40}$ 人。</li>
+      <li><b>顺手画满四格</b>:只买 $A$ 的 $120-40=80$,只买 $B$ 的 $90-40=50$;对账 $80+50+40+30=200$ ✓。</li>
+    </ol></div>
+    <div class="formula">$$P[A\cup B]=P[A]+P[B]-P[A\cap B]$$</div>
+    <p><b>白话</b>:直接相加,交集被数了两次,减回来一次——"加两次,减一次"。</p>
+    <div class="takeaway"><strong>读题先翻译:</strong>"都没" = 并集的补(德摩根),"至少一样" = 并集,"既…又" = 交集;翻译完,容斥一行出数。这是后面一切条件化的地皮测量课。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q2</span><span class="q-title">条件概率:已知出险,他来自哪组</span>
+      <span class="chips"><button class="chip" data-card="条件概率">条件概率 · L03</button><button class="chip" data-card="先验后验概率">先验后验 · L04</button></span></div>
+    <p class="scene">按历史出险率,今年这池骑手预计出险:低风险 $100\times2\%=2$ 人、中风险 $60\times5\%=3$ 人、高风险 $40\times10\%=4$ 人,共 9 人。</p>
+    <p class="ask">接到一条出险报案,报案人来自高风险组的概率?再问:从这 9 个出险者里抽 2 人做案例复盘,恰好都来自高风险组的概率?</p>
+    <div class="solve"><ol>
+      <li><b>砍样本空间</b>:条件"已出险"一到,分母从全体 200 换成出险的 9 人。</li>
+      <li><b>新世界里数数</b>:$P[\text{高}\mid \text{出险}]=\dfrac{4}{9}\approx\mathbf{0.444}$。先验 0.2 → 后验 0.444:一条报案让"高风险"的嫌疑翻倍还多。</li>
+      <li><b>条件世界里照常计数</b>(L02 在新地盘原样适用):$\dfrac{\binom{4}{2}}{\binom{9}{2}}=\dfrac{6}{36}=\dfrac{1}{6}$。</li>
+    </ol></div>
+    <div class="takeaway"><strong>条件概率不神秘:</strong>就是换分母。用"人头数"算最踏实——砍完的世界还是个普通样本空间,L01 的集合、L02 的计数全部照用。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q3</span><span class="q-title">全概率:整池的出险率报给精算部</span>
+      <span class="chips"><button class="chip" data-card="全概率公式">全概率 · L04</button><button class="chip" data-card="条件概率">条件概率 · L03</button></span></div>
+    <p class="scene">精算部要一个数:随机抽一名骑手,今年出险的概率 $P[A]$。</p>
+    <p class="ask">三组出险率 2% / 5% / 10% 怎么合成一个整体数?</p>
+    <div class="solve"><ol>
+      <li><b>按地盘加权</b>:$P[A]=0.5(0.02)+0.3(0.05)+0.2(0.10)$。</li>
+      <li><b>逐项算</b>:$=0.010+0.015+0.020=\mathbf{0.045}$。</li>
+      <li><b>头数对账</b>:Q2 里数过,预计出险 $2+3+4=9$ 人,$9/200=0.045$ ✓——全概率就是那次数数的概率化写法。</li>
+    </ol></div>
+    <p><b>白话</b>:整体出险率不是三个数的简单平均(那是 5.67%),而是<b>按人口占比的加权平均</b>——低风险组人多,把整体拉向 2% 那头。</p>
+    <div class="takeaway"><strong>全概率 = 加权平均,权重 = 先验地盘。</strong>看到"分几组、各组给条件概率、求总体"就写 $\sum P[B_i]P[A\mid B_i]$,别多想。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q4</span><span class="q-title">贝叶斯表格法:体检阳性 = 真高风险?</span>
+      <span class="chips"><button class="chip" data-card="贝叶斯定理">贝叶斯 · L04</button><button class="chip" data-card="先验后验概率">先验后验 · L04</button><button class="chip" data-card="全概率公式">全概率 · L04</button></span></div>
+    <p class="scene">新骑手入池要做"高风险体质"筛查:真高风险者 90% 呈阳性(灵敏度),非高风险者也有 15% 假阳性。新骑手先验:高风险 0.2,非高风险 0.8。</p>
+    <p class="ask">某新骑手筛查<b>阳性</b>,他真是高风险的概率?</p>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>假设</th><th>先验</th><th>似然 P[阳性|假设]</th><th>乘积</th><th>后验(÷0.30)</th></tr>
+      <tr><td>高风险</td><td>0.2</td><td>0.90</td><td>0.18</td><td class="hl-pos">0.60</td></tr>
+      <tr><td>非高风险</td><td>0.8</td><td>0.15</td><td>0.12</td><td>0.40</td></tr>
+      <tr><td>合计</td><td>1</td><td>—</td><td>0.30</td><td>1</td></tr>
+    </table>
+    </div>
+    <div class="solve"><ol>
+      <li><b>三步表格</b>:抄先验(0.2 / 0.8)→ 乘似然(0.90 / 0.15)→ 乘积 0.18 / 0.12,列和 0.30。</li>
+      <li><b>归一</b>:$P[\text{高}\mid\text{阳性}]=\dfrac{0.18}{0.30}=\mathbf{0.60}$。</li>
+      <li><b>假阳性直觉(头数版)</b>:200 名新骑手 → 高风险 40 人中 36 人阳性;非高风险 160 人中 $160\times15\%=24$ 人<b>假</b>阳性。阳性共 60 人,真高风险占 $36/60=0.60$ ✓。</li>
+    </ol></div>
+    <div class="takeaway warn"><strong>基础率陷阱:</strong>检测灵敏度 90%,不等于"阳性者 90% 是高风险"——假阳性虽然率低(15%),却乘在 0.8 的大基数上,凑出 24 人的假阳大军。先验(基础率)永远在分母里说话。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q5</span><span class="q-title">条件期望与塔式:分组定价,拼回全局</span>
+      <span class="chips"><button class="chip" data-card="条件期望">条件期望 · L14</button><button class="chip" data-card="全期望公式">全期望 · L16</button><button class="chip" data-card="全方差公式">全方差 · L16</button></span></div>
+    <p class="scene">定价部要"每骑手年期望赔付" $E[X]$。分组数据:出险后平均赔付,低风险 5000 元、中风险 8000 元、高风险 10000 元(出险率仍是 2% / 5% / 10%)。</p>
+    <p class="ask">先算各组的 $E[X\mid\text{组}]$,再用塔式合成 $E[X]$,最后用总账验算。</p>
+    <div class="solve"><ol>
+      <li><b>组内先条件一次</b>(是否出险):$E[X\mid\text{低}]=0.02\times5000=100$;$E[X\mid\text{中}]=0.05\times8000=400$;$E[X\mid\text{高}]=0.10\times10000=1000$ 元。</li>
+      <li><b>塔式拼回</b>:$E[X]=E\bigl[E[X\mid\text{组}]\bigr]=0.5(100)+0.3(400)+0.2(1000)=50+120+200=\mathbf{370}$ 元。</li>
+      <li><b>总账验算</b>:全池年期望总赔付 $100\times100+60\times400+40\times1000=10000+24000+40000=74000$ 元,÷200 人 $=370$ ✓。</li>
+      <li><b>看清套娃</b>:第 ① 步本身又是一次条件化(条件在"出险"),第 ② 步再条件在"组"——同一个动作,砍两刀,拼两次。</li>
+    </ol></div>
+    <div class="formula">$$E[X]=E\bigl[E[X\mid Y]\bigr]$$</div>
+    <p><b>白话</b>:塔式就是全概率的期望版——每个条件世界先关起门算自家平均,再按地盘大小把各家平均加权拼回全局。要波动就再上一层 EVVE(全方差):组内方差的平均 + 组均值的方差。</p>
+    <div class="takeaway"><strong>分层给数就上塔:</strong>题干一旦"先分组、组内再给率/均值",期望用 $E[E[X\mid Y]]$,方差用 EVVE——L16 的两座塔,地基都是本页这个动作。</div>
+  </div>
+
+  <div class="act-tag">收官 · 速查</div>
+  <h2>读题 30 秒:该召唤哪副面孔</h2>
+  <div class="q">
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th style="width:38%">题面信号</th><th>用哪副面孔</th></tr>
+      <tr><td>"given / 已知… / among those who…"</td><td>条件概率:换分母,砍样本空间再归一(L03)</td></tr>
+      <tr><td>"至少一个 / 都没 / 既…又…"</td><td>先用德摩根 + 容斥把集合翻译清楚,再谈概率(L01)</td></tr>
+      <tr><td>分几组,各组给条件概率,求总体</td><td>全概率:先验加权平均(L04)</td></tr>
+      <tr><td>已知结果,反问来源/原因</td><td>贝叶斯表格法:抄先验 × 乘似然 → 归一(L04)</td></tr>
+      <tr><td>"mutually exclusive" / "independent" 字样</td><td>先辨析:互斥 $P[A\cap B]=0$;独立 $P[A\cap B]=P[A]P[B]$——别拿互斥当独立乘(L01/L03)</td></tr>
+      <tr><td>已知 $X&gt;d$ 或 $X$ 落某区间,求分布/概率</td><td>条件 pmf / 条件密度:截断支撑,同除以 $P[X&gt;d]$(L06/L14)</td></tr>
+      <tr><td>分层给出组内均值/方差,求总均值/总方差</td><td>塔式 $E[E[X\mid Y]]$ + EVVE(L16)</td></tr>
+    </table>
+    </div>
+    <p style="color:var(--mute);font-size:14px">自测:合上页面,把三组人数改成 120/50/30、出险率改成 1%/4%/12%,Q2–Q5 重算一遍;再把 Q4 的假阳性降到 5%(先验不动),看后验从 0.60 跳到多少(应得 $0.18/0.22=9/11\approx0.82$)。</p>
+  </div>
+
+</div>
+
+<!-- ===== 概念卡弹窗 ===== -->
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
+      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
+    </div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
+    </div>
+  </div>
+</div>
+<!--CARD_POPUP_HTML_END-->
+
+<footer style="text-align:center;color:var(--mute);font-size:12.5px;padding:20px 0 40px">
+  E04 习题串讲 · 自编场景(非 ASM 原题)· 概念卡快照自 <span style="font-family:var(--mono)">10-Finance/Concepts/</span>,卡片更新后重跑 build-exam-p-e01-cards.py
+</footer>
+
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "乘法公式": {
+  "kind": "c",
+  "en": "MultiplicationRule",
+  "aliases": [
+   "multiplication rule",
+   "乘法律",
+   "乘法定理"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求\"两件事都发生\"的主力公式:交集概率 = 第一步的概率 × 第一步之下第二步的条件概率。由条件概率定义两边乘 \\(P[B]\\) 直接变形而来。</p><p><strong>白话</strong>:闯两道关卡才算通关:总通关率 = 第一关的通过率 × \"已过第一关的人\"里第二关的通过率。第二关的分母已经缩成过了第一关的那批人——所以乘的是条件概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cap B]=P[B]\\,P[A\\mid B]=P[A]\\,P[B\\mid A]$$</div><ul><li>哪个事件当\"第一步\"都行,选条件概率已知的那一边。</li><li><strong>连抽不放回就是连乘</strong>:每抽一步世界缩一次、概率乘一次;可链式推广 \\(P[A_1\\cap A_2\\cap A_3]=P[A_1]\\,P[A_2\\mid A_1]\\,P[A_3\\mid A_1\\cap A_2]\\)。</li><li>高频坑:题面给 \\(P[A\\mid B]\\) 却问 \\(P[A\\cap B]\\)(要乘 \\(P[B]\\)),或反过来——别把条件概率当交集概率用。</li><li>独立时退化为 \\(P[A\\cap B]=P[A]P[B]\\)(条件概率=无条件概率)。</li></ul><p><strong>算一遍</strong>:袋里 3 红 2 白,不放回连摸两颗,求两颗全红。</p><ul><li>第一步:\\(P[\\text{红}_1]=3/5\\)。</li><li>第二步:摸走一颗红后剩 2 红 2 白,\\(P[\\text{红}_2\\mid\\text{红}_1]=2/4=1/2\\)。</li><li>相乘:\\(\\dfrac{3}{5}\\times\\dfrac{1}{2}=\\dfrac{3}{10}\\)——世界缩一次、概率乘一次。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 定义 \\(P[A\\mid B]=P[A\\cap B]/P[B]\\) 两边乘 \\(P[B]\\) 的变形</li><li><a class=\"net-wl\" data-id=\"事件独立性\">事件独立性</a> — 独立时条件项退化为无条件项,交集直接相乘</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 每条分支先用乘法公式算 \\(P[B_i]\\,P[A\\mid B_i]\\) 再求和</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 分子与分母各项都是乘法公式展开的交集概率</li></ul>"
+ },
+ "事件独立性": {
+  "kind": "c",
+  "en": "IndependentEvents",
+  "aliases": [
+   "independence",
+   "independent events",
+   "mutually independent",
+   "pairwise independent",
+   "独立事件"
+  ],
+  "level": "advanced",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>事件 B 发生与否完全不改变 A 的概率,称 A 与 B <strong>独立</strong>——\"知道 B\"不带来任何信息,交集概率恰等于两者概率的乘积。</p><p><strong>白话</strong>:窗外下不下雨,和你抛硬币出不出正面,互不相干——知道下雨了,对猜硬币毫无帮助,这就是独立。验证只看一条:两件事一起发生的概率,是否恰好等于各自概率相乘。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cap B]=P[A]\\,P[B]\\;\\Longleftrightarrow\\;P[A\\mid B]=P[A]\\;\\Longleftrightarrow\\;P[B\\mid A]=P[B]$$</div><ul><li><strong>补集也独立</strong>:若 \\(A,B\\) 独立,则 \\(A',B\\)、\\(A,B'\\)、\\(A',B'\\) 也都独立。</li><li><strong>独立 ≠ 互斥</strong>(最大陷阱):互斥是 \\(P[A\\cap B]=0\\)\"势不两立\";两个非零概率事件若互斥,则<strong>一定不独立</strong>(知道 A 发生 ⇒ B 概率骤降为 0,信息量极大)。</li><li>多事件:<strong>相互独立</strong>要求任意子集的交都等于乘积 \\(P[\\bigcap A_i]=\\prod P[A_i]\\),强于<strong>两两独立</strong>;经典反例(两枚硬币:1号正面 / 2号正面 / 恰一正面)两两独立但不相互独立。</li><li>判独立只验一条:\\(P[A\\cap B]\\stackrel{?}{=}P[A]P[B]\\)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 偶数(\\(P=1/2\\)),\\(B=\\) 点数 \\(\\le 2\\)(\\(P=1/3\\))。</p><ul><li>交集:\\(A\\cap B=\\{2\\}\\),\\(P=1/6\\)。</li><li>乘积:\\(\\dfrac12\\times\\dfrac13=\\dfrac16\\),相等 → 独立。知道\"\\(\\le 2\\)\"没改变偶数的机会:\\(\\{1,2\\}\\) 里偶数照样占一半。</li><li>换 \\(B=\\) 点数 \\(\\le 3\\)(\\(P=1/2\\)):交集仍 \\(\\{2\\}\\)、\\(P=1/6\\ne \\dfrac12\\times\\dfrac12=\\dfrac14\\) → 不独立。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 独立 ⟺ \\(P[A\\mid B]=P[A]\\):条件不带来信息的特例</li><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 独立时条件概率退化,交集直接相乘</li><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 最易混对照:互斥=交为零,几乎与独立相反</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 同一思想从事件推广到随机变量</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 独立性进入期望运算后的直接后果</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"独立性判定清单\">独立性判定清单</a> — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ },
+ "互斥事件": {
+  "kind": "c",
+  "en": "MutuallyExclusiveEvents",
+  "aliases": [
+   "互斥",
+   "互斥事件",
+   "不相容事件",
+   "mutually exclusive"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>两事件满足 \\(A\\cap B=\\varnothing\\),即不可能同时发生(Venn 图上两圆不相交)。</p><p><strong>白话</strong>:掷一次骰子,\"出 1 点\"和\"出 6 点\"不可能一起来——一次只能朝上一个面。两件事势不两立,问\"其中之一发生\"的概率,直接把两个概率相加即可。</p><h4>关键性质 / 公式</h4><ul><li>互斥 \\(\\Rightarrow P[A\\cup B]=P[A]+P[B]\\)(容斥里交集项为 0)。</li><li><strong>互斥 ≠ 独立</strong>:互斥是集合层面\"不能同时发生\";独立是概率层面 \\(P[A\\cap B]=P[A]P[B]\\)(后续章节),两者常被混淆。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 出 1 点(\\(1/6\\)),\\(B=\\) 出 6 点(\\(1/6\\))。</p><ul><li>交集:一次投掷不可能又是 1 又是 6,\\(P[A\\cap B]=0\\)——互斥。</li><li>并:\\(P[A\\cup B]=\\dfrac16+\\dfrac16=\\dfrac13\\)——交集项为零,直接相加。</li><li>对照独立:\\(P[A]P[B]=1/36\\ne 0\\),所以这对互斥事件<strong>不独立</strong>——知道出了 1,B 的概率瞬间归零,信息量极大。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率公理\">概率公理</a> — 可数可加公理正是对互斥事件成立</li><li><a class=\"net-wl\" data-id=\"容斥原理\">容斥原理</a> — 互斥是其退化特例</li><li><a class=\"net-wl\" data-id=\"德摩根定律\">德摩根定律</a> — 同属集合运算工具</li></ul>"
+ },
+ "先验后验概率": {
+  "kind": "c",
+  "en": "PriorAndPosteriorProbability",
+  "aliases": [
+   "prior probability",
+   "posterior probability",
+   "prior",
+   "posterior",
+   "先验概率",
+   "后验概率"
+  ],
+  "level": "basic",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>先验概率</strong> \\(P[A_i]\\) 是观测到证据 B <strong>之前</strong>对各原因的概率判断(题面给的初始/整体比例);<strong>后验概率</strong> \\(P[A_i\\mid B]\\) 是观测到证据<strong>之后</strong>用贝叶斯定理更新出的概率。一先一后,本质是\"用证据更新信念\"。</p><p><strong>白话</strong>:医生看病:病人还没做检查时,凭\"这种病流行率约 1%\"心里先有个底(先验);化验单一出,把证据算进去,把握就更新成一个新数字(后验)。先验是老底,后验是看过证据后的新底。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{先验 } P[A_i]\\;\\xrightarrow{\\;\\text{观测到证据 } B\\;}\\;\\text{后验 } P[A_i\\mid B]$$</div><ul><li>先验从哪来:题面直接给的分组占比(如 80% 是 Type I);后验从哪来:贝叶斯定理的<strong>输出</strong>。</li><li>证据会移动概率:出险后\"高风险型\"的概率从先验 0.2 升到后验 3/7 ≈ 0.43。</li><li><strong>只需相对权重</strong>:先验同乘常数不影响后验——\"A₂ 的可能性是 A₁ 的两倍\"直接令 \\(P[A_1]=1,P[A_2]=2\\) 代入,不必先归一。</li><li>读题定位:随机抽取的整体比例=先验;\"given that … occurred\"之后要求的=后验。</li></ul><p><strong>算一遍</strong>:100 个投保人,20 个高风险(先验 \\(0.2\\))、80 个低风险;高风险出险率 \\(50\\%\\),低风险 \\(10\\%\\)。</p><ul><li>数出险人头:高风险 \\(20\\times 0.5=10\\) 人,低风险 \\(80\\times 0.1=8\\) 人,共 18 人。</li><li>已知某人出险,他是高风险的后验 \\(=10/18=5/9\\approx 0.56\\)。</li><li>证据把概率从 \\(0.2\\) 推到 \\(0.56\\)——\"出险\"这条证据大幅加重了高风险的嫌疑。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 先验进、后验出的更新引擎</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 后验就是\"给定证据\"的条件概率</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 归一化分母:把各先验权重摊到证据上</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "全方差公式": {
+  "kind": "c",
+  "en": "LawOfTotalVariance",
+  "aliases": [
+   "law of total variance",
+   "conditional variance formula",
+   "EVVE"
+  ],
+  "level": "hard",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>总方差 = <strong>组内方差的平均 + 组间均值的方差</strong>(EVVE)。总波动来自两处:每组内部本身的散布(条件方差的期望),以及各组中心彼此的差异(条件期望的方差)——两项相加,缺一不可。</p><p><strong>白话</strong>:全校成绩的总波动 = 各班内部成绩有多散(平均一下)+ 各班平均分彼此差多远。\"班里散\"和\"班与班散\"是两股独立的波动,加起来才是全貌。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=\\underbrace{E\\big[\\operatorname{Var}(X\\mid Y)\\big]}_{\\text{组内方差的平均}}+\\underbrace{\\operatorname{Var}\\big(E[X\\mid Y]\\big)}_{\\text{组均值的方差}}$$</div><ul><li>口诀 <strong>EVVE:E-of-V 加 V-of-E</strong>;头号丢分是漏第二项 \\(\\operatorname{Var}(E[X\\mid Y])\\)。</li><li>推导:对 \\(X\\)、\\(X^2\\) 各用一次塔式,内层展开 \\(E[X^2\\mid Y]=\\operatorname{Var}(X\\mid Y)+E[X\\mid Y]^2\\),末步对 \\(Z=E[X\\mid Y]\\) 用 \\(\\operatorname{Var}(Z)=E[Z^2]-E[Z]^2\\)。</li><li>配套工具:条件方差含 \\(Y^2\\)(如 \\(3Y^2\\))时用 \\(E[Y^2]=\\operatorname{Var}(Y)+E[Y]^2\\),别写成 \\(3E[Y]^2\\);\\(\\operatorname{Var}(aY)=a^2\\operatorname{Var}(Y)\\),系数要平方。</li><li>例 16B:\\(E[X\\mid Y]=10Y\\)、\\(\\operatorname{Var}(X\\mid Y)=3Y^2\\),\\(E[Y]=5\\)、\\(\\operatorname{Var}(Y)=12\\) → \\(3(12+25)+100\\times12=111+1200=1311\\)。</li><li>题型:分层 / 复合(先抽组、组内再出结果——掷硬币定掷几颗骰、好坏司机再出事故数);期望用塔式,方差用 EVVE。</li></ul><p><strong>算一遍</strong>:两个班各占一半:A 班人人 60 分(组内方差 0);B 班一半 70、一半 90(组内均值 80、方差 100)。</p><ul><li>组内方差的平均:\\(E[\\operatorname{Var}(X\\mid Y)]=0.5(0)+0.5(100)=50\\)。</li><li>组均值的方差:均值 60 与 80 各占一半,总均值 70 → \\(0.5(60-70)^2+0.5(80-70)^2=100\\)。</li><li>总方差 \\(=50+100=150\\)(直接对三点分布 60/70/90 硬算也得 150 ✓);只记第一项就漏掉班际差异——EVVE 缺一不可。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — 第一项的对象(上游 L14)</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 第二项的对象</li><li><a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a> — 两项有意义的地基</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 推导中用了两次的姊妹公式</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 被分解对象;\\(\\operatorname{Var}=E[\\cdot^2]-E[\\cdot]^2\\) 是推导枢纽</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "全期望公式": {
+  "kind": "c",
+  "en": "LawOfTotalExpectation",
+  "aliases": [
+   "law of total expectation",
+   "double expectation formula",
+   "tower rule",
+   "tower property",
+   "double expectation",
+   "law of iterated expectations",
+   "双重期望律"
+  ],
+  "level": "advanced",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>总期望等于<strong>条件期望的期望</strong>(塔式法则):先按 \\(Y\\) 分组算各组内的条件期望,再按各组出现的概率加权平均,结果恰好是总期望——\"平均的平均 = 总平均\"。当直接算 \\(E[X]\\) 难、\"给定 \\(Y\\) 后\"好算时的分而治之利器。</p><p><strong>白话</strong>:算全家每月平均伙食开销:不必逐天记账——工作日一档、周末一档各算个平均,再按天数占比加权,就是总平均。找到那个\"分情形的开关\",难题就拆成几个好算的小平均。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[g(X)]=E_Y\\!\\big[\\,E_X[g(X)\\mid Y]\\,\\big];\\qquad E[X]=E\\big[E[X\\mid Y]\\big]$$</div><ul><li>下标读法:内层 \\(E_X\\) 把 \\(Y\\) 当常数、只对 \\(X\\) 求平均(得到 \\(Y\\) 的函数 \\(h(Y)\\));外层 \\(E_Y\\) 再对 \\(Y\\) 平均。<strong>先内后外,顺序不能反</strong>。</li><li>用途:分段函数 / 免赔额 / 混合分布——找一个\"分情形开关\" \\(Y\\),每种情形下 \\(E[X\\mid Y]\\) 都简单,再按情形概率加权。</li><li>例 16A:损失 \\(U[0,10000]\\) + 1000 免赔,\\(E[\\text{赔付}]=0.1\\cdot0+0.9\\cdot4500=4050\\)。</li><li>直觉:全校平均分 = 各班平均分按班级人数占比加权。</li><li>对任意 \\(g(X)\\) 都成立,是全概率公式的期望版推广。</li></ul><p><strong>算一遍</strong>:抛一枚公平硬币定掷几颗骰子:正面掷 1 颗、反面掷 2 颗,求点数总和的期望。</p><ul><li>内层(各情形好算):正面时 \\(E[X\\mid\\text{正}]=3.5\\);反面时 \\(E[X\\mid\\text{反}]=7\\)。</li><li>外层加权:\\(E[X]=0.5(3.5)+0.5(7)=5.25\\)。</li><li>全程没碰\"总和的完整分布\"——先内后外,分而治之。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 内层对象</li><li><a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a> — 外层期望有意义的前提</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 概率版对应(上游 L04)</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> — 姊妹公式:方差版分解</li><li><a class=\"net-wl\" data-id=\"条件矩\">条件矩</a> — 内层的一般形式 \\(E[g(X)\\mid Y]\\)(上游 L14)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 被分解的对象</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "全概率公式": {
+  "kind": "c",
+  "en": "LawOfTotalProbability",
+  "aliases": [
+   "law of total probability",
+   "total probability theorem",
+   "全概率定理"
+  ],
+  "level": "advanced",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把一个事件的总概率<strong>沿一组互斥且完备的\"原因\"拆开</strong>:在每种情形 \\(B_i\\) 下算 A 的条件概率,再按该情形出现的权重 \\(P[B_i]\\) 加权求和。本质是\"分组加权平均\"。</p><p><strong>白话</strong>:全校近视率不用一个个数——先问每个班的近视率,再按各班人数占比加权平均,就是全校的。\"班\"就是那组互斥完备的 \\(B_i\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A]=\\sum_{i=1}^{n}P[B_i]\\,P[A\\mid B_i]$$</div><ul><li>前提:\\(B_1,\\dots,B_n\\) <strong>互斥</strong>(两两不交)且<strong>完备</strong>(并集为 \\(\\Omega\\)),A 被切成 n 块 \\(A\\cap B_i\\)。</li><li>每块用乘法公式 \\(P[A\\cap B_i]=P[B_i]\\,P[A\\mid B_i]\\),加总即得——<strong>先分组,再加权</strong>。</li><li>概率树视角:每条支路连乘,含 A 的支路全加,总和就是 \\(P[A]\\)。</li><li>\"先选类再看结果\"(掷骰、抽袋、分层人群)的题几乎都用它开路;它也是贝叶斯定理的分母。</li></ul><p><strong>算一遍</strong>:甲班 40 人近视率 \\(0.5\\),乙班 60 人近视率 \\(0.2\\),求全校近视率。</p><ul><li>按人数定权重:甲占 \\(0.4\\)、乙占 \\(0.6\\)——互斥且完备(每人恰属一班)。</li><li>加权求和:\\(P=0.4\\times0.5+0.6\\times0.2=0.2+0.12=0.32\\)。</li><li>直接数人验证:近视 \\(20+12=32\\) 人,除以 \\(100\\) 人正是 \\(0.32\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 每个分支项 \\(P[A\\mid B_i]\\) 都是条件概率</li><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 每条支路的交集概率由它给出</li><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 分组前提:互斥且完备,用前先确认</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 分母 \\(P[B]\\) 就是全概率展开</li><li><a class=\"net-wl\" data-id=\"全概率公式-连续\">全概率公式-连续</a> — 连续版:求和换成密度加权积分</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 同一\"分组加权平均\"思想搬到期望上</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "全概率公式-连续": {
+  "kind": "c",
+  "en": "LawOfTotalProbabilityContinuous",
+  "aliases": [
+   "law of total probability (continuous)"
+  ],
+  "level": "advanced",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把\"给定各种 \\(y\\) 时的条件密度\"按 \\(Y\\) 的密度<strong>加权积分</strong>,还原出 \\(X\\) 的边缘密度——离散全概率的加权求和换成加权积分,镜像成立。</p><p><strong>白话</strong>:想知道全国人的身高分布,就把\"每个年龄的人内部的身高分布\"按人口年龄结构混起来——年龄是连续的,\"按班级占比加权求和\"就变成了\"按年龄密度加权积分\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_X(x)=\\int_{-\\infty}^{\\infty} f_{X\\mid Y}(x\\mid y)\\,f_Y(y)\\,dy$$</div><ul><li>对照离散版 \\(P[X=x]=\\sum_y P[X=x\\mid Y=y]\\,P[Y=y]\\):求和换积分、pmf 换 pdf。</li><li>信息互推:一个边缘 + 一个条件密度 \\(\\Rightarrow\\) 反乘得联合 \\(f(x,y)=f_{X\\mid Y}(x\\mid y)\\,f_Y(y)\\),再积分得另一边缘——两块信息拼出全部分布。</li><li>典型题(练 29.4):给 \\(f_X\\) 与 \\(f_{Y\\mid X}\\) 求 \\(P[Y&gt;c]\\)——先合成联合密度,再用本式积掉 \\(x\\)。</li></ul><p><strong>算一遍</strong>:抛硬币选砖:正面 \\(X\\) 均匀落在 \\((0,1)\\),反面均匀落在 \\((0,2)\\),求 \\(x=0.5\\) 处的边缘密度。</p><ul><li>两种情形各自的条件密度:正面 \\(f=1\\),反面 \\(f=0.5\\);按各占一半加权:\\(f_X(0.5)=1(0.5)+0.5(0.5)=0.75\\)。</li><li>全线核对:\\((0,1)\\) 上密度 \\(0.75\\)、\\((1,2)\\) 上只剩反面贡献 \\(0.25\\),总面积 \\(0.75+0.25=1\\) ✓</li><li>若\"选哪种砖\"由连续的 \\(Y\\) 决定,这两项加权和就换成加权积分——正是本式。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 离散/事件版原型</li><li>条件密度函数 — 被加权的对象</li><li>边缘密度-连续 — 输出:还原出的边缘</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理-连续\">贝叶斯定理-连续</a> — 它的分母正是本式</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 期望层面的同款\"先条件后平均\"</li></ul>"
+ },
+ "容斥原理": {
+  "kind": "c",
+  "en": "InclusionExclusionPrinciple",
+  "aliases": [
+   "容斥",
+   "容斥公式",
+   "包含排斥原理",
+   "Inclusion-Exclusion"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求<strong>并集</strong>的概率(或计数)时,把各集合直接相加会把重叠部分重复计入,需按\"加单个 − 减两两交 + 加三集合交 − …\"正负交替修正。考试最多到三集合。</p><p><strong>白话</strong>:班里会英语的 20 人、会法语的 10 人,问\"至少会一门的有几人\"不能直接加——两门都会的人被点了两次名,得把重叠的减回去。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cup B]=P[A]+P[B]-P[A\\cap B]$$</div><div class=\"net-mth\">$$P[A\\cup B\\cup C]=\\sum P-\\sum P_{\\text{两两交}}+P[A\\cap B\\cap C]$$</div><ul><li>等价变形 \\(P[A\\cap B]=P[A]+P[B]-P[A\\cup B]\\) 是求交集的常用一步。</li><li>一般式正负交替(课本式 1.3)。</li></ul><p><strong>算一遍</strong>:会英语 20 人、会法语 10 人、两门都会 5 人,求至少会一门的人数。</p><ul><li>直接相加:\\(20+10=30\\) 人次——都会的 5 人被数了两遍。</li><li>减去重叠:\\(30-5=25\\) 人至少会一门。</li><li>反向用:若先知道\"至少会一门\"是 25 人,则都会的 \\(=20+10-25=5\\)——正是求交集的等价变形。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 互斥时交集为 0,公式退化为直接相加</li><li><a class=\"net-wl\" data-id=\"概率公理\">概率公理</a> — 由可数可加性导出</li><li><a class=\"net-wl\" data-id=\"德摩根定律\">德摩根定律</a> — 常配合把\"都不 / 至少\"翻成补集再代入</li></ul>"
+ },
+ "德摩根定律": {
+  "kind": "c",
+  "en": "DeMorgansLaws",
+  "aliases": [
+   "De Morgan 律",
+   "德·摩根定律",
+   "DeMorgan",
+   "笛摩根定律"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>对并集 / 交集<strong>取补</strong>时,\\(\\cup\\) 与 \\(\\cap\\) 必须互换。口诀:\"非(A 或 B)= 非A 且 非B\"。</p><p><strong>白话</strong>:说\"我今天没有(喝奶茶或吃甜点)\",等于说\"我既没喝奶茶,也没吃甜点\"——否定\"至少沾一样\",就得两样都不沾,\"或\"翻过来变成\"且\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$(A\\cup B)'=A'\\cap B' \\qquad (A\\cap B)'=A'\\cup B'$$</div><ul><li>高频考点,也是易错点:取补后符号<strong>必须互换</strong>,不是原样加撇。</li><li>可推广到任意多个集合。</li><li><strong>概率桥</strong>(把恒等式落到 \\(P[\\cdot]\\),考场直接用):</li><li>\\(P[A'\\cap B']=1-P[A\\cup B]\\)——\"都不发生\" = 落在并集外面,整体取补。</li><li>\\(P[A'\\cup B']=1-P[A\\cap B]\\)——\"至少缺一个\" = 不是两个都发生,整体取补。</li><li>三集合同款:\\(P[A'\\cap B'\\cap C']=1-P[A\\cup B\\cup C]\\)、\\(P[A'\\cup B'\\cup C']=1-P[A\\cap B\\cap C]\\)。</li><li>记法:Venn 图分区数块——\\(A'\\cap B'\\) 只有圈外 1 块,\\(A'\\cup B'\\) 是除 \\(A\\cap B\\) 外的全部块(见 001 Sets 集合 配图/L01 导学页分区图)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 偶数 \\(\\{2,4,6\\}\\),\\(B=\\) 大于 4 \\(\\{5,6\\}\\),验证 \\((A\\cup B)'=A'\\cap B'\\)。</p><ul><li>左边:\\(A\\cup B=\\{2,4,5,6\\}\\),取补得 \\(\\{1,3\\}\\)。</li><li>右边:\\(A'=\\{1,3,5\\}\\)、\\(B'=\\{1,2,3,4\\}\\),取交得 \\(\\{1,3\\}\\) ✓ 两边吻合。</li><li>错法对照:不换符号写成 \\(A'\\cup B'=\\{1,2,3,4,5\\}\\),和 \\(\\{1,3\\}\\) 差远了——取补后 \\(\\cup\\) 必须换成 \\(\\cap\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"容斥原理\">容斥原理</a> — 把\"都不发生 / 至少一个\"翻成补集时常用</li><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 同属集合运算工具箱</li><li><a class=\"net-wl\" data-id=\"概率公理\">概率公理</a> — 配合 \\(P[A']=1-P[A]\\) 落到概率</li></ul>"
+ },
+ "方差": {
+  "kind": "c",
+  "en": "Variance",
+  "aliases": [
+   "variance",
+   "Var",
+   "二阶中心矩"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量取值围绕均值摆动幅度的度量:偏差平方的期望(即二阶中心矩),记 \\(\\operatorname{Var}(X)\\) 或 \\(\\sigma^2\\)。方差 \\(\\ge 0\\),越大分布越分散;为 0 当且仅当 \\(X\\) 几乎处处是常数。</p><p><strong>白话</strong>:两个班平均分都是 80,一个班人人 78–82,另一个班一半 60 一半 100——平均分看不出差别,方差看得出:它算的是\"每个人离平均有多远\"的平均账(按平方记)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X)=E\\big[(X-\\mu)^2\\big]=E[X^2]-\\mu^2$$</div><ul><li>计算式\"<strong>平方的平均 − 平均的平方</strong>\"是解题主力:先算 \\(E[X]\\)、\\(E[X^2]\\) 两个原点矩,一减即出。</li><li><strong>平移不散,缩放平方</strong>:\\(\\operatorname{Var}(aX+b)=a^2\\operatorname{Var}(X)\\);负号平方后消失,\\(\\operatorname{Var}(-X)=\\operatorname{Var}(X)\\)。</li><li><strong>独立才可加</strong>:\\(\\operatorname{Var}(\\sum X_i)=\\sum\\operatorname{Var}(X_i)\\)(i.i.d. 时 \\(=n\\operatorname{Var}(X)\\));独立时 \\(\\operatorname{Var}(X-Y)\\) 也是\"加\"(系数 \\((-1)^2=1\\))。</li><li>两点分布捷径:取 \\(a\\)(概率 \\(p\\))、\\(b\\)(概率 \\(1-p\\))时 \\(\\operatorname{Var}(X)=(b-a)^2p(1-p)\\)。</li><li>绕任意点:\\(E[(X-c)^2]=\\operatorname{Var}(X)+(\\mu-c)^2\\),仅 \\(c=\\mu\\) 时等于方差(平行轴定理)。</li></ul><p><strong>算一遍</strong>:抛一枚硬币,正面记 1、反面记 0(各占一半),求方差。</p><ul><li>两个原点矩:\\(E[X]=0.5\\);\\(E[X^2]=0^2(0.5)+1^2(0.5)=0.5\\)。</li><li>一减即出:\\(\\operatorname{Var}=0.5-0.5^2=0.25\\),标准差 \\(0.5\\)。</li><li>两点捷径验算:\\((1-0)^2\\times0.5\\times0.5=0.25\\) ✓ 两条路同一答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 两个原点矩一减出方差;期望是线性算子、方差不是</li><li>矩 — 方差 = 二阶中心矩,矩家族一员</li><li>标准差 — 方差的正平方根,单位还原</li><li>伯努利分布 — 两点捷径的来源:\\(\\operatorname{Var}(N)=p(1-p)\\) 套缩放律</li><li>和的方差 — 不独立时的一般公式(补协方差项)</li><li>协方差 — 度量两变量联动,修正和的方差</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 它最重要的数字概括</li><li>概率函数 — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li>概率密度函数 — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li>LOTUS — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li>期望的线性 — 期望算子最常用的运算性质</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "条件分布": {
+  "kind": "c",
+  "en": "ConditionalDistribution",
+  "aliases": [
+   "conditional distribution",
+   "conditional density"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在 \\(Y=y\\) 的切片上,\\(X\\) 的重新归一化分布:<strong>联合分布除以边际</strong>。分母恰好把切片总量除回 1,得到的是正当概率分布,一切矩公式原封不动搬过来用。</p><p><strong>白话</strong>:全校成绩汇总表里只抽出\"三班\"那一行看——人数只剩一个班,各分数段的占比得按这一行自己的总人数重新折算,才能凑回 100%。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid Y}[x\\mid Y=y]=\\frac{f(x,y)}{f_Y(y)}$$</div><ul><li>口诀\"<strong>切片除边际</strong>\":分母 \\(f_Y(y)=\\sum_x f(x,y)\\)(或 \\(\\int f(x,y)\\,dx\\))扮演 \\(P[A]\\) 的归一化角色。</li><li>归一性:\\(\\sum_x \\dfrac{f(x,y)}{f_Y(y)}=\\dfrac{f_Y(y)}{f_Y(y)}=1\\),非负性天然满足——正当分布。</li><li>离散操作:取该行(列),逐项 ÷ 行(列)和;连续同构,换积分。</li><li>在它上面求矩,就得到条件期望、条件方差。</li></ul><p><strong>算一遍</strong>:联合 pmf 四格:\\(f(0,1)=0.2\\)、\\(f(1,1)=0.4\\)、\\(f(0,0)=0.1\\)、\\(f(1,0)=0.3\\),求 \\(Y=1\\) 切片上 \\(X\\) 的分布。</p><ul><li>先算分母(边际):\\(f_Y(1)=0.2+0.4=0.6\\)——这一行的总量。</li><li>逐项除:\\(P[X=0\\mid Y=1]=\\frac{0.2}{0.6}=\\frac13\\),\\(P[X=1\\mid Y=1]=\\frac{0.4}{0.6}=\\frac23\\)。</li><li>自检:\\(\\frac13+\\frac23=1\\) ✓ 切片除边际,总量归 1,正当分布。</li></ul><h4>与其他概念的关系</h4><ul><li>联合分布 — 分子(上游 L11)</li><li>边缘分布 — 分母(上游 L11)</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 同一\"缩样本空间再归一\"动作在分布上的体现</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 在其上求一阶矩</li><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — 在其上求二阶矩再相减</li><li>条件密度函数 — 双连续变量版(下游 L29)</li></ul><h4>应用视角</h4><ul><li>二项分布与联合分布的层面之辨 — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "条件密度与条件pmf": {
+  "kind": "c",
+  "en": "ConditionalDensityGivenEvent",
+  "aliases": [
+   "conditional pdf",
+   "conditional pmf",
+   "truncated distribution",
+   "条件密度",
+   "截断分布"
+  ],
+  "level": "advanced",
+  "chapter": "p-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定事件 A 后 X 的新分布长什么样:<strong>A 外归零,A 内同除 \\(P[A]\\)</strong>。先截断(A 外清零)、再归一(整体抬高 \\(1/P[A]\\) 倍),让总量重新等于 1——学名\"截断分布\"。</p><p><strong>白话</strong>:知道骰子掷出的是偶数后,2、4、6 的概率从各 \\(\\frac16\\) 抬到各 \\(\\frac13\\)——被排除的不算数,剩下的按原比例放大,把总账凑回 1。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid A}(x)=\\begin{cases}\\dfrac{f(x)}{P[A]}, &amp; x\\in A\\\\[6pt]0, &amp; x\\notin A\\end{cases}\\qquad p_{X\\mid A}(x)=\\frac{p_X(x)}{P[A]}\\;(x\\in A)$$</div><ul><li><strong>剪掉 A 外,抬高 A 内</strong>:两步缺一不可——只截不抬,面积 &lt;1,不是合法密度。</li><li><strong>合法性自检</strong>:在 A 上积分/求和必须 =1:\\(\\int_A\\frac{f(x)}{P[A]}dx=\\frac{P[A]}{P[A]}=1\\)。</li><li>最大陷阱就是<strong>忘除 \\(P[A]\\)</strong>;其中 \\(P[A]=\\int_A f(x)\\,dx\\)。</li><li>聚光灯直觉:条件化=聚光灯只打在 A 区、同时调高亮度让总光量回到 1(等车例:均匀 \\((0,10)\\) 给定 \\(X&gt;6\\) 后仍均匀,密度从 \\(\\tfrac1{10}\\) 抬到 \\(\\tfrac14\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,给定\"点数为偶\"(\\(A=\\{2,4,6\\}\\)),写条件 pmf。</p><ul><li>\\(P[A]=\\frac12\\);A 内每点:\\(\\frac{1/6}{1/2}=\\frac13\\);A 外(1、3、5)归零。</li><li>合法性自检:\\(\\frac13\\times3=1\\) ✓ 截断加归一,总量回到 1。</li><li>错法对照:只截不抬(2、4、6 仍各留 \\(\\frac16\\)),总和才 \\(\\frac12\\)——忘除 \\(P[A]\\) 就是这个错。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量的条件分布\">随机变量的条件分布</a> — 它就是这条新分布的密度/pmf 形态</li><li>概率密度函数 — 原料:原密度截断到 A 再归一</li><li>概率函数 — 离散版原料:A 内每点同除 \\(P[A]\\)</li><li>条件密度函数 — 推广:条件换成\"另一变量取某值\"(L29)</li><li>免赔额与正赔付条件 — 保险实战:给定 \\(X&gt;d\\) 的截断分布</li></ul>"
+ },
+ "条件方差": {
+  "kind": "c",
+  "en": "ConditionalVariance",
+  "aliases": [
+   "conditional variance"
+  ],
+  "level": "advanced",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定条件下 \\(X\\) 的方差:与无条件方差公式同构(二阶矩减一阶矩平方),但<strong>所有期望都换成条件版本</strong>、权重全用条件分布。</p><p><strong>白话</strong>:全国身高的散布里混着\"男女平均本来就差一截\"的成分;只看男性组内部,身高还散不散——在子群里面重新算一遍方差,就是条件方差。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\operatorname{Var}(X\\mid Y=y)=E[X^2\\mid Y=y]-\\big(E[X\\mid Y=y]\\big)^2$$</div><ul><li>三步:① 由 \\(f_{X\\mid Y}\\) 求 \\(E[X\\mid Y=y]\\);② 同一条件分布求 \\(E[X^2\\mid Y=y]\\);③ 相减。</li><li>例 14B:\\(f(x,y)=\\frac{x^2+y}{24}\\),求 \\(\\operatorname{Var}(Y\\mid X=1)\\):条件分布 \\((\\tfrac16,\\tfrac26,\\tfrac36)\\),\\(E=\\tfrac43\\)、\\(E[\\cdot^2]=\\tfrac73\\),\\(\\operatorname{Var}=\\tfrac73-\\tfrac{16}9=\\tfrac59\\)。</li><li>\\(\\operatorname{Var}(X\\mid Y=y)\\) 是 \\(y\\) 的函数;\\(\\operatorname{Var}(X\\mid Y)\\) 是随机变量,可再对它求期望——EVVE 第一项 \\(E[\\operatorname{Var}(X\\mid Y)]\\)。</li><li>算 \\(E[\\operatorname{Var}(X\\mid Y)]\\) 含 \\(Y^2\\) 时用 \\(E[Y^2]=\\operatorname{Var}(Y)+E[Y]^2\\),别丢 \\(\\operatorname{Var}(Y)\\)。</li><li>易错:二阶矩误用无条件权重。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,给定\"点数为偶\"(2、4、6 各 \\(\\frac13\\)),求条件方差。</p><ul><li>条件均值:\\(E[X\\mid\\text{偶}]=\\frac{2+4+6}{3}=4\\)。</li><li>条件二阶矩:\\(\\frac{4+16+36}{3}=\\frac{56}{3}\\);相减:\\(\\operatorname{Var}=\\frac{56}{3}-16=\\frac83\\approx2.67\\)。</li><li>对照无条件方差 \\(\\frac{35}{12}\\approx2.92\\)——条件砍掉了一半取值,组内摆动变小了。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> — 权重来源</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 一阶项</li><li><a class=\"net-wl\" data-id=\"条件矩\">条件矩</a> — 由一、二阶条件矩组合而成</li><li><a class=\"net-wl\" data-id=\"方差\">方差</a> — 无条件版的同构公式</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> — \\(E[\\operatorname{Var}(X\\mid Y)]\\) 是其第一项(下游 L16)</li><li>连续型条件方差 — 连续版(下游 L30)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件期望": {
+  "kind": "c",
+  "en": "ConditionalExpectation",
+  "aliases": [
+   "conditional expectation",
+   "conditional mean"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定条件下 \\(X\\) 的平均值:用<strong>条件分布</strong>作权重求出的期望。以 \\(Y=y\\) 为条件时结果里还带着 \\(y\\)——它是 \\(y\\) 的函数;代入具体 \\(y\\) 是一个数,保留 \\(Y\\) 不代值则升级为随机变量。</p><p><strong>白话</strong>:还是算平均,只是换了名单——外卖平均送达 30 分钟,但\"已知在下雨\"就只统计下雨天的单子,重摊出来可能是 45 分钟;条件一换,名单一换,平均跟着换。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X\\mid Y=y]=\\sum_{x}x\\,\\frac{f(x,y)}{f_Y(y)}\\;=\\;\\int_{x} x\\,\\frac{f(x,y)}{f_Y(y)}\\,dx$$</div><ul><li>离散题三步:边际 \\(f_Y(y)\\)(该行/列求和)→ 条件分布(逐项 ÷ 边际)→ 加权平均。</li><li>\\(E[X\\mid Y=y]\\) 是<strong>数</strong>,\\(E[X\\mid Y]\\) 是<strong>随机变量</strong>——Ch16 双重期望的入口。</li><li>直觉:条件把总体切成子群,均值在子群里重算(男性组平均身高 1.75,总体 1.68)。</li><li>对函数同理:\\(E[g(X)\\mid Y=y]\\) 用同一套条件权重。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求\"已知点数为偶\"时的条件期望。</p><ul><li>条件分布:2、4、6 各占 \\(\\frac13\\)(奇数被排除,剩下的重新归一)。</li><li>加权平均:\\(E[X\\mid\\text{偶}]=\\frac{2+4+6}{3}=4\\)——比无条件的 3.5 高,因为条件砍掉了小点数。</li><li>换条件\"点数为奇\" → \\(\\frac{1+3+5}{3}=3\\);条件一换数就换——条件期望是条件的函数。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> — 权重来源</li><li><a class=\"net-wl\" data-id=\"条件矩\">条件矩</a> — 条件期望是它的一阶特例</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 无条件对应物</li><li><a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a> — 不代值时的升维理解</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — \\(E[E[X\\mid Y]]=E[X]\\)(下游 L16)</li><li><a class=\"net-wl\" data-id=\"连续型条件期望\">连续型条件期望</a> — 连续版(下游 L30)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件期望分层求解": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "hard",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:损失分布依赖类别/参数(如好司机坏司机、N 依赖 Θ),求总体均值方差——先分层再合并。</p><h4>求解套路</h4><ol><li>分层写条件矩:\\(E[X\\mid Y=y]\\)、\\(\\mathrm{Var}(X\\mid Y=y)\\)(每层内是干净的标准分布)。</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> 合并均值:\\(E[X]=E\\big[E[X\\mid Y]\\big]\\)——外层对 Y 的分布加权。</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> 合并方差:\\(\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]+\\mathrm{Var}(E[X\\mid Y])\\)——<strong>层内平均 + 层间波动</strong>,两项都不能丢。</li><li>记住 <a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a>:\\(E[X\\mid Y]\\) 是 Y 的函数,才能再对它取期望/方差。</li></ol><h4>易错</h4><ul><li>全方差只算第一项(丢层间项)是最高频扣分点。</li><li>离散权重不归一(类别概率没加到 1)。</li></ul>"
+ },
+ "条件期望是随机变量": {
+  "kind": "c",
+  "en": "ConditionalExpectationAsRandomVariable",
+  "aliases": [
+   "conditional expectation as a random variable"
+  ],
+  "level": "advanced",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(E[X\\mid Y=y]\\) 代入具体 \\(y\\) 后是一个<strong>数</strong>;不固定 \\(Y\\) 时,\\(E[X\\mid Y]\\) 是函数 \\(y\\mapsto E[X\\mid Y=y]\\) 作用在随机的 \\(Y\\) 上,因而<strong>本身是随机变量</strong>,继承 \\(Y\\) 的随机性。全期望 / 全方差公式正建立在\"能再对它求期望、方差\"这一点上。</p><p><strong>白话</strong>:\\(E[X\\mid Y]\\) 像一台报数机——喂进哪个 \\(y\\) 就吐对应的平均数;而喂什么本身要抽签决定(\\(Y\\) 是随机的),所以\"机器将吐出的数\"在抽签前也是随机的。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X\\mid Y]=h(Y),\\quad h(y)=E[X\\mid Y=y];\\qquad \\operatorname{Var}(X\\mid Y)\\ \\text{同理是随机变量}$$</div><ul><li>口诀:<strong>带小 \\(y\\) 是数,带大 \\(Y\\) 是随机变量</strong>——符号即语义。</li><li>正因是随机变量,才能写 \\(E\\big[E[X\\mid Y]\\big]\\)(塔式)与 \\(\\operatorname{Var}\\big(E[X\\mid Y]\\big)\\)(EVVE 第二项)。</li><li>\\(\\operatorname{Var}(X\\mid Y)\\) 同理:EVVE 第一项就是对它求期望。</li><li>直觉:抽人前性别未定,\\(E[\\text{身高}\\mid \\text{性别}]\\) 以 \\(\\tfrac12\\) 取 1.75、\\(\\tfrac12\\) 取 1.61;对它再平均恰回总体的 1.68。</li><li>题面写 \"given \\(Y=y\\), \\(X\\) has mean \\(10y\\)\" → 直接抄成 \\(E[X\\mid Y]=10Y\\) 再往下算。</li></ul><p><strong>算一遍</strong>:\\(Y\\) 是掷一颗骰子的点数,题面给\"given \\(Y=y\\), \\(X\\) has mean \\(10y\\)\"。</p><ul><li>抄成随机变量:\\(E[X\\mid Y]=10Y\\)——骰子掷出 3 它就是 30,掷出 6 就是 60;没掷之前它跟着 \\(Y\\) 一起随机。</li><li>正因它是随机变量,才能再对它求期望:\\(E\\big[E[X\\mid Y]\\big]=10\\,E[Y]=10\\times3.5=35\\)。</li><li>这个 35 就是 \\(E[X]\\)(塔式)——\"先分骰子点数各算平均,再把六个平均摊平\"。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 升维前的本体(上游 L14)</li><li>随机变量 — \"\\(Y\\) 的函数\"因而是随机变量(上游 L05)</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 对它求期望</li><li><a class=\"net-wl\" data-id=\"全方差公式\">全方差公式</a> — 对它求方差</li><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — \\(\\operatorname{Var}(X\\mid Y)\\) 的同款理解</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望分层求解\">条件期望分层求解</a> — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "条件概率": {
+  "kind": "c",
+  "en": "ConditionalProbability",
+  "aliases": [
+   "conditional probability",
+   "条件机率"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在事件 B 已发生的前提下,事件 A 发生的概率。把样本空间<strong>缩小到 B</strong>(B 成为新的\"全体\"),A 剩下的部分是 \\(A\\cap B\\),再除以 \\(P[B]\\) 归一化。</p><p><strong>白话</strong>:问\"下雨天堵车的概率\",不拿全年当分母——先把下雨的日子挑出来当新的\"全体\",再数其中堵车的占几成。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\mid B]=\\frac{P[A\\cap B]}{P[B]}\\qquad(P[B]\\neq 0)$$</div><ul><li>固定条件 B 后,\\(P[\\cdot\\mid B]\\) 满足与普通概率相同的<strong>三公理</strong>——补集、容斥等规则在\"竖线右边不动\"时照常可用。</li><li>\\(P[A\\mid B]\\neq P[B\\mid A]\\):分母是\"条件\"那一个,写反是高频错。</li><li>直觉:<strong>先缩世界,再归一</strong>;\\(P[B]=0\\) 时无定义。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 掷出 6,\\(B=\\) 点数为偶,求 \\(P[A\\mid B]\\)。</p><ul><li>套定义:\\(P[A\\cap B]=P[\\{6\\}]=\\frac16\\),\\(P[B]=\\frac12\\),相除得 \\(P[A\\mid B]=\\frac13\\)。</li><li>直觉核对:世界缩到 \\(\\{2,4,6\\}\\) 三个等可能点,6 占一席 → \\(\\frac13\\) ✓</li><li>反向对照:\\(P[B\\mid A]=1\\)(掷出 6 必是偶数)——\\(\\frac13\\neq1\\),分母是\"条件\"那一个,写反差很远。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 定义两边乘 \\(P[B]\\) 的变形,求交集的主力工具</li><li><a class=\"net-wl\" data-id=\"事件独立性\">事件独立性</a> — \\(P[A\\mid B]=P[A]\\) 的特例:条件不带来信息</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 把 \\(P[A\\mid B]\\) 反转成 \\(P[B\\mid A]\\)</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 用一组条件概率加权拼出无条件概率</li><li><a class=\"net-wl\" data-id=\"连续型条件概率\">连续型条件概率</a> — 连续版(密度上的同一动作)</li><li><a class=\"net-wl\" data-id=\"随机变量的条件分布\">随机变量的条件分布</a> — 条件思想进入随机变量后的形态</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "条件矩": {
+  "kind": "c",
+  "en": "ConditionalMoment",
+  "aliases": [
+   "conditional moment",
+   "conditional moments"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>随机变量在给定条件(事件 \\(A\\) 或 \\(Y=y\\))下的矩:把落在条件区域里的概率<strong>重新归一化</strong>,拿它当权重求 \\(E[g(X)]\\)。条件分布是正当的概率分布,故均值、方差等一切矩照常可求。</p><p><strong>白话</strong>:只统计\"及格的同学\"的平均分和分数波动——不及格的先剔出名单,剩下的人头重新当 100%,然后照常算平均、算离散,一套算法原样搬。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[g(X)\\mid A]=\\sum_{x\\ \\text{满足}\\ A}\\frac{g(x)\\,P[X=x]}{P[A]}\\;=\\;\\int_{x\\ \\text{满足}\\ A}\\frac{g(x)\\,f_X(x)}{P[A]}\\,dx$$</div><ul><li>套路固定:<strong>先算分子</strong>(条件区域上的 \\(\\sum g\\,P\\) 或 \\(\\int g\\,f\\)),<strong>再除以</strong> \\(P[A]\\)——\"先切块,再归一\"。</li><li>\\(g(x)=x\\) 得条件期望,\\(g(x)=x^2\\) 得二阶条件矩;积分/求和限必须切到条件区域。</li><li>以 \\(Y=y\\) 为条件时,分母换成边际 \\(f_Y(y)\\)(扮演 \\(P[A]\\) 的角色)。</li><li>例 14A:\\(f(x)=3x^2\\) 于 \\([0,1]\\),\\(E[X\\mid X&gt;0.5]=\\dfrac{45/64}{7/8}=\\dfrac{45}{56}\\approx0.804\\)——条件砍掉小值半区,均值从 0.75 上抬。</li><li>易错:二阶矩误用无条件权重;分子算完忘除 \\(P[A]\\)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,给定 \\(X&gt;3\\)(剩 4、5、6),求一、二阶条件矩。</p><ul><li>归一:\\(P[A]=\\frac12\\),条件权重 \\(\\frac{1/6}{1/2}=\\frac13\\) 每点。</li><li>一阶:\\(E[X\\mid X&gt;3]=\\frac{4+5+6}{3}=5\\)——条件砍掉小半区,均值从 3.5 上抬。</li><li>二阶:\\(E[X^2\\mid X&gt;3]=\\frac{16+25+36}{3}=\\frac{77}{3}\\);顺手 \\(\\operatorname{Var}=\\frac{77}{3}-25=\\frac23\\)——两阶权重全用条件版。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — \"缩世界再归一\"动作的源头</li><li><a class=\"net-wl\" data-id=\"随机变量的条件分布\">随机变量的条件分布</a> — 条件矩在其上求(上游 L06)</li><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — \\(g(x)=x\\) 的一阶特例</li><li><a class=\"net-wl\" data-id=\"条件方差\">条件方差</a> — 一、二阶条件矩的组合</li><li>矩 — 无条件版本</li><li>连续型条件矩 — 双连续变量版(下游 L30)</li></ul>"
+ },
+ "概率公理": {
+  "kind": "c",
+  "en": "ProbabilityAxioms",
+  "aliases": [
+   "概率三公理",
+   "柯尔莫哥洛夫公理",
+   "Kolmogorov Axioms"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>概率是给事件赋一个 \\(0\\sim 1\\) 的数,须满足三条公理:</p><ol><li>非负:\\(P[A]\\ge 0\\)</li><li>规范:\\(P[\\Omega]=1\\)</li><li>可数可加:可数个<strong>互斥</strong>事件之并的概率 = 各概率之和</li></ol><p><strong>白话</strong>:概率就是分一块总量为 1 的蛋糕:每块不能是负的、整块合计正好是 1、互不重叠的几块合起来就是它们的简单相加。</p><h4>关键性质 / 公式</h4><p>由三公理推出的常用性质:</p><div class=\"net-mth\">$$P[A]\\le 1 \\qquad P[A']=1-P[A] \\qquad P[A\\cap B]\\le P[A]$$</div><ul><li>\\(P[A']=1-P[A]\\) 是把题目里\"不发生\"的比例翻译成概率时最常用的一步。</li></ul><p><strong>算一遍</strong>:掷一枚骰子,\\(A=\\)\"掷出 6\",\\(B=\\)\"掷出 5\"。</p><ul><li>互斥可加:\\(P[A\\cup B]=\\tfrac16+\\tfrac16=\\tfrac13\\)——\"5 或 6\"直接把两块概率相加。</li><li>取补:\\(P[\\text{既非 5 也非 6}]=1-\\tfrac13=\\tfrac23\\),不必逐点数 1,2,3,4。</li><li>六个点合计 \\(6\\times\\tfrac16=1\\),规范公理兜底 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 公理 ③ 的前提条件</li><li><a class=\"net-wl\" data-id=\"容斥原理\">容斥原理</a> — 由可加性推广而来</li><li><a class=\"net-wl\" data-id=\"德摩根定律\">德摩根定律</a> — 配合补集性质化简</li></ul>"
+ },
+ "独立与乘积期望": {
+  "kind": "c",
+  "en": "ExpectationOfProductOfIndependentVariables",
+  "aliases": [
+   "product of independent expectations",
+   "multiplication rule for expectations",
+   "expectation of product",
+   "product of expectations",
+   "独立时积的期望"
+  ],
+  "level": "advanced",
+  "chapter": "p-l27",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当 \\(X\\perp Y\\)(密度可因式分解且支撑矩形)时,乘积的期望才等于期望的乘积:\\(E[g(X)h(Y)]=E[g(X)]\\,E[h(Y)]\\)。二重积分自动拆成两个一重积分之积,不必真积二维。</p><p><strong>白话</strong>:两台没串线的抽奖机,\"两边奖金乘起来\"的平均 = 你那台的平均 × 我这台的平均——因为你抽到什么完全不影响我。但只要机器串了线(一台出大奖另一台就收紧),这么乘就是错的。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\;\\Longrightarrow\\;E[g(X)\\,h(Y)]=E[g(X)]\\,E[h(Y)]$$</div><ul><li>特例:\\(E[XY]=E[X]E[Y]\\)、\\(E[XY^2]=E[X]E[Y^2]\\)。</li><li>为什么能拆:独立时 \\(f=f_Xf_Y\\) 且支撑矩形,内外层积分互不牵扯,直接分离;支撑一旦耦合(内层限含外层变量),这步分离就做不了。</li><li>最大陷阱:未验独立就拆——支撑 \\(0\\le x\\le y\\le1\\) 时即便密度形式可拆也不独立,必须老实二重积分(27B 三角:\\(1/5\\) vs 27C 矩形:\\(1/6\\))。</li><li>方向注意:独立 ⟹ 可拆;反过来 \\(E[XY]=E[X]E[Y]\\)(零协方差)推不回独立。</li></ul><p><strong>算一遍</strong>:抛两枚互不相干的硬币,正面记 1、反面记 0,求 \\(E[XY]\\)。</p><ul><li>硬算:\\(XY=1\\) 只在\"双正面\"发生,概率 \\(\\tfrac12\\times\\tfrac12=\\tfrac14\\),所以 \\(E[XY]=\\tfrac14\\)。</li><li>拆开算:\\(E[X]=0.5\\)、\\(E[Y]=0.5\\),相乘得 \\(0.25\\)——两条路对上 ✓</li><li>前提是两枚硬币独立;若绑在一根轴上同起同落,\\(E[XY]=0.5\\neq0.25\\),拆法立刻失效。</li></ul><h4>与其他概念的关系</h4><ul><li>连续型独立判据 — 前提怎么验:因式分解 + 矩形支撑</li><li>连续型联合矩 — 应用场景:\\(E[XY]\\) 等联合矩的捷径</li><li>独立与不相关 — 直接推论:独立 ⟹ Cov=0;反向不成立</li><li>期望的线性 — 对照:加法恒可拆,乘法要独立</li></ul>"
+ },
+ "独立性判定清单": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:给联合结构问\"独立吗\",或题面暗给独立让你拆乘积——判定要点按对象分三层。</p><h4>判定清单</h4><ol><li><strong>事件</strong>:\\(P[A\\cap B]=P[A]P[B]\\)(等价 \\(P[A\\mid B]=P[A]\\));互斥的非零事件必不独立,见 <a class=\"net-wl\" data-id=\"事件独立性\">事件独立性</a>。</li><li><strong>离散 RV</strong>:联合 pmf 处处 = 边缘乘积(一个格子破功即不独立)。</li><li><strong>连续 RV</strong>:连续型独立判据——密度可分离 \\(f(x,y)=g(x)h(y)\\) <strong>且支撑是矩形</strong>;三角形支撑直接判不独立。</li><li><strong>相关性只是必要线索</strong>:\\(\\rho=0\\not\\Rightarrow\\) 独立(独立与不相关);唯一例外是二元正态(零相关即独立(正态特有))。</li></ol><h4>易错</h4><ul><li>支撑非矩形却用\"可分离\"误判独立——先看支撑再看式子。</li><li>用协方差为 0 直接下独立结论(非正态即错)。</li></ul>"
+ },
+ "累积分布函数": {
+  "kind": "c",
+  "en": "CumulativeDistributionFunction",
+  "aliases": [
+   "cdf",
+   "distribution function",
+   "分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(F(x)=P[X\\le x]\\):累住\"到 x 为止\"的全部概率。对离散、连续<strong>一视同仁</strong>——知道 F 就等于知道这个随机变量的一切,是求各种范围概率的统一入口。</p><p><strong>白话</strong>:\\(F\\) 像收银机的累计小票:沿数轴从最左端一路扫到 \\(x\\),沿途概率全部记进总账——它报的永远是\"到此为止一共多少\",不是\"这一点是多少\";要某一段的量,拿两张小票相减就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=P[X\\le x]\\qquad P[u&lt;X\\le v]=F(v)-F(u)$$</div><ul><li>四条<strong>必备性质</strong>整块记:非减 · 右连续 · \\(F(-\\infty)=0\\) · \\(F(\\infty)=1\\)。</li><li>连续时 \\(F'(x)=f(x)\\)(光滑 S 型);离散时 \\(F(x)=\\sum_{t\\le x}p(t)\\)(阶梯,跳高 \\(=p(x)\\))。</li><li><strong>\\(F\\) 用 \\(\\le\\) 不是 \\(&lt;\\)</strong>:离散时含端点那一跳;求 \\(P[X&lt;x]\\) 要用跳<strong>前</strong>的值,与 \\(F(x)\\) 差一个 \\(p(x)\\)——差一个跳点答案就错。</li><li>分段 F 求区间概率:直接 \\(F(b)-F(a)\\),先看清端点落在哪一段(例 5A:\\(F(2.5)=1\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求 \\(P[2&lt;X\\le4]\\)。</p><ul><li>两张\"累计小票\":\\(F(4)=\\tfrac46\\)(1 到 4 点),\\(F(2)=\\tfrac26\\)(1、2 点)。</li><li>相减:\\(F(4)-F(2)=\\tfrac26=\\tfrac13\\)——正好数出 \\(\\{3,4\\}\\) 两个点 ✓</li><li>端点自查:区间写法 \\(u&lt;X\\le v\\) 与 \\(F\\) 的 \\(\\le\\) 严丝合缝,右端 4 含、左端 2 不含,一个跳点都不差。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 离散连续通吃的完全刻画</li><li>概率函数 — 离散:由 pmf 累加,阶梯跳高 \\(=p(x)\\)</li><li>概率密度函数 — 连续:求导得密度,\\(f=F'\\)</li><li>生存函数 — 互补:\\(S=1-F\\),\"F 管不超过,S 管超过\"</li><li>百分位数 — 反着用 F:解 \\(F(x)=p\\) 得分位数</li><li>联合累积分布函数 — 二维推广</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "贝叶斯定理": {
+  "kind": "c",
+  "en": "BayesTheorem",
+  "aliases": [
+   "Bayes' Theorem",
+   "Bayes rule",
+   "Bayes' rule",
+   "贝氏定理"
+  ],
+  "level": "hard",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>由结果反推原因</strong>:已知结果 B 发生,原因是 \\(A_j\\) 的概率 = \\(A_j\\) 那条路径的概率,占所有通往 B 路径之和的比重。它把 \\(P[B\\mid A]\\) 方向的条件概率\"翻\"成 \\(P[A\\mid B]\\)。</p><p><strong>白话</strong>:车间两条流水线都会出次品,拿到一件次品猜它来自哪条线——不是看哪条线次品率高,而是看那条线<strong>贡献的次品</strong>占全部次品的份额:产量大的线即使次品率低,嫌疑也可能更大。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A_j\\mid B]=\\frac{P[A_j]\\,P[B\\mid A_j]}{\\displaystyle\\sum_{i=1}^{n}P[A_i]\\,P[B\\mid A_i]}$$</div><ul><li><strong>分母全走一遍,分子只挑一支</strong>:分母=全概率 \\(P[B]\\);分子正是分母求和里的<strong>第 j 项</strong>——忘除分母得到的就不是概率。</li><li>两步推导:乘法公式的对称性给 \\(P[A\\mid B]=P[A]P[B\\mid A]/P[B]\\),再把分母用全概率沿 \\(\\{A_i\\}\\) 展开。</li><li><strong>只需相对权重</strong>:各 \\(P[A_i]\\) 同乘常数不影响结果——题目只给\"可能性是两倍\"时直接令 1 和 2 代入。</li><li>最经典的错:题给 \\(P[B\\mid A_i]\\)(某型出险率)、求 \\(P[A_j\\mid B]\\)(出险者属某型),<strong>方向相反</strong>,直接拿 \\(P[B\\mid A_j]\\) 当答案必错。</li><li>基率压制:检测再准也翻不过很小的先验(罕见病阳性后验 ≈0.09);用\"1000 人自然频数表\"画出来最稳。</li></ul><p><strong>算一遍</strong>:两个盒子各有一半概率被选中,A 盒摸到红球的概率 0.2,B 盒 0.6;摸出一个红球,问来自 A 盒的概率。</p><ul><li>先把每条通往\"红球\"的路都走一遍:A 路径 \\(0.5\\times0.2=0.1\\),B 路径 \\(0.5\\times0.6=0.3\\)。</li><li>分母 = 全概率 \\(0.1+0.3=0.4\\);分子只挑 A 那一支 \\(0.1\\)。</li><li>\\(P[A\\mid \\text{红}]=0.1/0.4=0.25\\)——红球多半来自 B,A 的嫌疑只占四分之一;别拿 \\(0.2\\)(方向相反的 \\(P[\\text{红}\\mid A]\\))当答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 要翻转方向的对象:\\(P[A\\mid B]\\leftrightarrow P[B\\mid A]\\)</li><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 分子 \\(P[A_j]P[B\\mid A_j]\\) 的来源</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 分母就是它;\"分子是分母的一项\"是全部结构</li><li><a class=\"net-wl\" data-id=\"先验后验概率\">先验后验概率</a> — 输入先验、输出后验:用证据更新信念</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理-连续\">贝叶斯定理-连续</a> — 连续版:求和换积分、概率换密度</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "贝叶斯定理-连续": {
+  "kind": "c",
+  "en": "BayesTheoremContinuous",
+  "aliases": [
+   "Bayes' theorem (continuous)",
+   "continuous Bayes"
+  ],
+  "level": "hard",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把条件方向从 \\(Y\\mid X\\) 翻转成 \\(X\\mid Y\\) 的密度公式:分子 = <strong>先验 × 似然</strong>,分母 = 同一个分子对所有可能值积分(归一化常数)。与离散贝叶斯同构。</p><p><strong>白话</strong>:\"看结果猜原因\"的连续版:先验是你原本对未知量的信念曲线,似然给每个候选值打分——\"它多能解释这次观测\";两者相乘,曲线形状就更新了,最后整体缩放到面积为 1,得到新信念(后验)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid Y}(x\\mid y)=\\frac{f_X(x)\\,f_{Y\\mid X}(y\\mid x)}{\\displaystyle\\int_{-\\infty}^{\\infty} f_X(w)\\,f_{Y\\mid X}(y\\mid w)\\,dw}$$</div><ul><li>推导两步:分子用乘法 \\(f(x,y)=f_X(x)\\,f_{Y\\mid X}(y\\mid x)\\) 展开,分母 \\(f_Y(y)\\) 用连续全概率展开。</li><li>分母对 \\(w\\) 积分后是<strong>常数</strong>:先算分子、最后统一归一,别逐项带着分数跑。</li><li>口诀:先验乘似然,除以全概率——先验/后验更新的连续机器。</li></ul><p><strong>算一遍</strong>:硬币的正面概率 \\(X\\) 未知,先验均匀 \\(f_X(x)=1\\)(\\(0\\le x\\le1\\));抛一次,出正面,更新信念。</p><ul><li>分子 = 先验 × 似然:\\(1\\times x=x\\)(偏正的硬币更能解释这次正面)。</li><li>分母 = 分子积一遍:\\(\\int_0^1 w\\,dw=\\tfrac12\\)。</li><li>后验 \\(f(x\\mid\\text{正面})=x/\\tfrac12=2x\\)——信念从水平线翘成向右上的斜线:一次正面,就该更相信硬币偏正 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 离散原型,结构一模一样</li><li>条件密度函数 — 输入与输出都是它</li><li><a class=\"net-wl\" data-id=\"全概率公式-连续\">全概率公式-连续</a> — 分母的展开方式</li><li><a class=\"net-wl\" data-id=\"先验后验概率\">先验后验概率</a> — 公式的解释框架:由先验更新到后验</li></ul>"
+ },
+ "贝叶斯表格法快解后验": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:多类别(司机好/中/差、机器 A/B/C)各有先验与\"出事率\",已知出了事,反问来自哪一类——机械表格三行搞定。</p><h4>表格三步</h4><ol><li><strong>列</strong>:每类一列,行依次为 先验 \\(P[B_i]\\)、似然 \\(P[A\\mid B_i]\\)、乘积 \\(P[B_i]P[A\\mid B_i]\\)。</li><li><strong>加</strong>:乘积行求和 = \\(P[A]\\)(这一步就是 <a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a>)。</li><li><strong>除</strong>:目标列乘积 ÷ 总和 = 后验 \\(P[B_j\\mid A]\\)(<a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a>;先验→后验的更新见 <a class=\"net-wl\" data-id=\"先验后验概率\">先验后验概率</a>)。</li></ol><p>只需相对权重:先验若给的是比例(如 2:3:5)不必归一,最后一除自动归一。</p><h4>易错</h4><ul><li>似然行填成 \\(P[B_i\\mid A]\\)(方向反了——表格里永远填「类别 ⇒ 现象」)。</li><li>求「连续两次都出事」的后验时,似然要平方(条件独立假设)。</li></ul>"
+ },
+ "连续型条件期望": {
+  "kind": "c",
+  "en": "ConditionalExpectationContinuous",
+  "aliases": [
+   "conditional expectation (continuous)",
+   "conditional mean"
+  ],
+  "level": "advanced",
+  "chapter": "p-l30",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>一阶条件矩:给定 \\(Y=y\\) 后那支切片密度的<strong>重心</strong>。它是 \\(y\\) 的函数——不同条件值给出不同均值;把 \\(y\\) 换成随机的 \\(Y\\),它就是随机变量 \\(E[X\\mid Y]\\)。</p><p><strong>白话</strong>:像一张\"按年龄查平均收入\"的表:\"30 岁的平均收入\"是给定年龄后的平均,年龄换一个、平均数跟着换——条件期望本身是整张查询表(\\(y\\) 的函数),不是一个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X\\mid Y=y]=\\int_{-\\infty}^{\\infty} x\\,f_{X\\mid Y}(x\\mid y)\\,dx$$</div><ul><li>真题问 \\(E[X\\mid Y=y]\\),答案应是<strong>含 \\(y\\) 的表达式</strong>(如练 30.2 的 \\(11y/16\\)),别急着代数字——后一问往往要再对 \\(Y\\) 取期望。</li><li><strong>\\(E[X\\mid Y]\\) 不是数,是 \\(Y\\) 的随机变量</strong>——才能再对它取期望/方差,是双重期望、全方差的原料。</li><li>二元正态给出最漂亮特例:条件期望恰是 \\(y\\) 的直线(回归线)。</li></ul><p><strong>算一遍</strong>:给定 \\(Y=y\\) 后 \\(X\\) 在 \\([0,y]\\) 上均匀(切片密度 \\(1/y\\)),求 \\(E[X\\mid Y=y]\\)。</p><ul><li>\\(E[X\\mid Y=y]=\\int_0^y x\\cdot\\dfrac1y\\,dx=\\dfrac{y^2}{2y}=\\dfrac{y}{2}\\)——答案是<strong>含 \\(y\\) 的表达式</strong>,不是数。</li><li>代入体会:\\(y=1\\) 时重心 \\(0.5\\)、\\(y=2\\) 时 \\(1\\)——条件值换一个,切片重心跟着挪。</li><li>把 \\(y\\) 换成 \\(Y\\):\\(E[X\\mid Y]=Y/2\\) 是随机变量,可再对它取期望(双重期望的原料)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件期望\">条件期望</a> — 离散版原型</li><li>连续型条件矩 — 本卡是其 \\(g(x)=x\\) 特例</li><li><a class=\"net-wl\" data-id=\"条件期望是随机变量\">条件期望是随机变量</a> — 身份认知:\\(y\\) 的函数 → \\(Y\\) 的随机变量</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 对它再取期望还原 \\(E[X]\\)</li><li>条件分布(二元正态) — 闭式特例:回归线</li></ul>"
+ },
+ "连续型条件概率": {
+  "kind": "c",
+  "en": "ConditionalProbabilityContinuous",
+  "aliases": [
+   "conditional probability (continuous)"
+  ],
+  "level": "advanced",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定 \\(Y=y\\) 时 \\(X\\) 落入集合 \\(A\\) 的概率:先固定 \\(y\\) 得条件密度(一支合法密度),再照常对目标区间积分。</p><p><strong>白话</strong>:整座密度山只切下 \\(Y=y\\) 那一薄片:先把这片放大到总面积为 1(归一),再问\"\\(X\\) 落在 \\(A\\) 段占这片多大面积\"——和普通一维概率没两样,只是密度换成了切片版。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X\\in A\\mid Y=y]=\\int_A f_{X\\mid Y}(x\\mid y)\\,dx$$</div><ul><li>套路三步:固定条件变量、对另一变量积分求边缘(分母)→ 分子在目标区间积同一被积函数 → 相除。</li><li><strong>分母是常数、最后除</strong>:整题共用一个 \\(f_Y(y)\\)(或 \\(f_X(x)\\)),先把分子积完再除一次,少写分数少出错(例 29A 的常数 1.17)。</li><li>条件值一落地,先<strong>重写另一变量的范围</strong>:支撑 \\(0\\le x\\le y\\le1\\) 下 given \\(X=0.1\\),则 \\(y\\in[0.1,1]\\),再动积分。</li></ul><p><strong>算一遍</strong>:单位正方形上 \\(f(x,y)=x+y\\),求 \\(P[X\\le\\tfrac12\\mid Y=\\tfrac12]\\)。</p><ul><li>分母(边缘):\\(f_Y(\\tfrac12)=\\int_0^1\\big(x+\\tfrac12\\big)dx=1\\);条件密度就是 \\(x+\\tfrac12\\)。</li><li>分子照常积:\\(\\int_0^{1/2}\\big(x+\\tfrac12\\big)dx=\\tfrac18+\\tfrac14=\\tfrac38\\)。</li><li>相除:\\(P=\\tfrac{3/8}{1}=\\tfrac38\\)——固定切片、归一、对目标区间积分,三步完事。</li></ul><h4>与其他概念的关系</h4><ul><li>条件密度函数 — 被积函数;先有它才有概率</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 事件版原型:缩小世界再归一</li><li><a class=\"net-wl\" data-id=\"全概率公式-连续\">全概率公式-连续</a> — 反向操作:条件密度加权积回边缘</li><li>积分限与支撑 — 积分限随条件值变的根源</li></ul>"
+ },
+ "随机变量独立性": {
+  "kind": "c",
+  "en": "IndependenceOfRandomVariables",
+  "aliases": [
+   "independent random variables",
+   "mutual independence"
+  ],
+  "level": "advanced",
+  "chapter": "p-l11",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(X\\) 与 \\(Y\\) 独立 ⟺ 联合分布等于边缘分布的乘积、且对<strong>所有</strong> \\((x,y)\\) 成立——\"知道 \\(X\\) 取什么,不改变 \\(Y\\) 的分布\"。实操判定两条缺一不可:密度可因式分解 <strong>且</strong> 支撑为矩形。</p><p><strong>白话</strong>:两人各摇各的骰子:知道你摇出 6,对我这边每个点数的概率毫无影响——而且这话必须对<strong>所有</strong>组合都成立;有一格不符,独立就破功。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\iff f(x,y)=f_X(x)\\,f_Y(y)\\ \\ \\forall(x,y)\\qquad\\quad f(x_1,\\dots,x_n)=\\prod_{i=1}^{n} f(x_i)$$</div><ul><li><strong>非矩形支撑一票否决</strong>:独立时支撑必为两个一维集合的笛卡尔积(矩形,可含 \\(\\infty\\));\\(0&lt;x&lt;y&lt;1\\)、\\(x+y&lt;1\\) 这类把变量绑在一起的约束,公式再能拆也<strong>一定不独立</strong>——先看支撑再看公式。</li><li>判\"独立\"须每点都验;判\"不独立\"找到一格反例即可(例 11A:\\(p(1,1)=0.40\\neq p_X(1)p_Y(1)=0.42\\))。</li><li>推论:独立 ⟹ \\(E[XY]=E[X]E[Y]\\);逆命题不成立。</li><li>离散同理 \\(p(x,y)=p_X(x)\\,p_Y(y)\\);\\(n\\) 个变量为各自密度连乘。</li></ul><p><strong>算一遍</strong>:联合表 \\(p(0,0)=0.2\\)、\\(p(0,1)=0.3\\)、\\(p(1,0)=0.2\\)、\\(p(1,1)=0.3\\),判独立。</p><ul><li>先求边缘:行加总 \\(p_X(0)=p_X(1)=0.5\\);列加总 \\(p_Y(0)=0.4\\)、\\(p_Y(1)=0.6\\)。</li><li>四格逐一对乘积:\\(0.5\\times0.4=0.2\\) ✓、\\(0.5\\times0.6=0.3\\) ✓(另两格同)——<strong>每格都过</strong>才判独立。</li><li>反过来只需一格:若某格实测 \\(0.25\\neq\\) 乘积 \\(0.2\\),一个反例就判不独立(例 11A 正是如此)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"事件独立性\">事件独立性</a> — 事件版前身(L03),推广到随机变量</li><li>联合分布 — 判据的左边</li><li>边缘分布 — 判据的右边(乘积)</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 直接推论(L12)</li><li>连续型独立判据 — 连续版展开(L24)</li><li>独立与不相关 — \"逆不真\"的完整讨论</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"独立性判定清单\">独立性判定清单</a> — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ },
+ "随机变量的条件分布": {
+  "kind": "c",
+  "en": "ConditionalDistributionGivenEvent",
+  "aliases": [
+   "conditional random variable",
+   "conditional cdf",
+   "conditional distribution given an event",
+   "条件分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把\"缩小样本空间再归一化\"从事件搬到<strong>随机变量的整条分布</strong>:给定事件 A(如 \\(X&gt;a\\)),\"条件下的 X\"本身是一个<strong>新的随机变量</strong>,由条件 cdf \\(F_{X\\mid A}(x)=\\Pr(X\\le x\\mid A)\\) 刻画。</p><p><strong>白话</strong>:得知\"损失超过了免赔额\"这条消息后,损失 \\(X\\) 的整副牌都要重新洗、重新配平——洗出来的不是一个数,而是一位<strong>新变量</strong>:它自己有 cdf、有密度、有期望,想问什么都从它出发。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\Pr(X&gt;a\\mid X&lt;b)=\\frac{\\Pr(a&lt;X&lt;b)}{\\Pr(X&lt;b)}\\qquad F_{X\\mid A}(x)=\\Pr(X\\le x\\mid A)$$</div><ul><li>分子是<strong>交</strong>:\"\\(X&gt;8\\)\"与\"\\(X&lt;10\\)\"都是数轴区间,交就是公共区间 \\((8,10)\\)——分子写成 \\(\\Pr(X&gt;8)\\) 是高频错。</li><li>条件 cdf 可微时<strong>求导</strong>得条件密度函数——\"事件视角\"升级成\"整条分布视角\"的关键一步。</li><li>与 Ch3 是同一个动作:Ch3 求<strong>一个数</strong>,这里变出<strong>一条新分布</strong>;对条件分布再问 \\(P[X\\le x]\\) 就落回 Ch3。</li><li>贝叶斯定理对随机变量同样成立,写法照搬事件版。</li></ul><p><strong>算一遍</strong>:掷一颗骰子 \\(X\\),已知 \\(X&lt;5\\),求 \\(\\Pr(X&gt;2\\mid X&lt;5)\\)。</p><ul><li>分子是<strong>交</strong>:\\(\\{X&gt;2\\}\\cap\\{X&lt;5\\}=\\{3,4\\}\\),概率 \\(\\tfrac26\\)——写成 \\(\\Pr(X&gt;2)=\\tfrac46\\) 就是那个高频错。</li><li>分母 \\(\\Pr(X&lt;5)=\\tfrac46\\);相除 \\(\\tfrac{2/6}{4/6}=\\tfrac12\\)。</li><li>升级成整条分布:条件下的 \\(X\\) 在 \\(\\{1,2,3,4\\}\\) 上各占 \\(\\tfrac14\\)——一位新的随机变量,之后问任何概率都落回普通计算。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 同一定义从事件原样搬到关于 X 的事件</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 条件 cdf 刻画新变量,求导得条件密度</li><li><a class=\"net-wl\" data-id=\"条件密度与条件pmf\">条件密度与条件pmf</a> — 这条新分布的密度/pmf 具体形态</li><li><a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> — 推广:条件从\"事件\"换成\"另一个随机变量的取值\"</li><li><a class=\"net-wl\" data-id=\"连续型条件概率\">连续型条件概率</a> — 连续场景的细化(L29)</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
+</body>
+</html>

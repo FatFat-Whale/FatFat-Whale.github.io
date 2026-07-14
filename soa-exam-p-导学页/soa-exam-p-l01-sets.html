@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L01 · 集合</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -198,7 +268,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     <h1>第一章 · <em>Sets 集合</em></h1>
     <p class="lead">全书第一块地基:用集合语言描述事件,用 <b>Venn 图</b> 和 <b>容斥公式</b> 处理「并 / 交 / 补」。这是后面所有概率题的底层工具——本页对照课本 Lesson&nbsp;1 精读,随时可回看复习。</p>
     <div class="pills">
-      <span class="pill"><span class="dot" style="background:#7ec77a"></span>前导 <b>✓ 已学</b></span>
       <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch1 Sets <b>✓ 已学</b></span>
       <span class="pill">概念课 <b>1.2x</b> · 习题 <b>1.5x</b></span>
       <span class="pill">课本 <b>p.1–4</b></span>
@@ -228,56 +297,118 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
-  <a href="#pre">前导</a>
+  <a href="#cheat">核心</a>
   <a href="#sets">集合</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#map">对照</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完 Sets 你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 用 <b>∪ / ∩ / ′</b> 写出复合事件,并用 <b>De&nbsp;Morgan</b> 化简。</p>
-        <p style="margin-bottom:0">✅ 看到题能立刻判断:画 <b>Venn 图</b> 还是列 <b>表格</b>。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>集合运算</h4>
+        <p><span class="fx-de" data-tip="推导:都不发生=每个都不发生:落在并集外⟺同时落在两集之外" tabindex="0">推</span>\((A\cup B)'=A'\cap B'\)</p>
+        <p><span class="fx-de" data-tip="推导:非同时发生=至少缺一个:取补把∩换∪、各集取补" tabindex="0">推</span>\((A\cap B)'=A'\cup B'\)</p>
+        <p>分配律 \(A\cup(B\cap C)=(A\cup B)\cap(A\cup C)\)</p>
+        <p>互斥:\(A\cap B=\varnothing\)</p>
       </div>
-      <div class="card">
-        <p style="margin-top:0">✅ 熟练套用 <b>两 / 三集合容斥公式</b> 求并、交、补的概率。</p>
-        <p style="margin-bottom:0">✅ 把文字("不""至少""都不")正确翻译成 \(P[\cdot]\) 的项。</p>
+      <div class="cc t">
+        <h4>概率 / 容斥</h4>
+        <p>\(P[A']=1-P[A]\)</p>
+        <p><span class="fx-de" data-tip="推导:De Morgan 认出 A′∩B′=(A∪B)′——「都不发生」= 落在并集外面,整体取补" tabindex="0">推</span>\(P[A'\cap B']=1-P[A\cup B]\)</p>
+        <p><span class="fx-de" data-tip="推导:De Morgan 认出 A′∪B′=(A∩B)′——「至少缺一个」= 不是两个都发生,整体取补" tabindex="0">推</span>\(P[A'\cup B']=1-P[A\cap B]\)</p>
+        <p><span class="fx-de" data-tip="推导:直接相加把重叠区 A∩B 数了两次,扣回一次" tabindex="0">推</span>\(P[A\cup B]=P[A]+P[B]-P[A\cap B]\)</p>
+        <p style="font-size:13px"><span class="fx-de" data-tip="推导:两两重叠各多数一次全扣掉,三重区被加3减3,再加回一次" tabindex="0">推</span>\(P[A\cup B\cup C]=\sum P-\sum P_{两两}+P_{三}\)</p>
+        <p>公理:\(P[\Omega]=1,\ P[A]\ge 0\)</p>
       </div>
     </div>
-  </div>
-</section>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>用 <b>∪ / ∩ / ′</b> 写出复合事件,并用 <b>De&nbsp;Morgan</b> 化简;文字("不""至少""都不")正确翻成 \(P[\cdot]\) 的项。</li>
+          <li>熟练套用<b>两 / 三集合容斥</b>求并、交、补的概率;看题判断画 <b>Venn 图</b>还是列表格。</li>
+          <li>课本明说:本课考题基本都在考 <b>2–3 集合容斥</b>,剩下的功夫在"文字翻译成 \(P[\cdot]\) 的哪一项"。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>题面给「都不持有 \(x\%\)」,先转 \(P[A\cup B]=1-x\) 再套容斥。</li>
+          <li>保险语境信号词:<b>policyholder</b>(保单持有人)、<b>has coverage</b>(持有某险种)、<b>neither … nor …</b>(= 补集之交 \((A\cup B)'\))、<b>at least one</b>(= 并)。</li>
+          <li>陷阱:「only A / 只有 A」是 \(A\cap B'\),不是 \(A\);三集合题先画 Venn 分 8 块,从最里层(三重交)向外填数,填完再读题问的是哪几块。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="互斥事件">● 互斥事件</button><button class="chip" data-card="容斥原理">● 容斥原理</button><button class="chip" data-card="德摩根定律">● 德摩根定律</button><button class="chip" data-card="概率公理">● 概率公理</button><button class="chip" data-card="等可能模型">● 等可能模型</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 12 / 全章 50)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>1.2</b></td><td>补集翻译:E∪F′ 拆成不交并</td><td style="white-space:nowrap"><button class="kxb" data-kx="1.2" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">补集操作的干净入门真题(110-S85)</td></tr>
+<tr class="kxd" data-kxq="1.2" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( E \) and \( F \) be events such that \( P[E] = \frac{1}{2} \), \( P[F] = \frac{1}{2} \), and \( P[E&#x27; \cap F&#x27;] = \frac{1}{3} \). Then \( P[E \cup F&#x27;] = \)</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{1}{4} \)</span><span class="kx-opt"><b>(B)</b> \( \frac{2}{3} \)</span><span class="kx-opt"><b>(C)</b> \( \frac{3}{4} \)</span><span class="kx-opt"><b>(D)</b> \( \frac{5}{6} \)</span><span class="kx-opt"><b>(E)</b> \( 1 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;拆并集为不相交</td><td>\( E \cup F' = E \cup (E' \cap F') \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;两不相交集概率相加</td><td>\( P[E \cup F'] = P[E] + P[E' \cap F'] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入求值</td><td>\( = \frac{1}{2} + \frac{1}{3} = \frac{5}{6} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>1.3</b></td><td>De Morgan:(E∪F)′=E′∩F′</td><td style="white-space:nowrap"><button class="kxb" data-kx="1.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">全章唯一直击 De Morgan 的题(110-S88)</td></tr>
+<tr class="kxd" data-kxq="1.3" style="display:none"><td colspan="4"><div class="kx-qtx">If \( E \) and \( F \) are events for which \( P[E \cup F] = 1 \), then \( P[E&#x27; \cup F&#x27;] \) must equal</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 0 \)</span><span class="kx-opt"><b>(B)</b> \( P[E&#x27;] + P[F&#x27;] - P[E&#x27;]P[F&#x27;] \)</span><span class="kx-opt"><b>(C)</b> \( P[E&#x27;] + P[F&#x27;] \)</span><span class="kx-opt"><b>(D)</b> \( P[E&#x27;] + P[F&#x27;] - 1 \)</span><span class="kx-opt"><b>(E)</b> \( 1 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;德摩根改写补集交</td><td>\( E' \cap F' = (E \cup F)' \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;由并集为1得交为0</td><td>\( P[E' \cap F'] = 1 - P[E \cup F] = 0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;容斥收口</td><td>\( P[E' \cup F'] = P[E'] + P[F'] - 0 = P[E'] + P[F'] \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>1.6</b></td><td>分配律消项 (A∪B)∩(A∪B′)=A</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q3" type="button" title="展开题目与答案(样题 Q3)">▸</button>Q3</td><td class="dim" style="font-size:13px">招牌 SOA 样题,§00 套路原题</td></tr>
+<tr class="kxd kxds" data-kxq="Q3" style="display:none"><td colspan="4"><div class="kx-qtx">You are given \( P[A \cup B] = 0.7 \) and \( P[A \cup B&#x27;] = 0.9 \). Calculate \( P[A] \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.2</span><span class="kx-opt"><b>(B)</b> 0.3</span><span class="kx-opt"><b>(C)</b> 0.4</span><span class="kx-opt"><b>(D)</b> 0.6</span><span class="kx-opt"><b>(E)</b> 0.8</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;对 B 写容斥</td><td>\(P[A\cup B]=P[A]+P[B]-P[A\cap B]=0.7\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;对 B 补集写容斥</td><td>\(P[A\cup B^c]=P[A]+P[B^c]-P[A\cap B^c]=0.9\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;两式相加用分割恒等式</td><td>\(P[B]+P[B^c]=1,\ (A\cap B)\cup(A\cap B^c)=A\Rightarrow 1.6=2P[A]+1-P[A]\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;解出目标</td><td>\(P[A]=0.6\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>1.7</b></td><td>「或但不都」= 对称差</td><td style="white-space:nowrap"><button class="kxb" data-kx="1.7" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">owns A or H but not both,经典翻译陷阱(1999 旧样题)</td></tr>
+<tr class="kxd" data-kxq="1.7" style="display:none"><td colspan="4"><div class="kx-qtx">A marketing survey indicates that 60% of the population owns an automobile, 30% owns a house, and 20% owns both an automobile and a house. Calculate the probability that a person chosen at random owns an automobile or a house, but not both.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.4</span><span class="kx-opt"><b>(B)</b> 0.5</span><span class="kx-opt"><b>(C)</b> 0.6</span><span class="kx-opt"><b>(D)</b> 0.7</span><span class="kx-opt"><b>(E)</b> 0.9</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;目标写成对称差</td><td>\( (P[A]-P[A\cap H]) + (P[H]-P[A\cap H]) = P[A]+P[H]-2P[A\cap H] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入数值</td><td>\( = 0.6 + 0.3 - 2(0.2) \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;收口</td><td>\( = 0.5 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>1.8</b></td><td>三集合容斥 + none 取补</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q1" type="button" title="展开题目与答案(样题 Q1)">▸</button>Q1</td><td class="dim" style="font-size:13px">3 集合 inclusion-exclusion 范式题</td></tr>
+<tr class="kxd kxds" data-kxq="Q1" style="display:none"><td colspan="4"><div class="kx-qtx">A survey of a group&#x27;s viewing habits over the last year revealed the following information: (i) 28% watched gymnastics (ii) 29% watched baseball (iii) 19% watched soccer (iv) 14% watched gymnastics and baseball (v) 12% watched baseball and soccer (vi) 10% watched gymnastics and soccer (vii) 8% watched all three sports. Calculate the percentage of the group that watched none of the three sports during the last year.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 24%</span><span class="kx-opt"><b>(B)</b> 36%</span><span class="kx-opt"><b>(C)</b> 41%</span><span class="kx-opt"><b>(D)</b> 52%</span><span class="kx-opt"><b>(E)</b> 60%</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;目标转补集</td><td>\(\Pr[(G\cup B\cup S)^c]=1-\Pr(G\cup B\cup S)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;三集合容斥展开</td><td>\(\Pr(G\cup B\cup S)=0.28+0.29+0.19-0.14-0.10-0.12+0.08=0.48\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求补得结果</td><td>\(1-0.48=0.52\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>1.9</b></td><td>only-A 陷阱 + neither…nor</td><td style="white-space:nowrap"><button class="kxb" data-kx="1.9" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">B∩G′∩S′,only 区代表(ASM 自编)</td></tr>
+<tr class="kxd" data-kxq="1.9" style="display:none"><td colspan="4"><div class="kx-qtx">A survey of a group&#x27;s viewing habits over the last year revealed the following information: i) 28% watched gymnastics ii) 29% watched baseball iii) 19% watched soccer iv) 14% watched gymnastics and baseball v) 12% watched baseball and soccer vi) 10% watched gymnastics and soccer vii) 8% watched all three sports. Calculate the percentage of the group that watched baseball but neither soccer nor gymnastics during the last year.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="11%" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;取只看棒球那块</td><td>\( P[B] - P[B\cap G] - P[B\cap S] + P[B\cap G\cap S] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入数值</td><td>\( = 29\% - 14\% - 12\% + 8\% \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;收口</td><td>\( = 11\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>1.11</b></td><td>三集合 Venn 中心向外填数</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q182" type="button" title="展开题目与答案(样题 Q182)">▸</button>Q182</td><td class="dim" style="font-size:13px">硬核填数:「only-X 比 only-Y 多 76」型约束</td></tr>
+<tr class="kxd kxds" data-kxq="Q182" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance agent&#x27;s files reveal the following facts about his policyholders:
 
-<section id="pre">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-pre">前导 · 1.5x</span><h2 class="sec-title">热身:工具与全景</h2></div></div>
-    <p class="sec-sub">两段短视频,先把"考试用什么算"和"这门课要学什么"搞清楚,再进正课。</p>
-    <div class="grid2">
-      <div class="card">
-        <h3>① 计算器演示</h3>
-        <div class="src">视频 · [Bolong] · 42min · 1.5x</div>
-        <p>认准 SOA <b>允许的机型</b>(常见 TI‑30XS MultiView、TI‑30X&nbsp;IIS、BA&nbsp;II&nbsp;Plus 等,<b>以官网最新清单为准</b>)。重点练熟跟概率最相关的键:</p>
-        <p style="margin-bottom:0">阶乘 <span class="kbd">x!</span> · 排列 <span class="kbd">nPr</span> · 组合 <span class="kbd">nCr</span> · 统计模式(算 \(\bar x,\ \sigma\)) · 指数 \(e^x\)。后面排列组合、二项/泊松/正态全靠它。</p>
-      </div>
-      <div class="card">
-        <h3>② 课程科普</h3>
-        <div class="src">视频 · [Catherine] · 56min · 1.5x · 讲义</div>
-        <p>Exam P = 北美精算 SOA 的第一门,<b>机考、约 3 小时、30 道单选、纯概率</b>。</p>
-        <p style="margin-bottom:0">建立全局地图:<b>集合/计数 → 概率与条件概率 → 随机变量 → 常见分布 → 联合分布/矩 → 变换</b>。本章学的正是最左端那块地基。</p>
-      </div>
+i) 243 own auto insurance.
+ii) 207 own homeowner insurance.
+iii) 55 own life insurance and homeowner insurance.
+iv) 96 own auto insurance and homeowner insurance.
+v) 32 own life insurance, auto insurance and homeowner insurance.
+vi) 76 more clients own only auto insurance than only life insurance.
+vii) 270 own only one of these three insurance products.
+
+Calculate the total number of the agent&#x27;s policyholders who own at least one of these three insurance products.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 389</span><span class="kx-opt"><b>(B)</b> 407</span><span class="kx-opt"><b>(C)</b> 423</span><span class="kx-opt"><b>(D)</b> 448</span><span class="kx-opt"><b>(E)</b> 483</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;由三重区逐层去重</td><td>L/H非A \( =55-32=23 \),A/H非L \( =96-32=64 \),仅H \( =88 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;设未知列方程</td><td>仅L \( =X \),仅A \( =X+76 \):\( 88+X+(X+76)=270 \Rightarrow X=53 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>③&nbsp;补齐区域求总数</td><td>L/A非H \( =243-225=18 \),合计 \( 53+129+88+18+64+23+32=407 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q182" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance agent&#x27;s files reveal the following facts about his policyholders:
+
+i) 243 own auto insurance.
+ii) 207 own homeowner insurance.
+iii) 55 own life insurance and homeowner insurance.
+iv) 96 own auto insurance and homeowner insurance.
+v) 32 own life insurance, auto insurance and homeowner insurance.
+vi) 76 more clients own only auto insurance than only life insurance.
+vii) 270 own only one of these three insurance products.
+
+Calculate the total number of the agent&#x27;s policyholders who own at least one of these three insurance products.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 389</span><span class="kx-opt"><b>(B)</b> 407</span><span class="kx-opt"><b>(C)</b> 423</span><span class="kx-opt"><b>(D)</b> 448</span><span class="kx-opt"><b>(E)</b> 483</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;由三重区逐层去重</td><td>L/H非A \( =55-32=23 \),A/H非L \( =96-32=64 \),仅H \( =88 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;设未知列方程</td><td>仅L \( =X \),仅A \( =X+76 \):\( 88+X+(X+76)=270 \Rightarrow X=53 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>③&nbsp;补齐区域求总数</td><td>L/A非H \( =243-225=18 \),合计 \( 53+129+88+18+64+23+32=407 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>1.13</b></td><td>两集合 (A∪B)′ + neither…nor</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q2" type="button" title="展开题目与答案(样题 Q2)">▸</button>Q2</td><td class="dim" style="font-size:13px">最经典 SOA 入门样题(lab/referral)</td></tr>
+<tr class="kxd kxds" data-kxq="Q2" style="display:none"><td colspan="4"><div class="kx-qtx">The probability that a visit to a primary care physician&#x27;s (PCP) office results in neither lab work nor referral to a specialist is 35%. Of those coming to a PCP&#x27;s office, 30% are referred to specialists and 40% require lab work. Calculate the probability that a visit to a PCP&#x27;s office results in both lab work and referral to a specialist.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.05</span><span class="kx-opt"><b>(B)</b> 0.12</span><span class="kx-opt"><b>(C)</b> 0.18</span><span class="kx-opt"><b>(D)</b> 0.25</span><span class="kx-opt"><b>(E)</b> 0.35</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;容斥式解交集</td><td>\(P(R\cap L)=P(R)+P(L)-P(R\cup L)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;并集用补集表示</td><td>\(P(R\cup L)=1-P[(R\cup L)^c]=1-0.35\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入求值</td><td>\(0.30+0.40-1+0.35=0.05\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>1.15</b></td><td>三属性分类补集计数</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q5" type="button" title="展开题目与答案(样题 Q5)">▸</button>Q5</td><td class="dim" style="font-size:13px">young/male/married 经典分类样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q5" style="display:none"><td colspan="4"><div class="kx-qtx">An auto insurance company has 10,000 policyholders. Each policyholder is classified as (i) young or old; (ii) male or female; and (iii) married or single. Of these policyholders, 3000 are young, 4600 are male, and 7000 are married. The policyholders can also be classified as 1320 young males, 3010 married males, and 1400 young married persons. Finally, 600 of the policyholders are young married males. Calculate the number of the company&#x27;s policyholders who are young, female, and single.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 280</span><span class="kx-opt"><b>(B)</b> 423</span><span class="kx-opt"><b>(C)</b> 486</span><span class="kx-opt"><b>(D)</b> 880</span><span class="kx-opt"><b>(E)</b> 896</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;年轻女性=全体减男性</td><td>\(N(YF)=3000-1320=1680\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;已婚女性=已婚减已婚男</td><td>\(N(YFM)=1400-600=800\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;单身女性=女性减已婚女</td><td>\(1680-800=880\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>1.17</b></td><td>两集合容斥 + 差值约束</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q8" type="button" title="展开题目与答案(样题 Q8)">▸</button>Q8</td><td class="dim" style="font-size:13px">PT/chiro,带「多 0.14」关系式,综合度高</td></tr>
+<tr class="kxd kxds" data-kxq="Q8" style="display:none"><td colspan="4"><div class="kx-qtx">Among a large group of patients recovering from shoulder injuries, it is found that 22% visit both a physical therapist and a chiropractor, whereas 12% visit neither of these. The probability that a patient visits a chiropractor exceeds by 0.14 the probability that a patient visits a physical therapist. Calculate the probability that a randomly chosen member of this group visits a physical therapist.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.26</span><span class="kx-opt"><b>(B)</b> 0.38</span><span class="kx-opt"><b>(C)</b> 0.40</span><span class="kx-opt"><b>(D)</b> 0.48</span><span class="kx-opt"><b>(E)</b> 0.62</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;DeMorgan 转并集</td><td>\(0.88=1-\Pr(C^c\cap T^c)=\Pr(C\cup T)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;容斥并代入关系式</td><td>\(0.88=(\Pr[T]+0.14)+\Pr[T]-0.22=2\Pr[T]-0.08\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解一元方程</td><td>\(\Pr[T]=(0.88+0.08)/2=0.48\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>1.27</b></td><td>neither + at least one 双信号词</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q130" type="button" title="展开题目与答案(样题 Q130)">▸</button>Q130</td><td class="dim" style="font-size:13px">ER/hospital,信号词双料代表</td></tr>
+<tr class="kxd kxds" data-kxq="Q130" style="display:none"><td colspan="4"><div class="kx-qtx">This year, a medical insurance policyholder has probability 0.70 of having no emergency room visits, 0.85 of having no hospital stays, and 0.61 of having neither emergency room visits nor hospital stays
+
+Calculate the probability that the policyholder has at least one emergency room visit and at least one hospital stay this year.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.045</span><span class="kx-opt"><b>(B)</b> 0.060</span><span class="kx-opt"><b>(C)</b> 0.390</span><span class="kx-opt"><b>(D)</b> 0.667</span><span class="kx-opt"><b>(E)</b> 0.840</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;补集得并事件概率</td><td>\(P(A\cup B)=1-0.61=0.39\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;补集得各自概率</td><td>\(P(A)=1-0.70=0.30,\ P(B)=1-0.85=0.15\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;容斥反解交集</td><td>\(0.30+0.15-0.39=0.060\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q130" style="display:none"><td colspan="4"><div class="kx-qtx">This year, a medical insurance policyholder has probability 0.70 of having no emergency room visits, 0.85 of having no hospital stays, and 0.61 of having neither emergency room visits nor hospital stays
+
+Calculate the probability that the policyholder has at least one emergency room visit and at least one hospital stay this year.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.045</span><span class="kx-opt"><b>(B)</b> 0.060</span><span class="kx-opt"><b>(C)</b> 0.390</span><span class="kx-opt"><b>(D)</b> 0.667</span><span class="kx-opt"><b>(E)</b> 0.840</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;补集得并事件概率</td><td>\(P(A\cup B)=1-0.61=0.39\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;补集得各自概率</td><td>\(P(A)=1-0.70=0.30,\ P(B)=1-0.85=0.15\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;容斥反解交集</td><td>\(0.30+0.15-0.39=0.060\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>1.42</b></td><td>三集合 Venn 填数求全体</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q367" type="button" title="展开题目与答案(样题 Q367)">▸</button>Q367</td><td class="dim" style="font-size:13px">风险因子族最干净一题</td></tr>
+<tr class="kxd kxds" data-kxq="Q367" style="display:none"><td colspan="4"><div class="kx-qtx">A study is to be conducted on health risk factors of insurance applicants. The study needs exactly 268 people with heart disease, 268 with diabetes and 268 with high cholesterol. The study also needs exactly 68 people with only heart disease, 68 with only diabetes and 68 with only high cholesterol. The study needs exactly 84 people with all three risk factors and 155 people with no risk factors. Calculate the total number of people the study needs.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 443</span><span class="kx-opt"><b>(B)</b> 462</span><span class="kx-opt"><b>(C)</b> 617</span><span class="kx-opt"><b>(D)</b> 636</span><span class="kx-opt"><b>(E)</b> 791</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;韦恩图设两两交未知量</td><td>\(X,Y,Z=\text{仅两病重叠区},\ \text{三交}=84\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;每病总数268列三方程</td><td>\(68+84+X+Z=268\ \text{等三式}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;对称性解方程</td><td>\(X=Y=Z=58\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>④&nbsp;全区求和加无病者</td><td>\(3(68)+84+3(58)+155=617\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 26(同题型二刷备用)· 跳过 12(条件概率/分布/古典概率,属后续章节);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
 
 <section id="sets" style="background:linear-gradient(180deg,#fffdf4,#f5f6f9 240px)">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">Ch1 · Lesson 1 · 课本 p.1–4</span><h2 class="sec-title">Sets — 集合论</h2></div></div>
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">Ch1 · Lesson 1 · 课本 p.1–4</span><h2 class="sec-title">Sets — 集合论</h2></div></div>
     <p class="sec-sub">概率是给"不确定事件"赋一个 0~1 的数。要操作"且 / 或 / 非"这些事件组合,先把事件当成<b>集合</b>来处理。</p>
 
     <div class="card accent">
@@ -337,6 +468,57 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
     <div class="note tip"><span class="ic">🎯</span><span class="t">若 \(A\cap B=\varnothing\),称两集合<b>互斥(mutually exclusive)</b>——两圆不相交。这是后面概率公理的关键场景。</span></div>
 
+    <h3 style="font-family:var(--serif);font-size:19px;margin:26px 0 2px">Venn 图:分区推补集(两集合 4 块 / 三集合 8 块)</h3>
+    <p class="sec-sub" style="margin-top:6px">补集公式不用背——把 Ω 切成互不重叠的分区,数「哪些块在里面」就推出来了。颜色越深 = 被越多集合覆盖。</p>
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 300 196" role="img" aria-label="两集合四分区 Venn 图">
+          <rect x="6" y="6" width="288" height="184" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="14" y="24" font-size="12" fill="#16243d" font-style="italic">Ω</text>
+          <circle cx="112" cy="92" r="56" fill="#5b6f9e" fill-opacity=".12"/>
+          <circle cx="188" cy="92" r="56" fill="#5b6f9e" fill-opacity=".12"/>
+          <circle cx="112" cy="92" r="56" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <circle cx="188" cy="92" r="56" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="76" y="30" font-size="13" font-style="italic" fill="#16243d">A</text>
+          <text x="216" y="30" font-size="13" font-style="italic" fill="#16243d">B</text>
+          <text x="80" y="97" font-size="11.5" fill="#16243d" text-anchor="middle">A∩B′</text>
+          <text x="150" y="97" font-size="11.5" fill="#16243d" text-anchor="middle" font-weight="bold">A∩B</text>
+          <text x="221" y="97" font-size="11.5" fill="#16243d" text-anchor="middle">A′∩B</text>
+          <text x="46" y="178" font-size="11.5" fill="#16243d" text-anchor="middle">A′∩B′</text>
+        </svg>
+        <div class="cap"><b>4 块拼满 Ω、互不重叠</b>,补集就是「选哪几块」:<br>
+          \(A'\cap B'\) = 只有<b>圈外</b>那 1 块 = \((A\cup B)'\) ⇒ \(P[A'\cap B']=1-P[A\cup B]\)<br>
+          \(A'\cup B'\) = 除中间 \(A\cap B\) 外的 <b>3 块</b> = \((A\cap B)'\) ⇒ \(P[A'\cup B']=1-P[A\cap B]\)</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 300 236" role="img" aria-label="三集合八分区 Venn 图">
+          <rect x="6" y="6" width="288" height="224" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="14" y="24" font-size="12" fill="#16243d" font-style="italic">Ω</text>
+          <circle cx="116" cy="92" r="54" fill="#5b6f9e" fill-opacity=".12"/>
+          <circle cx="184" cy="92" r="54" fill="#5b6f9e" fill-opacity=".12"/>
+          <circle cx="150" cy="150" r="54" fill="#5b6f9e" fill-opacity=".12"/>
+          <circle cx="116" cy="92" r="54" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <circle cx="184" cy="92" r="54" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <circle cx="150" cy="150" r="54" fill="none" stroke="#16243d" stroke-width="1.5"/>
+          <text x="74" y="34" font-size="13" font-style="italic" fill="#16243d">A</text>
+          <text x="220" y="34" font-size="13" font-style="italic" fill="#16243d">B</text>
+          <text x="208" y="196" font-size="13" font-style="italic" fill="#16243d">C</text>
+          <text x="88" y="76" font-size="12" fill="#16243d" text-anchor="middle">①</text>
+          <text x="212" y="76" font-size="12" fill="#16243d" text-anchor="middle">②</text>
+          <text x="150" y="196" font-size="12" fill="#16243d" text-anchor="middle">③</text>
+          <text x="150" y="72" font-size="12" fill="#16243d" text-anchor="middle">④</text>
+          <text x="116" y="136" font-size="12" fill="#16243d" text-anchor="middle">⑤</text>
+          <text x="184" y="136" font-size="12" fill="#16243d" text-anchor="middle">⑥</text>
+          <text x="150" y="116" font-size="12" fill="#16243d" text-anchor="middle" font-weight="bold">⑦</text>
+          <text x="36" y="216" font-size="12" fill="#16243d" text-anchor="middle">⑧</text>
+        </svg>
+        <div class="cap"><b>8 块拼满 Ω</b>:①只A ②只B ③只C ④\(A\cap B\cap C'\) ⑤\(A\cap C\cap B'\) ⑥\(B\cap C\cap A'\) ⑦\(A\cap B\cap C\) ⑧圈外 \(A'\cap B'\cap C'\)<br>
+          ⑧ 一块 = \((A\cup B\cup C)'\) ⇒ \(P[A'\cap B'\cap C']=1-P[A\cup B\cup C]\)<br>
+          除 ⑦ 外七块 = \((A\cap B\cap C)'\) ⇒ \(P[A'\cup B'\cup C']=1-P[A\cap B\cap C]\)<br>
+          三集合容斥,本质就是把 ①–⑦ 每块<b>恰好数一次</b>。</div>
+      </div>
+    </div>
+
     <div class="card accent">
       <h3>集合运算律(必背)<span class="freq">考频 ★★</span></h3>
       <div class="src">课本 p.1 · Table 1.1</div>
@@ -356,6 +538,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">化简 \((A\cup B)\cap(A\cup B')\)。</p>
       <p>用分配律提出 \(A\):\((A\cup B)\cap(A\cup B') = A\cup(B\cap B')\)。<br>因为 \(B\) 与 \(B'\) 互斥,\(B\cap B'=\varnothing\),于是 \(=A\cup\varnothing\)。</p>
       <span class="ans">= A</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 分配律提出公因子 \(A\)</td><td>\(A\cup(B\cap C)=(A\cup B)\cap(A\cup C)\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 集合与其补的交是空集</td><td>\(B\cap B'=\varnothing\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 并上空集不变</td><td>\(A\cup\varnothing=A\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
 
     <div class="card accent">
@@ -397,27 +586,39 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       </tbody>
     </table>
 
-    <div class="grid2">
       <div class="ex">
         <div class="ex-h"><span class="badge">例 1B</span><span class="src" style="margin:0">课本 p.3 · 两集合</span></div>
         <p class="q">设 \(A\)=参加野餐,\(B\)=参加高尔夫/网球。已知不参加野餐 35%、不参加球局 80%、两者都不参加 25%。问两者都参加的比例?</p>
         <p>先把"不"翻成补:<br>\(P[A]=1-0.35=0.65\);\(P[B]=1-0.80=0.20\);<br>\(P[A\cup B]=1-P[(A\cup B)']=1-0.25=0.75\)。<br>再套交集容斥:\(P[A\cap B]=0.65+0.20-0.75\)。</p>
         <span class="ans">= 0.10</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 把"不参加"翻成补集</td><td>\(P[A]=1-P[A']=0.65,\ \ P[B]=0.20\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>② "都不参加" = 并的补(De Morgan)</td><td>\(A'\cap B'=(A\cup B)'\ \Rightarrow\ P[A\cup B]=1-0.25\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>③ 反解容斥求交集</td><td>\(P[A\cap B]=P[A]+P[B]-P[A\cup B]\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        </table></div>
       </div>
       <div class="ex">
         <div class="ex-h"><span class="badge">例 1C</span><span class="src" style="margin:0">课本 p.4 · 三集合</span></div>
         <p class="q">寿险/健康/伤残三种保障。10% 三种都没有;单项持有 25% / 75% / 20%;两两同时持有 15% / 12% / 5%。求三种都持有的比例 \(x\)?</p>
         <p>三者并 \(=1-0.10=0.90\)。代入三集合容斥:<br>\(0.90=0.25+0.75+0.20-0.15-0.12-0.05+x\)<br>\(0.90=0.88+x\)。</p>
         <span class="ans">x = 0.02</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① "三种都没有"取补 → 三者之并</td><td>\(P[A\cup B\cup C]=1-P[(A\cup B\cup C)']=0.90\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>② 套三集合容斥</td><td>\(P[A\cup B\cup C]=\sum P_{单}-\sum P_{两两}+P_{三}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>③ 代入已知解出三重交 \(x\)</td><td>\(0.90=0.88+x\ \Rightarrow\ x=0.02\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        </table></div>
       </div>
-    </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>本课题型:</b>课本明确说——本课考题基本都在考 <b>2 或 3 个集合的容斥</b>。剩下的功夫在"把文字翻成 \(P[\cdot]\) 的哪一项"。</span></div>
   </div>
 </section>
 
 <section id="insight">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
 
     <div class="card">
       <h3>💡 直觉例子:数人头,别数两遍</h3>
@@ -464,15 +665,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>本章真题几乎全是 <b>2–3 集合容斥 + 补集翻译</b>:题面给「都不持有 \(x\%\)」,先转 \(P[A\cup B]=1-x\) 再套容斥。</li>
-        <li>保险语境信号词:<b>policyholder</b>(保单持有人)、<b>has coverage</b>(持有某险种)、<b>neither … nor …</b>(= 补集之交 \((A\cup B)'\))、<b>at least one</b>(= 并)。</li>
-        <li>陷阱:「only A / 只有 A」是 \(A\cap B'\),不是 \(A\);三集合题先画 Venn 分 8 块,从最里层(三重交)向外填数,填完再读题问的是哪几块。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle">Wikipedia · Inclusion–exclusion principle</a></div><div class="z">容斥从两集合推到 n 集合的完整图解,看懂"正负交替"为什么必然如此。</div><div class="u">en.wikipedia.org/wiki/Inclusion–exclusion_principle</div></div>
@@ -483,155 +675,266 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="map">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-pre">课本 ↔ 视频</span><h2 class="sec-title">本章 5 个视频 · 对照表</h2></div></div>
-    <p class="sec-sub">概念课放慢到 1.2x 吃透定义,习题课 1.5x 过题。</p>
-    <table class="map">
-      <thead><tr><th style="width:33%">视频</th><th style="width:13%">倍速</th><th>对应课本 / 重点</th></tr></thead>
-      <tbody>
-        <tr><td>前导|计算器演示</td><td><span class="spd spd-b">1.5x</span></td><td>nCr / nPr / 阶乘 / 统计模式 键位</td></tr>
-        <tr><td>前导|课程科普</td><td><span class="spd spd-b">1.5x</span></td><td>Exam P 全景与知识地图</td></tr>
-        <tr><td>Ch1 Sets|知识点讲解</td><td><span class="spd spd-a">1.2x</span></td><td>p.1–4:运算、Venn、De Morgan、容斥、三公理</td></tr>
-        <tr><td>Ch1 Sets|习题 Part1</td><td><span class="spd spd-b">1.5x</span></td><td>两集合容斥 + 补集翻译(配例 1B)</td></tr>
-        <tr><td>Ch1 Sets|习题 Part2</td><td><span class="spd spd-b">1.5x</span></td><td>三集合 Venn / 容斥(配例 1C)</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
 
-<section id="test" style="background:linear-gradient(180deg,#fffdf2,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测(Sets)</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>互斥 ≠ 独立</b>:互斥是 \(A\cap B=\varnothing\)(集合层面);独立是另一个概念(后面才学),别混。</li>
-          <li><b>容斥忘减交集</b>:\(P[A\cup B]\) 一定要 \(-P[A\cap B]\),否则重复计数。</li>
-          <li><b>De Morgan 不换符号</b>:取补后 ∪↔∩ 必须互换。</li>
-          <li><b>"不"要转补集</b>:题给"不发生"比例时,先用 \(P[A']=1-P[A]\)。</li>
-        </ul>
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 1.1</span>已知 \(P[X],P[Y]\),判断 \(P[X\cap Y]\) 的不等式范围。</li>
-          <li><span class="ref">练 1.7</span>容斥求"只拥有其一"(车 or 房,但不都有)。</li>
-          <li><span class="ref">练 1.10</span>三种保险的容斥(求"有 A 但没 B")。</li>
-          <li><span class="ref">练 1.35</span>三风险因子的人数统计(三集合容斥经典)。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>已知 \(P[A]=0.6,\ P[B]=0.5,\ P[A\cup B]=0.8\),求 \(P[A\cap B]\)。</li>
-        <li>"既不抽烟也不喝酒"占 30%,如何用 \(P[\,\cdot\,']\) 表示"抽烟或喝酒"?</li>
-        <li>用 De Morgan 把 \((A\cap B)'\) 展开成补集运算。</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(0.6+0.5-0.8=0.3\);② \(1-0.30=0.70\);③ \((A\cap B)'=A'\cup B'\)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · Sets</h2></div></div>
-    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>集合运算</h4>
-        <p>\((A\cup B)'=A'\cap B'\)</p>
-        <p>\((A\cap B)'=A'\cup B'\)</p>
-        <p>分配律 \(A\cup(B\cap C)=(A\cup B)\cap(A\cup C)\)</p>
-        <p>互斥:\(A\cap B=\varnothing\)</p>
-      </div>
-      <div class="cc t">
-        <h4>概率 / 容斥</h4>
-        <p>\(P[A']=1-P[A]\)</p>
-        <p>\(P[A\cup B]=P[A]+P[B]-P[A\cap B]\)</p>
-        <p style="font-size:13px">\(P[A\cup B\cup C]=\sum P-\sum P_{两两}+P_{三}\)</p>
-        <p>公理:\(P[\Omega]=1,\ P[A]\ge 0\)</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "互斥事件": {
+  "kind": "c",
+  "en": "MutuallyExclusiveEvents",
+  "aliases": [
+   "互斥",
+   "互斥事件",
+   "不相容事件",
+   "mutually exclusive"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>两事件满足 \\(A\\cap B=\\varnothing\\),即不可能同时发生(Venn 图上两圆不相交)。</p><p><strong>白话</strong>:掷一次骰子,\"出 1 点\"和\"出 6 点\"不可能一起来——一次只能朝上一个面。两件事势不两立,问\"其中之一发生\"的概率,直接把两个概率相加即可。</p><h4>关键性质 / 公式</h4><ul><li>互斥 \\(\\Rightarrow P[A\\cup B]=P[A]+P[B]\\)(容斥里交集项为 0)。</li><li><strong>互斥 ≠ 独立</strong>:互斥是集合层面\"不能同时发生\";独立是概率层面 \\(P[A\\cap B]=P[A]P[B]\\)(后续章节),两者常被混淆。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 出 1 点(\\(1/6\\)),\\(B=\\) 出 6 点(\\(1/6\\))。</p><ul><li>交集:一次投掷不可能又是 1 又是 6,\\(P[A\\cap B]=0\\)——互斥。</li><li>并:\\(P[A\\cup B]=\\dfrac16+\\dfrac16=\\dfrac13\\)——交集项为零,直接相加。</li><li>对照独立:\\(P[A]P[B]=1/36\\ne 0\\),所以这对互斥事件<strong>不独立</strong>——知道出了 1,B 的概率瞬间归零,信息量极大。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率公理\">概率公理</a> — 可数可加公理正是对互斥事件成立</li><li><a class=\"net-wl\" data-id=\"容斥原理\">容斥原理</a> — 互斥是其退化特例</li><li><a class=\"net-wl\" data-id=\"德摩根定律\">德摩根定律</a> — 同属集合运算工具</li></ul>"
+ },
+ "容斥原理": {
+  "kind": "c",
+  "en": "InclusionExclusionPrinciple",
+  "aliases": [
+   "容斥",
+   "容斥公式",
+   "包含排斥原理",
+   "Inclusion-Exclusion"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求<strong>并集</strong>的概率(或计数)时,把各集合直接相加会把重叠部分重复计入,需按\"加单个 − 减两两交 + 加三集合交 − …\"正负交替修正。考试最多到三集合。</p><p><strong>白话</strong>:班里会英语的 20 人、会法语的 10 人,问\"至少会一门的有几人\"不能直接加——两门都会的人被点了两次名,得把重叠的减回去。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cup B]=P[A]+P[B]-P[A\\cap B]$$</div><div class=\"net-mth\">$$P[A\\cup B\\cup C]=\\sum P-\\sum P_{\\text{两两交}}+P[A\\cap B\\cap C]$$</div><ul><li>等价变形 \\(P[A\\cap B]=P[A]+P[B]-P[A\\cup B]\\) 是求交集的常用一步。</li><li>一般式正负交替(课本式 1.3)。</li></ul><p><strong>算一遍</strong>:会英语 20 人、会法语 10 人、两门都会 5 人,求至少会一门的人数。</p><ul><li>直接相加:\\(20+10=30\\) 人次——都会的 5 人被数了两遍。</li><li>减去重叠:\\(30-5=25\\) 人至少会一门。</li><li>反向用:若先知道\"至少会一门\"是 25 人,则都会的 \\(=20+10-25=5\\)——正是求交集的等价变形。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 互斥时交集为 0,公式退化为直接相加</li><li><a class=\"net-wl\" data-id=\"概率公理\">概率公理</a> — 由可数可加性导出</li><li><a class=\"net-wl\" data-id=\"德摩根定律\">德摩根定律</a> — 常配合把\"都不 / 至少\"翻成补集再代入</li></ul>"
+ },
+ "德摩根定律": {
+  "kind": "c",
+  "en": "DeMorgansLaws",
+  "aliases": [
+   "De Morgan 律",
+   "德·摩根定律",
+   "DeMorgan",
+   "笛摩根定律"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>对并集 / 交集<strong>取补</strong>时,\\(\\cup\\) 与 \\(\\cap\\) 必须互换。口诀:\"非(A 或 B)= 非A 且 非B\"。</p><p><strong>白话</strong>:说\"我今天没有(喝奶茶或吃甜点)\",等于说\"我既没喝奶茶,也没吃甜点\"——否定\"至少沾一样\",就得两样都不沾,\"或\"翻过来变成\"且\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$(A\\cup B)'=A'\\cap B' \\qquad (A\\cap B)'=A'\\cup B'$$</div><ul><li>高频考点,也是易错点:取补后符号<strong>必须互换</strong>,不是原样加撇。</li><li>可推广到任意多个集合。</li><li><strong>概率桥</strong>(把恒等式落到 \\(P[\\cdot]\\),考场直接用):</li><li>\\(P[A'\\cap B']=1-P[A\\cup B]\\)——\"都不发生\" = 落在并集外面,整体取补。</li><li>\\(P[A'\\cup B']=1-P[A\\cap B]\\)——\"至少缺一个\" = 不是两个都发生,整体取补。</li><li>三集合同款:\\(P[A'\\cap B'\\cap C']=1-P[A\\cup B\\cup C]\\)、\\(P[A'\\cup B'\\cup C']=1-P[A\\cap B\\cap C]\\)。</li><li>记法:Venn 图分区数块——\\(A'\\cap B'\\) 只有圈外 1 块,\\(A'\\cup B'\\) 是除 \\(A\\cap B\\) 外的全部块(见 001 Sets 集合 配图/L01 导学页分区图)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 偶数 \\(\\{2,4,6\\}\\),\\(B=\\) 大于 4 \\(\\{5,6\\}\\),验证 \\((A\\cup B)'=A'\\cap B'\\)。</p><ul><li>左边:\\(A\\cup B=\\{2,4,5,6\\}\\),取补得 \\(\\{1,3\\}\\)。</li><li>右边:\\(A'=\\{1,3,5\\}\\)、\\(B'=\\{1,2,3,4\\}\\),取交得 \\(\\{1,3\\}\\) ✓ 两边吻合。</li><li>错法对照:不换符号写成 \\(A'\\cup B'=\\{1,2,3,4,5\\}\\),和 \\(\\{1,3\\}\\) 差远了——取补后 \\(\\cup\\) 必须换成 \\(\\cap\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"容斥原理\">容斥原理</a> — 把\"都不发生 / 至少一个\"翻成补集时常用</li><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 同属集合运算工具箱</li><li><a class=\"net-wl\" data-id=\"概率公理\">概率公理</a> — 配合 \\(P[A']=1-P[A]\\) 落到概率</li></ul>"
+ },
+ "排列": {
+  "kind": "c",
+  "en": "Permutation",
+  "aliases": [
+   "Permutations",
+   "nPr",
+   "排列数"
+  ],
+  "level": "basic",
+  "chapter": "p-l02",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从 \\(n\\) 个不同对象中取 \\(r\\) 个,<strong>讲究顺序</strong>地排成一列的方式数。顺序不同视为不同方案。</p><p><strong>白话</strong>:领奖台思维——金牌银牌不能互换,\"甲金乙银\"和\"乙金甲银\"是两回事;排列数的就是这种\"谁站哪个位置都要分清\"的方案数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$_nP_r=\\frac{n!}{(n-r)!}$$</div><ul><li>全排列 \\(_nP_n=n!\\)。</li><li>与组合的换算:\\(_nP_r=\\,_nC_r\\cdot r!\\)。</li><li>计算器用 nPr 键。</li></ul><p><strong>算一遍</strong>:4 人赛跑,金、银牌有几种颁法。</p><ul><li>金牌 4 人里选 1,银牌剩 3 人里选 1:\\(_4P_2=\\frac{4!}{2!}=4\\times3=12\\) 种。</li><li>对照组合:不分金银、只挑 2 人进领奖台 → \\(_4C_2=6\\) 种。</li><li>换算核对:\\(12=6\\times 2!\\) ✓ 每一对人有 2 种颁奖顺序——排列 = 组合 × 内部排法。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"组合\">组合</a> — 不讲顺序的对应物,差一个 \\(r!\\)</li><li><a class=\"net-wl\" data-id=\"等可能模型\">等可能模型</a> — 古典概率里数\"总数 / 有利数\"常用排列</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"计数与逐步乘链的口径一致\">计数与逐步乘链的口径一致</a> — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "概率公理": {
+  "kind": "c",
+  "en": "ProbabilityAxioms",
+  "aliases": [
+   "概率三公理",
+   "柯尔莫哥洛夫公理",
+   "Kolmogorov Axioms"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>概率是给事件赋一个 \\(0\\sim 1\\) 的数,须满足三条公理:</p><ol><li>非负:\\(P[A]\\ge 0\\)</li><li>规范:\\(P[\\Omega]=1\\)</li><li>可数可加:可数个<strong>互斥</strong>事件之并的概率 = 各概率之和</li></ol><p><strong>白话</strong>:概率就是分一块总量为 1 的蛋糕:每块不能是负的、整块合计正好是 1、互不重叠的几块合起来就是它们的简单相加。</p><h4>关键性质 / 公式</h4><p>由三公理推出的常用性质:</p><div class=\"net-mth\">$$P[A]\\le 1 \\qquad P[A']=1-P[A] \\qquad P[A\\cap B]\\le P[A]$$</div><ul><li>\\(P[A']=1-P[A]\\) 是把题目里\"不发生\"的比例翻译成概率时最常用的一步。</li></ul><p><strong>算一遍</strong>:掷一枚骰子,\\(A=\\)\"掷出 6\",\\(B=\\)\"掷出 5\"。</p><ul><li>互斥可加:\\(P[A\\cup B]=\\tfrac16+\\tfrac16=\\tfrac13\\)——\"5 或 6\"直接把两块概率相加。</li><li>取补:\\(P[\\text{既非 5 也非 6}]=1-\\tfrac13=\\tfrac23\\),不必逐点数 1,2,3,4。</li><li>六个点合计 \\(6\\times\\tfrac16=1\\),规范公理兜底 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 公理 ③ 的前提条件</li><li><a class=\"net-wl\" data-id=\"容斥原理\">容斥原理</a> — 由可加性推广而来</li><li><a class=\"net-wl\" data-id=\"德摩根定律\">德摩根定律</a> — 配合补集性质化简</li></ul>"
+ },
+ "等可能模型": {
+  "kind": "c",
+  "en": "EquallyLikelyOutcomes",
+  "aliases": [
+   "古典概率",
+   "等可能概型",
+   "classical probability",
+   "equally likely"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当样本空间的所有基本结果<strong>等可能</strong>时,事件概率 = 有利结果数 ÷ 总结果数。即古典概率模型。</p><p><strong>白话</strong>:抽奖箱里每张券手感一模一样、谁被摸到全凭运气,这时概率就退化成数数:中奖券几张、箱里总共几张,一除完事——前提是\"每张券机会均等\",券有大小厚薄之分就不能这么数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[E]=\\frac{\\#E}{\\#\\Omega}$$</div><p>解题三步:① 确定样本空间(总数)② 数有利结果 ③ 相除。分子、分母常用排列 / 组合来计数。</p><ul><li><strong>等可能是「比例=概率」的开关</strong>:比例背后是加法——\\(N\\) 个结果各摊 \\(\\frac1N\\),数 \\(k\\) 个有利 = 加 \\(k\\) 份 \\(\\frac1N\\)。等可能才让\"数个数\"与\"加概率\"是同一件事;分子分母也因此必须在<strong>同一个</strong>等可能样本空间里数(口径一致)。</li><li><strong>它是正牌概率,不是近似</strong>:\\(P[E]=\\#E/\\#\\Omega\\) 自动满足三条 <a class=\"net-wl\" data-id=\"概率公理\">概率公理</a>(\\(P[\\Omega]=1\\)、非负、互斥可加)——古典概型是概率的第一个具体模型(有限 \\(\\Omega\\) + 均匀赋值),不是\"不太正宗的比例\"。</li><li><strong>反例记边界</strong>:\"明天要么下雨要么不下,所以下雨 50%\"——数数没错,错在两个结果不等可能。题面的 at random / well-shuffled / fair 就是在给你等可能许可证。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求掷出偶数的概率。</p><ul><li>样本空间:\\(\\Omega=\\{1,2,3,4,5,6\\}\\),共 6 个等可能结果。</li><li>数有利结果:偶数 \\(\\{2,4,6\\}\\),共 3 个。</li><li>相除:\\(P=\\tfrac36=\\tfrac12\\)——骰子六面均匀是\"等可能\"前提,灌了铅就不能这么算。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"排列\">排列</a> — 讲顺序时的计数工具</li><li><a class=\"net-wl\" data-id=\"组合\">组合</a> — 不讲顺序时的计数工具</li><li><a class=\"net-wl\" data-id=\"概率公理\">概率公理</a> — 古典概率是满足三公理的一种具体赋值</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"计数与逐步乘链的口径一致\">计数与逐步乘链的口径一致</a> — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "组合": {
+  "kind": "c",
+  "en": "Combination",
+  "aliases": [
+   "Combinations",
+   "nCr",
+   "组合数",
+   "二项式系数"
+  ],
+  "level": "basic",
+  "chapter": "p-l02",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从 \\(n\\) 个不同对象中取 \\(r\\) 个,<strong>不讲顺序</strong>地选出的方式数。</p><p><strong>白话</strong>:奶茶加料任选两种,\"珍珠 + 椰果\"和\"椰果 + 珍珠\"是同一杯——只问选了哪几样、不问先加哪样,数的就是组合;要是先后有讲究(比赛排名次),那是排列。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$_nC_r=\\binom{n}{r}=\\frac{n!}{r!\\,(n-r)!}$$</div><ul><li>对称性:\\(\\binom{n}{r}=\\binom{n}{n-r}\\)。</li><li>即二项式系数,后续接二项分布。</li><li>计算器用 nCr 键。</li></ul><p><strong>算一遍</strong>:4 种配料(珍珠、椰果、布丁、芋圆)里选 2 种,有几种搭配?</p><ul><li>套公式:\\(\\binom42=\\dfrac{4!}{2!\\,2!}=6\\)。</li><li>枚举核对:珍椰、珍布、珍芋、椰布、椰芋、布芋——正好 6 种 ✓</li><li>对照排列:讲顺序是 \\(4\\times3=12\\),每对被数了 2 次(\\(2!\\)),除回去就是 6——\"组合 = 排列 ÷ 内部排序\"。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"排列\">排列</a> — 讲顺序的对应物,\\(_nP_r=\\,_nC_r\\cdot r!\\)</li><li><a class=\"net-wl\" data-id=\"等可能模型\">等可能模型</a> — 古典概率里数\"总数 / 有利数\"常用组合</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"计数与逐步乘链的口径一致\">计数与逐步乘链的口径一致</a> — 分子分母同数种类还是同走乘链,混搭必错</li></ul>"
+ },
+ "计数与逐步乘链的口径一致": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "basic",
+  "chapter": "p-l02",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:hand / committee / sample 抽牌抽人,\"无放回 + 指定若干类恰好几个\"(如 52 张牌抽 5 张,要黑桃K + 恰 1 其他K + 恰 2 Q)。这类题的经典迷惑:「无放回是不是要讲顺序?分子基数是不是 52?」</p><h4>两套合法框架(选一套,别混)</h4><ol><li><strong>计数框架(默认首选)</strong>:\\(P=\\dfrac{\\#\\text{有利手牌}}{\\#\\text{全部手牌}}\\)——分子分母都在<strong>数种类</strong>。手牌是集合,无序;分子只在各小池子里挑(超几何分布 的分组模板),\\(52\\) 这个基数只出现在分母 \\(\\binom{52}{5}\\):</li></ol><div class=\"net-mth\">$$P=\\frac{\\binom11\\binom31\\binom42\\binom{44}1}{\\binom{52}{5}}=\\frac{792}{2{,}598{,}960}\\approx 0.0003$$</div><ol><li><strong>逐步乘链框架</strong>:按抽出顺序逐张乘概率,分母 \\(52,51,50,\\dots\\) 缩池,<strong>最后必须乘类型顺序数</strong>(相异排列,见 <a class=\"net-wl\" data-id=\"排列\">排列</a>):</li></ol><div class=\"net-mth\">$$\\Big(\\tfrac1{52}\\cdot\\tfrac3{51}\\cdot\\tfrac4{50}\\cdot\\tfrac3{49}\\cdot\\tfrac{44}{48}\\Big)\\times\\frac{5!}{1!\\,1!\\,2!\\,1!}\\approx 0.0003$$</div><p>两套答案恒等:计数框架 = 乘链框架上下同消 \\(5!\\) 的结果。</p><h4>核心原则与易错</h4><ul><li><strong>口径一致</strong>:要么全程数种类(组合/组合),要么全程逐步概率(乘链×顺序数)。<strong>分子算概率、分母数种类的混搭必错</strong>——典型错法:分子每张牌都用基数 52(把\"从 52 里抽到K的机会\"当计数),分母却用 \\(\\binom{52}{5}\\)。</li><li>「无放回」≠「讲顺序」:无放回只说明不重复;顺序看事件本身——问\"手里<strong>有</strong>什么\"就无序,问\"<strong>先后</strong>抽到什么\"才有序。</li><li>指定具体某张牌(黑桃K)只是限定集合成员,与顺序无关——它把「4 张K选 2」拆成「黑桃K必进 \\(\\binom11\\) + 其余 3 选 1」。</li></ul><h4>判别信号词</h4><ul><li>hand / committee / group / sample / contains → 最终拿到一堆东西 → <strong>计数框架</strong>。</li><li>first card…second card… / in order / successively → 过程按顺序发生 → <strong>逐步乘链</strong>(或排列计数)。</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab" style="background:linear-gradient(180deg,#fffdf2,#f5f6f9 220px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 1 原文用词</span><h2 class="sec-title">Sets 词汇表</h2></div></div>
-    <p class="sec-sub">读题慢往往卡在这些词上。A 类术语必须会(中↔英双向),B 类看见就懂,C 类短语整块记。</p>
-
-    <div class="card accent">
-      <h3>A · 集合论术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 1</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">set</td><td class="ipa">/sɛt/</td><td><span class="pos n">n.</span></td><td>集合</td><td class="root">事件可当作集合处理</td></tr>
-          <tr><td class="en">member</td><td class="ipa">/ˈmɛmbər/</td><td><span class="pos n">n.</span></td><td>元素;成员</td><td class="root">集合里的"成员"</td></tr>
-          <tr><td class="en">subset</td><td class="ipa">/ˈsʌbsɛt/</td><td><span class="pos n">n.</span></td><td>子集</td><td class="root">sub-(子) + set</td></tr>
-          <tr><td class="en">union</td><td class="ipa">/ˈjuːnjən/</td><td><span class="pos n">n.</span></td><td>并集(或)</td><td class="root">uni-(合一)→ 合并 \(A\cup B\)</td></tr>
-          <tr><td class="en">intersection</td><td class="ipa">/ˌɪntərˈsɛkʃən/</td><td><span class="pos n">n.</span></td><td>交集(且)</td><td class="root">inter-(之间)+sect(切)→ 相交</td></tr>
-          <tr><td class="en">complement</td><td class="ipa">/ˈkɒmplɪmənt/</td><td><span class="pos n">n.</span></td><td>补集(非)</td><td class="root">com-+ple(填满)→ 补足;别和 compliment(称赞)混</td></tr>
-          <tr><td class="en">empty set</td><td class="ipa">/ˈɛmpti sɛt/</td><td><span class="pos n">n.</span></td><td>空集 \(\varnothing\)</td><td class="root">empty=空的</td></tr>
-          <tr><td class="en">entire space</td><td class="ipa">/ɪnˈtaɪər speɪs/</td><td><span class="pos n">n.</span></td><td>全集 \(\Omega\)</td><td class="root">entire=整个</td></tr>
-          <tr><td class="en">mutually exclusive</td><td class="ipa">/ˈmjuːtʃuəli ɪkˈskluːsɪv/</td><td><span class="pos adj">adj.</span></td><td>互斥的</td><td class="root">mutual(相互)+ exclude(排除)</td></tr>
-          <tr><td class="en">Venn diagram</td><td class="ipa">/vɛn ˈdaɪəɡræm/</td><td><span class="pos n">n.</span></td><td>文氏图</td><td class="root">diagram=图示</td></tr>
-          <tr><td class="en">associative</td><td class="ipa">/əˈsoʊʃiətɪv/</td><td><span class="pos adj">adj.</span></td><td>结合律的</td><td class="root">associate(联结)</td></tr>
-          <tr><td class="en">distributive</td><td class="ipa">/dɪˈstrɪbjətɪv/</td><td><span class="pos adj">adj.</span></td><td>分配律的</td><td class="root">distribute(分发)</td></tr>
-          <tr><td class="en">probability</td><td class="ipa">/ˌprɒbəˈbɪləti/</td><td><span class="pos n">n.</span></td><td>概率</td><td class="root">probable(可能的)+ -ity</td></tr>
-          <tr><td class="en">axiom</td><td class="ipa">/ˈæksiəm/</td><td><span class="pos n">n.</span></td><td>公理</td><td class="root">不证自明的前提</td></tr>
-          <tr><td class="en">event</td><td class="ipa">/ɪˈvɛnt/</td><td><span class="pos n">n.</span></td><td>事件</td><td class="root">概率赋值的对象</td></tr>
-          <tr><td class="en">sample space</td><td class="ipa">/ˈsæmpəl speɪs/</td><td><span class="pos n">n.</span></td><td>样本空间</td><td class="root">所有可能结果的集合</td></tr>
-          <tr><td class="en">inclusion–exclusion</td><td class="ipa">/ɪnˈkluːʒən ɪkˈskluːʒən/</td><td><span class="pos n">n.</span></td><td>容斥(原理)</td><td class="root">include(纳入)↔ exclude(排除)</td></tr>
-          <tr><td class="en">countable</td><td class="ipa">/ˈkaʊntəbəl/</td><td><span class="pos adj">adj.</span></td><td>可数的</td><td class="root">count(数)+ -able</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card accent">
-      <h3>B · 高频通用学术词</h3>
-      <div class="src">非术语,但课本/考题反复出现</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:22%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:19%">中文</th><th>记忆点</th></tr></thead>
-        <tbody>
-          <tr><td class="en">indicate</td><td class="ipa">/ˈɪndɪkeɪt/</td><td><span class="pos v">v.</span></td><td>表明;说明</td><td class="root">"A survey indicates…"</td></tr>
-          <tr><td class="en">proportion</td><td class="ipa">/prəˈpɔːrʃən/</td><td><span class="pos n">n.</span></td><td>比例;占比</td><td class="root">pro-+portion(部分)</td></tr>
-          <tr><td class="en">occur</td><td class="ipa">/əˈkɜːr/</td><td><span class="pos v">v.</span></td><td>发生</td><td class="root">oc-+cur(跑)</td></tr>
-          <tr><td class="en">denote</td><td class="ipa">/dɪˈnoʊt/</td><td><span class="pos v">v.</span></td><td>表示;记作</td><td class="root">de-+note(记)</td></tr>
-          <tr><td class="en">manipulate</td><td class="ipa">/məˈnɪpjuleɪt/</td><td><span class="pos v">v.</span></td><td>(对式子)变形</td><td class="root">mani(手)→ 摆弄</td></tr>
-          <tr><td class="en">simplify</td><td class="ipa">/ˈsɪmplɪfaɪ/</td><td><span class="pos v">v.</span></td><td>化简</td><td class="root">simple + -ify</td></tr>
-          <tr><td class="en">calculate</td><td class="ipa">/ˈkælkjuleɪt/</td><td><span class="pos v">v.</span></td><td>计算</td><td class="root">考题最高频指令</td></tr>
-          <tr><td class="en">determine</td><td class="ipa">/dɪˈtɜːrmɪn/</td><td><span class="pos v">v.</span></td><td>求出;确定</td><td class="root">同 calculate 的指令</td></tr>
-          <tr><td class="en">portray</td><td class="ipa">/pɔːrˈtreɪ/</td><td><span class="pos v">v.</span></td><td>描绘;表示</td><td class="root">"Venn diagrams portray sets"</td></tr>
-          <tr><td class="en">component</td><td class="ipa">/kəmˈpoʊnənt/</td><td><span class="pos n">n.</span></td><td>组成部分</td><td class="root">容斥的"三块区域"</td></tr>
-          <tr><td class="en">interval</td><td class="ipa">/ˈɪntərvəl/</td><td><span class="pos n">n.</span></td><td>区间</td><td class="root">概率取值于 0~1 区间</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">at least one</div><div class="z">至少一个</div></div>
-        <div class="ph"><div class="e">at most</div><div class="z">至多;不超过</div></div>
-        <div class="ph"><div class="e">mutually exclusive</div><div class="z">互斥</div></div>
-        <div class="ph"><div class="e">neither … nor …</div><div class="z">既不……也不……</div></div>
-        <div class="ph"><div class="e">both … and …</div><div class="z">……和……都</div></div>
-        <div class="ph"><div class="e">it follows that</div><div class="z">由此可得</div></div>
-        <div class="ph"><div class="e">is denoted by</div><div class="z">记作;用……表示</div></div>
-        <div class="ph"><div class="e">calculate the probability that …</div><div class="z">求……的概率</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
-    <p><b>Exam P 导学 · Lesson 1</b> · 前导 + 第一章 Sets 集合</p>
+    <p><b>Exam P 导学 · Lesson 1</b> · 第一章 Sets 集合</p>
     <p>公式与例题整理自《ASM Exam P Study Manual, 7th ed.》Lesson 1(p.1–4,页码已标注,细节以课本为准)+ 威普网校视频。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 例题为方法精解,完整原题与解答请见课本。</p>
   </div>
 </footer>
@@ -667,5 +970,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

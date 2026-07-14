@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L11 · 联合分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -227,28 +297,122 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#joint">联合分布</a>
   <a href="#marginal">边缘</a>
   <a href="#indep">独立</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完联合分布你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 读懂联合 pmf \(p(x,y)\) / pdf \(f(x,y)\) / cdf \(F(x,y)\),并用归一条件 \(\sum\sum p=1\)、\(\iint f=1\) 核验。</p>
-        <p style="margin-bottom:0">✅ 用联合 cdf 求矩形区域概率,离散求 \(F(x,y)\)、连续算 \(\iint_R f\)。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>联合 / 边缘</h4>
+        <p>联合 pmf/pdf:\(p(x,y)\) / \(f(x,y)\ge0\),\(\sum\sum p=\iint f=1\)</p>
+        <p>联合 cdf:\(F(x,y)=P[X\le x,Y\le y]\)</p>
+        <p><span class="fx-de" data-tip="推导:2D 容斥:大角块减两边条,角块 F(a,c) 被减两次加回一次" tabindex="0">推</span>矩形:\(F(b,d)-F(a,d)-F(b,c)+F(a,c)\)</p>
+        <p>边缘:\(p_X(x)=\sum_y p\);\(f_X(x)=\int f\,dy\)</p>
+      </div>
+      <div class="cc t">
+        <h4>独立性</h4>
+        <p>独立 \(\iff f(x,y)=f_X(x)f_Y(y)\)</p>
+        <p>需<b>可因式分解 + 支撑为矩形</b></p>
+        <p>\(n\) 个:\(f=\prod f(x_i)\)</p>
+        <p>独立 \(\Rightarrow E[XY]=E[X]E[Y]\)(反不真)</p>
+        <p>非矩形支撑 → 一定不独立</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>读懂联合 <b>pmf \(p(x,y)\) / pdf \(f(x,y)\) / cdf \(F(x,y)\)</b>,用归一条件 \(\sum\sum p=1\)、\(\iint f=1\) 核验/反解常数;并用联合 cdf 求矩形区域概率(离散查 \(F\)、连续算 \(\iint_R f\))。</li>
+          <li>从联合分布"压回"<b>边缘分布</b>:离散 \(p_X(x)=\sum_y p(x,y)\)、连续 \(f_X(x)=\int f(x,y)\,dy\)(积分限随支撑变)。</li>
+          <li>判断 \(X,Y\) 是否<b>独立</b>:能否因式分解 \(f(x,y)=f_X(x)f_Y(y)\) <b>且</b>支撑为矩形。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 从联合分布"压回"<b>边缘分布</b>:离散 \(p_X(x)=\sum_y p(x,y)\)、连续 \(f_X(x)=\int f(x,y)\,dy\)。</p>
-        <p style="margin-bottom:0">✅ 判断 \(X,Y\) 是否<b>独立</b>:能否因式分解 \(f(x,y)=f_X(x)f_Y(y)\) <b>且</b>支撑为矩形。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>联合表题:拿到表<b>先把行/列合计写上</b>(边缘秒出),再答任何 \(P[\cdot]\)、独立性、\(X+Y\) 分布的问题。</li>
+          <li>连续 + 非矩形支撑(0&lt;x&lt;y 之类):<b>先画支撑图再定积分限</b>,内层积分限含另一变量(如 \(\int_x^1\)),写死 0 到 1 是最常见丢分点(练 11.10 同型)。</li>
+          <li>独立判定两步走:支撑是矩形吗?→ 能因式分解吗?顺序别反,非矩形直接判否。</li>
+          <li>保险语境:\(X\)=损失额、\(Y\)=理赔费用(ALAE),或两险种理赔次数的联合表——"at least two claims" 这类事件就是把对应格子挑出来加(练 11.4)。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="联合分布">● 联合分布</button><button class="chip" data-card="边缘分布">● 边缘分布</button><button class="chip" data-card="矩形区域概率">◆ 矩形区域概率</button><button class="chip" data-card="随机变量独立性">◆ 随机变量独立性</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 10 / 全章 17)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>11.2</b></td><td>独立性反解参数 θ1,θ2</td><td style="white-space:nowrap"><button class="kxb" data-kx="11.2" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">由独立性列方程反解参数的老真题(110-S90)</td></tr>
+<tr class="kxd" data-kxq="11.2" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) and \( Y \) be discrete random variables with joint probabilities given by: for \( Y=2 \), \( \Pr[X=1,Y=2]=\theta_1+\theta_2 \) and \( \Pr[X=5,Y=2]=\theta_1+2\theta_2 \); for \( Y=4 \), \( \Pr[X=1,Y=4]=\theta_1+2\theta_2 \) and \( \Pr[X=5,Y=4]=\theta_1+\theta_2 \). Let the parameters \( \theta_1 \) and \( \theta_2 \) satisfy the usual assumptions associated with a joint probability distribution and the additional constraints \( -0.25 \le \theta_1 \le 0.25 \) and \( 0 \le \theta_2 \le 0.35 \). If \( X \) and \( Y \) are independent, then \( (\theta_1, \theta_2) = \)</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \left(0,\ \tfrac{1}{6}\right) \)</span><span class="kx-opt"><b>(B)</b> \( \left(\tfrac{1}{4},\ 0\right) \)</span><span class="kx-opt"><b>(C)</b> \( \left(-\tfrac{1}{4},\ \tfrac{1}{3}\right) \)</span><span class="kx-opt"><b>(D)</b> \( \left(-\tfrac{1}{8},\ \tfrac{1}{4}\right) \)</span><span class="kx-opt"><b>(E)</b> \( \left(\tfrac{1}{16},\ \tfrac{1}{8}\right) \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;四格概率和为1</td><td>\( 4\theta_1+6\theta_2=1 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;独立:联合=边缘积</td><td>\( \theta_1+\theta_2=\Pr[X{=}1]\Pr[Y{=}2]=0.25 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;另一格同理</td><td>\( \theta_1+2\theta_2=0.25 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;相减求解</td><td>\( \theta_2=0,\ \theta_1=0.25 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>11.3</b></td><td>X+Y 之和的分布</td><td style="white-space:nowrap"><button class="kxb" data-kx="11.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">联合 pf 求和得 X+Y 分布的范式题(110-S90)</td></tr>
+<tr class="kxd" data-kxq="11.3" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) and \( Y \) be discrete random variables with joint probability function \( f(x,y) = \frac{1}{6} \) for \( x = 1,2,3 \) and \( y = 2,3 \), and \( 0 \) otherwise, and let \( U = X + Y \). What is the probability function of \( U \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( g(u)=\tfrac{1}{4} \) for \( u=3,4,5,6 \)</span><span class="kx-opt"><b>(B)</b> \( g(u)=\tfrac{2}{5} \) for \( u=3 \); \( \tfrac{1}{5} \) for \( u=4,5,6 \)</span><span class="kx-opt"><b>(C)</b> \( g(u)=\tfrac{1}{6} \) for \( u=3,6 \); \( \tfrac{1}{3} \) for \( u=4,5 \)</span><span class="kx-opt"><b>(D)</b> \( g(u)=\tfrac{1}{5} \) for \( u=2,3,4,5,6 \)</span><span class="kx-opt"><b>(E)</b> \( g(u)=\tfrac{1}{4} \) for \( u=2,3,4,5 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;U 取值 3 到 6</td><td>\( U=X+Y\in\{3,4,5,6\} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;u=3、6 各一种组合</td><td>\( g(3)=g(6)=\tfrac{1}{6} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;u=4、5 各两种组合</td><td>\( g(4)=g(5)=\tfrac{2}{6}=\tfrac{1}{3} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>11.4</b></td><td>保险两险种·至少两次理赔(取补)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q400" type="button" title="展开题目与答案(样题 Q400)">▸</button>Q400</td><td class="dim" style="font-size:13px">§00 明确点名的保险语境「至少两次理赔」代表题</td></tr>
+<tr class="kxd kxds" data-kxq="Q400" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance policy provides coverage for two types of claims. Let X and Y denote the numbers of monthly claims of Type I and Type II, respectively. The joint probability function of X and Y is given by \(p(x,y) = \frac{8-2x-y}{54}\), for \(x = 0, 1, 2\) and \(y = 0, 1, 2, 3\). Calculate the probability that there are in total at least two claims on this policy in the coming month.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.19</span><span class="kx-opt"><b>(B)</b> 0.28</span><span class="kx-opt"><b>(C)</b> 0.39</span><span class="kx-opt"><b>(D)</b> 0.52</span><span class="kx-opt"><b>(E)</b> 0.61</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;总索赔至少2取补集</td><td>\(P(W\ge 2)=1-P(0,0)-P(0,1)-P(1,0)\)</td><td class="xr"><a href="soa-exam-p-l01-sets.html">L01</a></td></tr><tr><td>②&nbsp;查联合pmf求和</td><td>\(\dfrac{8}{54}+\dfrac{7}{54}+\dfrac{6}{54}=\dfrac{21}{54}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;相减</td><td>\(1-\dfrac{21}{54}=\dfrac{33}{54}=0.61\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>11.5</b></td><td>龙卷风·联合 cdf F(2,3) 累加</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q410" type="button" title="展开题目与答案(样题 Q410)">▸</button>Q410</td><td class="dim" style="font-size:13px">联合 cdf 逐格累加求 F(x,y) 的样题标杆</td></tr>
+<tr class="kxd kxds" data-kxq="Q410" style="display:none"><td colspan="4"><div class="kx-qtx">This year, a homeowner experiences no tornadoes with probability 0.80, exactly one tornado with probability 0.12, exactly two tornadoes with probability 0.05, and exactly three tornadoes with probability 0.03. Each tornado independently results in a loss of 1 with probability 0.50 and a loss of 2 with probability 0.50. Let X be the number of tornadoes that the homeowner experiences this year, and Y be the total amount of losses that the homeowner experiences this year due to all the tornadoes. Let \(F(x, y)\) be the joint cumulative distribution function of X and Y. Calculate \(F(2,3)\).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0250</span><span class="kx-opt"><b>(B)</b> 0.0500</span><span class="kx-opt"><b>(C)</b> 0.0675</span><span class="kx-opt"><b>(D)</b> 0.9325</span><span class="kx-opt"><b>(E)</b> 0.9575</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;联合CDF定义拆事件</td><td>\(F_{X,Y}(2,3)=P[X\le 2\ \text{且}\ Y\le 3]\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;按龙卷风数分情形</td><td>\(X\le 1:\ p=0.8+0.12=0.92,\ \text{损失必}\le 2\)</td><td class="xr"><a href="soa-exam-p-l04-bayes-theorem.html">L04</a></td></tr><tr><td>③&nbsp;X=2时限制两损非全2</td><td>\(1-(0.5)^2=0.75\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;加权汇总</td><td>\(0.92+0.05(0.75)=0.9575\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>11.7</b></td><td>cdf 因式分解·独立 F(1,5)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q238" type="button" title="展开题目与答案(样题 Q238)">▸</button>Q238</td><td class="dim" style="font-size:13px">cdf 可分解即独立、串联几何分布的综合样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q238" style="display:none"><td colspan="4"><div class="kx-qtx">Skateboarders A and B practice one difficult stunt until becoming injured while attempting the stunt. On each attempt, the probability of becoming injured is \(p\), independent of the outcomes of all previous attempts.
+
+Let \(F(x, y)\) represent the probability that skateboarders A and B make no more than \(x\) and \(y\) attempts, respectively, where \(x\) and \(y\) are positive integers.
+
+It is given that \(F(2, 2) = 0.0441\).
+
+Calculate \(F(1, 5)\).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0093</span><span class="kx-opt"><b>(B)</b> 0.0216</span><span class="kx-opt"><b>(C)</b> 0.0495</span><span class="kx-opt"><b>(D)</b> 0.0551</span><span class="kx-opt"><b>(E)</b> 0.1112</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;两次内受伤概率(几何)</td><td>\(p+(1-p)p=2p-p^2\)</td><td class="xr"><a href="soa-exam-p-l18-negative-binomial.html">L18</a></td></tr><tr><td>②&nbsp;两人独立平方列方程</td><td>\((2p-p^2)^2=0.0441\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解出p</td><td>\((p-1)^2=0.79\Rightarrow p=0.11118\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>④&nbsp;目标联合概率</td><td>\(F(1,5)=p[1-(1-p)^5]=0.0495\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q238" style="display:none"><td colspan="4"><div class="kx-qtx">Skateboarders A and B practice one difficult stunt until becoming injured while attempting the stunt. On each attempt, the probability of becoming injured is \(p\), independent of the outcomes of all previous attempts.
+
+Let \(F(x, y)\) represent the probability that skateboarders A and B make no more than \(x\) and \(y\) attempts, respectively, where \(x\) and \(y\) are positive integers.
+
+It is given that \(F(2, 2) = 0.0441\).
+
+Calculate \(F(1, 5)\).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0093</span><span class="kx-opt"><b>(B)</b> 0.0216</span><span class="kx-opt"><b>(C)</b> 0.0495</span><span class="kx-opt"><b>(D)</b> 0.0551</span><span class="kx-opt"><b>(E)</b> 0.1112</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;两次内受伤概率(几何)</td><td>\(p+(1-p)p=2p-p^2\)</td><td class="xr"><a href="soa-exam-p-l18-negative-binomial.html">L18</a></td></tr><tr><td>②&nbsp;两人独立平方列方程</td><td>\((2p-p^2)^2=0.0441\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解出p</td><td>\((p-1)^2=0.79\Rightarrow p=0.11118\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>④&nbsp;目标联合概率</td><td>\(F(1,5)=p[1-(1-p)^5]=0.0495\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>11.8</b></td><td>cdf 判独立·精确 pmf 反解</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q239" type="button" title="展开题目与答案(样题 Q239)">▸</button>Q239</td><td class="dim" style="font-size:13px">cdf 乘积识独立 + 单点 pmf 反解,一题两法</td></tr>
+<tr class="kxd kxds" data-kxq="Q239" style="display:none"><td colspan="4"><div class="kx-qtx">The number of minor surgeries, \(X\), and the number of major surgeries, \(Y\), for a policyholder, this decade, has joint cumulative distribution function
+
+\(F(x, y) = \left[1 - (0.5)^{x+1}\right]\left[1 - (0.2)^{y+1}\right],\)
+
+for nonnegative integers \(x\) and \(y\).
+
+Calculate the probability that the policyholder experiences exactly three minor surgeries and exactly three major surgeries this decade.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.00004</span><span class="kx-opt"><b>(B)</b> 0.00040</span><span class="kx-opt"><b>(C)</b> 0.03244</span><span class="kx-opt"><b>(D)</b> 0.06800</span><span class="kx-opt"><b>(E)</b> 0.12440</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;联合pmf由CDF差分</td><td>\(P(X=3,Y=3)=F(3,3)-F(2,3)-F(3,2)+F(2,2)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代值计算</td><td>\(0.9360-0.8736-0.9300+0.8680=0.0004\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q239" style="display:none"><td colspan="4"><div class="kx-qtx">The number of minor surgeries, \(X\), and the number of major surgeries, \(Y\), for a policyholder, this decade, has joint cumulative distribution function
+
+\(F(x, y) = \left[1 - (0.5)^{x+1}\right]\left[1 - (0.2)^{y+1}\right],\)
+
+for nonnegative integers \(x\) and \(y\).
+
+Calculate the probability that the policyholder experiences exactly three minor surgeries and exactly three major surgeries this decade.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.00004</span><span class="kx-opt"><b>(B)</b> 0.00040</span><span class="kx-opt"><b>(C)</b> 0.03244</span><span class="kx-opt"><b>(D)</b> 0.06800</span><span class="kx-opt"><b>(E)</b> 0.12440</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;联合pmf由CDF差分</td><td>\(P(X=3,Y=3)=F(3,3)-F(2,3)-F(3,2)+F(2,2)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代值计算</td><td>\(0.9360-0.8736-0.9300+0.8680=0.0004\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>11.10</b></td><td>非矩形支撑·P[X+Y/2≤5]</td><td style="white-space:nowrap"><button class="kxb" data-kx="11.10" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 套路2 点名的非矩形支撑(x≤y)代表题</td></tr>
+<tr class="kxd" data-kxq="11.10" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) and \( Y \) be discrete random variables with joint probability function \( f(x,y) = \frac{y}{24x} \) for \( x = 1,2,4;\ y = 2,4,8;\ x \le y \), and \( 0 \) otherwise. What is \( P\left[X + \frac{Y}{2} \le 5\right] \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \tfrac{1}{8} \)</span><span class="kx-opt"><b>(B)</b> \( \tfrac{7}{24} \)</span><span class="kx-opt"><b>(C)</b> \( \tfrac{3}{8} \)</span><span class="kx-opt"><b>(D)</b> \( \tfrac{5}{8} \)</span><span class="kx-opt"><b>(E)</b> \( \tfrac{17}{24} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;满足条件的格:X=1 全列,X=2 取 y=2,4</td><td>\( X=1;\ \text{或}\ X=2,\ Y=2,4 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;X=1 一列求和</td><td>\( \frac{2+4+8}{24(1)}=\frac{14}{24} \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;X=2 两格求和</td><td>\( \frac{2+4}{24(2)}=\frac{3}{24} \)</td><td class="xr">代数/计算</td></tr><tr><td>④&nbsp;相加收口</td><td>\( \frac{14}{24}+\frac{3}{24}=\frac{17}{24} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>11.13</b></td><td>联合表条件概率(取补)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q493" type="button" title="展开题目与答案(样题 Q493)">▸</button>Q493</td><td class="dim" style="font-size:13px">由联合表求条件概率(至少两残疾｜至多一死)的经典样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q493" style="display:none"><td colspan="4"><div class="kx-qtx">An insurer sells a group life and disability policy.
+
+The joint probability distribution for death and disability is given in the table below.
+
+Number of Deaths: 0, 1, 2, 3, 4 | Number of Disabilities 0: 0.51, 0.09, 0.04, 0.01, 0.01 | Number of Disabilities 1: 0.08, 0.06, 0.02, 0.01, 0.01 | Number of Disabilities 2: 0.04, 0.03, 0.01, 0.01, 0.00 | Number of Disabilities 3: 0.03, 0.02, 0.01, 0.01, 0.00
+
+Calculate the probability of at least two disabilities given no more than one death.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.12</span><span class="kx-opt"><b>(B)</b> 0.14</span><span class="kx-opt"><b>(C)</b> 0.15</span><span class="kx-opt"><b>(D)</b> 0.25</span><span class="kx-opt"><b>(E)</b> 0.75</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;分子:交事件格累加</td><td>\(0.04+0.03+0.03+0.02=0.12\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;分母:死亡≤1累加</td><td>\(0.51+0.09+0.08+0.06+0.04+0.03+0.03+0.02=0.86\)</td><td class="xr"><a href="soa-exam-p-l01-sets.html">L01</a></td></tr><tr><td>③&nbsp;条件比值</td><td>\(0.12/0.86=0.1395\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q493" style="display:none"><td colspan="4"><div class="kx-qtx">An insurer sells a group life and disability policy.
+
+The joint probability distribution for death and disability is given in the table below.
+
+Number of Deaths: 0, 1, 2, 3, 4 | Number of Disabilities 0: 0.51, 0.09, 0.04, 0.01, 0.01 | Number of Disabilities 1: 0.08, 0.06, 0.02, 0.01, 0.01 | Number of Disabilities 2: 0.04, 0.03, 0.01, 0.01, 0.00 | Number of Disabilities 3: 0.03, 0.02, 0.01, 0.01, 0.00
+
+Calculate the probability of at least two disabilities given no more than one death.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.12</span><span class="kx-opt"><b>(B)</b> 0.14</span><span class="kx-opt"><b>(C)</b> 0.15</span><span class="kx-opt"><b>(D)</b> 0.25</span><span class="kx-opt"><b>(E)</b> 0.75</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;分子:交事件格累加</td><td>\(0.04+0.03+0.03+0.02=0.12\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;分母:死亡≤1累加</td><td>\(0.51+0.09+0.08+0.06+0.04+0.03+0.03+0.02=0.86\)</td><td class="xr"><a href="soa-exam-p-l01-sets.html">L01</a></td></tr><tr><td>③&nbsp;条件比值</td><td>\(0.12/0.86=0.1395\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr></table></div></td></tr>
+<tr><td><b>11.16</b></td><td>cdf 表反查单格概率(容斥)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q449" type="button" title="展开题目与答案(样题 Q449)">▸</button>Q449</td><td class="dim" style="font-size:13px">由 cdf 表用二维容斥反查单格 pmf 的标杆样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q449" style="display:none"><td colspan="4"><div class="kx-qtx">Two random variables X and Y are each defined on a set of positive integers and have joint probability function \( p(x,y) \). A portion of the corresponding joint cumulative distribution function \( F(x,y) \) is given in the following table: x: 3, 4, 5, 6 | y = 8: 0.53, 0.62, 0.67, 0.75 | y = 9: 0.65, 0.76, 0.84, 0.93. Calculate \( p(4,9) + p(5,9) \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.01</span><span class="kx-opt"><b>(B)</b> 0.02</span><span class="kx-opt"><b>(C)</b> 0.03</span><span class="kx-opt"><b>(D)</b> 0.04</span><span class="kx-opt"><b>(E)</b> 0.05</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;目标化为矩形概率</td><td>\(p(4,9)+p(5,9)=P(3<X\le5,8<Y\le9)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;联合CDF矩形四角法</td><td>\(F(5,9)-F(3,9)-F(5,8)+F(3,8)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代值</td><td>\(0.84-0.65-0.67+0.53=0.05\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>11.17</b></td><td>边缘分布 pX(x)</td><td style="white-space:nowrap"><button class="kxb" data-kx="11.17" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">最干净的边缘分布反解题(1999 旧样题集,不计现行样题号)</td></tr>
+<tr class="kxd" data-kxq="11.17" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) and \( Y \) be discrete random variables with joint probability function \( p(x,y) = \frac{2x + y}{12} \) for \( (x,y) = (0,1),(0,2),(1,2),(1,3) \), and \( 0 \) otherwise. Determine the marginal probability function of \( X \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( p(x)=\tfrac{1}{6} \) for \( x=0 \); \( \tfrac{5}{6} \) for \( x=1 \)</span><span class="kx-opt"><b>(B)</b> \( p(x)=\tfrac{1}{4} \) for \( x=0 \); \( \tfrac{3}{4} \) for \( x=1 \)</span><span class="kx-opt"><b>(C)</b> \( p(x)=\tfrac{1}{3} \) for \( x=0 \); \( \tfrac{2}{3} \) for \( x=1 \)</span><span class="kx-opt"><b>(D)</b> \( p(x)=\tfrac{2}{9} \) for \( x=1 \); \( \tfrac{3}{9} \) for \( x=2 \); \( \tfrac{4}{9} \) for \( x=3 \)</span><span class="kx-opt"><b>(E)</b> \( p(x)=\tfrac{y}{12} \) for \( x=0 \); \( \tfrac{2+y}{12} \) for \( x=1 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;边缘:对 y 求和</td><td>\( p_X(x)=\sum_y p(x,y) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;x=0 两格</td><td>\( p_X(0)=\frac{1}{12}+\frac{2}{12}=\frac{1}{4} \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;x=1 两格</td><td>\( p_X(1)=\frac{4}{12}+\frac{5}{12}=\frac{3}{4} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 5(同题型二刷备用)· 跳过 2(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -340,6 +504,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       </table>
       <p>只累加 \(X\le 1\) 且 \(Y\le 2\) 的格:\(F(1,2)=p(1,1)+p(1,2)=0.40+0.12=0.52\)。</p>
       <span class="ans">F(1,2) = 0.52</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 联合 cdf 定义:左下角整块累加</td><td>\(F(x,y)=\Pr[X\le x,\ Y\le y]=\sum_{s\le x}\sum_{t\le y}p(s,t)\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 圈定满足 \(X\le1\) 且 \(Y\le2\) 的格</td><td>只有 \(p(1,1),\ p(1,2)\) 两格入选</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 逐格累加</td><td>\(F(1,2)=0.40+0.12=0.52\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>直觉:</b>联合 cdf 就是"把左下角一整块的格子全加起来"。离散时逐格累加,连续时换成对密度做二重积分——形式变了,含义没变。</span></div>
   </div>
@@ -417,6 +588,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p><b>\(X\) 边缘</b>(逐行加):\(p_X(1)=0.40+0.12+0.08=0.60\);\(p_X(2)=0.30+0.06+0.04=0.40\)。<br>
       <b>\(Y\) 边缘</b>(逐列加):\(p_Y(1)=0.40+0.30=0.70\);\(p_Y(2)=0.12+0.06=0.18\);\(p_Y(3)=0.08+0.04=0.12\)。</p>
       <span class="ans">p_X: 0.60, 0.40　|　p_Y: 0.70, 0.18, 0.12</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 边缘 pmf 定义:消掉另一个变量</td><td>\(p_X(x)=\sum_y p(x,y),\ \ p_Y(y)=\sum_x p(x,y)\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 逐行加总得 \(X\) 边缘</td><td>\(p_X(1)=0.40+0.12+0.08=0.60,\ \ p_X(2)=0.40\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 逐列加总得 \(Y\) 边缘</td><td>\(p_Y(1)=0.70,\ p_Y(2)=0.18,\ p_Y(3)=0.12\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>连带技巧(例 11B):</b>要求 \(X+Y\) 的分布,就把所有满足 \(x+y=\) 定值的格加起来——例如 \(P[X+Y=3]=p(1,2)+p(2,1)=0.12+0.30=0.42\)。这也是"求和掉"的思路。</span></div>
   </div>
@@ -480,6 +658,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p class="q">例 11A 的 \(X,Y\) 独立吗?</p>
       <p>取一格验证:\(p(1,1)=0.40\),而 \(p_X(1)\,p_Y(1)=0.60\times0.70=0.42\neq 0.40\)。有一格不满足 → <b>不独立</b>。(判独立要<b>每格</b>都等于边缘乘积;判"不独立"只需<b>找到一格</b>反例。)</p>
       <span class="ans">不独立(0.40 ≠ 0.42)</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 独立判据:每格 = 边缘乘积</td><td>\(X\perp Y\iff p(x,y)=p_X(x)\,p_Y(y)\)(所有格)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+        <tr><td>② 备好边缘(例 11C 已算)</td><td>\(p_X(1)=0.60,\ \ p_Y(1)=0.70\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 找到一格反例即判不独立</td><td>\(p(1,1)=0.40\ne 0.60\times0.70=0.42\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
   </div>
 </section>
@@ -589,16 +774,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>联合表题:拿到表<b>先把行/列合计写上</b>(边缘秒出),再答任何 \(P[\cdot]\)、独立性、\(X+Y\) 分布的问题。</li>
-        <li>连续 + 非矩形支撑(0&lt;x&lt;y 之类):<b>先画支撑图再定积分限</b>,内层积分限含另一变量(如 \(\int_x^1\)),写死 0 到 1 是最常见丢分点(练 11.10 同型)。</li>
-        <li>独立判定两步走:支撑是矩形吗?→ 能因式分解吗?顺序别反,非矩形直接判否。</li>
-        <li>保险语境:\(X\)=损失额、\(Y\)=理赔费用(ALAE),或两险种理赔次数的联合表——"at least two claims" 这类事件就是把对应格子挑出来加(练 11.4)。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Joint_probability_distribution">Wikipedia · Joint probability distribution</a></div><div class="z">联合 / 边缘 / 条件一页打通,离散连续都配了例子,是本章到 L24 的总地图。</div><div class="u">en.wikipedia.org/wiki/Joint_probability_distribution</div></div>
@@ -609,107 +784,420 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>非矩形支撑当成独立</b>:见 \(x&lt;y\)、\(x+y&lt;1\) 等约束,直接判"不独立",别被可分解的公式骗。</li>
-          <li><b>边缘积分限写死</b>:连续求 \(f_X(x)\) 时,\(y\) 的积分上下限常<b>随 \(x\) 变</b>(如 \(\int_x^1\)),不是恒 \(0\) 到 \(1\)。</li>
-          <li><b>cdf 矩形概率漏容斥</b>:\(P[a&lt;X\le b,c&lt;Y\le d]\) 要 \(+F(a,c)\),别只减两项。</li>
-          <li><b>消错变量</b>:求 \(p_X\) 是对 \(y\) 求和,不是对 \(x\)。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 11.1</span>独立观测 + 已知 \(P[X_i]\),求样本均值 \(\bar X\) 的分布。</li>
-          <li><span class="ref">练 11.4</span>给 \(p(x,y)=\frac{8-2x-y}{54}\),求"至少两次理赔"的概率。</li>
-          <li><span class="ref">练 11.5</span>联合 cdf \(F(2,3)\)(龙卷风损失,离散)。</li>
-          <li><span class="ref">练 11.10</span>给 \(f(x,y)=\frac{y}{24x}\),求 \(P[X+\tfrac{Y}{2}\le 5]\)。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>联合表中 \(p(1,1)=0.2,\ p(1,2)=0.3,\ p(2,1)=0.1,\ p(2,2)=0.4\),求 \(p_X(1)\)。</li>
-        <li>上题里 \(X,Y\) 独立吗?(提示:比 \(p(1,1)\) 与 \(p_X(1)p_Y(1)\))</li>
-        <li>某连续密度支撑为 \(\{0&lt;x&lt;y&lt;1\}\),\(X,Y\) 能独立吗?</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(p_X(1)=0.2+0.3=0.5\);② \(p_Y(1)=0.3\),\(p_X(1)p_Y(1)=0.5\times0.3=0.15\neq0.2\) → <b>不独立</b>;③ <b>不能</b>(支撑非矩形,\(x\) 上限被 \(y\) 绑住)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat" style="background:linear-gradient(180deg,#f2faf8,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 联合分布</h2></div></div>
-    <p class="sec-sub">学完本章,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>联合 / 边缘</h4>
-        <p>联合 pmf/pdf:\(p(x,y)\) / \(f(x,y)\ge0\),\(\sum\sum p=\iint f=1\)</p>
-        <p>联合 cdf:\(F(x,y)=P[X\le x,Y\le y]\)</p>
-        <p>矩形:\(F(b,d)-F(a,d)-F(b,c)+F(a,c)\)</p>
-        <p>边缘:\(p_X(x)=\sum_y p\);\(f_X(x)=\int f\,dy\)</p>
-      </div>
-      <div class="cc t">
-        <h4>独立性</h4>
-        <p>独立 \(\iff f(x,y)=f_X(x)f_Y(y)\)</p>
-        <p>需<b>可因式分解 + 支撑为矩形</b></p>
-        <p>\(n\) 个:\(f=\prod f(x_i)\)</p>
-        <p>独立 \(\Rightarrow E[XY]=E[X]E[Y]\)(反不真)</p>
-        <p>非矩形支撑 → 一定不独立</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "事件独立性": {
+  "kind": "c",
+  "en": "IndependentEvents",
+  "aliases": [
+   "independence",
+   "independent events",
+   "mutually independent",
+   "pairwise independent",
+   "独立事件"
+  ],
+  "level": "advanced",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>事件 B 发生与否完全不改变 A 的概率,称 A 与 B <strong>独立</strong>——\"知道 B\"不带来任何信息,交集概率恰等于两者概率的乘积。</p><p><strong>白话</strong>:窗外下不下雨,和你抛硬币出不出正面,互不相干——知道下雨了,对猜硬币毫无帮助,这就是独立。验证只看一条:两件事一起发生的概率,是否恰好等于各自概率相乘。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cap B]=P[A]\\,P[B]\\;\\Longleftrightarrow\\;P[A\\mid B]=P[A]\\;\\Longleftrightarrow\\;P[B\\mid A]=P[B]$$</div><ul><li><strong>补集也独立</strong>:若 \\(A,B\\) 独立,则 \\(A',B\\)、\\(A,B'\\)、\\(A',B'\\) 也都独立。</li><li><strong>独立 ≠ 互斥</strong>(最大陷阱):互斥是 \\(P[A\\cap B]=0\\)\"势不两立\";两个非零概率事件若互斥,则<strong>一定不独立</strong>(知道 A 发生 ⇒ B 概率骤降为 0,信息量极大)。</li><li>多事件:<strong>相互独立</strong>要求任意子集的交都等于乘积 \\(P[\\bigcap A_i]=\\prod P[A_i]\\),强于<strong>两两独立</strong>;经典反例(两枚硬币:1号正面 / 2号正面 / 恰一正面)两两独立但不相互独立。</li><li>判独立只验一条:\\(P[A\\cap B]\\stackrel{?}{=}P[A]P[B]\\)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 偶数(\\(P=1/2\\)),\\(B=\\) 点数 \\(\\le 2\\)(\\(P=1/3\\))。</p><ul><li>交集:\\(A\\cap B=\\{2\\}\\),\\(P=1/6\\)。</li><li>乘积:\\(\\dfrac12\\times\\dfrac13=\\dfrac16\\),相等 → 独立。知道\"\\(\\le 2\\)\"没改变偶数的机会:\\(\\{1,2\\}\\) 里偶数照样占一半。</li><li>换 \\(B=\\) 点数 \\(\\le 3\\)(\\(P=1/2\\)):交集仍 \\(\\{2\\}\\)、\\(P=1/6\\ne \\dfrac12\\times\\dfrac12=\\dfrac14\\) → 不独立。</li></ul><h4>与其他概念的关系</h4><ul><li>条件概率 — 独立 ⟺ \\(P[A\\mid B]=P[A]\\):条件不带来信息的特例</li><li>乘法公式 — 独立时条件概率退化,交集直接相乘</li><li>互斥事件 — 最易混对照:互斥=交为零,几乎与独立相反</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 同一思想从事件推广到随机变量</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 独立性进入期望运算后的直接后果</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"独立性判定清单\">独立性判定清单</a> — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ },
+ "二项分布与联合分布的层面之辨": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "basic",
+  "chapter": "p-l17",
+  "status": "wip",
+  "html": "<h4>核心辨析</h4><p>两者不构成平行对比——层面不同:</p><table><thead><tr><th></th><th>二项分布</th><th>联合分布</th></tr></thead><tbody><tr><td>层面</td><td>具体分布(有名字、有公式)</td><td>概念框架(多变量的分布)</td></tr><tr><td>变量个数</td><td>1 个</td><td>≥2 个</td></tr><tr><td>描述对象</td><td>单个计数 \\(X\\) 的概率规律</td><td>多个变量<strong>组合出现</strong>的概率规律</td></tr><tr><td>平行对比对象</td><td>泊松、几何、负二项…</td><td>边缘分布、条件分布</td></tr></tbody></table><p><strong>白话</strong>:二项分布回答\"抛 10 次硬币正面几次\"——一个数的规律;联合分布回答\"身高和体重一起看长什么样\"——\"高的人往往重\"这种依赖关系,只有联合分布装得下,拆成两个边缘就丢了。</p><p>正确的对比组:</p><ul><li>二项分布 vs 泊松分布 vs 几何分布 —— 同为具体单变量分布</li><li><a class=\"net-wl\" data-id=\"联合分布\">联合分布</a> vs <a class=\"net-wl\" data-id=\"边缘分布\">边缘分布</a> vs 条件分布 —— 同为多变量框架的三视角</li></ul><h4>连接点:多项分布</h4><p>多项分布是两者的桥——二项的多变量推广:\\(n\\) 次试验、\\(k\\) 类结果,各类计数 \\((X_1, \\dots, X_k)\\) 的<strong>联合分布</strong>即多项分布;每个 \\(X_i\\) 单看,边缘分布是二项 \\(B(n, p_i)\\)。</p><p><strong>算一遍</strong>:掷骰子 3 次,记 \\(X_1\\) = 出 1 的次数,\\(X_2\\) = 出 6 的次数。</p><ul><li>\\((X_1, X_2)\\) 联合:\\(P(X_1=1, X_2=1) = \\dfrac{3!}{1!\\,1!\\,1!} \\cdot \\dfrac{1}{6} \\cdot \\dfrac{1}{6} \\cdot \\dfrac{4}{6} = \\dfrac{1}{9}\\)</li><li>\\(X_1\\) 边缘:\\(X_1 \\sim B(3, \\tfrac{1}{6})\\),\\(P(X_1=1) = 3 \\cdot \\tfrac{1}{6} \\cdot (\\tfrac{5}{6})^2 = \\tfrac{25}{72}\\)</li><li>同一个 \\(X_1\\):进联合是多项的一维,单拎出来是二项——层面切换,对象没变。</li></ul><h4>易错点</h4><ul><li>把\"二项 vs 联合\"当同类概念背——考试不这么考,考的是<strong>多项分布的边缘是二项</strong>这条关系。</li><li>多项分布各 \\(X_i\\) <strong>不独立</strong>(\\(\\sum X_i = n\\) 硬约束,协方差 \\(\\operatorname{Cov}(X_i, X_j) = -np_ip_j &lt; 0\\)),别拿边缘乘积当联合。</li></ul>"
+ },
+ "区域概率与积分限": {
+  "kind": "c",
+  "en": "ProbabilityOverARegion",
+  "aliases": [
+   "region probability",
+   "double integral",
+   "limits of integration"
+  ],
+  "level": "hard",
+  "chapter": "p-l24",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>连续二维概率的计算主线:\\(P[(X,Y)\\in R]=\\iint_R f\\,dA\\)。难点不在积分本身,而在把区域 R(与支撑的交集)翻译成正确的内外层积分限——尤其三角形、斜边有界区域。</p><p><strong>白话</strong>:像算一块地的总收成:密度是每平方米的亩产,概率是圈出来那块地的总产量;真正会翻车的不是\"加总\"本身,而是把地块的边界(尤其斜着的那条田埂)描成积分上下限。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[(X,Y)\\in R]=\\iint_R f(x,y)\\,dA=\\int_{x_{\\min}}^{x_{\\max}}\\!\\!\\int_{y_{\\text{low}}(x)}^{y_{\\text{high}}(x)} f(x,y)\\,dy\\,dx$$</div><ul><li>两步走:先画支撑 ∩ 目标区域,再定限——<strong>外层常数,内层可变</strong>,内层限只能含常数或外层变量。</li><li>矩形区域内外层都是常数限(例 24A:\\(P[X&lt;0.5,Y&lt;0.4]=0.068\\));三角形/斜边区域内层限是外层变量的函数(如 \\(y:0\\to 0.8-x\\))。</li><li><strong>斜边先取补</strong>:\\(X+Y&gt;c\\) 这类斜线事件,补集常是一块更好积的三角形(例 24B:\\(P[X+Y&gt;0.8]=1-0.14336=0.85664\\)),两块积分省成一块。</li><li>三大限坑:内层限含内层自己的变量(必错);矩形限想当然套到斜边区域;内外层顺序与 \\(dy\\,dx\\) 不匹配。</li><li>自检:内层积完不该再剩内层变量。</li></ul><p><strong>算一遍</strong>:密度 \\(f=1\\) 铺满单位正方形,求 \\(P[X+Y&lt;1]\\)。</p><ul><li>定限:外层 \\(x:0\\to1\\)(常数);内层 \\(y:0\\to1-x\\)——斜边限跟着外层变量走,不是常数。</li><li>积分:\\(\\int_0^1\\!\\int_0^{1-x}1\\,dy\\,dx=\\int_0^1(1-x)\\,dx=1-\\tfrac12=\\tfrac12\\)。</li><li>对照:对角三角形面积正是 \\(\\tfrac12\\) ✓;若内层限想当然写成 \\(0\\to1\\),积出来是 1(整个正方形)——限错全错。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 被积对象:概率 = 密度的二重积分</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — \"内层限随外层变量走\"的一般原则(通吃边缘/联合矩)</li><li>几何概率 — 密度为常数时的退化捷径:免积分、数面积</li><li><a class=\"net-wl\" data-id=\"联合累积分布函数\">联合累积分布函数</a> — 给 F 时矩形概率改代值作差,不再积分</li><li>连续型条件概率 — 条件概率型:分子分母都是区域概率</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"联合均匀分布的几何面积法\">联合均匀分布的几何面积法</a> — 联合均匀下概率 = 面积比,免积分</li></ul>"
+ },
+ "容斥原理": {
+  "kind": "c",
+  "en": "InclusionExclusionPrinciple",
+  "aliases": [
+   "容斥",
+   "容斥公式",
+   "包含排斥原理",
+   "Inclusion-Exclusion"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求<strong>并集</strong>的概率(或计数)时,把各集合直接相加会把重叠部分重复计入,需按\"加单个 − 减两两交 + 加三集合交 − …\"正负交替修正。考试最多到三集合。</p><p><strong>白话</strong>:班里会英语的 20 人、会法语的 10 人,问\"至少会一门的有几人\"不能直接加——两门都会的人被点了两次名,得把重叠的减回去。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cup B]=P[A]+P[B]-P[A\\cap B]$$</div><div class=\"net-mth\">$$P[A\\cup B\\cup C]=\\sum P-\\sum P_{\\text{两两交}}+P[A\\cap B\\cap C]$$</div><ul><li>等价变形 \\(P[A\\cap B]=P[A]+P[B]-P[A\\cup B]\\) 是求交集的常用一步。</li><li>一般式正负交替(课本式 1.3)。</li></ul><p><strong>算一遍</strong>:会英语 20 人、会法语 10 人、两门都会 5 人,求至少会一门的人数。</p><ul><li>直接相加:\\(20+10=30\\) 人次——都会的 5 人被数了两遍。</li><li>减去重叠:\\(30-5=25\\) 人至少会一门。</li><li>反向用:若先知道\"至少会一门\"是 25 人,则都会的 \\(=20+10-25=5\\)——正是求交集的等价变形。</li></ul><h4>与其他概念的关系</h4><ul><li>互斥事件 — 互斥时交集为 0,公式退化为直接相加</li><li>概率公理 — 由可数可加性导出</li><li>德摩根定律 — 常配合把\"都不 / 至少\"翻成补集再代入</li></ul>"
+ },
+ "独立与不相关": {
+  "kind": "c",
+  "en": "IndependenceVsUncorrelatedness",
+  "aliases": [
+   "independence vs uncorrelatedness",
+   "uncorrelated",
+   "independence implies zero covariance",
+   "uncorrelated vs independent",
+   "独立与零协方差"
+  ],
+  "level": "advanced",
+  "chapter": "p-l13",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>独立与\"协方差为零(不相关)\"是强弱不同的两个概念:<strong>独立 ⇒ Cov=0,但 Cov=0 推不出独立</strong>。协方差只度量线性关系,变量可以有极强的非线性依赖而协方差为零。</p><p><strong>白话</strong>:协方差是把直尺,只量得出\"直线趋势\"。独立是\"彻底不搭界\";不相关只是\"直尺量不出关系\"——弯的关系(比如抛物线)直尺看不见,但关系还在。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X,Y\\ \\text{独立}\\ \\Longrightarrow\\ E[XY]=E[X]E[Y]\\ \\Longrightarrow\\ \\operatorname{Cov}(X,Y)=0;\\qquad \\operatorname{Cov}(X,Y)=0\\ \\not\\!\\!\\Longrightarrow\\ X,Y\\ \\text{独立}$$</div><ul><li>经典反例:\\(X\\) 取 \\(-1,0,1\\) 各 \\(\\tfrac14,\\tfrac12,\\tfrac14\\),令 \\(Y=X^2\\)——\\(Y\\) 完全由 \\(X\\) 决定却 \\(\\operatorname{Cov}=0\\)(\\(E[X]=E[X^3]=0\\)),抛物线关系是纯非线性,线性测度看不见。</li><li>独立解锁全家桶:联合分布可分离、\\(E[XY]=E[X]E[Y]\\)、\\(\\operatorname{Var}(X+Y)=\\operatorname{Var}X+\\operatorname{Var}Y\\)。</li><li>不相关只给小福利:交叉项为零(\\(E[XY]=E[X]E[Y]\\) 这一条成立),但<strong>推不出</strong>联合分布可分离,任意函数 \\(E[g(X)h(Y)]\\) 不再保证分离。</li><li>判独立要回定义:\\(p(x,y)=p_X(x)\\,p_Y(y)\\) 对<strong>所有</strong>格点成立(联合表 = 行列外积)。</li><li>措辞陷阱:题面说 uncorrelated 千万别当 independent 用;说 independent 才能放心用全家桶。</li></ul><p><strong>算一遍</strong>:\\(X\\) 取 \\(-1,0,1\\) 概率 \\(\\tfrac14,\\tfrac12,\\tfrac14\\),\\(Y=X^2\\),逐步验证\"不相关但不独立\"。</p><ul><li>\\(E[X]=-\\tfrac14+0+\\tfrac14=0\\);\\(E[XY]=E[X^3]=0\\) → \\(\\operatorname{Cov}=0-0=0\\):不相关 ✓</li><li>查独立:\\(P[X{=}1,Y{=}1]=\\tfrac14\\),但 \\(P[X{=}1]\\,P[Y{=}1]=\\tfrac14\\times\\tfrac12=\\tfrac18\\),不相等 → 不独立。</li><li>知道 \\(X\\) 就完全知道 \\(Y\\),协方差却是 0——直尺量不出抛物线。</li></ul><h4>与其他概念的关系</h4><ul><li>协方差 — \"不相关\"即它为零</li><li><a class=\"net-wl\" data-id=\"事件独立性\">事件独立性</a> — 事件层面的独立概念(上游)</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 联合分布可分离的正式定义</li><li>相关系数 — 不相关 ⟺ \\(\\rho=0\\)</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 独立 ⇒ Cov=0 的推导枢纽</li><li>零相关即独立(正态特有) — 逆命题唯一成立的场合(二元正态)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"独立性判定清单\">独立性判定清单</a> — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ },
+ "独立与乘积期望": {
+  "kind": "c",
+  "en": "ExpectationOfProductOfIndependentVariables",
+  "aliases": [
+   "product of independent expectations",
+   "multiplication rule for expectations",
+   "expectation of product",
+   "product of expectations",
+   "独立时积的期望"
+  ],
+  "level": "advanced",
+  "chapter": "p-l27",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>当 \\(X\\perp Y\\)(密度可因式分解且支撑矩形)时,乘积的期望才等于期望的乘积:\\(E[g(X)h(Y)]=E[g(X)]\\,E[h(Y)]\\)。二重积分自动拆成两个一重积分之积,不必真积二维。</p><p><strong>白话</strong>:两台没串线的抽奖机,\"两边奖金乘起来\"的平均 = 你那台的平均 × 我这台的平均——因为你抽到什么完全不影响我。但只要机器串了线(一台出大奖另一台就收紧),这么乘就是错的。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\;\\Longrightarrow\\;E[g(X)\\,h(Y)]=E[g(X)]\\,E[h(Y)]$$</div><ul><li>特例:\\(E[XY]=E[X]E[Y]\\)、\\(E[XY^2]=E[X]E[Y^2]\\)。</li><li>为什么能拆:独立时 \\(f=f_Xf_Y\\) 且支撑矩形,内外层积分互不牵扯,直接分离;支撑一旦耦合(内层限含外层变量),这步分离就做不了。</li><li>最大陷阱:未验独立就拆——支撑 \\(0\\le x\\le y\\le1\\) 时即便密度形式可拆也不独立,必须老实二重积分(27B 三角:\\(1/5\\) vs 27C 矩形:\\(1/6\\))。</li><li>方向注意:独立 ⟹ 可拆;反过来 \\(E[XY]=E[X]E[Y]\\)(零协方差)推不回独立。</li></ul><p><strong>算一遍</strong>:抛两枚互不相干的硬币,正面记 1、反面记 0,求 \\(E[XY]\\)。</p><ul><li>硬算:\\(XY=1\\) 只在\"双正面\"发生,概率 \\(\\tfrac12\\times\\tfrac12=\\tfrac14\\),所以 \\(E[XY]=\\tfrac14\\)。</li><li>拆开算:\\(E[X]=0.5\\)、\\(E[Y]=0.5\\),相乘得 \\(0.25\\)——两条路对上 ✓</li><li>前提是两枚硬币独立;若绑在一根轴上同起同落,\\(E[XY]=0.5\\neq0.25\\),拆法立刻失效。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"连续型独立判据\">连续型独立判据</a> — 前提怎么验:因式分解 + 矩形支撑</li><li>连续型联合矩 — 应用场景:\\(E[XY]\\) 等联合矩的捷径</li><li><a class=\"net-wl\" data-id=\"独立与不相关\">独立与不相关</a> — 直接推论:独立 ⟹ Cov=0;反向不成立</li><li>期望的线性 — 对照:加法恒可拆,乘法要独立</li></ul>"
+ },
+ "独立性判定清单": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:给联合结构问\"独立吗\",或题面暗给独立让你拆乘积——判定要点按对象分三层。</p><h4>判定清单</h4><ol><li><strong>事件</strong>:\\(P[A\\cap B]=P[A]P[B]\\)(等价 \\(P[A\\mid B]=P[A]\\));互斥的非零事件必不独立,见 <a class=\"net-wl\" data-id=\"事件独立性\">事件独立性</a>。</li><li><strong>离散 RV</strong>:联合 pmf 处处 = 边缘乘积(一个格子破功即不独立)。</li><li><strong>连续 RV</strong>:<a class=\"net-wl\" data-id=\"连续型独立判据\">连续型独立判据</a>——密度可分离 \\(f(x,y)=g(x)h(y)\\) <strong>且支撑是矩形</strong>;三角形支撑直接判不独立。</li><li><strong>相关性只是必要线索</strong>:\\(\\rho=0\\not\\Rightarrow\\) 独立(<a class=\"net-wl\" data-id=\"独立与不相关\">独立与不相关</a>);唯一例外是二元正态(零相关即独立(正态特有))。</li></ol><h4>易错</h4><ul><li>支撑非矩形却用\"可分离\"误判独立——先看支撑再看式子。</li><li>用协方差为 0 直接下独立结论(非正态即错)。</li></ul>"
+ },
+ "矩形区域概率": {
+  "kind": "c",
+  "en": "RectangleProbability",
+  "aliases": [
+   "rectangle probability",
+   "rectangle rule for joint cdf"
+  ],
+  "level": "advanced",
+  "chapter": "p-l11",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>用联合 cdf 的容斥求半开矩形 \\((a,b]\\times(c,d]\\) 的概率:\"大块减两边、补回左下角\"。是一维 \\(P[a&lt;X\\le b]=F(b)-F(a)\\) 的二维推广。</p><p><strong>白话</strong>:联合 cdf 只会报\"从左下角原点圈到某点的累计量\",像地图 App 只给\"原点到此的整块人口\"。想要中间一块矩形街区,就拿大块减掉左边一竖条、下边一横条——左下角那小块被剪了两刀,得再贴回来一次。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[a&lt;X\\le b,\\ c&lt;Y\\le d]=F(b,d)-F(a,d)-F(b,c)+F(a,c)$$</div><ul><li>记忆:减 \\(F(a,d)\\)、\\(F(b,c)\\) 时左下角 \\(F(a,c)\\) 被减了<strong>两次</strong>,必须加回——漏 \\(+F(a,c)\\) 是高频错。</li><li>连续时与密度二重积分等价:\\(\\iint_R f(x,y)\\,dx\\,dy\\)。</li><li>离散时注意边界格取不取(\\(&lt;\\) 与 \\(\\le\\) 的差在跳跃点上是真概率)。</li></ul><p><strong>算一遍</strong>:\\(X,Y\\) 独立均匀落在 \\([0,1]\\),\\(F(x,y)=xy\\),求右上角小方块 \\(P[0.5&lt;X\\le1,\\ 0.5&lt;Y\\le1]\\)。</p><ul><li>四角代入:\\(F(1,1)-F(0.5,1)-F(1,0.5)+F(0.5,0.5)=1-0.5-0.5+0.25\\)。</li><li>得 \\(0.25\\)——右上角恰占大正方形的四分之一,面积直觉对上 ✓</li><li>若漏掉 \\(+F(0.5,0.5)\\) 会得 \\(0\\):左下块被减了两次,必须补回。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"联合累积分布函数\">联合累积分布函数</a> — 四个角的取值全来自它</li><li><a class=\"net-wl\" data-id=\"容斥原理\">容斥原理</a> — 加减四角正是二维容斥</li><li><a class=\"net-wl\" data-id=\"联合分布\">联合分布</a> — 所属框架</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 一维 \\(F(b)-F(a)\\) 的升维版</li><li><a class=\"net-wl\" data-id=\"区域概率与积分限\">区域概率与积分限</a> — 非矩形区域没有 cdf 捷径,改画区域定积分限</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"联合均匀分布的几何面积法\">联合均匀分布的几何面积法</a> — 联合均匀下概率 = 面积比,免积分</li></ul>"
+ },
+ "积分限与支撑": {
+  "kind": "c",
+  "en": "LimitsOfIntegration",
+  "aliases": [
+   "limits of integration",
+   "support",
+   "integration bounds"
+  ],
+  "level": "advanced",
+  "chapter": "p-l26",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>二维积分(区域概率、边缘密度、联合矩)的积分限不是抄 \\(\\pm\\infty\\) 或 0 到 1,而是由<strong>支撑</strong>(\\(f&gt;0\\) 的区域)决定;支撑非矩形时,内层变量的上下限是外层变量的函数。先画支撑再定限。</p><p><strong>白话</strong>:二重积分像逐行扫地:密度只铺在\"支撑\"这块地毯上,扫哪一行,就只扫这一行压在地毯上的那一段。地毯是三角形时,每行的起扫点和收扫点都不一样——所以内层积分限得写成外层变量的函数,不能一律抄 0 到 1。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{支撑 } 0\\le x\\le y\\le 1:\\qquad \\int_0^1\\!\\!\\int_x^1 f\\,dy\\,dx\\;=\\;\\int_0^1\\!\\!\\int_0^{y} f\\,dx\\,dy$$</div><ul><li>铁律:<strong>外层常数,内层可变</strong>——内层限只能含常数或外层变量;积完还剩内层变量 = 必错。</li><li>流程:画支撑(∩ 目标区域)→ 固定外层变量 → 读出内层变量在支撑内扫过的区间。</li><li>常见支撑形状:三角 \\(0&lt;x&lt;y&lt;1\\)(内层 x:0→y)、抛物 \\(x^2\\le y\\le x\\)、半圆(\\(y:\\pm\\sqrt{1-x^2}\\),真题 26.8 把\"限随变量变\"演到极致)。</li><li>同一约束的两个后果:支撑绑住两变量(非矩形)⟹ 积分限耦合,同时也 ⟹ 不独立。</li><li>题面一句 \"for \\(0&lt;x&lt;y&lt;1\\)\" 就是全部机关;L24–L27 九成失分在这。</li></ul><p><strong>算一遍</strong>:\\(f(x,y)=2\\) 铺在三角支撑 \\(0\\le x\\le y\\le1\\) 上,验证总概率是 1。</p><ul><li>画支撑:单位正方形的对角线上半三角,面积 \\(\\tfrac12\\);外层取 \\(x\\),固定一竖条后 \\(y\\) 只能从 \\(x\\) 扫到 \\(1\\)。</li><li>算:\\(\\int_0^1\\!\\int_x^1 2\\,dy\\,dx=\\int_0^1 2(1-x)\\,dx=2\\big(1-\\tfrac12\\big)=1\\) ✓(高 2 × 底面积 \\(\\tfrac12\\))。</li><li>错法对照:照抄矩形限 \\(\\int_0^1\\!\\int_0^1 2\\,dy\\,dx=2\\)——把地毯外的空地也扫了,总概率爆表。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"区域概率与积分限\">区域概率与积分限</a> — 区域概率场景下的具体应用(L24)</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 边缘积分的限同样由支撑读出(L26)</li><li>连续型联合矩 — 联合矩二重积分的限同样由支撑定(L27)</li><li><a class=\"net-wl\" data-id=\"连续型独立判据\">连续型独立判据</a> — 非矩形支撑既毁常数积分限、也毁独立</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 支撑 = 联合密度非零的区域</li></ul>"
+ },
+ "累积分布函数": {
+  "kind": "c",
+  "en": "CumulativeDistributionFunction",
+  "aliases": [
+   "cdf",
+   "distribution function",
+   "分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(F(x)=P[X\\le x]\\):累住\"到 x 为止\"的全部概率。对离散、连续<strong>一视同仁</strong>——知道 F 就等于知道这个随机变量的一切,是求各种范围概率的统一入口。</p><p><strong>白话</strong>:\\(F\\) 像收银机的累计小票:沿数轴从最左端一路扫到 \\(x\\),沿途概率全部记进总账——它报的永远是\"到此为止一共多少\",不是\"这一点是多少\";要某一段的量,拿两张小票相减就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=P[X\\le x]\\qquad P[u&lt;X\\le v]=F(v)-F(u)$$</div><ul><li>四条<strong>必备性质</strong>整块记:非减 · 右连续 · \\(F(-\\infty)=0\\) · \\(F(\\infty)=1\\)。</li><li>连续时 \\(F'(x)=f(x)\\)(光滑 S 型);离散时 \\(F(x)=\\sum_{t\\le x}p(t)\\)(阶梯,跳高 \\(=p(x)\\))。</li><li><strong>\\(F\\) 用 \\(\\le\\) 不是 \\(&lt;\\)</strong>:离散时含端点那一跳;求 \\(P[X&lt;x]\\) 要用跳<strong>前</strong>的值,与 \\(F(x)\\) 差一个 \\(p(x)\\)——差一个跳点答案就错。</li><li>分段 F 求区间概率:直接 \\(F(b)-F(a)\\),先看清端点落在哪一段(例 5A:\\(F(2.5)=1\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求 \\(P[2&lt;X\\le4]\\)。</p><ul><li>两张\"累计小票\":\\(F(4)=\\tfrac46\\)(1 到 4 点),\\(F(2)=\\tfrac26\\)(1、2 点)。</li><li>相减:\\(F(4)-F(2)=\\tfrac26=\\tfrac13\\)——正好数出 \\(\\{3,4\\}\\) 两个点 ✓</li><li>端点自查:区间写法 \\(u&lt;X\\le v\\) 与 \\(F\\) 的 \\(\\le\\) 严丝合缝,右端 4 含、左端 2 不含,一个跳点都不差。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — 离散连续通吃的完全刻画</li><li>概率函数 — 离散:由 pmf 累加,阶梯跳高 \\(=p(x)\\)</li><li>概率密度函数 — 连续:求导得密度,\\(f=F'\\)</li><li>生存函数 — 互补:\\(S=1-F\\),\"F 管不超过,S 管超过\"</li><li>百分位数 — 反着用 F:解 \\(F(x)=p\\) 得分位数</li><li><a class=\"net-wl\" data-id=\"联合累积分布函数\">联合累积分布函数</a> — 二维推广</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "联合分布": {
+  "kind": "c",
+  "en": "JointDistribution",
+  "aliases": [
+   "joint distribution",
+   "joint pmf",
+   "joint pdf",
+   "joint probability function"
+  ],
+  "level": "basic",
+  "chapter": "p-l11",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>同时描述两个(或多个)随机变量的分布:给每个 \\((x,y)\\) 配概率(离散联合 pmf \\(p(x,y)\\))或密度(连续联合 pdf \\(f(x,y)\\)),非负且全空间总和/总积分为 1;累积视角是联合 cdf \\(F(x,y)=P[X\\le x,\\ Y\\le y]\\)。</p><p><strong>白话</strong>:单人档案升级成双人档案:一张表格,行是\"他的情况\"、列是\"她的情况\",每个格子写\"俩人恰好同时是这个组合\"的概率——全表加起来是 1。只看一个人是普通分布,同时看两个人就是联合分布。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$p(x,y)=P[X=x,\\ Y=y]\\qquad \\sum_x\\sum_y p(x,y)=1\\qquad \\iint f(x,y)\\,dx\\,dy=1$$</div><ul><li>拿到题先用<strong>非负 + 归一化</strong>核验或反解常数 \\(c\\)。</li><li>区域概率 = 密度在区域上的二重积分:\\(P[(X,Y)\\in R]=\\iint_R f\\);离散则把区域内格子逐个加。</li><li>\\(X+Y\\) 的分布:把满足 \\(x+y=\\) 定值的格子归并相加(如 \\(P[X+Y=3]=p(1,2)+p(2,1)\\))。</li><li>\\(F(x,y)\\) 对 \\(x\\)、\\(y\\) 都单调不减;离散求 \\(F\\) 就是累加左下角一整块格子。</li></ul><p><strong>算一遍</strong>:独立抛两枚硬币,\\(X\\)、\\(Y\\) 各记正面 1、反面 0,写出联合 pmf 再用一次。</p><ul><li>四个格子:\\(p(0,0)=p(0,1)=p(1,0)=p(1,1)=\\tfrac14\\);归一化自检 \\(4\\times\\tfrac14=1\\) ✓</li><li>用格子算事件:\\(P[X+Y=1]=p(0,1)+p(1,0)=\\tfrac12\\)——把满足条件的格子挑出来相加。</li><li>累积视角:\\(F(0,0)=P[X\\le0,Y\\le0]=p(0,0)=\\tfrac14\\),就是左下角那一格。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — 单变量分布的二维推广</li><li><a class=\"net-wl\" data-id=\"联合累积分布函数\">联合累积分布函数</a> — 累积视角,矩形概率的原料</li><li><a class=\"net-wl\" data-id=\"边缘分布\">边缘分布</a> — 消掉一个变量压回单变量</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 联合 = 边缘乘积 ⟺ 独立</li><li><a class=\"net-wl\" data-id=\"联合矩\">联合矩</a> — 在联合分布上对 \\(g(X,Y)\\) 取期望</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 连续版细讲(L24)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布与联合分布的层面之辨\">二项分布与联合分布的层面之辨</a> — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "联合均匀分布的几何面积法": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l25",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:两人到达时间均匀、设备寿命对均匀……事件是 (X,Y) 平面上一块区域,求概率。</p><h4>求解套路</h4><ol><li>联合均匀分布 ⇒ 概率 = <strong>事件区域面积 ÷ 支撑总面积</strong>,不用积分。</li><li>画图:先画支撑(矩形/三角形),再画事件边界线(如 \\(|X-Y|&lt;15\\)、\\(X&gt;2Y\\)),阴影目标区。</li><li>复杂区域用补集:相遇问题算「不相遇」两个三角形更快。</li><li>支撑非矩形时面积法照用,但边界交点要解准(见 <a class=\"net-wl\" data-id=\"区域概率与积分限\">区域概率与积分限</a>)。</li></ol><h4>易错</h4><ul><li>支撑面积不是 1 时忘了除(密度是 \\(1/\\text{Area}\\))。</li><li>边界含端点与否不影响连续概率,别纠结开闭区间。</li></ul>"
+ },
+ "联合密度函数": {
+  "kind": "c",
+  "en": "JointProbabilityDensityFunction",
+  "aliases": [
+   "joint density function",
+   "joint pdf"
+  ],
+  "level": "basic",
+  "chapter": "p-l24",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>两个连续随机变量一起看时的密度 \\(f(x,y)\\):区域上的概率由它在该区域上的二重积分给出。连续世界单点、单条线的概率为 0,只谈区域概率。</p><p><strong>白话</strong>:像地图上的人口密度图:\\(f(x,y)\\) 报的是\"这一带每平方公里住多少概率\",某片城区的总人口 = 密度在那片地上加总(二重积分);一个门牌号、一条街道没有面积,自然住不下任何\"人口\"——单点单线概率为 0。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x,y)\\ge 0\\qquad\\text{且}\\qquad \\iint_{\\mathbb{R}^2} f(x,y)\\,dy\\,dx=1$$</div><ul><li>两条性质就是全部定义:处处非负 + 全平面积分为 1(密度曲面下总体积 = 1)。</li><li>反解常数 k 的固定套路:令 \\(\\iint_{\\text{支撑}} f=1\\) 解出 k,最后检查 \\(f\\ge0\\)。</li><li>直觉:一张盖在平面上的\"帐篷\",区域概率 = 帐篷在那块地皮上方的体积;地皮没面积(点、线)就没体积。</li><li>离散版对照(L11):格子概率<strong>相加</strong> ↔ 密度<strong>积分</strong>,联合/边缘/条件/独立整套语言原样平移。</li></ul><p><strong>算一遍</strong>:\\(f(x,y)=kxy\\) 铺在 \\([0,1]\\times[0,1]\\) 上,先反解 \\(k\\) 再用一次。</p><ul><li>归一化:\\(\\int_0^1\\!\\int_0^1 kxy\\,dy\\,dx=k\\cdot\\tfrac12\\cdot\\tfrac12=\\tfrac k4=1\\Rightarrow k=4\\);顺检 \\(f\\ge0\\) ✓</li><li>用它算区域概率:\\(P[X\\le\\tfrac12,\\ Y\\le\\tfrac12]=\\int_0^{1/2}\\!\\int_0^{1/2}4xy\\,dy\\,dx=4\\cdot\\tfrac18\\cdot\\tfrac18=\\tfrac1{16}\\)。</li><li>比面积比 \\(\\tfrac14\\) 小得多——左下角\"帐篷\"矮,概率跟着体积走,不跟面积走。</li></ul><h4>与其他概念的关系</h4><ul><li>概率密度函数 — 一维版;本卡是它的二维推广</li><li><a class=\"net-wl\" data-id=\"联合分布\">联合分布</a> — 离散版联合分布的连续对应</li><li><a class=\"net-wl\" data-id=\"区域概率与积分限\">区域概率与积分限</a> — 用密度算区域概率的操作面</li><li><a class=\"net-wl\" data-id=\"联合累积分布函数\">联合累积分布函数</a> — 互为微积分对偶:\\(f=\\partial^2F/\\partial x\\,\\partial y\\)</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 积掉一个变量得到的单变量密度</li><li>联合均匀分布 — 密度为常数的特例</li></ul>"
+ },
+ "联合矩": {
+  "kind": "c",
+  "en": "JointMoment",
+  "aliases": [
+   "joint moments",
+   "expectation of a function of two variables"
+  ],
+  "level": "basic",
+  "chapter": "p-l12",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>对两个随机变量的任意函数 \\(g(X,Y)\\) 取期望所得的量:\"值 × 概率再求和\"升到二维——离散双重求和、连续二重积分。取不同的 \\(g\\) 就得到不同的联合矩。</p><p><strong>白话</strong>:两人各报一个数,\\(g\\) 规定\"怎么把两个数合成一个\"(相乘、相加、取大都行);联合矩就是把每种组合的合成结果,按\"这对组合出现的概率\"加权平均——权重还是那张联合表,只换报的数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[g(X,Y)]=\\sum_x\\sum_y g(x,y)\\,p(x,y)\\qquad\\qquad E[g(X,Y)]=\\iint g(x,y)\\,f(x,y)\\,dx\\,dy$$</div><ul><li>\\(g=x\\) 退化回 \\(E[X]\\)(与先压边缘再求期望等价);\\(g=xy\\) 给混合矩 \\(E[XY]\\);\\(g=x^ay^b\\) 给一般混合矩。</li><li>边缘方差题:先由联合表压出边缘,再 \\(E[X^2]-(E[X])^2\\)——例 12A 课本印刷 \\(2.7-1.6^2=0.14\\) 系笔误,均值 1.5,正确 \\(0.45\\);均值要自己算,别照抄。</li><li>连续支撑非矩形(三角、\\(x\\le y\\))时先画区域再定积分限,内外限要对应。</li></ul><p><strong>算一遍</strong>:独立抛两枚硬币(正面 1、反面 0),四个格子概率各 \\(\\tfrac14\\),取 \\(g=xy\\) 求 \\(E[XY]\\)。</p><ul><li>逐格\"值 × 概率\":\\((0,0),(0,1),(1,0)\\) 三格乘积都是 0,只有 \\((1,1)\\) 格贡献 \\(1\\times\\tfrac14\\)。</li><li>加总:\\(E[XY]=\\tfrac14\\)。</li><li>交叉验证:独立时可拆,\\(E[X]E[Y]=0.5\\times0.5=\\tfrac14\\) ✓——换个 \\(g\\)(如 \\(x+y\\)、\\(\\max\\))同一套双重求和照用。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"联合分布\">联合分布</a> — 权重 \\(p(x,y)\\)/\\(f(x,y)\\) 的来源</li><li>LOTUS — 单变量\"函数的期望\"公式的二维升级</li><li>混合矩 — \\(g=xy\\)、\\(x^ay^b\\) 的特例</li><li>期望的线性 — 双和一拆即得的第一性质</li><li>协方差 — 下游:\\(E[XY]\\) 进 \\(\\operatorname{Cov}=E[XY]-E[X]E[Y]\\)</li><li>连续型联合矩 — 连续版细化(L27)</li></ul>"
+ },
+ "联合累积分布函数": {
+  "kind": "c",
+  "en": "JointCumulativeDistributionFunction",
+  "aliases": [
+   "joint cdf",
+   "joint distribution function"
+  ],
+  "level": "advanced",
+  "chapter": "p-l24",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(F(x,y)=P[X\\le x,\\ Y\\le y]\\)——\"两个都不超过\"的概率。它是联合密度从左下角一路积上来的结果,密度则是它的混合二阶偏导:pdf 与 cdf 互为微积分对偶。</p><p><strong>白话</strong>:一维的\"累计小票\"升级成二维的\"左下角圈地\":以 \\((x,y)\\) 为右上角,向左、向下一直圈到底,\\(F(x,y)\\) 报的就是这整块地里落进的概率总量——永远是\"圈到此为止一共多少\",不是这一点多少。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x,y)=\\int_{-\\infty}^{x}\\!\\!\\int_{-\\infty}^{y} f(s,t)\\,dt\\,ds,\\qquad f(x,y)=\\frac{\\partial^2 F(x,y)}{\\partial x\\,\\partial y}$$</div><ul><li>性质:对每个变量都不减;\\(F(-\\infty,\\cdot)=F(\\cdot,-\\infty)=0\\)、\\(F(\\infty,\\infty)=1\\);边缘 cdf \\(F_X(x)=F(x,\\infty)\\)。</li><li>口诀:<strong>给密度 → 动积分;给 cdf → 动偏导 / 代值</strong>。题给 F 求概率直接代值作差,别再积分(高频坑)。</li><li>求密度是<strong>混合二阶偏导</strong>(先 x 后 y 或反之皆可):微积分基本定理用两次,逐层剥掉两重积分。</li></ul><p><strong>算一遍</strong>:\\((X,Y)\\) 独立均匀落在单位正方形,\\(F(x,y)=xy\\)(\\(0\\le x,y\\le1\\)),两头验一验。</p><ul><li>圈地读法:\\(F(0.5,0.5)=0.25\\)——左下 \\(0.5\\times0.5\\) 小块恰占四分之一 ✓</li><li>偏导回密度:\\(\\dfrac{\\partial^2(xy)}{\\partial x\\,\\partial y}=1\\),正是常数密度 ✓</li><li>边缘:\\(F_X(0.5)=F(0.5,1)=0.5\\)——把 \\(y\\) 推到顶,只剩 \\(X\\) 自己的账。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 一维版;本卡是二维推广</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 对偶:F 由 f 积出来,f 由 F 偏导回去</li><li><a class=\"net-wl\" data-id=\"边缘分布\">边缘分布</a> — 令另一变量 → ∞ 得边缘 cdf</li><li><a class=\"net-wl\" data-id=\"区域概率与积分限\">区域概率与积分限</a> — 给 f 时的概率算法;给 F 时改作差</li></ul>"
+ },
+ "边缘分布": {
+  "kind": "c",
+  "en": "MarginalDistribution",
+  "aliases": [
+   "marginal distribution",
+   "marginal pmf",
+   "marginal pdf",
+   "边际分布"
+  ],
+  "level": "basic",
+  "chapter": "p-l11",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>从联合分布\"压回\"单个变量自身的分布:把另一个变量求和掉(离散)或积分掉(连续)。名字来自把行/列合计写在表格<strong>边缘</strong>。</p><p><strong>白话</strong>:班级花名册按\"性别 × 是否及格\"交叉统计,想知道\"男生一共几人\"就把男生那一行加个合计写在表边上——不再管及格与否;边缘分布就是这个\"行合计\":把不关心的维度加总掉。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$p_X(x)=\\sum_y p(x,y)\\qquad\\qquad f_X(x)=\\int f(x,y)\\,dy$$</div><ul><li>口诀\"<strong>求谁的边缘,消掉另一个</strong>\":行加总得 \\(p_X\\)、列加总得 \\(p_Y\\);联合表题先把行/列合计写上,边缘秒出。</li><li>连续版的积分限来自<strong>支撑</strong>,常随 \\(x\\) 变(如 \\(\\int_x^1\\)),写死 \\(0\\) 到 \\(1\\) 是最常见丢分——先画支撑图再定限。</li><li>边缘由联合唯一决定;反向不行——两个边缘拼不回联合(除非独立)。</li></ul><p><strong>算一遍</strong>:联合表 \\(p(0,0)=0.1\\)、\\(p(0,1)=0.3\\)、\\(p(1,0)=0.2\\)、\\(p(1,1)=0.4\\),求 \\(X\\) 的边缘。</p><ul><li>行加总(消掉 \\(y\\)):\\(p_X(0)=0.1+0.3=0.4\\)。</li><li>同法:\\(p_X(1)=0.2+0.4=0.6\\)。</li><li>复核 \\(0.4+0.6=1\\) ✓——求谁的边缘,消掉另一个。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"联合分布\">联合分布</a> — 压缩的对象</li><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 判独立拿\"边缘乘积\"对照联合</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 连续版细节(L26)</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — 积分限陷阱的专门卡</li><li><a class=\"net-wl\" data-id=\"边缘分布是否均匀\">边缘分布是否均匀</a> — 下游:联合均匀 ≠ 边缘均匀(L25)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"二项分布与联合分布的层面之辨\">二项分布与联合分布的层面之辨</a> — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "边缘分布是否均匀": {
+  "kind": "c",
+  "en": "MarginalsOfJointUniform",
+  "aliases": [
+   "uniform marginals",
+   "marginal of a joint uniform distribution"
+  ],
+  "level": "advanced",
+  "chapter": "p-l25",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>联合均匀分布的边缘分布<strong>未必均匀</strong>:只有支撑 R 是矩形(边平行坐标轴)时,X、Y 的边缘才各自均匀且相互独立;三角形、圆盘等非矩形支撑上,边缘密度随位置变化,不再是均匀分布。</p><p><strong>白话</strong>:把一块厚度均匀的饼干竖着压扁、投影到桌边:长方形饼干压出来的影子是平的;三角形饼干哪里高(截线长)影子就哪里厚——影子(边缘)成了斜坡,不再\"均匀\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_X(x)=\\int f(x,y)\\,dy=\\frac{x\\ \\text{处竖直截线的长度}}{\\text{Area}(R)}$$</div><ul><li>矩形支撑:边缘各自均匀且独立,一维均匀公式随便套。</li><li>非矩形支撑:截线越长、该处边缘密度越大——三角支撑边缘是线性斜坡(如 \\(f_X=2(1-x)\\)),半圆盘是 \\(f_X=\\dfrac{4}{\\pi}\\sqrt{1-x^2}\\)(真题 26.8)。</li><li>头号误用:对三角/圆盘上的均匀分布乱套一维均匀公式(均值 \\((a+b)/2\\)、方差 \\((b-a)^2/12\\) 等)。</li><li>与独立性同根:非矩形支撑把两变量绑在一起 ⟹ 既不独立、边缘也不均匀。</li></ul><p><strong>算一遍</strong>:三角形支撑 \\(0\\le x\\le y\\le1\\)(面积 \\(\\tfrac12\\))上的联合均匀,求 \\(X\\) 的边缘。</p><ul><li>\\(x\\) 处竖直截线:\\(y\\) 从 \\(x\\) 走到 \\(1\\),长 \\(1-x\\);除以面积:\\(f_X(x)=\\dfrac{1-x}{1/2}=2(1-x)\\)。</li><li>形状是斜坡不是平的:\\(x=0\\) 处密度 \\(2\\)、\\(x=1\\) 处 \\(0\\)。</li><li>\\(E[X]=\\int_0^1 x\\cdot2(1-x)\\,dx=\\tfrac13\\),不是一维均匀给的 \\(\\tfrac12\\)——均匀公式在三角上套不得。</li></ul><h4>与其他概念的关系</h4><ul><li>联合均匀分布 — 讨论对象:区域上的常数密度</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 判定工具:积掉另一变量看结果形状</li><li><a class=\"net-wl\" data-id=\"连续型独立判据\">连续型独立判据</a> — 同一\"矩形支撑\"条件的另一面</li><li>连续均匀分布 — 矩形情形下边缘退回的一维分布</li></ul>"
+ },
+ "边缘密度-连续": {
+  "kind": "c",
+  "en": "MarginalProbabilityDensityFunction",
+  "aliases": [
+   "marginal density",
+   "marginal pdf"
+  ],
+  "level": "basic",
+  "chapter": "p-l26",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>已知联合密度 \\(f(x,y)\\),想单看其中一个变量的分布,就把另一个变量沿支撑<strong>积分掉</strong>,剩下的单变量密度叫边缘密度。几何直觉:把密度山沿要丢的方向压扁投影。</p><p><strong>白话</strong>:一栋楼有\"每层每户\"的用电明细(联合),只想知道\"每层总用电\"(单看楼层),就把同层各户加总——连续版没法逐户点名,加总换成积分,得到的\"每层账\"就是边缘密度。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_X(x)=\\int_{-\\infty}^{\\infty} f(x,y)\\,dy,\\qquad f_Y(y)=\\int_{-\\infty}^{\\infty} f(x,y)\\,dx$$</div><ul><li>口诀:<strong>要谁留谁,另一个积掉</strong>——结果只准剩保留变量,且必须附上定义域。</li><li>\\(\\pm\\infty\\) 只是形式,真正的上下限由支撑决定:积分只在 \\(f&gt;0\\) 的区域进行。</li><li>三重自检:结果只含保留变量;写清有效区间;\\(\\int f_X\\,dx=1\\) 复核。</li><li>\"边缘\"得名于离散版:联合分布表的行/列合计写在<strong>页边(margin)</strong>;连续版把行求和换成沿 y 积分。</li><li>例 26A:\\(f=2\\) 于 \\(0\\le x\\le y\\le1\\) → \\(f_X=2(1-x)\\)、\\(f_Y=2y\\)(三角支撑,限随变量变)。</li></ul><p><strong>算一遍</strong>:单位正方形上 \\(f(x,y)=x+y\\),求 \\(f_X\\)。</p><ul><li>要 \\(x\\) 留 \\(x\\),把 \\(y\\) 积掉:\\(f_X(x)=\\int_0^1(x+y)\\,dy=x+\\tfrac12\\),附上定义域 \\(0\\le x\\le1\\)。</li><li>自检一:结果只含保留变量 \\(x\\) ✓</li><li>自检二:\\(\\int_0^1\\big(x+\\tfrac12\\big)dx=\\tfrac12+\\tfrac12=1\\) ✓——积出来不归一就是哪步限写错了。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"边缘分布\">边缘分布</a> — 离散版(行/列求和);本卡是连续对应</li><li><a class=\"net-wl\" data-id=\"联合密度函数\">联合密度函数</a> — 输入对象:被积掉的是它</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — 本章唯一大坑:非矩形支撑上限随变量变</li><li><a class=\"net-wl\" data-id=\"连续型独立判据\">连续型独立判据</a> — 独立 ⟺ \\(f=f_X\\,f_Y\\) 且支撑矩形</li><li><a class=\"net-wl\" data-id=\"边缘分布是否均匀\">边缘分布是否均匀</a> — 联合均匀情形下边缘形状的专题</li></ul>"
+ },
+ "连续型独立判据": {
+  "kind": "c",
+  "en": "IndependenceOfContinuousRandomVariables",
+  "aliases": [
+   "independence criterion",
+   "factorization with rectangular support"
+  ],
+  "level": "advanced",
+  "chapter": "p-l26",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>判断两个连续随机变量是否独立的充要条件:联合密度能因式分解为「只含 x 的因子 × 只含 y 的因子」,<strong>且</strong>支撑是矩形(可含 \\(\\pm\\infty\\))。两条缺一不可。</p><p><strong>白话</strong>:两人是否各过各的,要查两件事:账本能拆成\"你的账 × 我的账\"只是一半;地盘还得方方正正、互不牵制——只要一方的活动范围看另一方脸色(比如 \\(x\\) 必须小于 \\(y\\)),就谈不上独立。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\iff f(x,y)=g(x)\\,h(y)\\ \\text{且支撑为矩形}$$</div><ul><li>矩形支撑 = x 的范围不依赖 y、y 的范围也不依赖 x(可为无穷带状,如 \\(x&gt;0,\\ y&gt;0\\))。</li><li>头号陷阱:密度看着能拆就判独立——<strong>错</strong>;支撑出现 \\(0&lt;x&lt;y\\)、\\(x^2\\le y\\)、\\(x^2+y^2\\le1\\) 这类耦合约束,一定不独立(例 26A:\\(f=2\\) 可拆,但三角支撑 ⟹ 不独立)。</li><li>判题顺序:<strong>先看支撑是不是矩形,再看可不可拆</strong>——顺序反了就掉坑。</li><li>独立时 \\(f(x,y)=f_X(x)\\,f_Y(y)\\);对照:\\(f=6e^{-2x-3y}\\)(\\(x&gt;0,y&gt;0\\))可拆 + 矩形 ⟹ 独立。</li></ul><p><strong>算一遍</strong>:两例对照,按\"先支撑、后拆分\"的顺序各判一次。</p><ul><li>例一:\\(f=6e^{-2x-3y}\\)(\\(x&gt;0,\\ y&gt;0\\))——支撑是第一象限(无穷矩形)✓;可拆成 \\(2e^{-2x}\\times3e^{-3y}\\) ✓ ⟹ 独立。</li><li>例二:\\(f=2\\) 于 \\(0\\le x\\le y\\le1\\)——支撑是三角形、\\(x\\) 的范围看 \\(y\\) 脸色 ✗,直接判不独立,后面不用看了。</li><li>例二若先看\"能不能拆\"(常数当然可拆)就会误判——这就是判题顺序的意义。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量独立性\">随机变量独立性</a> — 一般定义;本卡是连续情形的可操作判据</li><li>连续型独立性 — 判据成立后的推论群(密度相乘、期望可拆)</li><li><a class=\"net-wl\" data-id=\"边缘密度-连续\">边缘密度-连续</a> — 独立 ⟺ 联合 = 边缘的乘积</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 判据的直接回报:\\(E[g(X)h(Y)]\\) 可拆</li><li><a class=\"net-wl\" data-id=\"积分限与支撑\">积分限与支撑</a> — 非矩形支撑既毁独立、也毁常数积分限</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"独立性判定清单\">独立性判定清单</a> — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ },
+ "随机变量": {
+  "kind": "c",
+  "en": "RandomVariable",
+  "aliases": [
+   "random variable",
+   "RV",
+   "随机变数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>从样本空间到实数集的一个函数</strong>——把随机试验的每个结果映射成一个实数(骰子点数、索赔个数、理赔金额)。大写 \\(X\\) 记变量,小写 \\(x\\) 记它的取值。</p><p><strong>白话</strong>:随机变量是给每个可能结局<strong>贴价签</strong>的机器:骰子摇出\"三点\"这个结局本身没法加减,贴上数字 3 才能求和算平均——它不是\"随机的数\",而是把结局翻译成数的一条固定规则。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X:\\Omega\\to\\mathbb{R}\\qquad p(x)=P[X=x],\\quad P[u&lt;X\\le v]$$</div><ul><li><strong>离散</strong>:取可数的一串点,概率集中在点上(每点 \\(P[X=x]&gt;0\\)),工具是 pmf 求和;cdf 呈阶梯。</li><li><strong>连续</strong>:取值填满区间,概率摊在范围上(单点 \\(P[X=x]=0\\)),工具是 pdf 积分;cdf 光滑上升。</li><li>还有第三种<strong>混合型</strong>:既有质量点(如\"零索赔\"有正概率)又有摊开的密度,保险损失常是这种。</li><li><strong>离散数柱子,连续量面积</strong>——问法一样,动作换一个。</li></ul><p><strong>算一遍</strong>:抛两枚硬币,定义 \\(X=\\) 正面数,把 4 个结局翻译成数。</p><ul><li>贴价签:反反 \\(\\to0\\),反正、正反 \\(\\to1\\),正正 \\(\\to2\\)——同一个数可由多个结局共享。</li><li>收概率:\\(p(0)=\\tfrac14\\)、\\(p(1)=\\tfrac12\\)、\\(p(2)=\\tfrac14\\);加总 \\(=1\\) ✓</li><li>这是离散型:概率全集中在 \\(0,1,2\\) 三个点上,问区间就数柱子,如 \\(P[0&lt;X\\le2]=\\tfrac12+\\tfrac14=\\tfrac34\\)。</li></ul><h4>与其他概念的关系</h4><ul><li>概率函数 — 离散随机变量的完全刻画(点→概率的表)</li><li>概率密度函数 — 连续随机变量的刻画(曲线下面积)</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 离散连续通吃的统一入口:知道 F 就知道一切</li><li>混合型随机变量 — 质量点 + 密度并存的第三类</li><li>期望 — 随机变量最重要的数字概括(下游)</li></ul>"
+ },
+ "随机变量独立性": {
+  "kind": "c",
+  "en": "IndependenceOfRandomVariables",
+  "aliases": [
+   "independent random variables",
+   "mutual independence"
+  ],
+  "level": "advanced",
+  "chapter": "p-l11",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(X\\) 与 \\(Y\\) 独立 ⟺ 联合分布等于边缘分布的乘积、且对<strong>所有</strong> \\((x,y)\\) 成立——\"知道 \\(X\\) 取什么,不改变 \\(Y\\) 的分布\"。实操判定两条缺一不可:密度可因式分解 <strong>且</strong> 支撑为矩形。</p><p><strong>白话</strong>:两人各摇各的骰子:知道你摇出 6,对我这边每个点数的概率毫无影响——而且这话必须对<strong>所有</strong>组合都成立;有一格不符,独立就破功。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X\\perp Y\\iff f(x,y)=f_X(x)\\,f_Y(y)\\ \\ \\forall(x,y)\\qquad\\quad f(x_1,\\dots,x_n)=\\prod_{i=1}^{n} f(x_i)$$</div><ul><li><strong>非矩形支撑一票否决</strong>:独立时支撑必为两个一维集合的笛卡尔积(矩形,可含 \\(\\infty\\));\\(0&lt;x&lt;y&lt;1\\)、\\(x+y&lt;1\\) 这类把变量绑在一起的约束,公式再能拆也<strong>一定不独立</strong>——先看支撑再看公式。</li><li>判\"独立\"须每点都验;判\"不独立\"找到一格反例即可(例 11A:\\(p(1,1)=0.40\\neq p_X(1)p_Y(1)=0.42\\))。</li><li>推论:独立 ⟹ \\(E[XY]=E[X]E[Y]\\);逆命题不成立。</li><li>离散同理 \\(p(x,y)=p_X(x)\\,p_Y(y)\\);\\(n\\) 个变量为各自密度连乘。</li></ul><p><strong>算一遍</strong>:联合表 \\(p(0,0)=0.2\\)、\\(p(0,1)=0.3\\)、\\(p(1,0)=0.2\\)、\\(p(1,1)=0.3\\),判独立。</p><ul><li>先求边缘:行加总 \\(p_X(0)=p_X(1)=0.5\\);列加总 \\(p_Y(0)=0.4\\)、\\(p_Y(1)=0.6\\)。</li><li>四格逐一对乘积:\\(0.5\\times0.4=0.2\\) ✓、\\(0.5\\times0.6=0.3\\) ✓(另两格同)——<strong>每格都过</strong>才判独立。</li><li>反过来只需一格:若某格实测 \\(0.25\\neq\\) 乘积 \\(0.2\\),一个反例就判不独立(例 11A 正是如此)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"事件独立性\">事件独立性</a> — 事件版前身(L03),推广到随机变量</li><li><a class=\"net-wl\" data-id=\"联合分布\">联合分布</a> — 判据的左边</li><li><a class=\"net-wl\" data-id=\"边缘分布\">边缘分布</a> — 判据的右边(乘积)</li><li><a class=\"net-wl\" data-id=\"独立与乘积期望\">独立与乘积期望</a> — 直接推论(L12)</li><li><a class=\"net-wl\" data-id=\"连续型独立判据\">连续型独立判据</a> — 连续版展开(L24)</li><li><a class=\"net-wl\" data-id=\"独立与不相关\">独立与不相关</a> — \"逆不真\"的完整讨论</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"独立性判定清单\">独立性判定清单</a> — 事件/变量独立的判据清单与常见陷阱</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 11 原文用词</span><h2 class="sec-title">联合分布 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"联合 / 边缘 / 独立"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 11</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">joint distribution</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合分布</td><td class="root">joint(连接的)→ 两变量一起看 \(F(x,y)\)</td></tr>
-          <tr><td class="en">joint probability function</td><td class="ipa">/ˌprɒbəˈbɪləti/</td><td><span class="pos n">n.</span></td><td>联合概率函数(离散 pmf)</td><td class="root">\(p(x,y)=P[X=x,Y=y]\)</td></tr>
-          <tr><td class="en">joint density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">连续版,\(\iint f=1\)</td></tr>
-          <tr><td class="en">marginal distribution</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘分布</td><td class="root">margin(页边)→ 行/列加总写在表边</td></tr>
-          <tr><td class="en">cumulative distribution function</td><td class="ipa">/ˈkjuːmjələtɪv/</td><td><span class="pos n">n.</span></td><td>累积分布函数</td><td class="root">cumulate(累积)→ 累加到 \((x,y)\) 左下</td></tr>
-          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">联合 = 边缘相乘 + 矩形支撑</td></tr>
-          <tr><td class="en">multivariate</td><td class="ipa">/ˌmʌltiˈvɛəriət/</td><td><span class="pos adj">adj.</span></td><td>多元的</td><td class="root">multi(多)+variate(变量)</td></tr>
-          <tr><td class="en">monotonically increasing</td><td class="ipa">/ˌmɒnəˈtɒnɪkli/</td><td><span class="pos adj">adj.</span></td><td>单调递增的</td><td class="root">cdf 对 \(x,y\) 均不减</td></tr>
-          <tr><td class="en">sample mean</td><td class="ipa">/ˈsæmpəl miːn/</td><td><span class="pos n">n.</span></td><td>样本均值</td><td class="root">\(\bar X=\frac1n\sum X_i\),本章开篇引例</td></tr>
-          <tr><td class="en">liability policy</td><td class="ipa">/ˌlaɪəˈbɪləti ˈpɒləsi/</td><td><span class="pos n">n.</span></td><td>责任险保单</td><td class="root">liable(负有责任的)→ 赔第三方的险种</td></tr>
-          <tr><td class="en">property damage</td><td class="ipa">/ˈprɒpərti ˈdæmɪdʒ/</td><td><span class="pos n">n.</span></td><td>财产损失</td><td class="root">p.183 引例中的 \(X\):撞坏的车/物</td></tr>
-          <tr><td class="en">bodily injury</td><td class="ipa">/ˈbɒdɪli ˈɪndʒəri/</td><td><span class="pos n">n.</span></td><td>人身伤害</td><td class="root">body(身体)→ 引例中的 \(Y\):伤到的人</td></tr>
-          <tr><td class="en">loss adjustment expense</td><td class="ipa">/lɒs əˈdʒʌstmənt ɪkˈspɛns/</td><td><span class="pos n">n.</span></td><td>损失理算费用(ALAE)</td><td class="root">adjust(核定)→ 查勘定损的开销;总支出 \(X(1+Y)\)</td></tr>
-          <tr><td class="en">total loss</td><td class="ipa">/ˈtoʊtl lɒs/</td><td><span class="pos n">n.</span></td><td>总损失</td><td class="root">引例中保险公司真正关心的 \(X+Y\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">joint probability function</div><div class="z">联合概率函数(给你整张表/公式)</div></div>
-        <div class="ph"><div class="e">the marginal distribution of X</div><div class="z">X 的边缘分布(消掉 Y)</div></div>
-        <div class="ph"><div class="e">X and Y are independent</div><div class="z">X 与 Y 独立(可分解 + 矩形支撑)</div></div>
-        <div class="ph"><div class="e">for x ≤ y / for 0 &lt; x &lt; y</div><div class="z">支撑约束(注意非矩形!)</div></div>
-        <div class="ph"><div class="e">Calculate F(x, y)</div><div class="z">求联合 cdf(累加 / 二重积分)</div></div>
-        <div class="ph"><div class="e">the distribution of X + Y</div><div class="z">求 X+Y 的分布(合并同和的格)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 11</b> · 第十一章 Joint Distribution 联合分布</p>
@@ -748,5 +1236,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

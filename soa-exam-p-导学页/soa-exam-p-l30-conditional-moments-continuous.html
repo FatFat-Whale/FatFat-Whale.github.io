@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L30 · 连续型条件矩</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -234,7 +246,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -287,7 +298,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <rect x="40" y="30" width="150" height="95" fill="#0284c7" fill-opacity="0.12" stroke="#0284c7" stroke-width="1.2"/>
           <line x1="40" y1="72" x2="190" y2="72" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="5 3"/>
           <text x="196" y="76" font-size="11" fill="#075985" font-style="italic">Y=y</text>
-          <text x="46" y="24" font-size="11" fill="#16243d">支撑区 \(f(x,y)&gt;0\)</text>
+          <text x="46" y="24" font-size="11" fill="#16243d">支撑区 f(x,y)&gt;0</text>
           <text x="10" y="138" font-size="11" fill="#16243d" font-style="italic">x</text>
           <text x="12" y="24" font-size="11" fill="#16243d" font-style="italic">y</text>
         </svg>
@@ -339,6 +350,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p style="margin-bottom:0"><b>④ 收尾除以边缘并套方差捷径:</b>
       \(\displaystyle \operatorname{Var}(Y\mid X=0.2)=\frac{0.316}{0.648}-\Big(\frac{0.424}{0.648}\Big)^2\)。</p>
       <span class="ans">Var(Y | X=0.2) = 0.059518</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 求分母:固定 \(X=0.2\),对 \(y\) 积出边缘密度</td><td>\(f_X(0.2)=\int_0^1 1.2\,(0.04+y)\,dy=0.648\)</td><td class="xr"><a href="soa-exam-p-l26-marginal-continuous.html">L26 边缘 ↗</a></td></tr>
+        <tr><td>② 条件密度 = 联合 ÷ 边缘(常数分母留到最后除)</td><td>\(f_{Y\mid X}(y\mid 0.2)=\dfrac{1.2\,(0.04+y)}{0.648}\)</td><td class="xr"><a href="soa-exam-p-l29-conditional-continuous.html">L29 条件密度 ↗</a></td></tr>
+        <tr><td>③ 条件一阶 / 二阶矩:分子各积 \(y\cdot\) 与 \(y^2\cdot\) 联合密度</td><td>\(E[Y\mid X]=\tfrac{0.424}{0.648},\ \ E[Y^2\mid X]=\tfrac{0.316}{0.648}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>④ 套方差捷径(条件版):二阶原点矩减均值平方</td><td>\(\operatorname{Var}(Y\mid X)=\tfrac{0.316}{0.648}-\big(\tfrac{0.424}{0.648}\big)^2\)</td><td class="xr"><span class="here">本章</span> · <a href="soa-exam-p-l08-variance-moments.html">L08 方差 ↗</a></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>看清方向:</b>本例条件在 \(X\) 上、求 \(Y\) 的矩,和上节公式里的 \(X,Y\) 角色对调,套路不变——把要求矩的那个变量当"被积变量",另一个当"已知常数"。</span></div>
   </div>
@@ -495,53 +514,19 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>条件密度 / 条件矩</h4>
         <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\)</p>
         <p>\(E[g(X)\mid Y=y]=\displaystyle\int g(x)\,f_{X\mid Y}(x\mid y)\,dx\)</p>
-        <p>\(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-(E[X\mid Y=y])^2\)</p>
+        <p><span class="fx-de" data-tip="推导:Var 捷径在条件分布上照用,均值换条件均值" tabindex="0">推</span>\(\operatorname{Var}(X\mid Y=y)=E[X^2\mid Y=y]-(E[X\mid Y=y])^2\)</p>
         <p>省力:分子先积,\(f_Y(y)\) 最后除</p>
       </div>
       <div class="cc t">
         <h4>接 Ch16(连续版)</h4>
         <p>\(E[X\mid Y]\)、\(\operatorname{Var}(X\mid Y)\) 是 \(Y\) 的随机变量</p>
-        <p>双重期望:\(E[X]=E[E[X\mid Y]]\)</p>
+        <p><span class="fx-de" data-tip="推导:按 Y=y 分组的组内均值,再对 Y 加权平均(同 L16)" tabindex="0">推</span>双重期望:\(E[X]=E[E[X\mid Y]]\)</p>
         <p>全方差:\(\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y])\)</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 30 原文用词</span><h2 class="sec-title">连续型条件矩 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"条件在谁身上"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 30</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">conditional density</td><td class="ipa">/kənˈdɪʃənəl ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>条件密度</td><td class="root">\(f_{X\mid Y}(x\mid y)=f(x,y)/f_Y(y)\)</td></tr>
-          <tr><td class="en">conditional moment</td><td class="ipa">/ˈmoʊmənt/</td><td><span class="pos n">n.</span></td><td>条件矩</td><td class="root">在条件下对某函数取期望 \(E[g(X)\mid Y=y]\)</td></tr>
-          <tr><td class="en">conditional expectation</td><td class="ipa">/ˌɛkspɛkˈteɪʃən/</td><td><span class="pos n">n.</span></td><td>条件期望</td><td class="root">一阶条件矩 \(E[X\mid Y=y]\),是 \(y\) 的函数</td></tr>
-          <tr><td class="en">conditional variance</td><td class="ipa">/ˈvɛəriəns/</td><td><span class="pos n">n.</span></td><td>条件方差</td><td class="root">二阶矩减均值平方,带条件</td></tr>
-          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘密度</td><td class="root">\(f_Y(y)=\int f(x,y)\,dx\),做归一化分母</td></tr>
-          <tr><td class="en">joint density</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合密度</td><td class="root">\(f(x,y)\),两变量的密度</td></tr>
-          <tr><td class="en">double expectation</td><td class="ipa">/ˈdʌbəl/</td><td><span class="pos n">n.</span></td><td>双重期望</td><td class="root">tower rule,\(E[E[X\mid Y]]=E[X]\)</td></tr>
-          <tr><td class="en">total variance</td><td class="ipa">/ˈtoʊtl/</td><td><span class="pos n">n.</span></td><td>全方差</td><td class="root">\(E[\operatorname{Var}]+\operatorname{Var}[E]\) 分解</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">given that X = x</div><div class="z">在 \(X=x\) 的条件下</div></div>
-        <div class="ph"><div class="e">conditional mean E[Y | X = …]</div><div class="z">条件均值</div></div>
-        <div class="ph"><div class="e">conditional variance of Y given X</div><div class="z">给定 X 时 Y 的条件方差</div></div>
-        <div class="ph"><div class="e">joint density function</div><div class="z">联合密度函数</div></div>
-        <div class="ph"><div class="e">marginal density of X</div><div class="z">X 的边缘密度</div></div>
-        <div class="ph"><div class="e">determine / calculate Var(Y | X = …)</div><div class="z">求条件方差</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -581,5 +566,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

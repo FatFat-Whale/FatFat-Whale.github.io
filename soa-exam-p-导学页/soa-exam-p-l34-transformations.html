@@ -208,6 +208,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -215,7 +227,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L34 · 变换</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -261,7 +273,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -310,6 +321,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>$$F_Y(y)=\Pr\big(X\le\sqrt{y-1}\big)=F_X\big(\sqrt{y-1}\big)=\big(\sqrt{y-1}\big)^2=y-1.$$</p>
       <p>区间外:\(F_Y(y)=0\)(\(y&lt;1\))、\(F_Y(y)=1\)(\(y>2\))。</p>
       <span class="ans">F_Y(y) = y − 1, 1 ≤ y ≤ 2　(即 Y ~ Uniform(1,2))</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 由密度积出 \(F_X\)</td><td>\(F_X(x)=\int_0^x 2u\,du=x^2\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 cdf ↗</a></td></tr>
+        <tr><td>② 判 \(g\) 递增、求反函数</td><td>\(g(x)=x^2+1\ \Rightarrow\ g^{-1}(y)=\sqrt{y-1}\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>③ cdf 法代入(递增不翻号)</td><td>\(F_Y(y)=F_X\big(g^{-1}(y)\big)=\big(\sqrt{y-1}\big)^2=y-1\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>④ 支撑翻译</td><td>\(0\le x\le1\ \Rightarrow\ 1\le y\le2\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>为什么先想 cdf:</b>cdf 法不需要"记公式",只靠"把 \(Y\le y\) 翻译成 \(X\) 的事件"。递减变换要翻转不等号、非单调要拆区间——这些密度法容易忘的细节,cdf 法会强迫你想清楚。</span></div>
   </div>
@@ -353,7 +372,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <line x1="40" y1="30" x2="190" y2="30" stroke="#7a8699" stroke-width="1" stroke-dasharray="3 3"/>
           <text x="98" y="146" font-size="10.5" fill="var(--accent-deep)">x∈[0,1]</text>
           <text x="44" y="44" font-size="10.5" fill="#8a3d06">y∈[1,2]</text>
-          <text x="120" y="95" font-size="11" fill="var(--accent-deep)" font-style="italic">y=x²+1</text>
+          <text x="98" y="86" font-size="11" fill="var(--accent-deep)" font-style="italic">y=x²+1</text>
         </svg>
         <div class="cap"><b>支撑变换:</b>\(g\) 把 \(x\!\in\![0,1]\) 映到 \(y\!\in\![1,2]\)</div>
       </div>
@@ -365,7 +384,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <!-- f(x)=2x on [0,1]; x 30..180, height 0..120 (2x max=2 -> scale 60) -->
           <path d="M30,150 L180,30 L180,150 Z" fill="var(--accent)" fill-opacity="0.20"/>
           <line x1="30" y1="150" x2="180" y2="30" stroke="var(--accent)" stroke-width="2.2"/>
-          <text x="90" y="100" font-size="11" fill="var(--accent-deep)" font-style="italic">f(x)=2x</text>
+          <text x="62" y="82" font-size="11" fill="var(--accent-deep)" font-style="italic">f(x)=2x</text>
           <text x="27" y="163" font-size="10" fill="#16243d">0</text>
           <text x="176" y="163" font-size="10" fill="#16243d">1</text>
         </svg>
@@ -394,6 +413,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>反函数 \(h(y)=\sqrt{y-1}\),导数 \(h'(y)=\dfrac{1}{2\sqrt{y-1}}\)。代入密度公式:</p>
       <p>$$f_Y(y)=f_X\big(h(y)\big)\,h'(y)=2\sqrt{y-1}\cdot\frac{1}{2\sqrt{y-1}}=1,\qquad 1\le y\le2.$$</p>
       <span class="ans">f_Y(y) = 1, 1 ≤ y ≤ 2　(与例 34A 一致)</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 反函数及其导数</td><td>\(h(y)=\sqrt{y-1},\ \ h'(y)=\tfrac{1}{2\sqrt{y-1}}\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 密度变换公式(乘雅可比)</td><td>\(f_Y(y)=f_X\big(h(y)\big)\,|h'(y)|=2\sqrt{y-1}\cdot\tfrac{1}{2\sqrt{y-1}}=1\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 支撑翻译</td><td>\(0\le x\le1\ \Rightarrow\ 1\le y\le2\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -402,6 +428,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>\(g(x)=\sqrt x\) 递增,反函数 \(x=h(y)=y^2\),\(h'(y)=2y\)。故</p>
       <p>$$f_Y(y)=f_X(y^2)\,|2y|=2(y^2)^{-2}\cdot2y=4y^{-4}\cdot y=\frac{4}{y^3}.$$</p>
       <span class="ans">f_Y(y) = 4/y³　→ (E)</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 判 \(g\) 递增、求反函数及导数</td><td>\(x=h(y)=y^2,\ \ h'(y)=2y\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 密度变换公式代入</td><td>\(f_Y(y)=f_X(y^2)\,|2y|=2y^{-4}\cdot2y=\tfrac{4}{y^3}\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 支撑翻译</td><td>\(1&lt;x&lt;2\ \Rightarrow\ 1&lt;y&lt;\sqrt2\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>三个必检项:</b>①<b>雅可比取绝对值</b>——写 \(|h'(y)|\),\(g\) 递减时 \(h'&lt;0\),漏绝对值会得负密度;②<b>支撑要换</b>——把 \(x\) 的范围 \(1&lt;x&lt;2\) 通过 \(y=\sqrt x\) 映成 \(1&lt;y&lt;\sqrt2\),别照抄旧区间;③<b>把 \(x\) 全部换成 \(y\)</b>——\(f_X\) 里的 \(x\) 要代成 \(h(y)\),不能留 \(x\)。</span></div>
   </div>
@@ -465,6 +498,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>\(g(x)=(x-0.5)^2\) 在 \([0,1]\) 上<b>非单调</b>:解 \(y=(x-0.5)^2\) 得两支 \(h_1(y)=0.5+\sqrt y\)、\(h_2(y)=0.5-\sqrt y\),两者都落在 \([0,1]\)。导数绝对值同为 \(|h_i'(y)|=\dfrac{1}{2\sqrt y}\)。相加:</p>
       <p>$$f_Y(y)=2(0.5+\sqrt y)\cdot\frac{1}{2\sqrt y}+2(0.5-\sqrt y)\cdot\frac{1}{2\sqrt y}=\frac{(0.5+\sqrt y)+(0.5-\sqrt y)}{\sqrt y}=\frac{1}{\sqrt y}.$$</p>
       <span class="ans">f_Y(y) = 1/√y, 0 ≤ y ≤ 0.25</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 识别 many-to-one、解出两分支反函数</td><td>\(y=(x-0.5)^2\ \Rightarrow\ h_{1,2}(y)=0.5\pm\sqrt y\)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+        <tr><td>② 各分支雅可比(绝对值相同)</td><td>\(|h_i'(y)|=\tfrac{1}{2\sqrt y}\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 分支密度相加、化简</td><td>\(f_Y(y)=\sum_i f_X\big(h_i(y)\big)\,|h_i'(y)|=\tfrac{1}{\sqrt y}\)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+        <tr><td>④ 支撑翻译</td><td>\(0\le x\le1\ \Rightarrow\ 0\le y\le0.25\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
 
     <div class="ex">
@@ -473,6 +514,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>用 cdf 法最稳:\(F_Y(y)=\Pr(X^2\le y)=\Pr(-\sqrt y\le X\le\sqrt y)=\displaystyle\int_{-\sqrt y}^{\sqrt y}(1-|x|)\,dx=2\!\int_0^{\sqrt y}(1-x)\,dx=2\sqrt y-y.\) 求导:</p>
       <p>$$f_Y(y)=\frac{d}{dy}\big(2\sqrt y-y\big)=\frac{1}{\sqrt y}-1,\qquad 0&lt;y&lt;1.$$</p>
       <span class="ans">f_Y(y) = 1/√y − 1　→ (A)</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 把 \(\{Y\le y\}\) 翻译回 \(X\) 区间(非单调拆区间)</td><td>\(F_Y(y)=\Pr\big(-\sqrt y\le X\le\sqrt y\big)\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        <tr><td>② 积密度取概率(利用对称)</td><td>\(\int_{-\sqrt y}^{\sqrt y}(1-|x|)\,dx=2\int_0^{\sqrt y}(1-x)\,dx=2\sqrt y-y\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 cdf ↗</a></td></tr>
+        <tr><td>③ 对 \(y\) 求导得密度</td><td>\(f_Y(y)=F_Y'(y)=\tfrac{1}{\sqrt y}-1\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>识别非单调:</b>看到 \(Y=X^2\)、\(Y=(X-a)^2\)、\(Y=|X|\) 且 \(X\) 的支撑<b>跨过对称中心</b>(如 \(-1&lt;x&lt;1\) 跨过 0),就是 many-to-one,必须分支相加。若支撑只在单调那一侧(如 \(x>0\)),则退化成单分支,按普通密度法即可。</span></div>
   </div>
@@ -584,14 +632,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     <div class="cheat">
       <div class="cc">
         <h4>cdf 法(通用)</h4>
-        <p>\(F_Y(y)=\Pr\big(g(X)\le y\big)\)</p>
+        <p><span class="fx-de" data-tip="推导:新变量 CDF 就是事件概率:把 g(X)≤y 解成 X 的区间,用 F_X 表达" tabindex="0">推</span>\(F_Y(y)=\Pr\big(g(X)\le y\big)\)</p>
         <p>\(g\!\uparrow:\ F_Y(y)=F_X\big(g^{-1}(y)\big)\)</p>
-        <p>\(g\!\downarrow:\ F_Y(y)=1-F_X\big(g^{-1}(y)\big)\)</p>
+        <p><span class="fx-de" data-tip="推导:g 递减翻不等号:g(X)≤y ⟺ X≥g^(-1)(y),概率=1-F_X" tabindex="0">推</span>\(g\!\downarrow:\ F_Y(y)=1-F_X\big(g^{-1}(y)\big)\)</p>
         <p>再 \(f_Y(y)=\dfrac{d}{dy}F_Y(y)\)</p>
       </div>
       <div class="cc t">
         <h4>密度法(单调 / 分支)</h4>
-        <p>单调:\(f_Y(y)=f_X\big(g^{-1}(y)\big)\,\big|\tfrac{d}{dy}g^{-1}(y)\big|\)</p>
+        <p><span class="fx-de" data-tip="推导:对 F_Y=F_X(g^(-1)(y)) 链式求导,|dg^(-1)/dy| 是链式项(取绝对值防负)" tabindex="0">推</span>单调:\(f_Y(y)=f_X\big(g^{-1}(y)\big)\,\big|\tfrac{d}{dy}g^{-1}(y)\big|\)</p>
         <p>雅可比 \(\big|\tfrac{dx}{dy}\big|\) <b>取绝对值</b></p>
         <p>非单调:\(f_Y(y)=\sum_i f_X(h_i(y))\,|h_i'(y)|\)</p>
         <p><b>支撑随变换改</b> · \(x\) 全代成 \(g^{-1}(y)\)</p>
@@ -600,45 +648,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 34 原文用词</span><h2 class="sec-title">变换 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"变换 / 求密度"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 34</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">transformation</td><td class="ipa">/ˌtrænsfərˈmeɪʃən/</td><td><span class="pos n">n.</span></td><td>变换</td><td class="root">trans-(跨)+form(形)→ 把 \(X\) 变成 \(Y=g(X)\)</td></tr>
-          <tr><td class="en">cumulative distribution function</td><td class="ipa">/ˈkjuːmjələtɪv/</td><td><span class="pos n">n.</span></td><td>(累积)分布函数</td><td class="root">CDF,\(F_Y(y)=\Pr(Y\le y)\);cdf 法核心</td></tr>
-          <tr><td class="en">density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度函数</td><td class="root">\(f_Y(y)=F_Y'(y)\);pdf</td></tr>
-          <tr><td class="en">inverse function</td><td class="ipa">/ˈɪnvɜːrs/</td><td><span class="pos n">n.</span></td><td>反函数</td><td class="root">\(h=g^{-1}\),\(h(g(x))=x\);解出 \(x\) 关于 \(y\)</td></tr>
-          <tr><td class="en">monotonic(ally) increasing</td><td class="ipa">/ˌmɒnəˈtɒnɪk/</td><td><span class="pos adj">adj.</span></td><td>单调递增的</td><td class="root">mono(单)+ton(调)→ 只升不降,不等号不翻</td></tr>
-          <tr><td class="en">strictly increasing</td><td class="ipa">/ˈstrɪktli/</td><td><span class="pos adj">adj.</span></td><td>严格递增的</td><td class="root">保证反函数存在、可逆</td></tr>
-          <tr><td class="en">one-to-one</td><td class="ipa">/ˌwʌn tə ˈwʌn/</td><td><span class="pos adj">adj.</span></td><td>一一对应的</td><td class="root">单射;每个 \(y\) 只对一个 \(x\),单分支</td></tr>
-          <tr><td class="en">many-to-one</td><td class="ipa">/ˈmɛni tə wʌn/</td><td><span class="pos adj">adj.</span></td><td>多对一的</td><td class="root">非单调,如 \(Y=X^2\);<b>分支密度相加</b></td></tr>
-          <tr><td class="en">Jacobian</td><td class="ipa">/dʒəˈkoʊbiən/</td><td><span class="pos n">n.</span></td><td>雅可比(行列式)</td><td class="root">\(\big|dx/dy\big|\),密度换元的伸缩因子,<b>取绝对值</b></td></tr>
-          <tr><td class="en">derivative</td><td class="ipa">/dɪˈrɪvətɪv/</td><td><span class="pos n">n.</span></td><td>导数</td><td class="root">对 cdf 求导得密度;链式法则 chain rule</td></tr>
-          <tr><td class="en">claim amount</td><td class="ipa">/kleɪm əˈmaʊnt/</td><td><span class="pos n">n.</span></td><td>理赔额</td><td class="root">claim(索赔)+ amount(金额);p.529 引言中的 \(X\)</td></tr>
-          <tr><td class="en">benefit limit</td><td class="ipa">/ˈbɛnɪfɪt ˈlɪmɪt/</td><td><span class="pos n">n.</span></td><td>给付限额</td><td class="root">封顶给付:实付 \(Y=\min(u,X)\),典型变换场景</td></tr>
-          <tr><td class="en">continuous random variable</td><td class="ipa">/kənˈtɪnjuəs ˈrændəm ˈvɛəriəbl/</td><td><span class="pos n">n.</span></td><td>连续型随机变量</td><td class="root">con(共)+tinue(延续)→ 不间断;\(\Pr(X=c)=0\)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">Let Y = g(X)</div><div class="z">令 Y 为 X 的某个函数(引出变换)</div></div>
-        <div class="ph"><div class="e">Determine the density function of Y</div><div class="z">求 Y 的密度函数</div></div>
-        <div class="ph"><div class="e">the cumulative distribution function of Y</div><div class="z">Y 的分布函数</div></div>
-        <div class="ph"><div class="e">where it is not zero / when nonzero</div><div class="z">在密度非零处(即求支撑范围)</div></div>
-        <div class="ph"><div class="e">the inverse of the transformation</div><div class="z">变换的反函数</div></div>
-        <div class="ph"><div class="e">for a one-to-one transformation</div><div class="z">对一一对应的变换(单分支)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -678,5 +687,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

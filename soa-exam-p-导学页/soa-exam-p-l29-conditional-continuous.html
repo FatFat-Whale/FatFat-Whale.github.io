@@ -182,6 +182,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
 </style>
 </head>
 <body>
@@ -189,7 +201,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L29 · 连续型条件分布</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -235,7 +247,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <a href="#insight">直觉拓展</a>
   <a href="#test">自测</a>
   <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
 <section id="goals" style="padding-bottom:8px">
@@ -292,7 +303,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <line x1="26" y1="128" x2="204" y2="128" stroke="#16243d" stroke-width="1.2"/>
           <path d="M34,120 Q110,64 186,120" fill="var(--accent)" fill-opacity="0.20" stroke="var(--accent-deep)" stroke-width="2"/>
           <text x="188" y="140" font-size="12" fill="#16243d" font-style="italic">x</text>
-          <text x="52" y="96" font-size="10.5" fill="var(--ink-soft)">面积 = \(f_Y(y)\)</text>
+          <text x="82" y="110" font-size="10.5" fill="var(--ink-soft)">面积 = f<tspan dy="2" font-size="7.5">Y</tspan><tspan dy="-2">(y)</tspan></text>
         </svg>
         <div class="cap">切面曲线 \(x\mapsto f(x,y)\),其下<b>面积 \(=f_Y(y)\)</b>,一般 \(\ne 1\)</div>
       </div>
@@ -376,6 +387,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       $$P[Y&gt;\tfrac12\mid X=0.1]=\frac{\displaystyle\int_{1/2}^{1}2(0.1+y)\,dy}{1.17}=\frac{(0.1+y)^2\big|_{1/2}^{1}}{1.17}=\frac{1.1^2-0.6^2}{1.17}=\frac{0.85}{1.17}.$$</p>
       <span class="ans">P[Y &gt; 1/2 | X = 0.1] = 0.85 / 1.17 ≈ 0.7265</span>
       <div class="note tip" style="margin-top:12px;margin-bottom:0"><span class="ic">✅</span><span class="t"><b>套路固定:</b>① 固定条件变量,对另一变量积分求边缘密度(分母);② 分子在目标区间上积同一被积函数;③ 相除。分母一整段都是同一个常数 \(1.17\),不必逐步显式写出条件密度。</span></div>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 求分母:固定 \(X=0.1\),对 \(y\) 积边缘密度,限随支撑取 \([0.1,1]\)</td><td>\(f_X(0.1)=\int_{0.1}^{1}2(0.1+y)\,dy=1.17\)</td><td class="xr"><a href="soa-exam-p-l26-marginal-continuous.html">L26 边缘 ↗</a></td></tr>
+        <tr><td>② 写条件密度:联合除边缘</td><td>\(f_{Y\mid X}(y\mid 0.1)=\dfrac{f(0.1,y)}{f_X(0.1)}=\dfrac{2(0.1+y)}{1.17}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>③ 条件概率:分子在目标区间 \(y&gt;\tfrac12\) 积分,再除常数分母</td><td>\(P[Y&gt;\tfrac12\mid X=0.1]=\dfrac{\int_{1/2}^{1}2(0.1+y)\,dy}{1.17}=\dfrac{0.85}{1.17}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
   </div>
 </section>
@@ -396,7 +414,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
             <text x="98" y="52" font-size="9" fill="#86198f" text-anchor="middle">f=2(x+y)</text>
             <text x="148" y="62" font-size="9" fill="#7a8699" text-anchor="middle">y=x</text>
             <line x1="72" y1="114.5" x2="72" y2="20" stroke="#c6492f" stroke-width="3"/>
-            <text transform="rotate(-90 84 67)" x="84" y="67" font-size="9" fill="#46566f" text-anchor="middle">0.1≤y≤1</text>
+            <text transform="rotate(-90 94 67)" x="94" y="67" font-size="9" fill="#46566f" text-anchor="middle">0.1≤y≤1</text>
             <text x="50" y="140" font-size="10" fill="#16243d" text-anchor="middle">0</text>
             <text x="180" y="140" font-size="10" fill="#16243d" text-anchor="middle">1</text>
             <text x="50" y="26" font-size="10" fill="#16243d" text-anchor="middle">1</text>
@@ -492,54 +510,20 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         <h4>条件密度 / 全概率</h4>
         <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}\)</p>
         <p>\(P[X\in A\mid Y=y]=\int_A f_{X\mid Y}\,dx\)</p>
-        <p>\(f_X(x)=\int f_{X\mid Y}(x\mid y)f_Y(y)\,dy\)</p>
+        <p><span class="fx-de" data-tip="推导:条件密度定义 f=f_(X|Y)·f_Y 两边对 y 积分,把 Y 积掉" tabindex="0">推</span>\(f_X(x)=\int f_{X\mid Y}(x\mid y)f_Y(y)\,dy\)</p>
         <p>固定 \(y\):\(\int f_{X\mid Y}\,dx=1\)</p>
       </div>
       <div class="cc t">
         <h4>独立 / 贝叶斯</h4>
         <p>独立:\(f_{X\mid Y}=f_X \Leftrightarrow f=f_Xf_Y\)</p>
-        <p>合成:\(f(x,y)=f_{Y\mid X}(y\mid x)f_X(x)\)</p>
-        <p>\(f_{X\mid Y}(x\mid y)=\dfrac{f_X(x)f_{Y\mid X}(y\mid x)}{\int f_X(w)f_{Y\mid X}(y\mid w)\,dw}\)</p>
+        <p><span class="fx-de" data-tip="推导:条件密度定义移项:联合=条件×边缘(乘法公式连续版)" tabindex="0">推</span>合成:\(f(x,y)=f_{Y\mid X}(y\mid x)f_X(x)\)</p>
+        <p><span class="fx-de" data-tip="推导:分子=联合密度的一种拆法,分母=同一联合积掉 x 归一化" tabindex="0">推</span>\(f_{X\mid Y}(x\mid y)=\dfrac{f_X(x)f_{Y\mid X}(y\mid x)}{\int f_X(w)f_{Y\mid X}(y\mid w)\,dw}\)</p>
         <p>支撑域耦合 ⇒ 不独立</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="vocab" style="background:linear-gradient(180deg,#fbf3fb,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">08</span><div><span class="sec-tag tag-accent">背诵 · Lesson 29 原文用词</span><h2 class="sec-title">连续型条件分布 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"条件 / 密度"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 29</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:17%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">conditional density function</td><td class="ipa">/kənˈdɪʃənəl/</td><td><span class="pos n">n.</span></td><td>条件密度函数</td><td class="root">\(f_{X\mid Y}=f(x,y)/f_Y(y)\),给定一个变量后另一个的密度</td></tr>
-          <tr><td class="en">marginal density</td><td class="ipa">/ˈmɑːrdʒɪnəl/</td><td><span class="pos n">n.</span></td><td>边缘密度</td><td class="root">margin(边)→ 联合密度对另一变量积掉,作分母</td></tr>
-          <tr><td class="en">joint density function</td><td class="ipa">/dʒɔɪnt/</td><td><span class="pos n">n.</span></td><td>联合密度函数</td><td class="root">joint(联合)→ \(f(x,y)\),两变量的共同密度</td></tr>
-          <tr><td class="en">Law of Total Probability</td><td class="ipa">/ˈtoʊtəl/</td><td><span class="pos n">n.</span></td><td>全概率公式</td><td class="root">条件密度按 \(f_Y\) 加权积分,还原边缘</td></tr>
-          <tr><td class="en">Bayes' Theorem</td><td class="ipa">/beɪz ˈθiːərəm/</td><td><span class="pos n">n.</span></td><td>贝叶斯定理</td><td class="root">翻转条件方向,\(X\mid Y \leftrightarrow Y\mid X\)</td></tr>
-          <tr><td class="en">independent</td><td class="ipa">/ˌɪndɪˈpɛndənt/</td><td><span class="pos adj">adj.</span></td><td>独立的</td><td class="root">条件密度 = 无条件边缘密度,\(f=f_Xf_Y\)</td></tr>
-          <tr><td class="en">support (of a density)</td><td class="ipa">/səˈpɔːrt/</td><td><span class="pos n">n.</span></td><td>支撑域</td><td class="root">密度非零的 \((x,y)\) 区域;耦合支撑 ⇒ 不独立</td></tr>
-          <tr><td class="en">normalize</td><td class="ipa">/ˈnɔːrməlaɪz/</td><td><span class="pos v">v.</span></td><td>归一化</td><td class="root">除以 \(f_Y(y)\) 使积分为 1</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">given that \(X=x\)</div><div class="z">在给定 \(X=x\) 的条件下</div></div>
-        <div class="ph"><div class="e">conditional density of \(Y\) given \(X\)</div><div class="z">给定 \(X\) 时 \(Y\) 的条件密度</div></div>
-        <div class="ph"><div class="e">joint density function</div><div class="z">联合密度函数</div></div>
-        <div class="ph"><div class="e">over the appropriate domain</div><div class="z">在恰当的定义域上(注意支撑)</div></div>
-        <div class="ph"><div class="e">for \(0&lt;x&lt;y&lt;1\)</div><div class="z">当 …… 时(支撑域,决定积分限)</div></div>
-        <div class="ph"><div class="e">uniformly distributed over …</div><div class="z">在……上均匀分布</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
@@ -579,5 +563,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
 </body>
 </html>

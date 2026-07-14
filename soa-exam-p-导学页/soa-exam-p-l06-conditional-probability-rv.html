@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L06 · 随机变量的条件概率</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -228,28 +298,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#dist">条件分布</a>
   <a href="#density">条件密度</a>
   <a href="#mixed">混合型</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完随机变量的条件概率你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 把条件概率定义套到随机变量:\(P[X>a\mid X&lt;b]=\dfrac{P[a&lt;X&lt;b]}{P[X&lt;b]}\)。</p>
-        <p style="margin-bottom:0">✅ 写出"给定事件 \(A\)"后的<b>条件密度 / pmf</b>:限制到 \(A\)、再除以 \(P[A]\)。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>条件概率 / cdf</h4>
+        <p>\(\Pr(X>a\mid X&lt;b)=\dfrac{\Pr(a&lt;X&lt;b)}{\Pr(X&lt;b)}\)</p>
+        <p>\(F_{X\mid A}(x)=\Pr(X\le x\mid A)\)</p>
+        <p>条件 pdf = 条件 cdf 求导</p>
+      </div>
+      <div class="cc t">
+        <h4>条件 pmf / pdf</h4>
+        <p>\(p_{X\mid A}(x)=\dfrac{p_X(x)}{P[A]}\)(\(x\in A\))</p>
+        <p>\(f_{X\mid A}(x)=\dfrac{f(x)}{P[A]}\)(\(x\in A\)),否则 0</p>
+        <p>\(\displaystyle\int_A f_{X\mid A}(x)\,dx=1\)(自检)</p>
+        <p>混合型:\(P[\text{目标}]=P[X>0]\,P[\text{目标}\mid X>0]\)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>把条件概率定义套到随机变量:\(P[X>a\mid X&lt;b]=\dfrac{P[a&lt;X&lt;b]}{P[X&lt;b]}\);分子取<b>交</b>(公共区间),分母是已知条件。</li>
+          <li>写出"给定事件 \(A\)"后的<b>条件 pmf / pdf</b>:<b>限制到 \(A\)、再除以 \(P[A]\)</b>;由条件 cdf 微分得条件 pdf,并验证在 \(A\) 上<b>积分为 1</b>。</li>
+          <li>处理<b>混合型</b>(mixed)随机变量:先拆出 \(P[X>0]\) 这类离散块,再用连续块的条件分布。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 由条件 cdf 微分得条件 pdf,并验证它在 \(A\) 上<b>积分为 1</b>。</p>
-        <p style="margin-bottom:0">✅ 处理<b>混合型</b>(mixed)随机变量:先拆出 \(P[X>0]\) 这类离散块,再用连续块的条件分布。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>保险高频形态:免赔额 \(d\) + <b>given that a payment is made</b>——先把条件与目标都翻成损失 \(X\) 的区间("有赔付"= \(X>d\),"赔付 \(\le c\)"= \(X\le c+d\)),再上条件概率。</li>
+          <li>混合型信号:"with probability 0.8 the loss is 0"——先拆离散块 \(P[X=0]\),连续块用条件 cdf(例 6A 型),两块靠乘法律接起来。</li>
+          <li>陷阱:分子忘取交(把 \(\Pr(8&lt;X&lt;10)\) 写成 \(\Pr(X>8)\));条件密度忘除 \(P[A]\);免赔额平移方向搞反(是 \(c+d\) 不是 \(c-d\))。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="条件密度与条件pmf">◆ 条件密度与条件pmf</button><button class="chip" data-card="混合型随机变量">◆ 混合型随机变量</button><button class="chip" data-card="随机变量的条件分布">◆ 随机变量的条件分布</button><button class="chip" data-card="免赔额与正赔付条件">★ 免赔额与正赔付条件</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 10 / 全章 22)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>6.1</b></td><td>离散条件 pmf:P[N=1|N≥1]</td><td style="white-space:nowrap"><button class="kxb" data-kx="6.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">离散条件概率最干净入门(至少一次归一,110-型)</td></tr>
+<tr class="kxd" data-kxq="6.1" style="display:none"><td colspan="4"><div class="kx-qtx">The number of claims on a policy is modeled by a random variable \( N \) with the following distribution: \( P[N=0]=0.65 \), \( P[N=1]=0.25 \), \( P[N=2]=0.05 \), \( P[N=3]=0.05 \). Determine the probability that exactly one claim was submitted, given that at least one claim was submitted.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.7143" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;求至少一次概率</td><td>\( P[N\ge1]=1-P[N=0]=1-0.65=0.35 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;套条件概率定义</td><td>\( P[N=1\mid N\ge1]=\dfrac{P[N=1]}{P[N\ge1]}=\dfrac{0.25}{0.35} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( =0.7143 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6.3</b></td><td>免赔额+有赔付,赔付换损失区间</td><td style="white-space:nowrap"><button class="kxb" data-kx="6.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">例6B 同款免赔额条件概率,非样题最佳代表</td></tr>
+<tr class="kxd" data-kxq="6.3" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company pays for a random loss \( X \) subject to a deductible of 2. The loss amount is modeled as a continuous random variable with density function \( f(x)=4x^{-5} \) for \( x&gt;1 \), and 0 otherwise. Determine the probability that the company makes a payment less than 1, given that a payment is made.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.802469" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;赔付&lt;1 ⟺ 损失∈(2,3)</td><td>\( \Pr(X<3\mid X>2)=\dfrac{\Pr(2<X<3)}{\Pr(X>2)} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;积出 cdf</td><td>\( F(x)=\int_1^x 4u^{-5}\,du=1-x^{-4} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入两概率</td><td>\( \Pr(X>2)=\tfrac{1}{16},\ \Pr(2<X<3)=\tfrac{1}{16}-\tfrac{1}{81} \)</td><td class="xr">代数/计算</td></tr><tr><td>④&nbsp;相除收口</td><td>\( \dfrac{1/16-1/81}{1/16}=0.802469 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6.6</b></td><td>离散条件:至少一次 given 至多四次</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q23" type="button" title="展开题目与答案(样题 Q23)">▸</button>Q23</td><td class="dim" style="font-size:13px">离散条件概率范式样题(F01:32)</td></tr>
+<tr class="kxd kxds" data-kxq="Q23" style="display:none"><td colspan="4"><div class="kx-qtx">The number of injury claims per month is modeled by a random variable \( N \) with \( P[N = n] = \frac{1}{(n+1)(n+2)} \), for nonnegative integers, \( n \). Calculate the probability of at least one claim during a particular month, given that there have been at most four claims during that month.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1/3</span><span class="kx-opt"><b>(B)</b> 2/5</span><span class="kx-opt"><b>(C)</b> 1/2</span><span class="kx-opt"><b>(D)</b> 3/5</span><span class="kx-opt"><b>(E)</b> 5/6</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;条件概率定义写比值</td><td>\(P[N\ge 1|N\le 4]=\frac{P[1\le N\le 4]}{P[N\le 4]}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>②&nbsp;代入各点 pmf</td><td>\(=\left[\tfrac16+\tfrac1{12}+\tfrac1{20}+\tfrac1{30}\right]/\left[\tfrac12+\tfrac16+\tfrac1{12}+\tfrac1{20}+\tfrac1{30}\right]\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>③&nbsp;通分化简</td><td>\(\frac{10+5+3+2}{30+10+5+3+2}=\frac{20}{50}=\frac25\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>6.8</b></td><td>连续生存比:exceeds16 given exceeds8</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q32" type="button" title="展开题目与答案(样题 Q32)">▸</button>Q32</td><td class="dim" style="font-size:13px">火灾损失尾比经典样题(F01:17),分子=交后取尾</td></tr>
+<tr class="kxd kxds" data-kxq="Q32" style="display:none"><td colspan="4"><div class="kx-qtx">The loss due to a fire in a commercial building is modeled by a random variable \( X \) with density function \( f(x) = 0.005(20 - x) \) for \( 0 &lt; x &lt; 20 \), and \( f(x) = 0 \) otherwise. Given that a fire loss exceeds 8, calculate the probability that it exceeds 16.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1/25</span><span class="kx-opt"><b>(B)</b> 1/9</span><span class="kx-opt"><b>(C)</b> 1/8</span><span class="kx-opt"><b>(D)</b> 1/3</span><span class="kx-opt"><b>(E)</b> 3/7</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;密度积分得生存函数</td><td>\(P[X>x]=\int_x^{20}0.005(20-t)dt=0.005(200-20x+\tfrac12 x^2)\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;嵌套事件条件概率</td><td>\(P[X>16|X>8]=\frac{P[X>16]}{P[X>8]}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>③&nbsp;代入求比值</td><td>\(\frac{200-320+128}{200-160+32}=\frac{8}{72}=\frac19\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>6.10</b></td><td>连续条件:<2 given ≥1.5</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q36" type="button" title="展开题目与答案(样题 Q36)">▸</button>Q36</td><td class="dim" style="font-size:13px">承保额条件区间样题(S01:39),cdf 差比标准形</td></tr>
+<tr class="kxd kxds" data-kxq="Q36" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company insures a large number of homes. The insured value, \( X \), of a randomly selected home is assumed to follow a distribution with density function \( f(x) = 3x^{-4} \) for \( x &gt; 1 \), and \( f(x) = 0 \) otherwise. Given that a randomly selected home is insured for at least 1.5, calculate the probability that it is insured for less than 2.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.578</span><span class="kx-opt"><b>(B)</b> 0.684</span><span class="kx-opt"><b>(C)</b> 0.704</span><span class="kx-opt"><b>(D)</b> 0.829</span><span class="kx-opt"><b>(E)</b> 0.875</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;密度积分得 CDF</td><td>\(F(x)=\int_1^x 3t^{-4}dt=1-x^{-3}\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;条件概率写 CDF 比</td><td>\(P[X<2|X\ge 1.5]=\frac{F(2)-F(1.5)}{1-F(1.5)}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>③&nbsp;代入化简</td><td>\(\frac{-1/8+8/27}{8/27}=\frac{37}{64}=0.578\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>6.11</b></td><td>免赔额反解:已知条件概率求 C</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q38" type="button" title="展开题目与答案(样题 Q38)">▸</button>Q38</td><td class="dim" style="font-size:13px">反向求免赔额,平移方向陷阱代表(S03:25)</td></tr>
+<tr class="kxd kxds" data-kxq="Q38" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance policy pays for a random loss \( X \) subject to a deductible of \( C \), where \( 0 &lt; C &lt; 1 \). The loss amount is modeled as a continuous random variable with density function \( f(x) = 2x \) for \( 0 &lt; x &lt; 1 \), and \( f(x) = 0 \) otherwise. Given a random loss \( X \), the probability that the insurance payment is less than 0.5 is equal to 0.64. Calculate \( C \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.1</span><span class="kx-opt"><b>(B)</b> 0.3</span><span class="kx-opt"><b>(C)</b> 0.4</span><span class="kx-opt"><b>(D)</b> 0.6</span><span class="kx-opt"><b>(E)</b> 0.8</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;免赔额事件改写</td><td>\(0.64=P[Y<0.5]=P[X<0.5+C]\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;密度积分成 CDF</td><td>\(\int_0^{0.5+C}2x\,dx=(0.5+C)^2\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>③&nbsp;解二次取合法根</td><td>\((0.5+C)^2=0.64\Rightarrow C=0.3\ (0<C<1)\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>6.12</b></td><td>条件密度 g(x):赔付的条件 pdf</td><td style="white-space:nowrap"><button class="kxb" data-kx="6.12" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">唯一考条件密度函数题(赔付平移+除以 P[A]),非样题代表</td></tr>
+<tr class="kxd" data-kxq="6.12" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance policy pays for a random loss \( X \) subject to a deductible of 500. The loss amount is modeled as a continuous random variable with distribution function \( F(x)=1-e^{-(x/1000)^{0.5}} \) for \( x\ge0 \), and 0 otherwise. Let \( g(x) \) be the probability density function of the payment amount, given that there is a nonzero payment. Calculate \( g(300) \).</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.00046352" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;赔付300对应损失800</td><td>\( g(300)=\dfrac{f(800)}{\Pr(X>500)} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;求无条件密度</td><td>\( f(800)=\dfrac{0.5(800^{-0.5})}{1000^{0.5}}e^{-0.8^{0.5}}=0.00022855 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求正赔付概率</td><td>\( 1-F(500)=e^{-0.5^{0.5}}=0.49306869 \)</td><td class="xr">代数/计算</td></tr><tr><td>④&nbsp;相除收口</td><td>\( \dfrac{0.00022855}{0.49306869}=0.00046352 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6.13</b></td><td>带上限报销的条件 cdf G(115)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q88" type="button" title="展开题目与答案(样题 Q88)">▸</button>Q88</td><td class="dim" style="font-size:13px">分段报销(免赔+50%封顶)套条件 cdf,综合度最高样题</td></tr>
+<tr class="kxd kxds" data-kxq="Q88" style="display:none"><td colspan="4"><div class="kx-qtx">The cumulative distribution function for health care costs experienced by a policyholder is modeled by the function
+
+\(F(x) = 1 - e^{-\frac{x}{100}}\) for \(x &gt; 0\); \(F(x) = 0\) otherwise.
+
+The policy has a deductible of 20. An insurer reimburses the policyholder for 100% of health care costs between 20 and 120. Health care costs above 120 are reimbursed at 50%.
+
+Let G be the cumulative distribution function of reimbursements given that the reimbursement is positive.
+
+Calculate G(115).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.683</span><span class="kx-opt"><b>(B)</b> 0.727</span><span class="kx-opt"><b>(C)</b> 0.741</span><span class="kx-opt"><b>(D)</b> 0.757</span><span class="kx-opt"><b>(E)</b> 0.777</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;报销115折回成本150</td><td>\(Y<115\Leftrightarrow X\le 150\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;条件概率写比式</td><td>\(P[X\le150|X>20]=\frac{F(150)-F(20)}{1-F(20)}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>③&nbsp;指数代入化简</td><td>\(\frac{e^{-0.2}-e^{-1.5}}{e^{-0.2}}=1-e^{-1.3}=0.727\)</td><td class="xr"><a href="soa-exam-p-l20-exponential-distribution.html">L20</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q88" style="display:none"><td colspan="4"><div class="kx-qtx">The cumulative distribution function for health care costs experienced by a policyholder is modeled by the function
+
+\(F(x) = 1 - e^{-\frac{x}{100}}\) for \(x &gt; 0\); \(F(x) = 0\) otherwise.
+
+The policy has a deductible of 20. An insurer reimburses the policyholder for 100% of health care costs between 20 and 120. Health care costs above 120 are reimbursed at 50%.
+
+Let G be the cumulative distribution function of reimbursements given that the reimbursement is positive.
+
+Calculate G(115).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.683</span><span class="kx-opt"><b>(B)</b> 0.727</span><span class="kx-opt"><b>(C)</b> 0.741</span><span class="kx-opt"><b>(D)</b> 0.757</span><span class="kx-opt"><b>(E)</b> 0.777</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;报销115折回成本150</td><td>\(Y<115\Leftrightarrow X\le 150\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05</a></td></tr><tr><td>②&nbsp;条件概率写比式</td><td>\(P[X\le150|X>20]=\frac{F(150)-F(20)}{1-F(20)}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>③&nbsp;指数代入化简</td><td>\(\frac{e^{-0.2}-e^{-1.5}}{e^{-0.2}}=1-e^{-1.3}=0.727\)</td><td class="xr"><a href="soa-exam-p-l20-exponential-distribution.html">L20</a></td></tr></table></div></td></tr>
+<tr><td><b>6.16</b></td><td>随机变量 Bayes:P[C=2|N=5]</td><td style="white-space:nowrap"><button class="kxb" data-kx="6.16" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">本章唯一贝叶斯反演题(离散混合参数),非样题代表</td></tr>
+<tr class="kxd" data-kxq="6.16" style="display:none"><td colspan="4"><div class="kx-qtx">The number of rooms in a house, \( N \), has the following distribution: \( P[N=n]=0.25 \) for \( n=1+C \), \( 0.30 \) for \( n=2+C \), \( 0.25 \) for \( n=3+C \), \( 0.20 \) for \( n=4+C \), where \( C \) is the number of people living in the house. The probability distribution of \( C \) is \( P[C=c]=0.10 \) for \( c=1 \), \( 0.35 \) for \( c=2 \), \( 0.35 \) for \( c=3 \), \( 0.20 \) for \( c=4 \), and 0 otherwise. Given that the house has 5 rooms, calculate the probability that the house has exactly 2 people.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.3333" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;贝叶斯反演</td><td>\( \Pr(C=2\mid N=5)=\dfrac{\Pr(N=5\mid C=2)\Pr(C=2)}{\Pr(N=5)} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;算分子</td><td>\( \Pr(N=5\mid C=2)\Pr(C=2)=(0.25)(0.35)=0.0875 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;全概率求分母</td><td>\( \Pr(N=5)=(0.20)(0.10)+(0.25)(0.35)+(0.30)(0.35)+(0.25)(0.20) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;相除收口</td><td>\( \dfrac{0.0875}{0.2625}=0.3333 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6.19</b></td><td>混合型+全概率:恰一次 given ≤2000</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q460" type="button" title="展开题目与答案(样题 Q460)">▸</button>Q460</td><td class="dim" style="font-size:13px">离散笔数×连续金额混合型代表样题,乘法律串接</td></tr>
+<tr class="kxd kxds" data-kxq="Q460" style="display:none"><td colspan="4"><div class="kx-qtx">Claims under a product liability policy have the following characteristics: i) The number of claims does not exceed two. ii) The probability that the number of claims is exactly one is 0.08. iii) The probability that the number of claims is exactly two is 0.02. iv) For \( n = 1 \) or 2 claims, the total claim amount under the policy is a random variable X with cumulative distribution function \( F(x) = 1 - \left(\frac{500n}{x}\right) \), for \( x \ge 500n \). Calculate the probability that there is exactly one claim, given that there is at least one claim and the total claim amount under the policy is less than or equal to 2000.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1/2</span><span class="kx-opt"><b>(B)</b> 3/5</span><span class="kx-opt"><b>(C)</b> 2/3</span><span class="kx-opt"><b>(D)</b> 3/4</span><span class="kx-opt"><b>(E)</b> 6/7</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;乘法规则算联合</td><td>\(P(N=1,X\le2000)=0.08\times\frac34=0.06\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>②&nbsp;另一支联合</td><td>\(P(N=2,X\le2000)=0.02\times\frac12=0.01\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>③&nbsp;条件概率取比</td><td>\(P(N=1\mid\cdot)=\frac{0.06}{0.07}=6/7\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 10(同题型二刷备用)· 跳过 2(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -326,7 +465,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <path d="M20,120 C60,120 70,40 120,40 C170,40 180,120 220,120" fill="none" stroke="#16243d" stroke-width="1.6"/>
           <line x1="140" y1="120" x2="140" y2="30" stroke="#5b21b6" stroke-width="1.3" stroke-dasharray="4 3"/>
           <text x="136" y="134" font-size="11" fill="#5b21b6" font-style="italic">a</text>
-          <text x="170" y="86" font-size="11" fill="#5b21b6">P[A]</text>
+          <text x="192" y="58" font-size="11" fill="#5b21b6">P[A]</text>
           <text x="26" y="30" font-size="11" fill="#16243d" font-style="italic">f(x)</text>
         </svg>
         <div class="cap">无条件:整条 \(f(x)\) 面积 = 1;\(A=\{X>a\}\)(深紫)只占 <b>\(P[A]\)</b></div>
@@ -365,6 +504,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       \(\Pr(X>0)=1-0.8=0.2\);\(\Pr(X>500\mid X>0)=\left(\dfrac{1500}{1500+500}\right)^{2}=\left(\dfrac{1500}{2000}\right)^{2}=0.5625\)。<br>
       故 \(\Pr(X>500)=0.2\times0.5625=0.1125\)。</p>
       <span class="ans">Pr(X>500) = 0.1125</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 认题型:质量点 + 条件分布的混合型</td><td>\(\Pr(X=0)=0.8\ \Rightarrow\ \Pr(X&gt;0)=1-0.8=0.2\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 随机变量 ↗</a></td></tr>
+        <tr><td>② 乘法律拆"先有正损失、再超 500"</td><td>\(\Pr(X&gt;500)=\Pr(X&gt;0)\,\Pr(X&gt;500\mid X&gt;0)\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率 ↗</a></td></tr>
+        <tr><td>③ 条件生存函数取值,代回相乘</td><td>\(\Pr(X&gt;500\mid X&gt;0)=1-F_{X\mid X&gt;0}(500)=0.5625\ \Rightarrow\ 0.2\times0.5625\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 随机变量 ↗</a> · <span class="here">本章 §02</span></td></tr>
+      </table></div>
     </div>
     <div class="note tip"><span class="ic">💡</span><span class="t"><b>套路:</b>\(P[\text{目标}]=P[\text{有赔付}]\times P[\text{目标}\mid \text{有赔付}]\)——乘法律(Ch3)把离散块和条件分布串起来。条件 cdf 里已经内含了"除以 \(P[X>0]\)"的归一化。</span></div>
 
@@ -374,6 +520,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>正赔付 ⟺ 损失 \(>100\);赔付 \(\le500\) ⟺ 损失 \(\le600\)。用 cdf \(F(x)=1-\dfrac{(1000-x)^2}{1{,}000{,}000}\):\(F(600)=0.84,\ F(100)=0.19\)。<br>
       \(\Pr(X\le600\mid X>100)=\dfrac{\Pr(100&lt;X\le600)}{\Pr(X>100)}=\dfrac{0.84-0.19}{1-0.19}=\dfrac{0.65}{0.81}=0.802469\)。</p>
       <span class="ans">Pr(X≤600 | X>100) = 0.802469</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 免赔额转译:赔付事件 → 损失区间</td><td>有正赔付 \(\Leftrightarrow X&gt;100\);赔付 \(\le500\Leftrightarrow X\le600\)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+        <tr><td>② 由密度积出 cdf</td><td>\(F(x)=\int_0^x f(u)\,du=1-\tfrac{(1000-x)^2}{1{,}000{,}000}\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 随机变量 ↗</a></td></tr>
+        <tr><td>③ 条件概率定义(分母 = 已知事件)</td><td>\(\Pr(X\le600\mid X&gt;100)=\dfrac{\Pr(100&lt;X\le600)}{\Pr(X&gt;100)}\)</td><td class="xr"><span class="here">本章 §01</span> · <a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率 ↗</a></td></tr>
+        <tr><td>④ 区间概率与尾概率全用 cdf 表出</td><td>\(\dfrac{F(600)-F(100)}{1-F(100)}=\dfrac{0.84-0.19}{1-0.19}=0.802469\)</td><td class="xr"><a href="soa-exam-p-l05-random-variables.html">L05 随机变量 ↗</a></td></tr>
+      </table></div>
     </div>
     <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>赔付换损失,先加免赔额</b> — "有正赔付"= \(X>d\);"赔付 \(\le c\)"= \(X\le c+d\)。分母永远是那个"已知"事件。</span></div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>读题转译:</b>免赔额把"赔付"平移成"损失区间"——"有正赔付"= \(X>d\),"赔付 \(\le c\)"= \(X\le c+d\)。条件概率的分母永远是那个<b>"已知"事件</b> \(\Pr(X>d)\)。</span></div>
@@ -430,15 +584,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>保险高频形态:免赔额 \(d\) + <b>given that a payment is made</b>——先把条件与目标都翻成损失 \(X\) 的区间("有赔付"= \(X>d\),"赔付 \(\le c\)"= \(X\le c+d\)),再上条件概率。</li>
-        <li>混合型信号:"with probability 0.8 the loss is 0"——先拆离散块 \(P[X=0]\),连续块用条件 cdf(例 6A 型),两块靠乘法律接起来。</li>
-        <li>陷阱:分子忘取交(把 \(\Pr(8&lt;X&lt;10)\) 写成 \(\Pr(X>8)\));条件密度忘除 \(P[A]\);免赔额平移方向搞反(是 \(c+d\) 不是 \(c-d\))。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Truncated_distribution">Wikipedia · Truncated distribution</a></div><div class="z">本章动作的学名叫"截断分布":截断 + 归一的通式与图示,和保险免赔额一脉相承。</div><div class="u">en.wikipedia.org/wiki/Truncated_distribution</div></div>
@@ -449,99 +594,351 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>忘除 \(P[A]\)</b>:条件密度必须整体放大 \(1/P[A]\),否则面积不为 1。</li>
-          <li><b>分子取错交集区间</b>:\(\Pr(X>8\mid X&lt;10)\) 的分子是 \(\Pr(8&lt;X&lt;10)\),不是 \(\Pr(X>8)\)。</li>
-          <li><b>混合型漏掉离散块</b>:先分离 \(\Pr(X=0)\),再对连续部分用条件分布。</li>
-          <li><b>免赔额平移方向搞反</b>:赔付 \(=X-d\),"赔付 \(\le c\)" ⟺ "损失 \(\le c+d\)"。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(Lesson 6 练习)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 6.2</span>损失 \(f(x)=\frac{100-x}{5000}\),求"损失在 50–60 之间 | 损失 &lt; 55"。</li>
-          <li><span class="ref">练 6.3</span>免赔额 2 的密度,求"赔付 &lt; 1 | 有赔付"。</li>
-          <li><span class="ref">练 6.11</span>[S03:25] 免赔额 \(C\)、\(f(x)=2x\),已知"赔付 &lt; 0.5"概率 0.64,反解 \(C\)。</li>
-          <li><span class="ref">练 6.13</span>[Sample:88] 健康险 cdf,求"报销 | 报销为正"。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>\(X\) 均匀于 \((0,10)\),求 \(\Pr(X>8\mid X&lt;10)\)。</li>
-        <li>条件密度 \(f_{X\mid A}(x)=\frac{f(x)}{P[A]}\) 在 \(A\) 上积分等于多少?</li>
-        <li>\(\Pr(X=0)=0.7\);给定 \(X>0\) 时 \(\Pr(X>3\mid X>0)=0.4\)。求 \(\Pr(X>3)\)。</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(\dfrac{\Pr(8&lt;X&lt;10)}{\Pr(X&lt;10)}=\dfrac{0.2}{1}=0.2\);② 恒 \(=1\)(合法密度);③ \(0.3\times0.4=0.12\)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat" style="background:linear-gradient(180deg,#f8f6fe,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 随机变量的条件概率</h2></div></div>
-    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>条件概率 / cdf</h4>
-        <p>\(\Pr(X>a\mid X&lt;b)=\dfrac{\Pr(a&lt;X&lt;b)}{\Pr(X&lt;b)}\)</p>
-        <p>\(F_{X\mid A}(x)=\Pr(X\le x\mid A)\)</p>
-        <p>条件 pdf = 条件 cdf 求导</p>
-      </div>
-      <div class="cc t">
-        <h4>条件 pmf / pdf</h4>
-        <p>\(p_{X\mid A}(x)=\dfrac{p_X(x)}{P[A]}\)(\(x\in A\))</p>
-        <p>\(f_{X\mid A}(x)=\dfrac{f(x)}{P[A]}\)(\(x\in A\)),否则 0</p>
-        <p>\(\displaystyle\int_A f_{X\mid A}(x)\,dx=1\)(自检)</p>
-        <p>混合型:\(P[\text{目标}]=P[X>0]\,P[\text{目标}\mid X>0]\)</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "乘法公式": {
+  "kind": "c",
+  "en": "MultiplicationRule",
+  "aliases": [
+   "multiplication rule",
+   "乘法律",
+   "乘法定理"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求\"两件事都发生\"的主力公式:交集概率 = 第一步的概率 × 第一步之下第二步的条件概率。由条件概率定义两边乘 \\(P[B]\\) 直接变形而来。</p><p><strong>白话</strong>:闯两道关卡才算通关:总通关率 = 第一关的通过率 × \"已过第一关的人\"里第二关的通过率。第二关的分母已经缩成过了第一关的那批人——所以乘的是条件概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cap B]=P[B]\\,P[A\\mid B]=P[A]\\,P[B\\mid A]$$</div><ul><li>哪个事件当\"第一步\"都行,选条件概率已知的那一边。</li><li><strong>连抽不放回就是连乘</strong>:每抽一步世界缩一次、概率乘一次;可链式推广 \\(P[A_1\\cap A_2\\cap A_3]=P[A_1]\\,P[A_2\\mid A_1]\\,P[A_3\\mid A_1\\cap A_2]\\)。</li><li>高频坑:题面给 \\(P[A\\mid B]\\) 却问 \\(P[A\\cap B]\\)(要乘 \\(P[B]\\)),或反过来——别把条件概率当交集概率用。</li><li>独立时退化为 \\(P[A\\cap B]=P[A]P[B]\\)(条件概率=无条件概率)。</li></ul><p><strong>算一遍</strong>:袋里 3 红 2 白,不放回连摸两颗,求两颗全红。</p><ul><li>第一步:\\(P[\\text{红}_1]=3/5\\)。</li><li>第二步:摸走一颗红后剩 2 红 2 白,\\(P[\\text{红}_2\\mid\\text{红}_1]=2/4=1/2\\)。</li><li>相乘:\\(\\dfrac{3}{5}\\times\\dfrac{1}{2}=\\dfrac{3}{10}\\)——世界缩一次、概率乘一次。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 定义 \\(P[A\\mid B]=P[A\\cap B]/P[B]\\) 两边乘 \\(P[B]\\) 的变形</li><li>事件独立性 — 独立时条件项退化为无条件项,交集直接相乘</li><li>全概率公式 — 每条分支先用乘法公式算 \\(P[B_i]\\,P[A\\mid B_i]\\) 再求和</li><li>贝叶斯定理 — 分子与分母各项都是乘法公式展开的交集概率</li></ul>"
+ },
+ "免赔额与保单限额的期望计算": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:损失 \\(X\\),保单带免赔额 \\(d\\)(赔 \\(\\max(X-d,0)\\))或限额 \\(u\\)(赔 \\(\\min(X,u)\\)),求期望赔付。</p><h4>求解套路</h4><ol><li><strong>认清赔付函数</strong>:免赔额 → \\((X-d)_+\\);限额 → \\(X\\wedge u\\);两者叠加 \\((X\\wedge u)-(X\\wedge d)\\)。</li><li><strong>生存函数积分是主力</strong>:\\(E[(X-d)_+]=\\int_d^\\infty S(x)\\,dx\\)、\\(E[X\\wedge u]=\\int_0^u S(x)\\,dx\\)——见 生存函数求期望,比对密度积分快一个量级。</li><li>指数损失有闭式:\\(E[(X-d)_+]=\\theta e^{-d/\\theta}\\)(无记忆的红利,见 指数分布)。</li><li>条件版陷阱:「已知发生正赔付」= 除以 \\(P[X&gt;d]\\),见 <a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a>。</li></ol><h4>易错</h4><ul><li>把 \\(E[(X-d)_+]\\) 写成 \\(E[X]-d\\)(只有 \\(X\\ge d\\) 恒成立时才对)。</li><li>免赔额+限额混合时积分限错位:上限是 \\(u\\) 不是 \\(u-d\\) 时要看清赔付定义。</li></ul>"
+ },
+ "免赔额与正赔付条件": {
+  "kind": "c",
+  "en": "DeductibleAndPositivePayment",
+  "aliases": [
+   "deductible",
+   "positive payment",
+   "given that a payment is made",
+   "免赔额"
+  ],
+  "level": "hard",
+  "chapter": "p-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>带免赔额 d 的保单:赔付 = 损失 − d(损失超过 d 才赔)。Exam P 高频形态是\"<strong>given that a payment is made</strong>\"——把\"有正赔付\"当条件事件,先把条件与目标都<strong>翻译回损失 X 的区间</strong>再上条件概率。</p><p><strong>白话</strong>:修车险免赔 100 元:修车花 250,保险只赔 150;花 80 就一分不赔。题目问\"已知保险赔了钱……\"时,诀窍是把每句\"赔付\"的话都翻译回\"损失\"的语言——赔了钱 = 损失超 100,赔付不超 500 = 损失不超 600。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\Pr(X\\le c+d\\mid X&gt;d)=\\frac{\\Pr(d&lt;X\\le c+d)}{\\Pr(X&gt;d)}$$</div><ul><li><strong>赔付换损失,先加免赔额</strong>:\"有正赔付\"= \\(X&gt;d\\);\"赔付 \\(\\le c\\)\"= \\(X\\le c+d\\)。平移方向是 \\(c+d\\) <strong>不是</strong> \\(c-d\\),搞反是经典错。</li><li>分母永远是那个<strong>\"已知\"事件</strong> \\(\\Pr(X&gt;d)=S(d)\\)。</li><li>Example 6B:\\(f(x)=\\frac{1000-x}{500000}\\)(\\(0&lt;x\\le1000\\)),d=100;正赔付 ⟺ \\(X&gt;100\\),赔付 \\(\\le500\\) ⟺ \\(X\\le600\\);\\(\\Pr=\\frac{F(600)-F(100)}{1-F(100)}=\\frac{0.84-0.19}{0.81}=0.802469\\)。</li><li>多步流程易漏:翻译区间 → 求 cdf 两点值 → 分子取交、分母取条件——每步都有坑。</li></ul><p><strong>算一遍</strong>:损失 \\(X\\) 均匀分布于 \\((0,1000)\\),免赔额 \\(d=100\\);已知有赔付,求赔付 \\(\\le 400\\) 的概率。</p><ul><li>翻译回损失:有赔付 ⟺ \\(X&gt;100\\);赔付 \\(\\le 400\\) ⟺ \\(X\\le 500\\)(加免赔额,<strong>不是</strong>减)。</li><li>分子 \\(\\Pr(100&lt;X\\le 500)=400/1000=0.4\\);分母 \\(\\Pr(X&gt;100)=900/1000=0.9\\)。</li><li>相除:\\(0.4/0.9=4/9\\approx 0.44\\)——分母永远是那个\"已知\"事件。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 整题就是一次条件概率计算,分母=已知事件</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — \"有正赔付\"的概率直接是 \\(S(d)\\)</li><li><a class=\"net-wl\" data-id=\"随机变量的条件分布\">随机变量的条件分布</a> — 给定 \\(X&gt;d\\) 后损失的条件分布</li><li><a class=\"net-wl\" data-id=\"条件密度与条件pmf\">条件密度与条件pmf</a> — 需要整条条件密度时的形态(截断+归一)</li><li><a class=\"net-wl\" data-id=\"混合型随机变量\">混合型随机变量</a> — 赔付变量在 0 处有质量点,天然混合型</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"免赔额与保单限额的期望计算\">免赔额与保单限额的期望计算</a> — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "条件分布": {
+  "kind": "c",
+  "en": "ConditionalDistribution",
+  "aliases": [
+   "conditional distribution",
+   "conditional density"
+  ],
+  "level": "basic",
+  "chapter": "p-l14",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在 \\(Y=y\\) 的切片上,\\(X\\) 的重新归一化分布:<strong>联合分布除以边际</strong>。分母恰好把切片总量除回 1,得到的是正当概率分布,一切矩公式原封不动搬过来用。</p><p><strong>白话</strong>:全校成绩汇总表里只抽出\"三班\"那一行看——人数只剩一个班,各分数段的占比得按这一行自己的总人数重新折算,才能凑回 100%。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid Y}[x\\mid Y=y]=\\frac{f(x,y)}{f_Y(y)}$$</div><ul><li>口诀\"<strong>切片除边际</strong>\":分母 \\(f_Y(y)=\\sum_x f(x,y)\\)(或 \\(\\int f(x,y)\\,dx\\))扮演 \\(P[A]\\) 的归一化角色。</li><li>归一性:\\(\\sum_x \\dfrac{f(x,y)}{f_Y(y)}=\\dfrac{f_Y(y)}{f_Y(y)}=1\\),非负性天然满足——正当分布。</li><li>离散操作:取该行(列),逐项 ÷ 行(列)和;连续同构,换积分。</li><li>在它上面求矩,就得到条件期望、条件方差。</li></ul><p><strong>算一遍</strong>:联合 pmf 四格:\\(f(0,1)=0.2\\)、\\(f(1,1)=0.4\\)、\\(f(0,0)=0.1\\)、\\(f(1,0)=0.3\\),求 \\(Y=1\\) 切片上 \\(X\\) 的分布。</p><ul><li>先算分母(边际):\\(f_Y(1)=0.2+0.4=0.6\\)——这一行的总量。</li><li>逐项除:\\(P[X=0\\mid Y=1]=\\frac{0.2}{0.6}=\\frac13\\),\\(P[X=1\\mid Y=1]=\\frac{0.4}{0.6}=\\frac23\\)。</li><li>自检:\\(\\frac13+\\frac23=1\\) ✓ 切片除边际,总量归 1,正当分布。</li></ul><h4>与其他概念的关系</h4><ul><li>联合分布 — 分子(上游 L11)</li><li>边缘分布 — 分母(上游 L11)</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 同一\"缩样本空间再归一\"动作在分布上的体现</li><li>条件期望 — 在其上求一阶矩</li><li>条件方差 — 在其上求二阶矩再相减</li><li><a class=\"net-wl\" data-id=\"条件密度函数\">条件密度函数</a> — 双连续变量版(下游 L29)</li></ul><h4>应用视角</h4><ul><li>二项分布与联合分布的层面之辨 — 单变量具体分布 vs 多变量框架,多项分布桥接</li></ul>"
+ },
+ "条件密度与条件pmf": {
+  "kind": "c",
+  "en": "ConditionalDensityGivenEvent",
+  "aliases": [
+   "conditional pdf",
+   "conditional pmf",
+   "truncated distribution",
+   "条件密度",
+   "截断分布"
+  ],
+  "level": "advanced",
+  "chapter": "p-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定事件 A 后 X 的新分布长什么样:<strong>A 外归零,A 内同除 \\(P[A]\\)</strong>。先截断(A 外清零)、再归一(整体抬高 \\(1/P[A]\\) 倍),让总量重新等于 1——学名\"截断分布\"。</p><p><strong>白话</strong>:知道骰子掷出的是偶数后,2、4、6 的概率从各 \\(\\frac16\\) 抬到各 \\(\\frac13\\)——被排除的不算数,剩下的按原比例放大,把总账凑回 1。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid A}(x)=\\begin{cases}\\dfrac{f(x)}{P[A]}, &amp; x\\in A\\\\[6pt]0, &amp; x\\notin A\\end{cases}\\qquad p_{X\\mid A}(x)=\\frac{p_X(x)}{P[A]}\\;(x\\in A)$$</div><ul><li><strong>剪掉 A 外,抬高 A 内</strong>:两步缺一不可——只截不抬,面积 &lt;1,不是合法密度。</li><li><strong>合法性自检</strong>:在 A 上积分/求和必须 =1:\\(\\int_A\\frac{f(x)}{P[A]}dx=\\frac{P[A]}{P[A]}=1\\)。</li><li>最大陷阱就是<strong>忘除 \\(P[A]\\)</strong>;其中 \\(P[A]=\\int_A f(x)\\,dx\\)。</li><li>聚光灯直觉:条件化=聚光灯只打在 A 区、同时调高亮度让总光量回到 1(等车例:均匀 \\((0,10)\\) 给定 \\(X&gt;6\\) 后仍均匀,密度从 \\(\\tfrac1{10}\\) 抬到 \\(\\tfrac14\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,给定\"点数为偶\"(\\(A=\\{2,4,6\\}\\)),写条件 pmf。</p><ul><li>\\(P[A]=\\frac12\\);A 内每点:\\(\\frac{1/6}{1/2}=\\frac13\\);A 外(1、3、5)归零。</li><li>合法性自检:\\(\\frac13\\times3=1\\) ✓ 截断加归一,总量回到 1。</li><li>错法对照:只截不抬(2、4、6 仍各留 \\(\\frac16\\)),总和才 \\(\\frac12\\)——忘除 \\(P[A]\\) 就是这个错。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量的条件分布\">随机变量的条件分布</a> — 它就是这条新分布的密度/pmf 形态</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 原料:原密度截断到 A 再归一</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散版原料:A 内每点同除 \\(P[A]\\)</li><li><a class=\"net-wl\" data-id=\"条件密度函数\">条件密度函数</a> — 推广:条件换成\"另一变量取某值\"(L29)</li><li><a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a> — 保险实战:给定 \\(X&gt;d\\) 的截断分布</li></ul>"
+ },
+ "条件密度函数": {
+  "kind": "c",
+  "en": "ConditionalDensityFunction",
+  "aliases": [
+   "conditional density",
+   "conditional pdf"
+  ],
+  "level": "basic",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在 \\(Y=y\\) 已知下 \\(X\\) 的密度:把联合密度沿 \\(Y=y\\) <strong>切一刀</strong>,截面曲线除以该处边缘密度 \\(f_Y(y)\\) <strong>归一化</strong>。连续变量 \\(P[Y=y]=0\\),事件版条件概率失效,改用密度之比。</p><p><strong>白话</strong>:联合密度像一整条起伏的面包,沿 \\(Y=y\\) 切下薄薄一片——截面的轮廓就是条件密度的形状,再按这片自己的面积缩放,让这一片单独算总量为 1。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid Y}(x\\mid y)=\\frac{f(x,y)}{f_Y(y)}\\qquad\\big(f_Y(y)&gt;0\\big)$$</div><ul><li>固定 \\(y\\) 后是一支<strong>合法一维密度</strong>:处处 \\(\\ge0\\)、对 \\(x\\) 全积分为 1(因 \\(\\int f(x,y)\\,dx=f_Y(y)\\),分子积分恰等于分母)——后续求概率、求矩都拿它当普通密度用。</li><li>角标对齐:分母永远是<strong>条件那个变量</strong>的边缘密度;要 \\(f_{Y\\mid X}\\) 就除 \\(f_X(x)\\)。</li><li>忘除 \\(f_Y(y)\\) = 全错(未归一化);支撑耦合时(如 \\(0\\le x\\le y\\))积分限随条件值变,别用死区间。</li><li>反乘可合成联合密度:\\(f(x,y)=f_{X\\mid Y}(x\\mid y)\\,f_Y(y)\\)。</li></ul><p><strong>算一遍</strong>:\\(f(x,y)=x+y\\)(\\(0\\le x,y\\le 1\\)),求给定 \\(Y=\\tfrac12\\) 时 \\(X\\) 的密度。</p><ul><li>先算分母(边缘):\\(f_Y(\\tfrac12)=\\int_0^1\\big(x+\\tfrac12\\big)dx=\\tfrac12+\\tfrac12=1\\)。</li><li>切片除边际:\\(f_{X\\mid Y}(x\\mid \\tfrac12)=\\dfrac{x+\\tfrac12}{1}=x+\\tfrac12\\)。</li><li>自检:\\(\\int_0^1\\big(x+\\tfrac12\\big)dx=1\\) ✓ 归一后是正当一维密度,可直接拿去求概率求矩。</li></ul><h4>与其他概念的关系</h4><ul><li>联合密度函数 — 分子:切片形状的来源</li><li>边缘密度-连续 — 分母:归一化常数</li><li><a class=\"net-wl\" data-id=\"条件密度与条件pmf\">条件密度与条件pmf</a> — 离散镜像,pmf 换 pdf</li><li><a class=\"net-wl\" data-id=\"连续型条件概率\">连续型条件概率</a> — 对它在区间上积分</li><li>连续型条件期望 — 对它积 \\(x\\) 得切片重心</li><li>贝叶斯定理-连续 — 翻转条件方向的机器</li></ul>"
+ },
+ "条件概率": {
+  "kind": "c",
+  "en": "ConditionalProbability",
+  "aliases": [
+   "conditional probability",
+   "条件机率"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在事件 B 已发生的前提下,事件 A 发生的概率。把样本空间<strong>缩小到 B</strong>(B 成为新的\"全体\"),A 剩下的部分是 \\(A\\cap B\\),再除以 \\(P[B]\\) 归一化。</p><p><strong>白话</strong>:问\"下雨天堵车的概率\",不拿全年当分母——先把下雨的日子挑出来当新的\"全体\",再数其中堵车的占几成。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\mid B]=\\frac{P[A\\cap B]}{P[B]}\\qquad(P[B]\\neq 0)$$</div><ul><li>固定条件 B 后,\\(P[\\cdot\\mid B]\\) 满足与普通概率相同的<strong>三公理</strong>——补集、容斥等规则在\"竖线右边不动\"时照常可用。</li><li>\\(P[A\\mid B]\\neq P[B\\mid A]\\):分母是\"条件\"那一个,写反是高频错。</li><li>直觉:<strong>先缩世界,再归一</strong>;\\(P[B]=0\\) 时无定义。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 掷出 6,\\(B=\\) 点数为偶,求 \\(P[A\\mid B]\\)。</p><ul><li>套定义:\\(P[A\\cap B]=P[\\{6\\}]=\\frac16\\),\\(P[B]=\\frac12\\),相除得 \\(P[A\\mid B]=\\frac13\\)。</li><li>直觉核对:世界缩到 \\(\\{2,4,6\\}\\) 三个等可能点,6 占一席 → \\(\\frac13\\) ✓</li><li>反向对照:\\(P[B\\mid A]=1\\)(掷出 6 必是偶数)——\\(\\frac13\\neq1\\),分母是\"条件\"那一个,写反差很远。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 定义两边乘 \\(P[B]\\) 的变形,求交集的主力工具</li><li>事件独立性 — \\(P[A\\mid B]=P[A]\\) 的特例:条件不带来信息</li><li>贝叶斯定理 — 把 \\(P[A\\mid B]\\) 反转成 \\(P[B\\mid A]\\)</li><li>全概率公式 — 用一组条件概率加权拼出无条件概率</li><li><a class=\"net-wl\" data-id=\"连续型条件概率\">连续型条件概率</a> — 连续版(密度上的同一动作)</li><li><a class=\"net-wl\" data-id=\"随机变量的条件分布\">随机变量的条件分布</a> — 条件思想进入随机变量后的形态</li></ul><h4>应用视角</h4><ul><li>贝叶斯表格法快解后验 — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "概率函数": {
+  "kind": "c",
+  "en": "ProbabilityMassFunction",
+  "aliases": [
+   "pmf",
+   "probability function",
+   "probability mass function",
+   "概率质量函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>离散随机变量的刻画工具:一张\"点 → 概率\"的表,\\(p(x)=P[X=x]\\)。离散分布由它完全决定,又叫概率质量函数(pmf)。</p><p><strong>白话</strong>:像一个分成若干扇形的抽奖转盘:每个可能取值占一块扇形,扇形大小就是它的概率,所有扇形拼起来正好一整圈。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$p(x)=P[X=x]\\qquad p(x)\\ge 0,\\quad \\sum_{\\text{all }x}p(x)=1$$</div><ul><li>两条<strong>合法性</strong>要求整块记:每点非负、全部加起来恰为 1(骰子 \\(p(x)=\\tfrac16\\),六项和为 1)。</li><li>概率是<strong>一根根柱子</strong>:高度 \\(=p(x)\\),柱高之和 \\(=1\\);求区间概率就把范围内的柱子加起来。</li><li>cdf 由 pmf 累加:\\(F(x)=\\sum_{t\\le x}p(t)\\),阶梯形、在每个质量点跳高 \\(p(x)\\)。</li><li>与连续的根本差别:离散每点 \\(P[X=x]&gt;0\\),\\(\\le\\) 与 \\(&lt;\\) <strong>不可</strong>随意互换。</li></ul><p><strong>算一遍</strong>:掷一枚均匀骰子,\\(p(x)=\\tfrac16\\)(\\(x=1,\\dots,6\\)),求 \\(P[X\\le2]\\)。</p><ul><li>合法性自检:六根柱子各 \\(\\tfrac16\\ge0\\),总和 \\(=1\\) ✓</li><li>区间概率 = 加柱子:\\(P[X\\le2]=p(1)+p(2)=\\tfrac13\\)。</li><li>对照:\\(P[X&lt;2]=p(1)=\\tfrac16\\ne P[X\\le2]\\)——离散下 \\(&lt;\\) 与 \\(\\le\\) 差一根柱子。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — 离散随机变量由 pmf 完全刻画</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续对应物:数柱子 vs 量面积</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — \\(F(x)=\\sum_{t\\le x}p(t)\\):阶梯、跳高=p(x)</li><li>期望 — 用 pmf 加权求和:\\(E[X]=\\sum x\\,p(x)\\)</li><li>离散均匀分布 — 最简单的 pmf 实例(各点等概率)</li></ul>"
+ },
+ "概率密度函数": {
+  "kind": "c",
+  "en": "ProbabilityDensityFunction",
+  "aliases": [
+   "pdf",
+   "probability density function",
+   "density function",
+   "密度函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>连续随机变量的刻画工具:概率是密度曲线<strong>下方的面积</strong>,想要区间概率就积分。密度是分布函数的导数 \\(f(x)=F'(x)\\)。</p><p><strong>白话</strong>:把 1 千克沙子撒在数轴上,\\(f(x)\\) 是各处沙层的厚度:某点再厚,单看一个点也没有重量;铲起一段称重(积分)才是那段的概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[a\\le X\\le b]=\\int_a^b f(x)\\,dx\\qquad f(x)\\ge 0,\\quad\\int_{-\\infty}^{\\infty}f(x)\\,dx=1$$</div><ul><li><strong>密度 ≠ 概率</strong>:\\(f(x)\\) 的值可以大于 1(它是\"每单位长度的概率\",像人口密度);只有积分(面积)才是概率。</li><li><strong>连续下单点概率为 0</strong>:\\(P[X=x]=0\\),所以 \\(\\le\\) 与 \\(&lt;\\) 可随意互换——这对离散不成立。</li><li>方法套路:给含未知常数的密度 \\(f=c\\,g(x)\\),先用 \\(\\int f=1\\) 反解 \\(c\\),再积分求所求区间(例 5D:\\(f=x^2/21\\))。</li><li>与 cdf 互逆:\\(f=F'\\)、\\(F(x)=\\int_{-\\infty}^x f(t)\\,dt\\)。</li></ul><p><strong>算一遍</strong>:密度 \\(f(x)=cx\\),\\(0\\le x\\le2\\),先定 \\(c\\) 再求 \\(P[X\\le1]\\)。</p><ul><li>总面积为 1:\\(\\int_0^2 cx\\,dx=2c=1\\Rightarrow c=\\tfrac12\\)。</li><li>区间概率 = 面积:\\(P[X\\le1]=\\int_0^1 \\tfrac{x}{2}\\,dx=\\tfrac14\\)。</li><li>单点没面积:\\(P[X=1]=0\\),所以 \\(P[X&lt;1]=P[X\\le1]\\),随便换。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — 连续随机变量的刻画工具</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散对应物:pmf 堆在点上求和,pdf 摊在区间上积分</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 求导/积分互逆:\\(f=F'\\)</li><li>期望 — 用密度加权积分:\\(E[X]=\\int x\\,f(x)\\,dx\\)</li><li>积分限与支撑 — 密度非零的区域决定积分限</li><li>连续均匀分布 — 最简单的密度实例(平的)</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "混合型随机变量": {
+  "kind": "c",
+  "en": "MixedRandomVariable",
+  "aliases": [
+   "mixed random variable",
+   "mixed distribution",
+   "混合分布",
+   "混合型"
+  ],
+  "level": "advanced",
+  "chapter": "p-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>既有<strong>离散质量点</strong>(如\"零损失\"这一点有正概率)又有<strong>连续密度</strong>的随机变量——离散、连续之外的第三类。保险损失是典型:\\(P[X=0]=0.8\\),其余 0.2 摊在正半轴上。</p><p><strong>白话</strong>:像\"抽奖 + 转盘\"两级游戏:八成概率直接抽中\"损失为 0\"这一格(一整块概率钉死在一个点上),剩下两成才进入连续转盘,金额摊开在正半轴上取。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[\\text{目标}]=P[X&gt;0]\\cdot P[\\text{目标}\\mid X&gt;0]$$</div><ul><li>解题套路:<strong>先拆离散块,再用连续块的条件分布</strong>,两块靠乘法公式串起来。</li><li>Example 6A:\\(P[X=0]=0.8\\),给定 \\(X&gt;0\\) 时 \\(F_{X\\mid X&gt;0}(x)=1-\\left(\\frac{1500}{1500+x}\\right)^2\\);则 \\(\\Pr(X&gt;500)=0.2\\times\\left(\\frac{1500}{2000}\\right)^2=0.1125\\)。</li><li>题面信号:\"with probability 0.8 the loss is 0\"——见到就先分离 \\(P[X=0]\\)。</li><li>条件 cdf 里已内含\"除以 \\(P[X&gt;0]\\)\"的归一化;混合型的 cdf 在质量点处<strong>跳跃</strong>、其余段连续。</li></ul><p><strong>算一遍</strong>:损失七成概率为 0;若发生(\\(X&gt;0\\)),金额在 \\((0,10]\\) 上均匀,求 \\(P[X&gt;4]\\)。</p><ul><li>拆离散块:\\(P[X&gt;0]=0.3\\)。</li><li>连续块条件概率:\\(P[X&gt;4\\mid X&gt;0]=\\tfrac{10-4}{10}=0.6\\)。</li><li>乘法串起:\\(P[X&gt;4]=0.3\\times0.6=0.18\\);对应 cdf 在 0 处跳 0.7、其后平滑上升。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — 离散/连续之外的第三类</li><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 离散块与连续块的黏合剂</li><li><a class=\"net-wl\" data-id=\"随机变量的条件分布\">随机变量的条件分布</a> — 连续块由\"给定 \\(X&gt;0\\)\"的条件分布刻画</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 混合型 cdf:跳点 + 连续上升段并存</li><li><a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a> — 保险赔付变量天然是混合型</li></ul>"
+ },
+ "生存函数": {
+  "kind": "c",
+  "en": "SurvivalFunction",
+  "aliases": [
+   "survival function",
+   "尾概率",
+   "尾函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(S(x)=P[X&gt;x]\\):\"活过 x / 损失超过 x\"的概率,与分布函数互补 \\(S=1-F\\)。精算里描述寿命、损失尾部全靠它。</p><p><strong>白话</strong>:全村人排队过一道 80 岁的门槛,\\(S(80)\\) 就是\"迈过去的人占几成\"——F 数的是倒在门槛前的,S 数的是熬过去的,两拨人加起来正好是全村。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$S(x)=P[X&gt;x]=1-F(x)$$</div><ul><li><strong>F 管\"不超过\",S 管\"超过\"</strong>,俩加起来恒等于 1;看到 at least / greater than,先想 S。</li><li>单调<strong>递减</strong>,\\(S(-\\infty)=1\\)、\\(S(\\infty)=0\\)——与 F 的四条性质镜像。</li><li>求\"至少 / 大于\"类问题用它最省事:\\(F(4)=0.8\\Rightarrow S(4)=0.2\\),一步到位。</li><li>保险语境:\"损失超过免赔额 d\"直接读作 \\(S(d)\\)。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,问\"至少 5 点\"的概率。</p><ul><li>先看 F:\\(F(4)=P[X\\le4]=\\tfrac46\\)——1 到 4 点占四格。</li><li>取补:\\(S(4)=1-\\tfrac46=\\tfrac26=\\tfrac13\\),正是 5、6 两格。</li><li>题面写 at least 5,直接想 \\(S(4)\\) 一步到位,不用逐点累加。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 互补关系:\\(S=1-F\\),性质全部镜像</li><li>生存函数求期望 — 非负变量 \\(E[X]=\\int_0^\\infty S(x)\\,dx\\) 的捷径</li><li><a class=\"net-wl\" data-id=\"免赔额与正赔付条件\">免赔额与正赔付条件</a> — \"损失超过 d 才赔\"就是拿 \\(S(d)\\) 当条件概率分母</li><li>指数分布 — 最常用的生存函数实例:\\(S(x)=e^{-x/\\theta}\\)</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "累积分布函数": {
+  "kind": "c",
+  "en": "CumulativeDistributionFunction",
+  "aliases": [
+   "cdf",
+   "distribution function",
+   "分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\\(F(x)=P[X\\le x]\\):累住\"到 x 为止\"的全部概率。对离散、连续<strong>一视同仁</strong>——知道 F 就等于知道这个随机变量的一切,是求各种范围概率的统一入口。</p><p><strong>白话</strong>:\\(F\\) 像收银机的累计小票:沿数轴从最左端一路扫到 \\(x\\),沿途概率全部记进总账——它报的永远是\"到此为止一共多少\",不是\"这一点是多少\";要某一段的量,拿两张小票相减就行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(x)=P[X\\le x]\\qquad P[u&lt;X\\le v]=F(v)-F(u)$$</div><ul><li>四条<strong>必备性质</strong>整块记:非减 · 右连续 · \\(F(-\\infty)=0\\) · \\(F(\\infty)=1\\)。</li><li>连续时 \\(F'(x)=f(x)\\)(光滑 S 型);离散时 \\(F(x)=\\sum_{t\\le x}p(t)\\)(阶梯,跳高 \\(=p(x)\\))。</li><li><strong>\\(F\\) 用 \\(\\le\\) 不是 \\(&lt;\\)</strong>:离散时含端点那一跳;求 \\(P[X&lt;x]\\) 要用跳<strong>前</strong>的值,与 \\(F(x)\\) 差一个 \\(p(x)\\)——差一个跳点答案就错。</li><li>分段 F 求区间概率:直接 \\(F(b)-F(a)\\),先看清端点落在哪一段(例 5A:\\(F(2.5)=1\\))。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,求 \\(P[2&lt;X\\le4]\\)。</p><ul><li>两张\"累计小票\":\\(F(4)=\\tfrac46\\)(1 到 4 点),\\(F(2)=\\tfrac26\\)(1、2 点)。</li><li>相减:\\(F(4)-F(2)=\\tfrac26=\\tfrac13\\)——正好数出 \\(\\{3,4\\}\\) 两个点 ✓</li><li>端点自查:区间写法 \\(u&lt;X\\le v\\) 与 \\(F\\) 的 \\(\\le\\) 严丝合缝,右端 4 含、左端 2 不含,一个跳点都不差。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"随机变量\">随机变量</a> — 离散连续通吃的完全刻画</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散:由 pmf 累加,阶梯跳高 \\(=p(x)\\)</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续:求导得密度,\\(f=F'\\)</li><li><a class=\"net-wl\" data-id=\"生存函数\">生存函数</a> — 互补:\\(S=1-F\\),\"F 管不超过,S 管超过\"</li><li>百分位数 — 反着用 F:解 \\(F(x)=p\\) 得分位数</li><li>联合累积分布函数 — 二维推广</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "连续型条件概率": {
+  "kind": "c",
+  "en": "ConditionalProbabilityContinuous",
+  "aliases": [
+   "conditional probability (continuous)"
+  ],
+  "level": "advanced",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>给定 \\(Y=y\\) 时 \\(X\\) 落入集合 \\(A\\) 的概率:先固定 \\(y\\) 得条件密度(一支合法密度),再照常对目标区间积分。</p><p><strong>白话</strong>:整座密度山只切下 \\(Y=y\\) 那一薄片:先把这片放大到总面积为 1(归一),再问\"\\(X\\) 落在 \\(A\\) 段占这片多大面积\"——和普通一维概率没两样,只是密度换成了切片版。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[X\\in A\\mid Y=y]=\\int_A f_{X\\mid Y}(x\\mid y)\\,dx$$</div><ul><li>套路三步:固定条件变量、对另一变量积分求边缘(分母)→ 分子在目标区间积同一被积函数 → 相除。</li><li><strong>分母是常数、最后除</strong>:整题共用一个 \\(f_Y(y)\\)(或 \\(f_X(x)\\)),先把分子积完再除一次,少写分数少出错(例 29A 的常数 1.17)。</li><li>条件值一落地,先<strong>重写另一变量的范围</strong>:支撑 \\(0\\le x\\le y\\le1\\) 下 given \\(X=0.1\\),则 \\(y\\in[0.1,1]\\),再动积分。</li></ul><p><strong>算一遍</strong>:单位正方形上 \\(f(x,y)=x+y\\),求 \\(P[X\\le\\tfrac12\\mid Y=\\tfrac12]\\)。</p><ul><li>分母(边缘):\\(f_Y(\\tfrac12)=\\int_0^1\\big(x+\\tfrac12\\big)dx=1\\);条件密度就是 \\(x+\\tfrac12\\)。</li><li>分子照常积:\\(\\int_0^{1/2}\\big(x+\\tfrac12\\big)dx=\\tfrac18+\\tfrac14=\\tfrac38\\)。</li><li>相除:\\(P=\\tfrac{3/8}{1}=\\tfrac38\\)——固定切片、归一、对目标区间积分,三步完事。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件密度函数\">条件密度函数</a> — 被积函数;先有它才有概率</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 事件版原型:缩小世界再归一</li><li>全概率公式-连续 — 反向操作:条件密度加权积回边缘</li><li>积分限与支撑 — 积分限随条件值变的根源</li></ul>"
+ },
+ "随机变量": {
+  "kind": "c",
+  "en": "RandomVariable",
+  "aliases": [
+   "random variable",
+   "RV",
+   "随机变数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>从样本空间到实数集的一个函数</strong>——把随机试验的每个结果映射成一个实数(骰子点数、索赔个数、理赔金额)。大写 \\(X\\) 记变量,小写 \\(x\\) 记它的取值。</p><p><strong>白话</strong>:随机变量是给每个可能结局<strong>贴价签</strong>的机器:骰子摇出\"三点\"这个结局本身没法加减,贴上数字 3 才能求和算平均——它不是\"随机的数\",而是把结局翻译成数的一条固定规则。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$X:\\Omega\\to\\mathbb{R}\\qquad p(x)=P[X=x],\\quad P[u&lt;X\\le v]$$</div><ul><li><strong>离散</strong>:取可数的一串点,概率集中在点上(每点 \\(P[X=x]&gt;0\\)),工具是 pmf 求和;cdf 呈阶梯。</li><li><strong>连续</strong>:取值填满区间,概率摊在范围上(单点 \\(P[X=x]=0\\)),工具是 pdf 积分;cdf 光滑上升。</li><li>还有第三种<strong>混合型</strong>:既有质量点(如\"零索赔\"有正概率)又有摊开的密度,保险损失常是这种。</li><li><strong>离散数柱子,连续量面积</strong>——问法一样,动作换一个。</li></ul><p><strong>算一遍</strong>:抛两枚硬币,定义 \\(X=\\) 正面数,把 4 个结局翻译成数。</p><ul><li>贴价签:反反 \\(\\to0\\),反正、正反 \\(\\to1\\),正正 \\(\\to2\\)——同一个数可由多个结局共享。</li><li>收概率:\\(p(0)=\\tfrac14\\)、\\(p(1)=\\tfrac12\\)、\\(p(2)=\\tfrac14\\);加总 \\(=1\\) ✓</li><li>这是离散型:概率全集中在 \\(0,1,2\\) 三个点上,问区间就数柱子,如 \\(P[0&lt;X\\le2]=\\tfrac12+\\tfrac14=\\tfrac34\\)。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散随机变量的完全刻画(点→概率的表)</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续随机变量的刻画(曲线下面积)</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 离散连续通吃的统一入口:知道 F 就知道一切</li><li><a class=\"net-wl\" data-id=\"混合型随机变量\">混合型随机变量</a> — 质量点 + 密度并存的第三类</li><li>期望 — 随机变量最重要的数字概括(下游)</li></ul>"
+ },
+ "随机变量的条件分布": {
+  "kind": "c",
+  "en": "ConditionalDistributionGivenEvent",
+  "aliases": [
+   "conditional random variable",
+   "conditional cdf",
+   "conditional distribution given an event",
+   "条件分布函数"
+  ],
+  "level": "advanced",
+  "chapter": "p-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把\"缩小样本空间再归一化\"从事件搬到<strong>随机变量的整条分布</strong>:给定事件 A(如 \\(X&gt;a\\)),\"条件下的 X\"本身是一个<strong>新的随机变量</strong>,由条件 cdf \\(F_{X\\mid A}(x)=\\Pr(X\\le x\\mid A)\\) 刻画。</p><p><strong>白话</strong>:得知\"损失超过了免赔额\"这条消息后,损失 \\(X\\) 的整副牌都要重新洗、重新配平——洗出来的不是一个数,而是一位<strong>新变量</strong>:它自己有 cdf、有密度、有期望,想问什么都从它出发。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\Pr(X&gt;a\\mid X&lt;b)=\\frac{\\Pr(a&lt;X&lt;b)}{\\Pr(X&lt;b)}\\qquad F_{X\\mid A}(x)=\\Pr(X\\le x\\mid A)$$</div><ul><li>分子是<strong>交</strong>:\"\\(X&gt;8\\)\"与\"\\(X&lt;10\\)\"都是数轴区间,交就是公共区间 \\((8,10)\\)——分子写成 \\(\\Pr(X&gt;8)\\) 是高频错。</li><li>条件 cdf 可微时<strong>求导</strong>得条件密度函数——\"事件视角\"升级成\"整条分布视角\"的关键一步。</li><li>与 Ch3 是同一个动作:Ch3 求<strong>一个数</strong>,这里变出<strong>一条新分布</strong>;对条件分布再问 \\(P[X\\le x]\\) 就落回 Ch3。</li><li>贝叶斯定理对随机变量同样成立,写法照搬事件版。</li></ul><p><strong>算一遍</strong>:掷一颗骰子 \\(X\\),已知 \\(X&lt;5\\),求 \\(\\Pr(X&gt;2\\mid X&lt;5)\\)。</p><ul><li>分子是<strong>交</strong>:\\(\\{X&gt;2\\}\\cap\\{X&lt;5\\}=\\{3,4\\}\\),概率 \\(\\tfrac26\\)——写成 \\(\\Pr(X&gt;2)=\\tfrac46\\) 就是那个高频错。</li><li>分母 \\(\\Pr(X&lt;5)=\\tfrac46\\);相除 \\(\\tfrac{2/6}{4/6}=\\tfrac12\\)。</li><li>升级成整条分布:条件下的 \\(X\\) 在 \\(\\{1,2,3,4\\}\\) 上各占 \\(\\tfrac14\\)——一位新的随机变量,之后问任何概率都落回普通计算。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 同一定义从事件原样搬到关于 X 的事件</li><li><a class=\"net-wl\" data-id=\"累积分布函数\">累积分布函数</a> — 条件 cdf 刻画新变量,求导得条件密度</li><li><a class=\"net-wl\" data-id=\"条件密度与条件pmf\">条件密度与条件pmf</a> — 这条新分布的密度/pmf 具体形态</li><li><a class=\"net-wl\" data-id=\"条件分布\">条件分布</a> — 推广:条件从\"事件\"换成\"另一个随机变量的取值\"</li><li><a class=\"net-wl\" data-id=\"连续型条件概率\">连续型条件概率</a> — 连续场景的细化(L29)</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 6 原文用词</span><h2 class="sec-title">随机变量条件概率 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它锁定"条件"与"免赔额平移"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 6</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:16%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">conditional random variable</td><td class="ipa">/kənˈdɪʃənəl/</td><td><span class="pos n">n.</span></td><td>条件随机变量</td><td class="root">\(Y=X\mid \text{condition}\),有自己的分布</td></tr>
-          <tr><td class="en">conditional density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>条件密度函数</td><td class="root">条件 cdf 求导;\(f_{X\mid A}=f/P[A]\)</td></tr>
-          <tr><td class="en">distribution function</td><td class="ipa">/ˌdɪstrɪˈbjuːʃən/</td><td><span class="pos n">n.</span></td><td>分布函数(cdf)</td><td class="root">\(F(x)=\Pr(X\le x)\);微分得密度</td></tr>
-          <tr><td class="en">renormalize</td><td class="ipa">/riːˈnɔːməlaɪz/</td><td><span class="pos v">v.</span></td><td>重新归一化</td><td class="root">re-(再)+normalize;除以 \(P[A]\) 让面积回 1</td></tr>
-          <tr><td class="en">mixed random variable</td><td class="ipa">/mɪkst/</td><td><span class="pos n">n.</span></td><td>混合型随机变量</td><td class="root">离散质量点 + 连续密度(如 \(X=0\) 有正概率)</td></tr>
-          <tr><td class="en">deductible</td><td class="ipa">/dɪˈdʌktɪbəl/</td><td><span class="pos n">n.</span></td><td>免赔额</td><td class="root">deduct(扣除)→ 赔付 = 损失 − 免赔额</td></tr>
-          <tr><td class="en">positive payment</td><td class="ipa">/ˈpɒzətɪv/</td><td><span class="pos n">n.</span></td><td>正赔付</td><td class="root">损失超过免赔额才有的赔付,常作"条件"</td></tr>
-          <tr><td class="en">Bayes' Theorem</td><td class="ipa">/beɪz/</td><td><span class="pos n">n.</span></td><td>贝叶斯定理</td><td class="root">对随机变量同样成立,写法照搬事件版</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">given that … is positive</div><div class="z">已知……为正(引出条件,常配赔付)</div></div>
-        <div class="ph"><div class="e">subject to a deductible of d</div><div class="z">带 \(d\) 的免赔额</div></div>
-        <div class="ph"><div class="e">given that a payment is made</div><div class="z">已知有赔付发生(即 \(X>d\))</div></div>
-        <div class="ph"><div class="e">conditional distribution function</div><div class="z">条件分布函数</div></div>
-        <div class="ph"><div class="e">the loss amount is modeled as …</div><div class="z">损失额建模为……</div></div>
-        <div class="ph"><div class="e">given that it is at least …</div><div class="z">已知它至少为……</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 6</b> · 第六章 Conditional Probability for Random Variables 随机变量的条件概率</p>
@@ -580,5 +977,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

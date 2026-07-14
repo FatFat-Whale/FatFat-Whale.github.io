@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L10 · 众数</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -226,28 +296,99 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#def">定义</a>
   <a href="#solve">连续众数</a>
   <a href="#special">特例</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完众数你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 说清众数 = 让概率函数<b>取最大值</b>的取值:离散 \(\arg\max_x p(x)\),连续 \(\arg\max_x f(x)\)。</p>
-        <p style="margin-bottom:0">✅ 用 \(f'(x)=0\)(常配 \(\ln f\))求连续分布众数,并<b>验证是极大而非极小/拐点</b>。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>定义</h4>
+        <p>离散:\(\operatorname{mode}=\arg\max_x p(x)\)</p>
+        <p>连续:\(\operatorname{mode}=\arg\max_x f(x)\)</p>
+        <p>可多峰、可不唯一;样本众数 = 最频繁值</p>
+      </div>
+      <div class="cc t">
+        <h4>连续求法</h4>
+        <p><span class="fx-de" data-tip="推导:ln 单调不动 argmax,乘积/指数变加减,求导省力" tabindex="0">推</span>解 \(\dfrac{d}{dx}\ln f(x)=0\) 找临界点</p>
+        <p>验 \(\dfrac{d^2}{dx^2}\ln f&lt;0\) 为极大</p>
+        <p>常数因子可略;<b>务必比支撑端点</b></p>
+        <p>众数 ≠ 均值 ≠ 中位数(偏态分离)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>说清众数 = 让概率函数<b>取最大值</b>的取值:离散 \(\arg\max_x p(x)\),连续 \(\arg\max_x f(x)\);众数<b>可不唯一</b>(多峰 multimodal)。</li>
+          <li>用 \(f'(x)=0\)(常配 \(\ln f\))求连续分布众数,并<b>验证是极大</b>而非极小/拐点。</li>
+          <li><b>检查支撑端点</b>:导数无零点或端点密度更高时,众数落在边界。</li>
+          <li>分清<b>众数 ≠ 均值 ≠ 中位数</b>,偏态分布三者分离,别互相代入。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 记得<b>检查支撑端点</b>:导数无零点或端点密度更高时,众数在边界。</p>
-        <p style="margin-bottom:0">✅ 分清众数 ≠ 均值 ≠ 中位数,并处理<b>多峰(multimodal)</b>与不唯一的情形。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>关键词:<b>mode / most likely value / value that maximizes the density</b>。</li>
+          <li>密度给成 "\(f(x)\) is proportional to \(x^a e^{-bx}\)"(Gamma 形)→ 常数不用求,\(\ln f\) 求导得 \(\text{mode}=a/b\)(练 10.2 同型)。</li>
+          <li><b>单调递减密度</b>(如指数分布)→ 众数 = 支撑左端点(常为 0)。</li>
+          <li>离散题老老实实逐点比 \(p(x)\)(练 10.4);预告 L19:泊松众数 \(=\lfloor\lambda\rfloor\)(\(\lambda\) 为整数时 \(\lambda-1\) 与 \(\lambda\) 并列)。</li>
+          <li>陷阱:临界点不验极大、端点不比、把众数当均值/中位数互相代入。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="多峰分布">● 多峰分布</button><button class="chip" data-card="众数">◆ 众数</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 9 / 全章 16)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>10.1</b></td><td>单调递增密度:众数落右端点 + 联动中位数</td><td style="white-space:nowrap"><button class="kxb" data-kx="10.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">全章唯一「单调→众数在支撑边界」代表(110-S83:24 旧考题)</td></tr>
+<tr class="kxd" data-kxq="10.1" style="display:none"><td colspan="4"><div class="kx-qtx">Let the random variable \( X \) have the density function \( f(x) = kx \) for \( 0 &lt; x \le \sqrt{\frac{2}{k}} \), and \( 0 \) otherwise. If the mode of this distribution is at \( x = \frac{\sqrt{2}}{4} \), then what is the median of this distribution?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{\sqrt{2}}{6} \)</span><span class="kx-opt"><b>(B)</b> \( \frac{1}{4} \)</span><span class="kx-opt"><b>(C)</b> \( \frac{\sqrt{2}}{4} \)</span><span class="kx-opt"><b>(D)</b> \( \frac{\sqrt{2}}{24} \)</span><span class="kx-opt"><b>(E)</b> \( \frac{1}{2} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;递增密度众数取右端点</td><td>\( \sqrt{\tfrac{2}{k}} = \frac{\sqrt{2}}{4} \Rightarrow k = 16 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;积分得CDF</td><td>\( F(x) = \int_0^x 16u\,du = 8x^2 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;令F=0.5求中位数</td><td>\( 8x^2 = 0.5 \Rightarrow x = \frac{1}{4} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>10.2</b></td><td>Gamma 形 x^a·e^{−bx} 众数 = a/b</td><td style="white-space:nowrap"><button class="kxb" data-kx="10.2" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">招牌 Gamma 形题,§00 套路点名同型(110-S85:46 旧考题)</td></tr>
+<tr class="kxd" data-kxq="10.2" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) be a continuous random variable with density function \( f(x) = ax^2 e^{-bx} \) for \( x \ge 0 \), and \( 0 \) otherwise, where \( a &gt; 0 \) and \( b &gt; 0 \). What is the mode of \( X \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 0 \)</span><span class="kx-opt"><b>(B)</b> \( 2 \)</span><span class="kx-opt"><b>(C)</b> \( \frac{2}{b} \)</span><span class="kx-opt"><b>(D)</b> \( \frac{b}{2} \)</span><span class="kx-opt"><b>(E)</b> \( \infty \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;取对数化简</td><td>\( \ln f(x) = \ln a + 2\ln x - bx \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;求导置零</td><td>\( \frac{d\ln f}{dx} = \frac{2}{x} - b = 0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解得众数</td><td>\( x = \frac{2}{b} \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>10.4</b></td><td>离散众数:逐点比 p(n) 取最大</td><td style="white-space:nowrap"><button class="kxb" data-kx="10.4" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 套路点名的离散逐点比代表题</td></tr>
+<tr class="kxd" data-kxq="10.4" style="display:none"><td colspan="4"><div class="kx-qtx">\( X \) is a discrete random variable with the following probability function: \( P[n] = 0.2 \) for \( n = 0 \), \( P[n] = 0.1 \) for \( n = 1 \), \( P[n] = 0.7(0.5^{n-1}) \) for \( n = 2, 3, 4, 5, \ldots \), and \( 0 \) otherwise. Calculate the mode of \( X \).</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="2" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;n≥2 段递减,峰在 n=2</td><td>\( P[n+1] = 0.5\,P[n] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;算 P[2]</td><td>\( P[2] = 0.7(0.5^{1}) = 0.35 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;比 P[0]、P[1]</td><td>\( 0.35 > 0.2 > 0.1 \Rightarrow \text{mode}=2 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>10.5</b></td><td>比例密度 xe^{−x²},log 求导</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q144" type="button" title="展开题目与答案(样题 Q144)">▸</button>Q144</td><td class="dim" style="font-size:13px">现行样题,proportional 形 + log 化简范式(答 0.7071)</td></tr>
+<tr class="kxd kxds" data-kxq="Q144" style="display:none"><td colspan="4"><div class="kx-qtx">An insurer&#x27;s medical reimbursements have density function \(f\), where \(f(x)\) is proportional to
+
+\(xe^{-x^2}\), for \(0 &lt; x &lt; 1\), and 0, otherwise.
+
+Calculate the mode of the medical reimbursements.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.00</span><span class="kx-opt"><b>(B)</b> 0.50</span><span class="kx-opt"><b>(C)</b> 0.71</span><span class="kx-opt"><b>(D)</b> 0.84</span><span class="kx-opt"><b>(E)</b> 1.00</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;众数与比例常数无关</td><td>\( f(x)\propto x e^{-x^2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;密度求导置零</td><td>\( f'(x)=ce^{-x^2}(1-2x^2)=0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解出峰值点</td><td>\( x=(1/2)^{1/2}\approx 0.71 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q144" style="display:none"><td colspan="4"><div class="kx-qtx">An insurer&#x27;s medical reimbursements have density function \(f\), where \(f(x)\) is proportional to
+
+\(xe^{-x^2}\), for \(0 &lt; x &lt; 1\), and 0, otherwise.
+
+Calculate the mode of the medical reimbursements.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.00</span><span class="kx-opt"><b>(B)</b> 0.50</span><span class="kx-opt"><b>(C)</b> 0.71</span><span class="kx-opt"><b>(D)</b> 0.84</span><span class="kx-opt"><b>(E)</b> 1.00</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;众数与比例常数无关</td><td>\( f(x)\propto x e^{-x^2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;密度求导置零</td><td>\( f'(x)=ce^{-x^2}(1-2x^2)=0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解出峰值点</td><td>\( x=(1/2)^{1/2}\approx 0.71 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>10.6</b></td><td>二次多项式密度 x(4−x)</td><td style="white-space:nowrap"><button class="kxb" data-kx="10.6" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">最简多项式密度求导范式(110-S90:18 旧考题)</td></tr>
+<tr class="kxd" data-kxq="10.6" style="display:none"><td colspan="4"><div class="kx-qtx">Let \( X \) be a continuous random variable with density function \( f(x) = \frac{1}{9}x(4 - x) \) for \( 0 &lt; x &lt; 3 \), and \( 0 \) otherwise. What is the mode of \( X \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{4}{9} \)</span><span class="kx-opt"><b>(B)</b> \( 1 \)</span><span class="kx-opt"><b>(C)</b> \( \frac{3}{2} \)</span><span class="kx-opt"><b>(D)</b> \( \frac{7}{4} \)</span><span class="kx-opt"><b>(E)</b> \( 2 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;取对数求导置零</td><td>\( \frac{1}{x} - \frac{1}{4-x} = 0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;交叉相等</td><td>\( x = 4 - x \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解得众数</td><td>\( x = 2 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>10.7</b></td><td>Beta 形 x^5(1−x)^2 众数</td><td style="white-space:nowrap"><button class="kxb" data-kx="10.7" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">x^a(1−x)^b 型代表(区别于 Gamma 形,呼应 Example 10A)</td></tr>
+<tr class="kxd" data-kxq="10.7" style="display:none"><td colspan="4"><div class="kx-qtx">The distribution of the amount of time in hours your colleague spends on his lunch break has a density function proportional to \( x^5(1 - x)^2 \) for \( 0 &lt; x &lt; 1 \), \( 0 \) otherwise. Calculate the mode of this distribution.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.71429" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;取对数</td><td>\( \ln f(x) = 5\ln x + 2\ln(1-x) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;求导置零</td><td>\( \frac{5}{x} - \frac{2}{1-x} = 0 \Rightarrow 5(1-x) - 2x = 0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解得众数</td><td>\( x = \frac{5}{7} = 0.71429 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>10.8</b></td><td>先由 CDF 微分得密度再求众数</td><td style="white-space:nowrap"><button class="kxb" data-kx="10.8" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">CDF→pdf→mode 的独特二段式(1999 旧样题:39,非现行)</td></tr>
+<tr class="kxd" data-kxq="10.8" style="display:none"><td colspan="4"><div class="kx-qtx">The loss amount \( X \) for a medical insurance policy has cumulative distribution function \( F(x) = 0 \) for \( x &lt; 0 \), \( F(x) = \frac{1}{9}\left(2x^2 - \frac{x^3}{3}\right) \) for \( 0 \le x \le 3 \), and \( F(x) = 1 \) for \( x &gt; 3 \). Calculate the mode of the distribution.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \frac{2}{3} \)</span><span class="kx-opt"><b>(B)</b> \( 1 \)</span><span class="kx-opt"><b>(C)</b> \( \frac{3}{2} \)</span><span class="kx-opt"><b>(D)</b> \( 2 \)</span><span class="kx-opt"><b>(E)</b> \( 3 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;微分CDF得密度</td><td>\( f(x) = \frac{1}{9}(4x - x^2) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;密度求导置零</td><td>\( f'(x) = \frac{1}{9}(4 - 2x) = 0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解得众数</td><td>\( x = 2 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>10.9</b></td><td>商形密度 x²/(1+x³),log 求导</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q143" type="button" title="展开题目与答案(样题 Q143)">▸</button>Q143</td><td class="dim" style="font-size:13px">现行样题,商形密度 log 化简代表(答 1.2599)</td></tr>
+<tr class="kxd kxds" data-kxq="Q143" style="display:none"><td colspan="4"><div class="kx-qtx">The lifetime of a light bulb has density function, \(f\), where \(f(x)\) is proportional to
+
+\(\frac{x^2}{1+x^3}\), \(0 &lt; x &lt; 5\), and 0, otherwise.
+
+Calculate the mode of this distribution.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.00</span><span class="kx-opt"><b>(B)</b> 0.79</span><span class="kx-opt"><b>(C)</b> 1.26</span><span class="kx-opt"><b>(D)</b> 4.42</span><span class="kx-opt"><b>(E)</b> 5.00</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;众数与比例常数无关</td><td>\( f(x)\propto x^2(1+x^3)^{-1} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;密度求导置零</td><td>\( f'(x)=2cx(1+x^3)^{-1}-3cx^4(1+x^3)^{-2}=0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;化简解方程</td><td>\( 2-x^3=0 \Rightarrow x=2^{1/3}\approx 1.26 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q143" style="display:none"><td colspan="4"><div class="kx-qtx">The lifetime of a light bulb has density function, \(f\), where \(f(x)\) is proportional to
+
+\(\frac{x^2}{1+x^3}\), \(0 &lt; x &lt; 5\), and 0, otherwise.
+
+Calculate the mode of this distribution.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.00</span><span class="kx-opt"><b>(B)</b> 0.79</span><span class="kx-opt"><b>(C)</b> 1.26</span><span class="kx-opt"><b>(D)</b> 4.42</span><span class="kx-opt"><b>(E)</b> 5.00</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;众数与比例常数无关</td><td>\( f(x)\propto x^2(1+x^3)^{-1} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;密度求导置零</td><td>\( f'(x)=2cx(1+x^3)^{-1}-3cx^4(1+x^3)^{-2}=0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;化简解方程</td><td>\( 2-x^3=0 \Rightarrow x=2^{1/3}\approx 1.26 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>10.15</b></td><td>临界点求极大 + 必比支撑端点密度</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q374" type="button" title="展开题目与答案(样题 Q374)">▸</button>Q374</td><td class="dim" style="font-size:13px">现行样题,唯一强制「端点检验」防陷阱题(答 0.775)</td></tr>
+<tr class="kxd kxds" data-kxq="Q374" style="display:none"><td colspan="4"><div class="kx-qtx">A random variable X has density function \(f(x) = \frac{5}{72}\left[3(x-2)^2 - (x-2)^4 + 4\right]\) for \(0 &lt; x &lt; 3\), and 0 otherwise. Calculate the mode of the distribution.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.000</span><span class="kx-opt"><b>(B)</b> 0.775</span><span class="kx-opt"><b>(C)</b> 2.000</span><span class="kx-opt"><b>(D)</b> 3.000</span><span class="kx-opt"><b>(E)</b> The correct answer is not given by (A), (B), (C), or (D).</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;密度求导找驻点</td><td>\(f'(x)=\tfrac{5}{72}\left[6(x-2)-4(x-2)^3\right]=0\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;解驻点并排除域外</td><td>\(x=2,\ x=0.7753\ (x=3.2247\ \text{域外})\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr><tr><td>③&nbsp;驻点与端点比密度值</td><td>\(f(0.7753)=0.4340>f(3)=0.4167>f(2)\Rightarrow\text{mode}=0.775\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 6(同题型二刷备用)· 跳过 1(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -325,6 +466,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>\(\dfrac{d\ln f}{dx}=\dfrac{2}{x}-\dfrac{1}{1-x}=0\ \Rightarrow\ 2(1-x)-x=0\ \Rightarrow\ 2-3x=0\ \Rightarrow\ x=\dfrac23\)。</p>
       <p style="margin-bottom:0">验极大:\(\dfrac{d^{2}\ln f}{dx^{2}}=-\dfrac{2}{x^{2}}-\dfrac{1}{(1-x)^{2}}&lt;0\) 恒成立,故 \(x=\tfrac23\) 是极大点。</p>
       <span class="ans">mode = 2/3</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 扔归一化常数、取对数</td><td>\(\ln f(x)=\ln c+2\ln x+\ln(1-x)\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>② 求导令零解临界点</td><td>\(\tfrac{d\ln f}{dx}=\tfrac{2}{x}-\tfrac{1}{1-x}=0\ \Rightarrow\ x=\tfrac23\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>③ 二阶导验极大</td><td>\(\tfrac{d^2\ln f}{dx^2}=-\tfrac{2}{x^2}-\tfrac{1}{(1-x)^2}&lt;0\) 恒成立</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+        <tr><td>④ 比端点:支撑边界密度为 0,峰在内部</td><td>\(f(0^+)=f(1^-)=0&lt;f(\tfrac23)\)</td><td class="xr"><span class="here">本章 §02</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>为什么验二阶导:</b>\(f'=0\) 只说明是驻点,可能是极大、极小或拐点。考试常"默认"临界点即众数,但严谨起见(尤其只有一个临界点时)应确认 \(\ln f\) 的二阶导为负。</span></div>
   </div>
@@ -443,17 +592,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>关键词:<b>mode / most likely value / value that maximizes the density</b>。</li>
-        <li>密度给成 "\(f(x)\) is proportional to \(x^a e^{-bx}\)"(Gamma 形)→ 常数不用求,\(\ln f\) 求导得 \(\text{mode}=a/b\)(练 10.2 同型)。</li>
-        <li><b>单调递减密度</b>(如指数分布)→ 众数 = 支撑左端点(常为 0)。</li>
-        <li>离散题老老实实逐点比 \(p(x)\)(练 10.4);预告 L19:泊松众数 \(=\lfloor\lambda\rfloor\)(\(\lambda\) 为整数时 \(\lambda-1\) 与 \(\lambda\) 并列)。</li>
-        <li>陷阱:临界点不验极大、端点不比、把众数当均值/中位数互相代入。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Mode_(statistics)">Wikipedia · Mode (statistics)</a></div><div class="z">众数与均值、中位数的比较表 + "mean−median−mode"经验规则的适用与反例。</div><div class="u">en.wikipedia.org/wiki/Mode_(statistics)</div></div>
@@ -464,99 +602,275 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>忘检查端点</b>:\(f'\) 无内部零点时众数在支撑边界,最常丢分。</li>
-          <li><b>众数 ≠ 均值 ≠ 中位数</b>:偏态分布三者不同,别互相代入。</li>
-          <li><b>不验极大</b>:\(f'=0\) 可能是极小或拐点,配 \(\ln f\) 二阶导确认。</li>
-          <li><b>漏多峰</b>:并列最高时众数不唯一,离散题尤其要逐点比 \(p(x)\)。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 10.2</span>密度 \(ax^{2}e^{-bx}\),求连续众数(\(\ln f\) 求导)。</li>
-          <li><span class="ref">练 10.4</span>离散 \(P[n]\) 分段,直接比各点概率取最大。</li>
-          <li><span class="ref">练 10.9</span>灯泡寿命 \(f\propto \dfrac{x^{2}}{(1+x^{3})^{3}}\),求众数。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算/心算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>\(f(x)=cx^{2}(1-x)\) 于 \((0,1)\),众数 = ?(例 10A)</li>
-        <li>密度在支撑内<b>严格递减</b>,\(f'\) 无零点——众数在哪?</li>
-        <li>样本 \(\{1,3,1,2,2,3,4,2\}\) 的样本众数 = ?</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考答案:① \(2/3\);② 落在<b>左端点</b>(密度最大处即支撑下界);③ \(2\)(出现 3 次,最频繁)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat" style="background:linear-gradient(180deg,#fdf4fc,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 众数</h2></div></div>
-    <p class="sec-sub">短章,一张卡足矣。默得出这几行就算过关。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>定义</h4>
-        <p>离散:\(\operatorname{mode}=\arg\max_x p(x)\)</p>
-        <p>连续:\(\operatorname{mode}=\arg\max_x f(x)\)</p>
-        <p>可多峰、可不唯一;样本众数 = 最频繁值</p>
-      </div>
-      <div class="cc t">
-        <h4>连续求法</h4>
-        <p>解 \(\dfrac{d}{dx}\ln f(x)=0\) 找临界点</p>
-        <p>验 \(\dfrac{d^2}{dx^2}\ln f&lt;0\) 为极大</p>
-        <p>常数因子可略;<b>务必比支撑端点</b></p>
-        <p>众数 ≠ 均值 ≠ 中位数(偏态分离)</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "Beta分布": {
+  "kind": "c",
+  "en": "BetaDistribution",
+  "aliases": [
+   "beta distribution"
+  ],
+  "level": "advanced",
+  "chapter": "p-l15",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>支撑在 \\([0,1]\\) 上、由两个形状参数 \\(a,b\\) 控制的连续分布族,是连续均匀分布的<strong>推广</strong>:\\(a=b=1\\) 时退化为 \\(U(0,1)\\)。Exam P 仅要求了解。</p><p><strong>白话</strong>:想猜一枚不均匀硬币正面朝上的概率是多少——这个\"概率本身\"是个 0 到 1 之间的不确定数。Beta 分布就是给它建模的橡皮泥:捏 \\(a,b\\) 两个旋钮,形状可平、可鼓成钟形、可偏向一头。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x)\\propto x^{a-1}(1-x)^{b-1}\\ (0\\le x\\le 1),\\qquad \\mathrm{E}[X]=\\frac{a}{a+b}$$</div><ul><li>\\(a=b=1\\):密度恒定 → \\(U(0,1)\\)——\"均匀是 Beta 的特例\"是本卡唯一必记句。</li><li>均值 \\(\\frac{a}{a+b}\\) 好记:\\(a\\) 在 \\(a+b\\) 里的\"票数占比\"。</li><li>支撑天然落在 \\([0,1]\\),适合给\"概率本身\"建模(如二项参数 \\(p\\) 的不确定性)。</li><li>考试极少直接考;形状随 \\(a,b\\) 可平、可钟形、可 U 形。</li></ul><p><strong>算一遍</strong>:取 \\(a=2,\\ b=1\\)(给\"偏大\"多投一票)。</p><ul><li>密度 \\(\\propto x^{2-1}(1-x)^{1-1}=x\\):一条从 0 到 1 递增的斜线——硬币\"偏正面\"的可能性越大越受青睐。</li><li>均值 \\(=\\dfrac{a}{a+b}=\\dfrac{2}{3}\\):\\(a\\) 在总票数 3 里占 2 票。</li><li>换回 \\(a=b=1\\):密度 \\(\\propto x^0(1-x)^0=1\\) 恒定,正是 \\(U(0,1)\\)——\"均匀是 Beta 的特例\"验证 ✓。</li></ul><h4>与其他概念的关系</h4><ul><li>连续均匀分布 — \\(a=b=1\\) 的特例</li><li>伽马分布 — 亲缘分布族:两独立 Gamma 之比 \\(X/(X+Y)\\) 构成 Beta(了解)</li><li>先验后验概率 — 贝叶斯视角下常作二项 \\(p\\) 的先验</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 密度形状全由 \\(a,b\\) 两参数塑形</li></ul>"
+ },
+ "中位数": {
+  "kind": "c",
+  "en": "Median",
+  "aliases": [
+   "median",
+   "sample median",
+   "样本中位数"
+  ],
+  "level": "basic",
+  "chapter": "p-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>50 分位数——把概率(密度面积)对半劈开的位置。连续型解 \\(F(x)=0.5\\);ASM 对离散<strong>分布</strong>的中位数刻意不定义(可能无解或有一整段解),只定义<strong>样本中位数</strong>(排序取中)。</p><p><strong>白话</strong>:全班按身高排队,站正中间那个人的身高就是中位数——一半人比他矮、一半人比他高。它只管\"人数对半\",不管两头的人有多极端。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$F(\\pi_{0.5})=0.5\\qquad\\text{(连续型)}$$</div><ul><li>样本中位数:奇数个取排序后中间项;偶数个取中间两项<strong>平均</strong>,如 \\(\\{1,10,5,3,9,7\\}\\) 排序后 \\(=(5+7)/2=6\\)。</li><li>抗极端值:重尾分布下均值被大额索赔拖走,中位数稳得多——\"中位损失\"比\"平均损失\"更代表典型。</li><li>右偏分布:众数 &lt; 中位数 &lt; 均值,中位数居中。</li></ul><p><strong>算一遍</strong>:五个病人的索赔额(万元):1、2、3、4、90。</p><ul><li>排序取中:中位数 \\(=3\\)——一半人赔得比它少、一半比它多。</li><li>均值 \\(=(1+2+3+4+90)/5=20\\),被那笔 90 万拖飞。</li><li>报\"典型赔付\"时 3 比 20 实在得多——中位数抗极端值。</li></ul><h4>与其他概念的关系</h4><ul><li>百分位数 — \\(p=0.5\\) 的特例,定义与解法整套沿用</li><li>累积分布函数 — 解 \\(F=0.5\\) 的对象</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 另一个\"中心\":均值怕重尾,中位数抗拉扯</li><li><a class=\"net-wl\" data-id=\"众数\">众数</a> — 第三个\"中心\",偏态下三者分离</li><li>range 与 midrange — midrange 只看端点,与中位数是两回事</li></ul>"
+ },
+ "众数": {
+  "kind": "c",
+  "en": "Mode",
+  "aliases": [
+   "mode",
+   "most likely value"
+  ],
+  "level": "advanced",
+  "chapter": "p-l10",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>让概率函数取最大值的取值——离散取 pmf 最高点,连续取密度最高峰,即\"最可能出现/最扎堆\"的值。可以不唯一(并列最高全是众数);样本众数 = 样本中出现最频繁的值。</p><p><strong>白话</strong>:班里最常见的鞋码——卖鞋备货就先备它。众数就是\"人最扎堆\"的那个值;它和\"排队正中间\"(中位数)、\"总平均\"(均值)是三种不同口径的\"中心\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{离散}:\\ \\operatorname{mode}=\\arg\\max_x p(x)\\qquad\\qquad \\text{连续}:\\ \\operatorname{mode}=\\arg\\max_x f(x)$$</div><ul><li>连续三步:解 \\(\\dfrac{d}{dx}\\ln f(x)=0\\) 找临界点 → 验 \\(\\dfrac{d^2}{dx^2}\\ln f(x)&lt;0\\) 确认极大 → <strong>必比支撑端点</strong>的密度。</li><li>取 \\(\\ln\\) 不挪峰(对数严格递增、\\(\\arg\\max\\) 不变),把乘积/幂拆成加法;归一化常数求导即消,可直接扔。</li><li>\\(f'\\) 在支撑内无零点(单调密度)→ 众数落在<strong>支撑端点</strong>(如单调递减密度的众数 = 左端点)——最常丢分处。</li><li>例 10A:\\(f(x)=cx^2(1-x)\\) 于 \\((0,1)\\) → mode \\(=2/3\\)(即 Beta(3,2),套 \\(\\frac{\\alpha-1}{\\alpha+\\beta-2}\\) 可秒验)。</li><li>偏态下众数 ≠ 中位数 ≠ 均值;右偏:众数 &lt; 中位数 &lt; 均值。</li></ul><p><strong>算一遍</strong>:五个病人本月就诊次数:0、1、1、1、4。</p><ul><li>数频次:0 出现 1 次、1 出现 3 次、4 出现 1 次 → 众数 \\(=1\\)(最扎堆)。</li><li>三中心对照:中位数(排序取中)\\(=1\\);均值 \\(=7/5=1.4\\),被那个 4 拉高。</li><li>右偏的典型格局在此显形:众数 \\(1\\) ≤ 中位数 \\(1\\) &lt; 均值 \\(1.4\\)——极端值只拽得动均值。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续众数 = 密度的 \\(\\arg\\max\\)</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散众数 = pmf 的 \\(\\arg\\max\\),逐点比大小</li><li><a class=\"net-wl\" data-id=\"多峰分布\">多峰分布</a> — 并列最高 → 众数不唯一</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — 三个\"中心\"之一,偏态下分离</li><li><a class=\"net-wl\" data-id=\"泊松众数\">泊松众数</a> — 下游:泊松 mode \\(=\\lfloor\\lambda\\rfloor\\)</li><li><a class=\"net-wl\" data-id=\"Beta分布\">Beta分布</a> — 例 10A 本尊,mode 有闭式</li></ul>"
+ },
+ "偏度": {
+  "kind": "c",
+  "en": "Skewness",
+  "aliases": [
+   "skewness",
+   "kurtosis",
+   "峰度"
+  ],
+  "level": "basic",
+  "chapter": "p-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>三阶标准化中心矩 \\(\\gamma_1\\),度量分布不对称的方向与程度:正偏右尾长、负偏左尾长、对称为 0。同族的四阶版本是峰度(kurtosis),度量峰的尖钝;两者均无量纲。</p><p><strong>白话</strong>:收入分布的\"尾巴甩向哪边\":大多数人工资一般,少数富豪把右尾拉得老长——右偏、偏度为正;左右对称的钟形则偏度为 0。偏度就是给\"歪的方向和程度\"打的分。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\gamma_1=\\frac{E[(X-\\mu)^3]}{\\sigma^3}\\qquad\\qquad \\text{峰度}=\\frac{E[(X-\\mu)^4]}{\\sigma^4}$$</div><ul><li>正偏(right-skewed):长尾在右,均值被尾巴拖向右侧;负偏反之;对称分布偏度为 0。</li><li>右偏典型排序:众数 &lt; 中位数 &lt; 均值(峰在最左、均值被拉到最右)。</li><li>例 8A:两点 0/1 各 \\(1/2\\) → 对称,偏度 0;峰度 \\(=0.0625/0.25^2=1\\)。</li></ul><p><strong>算一遍</strong>:三个病人里两人零索赔、一人索赔 3(万元):\\(X=0\\)(概率 \\(2/3\\))或 \\(3\\)(概率 \\(1/3\\)),\\(\\mu=1\\)。</p><ul><li>三阶中心矩:\\((0-1)^3\\tfrac23+(3-1)^3\\tfrac13=-\\tfrac23+\\tfrac83=2\\)——右边那笔大索赔的正贡献压倒性胜出。</li><li>\\(\\sigma^2=(1)\\tfrac23+(4)\\tfrac13=2\\),\\(\\sigma^3=2\\sqrt2\\approx 2.83\\);\\(\\gamma_1=2/2.83\\approx +0.71\\) → 正偏,右尾长。</li><li>对照:公平硬币 0/1 的三阶中心矩是 \\((\\pm 0.5)^3\\) 各半,正负恰好抵消 → 偏度 0,对称 ✓</li></ul><h4>与其他概念的关系</h4><ul><li>矩 — 三/四阶中心矩标准化而来</li><li>标准差 — 标准化分母 \\(\\sigma^3\\)、\\(\\sigma^4\\)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 长尾把均值拖向尾侧</li><li><a class=\"net-wl\" data-id=\"中位数\">中位数</a> — 偏态下三个\"中心\"分离,中位数居中</li><li><a class=\"net-wl\" data-id=\"众数\">众数</a> — 偏态下贴着峰、离均值最远</li></ul>"
+ },
+ "多峰分布": {
+  "kind": "c",
+  "en": "MultimodalDistribution",
+  "aliases": [
+   "multimodal",
+   "bimodal",
+   "双峰分布"
+  ],
+  "level": "basic",
+  "chapter": "p-l10",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>概率函数有多个取值并列最高的分布——这些点都是众数(众数不唯一);两个峰的叫双峰(bimodal)。常由两个子总体混合而成(如男/女鞋码混在一起)。</p><p><strong>白话</strong>:一天的车流量在早八和晚六各鼓一个包——\"最堵的时刻\"不止一个;要说\"典型堵点\"得报两个峰,拿全天平均车流当典型反而指到中午的空档。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f(x_1^{*})=f(x_2^{*})=\\max_x f(x),\\qquad x_1^{*}\\neq x_2^{*}$$</div><ul><li>双峰最常见:两个局部最高点<strong>都是</strong>众数;离散题逐点比 \\(p(x)\\) 别漏并列。</li><li>成因直觉:两个总体各有峰,混合后两峰都保留。</li><li>均值可能落在两峰之间的低谷——最没人取的值:此时均值代表不了\"典型个体\",要靠众数。</li></ul><p><strong>算一遍</strong>:\\(X\\) 取 \\(1\\dots5\\),pmf 依次 \\(0.35,\\,0.1,\\,0.1,\\,0.1,\\,0.35\\)。</p><ul><li>逐点比高:最高值 \\(0.35\\) 在 \\(x=1\\) 和 \\(x=5\\) 并列出现 → 众数是 \\(\\{1,5\\}\\),双峰,一个都不能漏。</li><li>算均值:\\(1(0.35)+2(0.1)+3(0.1)+4(0.1)+5(0.35)=3\\)。</li><li>对照:均值 3 处 \\(p(3)=0.1\\),恰是谷底——\"平均值\"落在最没人取的地方,典型个体得看两个峰。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"众数\">众数</a> — 多峰 = 众数不唯一的情形</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 双峰下均值可能落谷底,不是典型值</li><li><a class=\"net-wl\" data-id=\"偏度\">偏度</a> — 同为分布\"形状\"描述:一个看峰的个数,一个看不对称</li></ul>"
+ },
+ "期望": {
+  "kind": "c",
+  "en": "ExpectedValue",
+  "aliases": [
+   "expected value",
+   "expectation",
+   "mean",
+   "期望值",
+   "均值"
+  ],
+  "level": "basic",
+  "chapter": "p-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>分布最核心的一个数:所有可能取值以概率为权重的<strong>加权平均</strong>,记 \\(E[X]=\\mu\\)。几何上是密度面积的<strong>质心(平衡点)</strong>——把概率想成质量,\\(\\mu\\) 就是支起整片面积不倾倒的支点。</p><p><strong>白话</strong>:一张彩票 10% 中 100 元、90% 中 0 元,玩一万次摊下来每次约拿 10 元——期望就是\"无限次重玩\"摊出来的每次平均,是给随机结果定价的那个数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[X]=\\sum_x x\\,p(x)\\qquad\\qquad E[X]=\\int_{-\\infty}^{\\infty}x\\,f(x)\\,dx$$</div><ul><li><strong>值乘权重加起来</strong>:离散逐点加、连续换积分,同一思想;权重和为 1,故 \\(E[X]\\) 落在取值范围内。</li><li>\\(E[X]\\) 不一定是可取到的值(例 7A:\\(p(x)=x/15\\) 得 \\(E[X]=11/3\\))——它是长期重复的平均,不是某个观测。</li><li>右偏分布的均值被长尾拉向右:远处一点点质量、力臂很长,也能拽动支点。</li><li><strong>期望可能不存在</strong>:和/积分发散(柯西分布、重尾损失 \\(f\\propto x^{-2}\\))则均值不存在;尾巴肥的先验证收敛。</li></ul><p><strong>算一遍</strong>:彩票 10% 中 100 元、90% 中 0 元,求期望奖金。</p><ul><li>值乘权重加起来:\\(E[X]=100(0.1)+0(0.9)=10\\) 元。</li><li>没有任何一张票真中过 10 元(要么 0 要么 100)——期望是长期平均,不必是可取到的值。</li><li>定价含义:票价 12 元的话,长期每张平均亏 2 元——期望正是定价基准。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 它最重要的数字概括</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散版权重来源:\\(\\sum x\\,p(x)\\)</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续版权重来源:\\(\\int x\\,f\\,dx\\)</li><li>LOTUS — 从 \\(E[X]\\) 推广到 \\(E[g(X)]\\) 的通道</li><li>期望的线性 — 期望算子最常用的运算性质</li><li>方差 — 下一章:围绕期望的离散程度</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li><li>免赔额与保单限额的期望计算 — 赔付变量截断/封顶后的期望套路</li></ul>"
+ },
+ "概率函数": {
+  "kind": "c",
+  "en": "ProbabilityMassFunction",
+  "aliases": [
+   "pmf",
+   "probability function",
+   "probability mass function",
+   "概率质量函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>离散随机变量的刻画工具:一张\"点 → 概率\"的表,\\(p(x)=P[X=x]\\)。离散分布由它完全决定,又叫概率质量函数(pmf)。</p><p><strong>白话</strong>:像一个分成若干扇形的抽奖转盘:每个可能取值占一块扇形,扇形大小就是它的概率,所有扇形拼起来正好一整圈。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$p(x)=P[X=x]\\qquad p(x)\\ge 0,\\quad \\sum_{\\text{all }x}p(x)=1$$</div><ul><li>两条<strong>合法性</strong>要求整块记:每点非负、全部加起来恰为 1(骰子 \\(p(x)=\\tfrac16\\),六项和为 1)。</li><li>概率是<strong>一根根柱子</strong>:高度 \\(=p(x)\\),柱高之和 \\(=1\\);求区间概率就把范围内的柱子加起来。</li><li>cdf 由 pmf 累加:\\(F(x)=\\sum_{t\\le x}p(t)\\),阶梯形、在每个质量点跳高 \\(p(x)\\)。</li><li>与连续的根本差别:离散每点 \\(P[X=x]&gt;0\\),\\(\\le\\) 与 \\(&lt;\\) <strong>不可</strong>随意互换。</li></ul><p><strong>算一遍</strong>:掷一枚均匀骰子,\\(p(x)=\\tfrac16\\)(\\(x=1,\\dots,6\\)),求 \\(P[X\\le2]\\)。</p><ul><li>合法性自检:六根柱子各 \\(\\tfrac16\\ge0\\),总和 \\(=1\\) ✓</li><li>区间概率 = 加柱子:\\(P[X\\le2]=p(1)+p(2)=\\tfrac13\\)。</li><li>对照:\\(P[X&lt;2]=p(1)=\\tfrac16\\ne P[X\\le2]\\)——离散下 \\(&lt;\\) 与 \\(\\le\\) 差一根柱子。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 离散随机变量由 pmf 完全刻画</li><li><a class=\"net-wl\" data-id=\"概率密度函数\">概率密度函数</a> — 连续对应物:数柱子 vs 量面积</li><li>累积分布函数 — \\(F(x)=\\sum_{t\\le x}p(t)\\):阶梯、跳高=p(x)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 用 pmf 加权求和:\\(E[X]=\\sum x\\,p(x)\\)</li><li>离散均匀分布 — 最简单的 pmf 实例(各点等概率)</li></ul>"
+ },
+ "概率密度函数": {
+  "kind": "c",
+  "en": "ProbabilityDensityFunction",
+  "aliases": [
+   "pdf",
+   "probability density function",
+   "density function",
+   "密度函数"
+  ],
+  "level": "basic",
+  "chapter": "p-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>连续随机变量的刻画工具:概率是密度曲线<strong>下方的面积</strong>,想要区间概率就积分。密度是分布函数的导数 \\(f(x)=F'(x)\\)。</p><p><strong>白话</strong>:把 1 千克沙子撒在数轴上,\\(f(x)\\) 是各处沙层的厚度:某点再厚,单看一个点也没有重量;铲起一段称重(积分)才是那段的概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[a\\le X\\le b]=\\int_a^b f(x)\\,dx\\qquad f(x)\\ge 0,\\quad\\int_{-\\infty}^{\\infty}f(x)\\,dx=1$$</div><ul><li><strong>密度 ≠ 概率</strong>:\\(f(x)\\) 的值可以大于 1(它是\"每单位长度的概率\",像人口密度);只有积分(面积)才是概率。</li><li><strong>连续下单点概率为 0</strong>:\\(P[X=x]=0\\),所以 \\(\\le\\) 与 \\(&lt;\\) 可随意互换——这对离散不成立。</li><li>方法套路:给含未知常数的密度 \\(f=c\\,g(x)\\),先用 \\(\\int f=1\\) 反解 \\(c\\),再积分求所求区间(例 5D:\\(f=x^2/21\\))。</li><li>与 cdf 互逆:\\(f=F'\\)、\\(F(x)=\\int_{-\\infty}^x f(t)\\,dt\\)。</li></ul><p><strong>算一遍</strong>:密度 \\(f(x)=cx\\),\\(0\\le x\\le2\\),先定 \\(c\\) 再求 \\(P[X\\le1]\\)。</p><ul><li>总面积为 1:\\(\\int_0^2 cx\\,dx=2c=1\\Rightarrow c=\\tfrac12\\)。</li><li>区间概率 = 面积:\\(P[X\\le1]=\\int_0^1 \\tfrac{x}{2}\\,dx=\\tfrac14\\)。</li><li>单点没面积:\\(P[X=1]=0\\),所以 \\(P[X&lt;1]=P[X\\le1]\\),随便换。</li></ul><h4>与其他概念的关系</h4><ul><li>随机变量 — 连续随机变量的刻画工具</li><li><a class=\"net-wl\" data-id=\"概率函数\">概率函数</a> — 离散对应物:pmf 堆在点上求和,pdf 摊在区间上积分</li><li>累积分布函数 — 求导/积分互逆:\\(f=F'\\)</li><li><a class=\"net-wl\" data-id=\"期望\">期望</a> — 用密度加权积分:\\(E[X]=\\int x\\,f(x)\\,dx\\)</li><li>积分限与支撑 — 密度非零的区域决定积分限</li><li>连续均匀分布 — 最简单的密度实例(平的)</li></ul><h4>应用视角</h4><ul><li>期望的横竖两切与求导积分链 — 定义式(竖切)与生存捷径(横切)的统一视角、选路决策</li></ul>"
+ },
+ "泊松众数": {
+  "kind": "c",
+  "en": "PoissonMode",
+  "aliases": [
+   "mode of Poisson distribution",
+   "successive-probability recursion"
+  ],
+  "level": "advanced",
+  "chapter": "p-l19",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>泊松相邻概率之比是 \\(\\lambda/k\\):比值 \\(&gt;1\\)(\\(k&lt;\\lambda\\))时概率上升、越过 \\(\\lambda\\) 后下降,故<strong>众数 \\(=\\lfloor\\lambda\\rfloor\\)</strong>;\\(\\lambda\\) 恰为整数时 \\(\\lambda-1\\) 与 \\(\\lambda\\) 并列双众数。</p><p><strong>白话</strong>:概率像爬山:从 \\(k-1\\) 走到 \\(k\\) 要乘一次 \\(\\lambda/k\\),\\(k\\) 还小于 \\(\\lambda\\) 时这一步大于 1、一路上坡,一过 \\(\\lambda\\) 就变小于 1、开始下坡——山顶自然落在 \\(\\lfloor\\lambda\\rfloor\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\frac{P[X=k]}{P[X=k-1]}=\\frac{\\lambda}{k}\\quad\\Longrightarrow\\quad P[X=k]=\\frac{\\lambda}{k}\\,P[X=k-1]$$</div><ul><li>递推比值干净,便于<strong>逐项累加</strong>求 \\(P[X\\ge k]\\) 或手算一串 pmf。</li><li>众数 \\(=\\lfloor\\lambda\\rfloor\\)(不超过 \\(\\lambda\\) 的最大整数);例:\\(\\lambda=6.5\\to\\) 众数 6。</li><li><strong>整数坑</strong>:\\(\\lambda=6\\) 时 \\(P[5]=P[6]\\),众数是 <strong>5 和 6 两个</strong>,别只报一个。</li><li>直觉:\\(\\lambda\\) 小 → 右偏、峰堆在 0;\\(\\lambda\\) 大 → 峰随 \\(\\lambda\\) 右移趋对称。</li></ul><p><strong>算一遍</strong>:\\(\\lambda=2.5\\),用比值逐步找峰。</p><ul><li>\\(\\dfrac{P[1]}{P[0]}=\\dfrac{2.5}{1}=2.5&gt;1\\) 升;\\(\\dfrac{P[2]}{P[1]}=\\dfrac{2.5}{2}=1.25&gt;1\\) 再升。</li><li>\\(\\dfrac{P[3]}{P[2]}=\\dfrac{2.5}{3}\\approx0.83&lt;1\\),开始下坡。</li><li>峰停在 \\(k=2=\\lfloor2.5\\rfloor\\) ✓;若 \\(\\lambda=3\\) 整数,则 \\(P[2]=P[3]\\),双众数。</li></ul><h4>与其他概念的关系</h4><ul><li>泊松分布 — 递推式由其 pmf 直接相除得到</li><li><a class=\"net-wl\" data-id=\"众数\">众数</a> — 上位概念:离散分布取 pmf 最大的点</li><li>泊松分布的矩 — 峰在均值 \\(\\lambda\\) 附近:众数 \\(\\le\\) 均值</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 10 原文用词</span><h2 class="sec-title">众数 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它认出"求众数"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 10</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:24%">English</th><th style="width:22%">音标</th><th style="width:7%">词性</th><th style="width:18%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">mode</td><td class="ipa">/moʊd/</td><td><span class="pos n">n.</span></td><td>众数</td><td class="root">拉丁 modus(方式/常态)→ 最常出现的值</td></tr>
-          <tr><td class="en">density function</td><td class="ipa">/ˈdɛnsɪti/</td><td><span class="pos n">n.</span></td><td>密度函数</td><td class="root">连续分布的 \(f(x)\),众数取其最大处</td></tr>
-          <tr><td class="en">maximize</td><td class="ipa">/ˈmæksɪmaɪz/</td><td><span class="pos v">v.</span></td><td>使最大化</td><td class="root">max(最大)→ 众数 = 让概率 maximize 的 \(x\)</td></tr>
-          <tr><td class="en">multimodal</td><td class="ipa">/ˌmʌltiˈmoʊdəl/</td><td><span class="pos adj">adj.</span></td><td>多峰的</td><td class="root">multi-(多)+ modal(众数)→ 多个众数</td></tr>
-          <tr><td class="en">mixed distribution</td><td class="ipa">/mɪkst/</td><td><span class="pos n">n.</span></td><td>混合分布</td><td class="root">离散 + 连续并存,众数定义有争议</td></tr>
-          <tr><td class="en">inflection point</td><td class="ipa">/ɪnˈflɛkʃən/</td><td><span class="pos n">n.</span></td><td>拐点</td><td class="root">\(f'=0\) 可能是拐点而非极大,须验二阶导</td></tr>
-          <tr><td class="en">endpoint</td><td class="ipa">/ˈɛndpɔɪnt/</td><td><span class="pos n">n.</span></td><td>端点</td><td class="root">支撑边界;\(f'\) 无零点时众数常在此</td></tr>
-          <tr><td class="en">skewed</td><td class="ipa">/skjuːd/</td><td><span class="pos adj">adj.</span></td><td>偏态的</td><td class="root">分布不对称 → 众数/中位数/均值分离</td></tr>
-          <tr><td class="en">point mass</td><td class="ipa">/pɔɪnt mæs/</td><td><span class="pos n">n.</span></td><td>点质量</td><td class="root">混合分布中质量点概率恒高于连续部分,众数落在点质量处(课本 p.173)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">calculate the mode of X</div><div class="z">求 X 的众数</div></div>
-        <div class="ph"><div class="e">the value that maximizes …</div><div class="z">使……最大的取值</div></div>
-        <div class="ph"><div class="e">the most likely value</div><div class="z">最可能的取值</div></div>
-        <div class="ph"><div class="e">appears most frequently</div><div class="z">出现最频繁(样本众数)</div></div>
-        <div class="ph"><div class="e">f(x) is proportional to …</div><div class="z">f(x) 正比于……(常数可略)</div></div>
-        <div class="ph"><div class="e">at which the density is greatest</div><div class="z">密度最大处</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 10</b> · 第十章 Mode 众数</p>
@@ -595,5 +909,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>

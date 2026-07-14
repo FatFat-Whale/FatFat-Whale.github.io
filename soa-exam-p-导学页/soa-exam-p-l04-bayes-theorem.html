@@ -182,6 +182,76 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   ol.routine{margin:8px 0 0;padding-left:24px}
   ol.routine li{margin:7px 0}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  /* ===== 本章知识卡片 chips + 概念卡弹窗(快照由 build-exam-p-e01-cards.py 注入) ===== */
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:12.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid var(--accent);border-radius:10px;padding:2px 10px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:var(--hi)}
+  .chip::after{content:" ▸";opacity:.6}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
 </style>
 </head>
 <body>
@@ -189,7 +259,7 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   <div class="wrap">
     <span class="logo">Exam&nbsp;P · <b>L04 · 贝叶斯定理</b></span>
     <span class="spacer"></span>
-    <span class="countdown"><span class="lbl">距考试</span><span class="big">14</span>天 · 7/16</span>
+    <span class="countdown" data-exam="2026-07-16" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 7/16</span>
   </div>
 </header>
 <div class="hero">
@@ -227,28 +297,90 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 </div>
 
 <nav class="modnav" aria-label="本章模块">
-  <a href="#goals">目标</a>
+  <a href="#cheat">核心</a>
   <a href="#total">全概率</a>
   <a href="#bayes">贝叶斯</a>
   <a href="#prior">先验后验</a>
   <a href="#insight">直觉拓展</a>
-  <a href="#test">自测</a>
-  <a href="#cheat">速查</a>
-  <a href="#vocab">词汇</a>
 </nav>
 
-<section id="goals" style="padding-bottom:8px">
+<section id="cheat" style="padding-bottom:8px">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-pre">本章目标</span><h2 class="sec-title">学完贝叶斯定理你应该能……</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <p style="margin-top:0">✅ 用<b>全概率公式</b> \(P[A]=\sum_i P[B_i]\,P[A\mid B_i]\) 把一个总概率拆成各分支的加权和。</p>
-        <p style="margin-bottom:0">✅ 识别"互斥且完备(mutually exclusive & exhaustive)"的一组事件,把它们当分类框架。</p>
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc">
+        <h4>全概率</h4>
+        <p>\(B_i\) 互斥 + 完备(并集 \(=\Omega\))</p>
+        <p><span class="fx-de" data-tip="推导:B_i 切干净 Ω:A 分成互斥的 A∩B_i,逐块乘法公式相加" tabindex="0">推</span>\(P[A]=\sum_i P[B_i]P[A\mid B_i]\)</p>
+        <p>每支路径概率 \(=P[B_i]P[A\mid B_i]\),含 A 的路径全加</p>
+      </div>
+      <div class="cc t">
+        <h4>贝叶斯</h4>
+        <p><span class="fx-de" data-tip="推导:P[A_j∩B] 两种拆法相等(两次乘法公式),分母是全概率展开" tabindex="0">推</span>\(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\)</p>
+        <p>分子 = 分母求和的第 \(j\) 项</p>
+        <p>先验 \(P[A_i]\) → 后验 \(P[A_i\mid B]\)</p>
+        <p>只需相对权重(乘常数不影响)</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>用<b>全概率公式</b> \(P[A]=\sum_i P[B_i]\,P[A\mid B_i]\) 把总概率拆成各分支的加权和;前提是先识别一组<b>互斥且完备(mutually exclusive & exhaustive)</b>的事件当分类框架。</li>
+          <li>用<b>贝叶斯定理</b> \(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\) 由结果反推原因。</li>
+          <li>分清<b>先验(prior)</b> \(P[A_i]\) 与<b>后验(posterior)</b> \(P[A_i\mid B]\),理解"分子是分母求和里的第 \(j\) 项"。</li>
+        </ul>
       </div>
       <div class="card">
-        <p style="margin-top:0">✅ 用<b>贝叶斯定理</b>由结果反推原因:\(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\)。</p>
-        <p style="margin-bottom:0">✅ 分清<b>先验(prior)</b>与<b>后验(posterior)</b>概率,理解"分子是分母求和里的一项"。</p>
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>题干形态几乎固定:给分组占比(<b>先验</b>)+ 各组出险/患病/合格率(<b>条件概率</b>),问"已知结果发生,属某组的概率"。信号词:<b>given that a claim has been submitted</b> / <b>it is found that…</b> / <b>of those who…</b>。</li>
+          <li>三步走:列表登记 \(P[A_i]\) 与 \(P[B\mid A_i]\) → 分母套全概率 → 分子挑第 \(j\) 项。</li>
+          <li>陷阱:直接拿 \(P[B\mid A_j]\) 当答案(方向反了);只算分子忘除分母;题面只给"可能性是两倍"这类<b>相对权重</b>时,直接令 1 和 2 代入即可,不必先归一。</li>
+        </ol>
       </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>🃏 本章知识卡片 <span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">点开看概念卡快照;卡片更新后重跑 build-exam-p-e01-cards.py</span></h3>
+      <div class="chips" style="margin-top:10px"><button class="chip" data-card="先验后验概率">● 先验后验概率</button><button class="chip" data-card="全概率公式">◆ 全概率公式</button><button class="chip" data-card="贝叶斯定理">★ 贝叶斯定理</button></div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 10 / 全章 47)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>4.1</b></td><td>全概率逆解:已知总占比反求某先验</td><td style="white-space:nowrap"><button class="kxb" data-kx="4.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">LTP 反向求未知先验的最干净入门题</td></tr>
+<tr class="kxd" data-kxq="4.1" style="display:none"><td colspan="4"><div class="kx-qtx">In a company, 10% of employees in their first five years earn 100,000 or more, and 20% of employees past their first five years earn 100,000 or more. Overall, 13% of employees earn 100,000 or more. Determine the proportion of employees in their first five years.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.7" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;设首五年占比x套全概率</td><td>\( 0.1x + 0.2(1-x) = 0.13 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;展开化简</td><td>\( 0.2 - 0.1x = 0.13 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解出比例</td><td>\( x = 0.7 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4.7</b></td><td>全概率+相对倍数(高中低风险死亡率)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q154" type="button" title="展开题目与答案(样题 Q154)">▸</button>Q154</td><td class="dim" style="font-size:13px">只给相对倍数、令低风险为x套全概率的范式题</td></tr>
+<tr class="kxd kxds" data-kxq="Q154" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company categorizes its policyholders into three mutually exclusive groups: high-risk, medium-risk, and low-risk. An internal study of the company showed that 45% of the policyholders are low-risk and 35% are medium-risk. The probability of death over the next year, given that a policyholder is high-risk is two times the probability of death of a medium-risk policyholder. The probability of death over the next year, given that a policyholder is medium-risk is three times the probability of death of a low-risk policyholder. The probability of death of a randomly selected policyholder, over the next year, is 0.009.
+
+Calculate the probability of death of a policyholder over the next year, given that the policyholder is high-risk.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0025</span><span class="kx-opt"><b>(B)</b> 0.0200</span><span class="kx-opt"><b>(C)</b> 0.1215</span><span class="kx-opt"><b>(D)</b> 0.2000</span><span class="kx-opt"><b>(E)</b> 0.3750</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;按吸烟层全概率展开</td><td>\( P[D]=P[H]P[D\mid H]+P[M]P[D\mid M]+P[L]P[D\mid L] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;倍数关系统一未知量</td><td>\( P[D\mid M]=\tfrac{1}{2}P[D\mid H],\ P[D\mid L]=\tfrac{1}{6}P[D\mid H] \)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>③&nbsp;解一元方程</td><td>\( 0.009=0.45P[D\mid H] \Rightarrow P[D\mid H]=0.02 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q154" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company categorizes its policyholders into three mutually exclusive groups: high-risk, medium-risk, and low-risk. An internal study of the company showed that 45% of the policyholders are low-risk and 35% are medium-risk. The probability of death over the next year, given that a policyholder is high-risk is two times the probability of death of a medium-risk policyholder. The probability of death over the next year, given that a policyholder is medium-risk is three times the probability of death of a low-risk policyholder. The probability of death of a randomly selected policyholder, over the next year, is 0.009.
+
+Calculate the probability of death of a policyholder over the next year, given that the policyholder is high-risk.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0025</span><span class="kx-opt"><b>(B)</b> 0.0200</span><span class="kx-opt"><b>(C)</b> 0.1215</span><span class="kx-opt"><b>(D)</b> 0.2000</span><span class="kx-opt"><b>(E)</b> 0.3750</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;按吸烟层全概率展开</td><td>\( P[D]=P[H]P[D\mid H]+P[M]P[D\mid M]+P[L]P[D\mid L] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;倍数关系统一未知量</td><td>\( P[D\mid M]=\tfrac{1}{2}P[D\mid H],\ P[D\mid L]=\tfrac{1}{6}P[D\mid H] \)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>③&nbsp;解一元方程</td><td>\( 0.009=0.45P[D\mid H] \Rightarrow P[D\mid H]=0.02 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>4.14</b></td><td>全概率正向加权(仅auto/仅home/both三分)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q7" type="button" title="展开题目与答案(样题 Q7)">▸</button>Q7</td><td class="dim" style="font-size:13px">把总体拆成互斥完备三块的 LTP 正向代表(S03:18)</td></tr>
+<tr class="kxd kxds" data-kxq="Q7" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company estimates that 40% of policyholders who have only an auto policy will renew next year and 60% of policyholders who have only a homeowners policy will renew next year. The company estimates that 80% of policyholders who have both an auto policy and a homeowners policy will renew at least one of those policies next year. Company records show that 65% of policyholders have an auto policy, 50% of policyholders have a homeowners policy, and 15% of policyholders have both an auto policy and a homeowners policy. Using the company&#x27;s estimates, calculate the percentage of policyholders that will renew at least one policy next year.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 20%</span><span class="kx-opt"><b>(B)</b> 29%</span><span class="kx-opt"><b>(C)</b> 41%</span><span class="kx-opt"><b>(D)</b> 53%</span><span class="kx-opt"><b>(E)</b> 70%</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;拆出仅车险部分</td><td>\(\Pr(A\cap H^c)=0.65-0.15=0.50\)</td><td class="xr"><a href="soa-exam-p-l01-sets.html">L01</a></td></tr><tr><td>②&nbsp;拆出仅房险部分</td><td>\(\Pr(A^c\cap H)=0.50-0.15=0.35\)</td><td class="xr"><a href="soa-exam-p-l01-sets.html">L01</a></td></tr><tr><td>③&nbsp;三块按续保率加权</td><td>\(0.4(0.5)+0.6(0.35)+0.8(0.15)=0.53\)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>4.16</b></td><td>标准贝叶斯后验(三类保单死亡反推)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q19" type="button" title="展开题目与答案(样题 Q19)">▸</button>Q19</td><td class="dim" style="font-size:13px">最经典 SOA 后验样题:死者是ultra-preferred的概率(S01:6)</td></tr>
+<tr class="kxd kxds" data-kxq="Q19" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance company issues life insurance policies in three separate categories: standard, preferred, and ultra-preferred. Of the company&#x27;s policyholders, 50% are standard, 40% are preferred, and 10% are ultra-preferred. Each standard policyholder has probability 0.010 of dying in the next year, each preferred policyholder has probability 0.005 of dying in the next year, and each ultra-preferred policyholder has probability 0.001 of dying in the next year. A policyholder dies in the next year. Calculate the probability that the deceased policyholder was ultra-preferred.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.0001</span><span class="kx-opt"><b>(B)</b> 0.0010</span><span class="kx-opt"><b>(C)</b> 0.0071</span><span class="kx-opt"><b>(D)</b> 0.0141</span><span class="kx-opt"><b>(E)</b> 0.2817</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;全概率求总死亡率</td><td>\(P[D]=(0.01)(0.50)+(0.005)(0.40)+(0.001)(0.10)\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;贝叶斯反推超优类</td><td>\(P[U|D]=\frac{(0.001)(0.10)}{P[D]}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;数值求商</td><td>\(0.0001/0.0071=0.0141\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>4.19</b></td><td>贝叶斯只需相对权重(死亡比1:2:4)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q21" type="button" title="展开题目与答案(样题 Q21)">▸</button>Q21</td><td class="dim" style="font-size:13px">相对权重直接代入、不必归一的招牌题(S03:31)</td></tr>
+<tr class="kxd kxds" data-kxq="Q21" style="display:none"><td colspan="4"><div class="kx-qtx">A health study tracked a group of persons for five years. At the beginning of the study, 20% were classified as heavy smokers, 30% as light smokers, and 50% as nonsmokers. Results of the study showed that light smokers were twice as likely as nonsmokers to die during the five-year study, but only half as likely as heavy smokers. A randomly selected participant from the study died during the five-year period. Calculate the probability that the participant was a heavy smoker.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.20</span><span class="kx-opt"><b>(B)</b> 0.25</span><span class="kx-opt"><b>(C)</b> 0.35</span><span class="kx-opt"><b>(D)</b> 0.42</span><span class="kx-opt"><b>(E)</b> 0.57</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;用关系统一似然基准</td><td>\(P[D|N]=\tfrac12 P[D|L],\ P[D|H]=2P[D|L]\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>②&nbsp;贝叶斯写重烟组后验</td><td>\(P[H|D]=\frac{2P[D|L](0.2)}{\tfrac12 P[D|L](0.5)+P[D|L](0.3)+2P[D|L](0.2)}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;约去公共因子求值</td><td>\(\frac{0.4}{0.25+0.3+0.4}=0.42\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>4.21</b></td><td>贝叶斯假阳性检验(疾病+误报率)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q24" type="button" title="展开题目与答案(样题 Q24)">▸</button>Q24</td><td class="dim" style="font-size:13px">医检假阳性直觉陷阱的标准代表(S00:33)</td></tr>
+<tr class="kxd kxds" data-kxq="Q24" style="display:none"><td colspan="4"><div class="kx-qtx">A blood test indicates the presence of a particular disease 95% of the time when the disease is actually present. The same test indicates the presence of the disease 0.5% of the time when the disease is not actually present. One percent of the population actually has the disease. Calculate the probability that a person actually has the disease given that the test indicates the presence of the disease.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.324</span><span class="kx-opt"><b>(B)</b> 0.657</span><span class="kx-opt"><b>(C)</b> 0.945</span><span class="kx-opt"><b>(D)</b> 0.950</span><span class="kx-opt"><b>(E)</b> 0.995</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;列先验与两侧似然</td><td>\(P[D]=0.01,\ P[Y|D]=0.95,\ P[Y|D^c]=0.005\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;贝叶斯反推患病率</td><td>\(P[D|Y]=\frac{(0.95)(0.01)}{(0.95)(0.01)+(0.005)(0.99)}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;数值求商</td><td>\(0.0095/0.01445=0.657\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>4.17</b></td><td>贝叶斯组合数转移(球从I搬到II反推)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q186" type="button" title="展开题目与答案(样题 Q186)">▸</button>Q186</td><td class="dim" style="font-size:13px">转移型贝叶斯配组合数的干净代表</td></tr>
+<tr class="kxd kxds" data-kxq="Q186" style="display:none"><td colspan="4"><div class="kx-qtx">Bowl I contains eight red balls and six blue balls. Bowl II is empty. Four balls are selected at random, without replacement, and transferred from bowl I to bowl II. One ball is then selected at random from bowl II.
+
+Calculate the conditional probability that two red balls and two blue balls were transferred from bowl I to bowl II, given that the ball selected from bowl II is blue.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.21</span><span class="kx-opt"><b>(B)</b> 0.24</span><span class="kx-opt"><b>(C)</b> 0.43</span><span class="kx-opt"><b>(D)</b> 0.49</span><span class="kx-opt"><b>(E)</b> 0.57</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;目标为条件概率</td><td>\( P(2红2蓝\mid 蓝)=\dfrac{P(2红2蓝\cap 蓝)}{P(蓝)} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;分子超几何乘抽蓝</td><td>\( \dfrac{\binom{8}{2}\binom{6}{2}}{\binom{14}{4}}\cdot\dfrac{2}{4}=\dfrac{840}{4004} \)</td><td class="xr"><a href="soa-exam-p-l02-combinatorics.html">L02</a></td></tr><tr><td>③&nbsp;分母全概率求和</td><td>\( P(蓝)=\dfrac{60+480+840+336}{4004}=\dfrac{1716}{4004} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;相除</td><td>\( 840/1716=0.49 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr class="kxd kxds" data-kxq="Q186" style="display:none"><td colspan="4"><div class="kx-qtx">Bowl I contains eight red balls and six blue balls. Bowl II is empty. Four balls are selected at random, without replacement, and transferred from bowl I to bowl II. One ball is then selected at random from bowl II.
+
+Calculate the conditional probability that two red balls and two blue balls were transferred from bowl I to bowl II, given that the ball selected from bowl II is blue.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 0.21</span><span class="kx-opt"><b>(B)</b> 0.24</span><span class="kx-opt"><b>(C)</b> 0.43</span><span class="kx-opt"><b>(D)</b> 0.49</span><span class="kx-opt"><b>(E)</b> 0.57</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;目标为条件概率</td><td>\( P(2红2蓝\mid 蓝)=\dfrac{P(2红2蓝\cap 蓝)}{P(蓝)} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;分子超几何乘抽蓝</td><td>\( \dfrac{\binom{8}{2}\binom{6}{2}}{\binom{14}{4}}\cdot\dfrac{2}{4}=\dfrac{840}{4004} \)</td><td class="xr"><a href="soa-exam-p-l02-combinatorics.html">L02</a></td></tr><tr><td>③&nbsp;分母全概率求和</td><td>\( P(蓝)=\dfrac{60+480+840+336}{4004}=\dfrac{1716}{4004} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;相除</td><td>\( 840/1716=0.49 \)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr>
+<tr><td><b>4.22</b></td><td>贝叶斯反解无条件概率(由后验求患病率)</td><td style="white-space:nowrap"><button class="kxb" data-kx="4.22" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">给后验反求总体患病率的独特反向题</td></tr>
+<tr class="kxd" data-kxq="4.22" style="display:none"><td colspan="4"><div class="kx-qtx">A blood test indicates the presence of a particular disease 95% of the time when the disease is actually present. Given that the blood test is positive for the disease, the probability that the disease is present is 50%. The blood test is positive 4% of the time. Calculate the percentage of the population that has the disease.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.021053" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;贝叶斯反解列式</td><td>\( 0.95 = \dfrac{(0.5)(0.04)}{P[A]} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;解出患病率</td><td>\( P[A] = \dfrac{0.02}{0.95} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求值</td><td>\( = 0.021053 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4.29</b></td><td>贝叶斯缺先验先用全概率补(偏好/坏信用)</td><td style="white-space:nowrap"><button class="kxb" data-kx="4.29" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">分母先验缺失、须先LTP求P[B]再贝叶斯的综合题</td></tr>
+<tr class="kxd" data-kxq="4.29" style="display:none"><td colspan="4"><div class="kx-qtx">An insurance coverage has two underwriting classifications: standard and preferred. 80% of all policyholders are preferred. Given that a policyholder has a good credit record, the probability the policyholder is preferred is 90%. Given that a policyholder has a bad credit record, the probability that the policyholder is preferred is 50%. Calculate the probability that a preferred policyholder has a bad credit record.</div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="0.15625" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;缺先验先全概率列式</td><td>\( 0.8 = 0.5\,P[B] + 0.9(1-P[B]) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;解坏信用先验</td><td>\( P[B] = 0.25 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;贝叶斯求后验</td><td>\( P[B\mid P] = \dfrac{(0.5)(0.25)}{0.8} = 0.15625 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>4.44</b></td><td>贝叶斯求后验再预测未来(硬币两正后第三次)</td><td style="white-space:nowrap"><button class="kxb" data-kx="Q408" type="button" title="展开题目与答案(样题 Q408)">▸</button>Q408</td><td class="dim" style="font-size:13px">先后验再预测下一次结果的两段式代表</td></tr>
+<tr class="kxd kxds" data-kxq="Q408" style="display:none"><td colspan="4"><div class="kx-qtx">A purse contains two coins, one fair and one two-headed. One of the coins is selected at random and tossed twice. Both tosses result in heads. Calculate the probability that a third toss of the selected coin will result in heads.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1/2</span><span class="kx-opt"><b>(B)</b> 9/16</span><span class="kx-opt"><b>(C)</b> 5/8</span><span class="kx-opt"><b>(D)</b> 4/5</span><span class="kx-opt"><b>(E)</b> 9/10</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;嵌套事件条件概率</td><td>\(P(HHH\mid HH)=\dfrac{P(HHH)}{P(HH)}\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03</a></td></tr><tr><td>②&nbsp;全概率算P(HH)</td><td>\(\tfrac14\cdot\tfrac12+1\cdot\tfrac12=\tfrac58\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;全概率算P(HHH)</td><td>\(\tfrac18\cdot\tfrac12+1\cdot\tfrac12=\tfrac{9}{16}\)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;相除</td><td>\(\dfrac{9/16}{5/8}=\dfrac{9}{10}\)</td><td class="xr"><a href="soa-exam-p-calculus.html">∫ 微积分</a></td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 33(同题型二刷备用)· 跳过 4(离题/重复);全量评级存 _Meta/tools/data/exam-p-key-exercises.json</p>
     </div>
   </div>
 </section>
@@ -294,8 +426,8 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
           <line x1="29" y1="95" x2="96" y2="75" stroke="#0b6b60" stroke-width="1.4"/>
           <line x1="29" y1="95" x2="96" y2="120" stroke="#0b6b60" stroke-width="1.4"/>
           <line x1="29" y1="95" x2="96" y2="165" stroke="#0b6b60" stroke-width="1.4"/>
-          <text x="52" y="52" font-size="10" fill="#0b6b60">P[B₁]</text>
-          <text x="52" y="93" font-size="10" fill="#0b6b60">P[B₂]</text>
+          <text x="60" y="36" font-size="10" fill="#0b6b60">P[B₁]</text>
+          <text x="64" y="72" font-size="10" fill="#0b6b60">P[B₂]</text>
           <text x="52" y="163" font-size="10" fill="#0b6b60">P[Bₙ]</text>
           <text x="100" y="34" font-size="12" font-style="italic" fill="#16243d">B₁</text>
           <text x="100" y="79" font-size="12" font-style="italic" fill="#16243d">B₂</text>
@@ -334,6 +466,13 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>用全概率公式,\(A\)="投 Sue 票",按类别加权求和:</p>
       <p>\((0.6)(0.55)+(0.2)(0.35)+(0.1)(0.5)+(0.05)(0.8)+(0.05)(0.1)\)<br>\(=0.33+0.07+0.05+0.04+0.005=0.495\)。</p>
       <span class="ans">Sue Acer 得票 = 49.5%</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 认结构:5 类互斥且完备 → 全概率开路</td><td>\(B_i\) 两两不交、\(\bigcup B_i=\Omega\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 每条支路连乘(乘法律)</td><td>\(P[A\cap B_i]=P[B_i]\,P[A\mid B_i]\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率 ↗</a></td></tr>
+        <tr><td>③ 全概率公式加权求和</td><td>\(P[A]=\sum_i P[B_i]\,P[A\mid B_i]=0.495\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
   </div>
 </section>
@@ -404,6 +543,14 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <p>记 \(A_1\)=Type I、\(A_2\)=Type II、\(B\)=出险。<b>先验</b> \(P[A_1]=0.8,\ P[A_2]=0.2\);\(P[B\mid A_1]=0.1,\ P[B\mid A_2]=0.3\)。贝叶斯:</p>
       <p>$$P[A_2\mid B]=\frac{P[A_2]P[B\mid A_2]}{P[A_1]P[B\mid A_1]+P[A_2]P[B\mid A_2]}=\frac{(0.2)(0.3)}{(0.8)(0.1)+(0.2)(0.3)}=\frac{0.06}{0.14}=\frac{3}{7}$$</p>
       <span class="ans">P[A₂ | B] = 3/7 ≈ 0.4286</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 登记先验与各型条件概率</td><td>\(P[A_1]=0.8,\ P[A_2]=0.2;\ \ P[B\mid A_1]=0.1,\ P[B\mid A_2]=0.3\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 分子:关心那支连乘(乘法律)</td><td>\(P[A_2\cap B]=P[A_2]\,P[B\mid A_2]=0.06\)</td><td class="xr"><a href="soa-exam-p-l03-conditional-probability.html">L03 条件概率 ↗</a></td></tr>
+        <tr><td>③ 分母:全概率(每个原因走一遍)</td><td>\(P[B]=\sum_i P[A_i]\,P[B\mid A_i]=0.14\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>④ 贝叶斯归一化得后验</td><td>\(P[A_2\mid B]=\dfrac{P[A_2]P[B\mid A_2]}{\sum_i P[A_i]P[B\mid A_i]}=\dfrac{3}{7}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
     </div>
     <div class="note"><span class="ic">📝</span><span class="t"><b>先验 → 后验的更新:</b>没看到出险前,认为他是 Type II 的概率(<b>先验 prior</b>)只有 \(0.2\);观测到"出险"这个证据后,概率升到 \(3/7\approx0.43\)(<b>后验 posterior</b>)——出险这件事,让"高风险型"的嫌疑变大了。</span></div>
   </div>
@@ -493,15 +640,6 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
     </div>
 
     <div class="card">
-      <h3>🎯 SOA 题型套路</h3>
-      <ol class="dim routine">
-        <li>题干形态几乎固定:给分组占比(<b>先验</b>)+ 各组出险/患病/合格率(<b>条件概率</b>),问"已知结果发生,属某组的概率"。信号词:<b>given that a claim has been submitted</b> / <b>it is found that…</b> / <b>of those who…</b>。</li>
-        <li>三步走:列表登记 \(P[A_i]\) 与 \(P[B\mid A_i]\) → 分母套全概率 → 分子挑第 \(j\) 项。</li>
-        <li>陷阱:直接拿 \(P[B\mid A_j]\) 当答案(方向反了);只算分子忘除分母;题面只给"可能性是两倍"这类<b>相对权重</b>时,直接令 1 和 2 代入即可,不必先归一。</li>
-      </ol>
-    </div>
-
-    <div class="card">
       <h3>📚 扩展阅读(精选)</h3>
       <div class="xread">
         <div class="xr"><div class="e"><a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">3Blue1Brown · Bayes theorem</a></div><div class="z">用面积图把"分子是分母的一块"画给你看,15 分钟建立可复用的几何直觉。</div><div class="u">youtube.com/watch?v=HZGCoVF3YvM</div></div>
@@ -512,99 +650,289 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   </div>
 </section>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">巩固</span><h2 class="sec-title">易错点 + 自测</h2></div></div>
-    <div class="grid2">
-      <div class="card">
-        <h3>⚠️ 高频易错点</h3>
-        <ul class="clean" style="margin-top:6px">
-          <li><b>\(P[A\mid B]\) vs \(P[B\mid A]\) 混向</b>:题给出险率 \(P[B\mid A_i]\),求 \(P[A_j\mid B]\),必须走贝叶斯翻方向。</li>
-          <li><b>忘记除以分母(全概率)</b>:只算分子 \(P[A_j]P[B\mid A_j]\) 不归一化,得到的不是概率。</li>
-          <li><b>先验 / 后验搞反</b>:题给的比例是先验 \(P[A_i]\);算出的 \(P[A_i\mid B]\) 才是后验。</li>
-          <li><b>\(B_i\) 未必互斥完备</b>:全概率/贝叶斯的前提是这组事件两两不交、并集为 \(\Omega\),用前先确认。</li>
-        </ul>
+
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
       </div>
-      <div class="card">
-        <h3>📝 课本自测(做完对答案)</h3>
-        <p class="src" style="margin-top:0">先自己做,再翻课本 Solutions 核对。</p>
-        <ul class="clean selftest">
-          <li><span class="ref">练 4.1</span>员工前五年收入分层(10%/13% 挣 ≥10万),求整体挣 ≥10万比例——全概率。</li>
-          <li><span class="ref">练 4.3</span>驾驶员高/低风险,已知次年出事故,反求被归为高风险的概率——贝叶斯翻方向。</li>
-          <li><span class="ref">练 4.5</span>学生考 1 月或 2 月场,已知通过,求两场都过的概率。</li>
-          <li><span class="ref">练 4.6</span>委员会成员分 X/Y、男/女,已知是 Y,求是男的概率——贝叶斯。</li>
-        </ul>
-      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
     </div>
-    <div class="card accent">
-      <h3>🔎 60 秒快测(口算)</h3>
-      <ul class="clean" style="margin-top:6px">
-        <li>某病人群 1% 患病;检测对患者阳性率 90%,对健康者误阳 9%。随机一人阳性,患病的后验约多少?(写出贝叶斯式即可)</li>
-        <li>两袋:甲袋红球占比 0.3、乙袋 0.6,各半概率抽袋。抽到红球,来自乙袋的概率?</li>
-        <li>先验 \(P[A_1]=P[A_2]=0.5\),\(P[B\mid A_1]=0.2,\ P[B\mid A_2]=0.4\),求 \(P[A_1\mid B]\)。</li>
-      </ul>
-      <div class="note tip"><span class="ic">✅</span><span class="t">参考:① \(\dfrac{(0.01)(0.9)}{(0.01)(0.9)+(0.99)(0.09)}\approx0.092\);② \(\dfrac{(0.5)(0.6)}{(0.5)(0.3)+(0.5)(0.6)}=\dfrac{0.30}{0.45}=\dfrac{2}{3}\);③ \(\dfrac{(0.5)(0.2)}{(0.5)(0.2)+(0.5)(0.4)}=\dfrac{0.1}{0.3}=\dfrac13\)。</span></div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
     </div>
   </div>
-</section>
+</div>
+<!--CARD_POPUP_HTML_END-->
 
-<section id="cheat" style="background:linear-gradient(180deg,#f0faf8,#f5f6f9 200px)">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-pre">收尾</span><h2 class="sec-title">公式速查卡 · 贝叶斯定理</h2></div></div>
-    <p class="sec-sub">学完今天,这张卡随手能默写,就算过关了。</p>
-    <div class="cheat">
-      <div class="cc">
-        <h4>全概率</h4>
-        <p>\(B_i\) 互斥 + 完备(并集 \(=\Omega\))</p>
-        <p>\(P[A]=\sum_i P[B_i]P[A\mid B_i]\)</p>
-        <p>每支路径概率 \(=P[B_i]P[A\mid B_i]\),含 A 的路径全加</p>
-      </div>
-      <div class="cc t">
-        <h4>贝叶斯</h4>
-        <p>\(P[A_j\mid B]=\dfrac{P[A_j]P[B\mid A_j]}{\sum_i P[A_i]P[B\mid A_i]}\)</p>
-        <p>分子 = 分母求和的第 \(j\) 项</p>
-        <p>先验 \(P[A_i]\) → 后验 \(P[A_i\mid B]\)</p>
-        <p>只需相对权重(乘常数不影响)</p>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "乘法公式": {
+  "kind": "c",
+  "en": "MultiplicationRule",
+  "aliases": [
+   "multiplication rule",
+   "乘法律",
+   "乘法定理"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>求\"两件事都发生\"的主力公式:交集概率 = 第一步的概率 × 第一步之下第二步的条件概率。由条件概率定义两边乘 \\(P[B]\\) 直接变形而来。</p><p><strong>白话</strong>:闯两道关卡才算通关:总通关率 = 第一关的通过率 × \"已过第一关的人\"里第二关的通过率。第二关的分母已经缩成过了第一关的那批人——所以乘的是条件概率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\cap B]=P[B]\\,P[A\\mid B]=P[A]\\,P[B\\mid A]$$</div><ul><li>哪个事件当\"第一步\"都行,选条件概率已知的那一边。</li><li><strong>连抽不放回就是连乘</strong>:每抽一步世界缩一次、概率乘一次;可链式推广 \\(P[A_1\\cap A_2\\cap A_3]=P[A_1]\\,P[A_2\\mid A_1]\\,P[A_3\\mid A_1\\cap A_2]\\)。</li><li>高频坑:题面给 \\(P[A\\mid B]\\) 却问 \\(P[A\\cap B]\\)(要乘 \\(P[B]\\)),或反过来——别把条件概率当交集概率用。</li><li>独立时退化为 \\(P[A\\cap B]=P[A]P[B]\\)(条件概率=无条件概率)。</li></ul><p><strong>算一遍</strong>:袋里 3 红 2 白,不放回连摸两颗,求两颗全红。</p><ul><li>第一步:\\(P[\\text{红}_1]=3/5\\)。</li><li>第二步:摸走一颗红后剩 2 红 2 白,\\(P[\\text{红}_2\\mid\\text{红}_1]=2/4=1/2\\)。</li><li>相乘:\\(\\dfrac{3}{5}\\times\\dfrac{1}{2}=\\dfrac{3}{10}\\)——世界缩一次、概率乘一次。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 定义 \\(P[A\\mid B]=P[A\\cap B]/P[B]\\) 两边乘 \\(P[B]\\) 的变形</li><li>事件独立性 — 独立时条件项退化为无条件项,交集直接相乘</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 每条分支先用乘法公式算 \\(P[B_i]\\,P[A\\mid B_i]\\) 再求和</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 分子与分母各项都是乘法公式展开的交集概率</li></ul>"
+ },
+ "互斥事件": {
+  "kind": "c",
+  "en": "MutuallyExclusiveEvents",
+  "aliases": [
+   "互斥",
+   "互斥事件",
+   "不相容事件",
+   "mutually exclusive"
+  ],
+  "level": "basic",
+  "chapter": "p-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>两事件满足 \\(A\\cap B=\\varnothing\\),即不可能同时发生(Venn 图上两圆不相交)。</p><p><strong>白话</strong>:掷一次骰子,\"出 1 点\"和\"出 6 点\"不可能一起来——一次只能朝上一个面。两件事势不两立,问\"其中之一发生\"的概率,直接把两个概率相加即可。</p><h4>关键性质 / 公式</h4><ul><li>互斥 \\(\\Rightarrow P[A\\cup B]=P[A]+P[B]\\)(容斥里交集项为 0)。</li><li><strong>互斥 ≠ 独立</strong>:互斥是集合层面\"不能同时发生\";独立是概率层面 \\(P[A\\cap B]=P[A]P[B]\\)(后续章节),两者常被混淆。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 出 1 点(\\(1/6\\)),\\(B=\\) 出 6 点(\\(1/6\\))。</p><ul><li>交集:一次投掷不可能又是 1 又是 6,\\(P[A\\cap B]=0\\)——互斥。</li><li>并:\\(P[A\\cup B]=\\dfrac16+\\dfrac16=\\dfrac13\\)——交集项为零,直接相加。</li><li>对照独立:\\(P[A]P[B]=1/36\\ne 0\\),所以这对互斥事件<strong>不独立</strong>——知道出了 1,B 的概率瞬间归零,信息量极大。</li></ul><h4>与其他概念的关系</h4><ul><li>概率公理 — 可数可加公理正是对互斥事件成立</li><li>容斥原理 — 互斥是其退化特例</li><li>德摩根定律 — 同属集合运算工具</li></ul>"
+ },
+ "先验后验概率": {
+  "kind": "c",
+  "en": "PriorAndPosteriorProbability",
+  "aliases": [
+   "prior probability",
+   "posterior probability",
+   "prior",
+   "posterior",
+   "先验概率",
+   "后验概率"
+  ],
+  "level": "basic",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>先验概率</strong> \\(P[A_i]\\) 是观测到证据 B <strong>之前</strong>对各原因的概率判断(题面给的初始/整体比例);<strong>后验概率</strong> \\(P[A_i\\mid B]\\) 是观测到证据<strong>之后</strong>用贝叶斯定理更新出的概率。一先一后,本质是\"用证据更新信念\"。</p><p><strong>白话</strong>:医生看病:病人还没做检查时,凭\"这种病流行率约 1%\"心里先有个底(先验);化验单一出,把证据算进去,把握就更新成一个新数字(后验)。先验是老底,后验是看过证据后的新底。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{先验 } P[A_i]\\;\\xrightarrow{\\;\\text{观测到证据 } B\\;}\\;\\text{后验 } P[A_i\\mid B]$$</div><ul><li>先验从哪来:题面直接给的分组占比(如 80% 是 Type I);后验从哪来:贝叶斯定理的<strong>输出</strong>。</li><li>证据会移动概率:出险后\"高风险型\"的概率从先验 0.2 升到后验 3/7 ≈ 0.43。</li><li><strong>只需相对权重</strong>:先验同乘常数不影响后验——\"A₂ 的可能性是 A₁ 的两倍\"直接令 \\(P[A_1]=1,P[A_2]=2\\) 代入,不必先归一。</li><li>读题定位:随机抽取的整体比例=先验;\"given that … occurred\"之后要求的=后验。</li></ul><p><strong>算一遍</strong>:100 个投保人,20 个高风险(先验 \\(0.2\\))、80 个低风险;高风险出险率 \\(50\\%\\),低风险 \\(10\\%\\)。</p><ul><li>数出险人头:高风险 \\(20\\times 0.5=10\\) 人,低风险 \\(80\\times 0.1=8\\) 人,共 18 人。</li><li>已知某人出险,他是高风险的后验 \\(=10/18=5/9\\approx 0.56\\)。</li><li>证据把概率从 \\(0.2\\) 推到 \\(0.56\\)——\"出险\"这条证据大幅加重了高风险的嫌疑。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 先验进、后验出的更新引擎</li><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 后验就是\"给定证据\"的条件概率</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 归一化分母:把各先验权重摊到证据上</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "全期望公式": {
+  "kind": "c",
+  "en": "LawOfTotalExpectation",
+  "aliases": [
+   "law of total expectation",
+   "double expectation formula",
+   "tower rule",
+   "tower property",
+   "double expectation",
+   "law of iterated expectations",
+   "双重期望律"
+  ],
+  "level": "advanced",
+  "chapter": "p-l16",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>总期望等于<strong>条件期望的期望</strong>(塔式法则):先按 \\(Y\\) 分组算各组内的条件期望,再按各组出现的概率加权平均,结果恰好是总期望——\"平均的平均 = 总平均\"。当直接算 \\(E[X]\\) 难、\"给定 \\(Y\\) 后\"好算时的分而治之利器。</p><p><strong>白话</strong>:算全家每月平均伙食开销:不必逐天记账——工作日一档、周末一档各算个平均,再按天数占比加权,就是总平均。找到那个\"分情形的开关\",难题就拆成几个好算的小平均。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$E[g(X)]=E_Y\\!\\big[\\,E_X[g(X)\\mid Y]\\,\\big];\\qquad E[X]=E\\big[E[X\\mid Y]\\big]$$</div><ul><li>下标读法:内层 \\(E_X\\) 把 \\(Y\\) 当常数、只对 \\(X\\) 求平均(得到 \\(Y\\) 的函数 \\(h(Y)\\));外层 \\(E_Y\\) 再对 \\(Y\\) 平均。<strong>先内后外,顺序不能反</strong>。</li><li>用途:分段函数 / 免赔额 / 混合分布——找一个\"分情形开关\" \\(Y\\),每种情形下 \\(E[X\\mid Y]\\) 都简单,再按情形概率加权。</li><li>例 16A:损失 \\(U[0,10000]\\) + 1000 免赔,\\(E[\\text{赔付}]=0.1\\cdot0+0.9\\cdot4500=4050\\)。</li><li>直觉:全校平均分 = 各班平均分按班级人数占比加权。</li><li>对任意 \\(g(X)\\) 都成立,是全概率公式的期望版推广。</li></ul><p><strong>算一遍</strong>:抛一枚公平硬币定掷几颗骰子:正面掷 1 颗、反面掷 2 颗,求点数总和的期望。</p><ul><li>内层(各情形好算):正面时 \\(E[X\\mid\\text{正}]=3.5\\);反面时 \\(E[X\\mid\\text{反}]=7\\)。</li><li>外层加权:\\(E[X]=0.5(3.5)+0.5(7)=5.25\\)。</li><li>全程没碰\"总和的完整分布\"——先内后外,分而治之。</li></ul><h4>与其他概念的关系</h4><ul><li>条件期望 — 内层对象</li><li>条件期望是随机变量 — 外层期望有意义的前提</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 概率版对应(上游 L04)</li><li>全方差公式 — 姊妹公式:方差版分解</li><li>条件矩 — 内层的一般形式 \\(E[g(X)\\mid Y]\\)(上游 L14)</li><li>期望 — 被分解的对象</li></ul><h4>应用视角</h4><ul><li>条件期望分层求解 — 全期望/全方差分层,先条件后平均</li></ul>"
+ },
+ "全概率公式": {
+  "kind": "c",
+  "en": "LawOfTotalProbability",
+  "aliases": [
+   "law of total probability",
+   "total probability theorem",
+   "全概率定理"
+  ],
+  "level": "advanced",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把一个事件的总概率<strong>沿一组互斥且完备的\"原因\"拆开</strong>:在每种情形 \\(B_i\\) 下算 A 的条件概率,再按该情形出现的权重 \\(P[B_i]\\) 加权求和。本质是\"分组加权平均\"。</p><p><strong>白话</strong>:全校近视率不用一个个数——先问每个班的近视率,再按各班人数占比加权平均,就是全校的。\"班\"就是那组互斥完备的 \\(B_i\\)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A]=\\sum_{i=1}^{n}P[B_i]\\,P[A\\mid B_i]$$</div><ul><li>前提:\\(B_1,\\dots,B_n\\) <strong>互斥</strong>(两两不交)且<strong>完备</strong>(并集为 \\(\\Omega\\)),A 被切成 n 块 \\(A\\cap B_i\\)。</li><li>每块用乘法公式 \\(P[A\\cap B_i]=P[B_i]\\,P[A\\mid B_i]\\),加总即得——<strong>先分组,再加权</strong>。</li><li>概率树视角:每条支路连乘,含 A 的支路全加,总和就是 \\(P[A]\\)。</li><li>\"先选类再看结果\"(掷骰、抽袋、分层人群)的题几乎都用它开路;它也是贝叶斯定理的分母。</li></ul><p><strong>算一遍</strong>:甲班 40 人近视率 \\(0.5\\),乙班 60 人近视率 \\(0.2\\),求全校近视率。</p><ul><li>按人数定权重:甲占 \\(0.4\\)、乙占 \\(0.6\\)——互斥且完备(每人恰属一班)。</li><li>加权求和:\\(P=0.4\\times0.5+0.6\\times0.2=0.2+0.12=0.32\\)。</li><li>直接数人验证:近视 \\(20+12=32\\) 人,除以 \\(100\\) 人正是 \\(0.32\\) ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 每个分支项 \\(P[A\\mid B_i]\\) 都是条件概率</li><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 每条支路的交集概率由它给出</li><li><a class=\"net-wl\" data-id=\"互斥事件\">互斥事件</a> — 分组前提:互斥且完备,用前先确认</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 分母 \\(P[B]\\) 就是全概率展开</li><li><a class=\"net-wl\" data-id=\"全概率公式-连续\">全概率公式-连续</a> — 连续版:求和换成密度加权积分</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 同一\"分组加权平均\"思想搬到期望上</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "全概率公式-连续": {
+  "kind": "c",
+  "en": "LawOfTotalProbabilityContinuous",
+  "aliases": [
+   "law of total probability (continuous)"
+  ],
+  "level": "advanced",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把\"给定各种 \\(y\\) 时的条件密度\"按 \\(Y\\) 的密度<strong>加权积分</strong>,还原出 \\(X\\) 的边缘密度——离散全概率的加权求和换成加权积分,镜像成立。</p><p><strong>白话</strong>:想知道全国人的身高分布,就把\"每个年龄的人内部的身高分布\"按人口年龄结构混起来——年龄是连续的,\"按班级占比加权求和\"就变成了\"按年龄密度加权积分\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_X(x)=\\int_{-\\infty}^{\\infty} f_{X\\mid Y}(x\\mid y)\\,f_Y(y)\\,dy$$</div><ul><li>对照离散版 \\(P[X=x]=\\sum_y P[X=x\\mid Y=y]\\,P[Y=y]\\):求和换积分、pmf 换 pdf。</li><li>信息互推:一个边缘 + 一个条件密度 \\(\\Rightarrow\\) 反乘得联合 \\(f(x,y)=f_{X\\mid Y}(x\\mid y)\\,f_Y(y)\\),再积分得另一边缘——两块信息拼出全部分布。</li><li>典型题(练 29.4):给 \\(f_X\\) 与 \\(f_{Y\\mid X}\\) 求 \\(P[Y&gt;c]\\)——先合成联合密度,再用本式积掉 \\(x\\)。</li></ul><p><strong>算一遍</strong>:抛硬币选砖:正面 \\(X\\) 均匀落在 \\((0,1)\\),反面均匀落在 \\((0,2)\\),求 \\(x=0.5\\) 处的边缘密度。</p><ul><li>两种情形各自的条件密度:正面 \\(f=1\\),反面 \\(f=0.5\\);按各占一半加权:\\(f_X(0.5)=1(0.5)+0.5(0.5)=0.75\\)。</li><li>全线核对:\\((0,1)\\) 上密度 \\(0.75\\)、\\((1,2)\\) 上只剩反面贡献 \\(0.25\\),总面积 \\(0.75+0.25=1\\) ✓</li><li>若\"选哪种砖\"由连续的 \\(Y\\) 决定,这两项加权和就换成加权积分——正是本式。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 离散/事件版原型</li><li>条件密度函数 — 被加权的对象</li><li>边缘密度-连续 — 输出:还原出的边缘</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理-连续\">贝叶斯定理-连续</a> — 它的分母正是本式</li><li><a class=\"net-wl\" data-id=\"全期望公式\">全期望公式</a> — 期望层面的同款\"先条件后平均\"</li></ul>"
+ },
+ "条件概率": {
+  "kind": "c",
+  "en": "ConditionalProbability",
+  "aliases": [
+   "conditional probability",
+   "条件机率"
+  ],
+  "level": "basic",
+  "chapter": "p-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>在事件 B 已发生的前提下,事件 A 发生的概率。把样本空间<strong>缩小到 B</strong>(B 成为新的\"全体\"),A 剩下的部分是 \\(A\\cap B\\),再除以 \\(P[B]\\) 归一化。</p><p><strong>白话</strong>:问\"下雨天堵车的概率\",不拿全年当分母——先把下雨的日子挑出来当新的\"全体\",再数其中堵车的占几成。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A\\mid B]=\\frac{P[A\\cap B]}{P[B]}\\qquad(P[B]\\neq 0)$$</div><ul><li>固定条件 B 后,\\(P[\\cdot\\mid B]\\) 满足与普通概率相同的<strong>三公理</strong>——补集、容斥等规则在\"竖线右边不动\"时照常可用。</li><li>\\(P[A\\mid B]\\neq P[B\\mid A]\\):分母是\"条件\"那一个,写反是高频错。</li><li>直觉:<strong>先缩世界,再归一</strong>;\\(P[B]=0\\) 时无定义。</li></ul><p><strong>算一遍</strong>:掷一颗骰子,\\(A=\\) 掷出 6,\\(B=\\) 点数为偶,求 \\(P[A\\mid B]\\)。</p><ul><li>套定义:\\(P[A\\cap B]=P[\\{6\\}]=\\frac16\\),\\(P[B]=\\frac12\\),相除得 \\(P[A\\mid B]=\\frac13\\)。</li><li>直觉核对:世界缩到 \\(\\{2,4,6\\}\\) 三个等可能点,6 占一席 → \\(\\frac13\\) ✓</li><li>反向对照:\\(P[B\\mid A]=1\\)(掷出 6 必是偶数)——\\(\\frac13\\neq1\\),分母是\"条件\"那一个,写反差很远。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 定义两边乘 \\(P[B]\\) 的变形,求交集的主力工具</li><li>事件独立性 — \\(P[A\\mid B]=P[A]\\) 的特例:条件不带来信息</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 把 \\(P[A\\mid B]\\) 反转成 \\(P[B\\mid A]\\)</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 用一组条件概率加权拼出无条件概率</li><li>连续型条件概率 — 连续版(密度上的同一动作)</li><li>随机变量的条件分布 — 条件思想进入随机变量后的形态</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "贝叶斯定理": {
+  "kind": "c",
+  "en": "BayesTheorem",
+  "aliases": [
+   "Bayes' Theorem",
+   "Bayes rule",
+   "Bayes' rule",
+   "贝氏定理"
+  ],
+  "level": "hard",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p><strong>由结果反推原因</strong>:已知结果 B 发生,原因是 \\(A_j\\) 的概率 = \\(A_j\\) 那条路径的概率,占所有通往 B 路径之和的比重。它把 \\(P[B\\mid A]\\) 方向的条件概率\"翻\"成 \\(P[A\\mid B]\\)。</p><p><strong>白话</strong>:车间两条流水线都会出次品,拿到一件次品猜它来自哪条线——不是看哪条线次品率高,而是看那条线<strong>贡献的次品</strong>占全部次品的份额:产量大的线即使次品率低,嫌疑也可能更大。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$P[A_j\\mid B]=\\frac{P[A_j]\\,P[B\\mid A_j]}{\\displaystyle\\sum_{i=1}^{n}P[A_i]\\,P[B\\mid A_i]}$$</div><ul><li><strong>分母全走一遍,分子只挑一支</strong>:分母=全概率 \\(P[B]\\);分子正是分母求和里的<strong>第 j 项</strong>——忘除分母得到的就不是概率。</li><li>两步推导:乘法公式的对称性给 \\(P[A\\mid B]=P[A]P[B\\mid A]/P[B]\\),再把分母用全概率沿 \\(\\{A_i\\}\\) 展开。</li><li><strong>只需相对权重</strong>:各 \\(P[A_i]\\) 同乘常数不影响结果——题目只给\"可能性是两倍\"时直接令 1 和 2 代入。</li><li>最经典的错:题给 \\(P[B\\mid A_i]\\)(某型出险率)、求 \\(P[A_j\\mid B]\\)(出险者属某型),<strong>方向相反</strong>,直接拿 \\(P[B\\mid A_j]\\) 当答案必错。</li><li>基率压制:检测再准也翻不过很小的先验(罕见病阳性后验 ≈0.09);用\"1000 人自然频数表\"画出来最稳。</li></ul><p><strong>算一遍</strong>:两个盒子各有一半概率被选中,A 盒摸到红球的概率 0.2,B 盒 0.6;摸出一个红球,问来自 A 盒的概率。</p><ul><li>先把每条通往\"红球\"的路都走一遍:A 路径 \\(0.5\\times0.2=0.1\\),B 路径 \\(0.5\\times0.6=0.3\\)。</li><li>分母 = 全概率 \\(0.1+0.3=0.4\\);分子只挑 A 那一支 \\(0.1\\)。</li><li>\\(P[A\\mid \\text{红}]=0.1/0.4=0.25\\)——红球多半来自 B,A 的嫌疑只占四分之一;别拿 \\(0.2\\)(方向相反的 \\(P[\\text{红}\\mid A]\\))当答案。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"条件概率\">条件概率</a> — 要翻转方向的对象:\\(P[A\\mid B]\\leftrightarrow P[B\\mid A]\\)</li><li><a class=\"net-wl\" data-id=\"乘法公式\">乘法公式</a> — 分子 \\(P[A_j]P[B\\mid A_j]\\) 的来源</li><li><a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a> — 分母就是它;\"分子是分母的一项\"是全部结构</li><li><a class=\"net-wl\" data-id=\"先验后验概率\">先验后验概率</a> — 输入先验、输出后验:用证据更新信念</li><li><a class=\"net-wl\" data-id=\"贝叶斯定理-连续\">贝叶斯定理-连续</a> — 连续版:求和换积分、概率换密度</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯表格法快解后验\">贝叶斯表格法快解后验</a> — 先验×似然列表格,免公式硬背</li></ul>"
+ },
+ "贝叶斯定理-连续": {
+  "kind": "c",
+  "en": "BayesTheoremContinuous",
+  "aliases": [
+   "Bayes' theorem (continuous)",
+   "continuous Bayes"
+  ],
+  "level": "hard",
+  "chapter": "p-l29",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把条件方向从 \\(Y\\mid X\\) 翻转成 \\(X\\mid Y\\) 的密度公式:分子 = <strong>先验 × 似然</strong>,分母 = 同一个分子对所有可能值积分(归一化常数)。与离散贝叶斯同构。</p><p><strong>白话</strong>:\"看结果猜原因\"的连续版:先验是你原本对未知量的信念曲线,似然给每个候选值打分——\"它多能解释这次观测\";两者相乘,曲线形状就更新了,最后整体缩放到面积为 1,得到新信念(后验)。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$f_{X\\mid Y}(x\\mid y)=\\frac{f_X(x)\\,f_{Y\\mid X}(y\\mid x)}{\\displaystyle\\int_{-\\infty}^{\\infty} f_X(w)\\,f_{Y\\mid X}(y\\mid w)\\,dw}$$</div><ul><li>推导两步:分子用乘法 \\(f(x,y)=f_X(x)\\,f_{Y\\mid X}(y\\mid x)\\) 展开,分母 \\(f_Y(y)\\) 用连续全概率展开。</li><li>分母对 \\(w\\) 积分后是<strong>常数</strong>:先算分子、最后统一归一,别逐项带着分数跑。</li><li>口诀:先验乘似然,除以全概率——先验/后验更新的连续机器。</li></ul><p><strong>算一遍</strong>:硬币的正面概率 \\(X\\) 未知,先验均匀 \\(f_X(x)=1\\)(\\(0\\le x\\le1\\));抛一次,出正面,更新信念。</p><ul><li>分子 = 先验 × 似然:\\(1\\times x=x\\)(偏正的硬币更能解释这次正面)。</li><li>分母 = 分子积一遍:\\(\\int_0^1 w\\,dw=\\tfrac12\\)。</li><li>后验 \\(f(x\\mid\\text{正面})=x/\\tfrac12=2x\\)——信念从水平线翘成向右上的斜线:一次正面,就该更相信硬币偏正 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a> — 离散原型,结构一模一样</li><li>条件密度函数 — 输入与输出都是它</li><li><a class=\"net-wl\" data-id=\"全概率公式-连续\">全概率公式-连续</a> — 分母的展开方式</li><li><a class=\"net-wl\" data-id=\"先验后验概率\">先验后验概率</a> — 公式的解释框架:由先验更新到后验</li></ul>"
+ },
+ "贝叶斯表格法快解后验": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "p-l04",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:多类别(司机好/中/差、机器 A/B/C)各有先验与\"出事率\",已知出了事,反问来自哪一类——机械表格三行搞定。</p><h4>表格三步</h4><ol><li><strong>列</strong>:每类一列,行依次为 先验 \\(P[B_i]\\)、似然 \\(P[A\\mid B_i]\\)、乘积 \\(P[B_i]P[A\\mid B_i]\\)。</li><li><strong>加</strong>:乘积行求和 = \\(P[A]\\)(这一步就是 <a class=\"net-wl\" data-id=\"全概率公式\">全概率公式</a>)。</li><li><strong>除</strong>:目标列乘积 ÷ 总和 = 后验 \\(P[B_j\\mid A]\\)(<a class=\"net-wl\" data-id=\"贝叶斯定理\">贝叶斯定理</a>;先验→后验的更新见 <a class=\"net-wl\" data-id=\"先验后验概率\">先验后验概率</a>)。</li></ol><p>只需相对权重:先验若给的是比例(如 2:3:5)不必归一,最后一除自动归一。</p><h4>易错</h4><ul><li>似然行填成 \\(P[B_i\\mid A]\\)(方向反了——表格里永远填「类别 ⇒ 现象」)。</li><li>求「连续两次都出事」的后验时,似然要平方(条件独立假设)。</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "p-l11": "soa-exam-p-l11-joint-distribution.html",
+ "p-l25": "soa-exam-p-l25-joint-uniform.html",
+ "p-l01": "soa-exam-p-l01-sets.html",
+ "p-l17": "soa-exam-p-l17-binomial-distribution.html",
+ "p-l26": "soa-exam-p-l26-marginal-continuous.html",
+ "p-l22": "soa-exam-p-l22-central-limit-theorem.html",
+ "p-l34": "soa-exam-p-l34-transformations.html",
+ "p-l03": "soa-exam-p-l03-conditional-probability.html",
+ "p-l07": "soa-exam-p-l07-mean.html",
+ "p-l28": "soa-exam-p-l28-covariance-continuous.html",
+ "p-l32": "soa-exam-p-l32-mgf.html",
+ "p-l12": "soa-exam-p-l12-joint-moments.html",
+ "p-l27": "soa-exam-p-l27-joint-moments-continuous.html",
+ "p-l23": "soa-exam-p-l23-order-statistics.html",
+ "p-l05": "soa-exam-p-l05-random-variables.html",
+ "p-l13": "soa-exam-p-l13-covariance.html",
+ "p-l99": "soa-exam-p-l99-network.html",
+ "p-l08": "soa-exam-p-l08-variance-moments.html",
+ "p-l18": "soa-exam-p-l18-negative-binomial.html",
+ "p-l21": "soa-exam-p-l21-normal-distribution.html",
+ "p-l15": "soa-exam-p-l15-uniform-distribution.html",
+ "p-l04": "soa-exam-p-l04-bayes-theorem.html",
+ "p-l24": "soa-exam-p-l24-joint-continuous.html",
+ "p-l30": "soa-exam-p-l30-conditional-moments-continuous.html",
+ "p-l10": "soa-exam-p-l10-mode.html",
+ "p-l31": "soa-exam-p-l31-bivariate-normal.html",
+ "p-l06": "soa-exam-p-l06-conditional-probability-rv.html",
+ "p-l29": "soa-exam-p-l29-conditional-continuous.html",
+ "p-l33": "soa-exam-p-l33-pgf.html",
+ "p-l09": "soa-exam-p-l09-percentiles.html",
+ "p-l00": "soa-exam-p-l00-panorama.html",
+ "p-l02": "soa-exam-p-l02-combinatorics.html",
+ "p-l35": "soa-exam-p-l35-transformations-multivariate.html",
+ "p-l16": "soa-exam-p-l16-double-expectation.html",
+ "p-l14": "soa-exam-p-l14-conditional-moments.html",
+ "p-l19": "soa-exam-p-l19-poisson-distribution.html",
+ "p-l20": "soa-exam-p-l20-exponential-distribution.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
 
-<section id="vocab">
-  <div class="wrap">
-    <div class="sec-head"><span class="sec-num">07</span><div><span class="sec-tag tag-accent">背诵 · Lesson 4 原文用词</span><h2 class="sec-title">贝叶斯定理 词汇表</h2></div></div>
-    <p class="sec-sub">A 类术语必须中↔英双向;C 类短语整块记,读题靠它定位"先验条件"与"已观测结果"。</p>
-    <div class="card accent">
-      <h3>A · 术语(Must-know)</h3>
-      <div class="src">出现于课本 Lesson 4</div>
-      <table class="map vocab">
-        <thead><tr><th style="width:26%">English</th><th style="width:20%">音标</th><th style="width:7%">词性</th><th style="width:17%">中文</th><th>记忆点 / 词根</th></tr></thead>
-        <tbody>
-          <tr><td class="en">Bayes' Theorem</td><td class="ipa">/beɪz/</td><td><span class="pos n">n.</span></td><td>贝叶斯定理</td><td class="root">人名 Bayes;由结果反推原因 \(P[A_j\mid B]\)</td></tr>
-          <tr><td class="en">law of total probability</td><td class="ipa">/ˈtoʊtl/</td><td><span class="pos n">n.</span></td><td>全概率公式</td><td class="root">total(全部)→ 沿一组分支加权求和得总概率</td></tr>
-          <tr><td class="en">prior probability</td><td class="ipa">/ˈpraɪər/</td><td><span class="pos n">n.</span></td><td>先验概率</td><td class="root">prior(在先)→ 观测证据<b>之前</b>的 \(P[A_i]\)</td></tr>
-          <tr><td class="en">posterior probability</td><td class="ipa">/pɒˈstɪəriər/</td><td><span class="pos n">n.</span></td><td>后验概率</td><td class="root">posterior(在后)→ 观测证据<b>之后</b>的 \(P[A_i\mid B]\)</td></tr>
-          <tr><td class="en">mutually exclusive</td><td class="ipa">/ˈmjuːtʃuəli ɪkˈskluːsɪv/</td><td><span class="pos adj">adj.</span></td><td>互斥的</td><td class="root">两两不能同时发生 \(B_i\cap B_j=\varnothing\)</td></tr>
-          <tr><td class="en">exhaustive</td><td class="ipa">/ɪɡˈzɔːstɪv/</td><td><span class="pos adj">adj.</span></td><td>完备的 / 穷尽的</td><td class="root">exhaust(耗尽)→ 并集穷尽整个样本空间 \(\Omega\)</td></tr>
-          <tr><td class="en">decompose</td><td class="ipa">/ˌdiːkəmˈpoʊz/</td><td><span class="pos v">v.</span></td><td>分解</td><td class="root">de-+compose → 把事件拆成子事件之并</td></tr>
-          <tr><td class="en">submit a claim</td><td class="ipa">/səbˈmɪt/</td><td><span class="pos v">v.</span></td><td>提出理赔 / 出险</td><td class="root">保险语境高频,常作贝叶斯题的"证据 B"</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card accent">
-      <h3>C · 读题必备短语</h3>
-      <div class="phrase-grid">
-        <div class="ph"><div class="e">given that … occurred</div><div class="z">已知……已发生(证据 B,求后验)</div></div>
-        <div class="ph"><div class="e">a randomly selected …</div><div class="z">随机选取的一个……(引出先验比例)</div></div>
-        <div class="ph"><div class="e">what is the probability that it came from …</div><div class="z">它来自……的概率是多少(反推原因)</div></div>
-        <div class="ph"><div class="e">are mutually exclusive and exhaustive</div><div class="z">互斥且完备(全概率前提)</div></div>
-        <div class="ph"><div class="e">is twice as likely as …</div><div class="z">可能性是……的两倍(给相对权重)</div></div>
-        <div class="ph"><div class="e">determine the proportion of …</div><div class="z">求……所占比例(常用全概率)</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
 <footer>
   <div class="wrap">
     <p><b>Exam P 导学 · Lesson 4</b> · 第四章 Bayes' Theorem 贝叶斯定理</p>
@@ -643,5 +971,97 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
 })();
 </script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
 </body>
 </html>
