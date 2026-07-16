@@ -202,35 +202,48 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
         white-space:nowrap;cursor:pointer;transition:background .12s}
   .chip:hover{background:var(--hi)}
   .chip::after{content:" ▸";opacity:.6}
-  .modal-mask{position:fixed;inset:0;background:rgba(22,36,61,.45);z-index:80;
-              display:none;align-items:flex-start;justify-content:center;padding:6vh 16px 4vh;overflow-y:auto}
-  .modal-mask.open{display:flex}
-  .modal{background:#fff;border-radius:12px;max-width:660px;width:100%;
-         box-shadow:0 18px 60px rgba(0,0,0,.28);border-top:4px solid var(--accent)}
-  .m-head{padding:18px 24px 10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .m-title{font-family:var(--serif);font-size:21px;font-weight:700;margin:0}
-  .m-en{font-family:var(--mono);font-size:12.5px;color:var(--mute)}
-  .m-meta{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-  .m-tag{font-family:var(--mono);font-size:11px;background:#eef1f6;color:var(--ink-soft);border-radius:8px;padding:1px 8px}
-  .m-tag.lv-basic{background:#e4f1e9;color:#1d7a4f}
-  .m-tag.lv-advanced{background:#e4eeff;color:#1d4ed8}
-  .m-tag.lv-hard{background:var(--warn-soft);color:var(--warn)}
-  .m-tag a{color:inherit;text-decoration:none}
-  .m-close{font:inherit;border:0;background:none;font-size:20px;color:var(--mute);cursor:pointer;line-height:1}
-  .m-close:hover{color:var(--ink)}
-  .m-back{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
-  .m-back:empty{display:none}
-  .m-body{padding:14px 24px 22px;font-size:15px;max-height:66vh;overflow-y:auto}
-  .m-body h3{font-size:16.5px;margin:16px 0 6px;color:var(--accent-deep)}
-  .m-body h4{font-size:15px;margin:12px 0 4px}
-  .m-body ul{margin:6px 0;padding-left:20px}
-  .m-body li{margin:3px 0}
-  .m-body p{margin:8px 0}
-  .m-body .mblock{overflow-x:auto;padding:4px 2px;margin:8px 0}
-  .m-body .aka{font-size:12.5px;color:var(--mute)}
-  .wl{font:inherit;border:0;padding:0;background:none;cursor:pointer;color:var(--accent-deep);border-bottom:1px dashed var(--accent);font-size:inherit}
-  .wl:hover{background:var(--accent-soft)}
-  @media(max-width:640px){.m-body{max-height:70vh}}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
   .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
   .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
   tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
@@ -250,11 +263,48 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
   .fx-h .fxn{font-family:var(--mono);font-size:11px;color:#fff;padding:2px 10px;border-radius:999px}
   .fx-h a.fxlink{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
   .fx-h a.fxlink:hover{color:var(--accent-deep);border-bottom-color:var(--accent-deep)}
+  .fx-dist{margin:0 0 34px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px 16px 12px}
+  .fx-dist h3{font-family:var(--serif);font-size:18px;margin:0 0 8px}
+  .fx-dist .tw{overflow-x:auto}
+  .fx-dist table{border-collapse:collapse;width:100%;font-size:13.5px}
+  .fx-recite{table-layout:fixed}
+  .fx-recite th:nth-child(1),.fx-recite td:nth-child(1){width:42px}
+  .fx-recite th:nth-child(2){width:40%}
+  .fx-recite th:nth-child(3){width:31%}
+  .fx-recite td{white-space:normal;word-break:break-word;font-size:12.5px;line-height:1.9}
+  .fx-recite mjx-container{font-size:96%!important}
+  .fx-dist th,.fx-dist td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+  .fx-dist th{background:var(--paper);font-size:12.5px;white-space:nowrap}
+  .fx-dist td.dn{white-space:nowrap;font-weight:600}
+  .fx-dist td.dl{white-space:nowrap;font-family:var(--mono);font-size:12px}
+  .fx-dist p.dnote{color:var(--mute);font-size:12.5px;margin:8px 0 0;line-height:1.65}
 </style>
 </head>
 <body>
 <div class="fx-wrap"><h2 class="fx-title">Σ 公式总表 · 全 35 章速查卡</h2>
 <p class="fx-sub">自动聚合各章「公式速查卡」;点章名跳原章。<span class="fx-de" data-tip="需懂推导:能从定义/事件逻辑现场重导;悬停或点击徽章看该公式的推导句" tabindex="0">推</span>= 需懂推导(能现场重导);无标 = 背诵即可。改章后重跑 build-exam-p-book.py 刷新。</p>
+<div class="fx-dist">
+<h3>📐 分布期望 / 方差 / 标准差总表(L01–L23)</h3>
+<div class="tw"><table>
+<tr><th>分布(参数)</th><th>支撑</th><th>\(E\)</th><th>\(\mathrm{Var}\)</th><th>SD / 记忆钩子</th><th>章</th></tr>
+<tr><td class="dn">Bernoulli\((p)\)</td><td>\(\{0,1\}\)</td><td>\(p\)</td><td>\(pq\)</td><td>\(q=1-p\);二项的 \(n=1\)</td><td class="dl">L17</td></tr>
+<tr><td class="dn">二项 \(B(n,p)\)</td><td>\(0..n\)</td><td>\(np\)</td><td>\(npq\)</td><td>\(\sqrt{npq}\);n 个独立 Bernoulli 之和</td><td class="dl">L17</td></tr>
+<tr><td class="dn">超几何 \((N,K,n)\)</td><td>抽 n 中的成功数</td><td>\(n\frac KN\)</td><td>\(n\frac KN(1-\frac KN)\frac{N-n}{N-1}\)</td><td>二项 × 有限总体修正 \(\frac{N-n}{N-1}\)(方差选记)</td><td class="dl">L02·L17</td></tr>
+<tr><td class="dn">几何\((p)\) 试验次数版</td><td>\(1,2,\dots\)</td><td>\(\frac1p\)</td><td>\(\frac{q}{p^2}\)</td><td>失败次数版(支撑 0,1,…):\(E=\frac qp\),Var 同 \(\frac{q}{p^2}\)</td><td class="dl">L18</td></tr>
+<tr><td class="dn">负二项\((r,p)\) 试验次数版</td><td>\(r,r{+}1,\dots\)</td><td>\(\frac rp\)</td><td>\(\frac{rq}{p^2}\)</td><td>几何 × r(r 段独立几何相加);失败版 \(E=\frac{rq}p\)</td><td class="dl">L18</td></tr>
+<tr><td class="dn">泊松\((\lambda)\)</td><td>\(0,1,\dots\)</td><td>\(\lambda\)</td><td>\(\lambda\)</td><td><b>方差=均值</b>,SD=\(\sqrt\lambda\);可加:独立和仍泊松</td><td class="dl">L19</td></tr>
+<tr><td class="dn">离散均匀 \(\{1,\dots,n\}\)</td><td>\(1..n\)</td><td>\(\frac{n+1}2\)</td><td>\(\frac{n^2-1}{12}\)</td><td>连续版的"栅格化",分母同 12</td><td class="dl">L15</td></tr>
+<tr><td class="dn">连续均匀 \([a,b]\)</td><td>\((a,b)\)</td><td>\(\frac{a+b}2\)</td><td>\(\frac{(b-a)^2}{12}\)</td><td>SD=\(\frac{b-a}{\sqrt{12}}\);只看区间长,与位置无关</td><td class="dl">L15</td></tr>
+<tr><td class="dn">指数(均值 \(\theta\))</td><td>\((0,\infty)\)</td><td>\(\theta\)</td><td>\(\theta^2\)</td><td><b>SD=均值</b>(CV≡1);率参数记法 \(\lambda=\frac1\theta\)</td><td class="dl">L20</td></tr>
+<tr><td class="dn">Gamma\((\alpha,\theta)\)</td><td>\((0,\infty)\)</td><td>\(\alpha\theta\)</td><td>\(\alpha\theta^2\)</td><td>α 个独立指数之和;指数的 \(\alpha=1\) 特例</td><td class="dl">L20</td></tr>
+<tr><td class="dn">正态 \(N(\mu,\sigma^2)\)</td><td>\(\mathbb R\)</td><td>\(\mu\)</td><td>\(\sigma^2\)</td><td>参数即答案;线性组合仍正态</td><td class="dl">L21</td></tr>
+</table></div>
+<p class="dnote"><b>配套通用规则</b>:\(E(aX+b)=aE(X)+b\),\(\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)\)(常数不进方差、系数平方);
+独立则 \(\mathrm{Var}(X\pm Y)=\mathrm{Var}X+\mathrm{Var}Y\)(L08/L13);
+样本均值 \(\mathrm{Var}(\bar X)=\frac{\sigma^2}n\)、独立同分布和 \(\mathrm{Var}=n\sigma^2\)(L22 CLT);
+二阶矩还原 \(E(X^2)=\mathrm{Var}+[E(X)]^2\)。几何/负二项注意版本:试验次数版(从 1 / r 起)与失败次数版(从 0 起)均值差常数、方差相同。</p>
+</div>
+<div class="fx-dist"><h3>📿 背诵优先级(按各章题目使用频率,来自 SOA 题目指引)</h3><div class="tw"><table class="fx-recite"><tr><th>章</th><th>★★★ 必背(高频 ≥5 题)</th><th>★★ 重点(3–4 题)</th><th>★ 了解(1–2 题)</th></tr><tr><td class="dl">L01</td><td>补集转化 \(P(A^c)=1-P(A)\)<br>两事件容斥 \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)<br>分割恒等式 \(P(A)=P(A\cap B)+P(A\cap B^c)\)<br>三事件容斥 \(P(A\cup B\cup C)=\sum P_i-\sum P_{ij}+P_{ijk}\)</td><td>独立乘法 \(P(A\cap B)=P(A)P(B)\)<br>DeMorgan \((A\cup B)^c=A^c\cap B^c\)</td><td>—</td></tr><tr><td class="dl">L02</td><td>超几何 \(\dfrac{\binom{m}{j}\binom{N-m}{k-j}}{\binom{N}{k}}\)<br>组合数乘法 \(\binom{n_1}{k_1}\binom{n_2}{k_2}\cdots\)</td><td>补集 \(P(A)=1-P(A^c)\)<br>缩池链式乘法 \(\frac{a}{N}\cdot\frac{b}{N-1}\cdots\times\text{顺序数}\)</td><td>多项系数 \(\frac{n!}{x!y!z!}\)<br>圆排列 \((n-1)!\)</td></tr><tr><td class="dl">L03</td><td>条件概率定义 \(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\)<br>独立化积 \(P(A\cap B)=P(A)P(B)\)<br>容斥原理 \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)<br>补集/德摩根 \(P(A^c\cap B^c)=1-P(A\cup B)\)<br>全概率公式 \(P(A)=\sum_i P(A\mid B_i)P(B_i)\)<br>恰一拆分 \(P(\text{恰一})=P(A B^c)+P(A^c B)\)</td><td>—</td><td>—</td></tr><tr><td class="dl">L04</td><td>贝叶斯公式 \(P(A\mid B)=\frac{P(B\mid A)P(A)}{P(B)}\)<br>全概率公式 \(P(B)=\sum_i P(A_i)P(B\mid A_i)\)</td><td>—</td><td>二项概率 \(\binom{n}{k}p^k(1-p)^{n-k}\)<br>泊松概率 \(P(X=k)=\frac{\lambda^k e^{-\lambda}}{k!}\)<br>条件概率定义 \(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\)<br>指数生存 \(P(T&gt;t)=e^{-t/\theta}\)</td></tr><tr><td class="dl">L05</td><td>密度归一化定参 \(\int f=1\ (\Sigma p=1)\)<br>尾概率互补 \(P(X&gt;x)=1-F(x)\)<br>CDF区间概率 \(P(a&lt;X\le b)=F(b)-F(a)\)</td><td>条件概率比式 \(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\)<br>独立取补 \(1-(1-p)^n\)</td><td>跳点左极限 \(P(a\le X\le b)=F(b)-F(a^-)\)</td></tr><tr><td class="dl">L06</td><td>条件概率定义 \(P[A|B]=\frac{P[A\cap B]}{P[B]}\)</td><td>条件CDF差比 \(\frac{F(b)-F(a)}{1-F(a)}\)<br>免赔额换轴 \(P[Y\le y]=P[X\le y+d]\)<br>积分得CDF \(F(x)=\int_a^x f(t)\,dt\)<br>全概率公式 \(P[A]=\sum_i P[A|B_i]P[B_i]\)</td><td>指数尾概率 \(P[X&gt;x]=e^{-x/\theta}\)</td></tr><tr><td class="dl">L07</td><td>LOTUS期望 \(E[g(X)]=\int g(x)f(x)\,dx\)<br>期望定义 \(E[X]=\int x f(x)\,dx\)<br>限额min期望 \(E[\min(X,k)]=\int_0^k x f\,dx+kP(X&gt;k)\)</td><td>几何首发概率 \(P(k)=(1-p)^{k-1}p\)<br>生存函数法 \(E[X]=\int_0^{\infty}S(x)\,dx\)<br>期望线性性 \(E(aX+bY)=aE(X)+bE(Y)\)</td><td>—</td></tr><tr><td class="dl">L08</td><td>方差捷径式 \(Var=E[X^2]-(E[X])^2\)<br>独立方差可加 \(Var(\sum X_i)=\sum Var(X_i)\)<br>缩放平移律 \(Var(aX+b)=a^2Var(X)\)</td><td>LOTUS求矩 \(E[X^n]=\int x^n f\,dx\)</td><td>变异系数 \(CV=\sigma/\mu\)<br>全方差公式 \(Var(X)=Var(E[X\mid N])+E(Var(X\mid N))\)</td></tr><tr><td class="dl">L09</td><td>分位数方程 \(F(x_p)=p\)</td><td>条件分位换算 \(p&#x27;=\frac{p-F(d)}{1-F(d)}\)<br>指数中位数 \(m=\ln 2/\lambda=\mu\ln 2\)</td><td>相似平方律 \(\text{面积比}=(\text{底长比})^2\)<br>单调搬分位 \(\pi_p(Y)=g(\pi_p(X))\)<br>Pareto分位 \(x_p=\theta/(1-p)^{1/\alpha}\)</td></tr><tr><td class="dl">L10</td><td>密度求导置零 \(f&#x27;(x)=0\)</td><td>离散取最大 \(\text{mode}=\arg\max_n p(n)\)</td><td>略比例常数 \(f(x)\propto g(x)\)<br>Gamma 形众数 \(x^a e^{-bx}\Rightarrow a/b\)<br>Beta 形众数 \(x^a(1-x)^b\Rightarrow \tfrac{a}{a+b}\)<br>独立和卷积 \(P(S=k)=\sum_i p(i)q(k-i)\)</td></tr><tr><td class="dl">L11</td><td>边缘求和 \(p_X(x)=\sum_y p(x,y)\)</td><td>条件乘边缘 \(p(x,y)=p_{Y\mid X}(y\mid x)\,p_X(x)\)<br>方差速算 \(\mathrm{Var}=E[Z^2]-E[Z]^2\)<br>独立因式分解 \(F(x,y)=G(x)H(y)\iff X\perp Y\)</td><td>四角差分 \(F(b,d)-F(a,d)-F(b,c)+F(a,c)\)<br>联合CDF定义 \(F(x,y)=P[X\le x,\,Y\le y]\)</td></tr><tr><td class="dl">L12</td><td>联合LOTUS \(E[g(X,Y)]=\sum g\,p(x,y)\)</td><td>方差公式 \(Var(Z)=E(Z^2)-[E(Z)]^2\)</td><td>边际pmf \(p_X(x)=\sum_y p(x,y)\)<br>归一化定c \(\sum_{x,y} p(x,y)=1\)<br>条件期望 \(E[Y|A]=\sum y\,p(y|A)\)</td></tr><tr><td class="dl">L13</td><td>和的方差 \(\mathrm{Var}(X+Y)=\mathrm{Var}X+\mathrm{Var}Y+2\mathrm{Cov}(X,Y)\)<br>相关系数定义 \(\rho=\frac{\mathrm{Cov}(X,Y)}{\sigma_X\sigma_Y}\)<br>线性组合方差 \(\mathrm{Var}(aX+bY)=a^2\mathrm{Var}X+b^2\mathrm{Var}Y\ (X\perp Y)\)</td><td>协方差定义 \(\mathrm{Cov}(X,Y)=E(XY)-E(X)E(Y)\)<br>协方差双线性 \(\mathrm{Cov}(aA+bB,cC)=ac\,\mathrm{Cov}(A,C)+bc\,\mathrm{Cov}(B,C)\)</td><td>指数分布方差 \(X\sim\mathrm{Exp}(\mu):\ \mathrm{Var}X=\mu^2\)</td></tr><tr><td class="dl">L14</td><td>条件概率定义 \(P(B\mid A)=\frac{P(A\cap B)}{P(A)}\)</td><td>条件期望 \(E[X\mid A]=\sum x\,P(X{=}x\mid A)\)<br>条件方差矩差 \(\mathrm{Var}=E[X^2\mid A]-E[X\mid A]^2\)</td><td>Bernoulli方差 \(p(1-p)\)<br>全期望公式 \(E[Y]=\sum_i P(A_i)E[Y\mid A_i]\)<br>几何无记忆性 \(E[X\mid X\ge k]=k-1+\tfrac{1}{p}\)</td></tr><tr><td class="dl">L15</td><td>均匀方差 \(\mathrm{Var}=\frac{(b-a)^2}{12}\)<br>均匀均值 \(\mu=\frac{a+b}{2}\)<br>概率=长度比 \(P(c&lt;X&lt;d)=\frac{d-c}{b-a}\)<br>均匀分位数 \(q_p=(1-p)a+pb\)<br>方差恒等式 \(\mathrm{Var}=E[X^2]-E[X]^2\)</td><td>免赔期望 \(E[(X-d)_+]=\frac{(b-d)^2}{2(b-a)}\)</td><td>—</td></tr><tr><td class="dl">L16</td><td>方差公式 \(\mathrm{Var}=E(X^2)-[E(X)]^2\)</td><td>全方差EVVE \(\mathrm{Var}(X)=\mathrm{Var}[E(X\mid S)]+E[\mathrm{Var}(X\mid S)]\)<br>LOTUS期望 \(E[g(X)]=\int g(x)f(x)dx\)</td><td>均匀分布方差 \(\mathrm{Var}=\tfrac{(b-a)^2}{12}\)<br>指数方差 \(\mathrm{Var}=\theta^2\)<br>泊松二阶矩 \(E[X^2]=\lambda+\lambda^2\)</td></tr><tr><td class="dl">L17</td><td>二项pmf \(\binom{n}{k}p^k(1-p)^{n-k}\)<br>补事件转化 \(P(X\ge k)=1-\sum_{i&lt;k}P(X=i)\)</td><td>二项方差 \(\mathrm{Var}=np(1-p)\)</td><td>二项均值 \(E[X]=np\)<br>超几何pmf \(\frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}\)<br>二阶矩展开 \(E[X^2]=\mathrm{Var}(X)+(E[X])^2\)</td></tr><tr><td class="dl">L18</td><td>几何pmf \(P(X=n)=p(1-p)^{n-1}\)<br>负二项pmf \(\binom{m-1}{r-1}p^r(1-p)^{m-r}\)<br>几何尾概率 \(P(X&gt;n)=(1-p)^n\)</td><td>无记忆性 \(P(X&gt;m+n\mid X&gt;n)=P(X&gt;m)\)<br>负二项方差 \(\mathrm{Var}(X)=\frac{r(1-p)}{p^2}\)<br>几何均值 \(E[X]=\frac{1}{p}\)</td><td>—</td></tr><tr><td class="dl">L19</td><td>泊松pmf \(p(x)=\dfrac{e^{-\lambda}\lambda^x}{x!}\)<br>至少k取补 \(P(X\ge k)=1-\sum_{i&lt;k}p(i)\)<br>方差=均值 \(\mathrm{Var}(X)=E(X)=\lambda\)<br>零概率解λ \(P(0)=e^{-\lambda}\)<br>可加与λt \(\sum N_i\sim\text{Poisson}(\sum\lambda_i)\)<br>二阶矩 \(E[X^2]=\lambda+\lambda^2\)</td><td>—</td><td>—</td></tr><tr><td class="dl">L20</td><td>指数生存函数 \(P(X&gt;x)=e^{-x/\theta}\)<br>无记忆性 \(P(X&gt;s+t\mid X&gt;s)=P(X&gt;t)\)<br>指数矩 \(E(X)=\theta,\ Var(X)=\theta^2,\ E(X^2)=2\theta^2\)<br>中位数定参 \(\theta=\text{median}/\ln 2\)</td><td>指数分位数 \(\xi_p=-\theta\ln(1-p)\)<br>免赔期望赔付 \(E[(X-d)_+]=\theta e^{-d/\theta}\)</td><td>—</td></tr><tr><td class="dl">L21</td><td>标准化 \(z=\frac{x-\mu}{\sigma}\)<br>独立和方差 \(\mathrm{Var}\Big(\sum X_i\Big)=n\sigma^2\)</td><td>分位反查 \(x_p=\mu+\sigma z_p\)<br>对称性 \(\Phi(-z)=1-\Phi(z)\)<br>条件概率比式 \(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\)</td><td>均值标准差 \(\sigma_{\bar X}=\sigma/\sqrt{n}\)</td></tr><tr><td class="dl">L22</td><td>CLT标准化 \(Z=\frac{S-\mu}{\sigma}\)<br>独立和方差 \(\mathrm{Var}(S)=n\sigma^2\)<br>连续性修正 \(z=\frac{k\pm0.5-\mu}{\sigma}\)<br>分位数式 \(Q_p=\mu+z_p\sigma\)<br>均值标差 \(\sigma_{\bar X}=\sigma/\sqrt{n}\)</td><td>线性缩放律 \(\mathrm{Var}(aX)=a^2\mathrm{Var}(X)\)</td><td>—</td></tr><tr><td class="dl">L23</td><td>max CDF连乘 \(F_{\max}(x)=\prod_i F_i(x)\)</td><td>min生存连乘 \(S_{\min}(x)=\prod_i S_i(x)\)<br>kth密度通式 \(g_{(k)}=\tfrac{n!}{(k-1)!(n-k)!}F^{k-1}(1-F)^{n-k}f\)</td><td>指数min均值 \(E[\min]=\theta/n\)<br>kth概率二项 \(P=\sum_{j\ge k}\binom{n}{j}p^j(1-p)^{n-j}\)<br>生存函数期望 \(E[Y]=a+\int_a^\infty S_Y(y)\,dy\)</td></tr></table></div><p class="dnote">频率 = 该公式在本章已掌握套路 + 未掌握必做题解法链中的出现次数;改 exam-p-chapter-guides.json 后重跑本脚本刷新。逐章套路详情见 <a href="soa-exam-p-guide.html">🎯 SOA 题目指引汇总</a>。</p></div>
 <div class="fx-ch" data-l="l01" style="--accent:#e6a100;--accent-deep:#9a6f00;--accent-soft:#fff7da;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#e6a100">L01</span><a class="fxlink" href="soa-exam-p-l01-sets.html">Sets 集合</a></h3><div class="cheat">
       <div class="cc">
         <h4>集合运算</h4>
@@ -266,6 +316,8 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
       <div class="cc t">
         <h4>概率 / 容斥</h4>
         <p>\(P[A']=1-P[A]\)</p>
+        <p><span class="fx-de" data-tip="推导:De Morgan 认出 A′∩B′=(A∪B)′——「都不发生」= 落在并集外面,整体取补" tabindex="0">推</span>\(P[A'\cap B']=1-P[A\cup B]\)</p>
+        <p><span class="fx-de" data-tip="推导:De Morgan 认出 A′∪B′=(A∩B)′——「至少缺一个」= 不是两个都发生,整体取补" tabindex="0">推</span>\(P[A'\cup B']=1-P[A\cap B]\)</p>
         <p><span class="fx-de" data-tip="推导:直接相加把重叠区 A∩B 数了两次,扣回一次" tabindex="0">推</span>\(P[A\cup B]=P[A]+P[B]-P[A\cap B]\)</p>
         <p style="font-size:13px"><span class="fx-de" data-tip="推导:两两重叠各多数一次全扣掉,三重区被加3减3,再加回一次" tabindex="0">推</span>\(P[A\cup B\cup C]=\sum P-\sum P_{两两}+P_{三}\)</p>
         <p>公理:\(P[\Omega]=1,\ P[A]\ge 0\)</p>
@@ -274,17 +326,18 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\['
 <div class="fx-ch" data-l="l02" style="--accent:#0d7d7d;--accent-deep:#0a5a5a;--accent-soft:#dcf0ef;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#0d7d7d">L02</span><a class="fxlink" href="soa-exam-p-l02-combinatorics.html">Combinatorics 计数</a></h3><div class="cheat">
       <div class="cc t">
         <h4>计数核心</h4>
-        <p>古典概率 \(P=\dfrac{B}{A}\)(等可能)</p>
-        <p>排列:\(n!\)</p>
+        <p>古典概率 \(P=\dfrac{B}{A}\)(等可能;\(A\)=总结果数,\(B\)=有利结果数)</p>
+        <p>排列:\(n!\)(\(n\) 个不同对象排成一排的方式数)</p>
         <p><span class="fx-de" data-tip="推导:先当全可辨排 n!,组内 k_i! 种排法不可辨,除掉消序" tabindex="0">推</span>相异排列 \(\dfrac{n!}{k_1!\cdots k_j!}\)</p>
-        <p>有放回计数 \(n^r\)(用乘法)</p>
+        <p style="font-size:12.5px">(\(n\)=总个数,分 \(j\) 类,\(k_i\)=第 \(i\) 类里彼此相同的个数)</p>
+        <p>有放回计数 \(n^r\)(\(n\) 种选择连选 \(r\) 次,用乘法)</p>
       </div>
       <div class="cc t">
         <h4>组合 / 二项式</h4>
-        <p><span class="fx-de" data-tip="推导:先排列 n!/(n-k)!,选出的 k 个内部顺序无关,再除 k!" tabindex="0">推</span>\(\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}\)</p>
+        <p><span class="fx-de" data-tip="推导:先排列 n!/(n-k)!,选出的 k 个内部顺序无关,再除 k!" tabindex="0">推</span>\(\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}\)(从 \(n\) 个中选 \(k\) 个,不讲顺序)</p>
         <p>对称:\(\dbinom{n}{k}=\dbinom{n}{n-k}\)</p>
         <p style="font-size:13px"><span class="fx-de" data-tip="推导:分组计数:分子各组各选各的,分母一次抽 k 个" tabindex="0">推</span>无放回:\(\dfrac{\prod\binom{n_i}{k_i}}{\binom{n}{k}}\)</p>
-        <p style="font-size:12.5px">(上标和=\(n\),下标和=\(k\))</p>
+        <p style="font-size:12.5px">(\(n_i\)=第 \(i\) 类的总数,\(k_i\)=从该类抽中的个数;上标和=\(n\) 全体,下标和=\(k\) 抽样数)</p>
       </div>
     </div></div>
 <div class="fx-ch" data-l="l03" style="--accent:#5b53c4;--accent-deep:#3a338f;--accent-soft:#ecebfb;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#5b53c4">L03</span><a class="fxlink" href="soa-exam-p-l03-conditional-probability.html">Conditional Probability 条件概率</a></h3><div class="cheat">
