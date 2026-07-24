@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<!--
+  SOA Exam FM 导学页 · L02 Practical Applications
+  源: ASM Exam FM Study Manual 17th ed, Chapter 2 (p.73-88)
+  管线见 _Meta/process/soa-fm-导学页-sop.md
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · L02 导学 · 价值方程与货币时间价值</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0d7d7d; --accent-deep:#085151; --accent-soft:#e7f2f2; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(8,81,81,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>L02 · 价值方程与货币时间价值</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">2026-07-08 · 周三 · 导学已备(7/18 排学)</p>
+    <h1>第2章 · <em>Practical Applications 价值方程与货币时间价值</em></h1>
+    <p class="lead">FM 全卷的"解题操作系统":任何现金流问题 = 画一条时间轴,挑一个比较日,把所有钱搬过去列一个价值方程。本章短(理论仅 9 页)但地基极重,后面 7 章全在这套动作上叠积木。对照课本 Chapter 2 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch2 <b>整章一课</b></span>
+      <span class="pill">课本 <b>p.73–88</b>(理论 p.73–81)</span>
+      <span class="pill">习题 <b>18 题全旧考题</b> p.82–85</span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 4 句话</p>
+      <ol>
+        <li><b>一条时间轴 + 一个比较日 = 一个价值方程</b>;比较日随便挑,解不变。</li>
+        <li>付款期 ≠ 计息期 → 先解<b>等效利率</b> \((1+j)^m=(1+i)^k\),按付款期作图最顺。</li>
+        <li>求未知时间用 <b>LN 或 TVM</b>;翻倍时间 ≈ <b>72 ÷ 利率%</b>。</li>
+        <li><b>等时法</b> \(\bar t=\sum A_k t_k / \sum A_k\):金额加权、与利率无关、<b>恒比精确值偏大</b>。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-fm-l01-interest-and-discount-rates.html">L01 利率与贴现率</a>
+    <span class="arr">→</span>
+    <span class="here">L02 本章</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-fm-l03-annuities.html">L03 年金</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#syllabus">🎯 考纲</a>
+  <a href="#cheat">核心</a>
+  <a href="#core-2a">2a 价值方程与时间图</a>
+  <a href="#core-2bt">2b 未知时间</a>
+  <a href="#core-2bi">2b 未知利率</a>
+  <a href="#insight">直觉拓展</a>
+</nav>
+
+<section id="syllabus">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">◎</span><div><span class="sec-tag tag-accent">Syllabus</span><h2 class="sec-title">考纲对标 · 货币时间价值 ①</h2></div></div>
+    <p class="sec-sub">SOA 2026 官方 syllabus 本章命中的 learning outcomes 逐条列出(★ = 高频重点)。五域权重与题数分配见 <a href="soa-exam-fm-examday.html">考务页 ↗</a>。</p>
+    <div class="card accent" style="padding:0;overflow:hidden">
+      <table class="map">
+        <tr><th style="width:32%">考纲域 · 权重(≈题数)</th><th>本章 learning outcomes(★=重点)</th></tr>
+        <tr><td><b>货币时间价值 · 5–15% (≈2–4 题)</b></td><td><b>1a</b> 定义: 净现值 NPV、通胀与实际利率 (inflation & real rate)、equation of value<br><b>1b</b> 变力度下的 TVM 求解<br>★ <b>1d</b> 给定现金流 + 利率, <b>写出价值方程</b> 并求未知项 (未知时点/未知利率)</td></tr>
+      </table>
+    </div>
+    <div class="note tip"><span class="ic">🎯</span><span class="t"><b>本章重点:</b> 价值方程是全书主线: 任意现金流题先落一条 EoV 再解; 名义 vs 实际利率换算别搞反。</span></div>
+  </div>
+</section>
+
+<section id="cheat" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc t"><h4>价值方程</h4>
+        <p>所有款项折到同一比较日:\(\sum\text{流入}\cdot v^{s} = \sum\text{流出}\cdot v^{s}\)</p>
+        <p>比较日任选,解不变</p></div>
+      <div class="cc"><h4>等效利率</h4>
+        <p><span class="fx-de" data-tip="推导:两利率等价⟺同一段时间积累因子相等,幂次配平" tabindex="0">推</span>\((1+j)^m=(1+i)^k\)</p>
+        <p>季度对半年 3%:\(j=1.03^{1/2}-1\);两年对季度 2%:\(1+j=1.02^8\)</p></div>
+      <div class="cc"><h4>未知时间</h4>
+        <p>\(a^t=b\Rightarrow t=\ln b/\ln a\)</p>
+        <p>TVM:I/Y·PV·FV(反号)·CPT N</p>
+        <p>Rule of 72:\(t_{\times2}\approx 72/i\%\)(准:\(69.3/i\%+0.35\))</p></div>
+      <div class="cc t"><h4>等时法</h4>
+        <p>\(\bar t=\dfrac{\sum A_k t_k}{\sum A_k}\)</p>
+        <p>与利率无关 · \(i&gt;0\) 时恒大于精确 t</p></div>
+      <div class="cc"><h4>未知利率</h4>
+        <p>换元 \(x=1+i\) 或 \(x=v^n\) → 二次方程 → 舍平凡根</p></div>
+      <div class="cc"><h4>两条级数(Ex 2.9)</h4>
+        <p><span class="fx-de" data-tip="推导:等比级数求和得 d/(1-d),再用 i=d/(1-d) 收口" tabindex="0">推</span>\(d+d^2+\cdots=\frac{d}{1-d}=i\)</p>
+        <p>\(d+\frac{d^2}{2}+\frac{d^3}{3}+\cdots=-\ln(1-d)=\delta\)</p></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>任何现金流题:按规范画时间图(存取两侧、期单位、利率箭头、比较日竖箭),列价值方程一步解出。</li>
+          <li>付款期与计息期不一致时,两条路线(等效利率 j / 原利率 i)都能走通,并默认选付款期路线。</li>
+          <li>未知时间:LN 键 / TVM 键双解;心算翻倍时间(Rule of 72);等时法近似并说出"恒偏大"。</li>
+          <li>未知利率:换元 \(x=1+i\) 或 \(x=v^n\) 化多项式,取合理根、舍平凡根。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <p class="dim" style="margin:0 0 8px">本章 18 道习题<b>全部是旧考题</b>(SOA/CAS 80–00 年代),题型六类:</p>
+        <ol class="dim routine">
+          <li>贷款合并/改约(等 PV 列方程)。</li>
+          <li>等时法 vs 精确法求差(Q12–14,两个都要会算)。</li>
+          <li>\(v^n\) 给定解 i(Q8)。</li>
+          <li>单利与复利等 AV 解 n(Q9,单利是 \(1+it\) 线性别写成指数)。</li>
+          <li>力息基金差极值(Q16–17:写 \(a(t)=e^{\int\delta}\)、作差、求导置零、<b>验证二阶导为负</b>)。</li>
+          <li>几何级数求 PV(Q18,实为第 3 章预告)。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 9 / 全章 18)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>2.1</b></td><td>贷款合并:等现值列价值方程解等额付款</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 题型①招牌——两笔单付贷款合并成两期等额,各段用自己的半年利率贴现(SOA 11/89 #1)</td></tr>
+<tr class="kxd" data-kxq="2.1" style="display:none"><td colspan="4"><div class="kx-qtx">You are given two loans, with each loan to be repaid by a single payment in the future. Each payment includes both principal and interest. The first loan is repaid by a 3,000 payment at the end of four years. The interest is accrued at 10% per annum compounded semiannually. The second loan is repaid by a 4,000 payment at the end of five years. The interest is accrued at 8% per annum compounded semiannually. These two loans are to be consolidated. The consolidated loan is to be repaid by two equal installments of \( X \), with interest at 12% per annum compounded semiannually. The first payment is due immediately and the second payment is due one year from now. Calculate \( X \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 2{,}459 \)</span><span class="kx-opt"><b>(B)</b> \( 2{,}485 \)</span><span class="kx-opt"><b>(C)</b> \( 2{,}504 \)</span><span class="kx-opt"><b>(D)</b> \( 2{,}521 \)</span><span class="kx-opt"><b>(E)</b> \( 2{,}537 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;两原贷款折到今日(各用自己的半年利率)</td><td>\( 3{,}000v_{.05}^{8}+4{,}000v_{.04}^{10}=4{,}732.80 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;12%半年→每半年6%,两期等额折现</td><td>\( X(1+v_{.06}^{2})=X(1.8900) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解 X</td><td>\( X=\dfrac{4{,}732.80}{1.8900}=2{,}504 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.3</b></td><td>换元 x=(1+i)^6 消 X 解二次(未知利率)</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 未知利率换元法代表——三序列各列积累方程,作差消 X 得二次,取正根回代(SOA 5/88 #4)</td></tr>
+<tr class="kxd" data-kxq="2.3" style="display:none"><td colspan="4"><div class="kx-qtx">You are given the following data on three series of payments (payment at end of year 6, 12, 18, and accumulated value at end of year 18): Series A pays 240, 200, 300 with accumulated value \( X \); Series B pays 0, 360, 700 with accumulated value \( X+100 \); Series C pays \( Y \), 600, 0 with accumulated value \( X \). Assume interest is compounded annually. Calculate \( Y \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 93 \)</span><span class="kx-opt"><b>(B)</b> \( 99 \)</span><span class="kx-opt"><b>(C)</b> \( 102 \)</span><span class="kx-opt"><b>(D)</b> \( 107 \)</span><span class="kx-opt"><b>(E)</b> \( 111 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;换元 x=(1+i)^6,三序列各列积累方程</td><td>\( 240x^2+200x+300=X;\ 360x+700=X+100;\ Yx^2+600x=X \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;A 式减 B 式消去 X 得二次,取正根</td><td>\( 12x^2-8x-15=0\Rightarrow x=1.5 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;回代 B 求 X</td><td>\( 360(1.5)+700=X+100\Rightarrow X=1{,}140 \)</td><td class="xr">代数/计算</td></tr><tr><td>④&nbsp;代入 C 式解 Y</td><td>\( Y(1.5)^2+600(1.5)=1{,}140\Rightarrow Y=106.67 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.4</b></td><td>付款期≠计息期:化每季有效利率列方程解余款</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.4" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">本章核心考点『付款期与计息期不一致』代表——名义 12% 季度复利,按季度轴列价值方程解末笔付款(SOA 5/87 #1)</td></tr>
+<tr class="kxd" data-kxq="2.4" style="display:none"><td colspan="4"><div class="kx-qtx">A loan of 1000 is made at a nominal annual interest rate of 12% compounded quarterly. The loan is to be repaid with three payments: 400 at the end of the first year, 800 at the end of the fifth year, and the balance at the end of the tenth year. Calculate the amount of the final payment.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 587 \)</span><span class="kx-opt"><b>(B)</b> \( 658 \)</span><span class="kx-opt"><b>(C)</b> \( 737 \)</span><span class="kx-opt"><b>(D)</b> \( 777 \)</span><span class="kx-opt"><b>(E)</b> \( 812 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;名义 12% 季度复利→每季 3%,时间轴用季度</td><td>\( j=3\%,\ \text{1 年}=4\text{ 季},\ v=1.03^{-1} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;全折到今日列价值方程(余款设 R)</td><td>\( 1{,}000=400v^{4}+800v^{20}+Rv^{40} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解 R</td><td>\( R=\dfrac{1{,}000-400(.8885)-800(.5537)}{.3066}=657.66 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.8</b></td><td>给定 v^n 由价值方程反解 i</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.8" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 题型③『v^n 给定解 i』原题——两付款流等现值,代 v^n 后反求 v^10 得 i(11/01 #24)</td></tr>
+<tr class="kxd" data-kxq="2.8" style="display:none"><td colspan="4"><div class="kx-qtx">David can receive one of the following two payment streams: (i) 100 at time 0, 200 at time \( n \), and 300 at time \( 2n \); (ii) 600 at time 10. At an annual effective interest rate of \( i \), the present values of the two streams are equal. Given \( v^n = 0.75941 \), determine \( i \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 3.5\% \)</span><span class="kx-opt"><b>(B)</b> \( 4.0\% \)</span><span class="kx-opt"><b>(C)</b> \( 4.5\% \)</span><span class="kx-opt"><b>(D)</b> \( 5.0\% \)</span><span class="kx-opt"><b>(E)</b> \( 5.5\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;两流现值相等列方程</td><td>\( 100+200v^{n}+300v^{2n}=600v^{10} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入 v^n=0.75941 求左边</td><td>\( 100+200(.75941)+300(.75941)^2=424.893 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;解 v^10 反求 i</td><td>\( v^{10}=\dfrac{424.893}{600}=.708155\Rightarrow i=3.5\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.9</b></td><td>单利 vs 复利等积累解未知时间 n</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.9" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 题型④原题——Joe 单利(线性 1+it)与 Tina 复利同期末积累相等,换元 x=v^n 解二次再反解 n(5/00 #1)</td></tr>
+<tr class="kxd" data-kxq="2.9" style="display:none"><td colspan="4"><div class="kx-qtx">Joe deposits 10 today and another 30 in five years into a fund paying simple interest of 11% per year. Tina will make the same two deposits, but the 10 will be deposited \( n \) years from today and the 30 will be deposited \( 2n \) years from today. Tina&#x27;s deposits earn an annual effective rate of 9.15%. At the end of 10 years, the accumulated amount of Tina&#x27;s deposits equals the accumulated amount of Joe&#x27;s deposits. Calculate \( n \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 2.0 \)</span><span class="kx-opt"><b>(B)</b> \( 2.3 \)</span><span class="kx-opt"><b>(C)</b> \( 2.6 \)</span><span class="kx-opt"><b>(D)</b> \( 2.9 \)</span><span class="kx-opt"><b>(E)</b> \( 3.2 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;Joe 单利积累(1+it 线性,别写成指数)</td><td>\( 10[1+10(.11)]+30[1+5(.11)]=67.5 \)</td><td class="xr">代数/计算</td></tr><tr><td>②&nbsp;Tina 复利积累,令 x=v^n(9.15%)化二次</td><td>\( 72v^{2n}+24v^{n}-67.5=0\Rightarrow 3x^2+x-2.8125=0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;取正根</td><td>\( x=v^{n}=.815819 \)</td><td class="xr">代数/计算</td></tr><tr><td>④&nbsp;反解 n</td><td>\( n=\dfrac{-\ln .815819}{\ln 1.0915}=2.325 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.11</b></td><td>未知时间:提 v^n 化式反解(两笔间隔 5 年)</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.11" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 未知时间代表——两笔付款在 n 与 n+5,提出 v^n 解出后 LN 反解再换算年龄(CAS 5/94 #1)</td></tr>
+<tr class="kxd" data-kxq="2.11" style="display:none"><td colspan="4"><div class="kx-qtx">John is 30 years old. He will receive 2 payments of \( \$2{,}500 \) each. The first payment will be an unknown number of years in the future. The second payment will be five years after the first payment. At an annual effective interest rate of \( i=5\% \), the present value of the two payments is \( \$2{,}607 \). Determine at what age John will receive the second payment.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> Less than 40</span><span class="kx-opt"><b>(B)</b> At least 40 but less than 45</span><span class="kx-opt"><b>(C)</b> At least 45 but less than 50</span><span class="kx-opt"><b>(D)</b> At least 50 but less than 55</span><span class="kx-opt"><b>(E)</b> At least 55</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;设首付时间 n,列现值方程</td><td>\( 2{,}500(v^{n}+v^{n+5})=2{,}607 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;提出 v^n 解</td><td>\( v^{n}=\dfrac{2{,}607}{(1+v^{5})(2{,}500)}=.584684 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;反解 n,再加 5 求第二笔时年龄</td><td>\( n=11,\ 30+(n+5)=46 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.14</b></td><td>等时法 X vs 精确时点 Y,一题两算</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.14" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 题型②『等时法 vs 精确』最佳代表——同题内既算金额加权 X 又列价值方程求精确 Y(SOA 11/88 #5)</td></tr>
+<tr class="kxd" data-kxq="2.14" style="display:none"><td colspan="4"><div class="kx-qtx">Payments of 300, 500 and 700 are made at the end of years five, six and eight, respectively. Interest is accumulated at an annual effective rate of 4%. You are to find the point in time at which a single payment of 1,500 is equivalent to the above series of payments. You are given: (i) \( X \) is the point in time calculated by the method of equated time. (ii) \( Y \) is the exact point in time. Calculate \( X+Y \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 13.44 \)</span><span class="kx-opt"><b>(B)</b> \( 13.50 \)</span><span class="kx-opt"><b>(C)</b> \( 13.55 \)</span><span class="kx-opt"><b>(D)</b> \( 14.61 \)</span><span class="kx-opt"><b>(E)</b> \( 14.99 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;等时法:金额加权平均时点</td><td>\( X=\dfrac{300(5)+500(6)+700(8)}{1{,}500}=6.733 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;精确法:列价值方程</td><td>\( 1{,}500v^{Y}=300v^{5}+500v^{6}+700v^{8}\Rightarrow v^{Y}=.7688 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;反解 Y 并求和</td><td>\( Y=6.704,\ X+Y=13.437 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>2.16</b></td><td>力息基金差极值:单利 X 减复利 Y 求导置零</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.16" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 题型⑤代表——先由 δ_t 求等效 i,写单利 X 与复利 Y 作差,求导置零并验二阶导为负(SOA 5/87 #14)</td></tr>
+<tr class="kxd" data-kxq="2.16" style="display:none"><td colspan="4"><div class="kx-qtx">You are given: (i) \( \delta_t = \dfrac{2t^3+8t}{t^4+8t^2+16} \), \( 0\le t\le 1 \). (ii) \( i \) = the effective annual interest rate equivalent to \( \delta_t \). (iii) Fund X accumulates with simple interest at the rate \( i \). (iv) Fund Y accumulates at \( \delta_t \). (v) An amount of 1 is deposited in each of Fund X and Fund Y at time \( t=0 \). At what time, \( t \), is (Fund X − Fund Y) a maximum?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 0.250 \)</span><span class="kx-opt"><b>(B)</b> \( 0.375 \)</span><span class="kx-opt"><b>(C)</b> \( 0.500 \)</span><span class="kx-opt"><b>(D)</b> \( 0.625 \)</span><span class="kx-opt"><b>(E)</b> \( 0.750 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;求等效 i:积 δ 到 1 得积累因子</td><td>\( 1+i=e^{\int_0^1\delta}=(25/16)^{1/2}=1.25\Rightarrow i=.25 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;作差 f(t)=单利 X 减复利 Y</td><td>\( f(t)=(1+.25t)-\dfrac{t^2+4}{4}=\dfrac{4+t}{4}-\dfrac{t^2+4}{4} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求导置零</td><td>\( f'(t)=\dfrac14-\dfrac{t}{2}=0\Rightarrow t=0.5 \)</td><td class="xr">代数/计算</td></tr><tr><td>④&nbsp;验二阶导为负(确为极大)</td><td>\( f''(t)=-\tfrac12<0 \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>2.18</b></td><td>几何级数求现值解未知折现次数 K</td><td style="white-space:nowrap"><button class="kxb" data-kx="2.18" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 题型⑥代表(第 3 章年金预告)——60 期月付几何级数求 PV,令单笔现值相等反解 K(SOA 11/85 #1)</td></tr>
+<tr class="kxd" data-kxq="2.18" style="display:none"><td colspan="4"><div class="kx-qtx">On January 1, 1985, Marc has the following two options for repaying a loan: (i) Sixty monthly payments of 100 commencing February 1, 1985. (ii) A single payment of 6000 at the end of \( K \) months. Interest is at a nominal annual rate of 12% compounded monthly. The two options have the same present value. Determine \( K \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 29.0 \)</span><span class="kx-opt"><b>(B)</b> \( 29.5 \)</span><span class="kx-opt"><b>(C)</b> \( 30.0 \)</span><span class="kx-opt"><b>(D)</b> \( 30.5 \)</span><span class="kx-opt"><b>(E)</b> \( 31.0 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;名义 12% 月复利→每月 1%,求 60 期几何级数现值</td><td>\( 100(v+v^2+\cdots+v^{60})=100v\dfrac{1-v^{60}}{1-v}=4{,}495.50 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;令单笔现值相等</td><td>\( 6{,}000v^{K}=4{,}495.50\Rightarrow v^{K}=.749251 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;反解 K</td><td>\( K=\dfrac{-\ln .749251}{\ln 1.01}=29.0 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 9(同题型二刷备用)· 跳过 0(离题/重复);全量评级存 _Meta/tools/data/exam-fm-key-exercises.json</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-2a">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">§2a · 课本 p.73–77</span><h2 class="sec-title">价值方程与时间图</h2></div></div>
+    <p class="sec-sub">等价原则是整个利息理论的游戏规则:今天的 $1,000 与一年后的 $1,050(5% 下)对你无差异。接受它,所有问题都变成"把钱搬到同一天再比"。</p>
+
+    <div class="card accent">
+      <h3>价值方程 Equation of Value <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.73</div>
+      <p class="lede">把所有款项折算到同一个<b>比较日(comparison date)</b>,流入 = 流出,就是价值方程。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Equation of Value</span>
+        $$\sum \text{流入}_k\,(1+i)^{\pm s_k} \;=\; \sum \text{流出}_k\,(1+i)^{\pm s_k}\qquad(\text{全体折到比较日})$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>先搬钱,再列式</b> — 不同日期的钱不能直接加减,必须先搬到同一张"桌子"(比较日)上。</span></div>
+      <p class="dim">两个必须注意的点(p.73):① 评估任何两笔钱<b>必须</b>用同一日期;② <b>任何</b>日期都可当比较日——哪怕取 122 年后,两边同除 \(1.06^{120}\) 就回到原方程,解不变。</p>
+      <details class="more"><summary>展开:引例(p.73)</summary>
+        <p class="dim">两年后凑 $5,000:今天存 X、一年后再存 X,6% 有效。取时间 2 为比较日:\(X(1.06^2+1.06)=5{,}000\Rightarrow X=\$2{,}289.80\)。</p>
+      </details>
+    </div>
+
+    <div class="card accent">
+      <h3>时间图 Time Diagram <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.74 · "The Student's Friend"</div>
+      <p class="lede">"时间图就是把题目画成一幅画——画完,题差不多自己解完了。"</p>
+      <p class="dim">制图规范四条(p.74,Ex 2.1 后):① <b>存款、取款画时间线两侧</b>(一侧进一侧出);② 线左端<b>标注期单位</b>("years" / "½ years" / "¼ years");③ 每计息期有效利率用小双箭头标在线上;④ <b>竖直箭头指向比较日</b>。</p>
+      <div class="note tip"><span class="ic">💡</span><span class="t"><b>单位陷阱预防:</b>Ex 2.2 特意在轴左端标 "½ years"——提醒"时间 1"是 6 个月不是 1 年。名义利率先化成每计息期有效利率(5% 半年复利 → 每半年 2.5%)再画。</span></div>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 460 150" role="img" aria-label="时间图规范示意">
+          <line x1="30" y1="90" x2="430" y2="90" stroke="#16243d" stroke-width="2"/>
+          <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#46566f">
+            <text x="8" y="106">(yrs)</text>
+            <text x="56" y="106" text-anchor="middle">0</text>
+            <text x="146" y="106" text-anchor="middle">1</text>
+            <text x="236" y="106" text-anchor="middle">2</text>
+            <text x="326" y="106" text-anchor="middle">3</text>
+            <text x="416" y="106" text-anchor="middle">5</text>
+          </g>
+          <g stroke="#16243d" stroke-width="1.5">
+            <line x1="56" y1="85" x2="56" y2="95"/><line x1="146" y1="85" x2="146" y2="95"/>
+            <line x1="236" y1="85" x2="236" y2="95"/><line x1="326" y1="85" x2="326" y2="95"/><line x1="416" y1="85" x2="416" y2="95"/>
+          </g>
+          <g font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#085151" font-weight="bold">
+            <text x="56" y="128" text-anchor="middle">x ↓</text>
+            <text x="236" y="128" text-anchor="middle">x/2 ↓</text>
+          </g>
+          <g font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#c6492f" font-weight="bold">
+            <text x="146" y="74" text-anchor="middle">↑ 1,000</text>
+            <text x="416" y="74" text-anchor="middle">↑ 2,000</text>
+          </g>
+          <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#0d7d7d">
+            <text x="101" y="52" text-anchor="middle">←5%→</text>
+          </g>
+          <path d="M56 30 L56 60" stroke="#ffd23f" stroke-width="3" marker-end="url(#ar)"/>
+          <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto"><path d="M0,0 L8,0 L4,8 z" fill="#ffd23f"/></marker></defs>
+          <text x="62" y="38" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#a06a00">比较日 t=0</text>
+        </svg>
+        <div class="cap"><b>Ex 2.1 的时间图</b> · 存款在下、取款在上、期单位在左、竖箭指比较日</div>
+      </div>
+    </div>
+
+    <div class="ex">
+      <div class="ex-h"><span class="badge">例 2.1</span><span class="src" style="margin:0">课本 p.74</span></div>
+      <p class="q">今天存 x,两年后存 x/2;一年后取 $1,000、五年后取 $2,000;5% 有效。求 x。</p>
+      <p>取 t=0 为比较日,存款方 = 取款方:\(x+\frac{x}{2}v^2 = 1{,}000v+2{,}000v^5\),解出 \(x=\dfrac{1{,}000v+2{,}000v^5}{1+v^2/2}\)。</p>
+      <span class="ans">= $1,733.34</span>
+      <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+      <table>
+        <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+        <tr><td>① 画时间图,选比较日 t=0</td><td>存取画两侧、竖箭头指比较日(制图规范四条)</td><td class="xr"><span class="here">本章</span></td></tr>
+        <tr><td>② 列价值方程:存款 PV = 取款 PV</td><td>\(x+\frac{x}{2}v^2=1{,}000v+2{,}000v^5\)</td><td class="xr"><span class="here">本章</span> · <a href="soa-exam-fm-l01-interest-and-discount-rates.html">L01 折现因子 ↗</a></td></tr>
+        <tr><td>③ 解出 x,代 \(v=1/1.05\)</td><td>\(x=\dfrac{1{,}000v+2{,}000v^5}{1+v^2/2}=1{,}733.34\)</td><td class="xr"><span class="here">本章</span></td></tr>
+      </table></div>
+    </div>
+
+    <div class="card accent">
+      <h3>付款期 vs 计息期:两条路线 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.75–77 · Ex 2.3 / 2.4</div>
+      <p class="lede">付款频率与计息频率不一致时,要么<b>换利率就付款期</b>,要么<b>换刻度就计息期</b>——两种都必须会,默认走付款期。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>等效利率 Equivalent Rate</span>
+        $$(1+j)^{m}=(1+i)^{k}\qquad\text{如 } j=1.03^{1/2}-1\ (\text{季度}),\quad 1+j=1.02^{8}\ (\text{两年})$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>刻度跟付款走,利率跟刻度走</b> — 教材原话:利息函数在"计息期=付款期"时形式最简,等效利率不是整数无妨,计算器不在乎。</span></div>
+      <table class="map vs">
+        <thead><tr><th style="width:18%"></th><th>路线① 按付款期(推荐)</th><th>路线② 按计息期</th></tr></thead>
+        <tbody>
+          <tr><td>时间轴刻度</td><td>一格 = 一个付款期(Ex 2.3:¼ 年,0–40)</td><td>一格 = 一个计息期(Ex 2.3:½ 年,0–20)</td></tr>
+          <tr><td>用的利率</td><td>等效利率 \(j=1.03^{1/2}-1=1.48892\%\)</td><td>原有效利率 3%(付款落在 ½, 1, 1½ …)</td></tr>
+          <tr><td>何时用</td><td>数值答案(绝大多数考题)</td><td>答案留符号形式时(出题人用原利率符号)</td></tr>
+        </tbody>
+      </table>
+      <details class="more"><summary>展开:Ex 2.4(付款间隔超过 1 年也同样处理)</summary>
+        <p class="dim">1994–2014 偶数年 1/1 各存 $500,名义 8% 季度复利,求末笔存款日 AV。付款期 = 2 年 = 8 个季度:\(1+j=1.02^8\Rightarrow j=17.1659\%\),\(AV=500[1+(1+j)+\cdots+(1+j)^{10}]\)。计息期法:¼ 年轴 0–80,存款每隔 8 格。时间刻度编号随意(1–11、8–88 都行),只要付款间距正确。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="core-2bt">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">§2b · 课本 p.77–80</span><h2 class="sec-title">未知时间:对数、TVM 与等时法</h2></div></div>
+    <p class="sec-sub">价值方程里解 t——精确解靠对数或计算器 TVM 键;心算近似靠 Rule of 72;多笔付款合并成单笔靠等时法。</p>
+
+    <div class="card accent">
+      <h3>解未知时间 Unknown Time <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.77 · Ex 2.5–2.7</div>
+      <p class="lede">指数方程 \(a^t=b\) 两条路:<b>LN 键</b>取对数,或 <b>TVM 键</b>直接 CPT N。</p>
+      <div class="formula"><span class="name">对数解</span>
+        $$500(1.04^t)=1{,}500\ \Rightarrow\ t=\frac{\ln 3}{\ln 1.04}=28.01\ \text{年}$$</div>
+      <div class="note tip"><span class="ic">🖩</span><span class="t"><b>BA II Plus(Ex 2.5,p.77):</b><span class="kbd">4 I/Y</span> <span class="kbd">500 PV</span> <span class="kbd">1500 +/- FV</span> <span class="kbd">CPT N</span> → 28.01。<b>PV 与 FV 必须反号</b>,否则报错。</span></div>
+      <div class="formula"><span class="name">Rule of 72(翻倍时间心算)</span>
+        $$t_{\times 2}\approx\frac{72}{i\%}\qquad\text{更准: } t\approx\frac{69.3}{i\%}+0.35\quad(\ln 2\approx 0.693)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>翻倍七十二</b> — 5% 下 72/5=14.4 年;精确值 14.2067,改良式 69.3/5+0.35=14.21 已准到小数两位。</span></div>
+      <details class="more"><summary>展开:两笔付款在 t 与 2t(Ex 2.7 套路)</summary>
+        <p class="dim">\(1{,}000(v^t+v^{2t})=1{,}200\)(4%):令 \(x=v^t\) 化二次 \(x^2+x-1.2=0\),取正根 \(x=.704159\),再 LN/TVM 反解 \(t=8.943\)。<b>换元 → 二次 → 取正根 → 反解</b>是本题型标准四步。</p>
+      </details>
+    </div>
+
+    <div class="card accent">
+      <h3>等时法 Method of Equated Time <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.78–79 · Ex 2.9 / 2.10</div>
+      <p class="lede">"多笔付款合并成一笔,该付在哪天?"——精确解要解方程;等时法用<b>金额加权平均时间</b>一步近似。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Equated Time</span>
+        $$\bar t=\frac{\sum_k A_k\,t_k}{\sum_k A_k}\qquad\text{精确: }\Big(\sum_k A_k\Big)v^{t}=\sum_k A_k v^{t_k}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>金额当权重,答案总偏晚</b> — \(\bar t\) 与利率无关,且正利率下<b>恒大于</b>精确 t(书 79:approximation always exceeds the exact answer)。</span></div>
+      <p class="dim">例(p.79):付款 5、1、15 于时点 1、3、10 → \(\bar t=\frac{5(1)+1(3)+15(10)}{21}=7.52\);i=5% 时精确 t=7.12。权重必须是金额——"不看金额平均时点"不是好近似。</p>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 2.10</span><span class="src" style="margin:0">课本 p.79–80</span></div>
+        <p class="q">Hannah 应收 100/200/300 于年末 4/10/12;改为在等时法时点一次收 600;6% 有效。两种安排的现值差 X?</p>
+        <p>\(\bar t=\frac{4(100)+10(200)+12(300)}{600}=10\);单笔 \(PV=600v^{10}=335.04\);原计划 \(PV=100v^4+200v^{10}+300v^{12}=339.98\)。单笔付在偏晚时点 ⇒ PV 偏小。</p>
+        <span class="ans">X = 4.94</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 等时法定合并时点:金额加权平均</td><td>\(\bar t=\frac{\sum A_k t_k}{\sum A_k}=\frac{4(100)+10(200)+12(300)}{600}=10\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>② 单笔方案 PV</td><td>\(600v^{10}=335.04\)</td><td class="xr"><a href="soa-exam-fm-l01-interest-and-discount-rates.html">L01 折现 ↗</a></td></tr>
+          <tr><td>③ 原计划 PV:逐笔折现求和</td><td>\(100v^4+200v^{10}+300v^{12}=339.98\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>④ 求差 + 方向检验:等时法恒偏晚 ⇒ 单笔 PV 偏小</td><td>\(X=339.98-335.04=4.94\)</td><td class="xr"><span class="here">本章</span></td></tr>
+        </table></div>
+      </div>
+      <details class="more"><summary>展开:Ex 2.9 的两个经典级数(选择题速杀)</summary>
+        <p class="dim">无穷付款 \(d, \frac{d^2}{2}, \frac{d^3}{3},\dots\) 求 \(\bar t\):分子 \(d+d^2+\cdots=\frac{d}{1-d}=i\);分母 \(d+\frac{d^2}{2}+\cdots=-\ln(1-d)=\delta\)。答案 \(\bar t = i/\delta\)。两条级数和(几何、对数)值得单独背。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="core-2bi">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">§2b · 课本 p.80–81</span><h2 class="sec-title">未知利率:换元解多项式</h2></div></div>
+    <p class="sec-sub">教材原话:未知利率"among the most difficult to solve"。高次多项式没有求根公式——但考题给你的都能换元降成二次,剩下的交给 BA II Plus(CF/IRR,后续章节)。</p>
+
+    <div class="card accent">
+      <h3>换元解 i <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.80 · Ex 2.11 / 2.12</div>
+      <p class="lede">令 \(x=1+i\) 或 \(x=v^n\),价值方程化成 x 的二次方程,<b>取合理根、舍平凡根</b>。</p>
+      <div class="formula"><span class="name">Ex 2.11(x = 1+i)</span>
+        $$(1+i)^2+2(1+i)=4\ \Rightarrow\ x^2+2x-4=0\ \Rightarrow\ x=\sqrt5-1=1.236068\ \Rightarrow\ i=23.61\%$$</div>
+      <div class="formula"><span class="name">Ex 2.12(x = v⁵,因式分解 + 舍根)</span>
+        $$100v^5+200v^{15}=300v^{10}\Rightarrow 2v^{10}-3v^5+1=0\Rightarrow(2x-1)(x-1)=0\Rightarrow v^5=\tfrac12\Rightarrow i=14.87\%$$</div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>舍根意识:</b>Ex 2.12 另一根 \(v^5=1\Rightarrow i=0\),题设 i 为正利率,舍。凡换元必检查每个根是否合题意。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+    <div class="card">
+      <h3>💡 直觉例子</h3>
+      <p><b>比较日 = 数钱的桌子。</b>桌子随便挑——今天这张、两年后那张、甚至 122 年后的那张——只要所有钱都搬到<b>同一张</b>桌子上,数出的结论一模一样。价值方程就是"这张桌子上,进的钱 = 出的钱"。</p>
+      <p class="dim"><b>等时法 = 钱群的重心。</b>把每块钱看作站在时间轴上的人,\(\bar t\) 是按体重(金额)加权的重心。折现曲线是凸的,所以重心总落在精确答案<b>右边一点</b>(偏晚)——这就是"恒偏大"的几何原因。</p>
+    </div>
+    <div class="card">
+      <h3>📚 扩展阅读(精选 2 个)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Rule_of_72">Rule of 72 — Wikipedia</a></div><div class="z">72 法则的来龙去脉:为什么是 72 不是 69.3(72 因数多好心算),各利率区间的误差表。</div><div class="u">en.wikipedia.org/wiki/Rule_of_72</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Time_value_of_money">Time Value of Money — Wikipedia</a></div><div class="z">货币时间价值的完整图谱:本章的价值方程如何延伸到年金、永续年金——正好是 L03 的预告片。</div><div class="u">en.wikipedia.org/wiki/Time_value_of_money</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
+<footer>
+  <div class="wrap">
+    <p><b>Exam FM 导学 · Chapter 2</b> · 第2章 Practical Applications 价值方程与货币时间价值</p>
+    <p>公式与例题整理自《ASM Exam FM Study Manual, 17th ed.》Chapter 2(p.73–88,页码已标注,细节以课本为准)。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('中文') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '👁'; btn.title = '遮住/显示中文，自测用';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '🙈' : '👁';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
+</body>
+</html>

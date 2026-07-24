@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<!--
+  Exam FM 习题串讲 E01:年金家族辨析(L03/L04)。
+  概念卡弹窗内容是构建时快照:概念卡 .md 修改后重跑
+      python3 _Meta/tools/build-exam-p-e01-cards.py
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · E01 年金家族辨析:一条时间线定乾坤 L03–L04</title>
+<script>
+MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --accent:#b45309; --accent-deep:#7c3a06; --accent-soft:#f9ede0; --hi:#ffd23f;
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#fbfaf7; --card:#ffffff; --line:#e2e0d8; --grid:#f0efe9;
+    --pos:#0e8a6d; --pos-fill:rgba(14,138,109,.12);
+    --neg:#bb2649; --neg-fill:rgba(187,38,73,.10);
+    --blue:#3b66c4; --blue-fill:rgba(59,102,196,.10);
+    --disc:#5b53c4; --disc-soft:#edebfa;
+    --cont:#b8860b; --cont-soft:#f7efdc;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC","Noto Serif SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       line-height:1.8;font-size:16px;-webkit-font-smoothing:antialiased}
+  .bar{background:linear-gradient(180deg,#16243d,#1d3050);color:#fff;border-bottom:3px solid var(--hi);
+       padding:14px 24px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:17px}
+  .bar .logo b{color:var(--hi)}
+  .bar .tagline{font-family:var(--mono);font-size:12px;color:#cdd6e6}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 24px 90px}
+  h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.35}
+  h1{font-size:29px;margin:0 0 8px}
+  h1 em{font-style:normal;color:var(--accent-deep)}
+  h2{font-size:22px;margin:48px 0 4px;padding-top:24px;border-top:1px solid var(--line)}
+  .act-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--mute);margin-top:40px}
+  .thesis{color:var(--ink-soft);max-width:46em;margin:0 0 6px}
+  .thesis strong{color:var(--ink)}
+  .howto{font-size:14px;color:var(--accent-deep);background:var(--accent-soft);
+         border-radius:8px;padding:8px 14px;margin:14px 0 4px;max-width:46em}
+  .chain{font-size:13.5px;color:var(--mute);margin:10px 0 0}
+  .chain a{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .chain a:hover{border-bottom-color:var(--accent-deep)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:8px;
+     padding:20px 24px 16px;margin:24px 0}
+  .q-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .q-no{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--accent);white-space:nowrap}
+  .q-title{font-weight:700;font-size:17px}
+  .chips{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);
+        border:1px solid rgba(180,83,9,.35);border-radius:10px;padding:1px 9px;
+        white-space:nowrap;cursor:pointer;transition:background .12s}
+  .chip:hover{background:#f2dfc8}
+  .chip::after{content:" ▸";opacity:.6}
+  .scene{color:var(--ink-soft);font-size:15px;margin:4px 0 8px}
+  .scene::before{content:"场景 · ";color:var(--ink);font-weight:600}
+  .ask{margin:8px 0;font-weight:600}
+  .ask::before{content:"问:";color:var(--accent)}
+  .solve{margin:8px 0 4px}
+  .solve ol{margin:6px 0;padding-left:22px}
+  .solve li{margin:4px 0}
+  .keys{font-family:var(--mono);font-size:13px;background:var(--grid);border-radius:6px;
+        padding:6px 12px;margin:8px 0 4px;overflow-x:auto;white-space:nowrap}
+  .keys::before{content:"⌨ BA II Plus · ";color:var(--mute)}
+  .takeaway{border-left:3px solid var(--pos);padding:2px 0 2px 12px;font-size:14.5px;margin:12px 0 4px}
+  .takeaway strong{color:var(--pos)}
+  .warn{border-left-color:var(--neg)}
+  .warn strong{color:var(--neg)}
+  var,.f{font-family:Georgia,"Times New Roman",serif;font-style:italic}
+  .formula{font-family:Georgia,"Times New Roman",serif;background:var(--accent-soft);border-radius:6px;
+           padding:8px 14px;margin:10px 0;overflow-x:auto;font-size:15.5px}
+  table{border-collapse:collapse;margin:12px 0;font-size:14.5px;font-variant-numeric:tabular-nums}
+  th,td{padding:6px 12px;border:1px solid var(--line);text-align:center}
+  th{font-size:13px;color:var(--mute);font-weight:600;background:var(--grid)}
+  td.hl-pos{background:var(--pos-fill);font-weight:600}
+  td.hl-disc{background:var(--disc-soft)}
+  td.hl-cont{background:var(--cont-soft)}
+  .tbl-wrap{overflow-x:auto}
+  table.map td{text-align:left}
+  table.map td:first-child{white-space:nowrap;font-weight:600}
+  figure{margin:16px 0 4px}
+  figure svg{display:block;margin:0 auto;max-width:100%}
+  figcaption{font-size:13px;color:var(--mute);margin-top:6px;text-align:center}
+  svg text{font-family:var(--sans);fill:var(--ink-soft);font-size:11px}
+  svg text.dark{fill:var(--ink);font-weight:600}
+  svg text.small{font-size:9.5px;fill:var(--mute)}
+/*CARD_POPUP_CSS_BEGIN*/
+  .net-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:center;justify-content:center}
+  .net-modal[hidden]{display:none}
+  .net-back{position:absolute;inset:0;background:rgba(15,22,38,.62)}
+  .net-box{position:relative;max-width:760px;width:calc(100% - 36px);max-height:85vh;display:flex;flex-direction:column;
+    background:#fff;border-radius:18px;box-shadow:0 40px 100px -20px rgba(8,14,28,.6);overflow:hidden}
+  .net-mh{background:linear-gradient(135deg,#16243d 0%,#1d3050 55%,#0d4a56 100%);color:#fff;padding:18px 24px 16px;position:relative}
+  .net-kick{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .net-chip{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-stat{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#fff;border-radius:5px;padding:2px 8px}
+  .net-chc{font-family:var(--mono);font-size:11px;color:var(--hi);border:1px solid rgba(255,210,63,.5);border-radius:5px;padding:1.5px 8px}
+  .net-kind{font-size:11px;color:#9fb0c8;letter-spacing:.08em}
+  .net-t{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;padding-right:34px}
+  .net-en{font-family:var(--mono);font-size:12px;color:#9fb0c8;margin-top:3px}
+  .net-x{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.12);color:#dbe3f0;font-size:14px;line-height:1}
+  .net-x:hover{background:rgba(255,255,255,.25)}
+  .net-bd{flex:1 1 auto;min-height:0;padding:16px 26px 20px;overflow-y:auto;overscroll-behavior:contain;font-size:14.5px;line-height:1.75}
+  .net-bd p{margin:0 0 10px}
+  .net-bd h4,.net-bd h5,.net-bd h6{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px;padding-left:10px;
+    border-left:3px solid var(--hi);color:var(--ink)}
+  .net-bd h4:first-child,.net-bd h5:first-child{margin-top:2px}
+  .net-bd ul,.net-bd ol{margin:0 0 10px;padding-left:22px}
+  .net-bd li{margin:3px 0}
+  .net-bd strong{color:var(--accent-deep)}
+  .net-bd code{font-family:var(--mono);font-size:.88em;background:#eef1f6;border-radius:4px;padding:1px 5px}
+  .net-bd .net-mth{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:0 0 10px;overflow-x:auto}
+  .net-bd .net-pre{background:#f3f5f9;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 10px;
+    overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5}
+  .net-bd table{border-collapse:collapse;margin:0 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+  .net-bd th,.net-bd td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+  .net-bd th{background:#f3f5f9;font-weight:600;white-space:nowrap}
+  .net-bd .net-aka{font-size:12.5px;color:var(--mute)}
+  .net-wl{color:var(--accent-deep);text-decoration:none;border-bottom:1px dashed var(--mute);cursor:pointer}
+  .net-wl:hover{border-bottom-style:solid}
+  .net-mf{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 24px;background:#f8f9fc;flex-wrap:wrap}
+  .net-bk{font:inherit;border:0;background:none;font-size:13px;color:var(--accent-deep);cursor:pointer;padding:0}
+  .net-bk[hidden]{display:none}
+  .net-go{font-size:12.5px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .net-go:hover{background:var(--accent-deep)}
+  @media(max-width:640px){.net-bd{max-height:70vh}}
+  /*CARD_POPUP_CSS_END*/
+  @media(max-width:640px){.chips{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="logo">Exam&nbsp;FM · <b>习题串讲</b></span>
+  <span class="tagline">E01 · annuity family, one timeline · L03/L04</span>
+</div>
+
+<div class="wrap">
+  <h1>年金家族辨析:<em>一条时间线定乾坤 L03–L04</em></h1>
+  <p class="thesis">$a$、$\ddot a$、$s$、$\ddot s$、${}_{m|}a$、$1/i$……符号越背越乱?<strong>年金符号混淆的病根只有一个:没把付款点画在时间线上。</strong>期末/期初/递延/永续,只是<strong>同一串付款在时间线上的四种摆法</strong>——付款点画出来,该用哪个符号自己会跳出来。本页先看四联图,再两两对比换算关系,然后用「攒退休金 + 还房贷」五道题走完年金一生,最后给读题决策树。</p>
+  <p class="howto">💡 概念标签可点弹卡;所有数字手算可验;做年金题的第一动作永远是<b>画时间线、标付款点</b>,符号只是图的速记。</p>
+  <p class="chain">配套章节:
+    <a href="soa-exam-fm-l03-annuities.html">L03 年金</a> ·
+    <a href="soa-exam-fm-l04-complex-annuities.html">L04 复杂年金</a></p>
+
+  <div class="act-tag">第一幕 · 全景</div>
+  <h2>四种年金 = 同一串付款的四种摆法</h2>
+
+  <figure><svg viewBox="0 0 860 300" role="img" aria-label="年金时间线四联图:期末年金付款点在1到n,期初年金在0到n-1,递延年金在m+1到m+n,永续年金从1到无穷">
+    <text x="700" y="16" font-size="10" fill="#7a8699">t=0 现值符号</text>
+    <!-- Row 1: annuity-immediate -->
+    <text x="132" y="22" font-size="11.5" fill="#7c3a06" font-weight="700">① 期末年金 annuity-immediate —— 首笔在 t=1,末笔在 t=n</text>
+    <line x1="132" y1="52" x2="445" y2="52" stroke="#16243d" stroke-width="1.2"/>
+    <line x1="495" y1="52" x2="648" y2="52" stroke="#16243d" stroke-width="1.2"/>
+    <polygon points="648,48 658,52 648,56" fill="#16243d"/>
+    <text x="470" y="56" font-size="13" fill="#7a8699" text-anchor="middle">⋯</text>
+    <line x1="150" y1="47" x2="150" y2="57" stroke="#9aa6ba" stroke-width="1.2"/>
+    <circle cx="230" cy="52" r="5" fill="#b45309"/><circle cx="310" cy="52" r="5" fill="#b45309"/>
+    <circle cx="390" cy="52" r="5" fill="#b45309"/><circle cx="550" cy="52" r="5" fill="#b45309"/>
+    <text x="230" y="38" font-size="9.5" fill="#7a8699" text-anchor="middle">1</text>
+    <text x="310" y="38" font-size="9.5" fill="#7a8699" text-anchor="middle">1</text>
+    <text x="390" y="38" font-size="9.5" fill="#7a8699" text-anchor="middle">1</text>
+    <text x="550" y="38" font-size="9.5" fill="#7a8699" text-anchor="middle">1</text>
+    <text x="150" y="74" text-anchor="middle">0</text><text x="230" y="74" text-anchor="middle">1</text>
+    <text x="310" y="74" text-anchor="middle">2</text><text x="390" y="74" text-anchor="middle">3</text>
+    <text x="550" y="74" text-anchor="middle">n</text>
+    <text x="700" y="58" font-size="17" font-family="Georgia,serif" font-style="italic" fill="#16243d">a</text>
+    <text x="711" y="63" font-size="11" font-family="Georgia,serif" font-style="italic" fill="#16243d">n</text>
+    <line x1="710" y1="49" x2="727" y2="49" stroke="#16243d" stroke-width="1"/>
+    <line x1="727" y1="49" x2="727" y2="64" stroke="#16243d" stroke-width="1"/>
+    <text x="736" y="58" font-size="10" fill="#7a8699">= (1−vⁿ)/i</text>
+    <!-- Row 2: annuity-due -->
+    <text x="132" y="88" font-size="11.5" fill="#7c3a06" font-weight="700">② 期初年金 annuity-due —— 整串左移一格:首笔 t=0,末笔 t=n−1</text>
+    <line x1="132" y1="118" x2="445" y2="118" stroke="#16243d" stroke-width="1.2"/>
+    <line x1="495" y1="118" x2="648" y2="118" stroke="#16243d" stroke-width="1.2"/>
+    <polygon points="648,114 658,118 648,122" fill="#16243d"/>
+    <text x="470" y="122" font-size="13" fill="#7a8699" text-anchor="middle">⋯</text>
+    <circle cx="150" cy="118" r="5" fill="#b45309"/><circle cx="230" cy="118" r="5" fill="#b45309"/>
+    <circle cx="310" cy="118" r="5" fill="#b45309"/><circle cx="390" cy="118" r="5" fill="#b45309"/>
+    <circle cx="550" cy="118" r="5" fill="#b45309"/>
+    <line x1="630" y1="113" x2="630" y2="123" stroke="#9aa6ba" stroke-width="1.2"/>
+    <text x="150" y="140" text-anchor="middle">0</text><text x="230" y="140" text-anchor="middle">1</text>
+    <text x="310" y="140" text-anchor="middle">2</text><text x="390" y="140" text-anchor="middle">3</text>
+    <text x="550" y="140" text-anchor="middle">n−1</text><text x="630" y="140" text-anchor="middle">n</text>
+    <circle cx="703" cy="109" r="1.4" fill="#16243d"/><circle cx="708" cy="109" r="1.4" fill="#16243d"/>
+    <text x="700" y="124" font-size="17" font-family="Georgia,serif" font-style="italic" fill="#16243d">a</text>
+    <text x="711" y="129" font-size="11" font-family="Georgia,serif" font-style="italic" fill="#16243d">n</text>
+    <line x1="710" y1="115" x2="727" y2="115" stroke="#16243d" stroke-width="1"/>
+    <line x1="727" y1="115" x2="727" y2="130" stroke="#16243d" stroke-width="1"/>
+    <text x="736" y="124" font-size="10" fill="#7a8699">= a·(1+i) = (1−vⁿ)/d</text>
+    <!-- Row 3: deferred -->
+    <text x="132" y="156" font-size="11.5" fill="#7c3a06" font-weight="700">③ 递延年金 deferred —— 前 m 期空窗,首笔在 t=m+1</text>
+    <line x1="150" y1="174" x2="310" y2="174" stroke="#9aa6ba" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="230" y="167" font-size="9.5" fill="#7a8699" text-anchor="middle">空窗 m 期</text>
+    <line x1="132" y1="186" x2="205" y2="186" stroke="#16243d" stroke-width="1.2"/>
+    <line x1="255" y1="186" x2="525" y2="186" stroke="#16243d" stroke-width="1.2"/>
+    <line x1="575" y1="186" x2="648" y2="186" stroke="#16243d" stroke-width="1.2"/>
+    <polygon points="648,182 658,186 648,190" fill="#16243d"/>
+    <text x="230" y="190" font-size="13" fill="#7a8699" text-anchor="middle">⋯</text>
+    <text x="550" y="190" font-size="13" fill="#7a8699" text-anchor="middle">⋯</text>
+    <line x1="150" y1="181" x2="150" y2="191" stroke="#9aa6ba" stroke-width="1.2"/>
+    <line x1="310" y1="181" x2="310" y2="191" stroke="#9aa6ba" stroke-width="1.2"/>
+    <circle cx="390" cy="186" r="5" fill="#b45309"/><circle cx="470" cy="186" r="5" fill="#b45309"/>
+    <circle cx="630" cy="186" r="5" fill="#b45309"/>
+    <text x="150" y="208" text-anchor="middle">0</text><text x="310" y="208" text-anchor="middle">m</text>
+    <text x="390" y="208" text-anchor="middle">m+1</text><text x="470" y="208" text-anchor="middle">m+2</text>
+    <text x="630" y="208" text-anchor="middle">m+n</text>
+    <text x="681" y="197" font-size="11" font-family="Georgia,serif" font-style="italic" fill="#16243d">m|</text>
+    <text x="700" y="192" font-size="17" font-family="Georgia,serif" font-style="italic" fill="#16243d">a</text>
+    <text x="711" y="197" font-size="11" font-family="Georgia,serif" font-style="italic" fill="#16243d">n</text>
+    <line x1="710" y1="183" x2="727" y2="183" stroke="#16243d" stroke-width="1"/>
+    <line x1="727" y1="183" x2="727" y2="198" stroke="#16243d" stroke-width="1"/>
+    <text x="736" y="192" font-size="10" fill="#7a8699">= vᵐ × (1−vⁿ)/i</text>
+    <!-- Row 4: perpetuity -->
+    <text x="132" y="228" font-size="11.5" fill="#7c3a06" font-weight="700">④ 永续年金 perpetuity —— 付款永不停止,n → ∞</text>
+    <line x1="132" y1="258" x2="585" y2="258" stroke="#16243d" stroke-width="1.2"/>
+    <line x1="615" y1="258" x2="648" y2="258" stroke="#16243d" stroke-width="1.2"/>
+    <polygon points="648,254 658,258 648,262" fill="#16243d"/>
+    <text x="600" y="262" font-size="13" fill="#7a8699" text-anchor="middle">⋯</text>
+    <text x="666" y="262" font-size="13" fill="#16243d">∞</text>
+    <line x1="150" y1="253" x2="150" y2="263" stroke="#9aa6ba" stroke-width="1.2"/>
+    <circle cx="230" cy="258" r="5" fill="#b45309"/><circle cx="310" cy="258" r="5" fill="#b45309"/>
+    <circle cx="390" cy="258" r="5" fill="#b45309"/><circle cx="470" cy="258" r="5" fill="#b45309"/>
+    <circle cx="550" cy="258" r="5" fill="#b45309"/>
+    <text x="150" y="280" text-anchor="middle">0</text><text x="230" y="280" text-anchor="middle">1</text>
+    <text x="310" y="280" text-anchor="middle">2</text><text x="390" y="280" text-anchor="middle">3</text>
+    <text x="470" y="280" text-anchor="middle">4</text><text x="550" y="280" text-anchor="middle">5</text>
+    <text x="704" y="254" font-size="13" font-family="Georgia,serif" fill="#16243d" text-anchor="middle">1</text>
+    <line x1="696" y1="259" x2="712" y2="259" stroke="#16243d" stroke-width="1"/>
+    <text x="704" y="273" font-size="13" font-family="Georgia,serif" font-style="italic" fill="#16243d" text-anchor="middle">i</text>
+    <text x="736" y="264" font-size="10" fill="#7a8699">(期初版 = 1/d)</text>
+  </svg><figcaption>同一串「每期 1 元」的付款,在时间线上只有四种摆法:<b>晚一格起步 / 提前一格 / 推迟 m 格 / 无限延长</b>。先画点,再选符号——符号是图的速记,不是图的替代。</figcaption></figure>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">全景</span><span class="q-title">符号家族总表:站在哪、朝哪看</span>
+      <span class="chips"><button class="chip" data-card="年金基本符号">年金符号 · L03</button><button class="chip" data-card="现值与折现因子">折现因子 · L01</button></span></div>
+    <p><b>全家只有一张底牌</b>:</p>
+    <div class="formula">$$a_{\overline{n}|}=\frac{1-v^n}{i}=\underbrace{\frac1i}_{\text{永续}}-\underbrace{v^n\cdot\frac1i}_{\text{推迟 }n\text{ 年的永续}}$$</div>
+    <p>白话:<b>n 期年金 = 一条永续掐掉 n 年后的尾巴</b>。其余成员全是这张底牌的平移(乘 $(1+i)$ 或 $v^m$)或换端读数(乘 $(1+i)^n$)。</p>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>符号</th><th>站在哪个时点</th><th>朝哪看</th><th>闭式</th><th>白话</th></tr>
+      <tr><td>$a_{\overline{n}|}$</td><td>$t=0$</td><td>朝前看 n 笔期末付款</td><td>$\dfrac{1-v^n}{i}$</td><td>n 笔 1 元折回今天</td></tr>
+      <tr><td>$\ddot a_{\overline{n}|}$</td><td>$t=0$</td><td>首笔就踩在脚下</td><td>$\dfrac{1-v^n}{d}$</td><td>每笔早一年 → 各多值一年利息</td></tr>
+      <tr><td>$s_{\overline{n}|}$</td><td>$t=n$(末笔时点)</td><td>朝回看已存的 n 笔</td><td>$\dfrac{(1+i)^n-1}{i}$</td><td>存完那刻的账户余额</td></tr>
+      <tr><td>$\ddot s_{\overline{n}|}$</td><td>$t=n$(末笔后一年)</td><td>朝回看</td><td>$\dfrac{(1+i)^n-1}{d}$</td><td>每笔都多滚了一年</td></tr>
+      <tr><td>$a_{\overline{\infty}|}$</td><td>$t=0$</td><td>朝前看无穷</td><td>$1/i$</td><td>只花利息,本金永不动</td></tr>
+      <tr><td>$\ddot a_{\overline{\infty}|}$</td><td>$t=0$</td><td>当场先领一笔</td><td>$1/d$</td><td>$=1+1/i$:先领 1,剩下是普通永续</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>读符号口诀:</strong>字母定端点($a$ 站 0 看现值,$s$ 站 n 看积累),两点定期初($\ddot{}$ = 首笔提前),前标定递延(${}_{m|}$ = 整串右移 m)。</div>
+  </div>
+
+  <div class="act-tag">第二幕 · 分组对比</div>
+  <h2>两两换算:全家只差几个 $(1+i)$</h2>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比①</span><span class="q-title">immediate vs due:每笔各早收一年利息</span>
+      <span class="chips"><button class="chip" data-card="年金基本符号">年金符号 · L03</button><button class="chip" data-card="实际贴现率">贴现率 d · L01</button></span></div>
+    <div class="formula">$$\ddot a_{\overline{n}|}=a_{\overline{n}|}\,(1+i),\qquad \ddot s_{\overline{n}|}=s_{\overline{n}|}\,(1+i)$$</div>
+    <p>白话:期初 = 整串付款左移一格 → <b>每笔各早付一年、各多滚一年利息</b> → 总值恰好整体乘一个 $(1+i)$。等价路径:分母 $i$ 换 $d$(因 $d=iv$,除以 $v$ 与乘 $(1+i)$ 是同一件事)。</p>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>错位恒等式</th><th>时间线读法</th></tr>
+      <tr><td>$\ddot a_{\overline{n}|}=1+a_{\overline{n-1}|}$</td><td>期初年金 = 当场领 1 元 + 剩下 n−1 笔期末年金</td></tr>
+      <tr><td>$\ddot s_{\overline{n}|}=s_{\overline{n+1}|}-1$</td><td>多滚一年的积累 = 多存一期再退掉最后那笔本金</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>考场策略:</strong>只背 immediate 一套,见到 "beginning of each year" 最后乘 $(1+i)$——比单独背 due 公式少一半记忆量、少一处出错点。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比②</span><span class="q-title">PV vs AV:同一串钱在两端的读数</span>
+      <span class="chips"><button class="chip" data-card="年金基本符号">年金符号 · L03</button><button class="chip" data-card="价值方程">价值方程 · L02</button></span></div>
+    <figure><svg viewBox="0 0 430 110" role="img" aria-label="PV 在时间线左端 AV 在右端,相差一个 (1+i) 的 n 次方">
+      <line x1="30" y1="70" x2="405" y2="70" stroke="#16243d" stroke-width="1.4"/>
+      <polygon points="398,66 408,70 398,74" fill="#16243d"/>
+      <line x1="60" y1="64" x2="60" y2="76" stroke="#9aa6ba" stroke-width="1.2"/>
+      <line x1="370" y1="64" x2="370" y2="76" stroke="#9aa6ba" stroke-width="1.2"/>
+      <circle cx="105" cy="70" r="3.5" fill="#b45309"/><circle cx="150" cy="70" r="3.5" fill="#b45309"/>
+      <circle cx="195" cy="70" r="3.5" fill="#b45309"/><circle cx="240" cy="70" r="3.5" fill="#b45309"/>
+      <circle cx="285" cy="70" r="3.5" fill="#b45309"/><circle cx="330" cy="70" r="3.5" fill="#b45309"/>
+      <circle cx="370" cy="70" r="3.5" fill="#b45309"/>
+      <text x="60" y="92" text-anchor="middle">0</text><text x="370" y="92" text-anchor="middle">n</text>
+      <text x="60" y="44" text-anchor="middle" class="dark" font-size="11.5">PV = a</text>
+      <text x="370" y="44" text-anchor="middle" class="dark" font-size="11.5">AV = s</text>
+      <path d="M 78 34 Q 215 6 352 34" fill="none" stroke="#b45309" stroke-width="1.6"/>
+      <polygon points="345,29 354,36 344,39" fill="#b45309"/>
+      <text x="215" y="14" text-anchor="middle" font-size="11" fill="#7c3a06" font-weight="600">× (1+i)ⁿ</text>
+    </svg><figcaption>同一串付款,站 0 点读是 $a$、站 n 点读是 $s$——两个读数之间隔一趟 n 年的时光机。</figcaption></figure>
+    <div class="formula">$$s_{\overline{n}|}=a_{\overline{n}|}\,(1+i)^n,\qquad \ddot s_{\overline{n}|}=\ddot a_{\overline{n}|}\,(1+i)^n$$</div>
+    <p>价值方程视角:比较日随便挑,挑好后所有现金流用 $(1+i)^t$ 搬到同一天再对账——$a$ 和 $s$ 只是「比较日选 0 还是选 n」的两个特例。</p>
+    <div class="takeaway"><strong>读题抓问法:</strong>「现在值多少 / how much to invest today」→ PV 用 $a$;「到期攒了多少 / accumulated value」→ AV 用 $s$。别算完 $s$ 又手滑乘 $v^n$。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比③</span><span class="q-title">递增递减家族:付款不再水平</span>
+      <span class="chips"><button class="chip" data-card="等差年金">等差年金 · L04</button><button class="chip" data-card="等比年金">等比年金 · L04</button></span></div>
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th>题眼</th><th>付款串</th><th>PV 公式</th><th>手感</th></tr>
+      <tr><td>"increases by 1 each year"</td><td>$1,2,\dots,n$</td><td>$(Ia)_{\overline{n}|}=\dfrac{\ddot a_{\overline{n}|}-nv^n}{i}$</td><td>口诀「ä 在上,减 $nv^n$,除 $i$」</td></tr>
+      <tr><td>"decreases by 1 each year"</td><td>$n,n-1,\dots,1$</td><td>$(Da)_{\overline{n}|}=\dfrac{n-a_{\overline{n}|}}{i}$</td><td>口诀「n 在上,减 $a$,除 $i$」</td></tr>
+      <tr><td>配对自检</td><td>两串对应相加,每期都是 $n{+}1$</td><td>$(Ia)+(Da)=(n{+}1)\,a_{\overline{n}|}$</td><td>考场验算神器</td></tr>
+      <tr><td>"grows k% per year"</td><td>$1,\,(1{+}k),\,(1{+}k)^2,\dots$(首笔 1 在期末)</td><td>$\dfrac{1-\left(\frac{1+k}{1+i}\right)^{\!n}}{i-k}$</td><td>增长抵掉一截利率:净折现率约 $i-k$</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><strong>时间线上看:</strong>等差是「每年再叠一层水平年金」,等比是「每笔按 $(1+k)$ 长个子」——画两三笔付款标上金额,选公式就不会串。等比公式 $i=k$ 时分母为 0,退化为 $PV=n\,v$(每笔现值相等)。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">对比④</span><span class="q-title">永续特权:$n\to\infty$ 后公式反而最短</span>
+      <span class="chips"><button class="chip" data-card="永续年金">永续年金 · L03</button><button class="chip" data-card="等差年金">等差年金 · L04</button></span></div>
+    <div class="formula">$$a_{\overline{\infty}|}=\frac1i,\qquad \ddot a_{\overline{\infty}|}=\frac1d=1+\frac1i,\qquad (Ia)_{\overline{\infty}|}=\frac1i+\frac1{i^2},\qquad \text{等比永续}=\frac1{i-k}\ (k&lt;i)$$</div>
+    <p>白话三连:</p>
+    <div class="solve"><ol>
+      <li>$1/i$:本金 $1/i$ 每年恰好生息 1 元——<b>只花利息、本金永不动</b>,所以能永续。</li>
+      <li>$1/d$:期初版 = 当场先领 1 元,剩下就是普通永续 → $1+1/i$。</li>
+      <li>$1/i+1/i^2$:付款 $1,2,3,\dots$ = <b>每年新开一条「每年 1 元」的永续</b>;第一条值 $1/i$,而「每年开一条 $1/i$」本身又排成一条永续 → 再加 $\frac{1/i}{i}$。</li>
+    </ol></div>
+    <div class="takeaway"><strong>为什么最短:</strong>$n\to\infty$ 时 $v^n\to0$,底牌 $\frac{1-v^n}{i}$ 直接掉成 $\frac1i$——尾巴没了,公式只剩头。</div>
+  </div>
+
+  <div class="act-tag">第三幕 · 贯穿场景</div>
+  <h2>攒退休金 + 还房贷:五问走完年金一生</h2>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q1</span><span class="q-title">期末攒钱:$s_{\overline{30}|}$ 完整算一遍</span>
+      <span class="chips"><button class="chip" data-card="年金基本符号">年金符号 · L03</button><button class="chip" data-card="实际利率">实际利率 · L01</button></span></div>
+    <p class="scene">30 岁的你决定每年<b>年末</b>存 1 万元进退休账户,连存 30 年,年有效利率 $i=5\%$。</p>
+    <p class="ask">第 30 笔存进去那一刻,账户里一共多少钱?</p>
+    <div class="solve"><ol>
+      <li><b>画时间线选符号</b>:付款点在 $t=1..30$(期末),问「存完那刻的余额」→ 站在 $t=30$ 朝回看,用 AV:$s_{\overline{30}|}$。</li>
+      <li><b>套底牌</b>:$s_{\overline{30}|}=\dfrac{(1+i)^{30}-1}{i}=\dfrac{1.05^{30}-1}{0.05}=\dfrac{4.32194-1}{0.05}=66.4388$。</li>
+      <li><b>到手</b>:$1\text{万}\times 66.4388=\mathbf{66.44\ 万}$——本金只投了 30 万,利息滚出 36.44 万,复利占了大半壁江山。</li>
+    </ol></div>
+    <p class="keys">N=30, I/Y=5, PV=0, PMT=−10000, CPT FV → 664,388.48</p>
+    <div class="takeaway"><strong>公式白话:</strong>分子 $(1+i)^n-1$ 是「1 元躺 n 年长出的总利息」,除以 $i$ 摊回「每年存 1 元」的口径——$s$ 就是这么来的。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q2</span><span class="q-title">期初对比:同样的钱,早存一年值多少</span>
+      <span class="chips"><button class="chip" data-card="实际贴现率">贴现率 d · L01</button></span></div>
+    <p class="scene">同一计划改成每年<b>年初</b>存 1 万(其余不变),仍在原来那个时点(第 30 年年末)看余额。</p>
+    <p class="ask">比 Q1 多攒多少?</p>
+    <div class="solve"><ol>
+      <li><b>时间线上看</b>:整串付款左移一格 → 每笔各多滚一年 → 整体乘 $(1+i)$:$\ddot s_{\overline{30}|}=s_{\overline{30}|}\times1.05=66.4388\times1.05=69.7608$。</li>
+      <li><b>到手</b>:$69.76$ 万,比 Q1 多 $66.4388\times0.05=3.3219\to\mathbf{3.32\ 万}$——正好等于「Q1 的整锅余额再吃一年利息」。</li>
+    </ol></div>
+    <p class="keys">2ND [BGN] 2ND [SET] 切 BGN 模式,其余同 Q1,CPT FV → 697,607.90(算完记得切回 END!)</p>
+    <div class="takeaway warn"><strong>高频坑:</strong>due 题按 immediate 算完<b>忘乘 $(1+i)$</b>——选项里必埋着那个偏小的错误答案等你跳;计算器 BGN 模式用完不切回,下一题全错。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q3</span><span class="q-title">房贷月供:名义利率先换月有效</span>
+      <span class="chips"><button class="chip" data-card="贷款摊还">贷款摊还 · L06</button><button class="chip" data-card="名义利率">名义利率 · L01</button><button class="chip" data-card="错拍年金">错拍年金 · L04</button></span></div>
+    <p class="scene">贷款 100 万买房,期限 30 年、按月等额还款,名义年利率 $6\%$ 按月计息($i^{(12)}=6\%$)。</p>
+    <p class="ask">月供多少?</p>
+    <div class="solve"><ol>
+      <li><b>先对齐节拍</b>:付款按月,利率必须换成<b>月有效</b>:$j=\dfrac{6\%}{12}=0.5\%$,期数 $n=30\times12=360$ 个月。</li>
+      <li><b>贷款 = 月供的 PV</b>(站在放款日):$P\cdot a_{\overline{360}|0.5\%}=100\text{万}$。</li>
+      <li>$a_{\overline{360}|}=\dfrac{1-1.005^{-360}}{0.005}=\dfrac{1-0.16604}{0.005}=166.79$。</li>
+      <li>$P=\dfrac{1{,}000{,}000}{166.79}=\mathbf{5{,}995.51}$ 元/月;30 年总还款 $5{,}995.51\times360\approx215.8$ 万——利息比本金还多。</li>
+    </ol></div>
+    <p class="keys">N=360, I/Y=0.5, PV=1000000, FV=0, CPT PMT → −5,995.51</p>
+    <div class="takeaway warn"><strong>头号坑:</strong>I/Y 填的是<b>每期利率</b>——期是月就填 0.5,不是 6。凡是「付款频率 ≠ 利率标注频率」的题,第一步永远是换到<b>付款期</b>的有效利率,再当普通年金做。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q4</span><span class="q-title">递延年金:攒到 65 岁再开领,两步折现</span>
+      <span class="chips"><button class="chip" data-card="递延年金">递延年金 · L03</button><button class="chip" data-card="现值与折现因子">折现因子 · L01</button></span></div>
+    <p class="scene">今天你 30 岁,想一次性存入一笔钱,从 <b>65 岁生日</b>起每年领 10 万、连领 20 年(65 岁生日当天领第一笔),$i=5\%$。</p>
+    <p class="ask">今天要存多少?</p>
+    <div class="solve"><ol>
+      <li><b>画时间线</b>:今天 $t=0$,首笔在 $t=35$,共 20 笔——站在 $t=35$ 看,领取段是一条<b>期初</b>年金。</li>
+      <li><b>第一步(年金压缩)</b>:$\ddot a_{\overline{20}|}=a_{\overline{20}|}\times1.05=12.4622\times1.05=13.0853$ → 65 岁时点需要 $10\times13.0853=130.85$ 万。</li>
+      <li><b>第二步(整体折现)</b>:$130.8532\times v^{35}=130.8532\times1.05^{-35}=130.8532\times0.18129=\mathbf{23.72\ 万}$。</li>
+      <li><b>换条路验算</b>(视作递延 34 年的期末年金,首笔仍在 $t=35$):${}_{34|}a_{\overline{20}|}=v^{34}a_{\overline{20}|}=0.19035\times12.4622=2.3722$ → 23.72 万 ✓ 两种摆法读数相同。</li>
+    </ol></div>
+    <p class="keys">两步:BGN 模式 N=20, I/Y=5, PMT=100000, CPT PV → 1,308,532;再 N=35, PMT=0, FV=1308532, CPT PV → 237,224</p>
+    <div class="takeaway"><strong>递延套路:</strong>先在首笔附近把年金压成一坨,再整体 $v^m$ 折回今天——两步各自简单,<b>漏第二步</b>(只算到 65 岁时点就交卷)是经典丢分。</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">Q5</span><span class="q-title">永续奖学金:一步除法,递增换分母</span>
+      <span class="chips"><button class="chip" data-card="永续年金">永续年金 · L03</button><button class="chip" data-card="等比年金">等比年金 · L04</button></span></div>
+    <p class="scene">校友想捐一笔本金设奖学金:每年<b>年末</b>发 5 万,永远发下去,基金年收益 $i=4\%$。</p>
+    <p class="ask">本金要多少?若奖学金每年递增 $2\%$(跟上通胀)呢?</p>
+    <div class="solve"><ol>
+      <li><b>水平永续</b>:$PV=\dfrac{C}{i}=\dfrac{5}{0.04}=\mathbf{125\ 万}$——白话:125 万每年生息恰好 5 万,<b>只花利息、本金永不动</b>,自然发得到天荒地老。</li>
+      <li><b>期初版顺手看</b>:改每年初发则 $PV=C/d=C(1+i)/i=125\times1.04=130$ 万——多出的 5 万就是当场先发的那笔。</li>
+      <li><b>递增 2%</b>:$PV=\dfrac{C}{i-k}=\dfrac{5}{0.04-0.02}=\mathbf{250\ 万}$——每年利息里要留 $2\%$ 给本金「长个子」以支撑明年更高的奖学金,可持续花的只剩 $i-k$。</li>
+      <li>永续题不用计算器:$N=\infty$ 没法输,本来也就一步除法。</li>
+    </ol></div>
+    <div class="takeaway"><strong>发散警报:</strong>递增永续要求 $k&lt;i$;算出负分母说明读错题(或者那题根本是有限期等比,回去看年数)。</div>
+  </div>
+
+  <div class="act-tag">收官 · 速查</div>
+  <h2>读题 30 秒:年金题拆解口诀</h2>
+  <div class="q">
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th style="width:38%">题面信号</th><th>符号与动作</th></tr>
+      <tr><td>"at the end of each year"</td><td>期末:$a_{\overline{n}|}$ / $s_{\overline{n}|}$,首笔在 $t=1$</td></tr>
+      <tr><td>"at the beginning of each year"</td><td>期初:按 immediate 算完 ×$(1+i)$(或分母 $i\to d$)</td></tr>
+      <tr><td>"first payment at time m+1 / deferred m years"</td><td>递延:${}_{m|}a_{\overline{n}|}=v^m a_{\overline{n}|}$,两步折现</td></tr>
+      <tr><td>"payments continue forever / perpetuity"</td><td>$1/i$(期末)或 $1/d$(期初);递增 1 元:$1/i+1/i^2$</td></tr>
+      <tr><td>"accumulated value / balance after last deposit"</td><td>AV:$s=a\,(1+i)^n$,站在 $t=n$ 读数</td></tr>
+      <tr><td>"increases by 1 / by k% each year"</td><td>$(Ia)$ 等差 / 等比公式,分母 $i$ 或 $i-k$</td></tr>
+      <tr><td>"monthly payments, nominal annual rate"</td><td>先换<b>付款期</b>有效利率($i^{(12)}/12$),n 用月数</td></tr>
+    </table>
+    </div>
+    <div class="tbl-wrap">
+    <table class="map">
+      <tr><th style="width:38%">高频坑</th><th>疫苗</th></tr>
+      <tr><td>月供题拿年利率直接算</td><td>付款按月 → 利率必换月有效,$n$ 必换月数(Q3)</td></tr>
+      <tr><td>due 忘乘 $(1+i)$ / BGN 模式忘切回</td><td>答案总偏小一点点;算完 due 立刻切回 END(Q2)</td></tr>
+      <tr><td>递延两步折现漏一步</td><td>压缩到首笔附近后,还欠一趟 $v^m$ 回今天(Q4)</td></tr>
+      <tr><td>首笔时点认错</td><td>"deferred m 年 + 期末" → 首笔在 $m+1$,不在 $m$</td></tr>
+      <tr><td>递增永续 $k\ge i$ 硬套公式</td><td>分母出负数 = 读错题,回去重画时间线(Q5)</td></tr>
+    </table>
+    </div>
+    <p style="color:var(--mute);font-size:14px">自测:合上页面,把 $i$ 改成 4%、Q4 改成 60 岁开领,Q1–Q5 重算一遍;每题第一笔永远先画时间线、标付款点,再选符号。</p>
+  </div>
+
+</div>
+
+<!-- ===== 概念卡弹窗 ===== -->
+<!--CARD_POPUP_HTML_BEGIN-->
+<div class="net-modal" hidden>
+  <div class="net-back"></div>
+  <div class="net-box">
+    <div class="net-mh">
+      <div class="net-kick">
+        <span class="net-chip"></span>
+        <span class="net-stat"></span>
+        <span class="net-chc"></span>
+        <span class="net-kind"></span>
+      </div>
+      <div class="net-t"></div>
+      <div class="net-en"></div>
+      <button class="net-x" type="button" aria-label="关闭">✕</button>
+    </div>
+    <div class="net-bd"></div>
+    <div class="net-mf">
+      <button class="net-bk" type="button" hidden></button>
+      <a class="net-go" href="#" hidden>进入章节 ↗</a>
+    </div>
+  </div>
+</div>
+<!--CARD_POPUP_HTML_END-->
+
+<footer style="text-align:center;color:var(--mute);font-size:12.5px;padding:20px 0 40px">
+  FM E01 习题串讲 · 自编场景(非 ASM 原题)· 概念卡快照自 <span style="font-family:var(--mono)">10-Finance/Concepts/</span>,卡片更新后重跑 build-exam-p-e01-cards.py
+</footer>
+
+<script>
+/*CARD_POPUP_JS_BEGIN*/
+/*CARDS_JSON_BEGIN*/
+const CARDS = {
+ "FM考试的BA II Plus操作体系": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "fm-l03",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:一切数值题。四个工作表 + 两组常规键覆盖全卷。</p><h4>开考设置(一次做对)</h4><ol><li><code>2nd FORMAT</code> → DEC=4;计算方式保持 <strong>Chn</strong>。</li><li><code>2nd P/Y</code> → <strong>P/Y=C/Y 永远 =1</strong>(监考 RESET 后老款出厂 P/Y=12,坐下先重设)。</li><li><strong>每题开算前 <code>2nd CLR TVM</code></strong>(关机不清寄存器)。</li></ol><h4>工作表分工</h4><table><thead><tr><th>场景</th><th>键组</th><th>要点</th></tr></thead><tbody><tr><td>年金/贷款/债券定价</td><td>TVM 五键</td><td>PV 与 PMT/FV <strong>反号</strong>;I/Y 按百分数;due 用 ×(1+i) 免开 BGN(开了必切回)</td></tr><tr><td>等差年金</td><td>TVM 变形</td><td><strong>PMT=P+Q/i,FV=−nQ/i</strong>(P&amp;Q 式变形)</td></tr><tr><td>摊还表任意区间</td><td><code>2nd AMORT</code></td><td>P1/P2 → BAL(P2 期付款后)/ PRN / INT(区间<strong>合计</strong>)</td></tr><tr><td>非水平现金流</td><td><code>CF</code>+<code>NPV</code>/<code>IRR</code></td><td>数字后必 ENTER;0 现金流年按 ENTER 跳过;频数 F 别当现金流;先 <code>2nd CLR WORK</code></td></tr><tr><td>名义↔实际</td><td><code>2nd ICONV</code></td><td>NOM/EFF/C/Y 三寄存器;贴现率不支持,用常规键</td></tr><tr><td>利息力</td><td><code>LN</code> / <code>2nd e^x</code></td><td>δ=ln(1+i);e^{∫δ} 先积分后取幂</td></tr></tbody></table><h4>高频翻车榜</h4><ol><li>BGN 忘切回(CLR TVM 清不掉它)——下一题全错。</li><li>CPT I/Y 出的是<strong>每期率</strong>,忘 ×2(名义)或平方(年有效)。</li><li>CPT N 非整数直接四舍五入——必须分 balloon/drop(FV 符号定补退,见 <a class=\"net-wl\" data-id=\"贷款尾款与再融资\">贷款尾款与再融资</a>)。</li><li>IRR 多解时计算器只报一个根(见 净现值与内部收益率)。</li></ol>"
+ },
+ "久期": {
+  "kind": "c",
+  "en": "MacaulayDuration",
+  "aliases": [
+   "duration",
+   "Macaulay duration",
+   "modified duration",
+   "修正久期"
+  ],
+  "level": "basic",
+  "chapter": "fm-l08",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>现金流的 <strong>PV 加权平均时间</strong>(PV 重心时刻),度量现值对利率的敏感度:\\(D_{mac}=\\frac{\\sum t\\,v^tA_t}{\\sum v^tA_t}\\),数学上等价于 PV 对利息力 δ 的敏感度。修正久期 \\(D_{mod}=vD_{mac}\\) 对 i 求导。<strong>考试无修饰词的 \"duration\" = Macaulay</strong>(SOA 规定)。</p><p><strong>白话</strong>:把每笔钱的 PV 当砝码摆上时间轴,天平支点的位置就是久期;零息债的久期就是它的剩余年数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$D_{mac}=\\frac{\\sum t\\,v^t A_t}{P(i)}=-\\frac{dP/d\\delta}{P}\\qquad D_{mod}=-\\frac{P'(i)}{P(i)}=\\frac{D_{mac}}{1+i}$$</div><p>五种标准资产:零息债 = n;永续 immediate = \\(\\frac{1+i}{i}\\);<strong>平价附息债 = \\(\\ddot a_{\\overline{n}|}\\)</strong>;增长股 = \\(\\frac{1+i}{i-g}\\);level 按揭 = \\(\\frac{(Ia)_{\\overline{n}|}}{a_{\\overline{n}|}}\\)。</p><ul><li>券息越高、重心越靠前、久期越短;组合久期 = 成分久期的<strong>价格加权平均</strong>。</li><li>两个一阶近似:修正版 \\(P\\approx P_0[1-\\Delta i\\,D_{mod}]\\)(恒低估);<strong>Macaulay 版更准</strong>:\\(P\\approx P_0(\\frac{1+i_0}{1+i})^{D_{mac}}\\)。</li><li>随时间锯齿下降:渐降、每逢付息日跳升一齿。</li><li>平价债陷阱:D_mac=ä(due)、D_mod=a(immediate),一撇之差。</li></ul><p><strong>算一遍</strong>:同一时点 D_mac=10、D_mod=9.39,求 i。</p><ul><li>\\(D_{mod}=\\frac{D_{mac}}{1+i}\\Rightarrow 9.39=\\frac{10}{1+i}\\)。</li><li>\\(1+i=1.0650\\)。</li><li>i=6.50% ✓(ASM Ex 8.8)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"利息力\">利息力</a> — D_mac 是 PV 对 δ 的敏感度</li><li>凸性 — 二阶补丁</li><li>免疫策略 — 三条件的第二条</li><li>债券定价 — 价格敏感度的载体</li><li><a class=\"net-wl\" data-id=\"等时法\">等时法</a> — 金额加权版的前身(不折现)</li></ul><h4>应用视角</h4><ul><li>资产负债免疫的三层防护</li></ul>"
+ },
+ "价值方程": {
+  "kind": "c",
+  "en": "EquationOfValue",
+  "aliases": [
+   "equation of value",
+   "comparison date",
+   "比较日",
+   "时间图"
+  ],
+  "level": "basic",
+  "chapter": "fm-l02",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>把所有款项折算到同一个<strong>比较日(comparison date)</strong>,令流入 = 流出,就是价值方程。等价原则打底:今天 <span>$</span>1,000 与一年后 <span>$</span>1,050(5% 下)无差异。配套工具是<strong>时间图</strong>:\"把题目画成一幅画,画完题差不多自己解完了\"。</p><p><strong>白话</strong>:比较日是数钱的桌子——桌子随便挑(122 年后那张都行),但所有钱必须搬到<strong>同一张</strong>桌子上再比。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\sum \\text{流入}_k\\,(1+i)^{\\pm s_k}=\\sum \\text{流出}_k\\,(1+i)^{\\pm s_k}$$</div><ul><li>比较日任选,解不变(两边同乘除 (1+i) 的幂即切换)。</li><li>时间图规范四条:存取两侧、期单位标左端、利率小箭头、竖箭指比较日。</li><li>付款期 ≠ 计息期:先解等效利率 \\((1+j)^m=(1+i)^k\\),默认按付款期作图。</li></ul><p><strong>算一遍</strong>:两年后凑 <span>$</span>5,000,今天存 X、一年后再存 X,6% 有效。</p><ul><li>取时间 2 为比较日:\\(X(1.06^2+1.06)=5{,}000\\)。</li><li>\\(X=5{,}000/2.1836=\\$2{,}289.80\\) ✓(ASM p.73)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"现值与折现因子\">现值与折现因子</a> — 搬钱的工具</li><li><a class=\"net-wl\" data-id=\"等时法\">等时法</a> — 多笔并一笔的近似解</li><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 规则付款串的价值方程速记</li><li><a class=\"net-wl\" data-id=\"贷款尾款与再融资\">贷款尾款与再融资</a> — 再融资通法就是一条价值方程</li></ul>"
+ },
+ "债券溢价与折价": {
+  "kind": "c",
+  "en": "BondPremiumAndDiscount",
+  "aliases": [
+   "premium",
+   "discount",
+   "book value",
+   "write down",
+   "write up",
+   "账面价值摊销"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l07",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>买价 P 与赎回值 C 的差:P&amp;gt;C 溢价(g&amp;gt;i)、P&amp;lt;C 折价(g&amp;lt;i)。账面价值 B_t 沿摊销表从 P 走到 C——就是<a class=\"net-wl\" data-id=\"贷款摊还\">贷款摊还</a>那台机器换四个名字:book value↔余额、coupon↔还款、write down↔还本、write up↔折价累积。</p><p><strong>白话</strong>:溢价债像多付了入场费——每期 coupon 里有一小块是退你多付的本,退完刚好剩 C;折价债反向,书值逐期\"长胖\"到 C。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\text{Premium}=P-C=(Cg-Ci)a_{\\overline{n}|}\\qquad I_t=iB_{t-1}\\qquad P_t=(Cg-Ci)v^{\\,n-t+1}\\qquad B_t=B_{t-1}\\mp P_t$$</div><ul><li>P_t 逐期<strong>等比,公比 (1+i)</strong>;全部 P_t 之和 = |P−C|。</li><li>折价时 P_t 为负、书值上升(write up)——财界规避负数的叫法。</li><li>机构报表 investment income = coupon ± 摊销调整,不是 coupon 本身。</li></ul><p><strong>算一遍</strong>:<span>$</span>100 债券、5% semiannual、10 年、<span>$</span>105 赎回、收益 4% 名义半年。第 9 个 coupon 的溢价摊销?</p><ul><li>\\(Fr=2.50\\),\\(Ci=105\\times.02=2.10\\)。</li><li>\\(P_9=(2.50-2.10)v^{20-9+1}=0.4v^{12}\\) at 2%。</li><li>= <span>$</span>0.32 ✓(ASM Ex 7.6)</li></ul><h4>与其他概念的关系</h4><ul><li>债券定价 — 溢价/折价公式的出处</li><li><a class=\"net-wl\" data-id=\"贷款摊还\">贷款摊还</a> — 同一台机器</li><li>可赎回债券 — 溢价/折价决定最坏赎回日方向</li></ul>"
+ },
+ "再投资利率": {
+  "kind": "c",
+  "en": "ReinvestmentRate",
+  "aliases": [
+   "reinvestment rate",
+   "利息再投资"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>原投资按利率 i 付息,利息取出后只能按市价 i′ 再投——总财富 = 本金(原地不动)+ 利息流在第二账户滚出的年金。债券息票的现实困境:到期收益率默认息票同率再投,这个概念给该假设打补丁。</p><p><strong>白话</strong>:本金在 A 厂打工,工资(利息)只能存到 B 银行。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$AV_{\\text{单笔 }1}=1+i\\,s_{\\overline{n}|i'}\\qquad AV_{\\text{每年初存 }1\\text{ 共 }n\\text{ 年}}=n+i\\,(Is)_{\\overline{n}|i'}$$</div><ul><li>利息被\"剥离\"(stripped out)后原账户<strong>不复利</strong>——别把 \\(100(1.10)^{10}\\) 当答案。</li><li>(Is) 的下标利率是<strong>再投资利率 i′</strong>,不是原利率 i。</li><li>利率分段用 block payments 拆利息流。</li></ul><p><strong>算一遍</strong>:<span>$</span>1,000 存利率 i 账户,利息每年取出再投 5%;10 年末合计 <span>$</span>1,780,求 i。</p><ul><li>\\(1{,}780=1{,}000+1{,}000\\,i\\,s_{\\overline{10}|.05}\\)。</li><li>\\(s_{\\overline{10}|.05}=12.5779\\)。</li><li>\\(i=780/12{,}577.9=6.20\\%\\) ✓(ASM Ex 5.6)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"等差年金\">等差年金</a> — 年初连存的利息流是 (Is) 形</li><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — s 的主场</li><li>债券定价 — YTM 的再投资假设</li><li>净现值与内部收益率 — 整笔交易收益率的合计视角</li></ul>"
+ },
+ "利息力": {
+  "kind": "c",
+  "en": "ForceOfInterest",
+  "aliases": [
+   "force of interest",
+   "delta",
+   "利息强度",
+   "连续复利"
+  ],
+  "level": "hard",
+  "chapter": "fm-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>时刻 t 的<strong>瞬时增长率</strong>:\\(\\delta_t=\\frac{a'(t)}{a(t)}\\)。导数 a′ 是\"赚钱速度\",除以当时金额才是\"增长率\"——银行 A 存 <span>$</span>100 年赚 <span>$</span>5、银行 B 存 <span>$</span>200 也赚 <span>$</span>5,率差一倍。恒定时 δ 就是连续复利:名义利率复利频率 → ∞ 的极限。</p><p><strong>白话</strong>:仪表盘上的瞬时时速;i 是按出发点报的年均速,δ 是每一刻的表读数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\delta_t=\\frac{a'(t)}{a(t)}=\\frac{d}{dt}\\ln a(t)\\qquad a(t)=e^{\\int_0^t\\delta_r\\,dr}\\qquad e^\\delta=1+i,\\ \\ \\delta=\\ln(1+i)$$</div><ul><li><strong>先积分,后取 e</strong>(ASM p.38 Trap):e 的指数是含上下限代完的整个定积分。</li><li><strong>变力不从 0 起投</strong>(1g 陷阱):\\(AV=\\frac{a(t_2)}{a(t_1)}=e^{\\int_{t_1}^{t_2}\\delta_t dt}\\),积分限 t₁→t₂,不是 0→持有年数。</li><li>考试语境 \"simple interest\" 例外:从每笔存入日重启 1+it,不套 a(t₂)/a(t₁)。</li><li>log 技巧:a(t) 形状狰狞时先取 ln 再微分(Ex 1.25)。</li><li>幂级数:\\(\\delta=i-\\frac{i^2}{2}+\\frac{i^3}{3}-\\cdots=d+\\frac{d^2}{2}+\\frac{d^3}{3}+\\cdots\\)。</li></ul><p><strong>算一遍</strong>:δ_t=.02t(t=0 起算),<span>$</span>1 于 t=2 投入、t=7 取出。</p><ul><li>诱错:持有 5 年 ⇒ e^{.25}(✗,钱 t=2 才进场)。</li><li>正确:\\(AV=a(7)/a(2)=e^{.49}/e^{.04}=e^{.45}\\) ✓(ASM Ex 1.34)</li><li>直觉:δ 递增,t=2→7 这段比 0→5 长得快。</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"积累函数\">积累函数</a> — δ 与 a 互相还原</li><li><a class=\"net-wl\" data-id=\"实际利率\">实际利率</a> — δ=ln(1+i)</li><li><a class=\"net-wl\" data-id=\"名义利率\">名义利率</a> — i^(∞)=d^(∞)=δ</li><li>连续年金(<a class=\"net-wl\" data-id=\"错拍年金\">错拍年金</a> m→∞ 节)— 分母 δ 的来源</li><li><a class=\"net-wl\" data-id=\"久期\">久期</a> — D_mac 就是 PV 对 δ 的敏感度</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"利率五种读数的换算体系\">利率五种读数的换算体系</a></li></ul>"
+ },
+ "利率五种读数的换算体系": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "fm-l01",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:同一段增长,题目用 A 口径报价、要 B 口径的答案(如\"季复利名义贴现率 ⟺ 利息力\")。FM 第一章的主战场,后续每章都在复用。</p><h4>一条总等式走到底</h4><div class=\"net-mth\">$$1+i=\\Bigl(1+\\frac{i^{(m)}}{m}\\Bigr)^m=\\Bigl(1-\\frac{d^{(m)}}{m}\\Bigr)^{-m}=e^{\\delta}=\\frac1v$$</div><p>任意两个口径互换:各自表达成\"一年的积累因子\",令相等,解目标变量。<strong>统一以一年期写方程</strong>最不易错(ASM §1h 心法)。</p><h4>考场三步</h4><ol><li><strong>翻译</strong>:每个报价先化成\"每期实际利率 + 期长\"(名义 ÷ m;贴现看清指数方向;δ 先积分)。</li><li><strong>对齐</strong>:两边写成同一时段的积累式(幂次自查:总时长相等)。</li><li><strong>反解</strong>:开 m 次方回名义口径;计算器 ICONV 只管 i↔i^(m),贴现率用常规键。</li></ol><h4>易错</h4><ul><li>d 的指数方向与 i 相反:贴现 \\((1-d)^t\\)、积累 \\((1-d)^{-t}\\)。</li><li>变利率下\"等价\"必须指明时段——没有全局等价利率。</li><li>经济学的 \"nominal rate\"(含通胀市场利率)与 FM 名义利率同词不同义(见 <a class=\"net-wl\" data-id=\"真实利率\">真实利率</a>)。</li></ul>"
+ },
+ "即期利率": {
+  "kind": "c",
+  "en": "SpotRate",
+  "aliases": [
+   "spot rate",
+   "zero rate",
+   "bootstrap",
+   "零息利率"
+  ],
+  "level": "basic",
+  "chapter": "fm-l09",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>期限 t 的单笔投资从头到尾的年实际利率 r_t,等价于 <strong>t 年期零息债的定价利率</strong>。整段一口价:r₂ 管 0→2 全程,不是\"第 2 年当年\"的利率。</p><p><strong>白话</strong>:银行定期存单价目表——存多久、给多少年化,一段一价。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$AV=(1+r_t)^t\\qquad P=\\sum_t\\frac{CF_t}{(1+r_t)^t}\\qquad r_t=P_t^{-1/t}-1\\ (\\text{零息债价格互推})$$</div><ul><li>每笔现金流用<strong>自己期限</strong>的 spot 折;非整数期限 t 直接上指数。</li><li>yield(YTM)= 再现价格的单一利率,<strong>不是 spot 的算术平均</strong>。</li><li><strong>bootstrap 剥洋葱</strong>:1 年票息债单笔支付给出 r₁;2 年债用 r₁ 剥掉第一年,暴露 r₂;层层向外。</li></ul><p><strong>算一遍</strong>:三年每年末收 <span>$</span>1,000,spot 曲线 5.00%/5.35%/5.65%。</p><ul><li>\\(P=1{,}000[1.05^{-1}+1.0535^{-2}+1.0565^{-3}]\\)。</li><li>\\(=952.38+901.19+847.82=\\$2{,}701.39\\) ✓(ASM Ex 9.1)</li><li>对应 yield:解 \\(1{,}000a_{\\overline{3}|j}=2{,}701.39\\) 得 j=5.4313%(介于各 spot 间,非平均)。</li></ul><h4>与其他概念的关系</h4><ul><li>收益率曲线 — spot 的图形载体</li><li>远期利率 — 两条路一个终点互推</li><li>债券定价 — 逐笔按 spot 折现的定价视角</li><li>净现值与内部收益率 — yield 与 spot 的关系</li></ul>"
+ },
+ "名义利率": {
+  "kind": "c",
+  "en": "NominalRateOfInterest",
+  "aliases": [
+   "nominal rate",
+   "i(m)",
+   "d(m)",
+   "convertible m-thly",
+   "名义贴现率"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\"6% 名义、按月复利(convertible monthly)\"= 每月实际利率 0.5%,一年滚成 \\(1.005^{12}-1=6.17\\%\\)。上标 (m) 不是指数,是\"每年复利 m 次\";<strong>名义利率 ÷ m = 每期实际利率</strong>。名义贴现率 d^(m) 同理。</p><p><strong>白话</strong>:nominal = in name only——挂名 CEO 不管事;真实的是除以 m 之后那个每期率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\Bigl(1+\\frac{i^{(m)}}{m}\\Bigr)^m=1+i\\qquad \\Bigl(1-\\frac{d^{(m)}}{m}\\Bigr)^m=1-d\\qquad i^{(p)}=p\\Bigl[\\Bigl(1+\\frac{i^{(m)}}{m}\\Bigr)^{m/p}-1\\Bigr]$$</div><ul><li>期长由名义率的描述直接决定,m 可为 1/2 等非整数(\"6% 每两年复利一次\" ⇒ 期利率 12%)。</li><li>名义率低但复利更频者可赢:12% 月复利(1.126825)胜 12.2% 半年复利(1.125721)。</li><li>BA II Plus:ICONV 工作表(NOM/EFF/C/Y)互算;贴现率不支持,用常规键。</li></ul><p><strong>算一遍</strong>:与实际年率 6.23% 等价的月复利名义利率。</p><ul><li>\\(i^{(12)}=12(1.0623^{1/12}-1)\\)。</li><li>\\(=12\\times 0.005049=6.06\\%\\)。</li><li>ICONV 核对:EFF=6.23, C/Y=12, CPT NOM → 6.0589 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"实际利率\">实际利率</a> — 除以 m 前后的关系</li><li><a class=\"net-wl\" data-id=\"实际贴现率\">实际贴现率</a> — d^(m) 对应</li><li><a class=\"net-wl\" data-id=\"利息力\">利息力</a> — m→∞ 的极限 i^(∞)=δ</li><li><a class=\"net-wl\" data-id=\"错拍年金\">错拍年金</a> — a^(m) 符号的分母来源</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"利率五种读数的换算体系\">利率五种读数的换算体系</a></li><li><a class=\"net-wl\" data-id=\"FM考试的BA II Plus操作体系\">FM考试的BA II Plus操作体系</a> — ICONV 流程</li></ul>"
+ },
+ "实际利率": {
+  "kind": "c",
+  "en": "EffectiveRateOfInterest",
+  "aliases": [
+   "effective rate of interest",
+   "有效利率",
+   "年实际利率"
+  ],
+  "level": "basic",
+  "chapter": "fm-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>第 t 年的增长率,<strong>以年初金额为基</strong>:\\(i_t=\\frac{a(t)-a(t-1)}{a(t-1)}\\)。复利下各年恒为常数 i,\\(a(t)=(1+i)^t\\)。</p><p><strong>白话</strong>:今年赚的利息除以年初的本金——\"按出发点报的年均速\"。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$i_t=\\frac{a(t)-a(t-1)}{a(t-1)}=\\frac{A(t)-A(t-1)}{A(t-1)}\\qquad A(t)=(1+i_t)A(t-1)$$</div><ul><li>与 <a class=\"net-wl\" data-id=\"实际贴现率\">实际贴现率</a> 的分母之差:i 除年初,d 除年末 ⇒ 恒有 \\(d\\lt i\\)。</li><li>与其余读数一条等式互换:\\((1+i)=(1+\\frac{i^{(m)}}{m})^m=(1-\\frac{d^{(m)}}{m})^{-m}=e^\\delta\\)。</li></ul><p><strong>算一遍</strong>:i_t = k+.01(t−1),<span>$</span>100 两年滚到 <span>$</span>112.35,求 i₂。</p><ul><li>链乘:\\((1+k)(1+k+.01)=1.1235\\)。</li><li>解二次:k=.0550。</li><li>故 \\(i_2=k+.01=6.50\\%\\) ✓(ASM Ex 1.8)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"积累函数\">积累函数</a> — i 是它的年度读数</li><li><a class=\"net-wl\" data-id=\"实际贴现率\">实际贴现率</a> — 同一笔利息换年末做分母</li><li><a class=\"net-wl\" data-id=\"名义利率\">名义利率</a> — i^(m)/m 才是每期实际利率</li><li><a class=\"net-wl\" data-id=\"利息力\">利息力</a> — δ=ln(1+i),连续复利极限</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"利率五种读数的换算体系\">利率五种读数的换算体系</a></li></ul>"
+ },
+ "实际贴现率": {
+  "kind": "c",
+  "en": "EffectiveRateOfDiscount",
+  "aliases": [
+   "effective rate of discount",
+   "d",
+   "贴现率"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>第 t 年的增长率,<strong>以年末金额为基</strong>:\\(d_t=\\frac{a(t)-a(t-1)}{a(t)}\\)。情境原型:一年后付 <span>$</span>1,000 的票据按 10% 贴现,利息 <span>$</span>100 从面值<strong>预先</strong>扣,今天只付 <span>$</span>900。</p><p><strong>白话</strong>:同一笔利息,换\"到达点\"做分母——利息预扣的世界用 d 说话。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$1-d=v\\qquad d=\\frac{i}{1+i}=iv\\qquad i=\\frac{d}{1-d}\\qquad i-d=id\\qquad \\frac1d-\\frac1i=1$$</div><ul><li><strong>指数方向与 i 相反</strong>(ASM p.22 Trap Alert):贴现 \\((1-d)^t\\) 正指数,积累 \\((1-d)^{-t}\\) 负指数。锚点:1−d=v,v 的幂天然是折现。</li><li>恒有 \\(d\\lt i\\)(分母更大)。</li></ul><p><strong>算一遍</strong>:d=10%,<span>$</span>100 存三年的 AV。</p><ul><li>积累用负指数:\\(AV=100(1-.10)^{-3}\\)。</li><li>\\(=100/0.729=\\$137.17\\) ✓(ASM Ex 1.16)</li><li>反向核对:137.17×0.9³=100 ✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"实际利率\">实际利率</a> — 同一笔利息、两个分母;i−d=id</li><li><a class=\"net-wl\" data-id=\"现值与折现因子\">现值与折现因子</a> — 1−d=v 一体两面</li><li><a class=\"net-wl\" data-id=\"名义利率\">名义利率</a> — d^(m) 是它的 m 次复利版</li><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 期初年金分母是 d(\"i 配 immediate,d 配 due\")</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"利率五种读数的换算体系\">利率五种读数的换算体系</a></li></ul>"
+ },
+ "年金基本符号": {
+  "kind": "c",
+  "en": "AnnuityCertain",
+  "aliases": [
+   "annuity-immediate",
+   "annuity-due",
+   "a-angle-n",
+   "s-angle-n",
+   "期末年金",
+   "期初年金"
+  ],
+  "level": "basic",
+  "chapter": "fm-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>年金 = 规则付款串(本质是换名字的几何级数)。四大符号:期末年金现值 \\(a_{\\overline{n}|}\\)、其终值 \\(s_{\\overline{n}|}\\)(末付当日);期初年金 \\(\\ddot a_{\\overline{n}|}\\)、其终值 \\(\\ddot s_{\\overline{n}|}\\)(末付后一期)。<strong>immediate/due 不是年金的属性,是估值日的位置</strong>。</p><p><strong>白话</strong>:付款串是固定风景,a/ä/s/s̈ 是四个机位拍的照片;搞清相机摆哪,符号自动对。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$a_{\\overline{n}|}=\\frac{1-v^n}{i}\\quad s_{\\overline{n}|}=\\frac{(1+i)^n-1}{i}\\quad \\ddot a_{\\overline{n}|}=\\frac{1-v^n}{d}\\quad \\ddot s_{\\overline{n}|}=\\frac{(1+i)^n-1}{d}$$</div><ul><li>记忆:<strong>i 配 immediate,d 配 due</strong>(分母首字母)。</li><li>关系式:\\(\\ddot a=(1+i)a=1+a_{\\overline{n-1}|}\\);\\(\\ddot s=(1+i)s=s_{\\overline{n+1}|}-1\\);\\(s=(1+i)^n a\\)。</li><li>铁律:n 笔付款在末付当日的 AV <strong>恒为</strong> \\(s_{\\overline{n}|}\\),与时间轴编号无关。</li><li>口头证明:存 <span>$</span>1,每年末取息 i、第 n 年取回本金——\"每年 i + 期末 1\"的现值恰为 1。</li><li>比值技巧:\\(a_{\\overline{2n}|}/a_{\\overline{n}|}=1+v^n\\)(倍长年金解 i 的标准路)。</li></ul><p><strong>算一遍</strong>:已知 \\(a_{\\overline{n}|}=7.9127\\)、\\(\\ddot a_{\\overline{n}|}=8.2688\\),求 n。</p><ul><li>\\(\\ddot a/a=1+i=1.045\\Rightarrow i=4.5\\%\\)。</li><li>TVM:4.5 I/Y、7.9127 PV、1 +/- PMT、CPT N → n=10 ✓(ASM Ex 3.5)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"现值与折现因子\">现值与折现因子</a> — a 就是 v 的幂级数和</li><li><a class=\"net-wl\" data-id=\"永续年金\">永续年金</a> — n→∞ 的极限</li><li><a class=\"net-wl\" data-id=\"递延年金\">递延年金</a> — 加时间平移</li><li><a class=\"net-wl\" data-id=\"错拍年金\">错拍年金</a> — 付款计息不同拍的推广</li><li><a class=\"net-wl\" data-id=\"等差年金\">等差年金</a> / <a class=\"net-wl\" data-id=\"等比年金\">等比年金</a> — 变额推广</li><li><a class=\"net-wl\" data-id=\"贷款摊还\">贷款摊还</a> — 余额前瞻/追溯全用 a、s 表达</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"FM考试的BA II Plus操作体系\">FM考试的BA II Plus操作体系</a> — TVM 五键 + BGN 陷阱</li><li><a class=\"net-wl\" data-id=\"通胀年金与真实利率的等价\">通胀年金与真实利率的等价</a> — 等比增长年金 ↔ 真实利率折算的等价</li></ul>"
+ },
+ "永续年金": {
+  "kind": "c",
+  "en": "Perpetuity",
+  "aliases": [
+   "perpetuity",
+   "perpetuity-immediate",
+   "perpetuity-due",
+   "永续债"
+  ],
+  "level": "basic",
+  "chapter": "fm-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>每年付 \\(1、永远付下去的年金;正利率下现值有限:期末版 \\)a_{\\overline{\\infty}|}=1/i\\(,期初版 \\)\\ddot a_{\\overline{\\infty}|}=1/d<span>$</span>。</p><p><strong>白话</strong>:存 \\(\\frac1i\\) 进利率 i 的银行,每年末取利息 <span>$</span>1、本金永远不动——这就是 1/i 的口头证明。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$a_{\\overline{\\infty}|}=\\frac1i\\qquad \\ddot a_{\\overline{\\infty}|}=\\frac1d\\qquad \\frac1d-\\frac1i=1\\qquad {}_{n|}a_{\\overline{\\infty}|}=\\frac{v^n}{i}$$</div><ul><li>1/d − 1/i = 1:两个永续年金只差 time 0 那一笔。</li><li>定期年金 = 永续 − 递延永续:\\(a_{\\overline{n}|}=\\frac1i-\\frac{v^n}{i}\\)(虚拟付款玩法)。</li><li>增额版见 <a class=\"net-wl\" data-id=\"等差年金\">等差年金</a>:\\((Ia)_{\\overline{\\infty}|}=\\frac1i+\\frac1{i^2}\\)。</li><li>措辞陷阱:\"10-year deferred perpetuity-immediate\" 首付在 <strong>10.5 年</strong>(递延后 immediate 还要再等一期)。</li></ul><p><strong>算一遍</strong>:永续年金前 10 年 <span>$</span>100/年、次 10 年 <span>$</span>150、以后 <span>$</span>200,i=3.85%。</p><ul><li>分块从最远起步:\\(PV=\\frac{200}{i}-50a_{\\overline{20}|}-50a_{\\overline{10}|}\\)。</li><li>\\(=5{,}194.81-687.30-409.93=\\$4{,}097.58\\) ✓(ASM Ex 3.22)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — n→∞ 极限</li><li><a class=\"net-wl\" data-id=\"递延年金\">递延年金</a> — 组合出定期年金</li><li><a class=\"net-wl\" data-id=\"实际贴现率\">实际贴现率</a> — 1/d 的来源</li><li><a class=\"net-wl\" data-id=\"久期\">久期</a> — 永续年金久期 = (1+i)/i</li></ul>"
+ },
+ "现值与折现因子": {
+  "kind": "c",
+  "en": "PresentValue",
+  "aliases": [
+   "present value",
+   "PV",
+   "v",
+   "discount factor",
+   "折现因子"
+  ],
+  "level": "basic",
+  "chapter": "fm-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>反向问题:今天投多少,t 时刻恰好 \\(1?\\)PV\\cdot a(t)=1\\Rightarrow PV=\\frac{1}{a(t)}\\((贴现函数)。复利下 \\)PV=v^t\\(,其中 \\)v=\\frac{1}{1+i}<span>$</span> 是<strong>折现因子</strong>。精算全行业(年金、寿险给付、或有事件)都建在这上面。</p><p><strong>白话</strong>:未来钱的今日标价;v 是\"明年一块钱今天值几毛\"的汇率。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$v=\\frac{1}{1+i}=1-d\\qquad PV=v^t=(1+i)^{-t}$$</div><ul><li>\\(v^n\\) 与 \\((1+i)^n\\) 互逆:见到 \\(v^n=0.5\\) 先翻成 \\((1+i)^n=2\\),常一步出答案。</li><li>\\(1-v=iv=d\\):年金公式化简的万能钥匙。</li></ul><p><strong>算一遍</strong>:\\(v^n=0.5\\),时刻 0、n、2n 各存 <span>$</span>1,求时刻 3n 的 AV。</p><ul><li>翻译:\\((1+i)^n=2\\)。</li><li>各笔分别滚 3n、2n、n:\\(2^3+2^2+2=14\\) ✓(ASM Ex 1.12)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"积累函数\">积累函数</a> — 贴现函数是它的倒数</li><li><a class=\"net-wl\" data-id=\"实际贴现率\">实际贴现率</a> — 1−d=v 一体两面</li><li><a class=\"net-wl\" data-id=\"价值方程\">价值方程</a> — 把钱搬到比较日全靠 v 的幂</li><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — a 角标 n 就是 v 的幂级数和</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"利率五种读数的换算体系\">利率五种读数的换算体系</a></li></ul>"
+ },
+ "真实利率": {
+  "kind": "c",
+  "en": "RealRateOfInterest",
+  "aliases": [
+   "real rate of interest",
+   "inflation",
+   "通胀",
+   "实际收益率"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l05",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>剔除通胀后的购买力增长率:市场利率 i、通胀率 r,则 \\(i'=\\frac{i-r}{1+r}\\)。咖啡例:投 <span>$</span>100@5%,咖啡从 <span>$</span>10 涨到 <span>$</span>10.30——年末能买的磅数只多 1.942%。</p><p><strong>白话</strong>:利率是钱变多的速度,通胀是东西变贵的速度,真实利率是你能多买多少东西的速度。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$i'=\\frac{i-r}{1+r}\\qquad 1+i=(1+i')(1+r)\\qquad i=i'+r+i'r\\qquad 1+i'=\\frac{1+i}{1+r}$$</div><ul><li>低通胀才可近似 \\(i'\\approx i-r\\);高通胀直接翻车(i=60%、r=50%:真值 6.667%,近似 10%)。</li><li><strong>通胀年金 ≡ 真实利率下的水平年金</strong>:付款按 r 几何递增、按 i 折现 ⇔ 付款水平、按 i′ 折现——TVM 一键。</li><li>术语撞车:经济学 \"nominal rate\" = 含通胀市场利率,与 FM 的<a class=\"net-wl\" data-id=\"名义利率\">名义利率</a>同词不同义;通胀由 CPI 度量。</li></ul><p><strong>算一遍</strong>:i=6%,来年真实利率 4%,求通胀率。</p><ul><li>\\(.04=\\frac{.06-r}{1+r}\\)。</li><li>\\(.04+.04r=.06-r\\Rightarrow 1.04r=.02\\)。</li><li>r=1.923% ✓(ASM Ex 5.8)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"实际利率\">实际利率</a> — 市场口径 vs 购买力口径</li><li><a class=\"net-wl\" data-id=\"等比年金\">等比年金</a> — 通胀年金的数学本体</li><li><a class=\"net-wl\" data-id=\"名义利率\">名义利率</a> — 同词不同义警告</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"通胀年金与真实利率的等价\">通胀年金与真实利率的等价</a></li></ul>"
+ },
+ "积累函数": {
+  "kind": "c",
+  "en": "AccumulationFunction",
+  "aliases": [
+   "accumulation function",
+   "a(t)",
+   "累积函数"
+  ],
+  "level": "basic",
+  "chapter": "fm-l01",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>时刻 0 投入 \\(1,在时刻 t 的积累值(AV),记 \\)a(t)\\(;\\)a(0)\\equiv 1\\(。金额函数 \\)A(t)=k\\,a(t)<span>$</span> 是起投 k 元的版本,两者只差常数倍。FM 全书五种利率(i、d、i^(m)、d^(m)、δ)都是给这条曲线做\"读数\"。</p><p><strong>白话</strong>:一块钱种下去长成的那条生长曲线——存钱罐是水平线,单利是直线,复利是指数。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$a(t)=1+it\\ (\\text{单利})\\qquad a(t)=(1+i)^t\\ (\\text{复利})\\qquad a(t)=\\prod_{j=1}^{t}(1+i_j)\\ (\\text{链乘})$$</div><ul><li>本课程的 a(t) 一般连续且递增;考试默认复利。</li><li>单利下实际利率 \\(i_t=\\frac{i}{1+i(t-1)}\\) 双曲递减——\"simple interest isn't so simple\"。</li><li>波动利率的链乘积:算术平均相同时,波动越大乘积越小(ASM Ex 1.10,差额 <span>$</span>0.58/千元)。</li></ul><p><strong>算一遍</strong>:A(t)=4t²+8t+4,求 a(t) 与 i₅。</p><ul><li>\\(a(t)=A(t)/A(0)=t^2+2t+1\\)。</li><li>\\(i_5=\\frac{A(5)-A(4)}{A(4)}=\\frac{144-100}{100}=44\\%\\)。</li><li>核对:a 与 A 定义利率同款(k 相消)✓</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"实际利率\">实际利率</a> — a(t) 的年度读数(年初为基)</li><li><a class=\"net-wl\" data-id=\"实际贴现率\">实际贴现率</a> — 年末为基的读数</li><li><a class=\"net-wl\" data-id=\"利息力\">利息力</a> — a(t) 的瞬时读数 a′/a;由 δ 还原 a(t)=e^∫δ</li><li><a class=\"net-wl\" data-id=\"现值与折现因子\">现值与折现因子</a> — 贴现函数 = 1/a(t)</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"利率五种读数的换算体系\">利率五种读数的换算体系</a> — 一条曲线五种报速方式</li></ul>"
+ },
+ "等差年金": {
+  "kind": "c",
+  "en": "AnnuityInArithmeticProgression",
+  "aliases": [
+   "increasing annuity",
+   "decreasing annuity",
+   "P&Q formula",
+   "Ia",
+   "Da"
+  ],
+  "level": "hard",
+  "chapter": "fm-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>付款 P, P+Q, P+2Q, …(P 首付、Q 公差)的年金。特例:P=Q=1 为增额年金 (Ia);P=n、Q=−1 为减额年金 (Da)。FM 单一最大考区(ASM 4h–4i 独占 48 题)。</p><p><strong>白话</strong>:增额年金 = n 个错峰起跑的级别年金叠罗汉——所以公式分子里藏着 ä。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$PV=P\\,a_{\\overline{n}|}+Q\\,\\frac{a_{\\overline{n}|}-nv^n}{i}\\qquad (Ia)_{\\overline{n}|}=\\frac{\\ddot a_{\\overline{n}|}-nv^n}{i}\\qquad (Da)_{\\overline{n}|}=\\frac{n-a_{\\overline{n}|}}{i}$$</div><div class=\"net-mth\">$$(Is)_{\\overline{n}|}=\\frac{s_{\\overline{n+1}|}-(n+1)}{i}\\qquad (Ia)_{\\overline{\\infty}|}=\\frac1i+\\frac1{i^2}\\qquad PV_{P\\&amp;Q\\ \\text{永续}}=\\frac{P}{i}+\\frac{Q}{i^2}$$</div><ul><li>TVM 直按:<strong>PMT = P+Q/i,FV = −nQ/i</strong>(Calculator Notes #6)。</li><li>先增后平永续 1,2,…,n,n,…:\\(PV=\\ddot a_{\\overline{n}|}/i\\)(n 个递延永续各值 1/i)。</li><li>易错:(Ia) 分子是 ä 不是 a;(Is) 用 s̈−n;FV 忘取负。</li><li>回文年金 1..n..1:\\(PV=a_{\\overline{n}|}\\ddot a_{\\overline{n}|}\\)(金字塔切平板)。</li></ul><p><strong>算一遍</strong>:首付 3、年增 2 的永续年金 PV=406.81,求 i。</p><ul><li>\\(\\frac3i+\\frac2{i^2}=406.81\\)。</li><li>\\(406.81i^2-3i-2=0\\),求根取正。</li><li>i=7.39% ✓(ASM Ex 4.23)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 级别版特例</li><li><a class=\"net-wl\" data-id=\"永续年金\">永续年金</a> — 增额永续的底座</li><li><a class=\"net-wl\" data-id=\"等比年金\">等比年金</a> — \"increase by X\" vs \"increase by X%\" 的对家</li><li><a class=\"net-wl\" data-id=\"再投资利率\">再投资利率</a> — 利息流常成 (Is) 形</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"FM考试的BA II Plus操作体系\">FM考试的BA II Plus操作体系</a> — P&amp;Q 的 TVM 变形</li></ul>"
+ },
+ "等时法": {
+  "kind": "c",
+  "en": "MethodOfEquatedTime",
+  "aliases": [
+   "method of equated time",
+   "equated time",
+   "加权平均时间"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l02",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>\"一笔等于各期付款总和的单笔付款该付在哪天?\"精确解要解方程;等时法用<strong>金额加权平均时间</strong> \\(\\bar t\\) 一步近似。</p><p><strong>白话</strong>:把每块钱看作站在时间轴上的人,\\(\\bar t\\) 是按体重(金额)加权的重心。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$\\bar t=\\frac{\\sum_k A_k t_k}{\\sum_k A_k}\\qquad\\text{精确: }\\Bigl(\\sum_k A_k\\Bigr)v^t=\\sum_k A_k v^{t_k}$$</div><ul><li>与利率无关;正利率下<strong>恒大于</strong>精确值(折现是凸的,重心偏晚)。</li><li>权重是<strong>金额</strong>,不是时点简单平均。</li><li>考题常同时要两个值或其差(PV 差额化:单笔付偏晚 ⇒ PV 偏小)。</li></ul><p><strong>算一遍</strong>:付款 5、1、15 于时点 1、3、10。</p><ul><li>\\(\\bar t=\\frac{5(1)+1(3)+15(10)}{21}=\\frac{158}{21}=7.52\\)。</li><li>i=5% 时精确 t=7.12。</li><li>核对性质:7.52 &amp;gt; 7.12(恒偏大)✓(ASM p.79)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"价值方程\">价值方程</a> — 精确解就是一条价值方程</li><li><a class=\"net-wl\" data-id=\"现值与折现因子\">现值与折现因子</a> — 偏差来源于折现的凸性</li><li><a class=\"net-wl\" data-id=\"久期\">久期</a> — 同为\"金额/PV 加权平均时间\",D_mac 是 PV 加权版</li></ul>"
+ },
+ "等比年金": {
+  "kind": "c",
+  "en": "AnnuityInGeometricProgression",
+  "aliases": [
+   "geometric annuity",
+   "geometrically increasing annuity",
+   "COLA 年金"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>付款逐期 ×(1+k) 的年金(现实原型:通胀挂钩 COLA)。核心 trick:<strong>等价于调整利率 i′ 下的级别年金</strong>。</p><p><strong>白话</strong>:付款每年在涨(×(1+k))、折现每年在压(÷(1+i)),两效应对冲后剩下的净利率就是 i′——世界重新变平。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$PV=\\frac{1-\\bigl(\\frac{1+k}{1+i}\\bigr)^n}{i-k}\\qquad 1+i'=\\frac{1+i}{1+k}\\ \\Leftrightarrow\\ i'=\\frac{i-k}{1+k}$$</div><ul><li>分母是 i−k 不是 i;调整率别忘除 (1+k)。</li><li>k 为负(逐期打折)直接套;k=通胀率时 i′ 就是<a class=\"net-wl\" data-id=\"真实利率\">真实利率</a>。</li><li>due/immediate 差一个 v 或 (1+i)。</li></ul><p><strong>算一遍</strong>:15 年 immediate、首付 <span>$</span>1,000、逐年 ×1.03、i=5.25%。</p><ul><li>调整率:\\(i'=\\frac{.0525-.03}{1.03}=2.1845\\%\\)。</li><li>\\(PV=\\frac{1000}{1.0525}\\ddot a_{\\overline{15}|i'}\\)。</li><li>= <span>$</span>12,304.56 ✓(通式复算同值,ASM Ex 4.26/4.27)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 级别化后的落点</li><li><a class=\"net-wl\" data-id=\"等差年金\">等差年金</a> — 等差 vs 等比,读题关键词区分</li><li><a class=\"net-wl\" data-id=\"真实利率\">真实利率</a> — 通胀年金 ≡ 真实利率下的水平年金</li><li><a class=\"net-wl\" data-id=\"即期利率\">即期利率</a> — 变利率折现的另一个世界</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"通胀年金与真实利率的等价\">通胀年金与真实利率的等价</a></li></ul>"
+ },
+ "贷款尾款与再融资": {
+  "kind": "c",
+  "en": "BalloonDropAndRefinance",
+  "aliases": [
+   "balloon payment",
+   "drop payment",
+   "refinance",
+   "气球付款",
+   "再融资"
+  ],
+  "level": "advanced",
+  "chapter": "fm-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>CPT N 出非整数(如 14.2067)时的两种收尾:<strong>balloon</strong> = 第 ⌊N⌋ 期付款加大;<strong>drop</strong> = 第 ⌈N⌉ 期付一笔小于正常的尾款。<strong>再融资</strong>通法:旧条款算时点余额,令其等于新条款付款的 PV。</p><p><strong>白话</strong>:最后一片香肠切不齐——要么最后一刀切厚点(balloon),要么多切一刀薄的(drop);再融资 = 旧账翻结、重新开局。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$L=R\\,a_{\\overline{\\lfloor N\\rfloor}|}+X_1v^{\\lfloor N\\rfloor}=R\\,a_{\\overline{\\lfloor N\\rfloor}|}+X_2v^{\\lceil N\\rceil}\\qquad X_2=(1+i)X_1$$</div><div class=\"net-mth\">$$\\text{再融资: } B_t^{\\text{旧条款}}=R'\\,a_{\\overline{m}|j}^{\\text{新条款}}\\quad(\\text{追加一次性还款 }X\\text{ 先扣})$$</div><ul><li>计算器 FV 符号定补/退:⌊N⌋ N CPT FV 为<strong>负</strong> = 还要补(balloon);⌈N⌉ N CPT FV 为<strong>正</strong> = 超付退回(drop = R − FV)。</li><li>再融资余额<strong>必须用旧条款算</strong>;利率表述先统一到付款频率的期利率。</li></ul><p><strong>算一遍</strong>:<span>$</span>10,000、5%、年付 <span>$</span>1,000,CPT N=14.2067。</p><ul><li>balloon:14 N CPT FV → −200.68 ⇒ 第 14 期总付 1,200.68。</li><li>drop:15 N CPT FV → +789.28 ⇒ 第 15 期付 210.72。</li><li>核对:\\(X_2=1.05\\times 200.68=210.71\\) ✓ 差一年利息(ASM p.311–312)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"贷款摊还\">贷款摊还</a> — 余额是两问的共同起点</li><li><a class=\"net-wl\" data-id=\"价值方程\">价值方程</a> — 再融资通法就是一条价值方程</li><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 非整数 N 的来源</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"FM考试的BA II Plus操作体系\">FM考试的BA II Plus操作体系</a> — FV 符号读法</li></ul>"
+ },
+ "贷款摊还": {
+  "kind": "c",
+  "en": "LoanAmortization",
+  "aliases": [
+   "amortization",
+   "outstanding balance",
+   "prospective method",
+   "retrospective method",
+   "摊还表"
+  ],
+  "level": "basic",
+  "chapter": "fm-l06",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>逐期付款把贷款\"杀死\"(amortize 词根 mort=死亡):每期付款先付利息(按期初余额)、剩余还本。摊还表 = 利息/本金/余额三列机器,任何现值 = 贷款额的付款流都能跑。</p><p><strong>白话</strong>:每期月供 = 房租(利息)+ 赎楼款(本金);余额越还越小、房租越交越少,赎楼份额按 (1+i) 等比滚雪球——\"前期还的几乎全是利息\"的数学版。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$I_t=iB_{t-1}\\qquad P_t=R_t-I_t\\qquad B_t=B_{t-1}-P_t\\qquad P_{t+s}=P_t(1+i)^s$$</div><p>等额付款(R = L/a)任意一行直取:</p><div class=\"net-mth\">$$I_t=R(1-v^{\\,n-t+1})\\qquad P_t=Rv^{\\,n-t+1}\\qquad B_t=Ra_{\\overline{n-t}|}$$</div><ul><li>余额双视角:<strong>前瞻</strong> \\(B_t=Ra_{\\overline{n-t}|}\\)(剩余付款 PV);<strong>追溯</strong> \\(B_t=L(1+i)^t-Rs_{\\overline{t}|}\\)(勿漏滚息!)。</li><li>本金等比步数别多一:P₁→P₁₀ 是 ×(1+i)⁹;贷款额 = 全部本金之和。</li><li>付款 &amp;lt; 利息 ⇒ 负摊还(余额回血,利息资本化);等额本金 ≠ 等额付款(付款等差递减)。</li><li>AMORT 工作表:P1/P2 区间合计 PRN/INT + BAL 一键取。</li></ul><p><strong>算一遍</strong>:15 年贷款、7%,第 5 期本金 <span>$</span>187,求贷款额。</p><ul><li>从 P₅ 等比双向铺满 15 期:向前折 4 步、向后滚 10 步。</li><li>\\(L=187(a_{\\overline{4}|}+s_{\\overline{11}|})=187(3.3872+15.7836)\\)。</li><li>= <span>$</span>3,585 ✓(ASM Ex 6.3)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 余额表达全用 a、s</li><li><a class=\"net-wl\" data-id=\"贷款尾款与再融资\">贷款尾款与再融资</a> — 非整期收尾与条款重谈</li><li><a class=\"net-wl\" data-id=\"债券溢价与折价\">债券溢价与折价</a> — 同一台机器换名字(book value↔余额)</li><li><a class=\"net-wl\" data-id=\"等差年金\">等差年金</a> — 等额本金的付款串是等差</li></ul><h4>应用视角</h4><ul><li><a class=\"net-wl\" data-id=\"FM考试的BA II Plus操作体系\">FM考试的BA II Plus操作体系</a> — AMORT 工作表</li></ul>"
+ },
+ "递延年金": {
+  "kind": "c",
+  "en": "DeferredAnnuity",
+  "aliases": [
+   "deferred annuity",
+   "延期年金"
+  ],
+  "level": "basic",
+  "chapter": "fm-l03",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>整体推迟 m 期的年金:\\({}_{m|}a_{\\overline{n}|}\\) 读作\"到 time m 去,按符号右侧付款\"。</p><p><strong>白话</strong>:同一串付款往后挪 m 格;要么打折(v^m),要么摆虚拟付款再减掉。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$${}_{m|}a_{\\overline{n}|}=v^m a_{\\overline{n}|}=a_{\\overline{m+n}|}-a_{\\overline{m}|}={}_{m+1|}\\ddot a_{\\overline{n}|}$$</div><ul><li>同一串付款(5–12 时点)的多种写法:\\(v^4a_{\\overline{8}|}=v^5\\ddot a_{\\overline{8}|}=v^{12}s_{\\overline{8}|}=v^{13}\\ddot s_{\\overline{8}|}\\)——\"now you see it\" 游戏。</li><li>分块付款速记:PV 从离比较日最远的块起步(a),AV 从首笔起步(s),变额点加减。</li></ul><p><strong>算一遍</strong>:已知 \\(a_{\\overline{n}|}=10\\),且 n 年递延 n 年年金 PV=5。</p><ul><li>\\(v^n a_{\\overline{n}|}=5\\Rightarrow v^n=0.5\\)。</li><li>代回:\\(10=\\frac{1-0.5}{i}\\Rightarrow i=5\\%\\) ✓(ASM Ex 3.15)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 平移前的本体</li><li><a class=\"net-wl\" data-id=\"永续年金\">永续年金</a> — 递延永续 v^n/i;两者相减得定期年金</li><li><a class=\"net-wl\" data-id=\"价值方程\">价值方程</a> — 平移 = 换比较日</li></ul>"
+ },
+ "通胀年金与真实利率的等价": {
+  "kind": "a",
+  "en": "",
+  "aliases": [],
+  "level": "advanced",
+  "chapter": "fm-l05",
+  "status": "wip",
+  "html": "<p><strong>题型</strong>:退休金要\"购买力恒定\"(每期按通胀 r 几何递增),给 PV/给付款反解利率——新大纲常客。</p><h4>一个等价,两个方向</h4><div class=\"net-mth\">$$\\text{付款按 }(1+r)\\text{ 递增、按 }i\\text{ 折现}\\iff \\text{付款水平、按 }i'=\\frac{i-r}{1+r}\\text{ 折现}$$</div><ul><li><strong>正向(定价)</strong>:换成 i′ 后水平年金 TVM 一键(Ch4 的调整利率 trick 与 Ch5 的实际利率是同一个 i′)。</li><li><strong>反向(反解)</strong>:给 PV 与几何付款串 → TVM 解出的 I/Y 是 <strong>i′</strong>,再用 \\(i=i'+r+i'r\\) 还原市场利率(ASM Ex 5.13 标准套路:N=15、PV=120,137、PMT=−10,000、CPT I/Y=2.9127% → i=6%)。</li></ul><h4>易错</h4><ul><li>首付款是 X(1+r) 还是 X:决定比值从一次方还是零次方起。</li><li>高通胀禁用 i′≈i−r(Ex 5.10 专考)。</li><li>等差(\"increase by X\")≠ 等比(\"increase by X%\"),读题第一眼分家。</li></ul>"
+ },
+ "错拍年金": {
+  "kind": "c",
+  "en": "MthlyAnnuity",
+  "aliases": [
+   "off-payments",
+   "m-thly annuity",
+   "fission",
+   "fusion",
+   "连续年金"
+  ],
+  "level": "hard",
+  "chapter": "fm-l04",
+  "status": "wip",
+  "html": "<h4>定义</h4><p>付款频率与计息期不一致的年金(off-payments):付款可比计息期更疏(每 5 年一笔)或更密(每月一笔)。两条路线:①换等效利率 j 当普通年金(数值题);②fission/fusion 改造付款 + m-thly 符号(符号题)。m→∞ 即连续年金 \\(\\bar a\\)。</p><p><strong>白话</strong>:钟表和付款不同拍——要么把钟调到同拍(换利率),要么把付款改拍(拆笔/并笔),现值不变。</p><h4>关键性质 / 公式</h4><div class=\"net-mth\">$$j=(1+i)^k-1\\qquad PV_{\\text{每 }k\\text{ 期末付 }1}=\\frac{a_{\\overline{n}|}}{s_{\\overline{k}|}}\\qquad a^{(m)}_{\\overline{n}|}=\\frac{1-v^n}{i^{(m)}}=\\frac{i}{i^{(m)}}a_{\\overline{n}|}\\qquad \\bar a_{\\overline{n}|}=\\frac{1-v^n}{\\delta}$$</div><ul><li><strong>系数陷阱</strong>(4c):\\(a^{(m)}\\) 前系数 = 一个<strong>计息期</strong>内的付款总和(检验:÷m = 单笔);m 由\"计息期内几笔\"定,不由\"每年几笔\"定。</li><li>符号即公式:PV 分子恒 \\(1-v^n\\),分母 a→i、ä→d、(m)→\\(i^{(m)}/d^{(m)}\\)、bar→δ。</li><li>同利率下\"双点约掉\":\\(\\frac{a^{(m)}_{\\overline{2n}|}}{a^{(m)}_{\\overline{n}|}}=1+v^n\\);利率不同则非法。</li></ul><p><strong>算一遍</strong>:每 5 年末付 1、共 40 年、i=5%。</p><ul><li>法一:\\(j=1.05^5-1=27.6282\\%\\),\\(PV=a_{\\overline{8}|j}=3.1054\\)。</li><li>法二 fission:\\(PV=a_{\\overline{40}|}/s_{\\overline{5}|}=17.1591/5.5256=3.1054\\) ✓ 两法同值(ASM Ex 4.1/4.5)</li></ul><h4>与其他概念的关系</h4><ul><li><a class=\"net-wl\" data-id=\"年金基本符号\">年金基本符号</a> — 变形前的本体</li><li><a class=\"net-wl\" data-id=\"名义利率\">名义利率</a> — i^(m) 分母的来源</li><li><a class=\"net-wl\" data-id=\"利息力\">利息力</a> — 连续年金分母 δ</li><li><a class=\"net-wl\" data-id=\"等差年金\">等差年金</a> — (Ia)^(m) 双重变形</li></ul>"
+ }
+};
+/*CARDS_JSON_END*/
+const CHMAP = {
+ "fm-l99": "soa-exam-fm-l99-network.html",
+ "fm-l02": "soa-exam-fm-l02-practical-applications.html",
+ "fm-l03": "soa-exam-fm-l03-annuities.html",
+ "fm-l09": "soa-exam-fm-l09-spot-forward-rates.html",
+ "fm-l05": "soa-exam-fm-l05-additional-applications.html",
+ "fm-l04": "soa-exam-fm-l04-complex-annuities.html",
+ "fm-l06": "soa-exam-fm-l06-loans.html",
+ "fm-l07": "soa-exam-fm-l07-bonds.html",
+ "fm-l00": "soa-exam-fm-l00-panorama.html",
+ "fm-l08": "soa-exam-fm-l08-duration-convexity-immunization.html",
+ "fm-l01": "soa-exam-fm-l01-interest-and-discount-rates.html"
+};
+(function(){
+  var modal = document.querySelector('.net-modal');
+  if (!modal) return;
+  var bd = modal.querySelector('.net-bd'), bk = modal.querySelector('.net-bk'),
+      go = modal.querySelector('.net-go'), stack = [], cur = null;
+  var LV = {basic:['基础','#0e7c66'], advanced:['进阶','#5b53c4'], hard:['高难','#c2413b']};
+  var SLAB = {wip:'学习中', mastered:'已掌握', review:'待复习'};
+  var SCOLOR = {wip:'#c07a1c', mastered:'#2f6fd6', review:'#c23b8a'};
+  function show(name, push){
+    var c = CARDS[name];
+    if (!c) return;
+    if (push && cur) stack.push(cur);
+    cur = name;
+    modal.querySelector('.net-t').textContent = name;
+    modal.querySelector('.net-kind').textContent = c.kind === 'a' ? '◇ 应用卡 · Application' : '○ 概念卡 · Concept';
+    var chip = modal.querySelector('.net-chip'), lv = LV[c.level];
+    chip.style.display = lv ? '' : 'none';
+    if (lv){ chip.textContent = lv[0]; chip.style.background = lv[1]; }
+    var stat = modal.querySelector('.net-stat');
+    stat.style.display = c.status ? '' : 'none';
+    if (c.status){ stat.textContent = SLAB[c.status] || c.status; stat.style.background = SCOLOR[c.status] || '#6b7280'; }
+    var chc = modal.querySelector('.net-chc');
+    chc.style.display = c.chapter ? '' : 'none';
+    if (c.chapter) chc.textContent = c.chapter.toUpperCase();
+    var en = modal.querySelector('.net-en');
+    en.textContent = c.en || '';
+    en.style.display = c.en ? '' : 'none';
+    if (c.chapter && CHMAP[c.chapter]){
+      go.hidden = false;
+      go.setAttribute('href', CHMAP[c.chapter]);
+      go.textContent = '进入 ' + c.chapter.toUpperCase().replace(/^(P|FM)-/, '') + ' ↗';
+    } else { go.hidden = true; }
+    bd.innerHTML = '';
+    if (c.aliases && c.aliases.length){
+      var aka = document.createElement('p');
+      aka.className = 'net-aka';
+      aka.textContent = '又名:' + c.aliases.join(' · ');
+      bd.appendChild(aka);
+    }
+    var div = document.createElement('div');
+    div.innerHTML = c.html;
+    while (div.firstChild) bd.appendChild(div.firstChild);
+    bk.hidden = !stack.length;
+    bk.textContent = stack.length ? '‹ ' + stack[stack.length - 1] : '';
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    bd.scrollTop = 0;
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([modal.querySelector('.net-box')]).catch(function(){});
+  }
+  function close(){ modal.hidden = true; stack.length = 0; cur = null; document.documentElement.style.overflow = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('[data-card]');
+    if (chip){ stack.length = 0; cur = null; show(chip.getAttribute('data-card'), false); return; }
+    var wl = e.target.closest && e.target.closest('a.net-wl');
+    if (wl && !modal.hidden){ show(wl.getAttribute('data-id'), true); return; }
+    if (e.target.closest && (e.target.closest('.net-x') || e.target.classList.contains('net-back'))) close();
+  });
+  bk.addEventListener('click', function(){
+    var prev = stack.pop();
+    if (prev){ cur = null; show(prev, false); cur = prev; bk.hidden = !stack.length; if (stack.length) bk.textContent = '‹ ' + stack[stack.length - 1]; }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  modal.addEventListener('wheel', function(e){ if (!bd.contains(e.target)) e.preventDefault(); }, {passive: false});
+})();
+/*CARD_POPUP_JS_END*/
+</script>
+</body>
+</html>

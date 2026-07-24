@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · L00 全景 · Panorama 知识网络</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#b45309; --accent-deep:#7c3a06; --accent-soft:#fbeee0; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:44px 0 34px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5vw,44px);line-height:1.06;margin:0 0 14px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:16.5px;color:#cdd6e6;max-width:70ch;margin:0}
+  section{padding:36px 0;scroll-margin-top:112px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  mjx-container{max-width:100%}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>全景 Panorama</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Panorama · 知识网络 · 迷路就回这页</p>
+    <h1>第零章 · <em>Panorama 全景知识网络</em></h1>
+    <p class="lead">全书只讲一件事:<b>钱在时间轴上搬家,搬一次收一次"运费"(利率)</b>。下图是 9 章的依赖地图——实线是块内主链(按它学),虚线是跨块针线(靠它串)。<b>点任意节点</b>弹出该章必背公式;弹窗里可一键进章精读。</p>
+  </div>
+</div>
+
+<style>
+  .pan .mainline{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:#0f1b30;color:#eaf0fb;
+    border-radius:14px;padding:14px 18px;margin:0 0 18px}
+  .pan .mainline .ml{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--hi);
+    text-transform:uppercase;width:100%;margin-bottom:2px}
+  .pan .mainline .stage{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+    border-radius:8px;padding:5px 12px;font-size:13px;white-space:nowrap}
+  .pan .mainline .stage b{color:var(--hi)}
+  .pan .mainline .marr{color:#8ea1c0;font-family:var(--mono)}
+  .pan .maplegend{font-size:13px;color:var(--mute);margin:8px 2px 4px;display:flex;flex-wrap:wrap;gap:16px}
+  .pan .maplegend .li{display:flex;align-items:center;gap:6px}
+  .pan .maplegend .sw{display:inline-block;width:26px;height:0;border-top:2.5px solid #46566f}
+  .pan .maplegend .sw.d{border-top-style:dashed}
+  .pan .mapcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .pan .mapcard svg{display:block;width:100%;height:auto}
+  .pan .pnode{cursor:pointer}
+  .pan .pnode rect{fill:#fff;stroke:var(--c,#0e8a63);stroke-width:1.6;rx:9}
+  .pan .pnode:hover rect,.pan .pnode:focus rect{stroke-width:3;fill:#f7fdfb}
+  .pan .pnode .pl{font-family:var(--mono);font-size:10.5px;font-weight:700;fill:var(--c,#0e8a63)}
+  .pan .pnode .pt{font-size:13px;fill:#16243d}
+  .pan .colh{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:1.5px}
+  .pan .subh{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;fill:#7a8699}
+  .pan .ed{fill:none;stroke-width:2;stroke-linejoin:round}
+  .pan .ed.d{stroke-dasharray:6 5}
+  .pan .thread-box{margin-top:18px;background:#fff;border:1px dashed var(--accent);border-radius:12px;padding:14px 18px}
+  .pan .thread-box h4{margin:0 0 6px;font-family:var(--mono);font-size:12px;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--accent-deep)}
+  .pan .thread-box ul{margin:0;padding-left:20px}
+  .pan .thread-box li{font-size:14px;color:var(--ink-soft);margin:5px 0}
+  .pan .thread-box li b{color:var(--ink)}
+  /* 弹窗 */
+  .pan-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center}
+  .pan-modal[hidden]{display:none}
+  .pan-back{position:absolute;inset:0;background:rgba(15,22,38,.55);backdrop-filter:blur(3px)}
+  .pan-box{position:relative;max-width:760px;width:calc(100% - 40px);max-height:80vh;overflow-y:auto;
+    background:var(--paper);border-radius:16px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);padding:18px 22px}
+  .pan-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .pan-t{font-family:var(--serif);font-weight:700;font-size:19px;flex:1}
+  .pan-go{font-size:13px;text-decoration:none;background:#16243d;color:#fff;padding:6px 14px;border-radius:999px;white-space:nowrap}
+  .pan-go:hover{background:#3a4a63}
+  .pan-x{background:none;border:1px solid var(--line);border-radius:8px;font-size:15px;
+    padding:4px 10px;cursor:pointer;color:var(--ink-soft)}
+  .pan-x:hover{background:#fff}
+  .pan-body .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.pan-body .cheat{grid-template-columns:1fr}}
+  .pan-body .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .pan-body .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .pan-body .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .pan-body .cc p{margin:7px 0;font-size:14.5px}
+  .pan-body .fallback{font-size:14.5px;color:var(--ink-soft)}
+</style>
+
+<section id="map" class="pan" style="padding-top:26px">
+  <div class="wrap">
+
+    <div class="mainline">
+      <span class="ml">★ 全书主线 · 一条线拎起 9 章</span>
+      <span class="stage"><b>①</b> 利率度量衡</span><span class="marr">→</span>
+      <span class="stage"><b>②</b> 价值方程</span><span class="marr">→</span>
+      <span class="stage"><b>③</b> 年金机器</span><span class="marr">→</span>
+      <span class="stage"><b>④</b> 三大应用(决策/贷款/债券)</span><span class="marr">→</span>
+      <span class="stage"><b>⑤</b> 利率风险与期限结构</span>
+    </div>
+
+    <div class="mapcard">
+    <svg viewBox="0 0 1000 300" role="img" aria-label="Exam FM 9 章知识依赖图">
+      <defs>
+        <marker id="ar1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0e8a63"/></marker>
+        <marker id="ar2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5b53c4"/></marker>
+        <marker id="ar3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b8860b"/></marker>
+        <marker id="ar4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b0487a"/></marker>
+      </defs>
+
+      <text class="colh" x="10" y="18" fill="#0e8a63">① 利率与价值方程</text>
+      <text class="colh" x="208" y="18" fill="#5b53c4">② 年金机器</text>
+      <text class="colh" x="406" y="18" fill="#b8860b">③ 三大应用</text>
+      <text class="colh" x="604" y="18" fill="#b0487a">④ 风险与期限</text>
+      <text class="colh" x="802" y="18" fill="#46566f">工具页</text>
+
+      <!-- 块内主链(实线) -->
+      <path class="ed" d="M95,100 L95,116" stroke="#0e8a63" marker-end="url(#ar1)"/>
+      <path class="ed" d="M293,100 L293,116" stroke="#5b53c4" marker-end="url(#ar2)"/>
+      <path class="ed" d="M491,100 L491,116" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <path class="ed" d="M491,158 L491,174" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <path class="ed" d="M689,100 L689,116" stroke="#b0487a" marker-end="url(#ar4)"/>
+
+      <!-- 跨块针线(虚线, 列间通道) -->
+      <!-- L02 价值方程 → L03 年金(左块出右入) -->
+      <path class="ed d" d="M180,140 H202" stroke="#0e8a63" marker-end="url(#ar1)"/>
+      <!-- L04 复杂年金 → L05 应用(等比→通胀) -->
+      <path class="ed d" d="M378,140 H392 V82 H400" stroke="#5b53c4" marker-end="url(#ar2)"/>
+      <!-- L03 年金 → L06 贷款(摊还机器) -->
+      <path class="ed d" d="M378,74 H392 V140 H400" stroke="#5b53c4" marker-end="url(#ar2)"/>
+      <!-- L07 债券 → L08 久期(价格敏感度) -->
+      <path class="ed d" d="M576,198 H590 V82 H598" stroke="#b8860b" marker-end="url(#ar3)"/>
+      <!-- L01 利息力(1g) → L09 期限结构(顶部公路) -->
+      <path class="ed d" d="M95,64 V36 H620 V116" stroke="#0e8a63" marker-end="url(#ar1)"/>
+
+      <!-- 节点 -->
+      <g class="pnode" data-l="l01" style="--c:#0e8a63" transform="translate(10,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L01</text><text class="pt" x="48" y="23">利率与贴现率</text></g>
+      <g class="pnode" data-l="l02" style="--c:#0e8a63" transform="translate(10,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L02</text><text class="pt" x="48" y="23">价值方程</text></g>
+
+      <g class="pnode" data-l="l03" style="--c:#5b53c4" transform="translate(208,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L03</text><text class="pt" x="48" y="23">年金</text></g>
+      <g class="pnode" data-l="l04" style="--c:#5b53c4" transform="translate(208,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L04</text><text class="pt" x="48" y="23">复杂年金</text></g>
+
+      <g class="pnode" data-l="l05" style="--c:#b8860b" transform="translate(406,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L05</text><text class="pt" x="48" y="23">NPV·再投资·通胀</text></g>
+      <g class="pnode" data-l="l06" style="--c:#b8860b" transform="translate(406,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L06</text><text class="pt" x="48" y="23">贷款</text></g>
+      <g class="pnode" data-l="l07" style="--c:#b8860b" transform="translate(406,180)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L07</text><text class="pt" x="48" y="23">债券</text></g>
+
+      <g class="pnode" data-l="l08" style="--c:#b0487a" transform="translate(604,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L08</text><text class="pt" x="48" y="23">久期·凸性·免疫</text></g>
+      <g class="pnode" data-l="l09" style="--c:#b0487a" transform="translate(604,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L09</text><text class="pt" x="48" y="23">即期与远期利率</text></g>
+
+      <g class="pnode" data-l="l99" style="--c:#46566f" transform="translate(802,64)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">L99</text><text class="pt" x="48" y="23">概念网络图</text></g>
+      <g class="pnode" data-l="fx" style="--c:#46566f" transform="translate(802,122)" tabindex="0"><rect width="170" height="36" rx="9"/><text class="pl" x="12" y="23">Σ</text><text class="pt" x="48" y="23">公式总表</text></g>
+    </svg>
+    </div>
+    <div class="maplegend">
+      <span class="li"><span class="sw"></span>块内主链(按它学)</span>
+      <span class="li"><span class="sw d"></span>跨块针线(靠它串,详见下方五条线)</span>
+      <span class="li">🖱️ 点节点 = 弹出该章必背公式</span>
+    </div>
+
+    <div class="thread-box">
+      <h4>五条跨块串联线 · 考前各走一遍</h4>
+      <ul>
+        <li><b>机器线</b>:L03 年金符号 → L06 摊还表 → L07 债券摊销——同一台"利息优先、剩余还本"的机器三次换皮(余额↔book value,还款↔coupon)。</li>
+        <li><b>换算线</b>:L01 五率一轴 \((1+i)=(1+\frac{i^{(m)}}{m})^m=e^\delta\) → L02 等效利率 → L04 fission/fusion → L09 spot/forward——全是"两条路终点相等"。</li>
+        <li><b>通胀线</b>:L04 等比年金 ≡ L05 真实利率下的水平年金(\(i'=\frac{i-k}{1+k}\)),一个 trick 两章共用。</li>
+        <li><b>敏感度线</b>:L07 债券价格 → L08 久期(一阶)→ 凸性(二阶)→ 免疫三条件 → L09 变利率世界(spot 曲线)。</li>
+        <li><b>计算器线</b>:TVM 五键(L03)→ AMORT(L06)→ CF/NPV/IRR(L05)→ ICONV(L01)——四个工作表覆盖全卷;每题前 2nd CLR TVM。</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="pan-modal" hidden>
+  <div class="pan-back"></div>
+  <div class="pan-box">
+    <div class="pan-head">
+      <span class="pan-t">章节</span>
+      <a class="pan-go" href="#">进入本章 ↗</a>
+      <button class="pan-x" type="button" aria-label="关闭">✕</button>
+    </div>
+    <div class="pan-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal = document.querySelector('.pan-modal');
+  if(!modal) return;
+  var body = modal.querySelector('.pan-body');
+  var title = modal.querySelector('.pan-t');
+  var go = modal.querySelector('.pan-go');
+  function close(){ modal.hidden = true; }
+  // lNN → 兄弟章文件(手维护;新增章改 SVG 节点时一起加行)
+  var CHMAP = {
+    l01:'soa-exam-fm-l01-interest-and-discount-rates.html',
+    l02:'soa-exam-fm-l02-practical-applications.html',
+    l03:'soa-exam-fm-l03-annuities.html',
+    l04:'soa-exam-fm-l04-complex-annuities.html',
+    l05:'soa-exam-fm-l05-additional-applications.html',
+    l06:'soa-exam-fm-l06-loans.html',
+    l07:'soa-exam-fm-l07-bonds.html',
+    l08:'soa-exam-fm-l08-duration-convexity-immunization.html',
+    l09:'soa-exam-fm-l09-spot-forward-rates.html',
+    l99:'soa-exam-fm-l99-network.html',
+    fx:'soa-exam-fm-formulas.html'
+  };
+  // 公式预览: fetch 公式总表页克隆对应块(http 下可用; file:// fetch 被拒 → 降级文字提示)
+  var fxDoc = null, fxState = 'idle', curL = null;
+  function fillBody(l){
+    body.innerHTML = '';
+    var src = fxDoc && fxDoc.querySelector('.fx-ch[data-l="' + l + '"]');
+    if(src){
+      var clone = document.importNode(src, true);
+      var h = clone.querySelector('.fx-h'); if(h) h.remove();
+      body.appendChild(clone);
+      if(window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([body]);
+    } else {
+      var p = document.createElement('p');
+      p.className = 'fallback';
+      p.textContent = '公式速查见合辑侧栏「Σ 公式总表」;点右上「进入本章」看全章。';
+      body.appendChild(p);
+    }
+  }
+  function openFor(l, name){
+    title.textContent = name;
+    curL = l;
+    go.setAttribute('href', CHMAP[l] || '#');
+    go.style.display = CHMAP[l] ? '' : 'none';
+    if(fxState === 'idle' && window.fetch){
+      fxState = 'loading';
+      fetch('soa-exam-fm-formulas.html')
+        .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+        .then(function(t){
+          fxDoc = new DOMParser().parseFromString(t, 'text/html');
+          fxState = 'ready';
+          if(!modal.hidden && curL) fillBody(curL);
+        })
+        .catch(function(){ fxState = 'failed'; });
+    }
+    fillBody(l);
+    modal.hidden = false;
+  }
+  document.addEventListener('click', function(e){
+    var n = e.target.closest && e.target.closest('.pnode');
+    if(n){
+      var l = n.getAttribute('data-l');
+      var pl = n.querySelector('.pl'), pt = n.querySelector('.pt');
+      openFor(l, (pl ? pl.textContent : '') + ' · ' + (pt ? pt.textContent : ''));
+      return;
+    }
+    if(e.target.closest && (e.target.closest('.pan-x') || e.target.classList.contains('pan-back'))) close();
+    if(e.target.closest && e.target.closest('.pan-go')) close();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') close();
+    if(e.key === 'Enter'){
+      var n = e.target.closest && e.target.closest('.pnode');
+      if(n) n.click();
+    }
+  });
+})();
+</script>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam FM 导学 · L00 Panorama</b> · 全景知识网络</p>
+    <p>结构整理自《ASM Exam FM Study Manual, 17th ed.》9 章;依赖图与串联线为 AI 辅助归纳,服务于知识点串联复习。仅供个人备考使用。</p>
+  </div>
+</footer>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+</body>
+</html>

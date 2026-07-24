@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<!-- 生成物: 由 _Meta/tools/build-exam-fm-book.py 聚合各章速查卡。勿手改,改章后重跑脚本刷新。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · Σ 公式总表</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#5b53c4; --accent-deep:#3b367f; --accent-soft:#efeef9; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(59,54,127,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
+</style>
+<style>
+  .fx-wrap{padding:34px 22px 46px;max-width:940px;margin:0 auto}
+  .fx-title{font-family:var(--serif);font-size:clamp(26px,4vw,38px);margin:0 0 4px}
+  .fx-sub{color:var(--mute);font-size:14px;margin:0 0 24px}
+  .fx-ch{margin:0 0 30px}
+  .fx-h{font-family:var(--serif);font-size:19px;margin:0 0 10px;display:flex;align-items:center;gap:10px}
+  .fx-h .fxn{font-family:var(--mono);font-size:11px;color:#fff;padding:2px 10px;border-radius:999px}
+  .fx-h a.fxlink{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .fx-h a.fxlink:hover{color:var(--accent-deep);border-bottom-color:var(--accent-deep)}
+</style>
+</head>
+<body>
+<div class="fx-wrap"><h2 class="fx-title">Σ 公式总表 · 全 9 章速查卡</h2>
+<p class="fx-sub">自动聚合各章「公式速查卡」;点章名跳原章。<span class="fx-de" data-tip="需懂推导:能从定义/事件逻辑现场重导;悬停或点击徽章看该公式的推导句" tabindex="0">推</span>= 需懂推导(能现场重导);无标 = 背诵即可。改章后重跑 build-exam-fm-book.py 刷新。</p>
+<div class="fx-ch" data-l="l01" style="--accent:#0e8a63;--accent-deep:#095a40;--accent-soft:#e7f3ef;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#0e8a63">L01</span><a class="fxlink" href="soa-exam-fm-l01-interest-and-discount-rates.html">Interest Rates and Discount Rates 利率与贴现率</a></h3><div class="cheat">
+      <div class="cc t"><h4>基础(1a P1)</h4>
+        <p>\(i_t=\frac{a(t)-a(t-1)}{a(t-1)}\),\(a(0)=1\),\(A(t)=k\,a(t)\)</p>
+        <p>单利 \(a=1+it\)(\(i_t\) 递减)· 复利 \(a=(1+i)^t\)</p>
+        <p>\(v=\frac{1}{1+i}\),\(PV=v^t\)</p></div>
+      <div class="cc"><h4>贴现率(1a P2)</h4>
+        <p>\(d_t=\frac{a(t)-a(t-1)}{a(t)}\)(年末基)</p>
+        <p><span class="fx-de" data-tip="推导:一期两视角:年初贴 d 拿 1-d、年末收 1;由 v=1/(1+i) 与 d=iv 可推全族" tabindex="0">推</span>\(1-d=v\) · \(d=iv\) · \(i=\frac{d}{1-d}\) · \(i-d=id\) · \(\frac1d-\frac1i=1\)</p>
+        <p>\(PV=(1-d)^t\),\(AV=(1-d)^{-t}\)</p></div>
+      <div class="cc"><h4>名义利率</h4>
+        <p><span class="fx-de" data-tip="推导:每期 i^(m)/m,一年复利 m 次合成实际 i;d 同理反向" tabindex="0">推</span>\((1+\frac{i^{(m)}}{m})^m=1+i\) · \((1-\frac{d^{(m)}}{m})^m=1-d\)</p>
+        <p>\(i^{(p)}=p[(1+\frac{i^{(m)}}{m})^{m/p}-1]\)</p>
+        <p>期长由名义率描述决定(m 可 = 1/2)</p></div>
+      <div class="cc t"><h4>利息力(1b–1f)</h4>
+        <p>\(\delta_t=\frac{a'}{a}=\frac{d}{dt}\ln a(t)\)</p>
+        <p><span class="fx-de" data-tip="推导:δ=a'/a=(ln a)' 两边积分再指数化" tabindex="0">推</span>\(a(t)=e^{\int_0^t\delta}\);恒定:\(e^\delta=1+i\),\(\delta=\ln(1+i)\)</p>
+        <p>\(i^{(\infty)}=d^{(\infty)}=\delta\)(连续复利)</p></div>
+      <div class="cc t"><h4>变力陷阱(1g)</h4>
+        <p><span class="fx-de" data-tip="推导:区间积累=终点/起点因子之比,指数上积分相减" tabindex="0">推</span>\(AV=\frac{a(t_2)}{a(t_1)}=e^{\int_{t_1}^{t_2}\delta}\)</p>
+        <p>\(PV=e^{-\int_{t_1}^{t_2}\delta}\)</p>
+        <p>simple interest:从存入日重启 \(1+it\)</p></div>
+      <div class="cc"><h4>等价利率(1h)+ 级数(1f)</h4>
+        <p><span class="fx-de" data-tip="推导:同一年积累因子的多种写法:全等于 1+i,现场互推" tabindex="0">推</span>\(1+i=(1+\frac{i^{(m)}}{m})^m=(1-\frac{d^{(m)}}{m})^{-m}=e^\delta=\frac1v\)</p>
+        <p>\(i=d+d^2+\cdots\) · \(d=i-i^2+\cdots\) · \(\delta=i-\frac{i^2}{2}+\frac{i^3}{3}-\cdots\)</p>
+        <p>变利率下等价必须指明时段</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l02" style="--accent:#0d7d7d;--accent-deep:#085151;--accent-soft:#e7f2f2;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#0d7d7d">L02</span><a class="fxlink" href="soa-exam-fm-l02-practical-applications.html">Practical Applications 价值方程与货币时间价值</a></h3><div class="cheat">
+      <div class="cc t"><h4>价值方程</h4>
+        <p>所有款项折到同一比较日:\(\sum\text{流入}\cdot v^{s} = \sum\text{流出}\cdot v^{s}\)</p>
+        <p>比较日任选,解不变</p></div>
+      <div class="cc"><h4>等效利率</h4>
+        <p><span class="fx-de" data-tip="推导:两利率等价⟺同一段时间积累因子相等,幂次配平" tabindex="0">推</span>\((1+j)^m=(1+i)^k\)</p>
+        <p>季度对半年 3%:\(j=1.03^{1/2}-1\);两年对季度 2%:\(1+j=1.02^8\)</p></div>
+      <div class="cc"><h4>未知时间</h4>
+        <p>\(a^t=b\Rightarrow t=\ln b/\ln a\)</p>
+        <p>TVM:I/Y·PV·FV(反号)·CPT N</p>
+        <p>Rule of 72:\(t_{\times2}\approx 72/i\%\)(准:\(69.3/i\%+0.35\))</p></div>
+      <div class="cc t"><h4>等时法</h4>
+        <p>\(\bar t=\dfrac{\sum A_k t_k}{\sum A_k}\)</p>
+        <p>与利率无关 · \(i&gt;0\) 时恒大于精确 t</p></div>
+      <div class="cc"><h4>未知利率</h4>
+        <p>换元 \(x=1+i\) 或 \(x=v^n\) → 二次方程 → 舍平凡根</p></div>
+      <div class="cc"><h4>两条级数(Ex 2.9)</h4>
+        <p><span class="fx-de" data-tip="推导:等比级数求和得 d/(1-d),再用 i=d/(1-d) 收口" tabindex="0">推</span>\(d+d^2+\cdots=\frac{d}{1-d}=i\)</p>
+        <p>\(d+\frac{d^2}{2}+\frac{d^3}{3}+\cdots=-\ln(1-d)=\delta\)</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l03" style="--accent:#5b53c4;--accent-deep:#3b367f;--accent-soft:#efeef9;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#5b53c4">L03</span><a class="fxlink" href="soa-exam-fm-l03-annuities.html">Annuities 年金</a></h3><div class="cheat">
+      <div class="cc t"><h4>四大符号</h4>
+        <p><span class="fx-de" data-tip="推导:等比级数:v+v²+⋯+v^n 求和,分母 1-v 化简成 i" tabindex="0">推</span>\(a_{\overline{n}|}=\frac{1-v^n}{i}\) · \(s_{\overline{n}|}=\frac{(1+i)^n-1}{i}\)</p>
+        <p>\(\ddot a_{\overline{n}|}=\frac{1-v^n}{d}\) · \(\ddot s_{\overline{n}|}=\frac{(1+i)^n-1}{d}\)</p></div>
+      <div class="cc"><h4>关系式</h4>
+        <p><span class="fx-de" data-tip="推导:期初=期末整体前移一期,各项乘 (1+i);或拆首笔 1" tabindex="0">推</span>\(\ddot a=(1+i)a=1+a_{\overline{n-1}|}\)</p>
+        <p>\(\ddot s=(1+i)s=s_{\overline{n+1}|}-1\) · \(s=(1+i)^n a\)</p></div>
+      <div class="cc"><h4>递延</h4>
+        <p><span class="fx-de" data-tip="推导:整段后移 m 期打折 v^m;或长段 a_{m+n} 减前段 a_m" tabindex="0">推</span>\({}_{m|}a_{\overline{n}|}=v^ma_{\overline{n}|}=a_{\overline{m+n}|}-a_{\overline{m}|}\)</p></div>
+      <div class="cc t"><h4>永续</h4>
+        <p><span class="fx-de" data-tip="推导:本金 1 每年生息 i 永续:i·a_∞=1;或 a_n 取 n→∞" tabindex="0">推</span>\(a_{\overline{\infty}|}=\frac1i\) · \(\ddot a_{\overline{\infty}|}=\frac1d\) · \(\frac1d-\frac1i=1\)</p>
+        <p>递延永续:\(v^n/i\)</p></div>
+      <div class="cc t"><h4>比值技巧</h4>
+        <p><span class="fx-de" data-tip="推导:因式分解 1-v^{2n}=(1-v^n)(1+v^n),i 与 1-v^n 约掉" tabindex="0">推</span>\(a_{\overline{2n}|}/a_{\overline{n}|}=1+v^n\)</p>
+        <p>\(a_{\overline{3n}|}/a_{\overline{n}|}=1+v^n+v^{2n}\)</p></div>
+      <div class="cc"><h4>分块速记 + 变利率</h4>
+        <p>PV 从最远块起步(a),AV 从首笔起步(s),变额点加减</p>
+        <p>变利率:分段各用各的,跨段连乘实际经历的因子</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l04" style="--accent:#7c3aed;--accent-deep:#51269a;--accent-soft:#f2ebfd;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#7c3aed">L04</span><a class="fxlink" href="soa-exam-fm-l04-complex-annuities.html">Complex Annuities 复杂年金</a></h3><div class="cheat">
+      <div class="cc t"><h4>错拍年金</h4>
+        <p><span class="fx-de" data-tip="推导:k 期合一期:等效利率合成;或每组先用 s_k 聚成一笔" tabindex="0">推</span>疏:\(j=(1+i)^k-1\) 或 \(a_{\overline{n}|}/s_{\overline{k}|}\)</p>
+        <p>密:\(a^{(m)}=\frac{1-v^n}{i^{(m)}}=\frac{i}{i^{(m)}}a\);系数=期内总付款</p></div>
+      <div class="cc"><h4>符号即公式</h4>
+        <p>PV 分子 1−vⁿ · AV 分子 (1+i)ⁿ−1</p>
+        <p>分母:a→i · ä→d · (m)→i^(m)/d^(m) · bar→δ</p></div>
+      <div class="cc t"><h4>等差(P&amp;Q)</h4>
+        <p>\(PV=Pa_{\overline{n}|}+Q\frac{a_{\overline{n}|}-nv^n}{i}\)</p>
+        <p>\((Ia)=\frac{\ddot a-nv^n}{i}\) · \((Da)=\frac{n-a}{i}\) · \((Is)=\frac{s_{\overline{n+1}|}-(n+1)}{i}\)</p>
+        <p>TVM:PMT=P+Q/i,FV=−nQ/i</p></div>
+      <div class="cc t"><h4>增额永续</h4>
+        <p>\((Ia)_\infty=\frac1i+\frac1{i^2}\) · P&amp;Q 版 \(\frac Pi+\frac Q{i^2}\)</p>
+        <p>先增后平:\(\ddot a_{\overline{n}|}/i\)</p></div>
+      <div class="cc"><h4>等比 / 连续</h4>
+        <p><span class="fx-de" data-tip="推导:公比 (1+k)v 的等比级数,分母 1-(1+k)v=(i-k)/(1+i)" tabindex="0">推</span>\(PV=\frac{1-(\frac{1+k}{1+i})^n}{i-k}\);\(i'=\frac{i-k}{1+k}\)</p>
+        <p>\(\bar a=\frac{1-v^n}{\delta}\) · \((\bar I\bar a)=\frac{\bar a-nv^n}{\delta}\)</p></div>
+      <div class="cc"><h4>回文 / 0%</h4>
+        <p>\(1..n..1:\ a_{\overline{n}|}\ddot a_{\overline{n}|}\);time 0 起 \((\ddot a)^2\)</p>
+        <p>0%:v=1、a=s=n、(Ia)=n(n+1)/2,和对不上即排除</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l05" style="--accent:#2563eb;--accent-deep:#184099;--accent-soft:#e9effd;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#2563eb">L05</span><a class="fxlink" href="soa-exam-fm-l05-additional-applications.html">Additional Applications 利率的其他应用</a></h3><div class="cheat">
+      <div class="cc t"><h4>NPV / IRR</h4>
+        <p>\(NPV=\sum(A_t-L_t)v^t\)(资本成本折现,选最大)</p>
+        <p>IRR:\(P(i)=0\) 的根,可能多解</p></div>
+      <div class="cc"><h4>再投资(单笔)</h4>
+        <p><span class="fx-de" data-tip="推导:现金流图景:本金原地收回 1,每年利息 i 进 i' 账户滚 s" tabindex="0">推</span>\(AV=1+i\,s_{\overline{n}|i'}\)</p></div>
+      <div class="cc"><h4>再投资(年初连存)</h4>
+        <p>\(AV=n+i(Is)_{\overline{n}|i'}\)</p>
+        <p>\((Is)_{\overline{n}|}=\dfrac{\ddot s_{\overline{n}|}-n}{i}\)</p></div>
+      <div class="cc t"><h4>实际利率</h4>
+        <p><span class="fx-de" data-tip="推导:购买力比值:(1+i)/(1+r)=1+i',交叉相乘即得" tabindex="0">推</span>\(i'=\dfrac{i-r}{1+r}\) · \(1+i=(1+i')(1+r)\)</p>
+        <p>低通胀才可 \(i'\approx i-r\)</p></div>
+      <div class="cc t"><h4>通胀年金</h4>
+        <p><span class="fx-de" data-tip="推导:现金流 (1+r)^t 与折现 v^t 合并:公比即 1/(1+i')" tabindex="0">推</span>几何递增(随 r)年金 ≡ i′ 下水平年金</p>
+        <p>TVM 解 i′ → 还原 i</p></div>
+      <div class="cc"><h4>CF 工作表</h4>
+        <p>CF₀ + C01…C24(带频数 F)</p>
+        <p>NPV:I ENTER ↓ CPT · IRR:CPT</p>
+        <p>每题先 2nd CLR WORK</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l06" style="--accent:#0891b2;--accent-deep:#055e74;--accent-soft:#e6f4f7;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#0891b2">L06</span><a class="fxlink" href="soa-exam-fm-l06-loans.html">Loans 贷款</a></h3><div class="cheat">
+      <div class="cc t"><h4>递推三件套</h4>
+        <p>\(I_t=iB_{t-1}\) · \(P_t=R_t-I_t\) · \(B_t=B_{t-1}-P_t\)</p>
+        <p><span class="fx-de" data-tip="推导:P_t=Rv^{n-t+1}:t 每加 1 少一个 v,即乘 (1+i)" tabindex="0">推</span>本金等比:\(P_{t+s}=P_t(1+i)^s\)</p></div>
+      <div class="cc t"><h4>任意一行直取</h4>
+        <p><span class="fx-de" data-tip="推导:由前瞻余额 B_{t-1}=Ra:I_t=iB_{t-1} 化简,P_t=R-I_t" tabindex="0">推</span>\(I_t=R(1-v^{n-t+1})\) · \(P_t=Rv^{n-t+1}\)</p>
+        <p>\(B_t=Ra_{\overline{n-t}|}\)</p></div>
+      <div class="cc"><h4>余额双视角</h4>
+        <p><span class="fx-de" data-tip="推导:余额=剩余付款的现值(价值方程站在 t 时刻看未来)" tabindex="0">推</span>前瞻 \(B_t=Ra_{\overline{n-t}|}\)</p>
+        <p><span class="fx-de" data-tip="推导:余额=贷款滚存到 t 减去已还付款滚存 Rs_t(看过去)" tabindex="0">推</span>追溯 \(B_t=L(1+i)^t-Rs_{\overline{t}|}\)</p></div>
+      <div class="cc"><h4>变付款 / 等额本金</h4>
+        <p>\(P_t=(1+i)P_{t-1}+(R_t-R_{t-1})\)</p>
+        <p>等额本金:\(R_t=X+i[L-(t-1)X]\),付款等差递减</p></div>
+      <div class="cc t"><h4>Balloon / Drop</h4>
+        <p>\(L=Ra_{\overline{\lfloor N\rfloor}|}+X_1v^{\lfloor N\rfloor}=Ra_{\overline{\lfloor N\rfloor}|}+X_2v^{\lceil N\rceil}\)</p>
+        <p>\(X_2=(1+i)X_1\);FV 符号定补/退</p></div>
+      <div class="cc"><h4>再融资</h4>
+        <p>\(B_t^{旧}=R'a_{\overline{m}|j}^{新}\)(追加 X 先扣)</p>
+        <p>AMORT:P1/P2 → BAL/PRN/INT</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l07" style="--accent:#b8860b;--accent-deep:#785707;--accent-soft:#f8f3e7;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#b8860b">L07</span><a class="fxlink" href="soa-exam-fm-l07-bonds.html">Bonds 债券</a></h3><div class="cheat">
+      <div class="cc t"><h4>定价</h4>
+        <p><span class="fx-de" data-tip="推导:债券=现金流折现:票息年金 Fr·a_n 加面值折现 Cv^n" tabindex="0">推</span>\(P=Fr\,a_{\overline{n}|i}+Cv^n\)</p>
+        <p><span class="fx-de" data-tip="推导:把 Cv^n=C-Ci·a_n 代入定价式,整理出溢折价项 (Fr-Ci)a_n" tabindex="0">推</span>\(P=C+(Fr-Ci)a_{\overline{n}|i}\)</p>
+        <p>coupon = Fr = Cg,g = Fr/C</p></div>
+      <div class="cc"><h4>溢价 / 折价</h4>
+        <p>Premium = \((Cg-Ci)a_{\overline{n}|}\)(g 大于 i)</p>
+        <p>Discount = \((Ci-Cg)a_{\overline{n}|}\)(g 小于 i)</p></div>
+      <div class="cc t"><h4>摊销表</h4>
+        <p><span class="fx-de" data-tip="推导:债券即贷款:书面值摊销同贷款行直取公式,超额票息是『还本』" tabindex="0">推</span>\(I_t=iB_{t-1}\) · \(P_t=(Cg-Ci)v^{n-t+1}\)</p>
+        <p>\(B_t=B_{t-1}\mp P_t\) · P_t 等比 (1+i)</p>
+        <p>\(\sum P_t=|P-C|\)</p></div>
+      <div class="cc"><h4>反求 yield</h4>
+        <p>TVM:N·PV·PMT(反号)·FV,CPT I/Y</p>
+        <p>近似:\(i\approx\dfrac{nCg+C-P}{\frac{n}{2}(P+C)}\)</p></div>
+      <div class="cc t"><h4>Callable(PEW)</h4>
+        <p>溢价 → 最早 call 日;折价 → 最晚</p>
+        <p>call 价分段:逐段算价取最低</p></div>
+      <div class="cc"><h4>Makeham(非考纲)</h4>
+        <p>\(P=K+\frac{g}{i}(C-K)\),\(K=Cv^n\)</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l08" style="--accent:#b0487a;--accent-deep:#722f4f;--accent-soft:#f7edf2;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#b0487a">L08</span><a class="fxlink" href="soa-exam-fm-l08-duration-convexity-immunization.html">Duration, Convexity, and Immunization 久期、凸性与免疫</a></h3><div class="cheat">
+      <div class="cc t"><h4>久期</h4>
+        <p><span class="fx-de" data-tip="推导:对 P(i)=Σv^t A_t 求导:-P'/P=Σt·v^{t+1}A_t/P=v·D_mac" tabindex="0">推</span>\(D_{mac}=\frac{\sum t v^t A_t}{P}\) · \(D_{mod}=vD_{mac}\)</p>
+        <p>零息=n · 永续=\(\frac{1+i}{i}\) · 平价债=\(\ddot a_{\overline{n}|}\) · 增长股=\(\frac{1+i}{i-g}\)</p></div>
+      <div class="cc"><h4>一阶近似</h4>
+        <p><span class="fx-de" data-tip="推导:Taylor 一阶 P≈P₀+P'Δi;凸性>0 使真值恒在切线上方,故低估" tabindex="0">推</span>修正:\(P\approx P_0[1-\Delta i\,D_{mod}]\)(恒低估)</p>
+        <p>Macaulay:\(P\approx P_0(\frac{1+i_0}{1+i})^{D_{mac}}\)(更准)</p></div>
+      <div class="cc"><h4>组合与时间</h4>
+        <p>组合久期 = 价格加权平均</p>
+        <p>随时间锯齿下降,付息瞬间跳升</p></div>
+      <div class="cc t"><h4>凸性</h4>
+        <p>\(C_{mod}=\frac{\sum t(t+1)v^{t+2}A_t}{P}\) · \(C_{mac}=\frac{\sum t^2v^tA_t}{P}\)</p>
+        <p>\(C_{mod}=\frac{C_{mac}+D_{mac}}{(1+i)^2}\)</p></div>
+      <div class="cc t"><h4>Redington</h4>
+        <p>\(P_A=P_L\) · \(P'_A=P'_L\) · \(P''_A\gt P''_L\)</p>
+        <p>= 盈余在 i₀ 相对极小;第三条件 ⇔ t² 加权比较</p></div>
+      <div class="cc"><h4>Full / Dedication</h4>
+        <p>Full:PV 等+久期等+前后各一笔(防任意幅度)</p>
+        <p>Dedication:\(A_t=L_t\),最远期倒推;需 rebalance</p></div>
+    </div></div>
+<div class="fx-ch" data-l="l09" style="--accent:#4f46e5;--accent-deep:#332e95;--accent-soft:#edecfc;--hi:#ffd23f"><h3 class="fx-h"><span class="fxn" style="background:#4f46e5">L09</span><a class="fxlink" href="soa-exam-fm-l09-spot-forward-rates.html">Spot Rates and Forward Rates 即期利率与远期利率</a></h3><div class="cheat">
+      <div class="cc t"><h4>Spot</h4>
+        <p>\(AV=(1+r_t)^t\) · \(P=\sum CF_t(1+r_t)^{-t}\)</p>
+        <p>零息债:\(r_t=P_t^{-1/t}-1\)</p></div>
+      <div class="cc"><h4>Forward 记号</h4>
+        <p>\(f_{[t_1,t_2]}\):t₁→t₂ 年实际利率</p>
+        <p>m-yr fwd deferred t yrs = \(f_{[t,t+m]}\) · \(f_{[0,1]}=r_1\)</p></div>
+      <div class="cc t"><h4>核心等式</h4>
+        <p><span class="fx-de" data-tip="推导:无套利:直投 t₂ 年与先 t₁ 年再远期续,两路径终值必相等" tabindex="0">推</span>\((1+r_{t_1})^{t_1}(1+f_{[t_1,t_2]})^{t_2-t_1}=(1+r_{t_2})^{t_2}\)</p>
+        <p>幂次自查:两边总时长相等</p></div>
+      <div class="cc"><h4>几何平均视角</h4>
+        <p>\(1+r_t=[\prod(1+f_{[j,j+1]})]^{1/t}\)</p>
+        <p>\(P=F\prod(1+f_{[j,j+1]})^{-1}\)</p></div>
+      <div class="cc"><h4>Yield(YTM)</h4>
+        <p>使 \(\sum CF_t(1+i)^{-t}=P\) 的单一 i</p>
+        <p>TVM:N·PV·PMT·FV,CPT I/Y</p></div>
+      <div class="cc t"><h4>锁定构造</h4>
+        <p><span class="fx-de" data-tip="推导:借 t₁ 年零息 + 投 t₂ 年零息:净现金流只剩 [t₁,t₂] 段,其利率即 f" tabindex="0">推</span>借 t₁ 年 + 投 t₂ 年零息 ⇒ 锁定 \(f_{[t_1,t_2]}\)</p>
+        <p>前提:借贷同利率(无套利)</p></div>
+    </div></div>
+</div>
+</body>
+</html>

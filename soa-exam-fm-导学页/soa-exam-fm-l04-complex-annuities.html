@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<!--
+  SOA Exam FM 导学页 · L04 Complex Annuities
+  源: ASM Exam FM Study Manual 17th ed, Chapter 4 (p.151-241)
+  管线见 _Meta/process/soa-fm-导学页-sop.md
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · L04 导学 · 复杂年金</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#7c3aed; --accent-deep:#51269a; --accent-soft:#f2ebfd; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(81,38,154,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>L04 · 复杂年金</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">2026-07-08 · 周三 · 导学已备(7/20–7/22 排学,三天)</p>
+    <h1>第4章 · <em>Complex Annuities 复杂年金</em></h1>
+    <p class="lead">L03 的年金开始"变形":付款和计息不同拍(off-payments)、连续流(bar)、等差(I/D)、等比(通胀挂钩)、回文金字塔——外加两件应试神器(符号即公式、0% 检验)。全书最厚一章(89 页、130 道旧考题),等差年金区独占 48 题。对照课本 Chapter 4 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch4 <b>全书最重 · 排 3 天</b></span>
+      <span class="pill">课本 <b>p.151–241</b>(理论 ≈ 35 页)</span>
+      <span class="pill">习题 <b>130 题全旧考题</b>(4h–4i 占 48)</span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 4 句话</p>
+      <ol>
+        <li>Off-payments 两法:数值题<b>换等效利率</b> \(j=(1+i)^k-1\);符号题 <b>fission</b> \(a_{\overline{n}|}/s_{\overline{k}|}\) / <b>fusion</b> \(\frac{i}{i^{(m)}}\)。</li>
+        <li><b>符号即公式</b>:PV 分子恒 \(1-v^n\)、AV 分子恒 \((1+i)^n-1\);分母 a→i、ä→d、(m)→\(i^{(m)}/d^{(m)}\)、bar→δ。<b>m-thly 系数 = 一个计息期的付款总和</b>。</li>
+        <li>等差三件套:\((Ia)=\frac{\ddot a_{\overline{n}|}-nv^n}{i}\)、\((Da)=\frac{n-a_{\overline{n}|}}{i}\)、增额永续 \(\frac1i+\frac1{i^2}\);TVM 形 <b>PMT=P+Q/i、FV=−nQ/i</b>。</li>
+        <li>等比年金 = <b>调整利率 \(i'=\frac{i-k}{1+k}\) 下的级别年金</b>;符号选择题先跑 <b>0% 检验</b>。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-fm-l03-annuities.html">L03 年金</a>
+    <span class="arr">→</span>
+    <span class="here">L04 本章</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-fm-l05-additional-applications.html">L05 利率的其他应用</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#syllabus">🎯 考纲</a>
+  <a href="#cheat">核心</a>
+  <a href="#core-4abc">4abc 错拍年金</a>
+  <a href="#core-4dg">4d–g 连续与技巧</a>
+  <a href="#core-4hi">4hi 等差</a>
+  <a href="#core-4j">4j 等比</a>
+  <a href="#core-4klm">4klm 变额·回文·0%</a>
+  <a href="#insight">直觉拓展</a>
+</nav>
+
+<section id="syllabus">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">◎</span><div><span class="sec-tag tag-accent">Syllabus</span><h2 class="sec-title">考纲对标 · 年金 ②</h2></div></div>
+    <p class="sec-sub">SOA 2026 官方 syllabus 本章命中的 learning outcomes 逐条列出(★ = 高频重点)。五域权重与题数分配见 <a href="soa-exam-fm-examday.html">考务页 ↗</a>。</p>
+    <div class="card accent" style="padding:0;overflow:hidden">
+      <table class="map">
+        <tr><th style="width:32%">考纲域 · 权重(≈题数)</th><th>本章 learning outcomes(★=重点)</th></tr>
+        <tr><td><b>年金/非或有现金流 · 20–30% (≈6–9 题)</b></td><td><b>2a</b> 定义: 等差增/减 (arithmetic)、等比增/减 (geometric) 年金<br>★ <b>2b</b> <b>等差年金</b> 有限期 + 永续 \((Ia),(Da)\)<br>★ <b>2b</b> <b>等比年金</b> 有限期 + 永续<br><b>2b</b> 其他非平年金 / off-payment-period (付款期≠计息期)、m-thly 与连续付年金</td></tr>
+      </table>
+    </div>
+    <div class="note tip"><span class="ic">🎯</span><span class="t"><b>本章重点:</b> 年金域权重最大块 (20–30%) 主战场在此: 等差/等比/递延/变频 公式家族易混, 见 <a href="soa-exam-fm-e01-annuities-l03-l04.html">E01 串讲</a> 统一符号。</span></div>
+  </div>
+</section>
+
+<section id="cheat" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc t"><h4>错拍年金</h4>
+        <p><span class="fx-de" data-tip="推导:k 期合一期:等效利率合成;或每组先用 s_k 聚成一笔" tabindex="0">推</span>疏:\(j=(1+i)^k-1\) 或 \(a_{\overline{n}|}/s_{\overline{k}|}\)</p>
+        <p>密:\(a^{(m)}=\frac{1-v^n}{i^{(m)}}=\frac{i}{i^{(m)}}a\);系数=期内总付款</p></div>
+      <div class="cc"><h4>符号即公式</h4>
+        <p>PV 分子 1−vⁿ · AV 分子 (1+i)ⁿ−1</p>
+        <p>分母:a→i · ä→d · (m)→i^(m)/d^(m) · bar→δ</p></div>
+      <div class="cc t"><h4>等差(P&amp;Q)</h4>
+        <p>\(PV=Pa_{\overline{n}|}+Q\frac{a_{\overline{n}|}-nv^n}{i}\)</p>
+        <p>\((Ia)=\frac{\ddot a-nv^n}{i}\) · \((Da)=\frac{n-a}{i}\) · \((Is)=\frac{s_{\overline{n+1}|}-(n+1)}{i}\)</p>
+        <p>TVM:PMT=P+Q/i,FV=−nQ/i</p></div>
+      <div class="cc t"><h4>增额永续</h4>
+        <p>\((Ia)_\infty=\frac1i+\frac1{i^2}\) · P&amp;Q 版 \(\frac Pi+\frac Q{i^2}\)</p>
+        <p>先增后平:\(\ddot a_{\overline{n}|}/i\)</p></div>
+      <div class="cc"><h4>等比 / 连续</h4>
+        <p><span class="fx-de" data-tip="推导:公比 (1+k)v 的等比级数,分母 1-(1+k)v=(i-k)/(1+i)" tabindex="0">推</span>\(PV=\frac{1-(\frac{1+k}{1+i})^n}{i-k}\);\(i'=\frac{i-k}{1+k}\)</p>
+        <p>\(\bar a=\frac{1-v^n}{\delta}\) · \((\bar I\bar a)=\frac{\bar a-nv^n}{\delta}\)</p></div>
+      <div class="cc"><h4>回文 / 0%</h4>
+        <p>\(1..n..1:\ a_{\overline{n}|}\ddot a_{\overline{n}|}\);time 0 起 \((\ddot a)^2\)</p>
+        <p>0%:v=1、a=s=n、(Ia)=n(n+1)/2,和对不上即排除</p></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>付款疏于/密于计息期都能<b>双法</b>处理;m-thly 符号系数一眼验对(<b>÷m=单笔</b>,系数 = 一个计息期总付款)。</li>
+          <li>等差年金 <b>P&amp;Q</b> 通式 + TVM 直按;\((Ia)\)/\((Da)\)/增额永续闭式随手写。</li>
+          <li>等比年金换<b>调整利率 \(i'\)</b> 一键级别化;连续/变力年金列积分。</li>
+          <li>回文年金<b>乘积捷径</b> + <b>0% 检验</b>秒排符号选项。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <ol class="dim routine">
+          <li>130 题分布:4a–4c 错拍 38 题(疏 18 + 密 20)、4d–4g 11 题、<b>4h–4i 等差 48 题(最重:增 15 + 减 10 + 增额永续 23)</b>、4j 等比 22 题、4k 积分 7 题、4l 回文 4 题。</li>
+          <li>增额永续是单一最大题群——\(P/i+Q/i^2\) 反解 i 的二次方程套路必须滚瓜烂熟。</li>
+          <li>"triennial"=每 3 年(解答区 p.214)。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 11 / 全章 130)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>4ac.9</b></td><td>错拍年金(疏)fission:除以 s_k 反解利率再换每三年一笔</td><td style="white-space:nowrap"><button class="kxb" data-kx="4ac.9" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">off-payment 疏 fission 招牌题——由每两年/每三年折算的 a/s 比反推 i,§00 法二代表(SOA 5/90 #9)</td></tr>
+<tr class="kxd" data-kxq="4ac.9" style="display:none"><td colspan="4"><div class="kx-qtx">You are given: (i) the present value of a \( 6n \)-year annuity-immediate of 1 at the end of every year is 9.996; (ii) the present value of a \( 6n \)-year annuity-immediate of 1 at the end of every second year is 4.760; and (iii) the present value of a \( 6n \)-year annuity-immediate of 1 at the end of every third year is \( X \). Calculate \( X \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 2.87 \)</span><span class="kx-opt"><b>(B)</b> \( 3.02 \)</span><span class="kx-opt"><b>(C)</b> \( 3.17 \)</span><span class="kx-opt"><b>(D)</b> \( 3.32 \)</span><span class="kx-opt"><b>(E)</b> \( 4.17 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;疏付款 fission:每 k 期一笔 = a/s_k;用每两年值反解利率</td><td>\( \frac{a_{\overline{6n}|}}{s_{\overline{2}|}}=4.760\Rightarrow s_{\overline{2}|}=\frac{9.996}{4.760}=2.10 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;由 s_{2|}=2+i 得利率</td><td>\( 2+i=2.10\Rightarrow i=0.10 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;每三年一笔:除以 s_{3|}</td><td>\( X=\frac{a_{\overline{6n}|}}{s_{\overline{3}|}}=\frac{9.996}{3.31}=3.02 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4ac.38</b></td><td>错拍年金(密)m-thly 陷阱:m 由计息期内几笔定,非每年几笔</td><td style="white-space:nowrap"><button class="kxb" data-kx="4ac.38" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 m-thly 陷阱最直接代表——名义 3% 每 8 月复利(计息期=8月),2 月付一笔,先合成期利率(SOA SAMPLE/84 #13)</td></tr>
+<tr class="kxd" data-kxq="4ac.38" style="display:none"><td colspan="4"><div class="kx-qtx">A payment of $100 is made at the end of each two months for a period of six years. The nominal annual rate of interest is 3%, convertible every 8 months. Find the present value of this series of payments.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> $3,150</span><span class="kx-opt"><b>(B)</b> $3,210</span><span class="kx-opt"><b>(C)</b> $3,250</span><span class="kx-opt"><b>(D)</b> $3,290</span><span class="kx-opt"><b>(E)</b> $3,330</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;计息期=8 个月(名义 3%÷1.5=每 8 月 2%),先合成年利率</td><td>\( (1+i)=1.02^{1.5} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;化每 2 个月的期利率 j(每年 6 个 2 月期)</td><td>\( (1+j)^6=1.02^{1.5}\Rightarrow j=1.02^{0.25}-1=0.496293\% \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;36 笔 2 月付款按期利率贴现</td><td>\( PV=100\,a_{\overline{36}|j}=3289.28 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4dg.6</b></td><td>连续年金符号即公式 + 0% 检验(∫ā_t dt 反求 ā_n)</td><td style="white-space:nowrap"><button class="kxb" data-kx="4dg.6" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『符号即公式』+『0% 检验』双料代表:代入 ā_t=(1−v^t)/δ 积分,δ→0 排除选项(SOA 11/87 #1)</td></tr>
+<tr class="kxd" data-kxq="4dg.6" style="display:none"><td colspan="4"><div class="kx-qtx">You are given \( \int_0^n \bar a_{\overline{t}|}\,dt = 100 \). Calculate \( \bar a_{\overline{n}|} \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 100n\delta \)</span><span class="kx-opt"><b>(B)</b> \( n\delta \)</span><span class="kx-opt"><b>(C)</b> \( n-100\delta \)</span><span class="kx-opt"><b>(D)</b> \( 100-n\delta \)</span><span class="kx-opt"><b>(E)</b> \( n-\frac{\delta}{100} \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;代入连续年金符号 ā_t=(1−v^t)/δ 积分</td><td>\( \int_0^n \bar a_{\overline{t}|}dt=\int_0^n\frac{1-v^t}{\delta}dt=\frac{n-\bar a_{\overline{n}|}}{\delta} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;令积分=100 解出</td><td>\( \frac{n-\bar a_{\overline{n}|}}{\delta}=100\Rightarrow \bar a_{\overline{n}|}=n-100\delta \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;0% 检验:δ→0 时 ā_n→n(排除 A/B/D)</td><td>\( \delta\to 0:\ \bar a_{\overline{n}|}=n\ \checkmark \)</td><td class="xr"><span class="here">本章</span></td></tr></table></div></td></tr>
+<tr><td><b>4dg.3</b></td><td>变力利率 s̄ 陷阱:累积走 a(n)/a(t),非 a(n−t)</td><td style="white-space:nowrap"><button class="kxb" data-kx="4dg.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 4g 变利率累积陷阱最干净代表——先求 a(t)=1+t,逐笔按 a(5)/a(t) 加(SOA 5/90 #5)</td></tr>
+<tr class="kxd" data-kxq="4dg.3" style="display:none"><td colspan="4"><div class="kx-qtx">You are given \( \delta_t = \frac{1}{1+t} \) for \( 0 \le t \le 5 \). Calculate \( s_{\overline{5}|} \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 7.5 \)</span><span class="kx-opt"><b>(B)</b> \( 8.7 \)</span><span class="kx-opt"><b>(C)</b> \( 10.5 \)</span><span class="kx-opt"><b>(D)</b> \( 13.7 \)</span><span class="kx-opt"><b>(E)</b> \( 16.0 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;变力→先求累积函数 a(t)</td><td>\( a(t)=e^{\int_0^t \frac{dr}{1+r}}=e^{\ln(1+t)}=1+t \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;非复利:t 时 1 元累积到 5 = a(5)/a(t),逐笔相加(勿用 a(5−t))</td><td>\( s_{\overline{5}|}=a(5)\sum_{t=1}^{5}\frac{1}{a(t)}=6\left(\tfrac12+\tfrac13+\tfrac14+\tfrac15+\tfrac16\right) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求值</td><td>\( =6(1.45)=8.7 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4dg.9</b></td><td>双点约掉(2n 比值技巧)套连续年金 + 解 δ</td><td style="white-space:nowrap"><button class="kxb" data-kx="4dg.9" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『双点约掉』对连续年金的代表:ā_2n=1.5ā_n 化 e^{−10δ} 的二次方程,L03 的 2n 技巧照用(SOA SAMPLE/84 #138)</td></tr>
+<tr class="kxd" data-kxq="4dg.9" style="display:none"><td colspan="4"><div class="kx-qtx">For a given interest rate \( i &gt; 0 \), the present value of a 20-year continuous annuity of one dollar per year is equal to 1.5 times the present value of a 10-year continuous annuity of one dollar per year. Calculate the accumulated value of a 7-year continuous annuity of one dollar per year.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 5.36 \)</span><span class="kx-opt"><b>(B)</b> \( 5.55 \)</span><span class="kx-opt"><b>(C)</b> \( 8.70 \)</span><span class="kx-opt"><b>(D)</b> \( 9.01 \)</span><span class="kx-opt"><b>(E)</b> \( 9.33 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;列比例,分子分母消 δ,得 e^{−10δ} 的二次方程</td><td>\( \frac{1-e^{-20\delta}}{\delta}=1.5\cdot\frac{1-e^{-10\delta}}{\delta}\Rightarrow e^{-20\delta}-1.5e^{-10\delta}+0.5=0 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;令 X=e^{−10δ} 解二次,取有效根</td><td>\( X=0.5\Rightarrow \delta=\frac{\ln 0.5}{-10}=0.069315 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;代入连续年金累积值公式</td><td>\( \bar s_{\overline{7}|}=\frac{e^{7\delta}-1}{\delta}=9.01 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4hi.8</b></td><td>等差增额 P&Q 通式(首付 100,年增 10)</td><td style="white-space:nowrap"><button class="kxb" data-kx="4hi.8" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 等差增额(Ia)/P&Q 最干净入门代表——一年前起点直接套 P&Q 通式(CAS 5/90 #14)</td></tr>
+<tr class="kxd" data-kxq="4hi.8" style="display:none"><td colspan="4"><div class="kx-qtx">An annuity provides for 10 annual payments. The first of these payments is $100 and each subsequent payment is 10 more than the one preceding it. Find the present value to the nearest $50 of this annuity at the time one year prior to the first payment if \( i = 10\% \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> $800</span><span class="kx-opt"><b>(B)</b> $850</span><span class="kx-opt"><b>(C)</b> $900</span><span class="kx-opt"><b>(D)</b> $950</span><span class="kx-opt"><b>(E)</b> $1,000</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;认题型:P&amp;Q 增额,P=100、Q=10、n=10</td><td>\( PV=P\,a_{\overline{10}|}+Q\,\frac{a_{\overline{10}|}-10v^{10}}{i} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入 i=10% 的年金因子</td><td>\( =100(6.1446)+10\cdot\frac{6.1446-10(0.3855)}{0.10} \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;求值(最近 $50 → 850)</td><td>\( =614.46+228.91=843.37\approx 850 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4hi.20</b></td><td>等差减额(Da):增额年金与减额年金 PV 相等解 X</td><td style="white-space:nowrap"><button class="kxb" data-kx="4hi.20" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 等差减额(Da)代表——(Ia) 与 (Da) 两闭式同题对撞,减额侧 (X/10)(Da) 是核心(SOA 5/92 #6)</td></tr>
+<tr class="kxd" data-kxq="4hi.20" style="display:none"><td colspan="4"><div class="kx-qtx">Jane receives a 10-year increasing annuity-immediate paying 100 the first year and increasing by 100 each year thereafter. Mary receives a 10-year decreasing annuity-immediate paying \( X \) the first year and decreasing by \( X/10 \) each year thereafter. At an effective annual interest rate of 5%, both annuities have the same present value. Calculate \( X \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 860 \)</span><span class="kx-opt"><b>(B)</b> \( 864 \)</span><span class="kx-opt"><b>(C)</b> \( 868 \)</span><span class="kx-opt"><b>(D)</b> \( 872 \)</span><span class="kx-opt"><b>(E)</b> \( 876 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;两年金 PV 相等:增额=100(Ia),减额=(X/10)(Da)</td><td>\( 100(Ia)_{\overline{10}|}=\frac{X}{10}(Da)_{\overline{10}|} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入两闭式(i=5%)</td><td>\( 100\cdot\frac{\ddot a_{\overline{10}|}-10v^{10}}{0.05}=\frac{X}{10}\cdot\frac{10-a_{\overline{10}|}}{0.05} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求值解 X</td><td>\( 3937.38=\frac{X}{10}(45.5653)\Rightarrow X=864.12 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4hi.43</b></td><td>增额永续反解 i(二次方程),每 2 年一档</td><td style="white-space:nowrap"><button class="kxb" data-kx="4hi.43" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 点名单一最大题群『增额永续 P/i+Q/i² 反解 i 的二次方程』的招牌题(每 2 年一档更毒)(SOA 5/90 #6)</td></tr>
+<tr class="kxd" data-kxq="4hi.43" style="display:none"><td colspan="4"><div class="kx-qtx">Barbara purchases an increasing perpetuity with payments occurring at the end of every 2 years. The first payment is 1, the second one is 2, the third one is 3, etc. The price of the perpetuity is 110. Calculate the annual effective interest rate.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 4.50\% \)</span><span class="kx-opt"><b>(B)</b> \( 4.62\% \)</span><span class="kx-opt"><b>(C)</b> \( 4.75\% \)</span><span class="kx-opt"><b>(D)</b> \( 4.88\% \)</span><span class="kx-opt"><b>(E)</b> \( 5.00\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;每 2 年一档→用 2 年期利率 j 的增额永续闭式</td><td>\( PV=(Ia)_{\overline{\infty}|j}=\frac{1}{j}+\frac{1}{j^2}=110 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;整理成 j 的二次方程,因式分解取正根</td><td>\( 110j^2-j-1=0\Rightarrow (11j+1)(10j-1)=0\Rightarrow j=0.1 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;2 年期利率还原年利率</td><td>\( i=(1+j)^{1/2}-1=1.1^{0.5}-1=4.88\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4j.19</b></td><td>等比年金换调整利率 i′ 一键级别化</td><td style="white-space:nowrap"><button class="kxb" data-kx="4j.19" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 等比年金『换调整利率 i′=(i−k)/(1+k) 级别化』最直接代表——1.0712/1.03=1.04 一步到位(CAS 5/86 #10)</td></tr>
+<tr class="kxd" data-kxq="4j.19" style="display:none"><td colspan="4"><div class="kx-qtx">Smith wishes to buy an annuity that will provide 15 annual payments. The first payment of $200 will be paid one year from today. The payments increase such that each payment is 3% greater than the preceding payment. Given a 7.12% effective annual interest rate, what is the price of Smith&#x27;s annuity?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> Less than $2,050</span><span class="kx-opt"><b>(B)</b> At least $2,050 but less than $2,100</span><span class="kx-opt"><b>(C)</b> At least $2,100 but less than $2,150</span><span class="kx-opt"><b>(D)</b> At least $2,150 but less than $2,200</span><span class="kx-opt"><b>(E)</b> At least $2,200</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;等比→换调整利率 i′=(1+i)/(1+k)−1</td><td>\( 1+i'=\frac{1.0712}{1.03}=1.04\Rightarrow i'=4\% \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;级别化:提出首付/(1+k),用 i′ 的级别年金</td><td>\( PV=\frac{200}{1.03}\,a_{\overline{15}|i'} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求值(i′=4%)</td><td>\( =\frac{200}{1.03}(11.1184)=2159 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4k.4</b></td><td>连续变额年金(金水机)列积分 + 分部积分</td><td style="white-space:nowrap"><button class="kxb" data-kx="4k.4" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 连续变额年金列积分最干净符号代表——付款率 t、δ=1/n,∫t·v^t dt 分部积出闭式(SOA 5/87 #11)</td></tr>
+<tr class="kxd" data-kxq="4k.4" style="display:none"><td colspan="4"><div class="kx-qtx">A continuously increasing annuity with a term of \( n \) years has payments payable at an annual rate \( t \) at time \( t \). The force of interest is equal to \( \frac{1}{n} \). Calculate the present value of this annuity.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( n^2(1-e^{-1/n}) \)</span><span class="kx-opt"><b>(B)</b> \( n^2(1-2e^{-1/n}) \)</span><span class="kx-opt"><b>(C)</b> \( n^2(1-e^{-1}) \)</span><span class="kx-opt"><b>(D)</b> \( n^2(1-2e^{-1}) \)</span><span class="kx-opt"><b>(E)</b> \( n^2(1-e^{-n}) \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;金水机:PV=∫₀ⁿ 付款率×折现,δ=1/n</td><td>\( PV=\int_0^n t\,e^{-t/n}\,dt \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;分部积分 u=t,dv=e^{−t/n}dt,v=−n·e^{−t/n}</td><td>\( =\left[-nt\,e^{-t/n}\right]_0^n+\int_0^n n\,e^{-t/n}dt \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求值收口</td><td>\( =-n^2e^{-1}-n^2(e^{-1}-1)=n^2(1-2e^{-1}) \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>4l.1</b></td><td>回文年金乘积捷径 PV=(a_n)²</td><td style="white-space:nowrap"><button class="kxb" data-kx="4l.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 回文年金乘积捷径最干净代表——由 (a_6)²=25 定 a_6,再 a_6·ä_6 秒得峰值重复的 12 年回文(SOA 11/89 #8)</td></tr>
+<tr class="kxd" data-kxq="4l.1" style="display:none"><td colspan="4"><div class="kx-qtx">An 11-year annuity has a series of payments 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, with the first payment made at the end of the second year. The present value of this annuity is 25 at interest rate \( i \). A 12-year annuity has a series of payments 1, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2, 1, with the first payment made at the end of the first year. Calculate the present value of the 12-year annuity at interest rate \( i \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 29.5 \)</span><span class="kx-opt"><b>(B)</b> \( 30.0 \)</span><span class="kx-opt"><b>(C)</b> \( 30.5 \)</span><span class="kx-opt"><b>(D)</b> \( 31.0 \)</span><span class="kx-opt"><b>(E)</b> \( 31.5 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;回文乘积捷径:11 年回文(首付在 t=2)PV=(a_6)²</td><td>\( (a_{\overline{6}|})^2=25\Rightarrow a_{\overline{6}|}=5 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;12 年回文(峰值 6 重复)= a_6·ä_6,或 = 上题加一份 a_6</td><td>\( PV=a_{\overline{6}|}\,\ddot a_{\overline{6}|}=a_{\overline{6}|}(1+a_{\overline{6}|}) \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求值收口</td><td>\( =5\times 6=30 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 99(同题型二刷备用)· 跳过 20(离题/重复);全量评级存 _Meta/tools/data/exam-fm-key-exercises.json</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-4abc">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">§4a–4c · 课本 p.151–174</span><h2 class="sec-title">错拍年金:两法 + m-thly 陷阱</h2></div></div>
+    <p class="sec-sub">付款每 5 年一笔(疏)或每月一笔(密),计息却按年——把钟表调到同拍,或改造付款本身。</p>
+
+    <div class="card accent">
+      <h3>法一:换等效利率(数值题首选) <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.151–153</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Equivalent Rate</span>
+        $$j=(1+i)^k-1\ (\text{疏})\qquad j=(1+i)^{1/m}-1\ (\text{密})\ \Rightarrow\ \text{当普通年金 TVM 直按}$$</div>
+      <p class="dim">Ex 4.1:每 5 年末付 1 共 40 年(5%):\(j=1.05^5-1=27.6282\%\),\(PV=a_{\overline{8}|j}=3.1054\)。名义利率先化期利率再合成(Ex 4.2 的 4% 季复利坑)。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>法二:Fission / Fusion(符号题必会) <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.153–158</div>
+      <p class="lede">疏 → <b>裂变</b>:每 k 期一笔 1 拆成每期 \(1/s_{\overline{k}|}\);密 → <b>聚变</b>:一期内 m 笔 1/m 聚成期末 \(i/i^{(m)}\)。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Fission / m-thly 符号</span>
+        $$PV_{\text{每 }k\text{ 期末付 }1}=\frac{a_{\overline{n}|}}{s_{\overline{k}|}}\qquad a^{(m)}_{\overline{n}|}=\frac{1-v^n}{i^{(m)}}=\frac{i}{i^{(m)}}a_{\overline{n}|}\qquad \ddot a^{(m)}_{\overline{n}|}=\frac{1-v^n}{d^{(m)}}\qquad a^{(m)}_{\overline{\infty}|}=\frac{1}{i^{(m)}}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>大笔拆小笔,小笔聚大笔,现值不动</b> — 拆:小笔滚 k 期恰凑回原笔;聚:早付的钱多吃利息,所以期末等价笔略大(i/i^(m) 大于 1)。</span></div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>m-thly 陷阱(4c,p.158):</b>\(a^{(m)}\) 前系数 = <b>一个计息期内付款总和</b>。月付 $100 十年(5% 有效)是 \(1{,}200a^{(12)}_{\overline{10}|}\) 不是 \(100a^{(12)}\)。Ex 4.14 更毒:季付 $18,000 + 名义 6% <b>半年</b>复利 ⇒ 计息期=半年、期内 2 笔 ⇒ \(36{,}000\,a^{(2)}_{\overline{16}|}\) at 3%——<b>m 由"计息期内几笔"定,不由"每年几笔"定</b>。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="core-4dg">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">§4d–4g · 课本 p.175–184</span><h2 class="sec-title">连续年金与三个应试技巧</h2></div></div>
+    <p class="sec-sub">m→∞ 付款成水流;顺手拿走三件武器:双点约掉、符号即公式、变利率 s̄ 陷阱。</p>
+
+    <div class="card accent">
+      <h3>连续年金 + 符号即公式 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.175–177</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Continuous Annuity + 分母表</span>
+        $$\bar a_{\overline{n}|}=\frac{1-v^n}{\delta}=\int_0^n v^t\,dt=\frac{i}{\delta}a_{\overline{n}|}\qquad \text{分母: } a\to i,\ \ddot a\to d,\ {}^{(m)}\to i^{(m)}/d^{(m)},\ \bar{\ }\to\delta$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>看见双点想 d,看见 bar 想 δ</b> — PV 分子永远 1−vⁿ,AV 分子永远 (1+i)ⁿ−1,符号本身就是公式(4f Memory Alert)。</span></div>
+      <p class="dim"><b>双点约掉(4e)</b>:同一利率下 \(\frac{\ddot a_{\overline{n}|}}{\ddot a_{\overline{p}|}}=\frac{a^{(m)}_{\overline{n}|}}{a^{(m)}_{\overline{p}|}}=\frac{1-v^n}{1-v^p}\)——L03 的 2n 技巧对 m-thly 照用(Ex 4.16:\(a^{(12)}\) 版 vⁿ=0.5 → i^(12)=5% → i=5.1162%)。<b>利率不同则全失效</b>。</p>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>变利率 s̄ 陷阱(4g,呼应 1g):</b>非复利世界 t 时存 1 到 n 累积 \(\frac{a(n)}{a(t)}\),<b>不是</b> a(n−t)。Ex 4.18 诱答 6.20,正解 7.34。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="core-4hi">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">§4h–4i · 课本 p.185–215 · 本章最重考区(48 题)</span><h2 class="sec-title">等差年金:P&amp;Q 一族</h2></div></div>
+    <p class="sec-sub">付款 P, P+Q, P+2Q, …。一条通式生一族;计算器有专用变形,考场直按。</p>
+
+    <div class="card accent">
+      <h3>P&amp;Q 通式与增减额闭式 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.185–190</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>P&amp;Q + 三件套</span>
+        $$PV=P\,a_{\overline{n}|}+Q\,\frac{a_{\overline{n}|}-nv^n}{i}\qquad (Ia)_{\overline{n}|}=\frac{\ddot a_{\overline{n}|}-nv^n}{i}\qquad (Da)_{\overline{n}|}=\frac{n-a_{\overline{n}|}}{i}\qquad (Is)_{\overline{n}|}=\frac{s_{\overline{n+1}|}-(n+1)}{i}$$</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>增额永续 + 先增后平</span>
+        $$(Ia)_{\overline{\infty}|}=\frac{1}{id}=\frac1i+\frac1{i^2}\qquad PV_{P\&Q\ \text{永续}}=\frac{P}{i}+\frac{Q}{i^2}\qquad PV_{1,2,\dots,n,n,n,\dots}=\frac{\ddot a_{\overline{n}|}}{i}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>增额年金 = n 个错峰起跑的级别年金叠罗汉</b> — 所以分子藏着 ä;增额永续 = 平铺永续(1/i)+ "永续的永续"(1/i²)。</span></div>
+      <div class="note tip"><span class="ic">🖩</span><span class="t"><b>Calculator Notes #6(p.191–192)TVM 直按:</b>变形 \(PV=(P+\frac{Q}{i})a_{\overline{n}|}-\frac{nQ}{i}v^n\) ⇒ <b>PMT = P+Q/i,FV = −nQ/i</b>。例:1..15 @7.5%:<span class="kbd">15 N 7.5 I/Y 14.333 PMT -200 FV CPT PV</span> → 58.93。(Is):CPT FV 后 −(n+1) 再 ÷i。</span></div>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 4.23</span><span class="src" style="margin:0">课本 p.189 · 增额永续反解 i</span></div>
+        <p class="q">首付 3、年增 2 的永续年金 PV=406.81。求 i。</p>
+        <p>\(\frac3i+\frac2{i^2}=406.81\Rightarrow 406.81i^2-3i-2=0\)。</p>
+        <span class="ans">i = 7.39%</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 认题型:P&amp;Q 永续,P=3、Q=2</td><td>\(PV=\frac{P}{i}+\frac{Q}{i^2}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>② 代入并整理成 i 的二次方程</td><td>\(\frac3i+\frac2{i^2}=406.81\ \Rightarrow\ 406.81i^2-3i-2=0\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>③ 求根公式取正根(负根不合利率题意,舍)</td><td>\(i=\frac{3+\sqrt{9+8(406.81)}}{2(406.81)}=7.39\%\)</td><td class="xr"><a href="soa-exam-fm-l02-practical-applications.html">L02 未知利率 ↗</a></td></tr>
+        </table></div>
+      </div>
+      <details class="more"><summary>展开:4i 的 m-thly 增额符号(谁带 m,谁的位置换)</summary>
+        <p class="dim">\((Ia)^{(m)}\):年率逐<b>年</b>增、付款 m-thly ⇒ 只换分母 \(i^{(m)}\);\((I^{(m)}a)^{(m)}\):年率每 <b>1/m 年</b>增 1/m ⇒ 分子也换 \(\ddot a^{(m)}\);\((\bar I\bar a)_{\overline{n}|}=\frac{\bar a_{\overline{n}|}-nv^n}{\delta}\)。工资类比:年薪 10 万季付=每季 2.5 万,"年付款率"是钥匙(p.193–194)。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="core-4j">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">§4j · 课本 p.216–226</span><h2 class="sec-title">等比年金:调整利率一键级别化</h2></div></div>
+    <p class="sec-sub">付款逐年 ×(1+k)(典型:通胀挂钩 COLA)。付款在涨、折现在压,对冲后剩净利率 i′——世界重新变平。</p>
+
+    <div class="card accent">
+      <h3>通式 + Trick <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.216–217</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Geometric Annuity</span>
+        $$PV=\frac{1-\bigl(\frac{1+k}{1+i}\bigr)^n}{i-k}\qquad i'=\frac{i-k}{1+k}\ \Rightarrow\ PV=(\text{首付})\,v\,\ddot a_{\overline{n}|i'}$$</div>
+      <p class="dim">Ex 4.26/4.27 双解对照:15 年、首付 1,000、×1.03、i=5.25% → 12,304.56(通式与调整率法同值)。递减几何(k 负,Ex 4.28:每年降到 90%)直接套。与 L05 通胀年金同源:k=通胀率时 i′ 就是实际利率。</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-4klm">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-accent">§4k–4m · 课本 p.227–241</span><h2 class="sec-title">金水机、回文年金与 0% 检验</h2></div></div>
+    <p class="sec-sub">收尾三件:连续变额(积分)、回文金字塔(乘积捷径)、考场锦囊(0% 排除法)。</p>
+
+    <div class="card accent">
+      <h3>连续变额年金(金水机) <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.227–230</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>微元法</span>
+        $$(\bar I\bar a)_{\overline{n}|}=\int_0^n t\,v^t dt=\frac{\bar a_{\overline{n}|}-nv^n}{\delta}\qquad PV=\int_0^n f(t)\,e^{-\int_0^t\delta_r dr}dt\qquad AV=\int_0^n f(t)\,e^{\int_t^n\delta_r dr}dt$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>水龙头刻度 = 年流速</b> — PV 是每滴水按落地时间打折的总量;AV 的指数从付款时刻积到期末(\(\int_t^n\)),别写成 \(\int_0^n\)。</span></div>
+    </div>
+
+    <div class="card accent">
+      <h3>回文年金 + 0% 检验 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.235–241</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Palindromic + 0% Test</span>
+        $$PV_{1..n..1}=a_{\overline{n}|}\cdot\ddot a_{\overline{n}|}\qquad \text{time 0 起跑}=(\ddot a_{\overline{n}|})^2\qquad \text{0\%: } v=1,\ a=s=n,\ (Ia)=\tfrac{n(n+1)}{2}$$</div>
+      <p class="dim">回文直觉:金字塔切成一摞错峰起跑的同款级别年金 ⇒ 乘积。<b>0% 检验(4m,考场锦囊)</b>:符号选择题把 i=0 代入——一切退化成付款算术和,选项对不上直接排除(Ex 4.36 五选项秒杀三个)。必要非充分;特定利率或分母含 i/d/δ 时失效。</p>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+    <div class="card">
+      <h3>💡 直觉例子</h3>
+      <p><b>全章一个母题:把不标准的付款流变标准。</b>错拍 → 调钟表(等效利率)或改付款(fission/fusion);等差 → 拆成叠罗汉;等比 → 换净利率;连续 → 积分。每个"新符号"都只是"变形动作 + L03 老符号"。</p>
+      <p class="dim"><b>0% 世界没有利息:</b>钱不折现,一切价值 = 小学算术加总。选项连加法都对不上,必错——这就是 0% 检验的全部原理。</p>
+    </div>
+    <div class="card">
+      <h3>📚 扩展阅读(精选 2 个)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Actuarial_notation">Actuarial Notation — Wikipedia</a></div><div class="z">精算符号体系总表——本章符号大爆炸后,来这里看全景图(含 FAM 的寿险符号预告)。</div><div class="u">en.wikipedia.org/wiki/Actuarial_notation</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Cost-of-living_adjustment">Cost-of-Living Adjustment — Wikipedia</a></div><div class="z">等比年金的现实原型:社保 COLA 怎么按 CPI 调——和 L05 通胀一节连成线。</div><div class="u">en.wikipedia.org/wiki/Cost-of-living_adjustment</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
+<footer>
+  <div class="wrap">
+    <p><b>Exam FM 导学 · Chapter 4</b> · 第4章 Complex Annuities 复杂年金</p>
+    <p>公式与例题整理自《ASM Exam FM Study Manual, 17th ed.》Chapter 4(p.151–241,页码已标注,细节以课本为准;扫描件缺书页 195–196,4i 尾部一两页,公式经 p.194 表与 p.197 Summary 核对无缺)。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('中文') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '👁'; btn.title = '遮住/显示中文，自测用';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '🙈' : '👁';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
+</body>
+</html>

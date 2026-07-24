@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<!--
+  SOA Exam FM 导学页 · L08 Duration, Convexity, and Immunization
+  源: ASM Exam FM Study Manual 17th ed, Chapter 8 (p.375-414)
+  管线见 _Meta/process/soa-fm-导学页-sop.md
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · L08 导学 · 久期、凸性与免疫</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#b0487a; --accent-deep:#722f4f; --accent-soft:#f7edf2; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(114,47,79,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>L08 · 久期、凸性与免疫</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">2026-07-08 · 周三 · 导学已备(7/26 排学)</p>
+    <h1>第8章 · <em>Duration, Convexity, and Immunization 久期、凸性与免疫</em></h1>
+    <p class="lead">利率一动,固收资产的现值就动——动多少?久期量一阶(斜率),凸性量二阶(弯度),免疫用这两把尺给资产负债配平。教材原话:近年考题在本章大量出题,考前必须彻底复习。三层主线:<b>度量 → 近似 → 防护</b>。对照课本 Chapter 8 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch8 <b>新大纲高频章</b></span>
+      <span class="pill">课本 <b>p.375–414</b>(理论 ≈ 22 页)</span>
+      <span class="pill">习题 <b>45 题</b>(24+21,ASM 原创)</span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 4 句话</p>
+      <ol>
+        <li>D<sub>mac</sub> = 现金流的 <b>PV 重心时刻</b>;零息债久期 = 期限;<b>平价附息债 = \(\ddot a_{\overline{n}|}\)</b>。</li>
+        <li>\(D_{mod}=vD_{mac}\);两个一阶近似里 <b>Macaulay 版更准</b>:\(P(i)\approx P(i_0)\bigl(\frac{1+i_0}{1+i}\bigr)^{D_{mac}}\)。</li>
+        <li><b>考试默认:duration = Macaulay,convexity = modified</b>——两个默认方向相反(p.397 术语表)。</li>
+        <li>Redington 三条件:PV 等、久期等、<b>资产凸性更大</b>(资产现金流跨骑负债两侧);full immunization = 前后各一笔,防任意幅度。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-fm-l07-bonds.html">L07 债券</a>
+    <span class="arr">→</span>
+    <span class="here">L08 本章</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-fm-l09-spot-forward-rates.html">L09 即期与远期利率</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#syllabus">🎯 考纲</a>
+  <a href="#cheat">核心</a>
+  <a href="#core-dur">8a–8f 久期</a>
+  <a href="#core-conv">8g 凸性</a>
+  <a href="#core-imm">8h–8k 免疫</a>
+  <a href="#insight">直觉拓展</a>
+</nav>
+
+<section id="syllabus">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">◎</span><div><span class="sec-tag tag-accent">Syllabus</span><h2 class="sec-title">考纲对标 · 组合与资产负债管理 ⑤</h2></div></div>
+    <p class="sec-sub">SOA 2026 官方 syllabus 本章命中的 learning outcomes 逐条列出(★ = 高频重点)。五域权重与题数分配见 <a href="soa-exam-fm-examday.html">考务页 ↗</a>。</p>
+    <div class="card accent" style="padding:0;overflow:hidden">
+      <table class="map">
+        <tr><th style="width:32%">考纲域 · 权重(≈题数)</th><th>本章 learning outcomes(★=重点)</th></tr>
+        <tr><td><b>组合与资产负债管理 · 20–30% (≈6–9 题)</b></td><td><b>5a</b> 定义: Macaulay & modified 久期、凸性 convexity、免疫 (full & Redington)、cashflow / duration matching、portfolio、current value<br>★ <b>5b</b> 一组现金流的久期/凸性; <b>Macaulay ↔ modified 互化</b><br>★ <b>5b</b> 利率变动下 <b>ΔPV 一阶近似</b> (基于 modified / 基于 Macaulay)、凸性二阶修正<br>★ <b>5c</b> <b>Redington / 完全免疫</b> 构建组合; 精确现金流匹配 exact matching</td></tr>
+      </table>
+    </div>
+    <div class="note tip"><span class="ic">🎯</span><span class="t"><b>本章重点:</b> Mac/mod 久期互化 + ΔPV 一阶近似 + Redington 三条件 (PV 相等、久期相等、资产凸性≥负债) 是必拿分; 大纲<b>唯一指定必读</b> Study Note <b>FM-24-17</b> §1–4 即本章内容。</span></div>
+  </div>
+</section>
+
+<section id="cheat" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc t"><h4>久期</h4>
+        <p><span class="fx-de" data-tip="推导:对 P(i)=Σv^t A_t 求导:-P'/P=Σt·v^{t+1}A_t/P=v·D_mac" tabindex="0">推</span>\(D_{mac}=\frac{\sum t v^t A_t}{P}\) · \(D_{mod}=vD_{mac}\)</p>
+        <p>零息=n · 永续=\(\frac{1+i}{i}\) · 平价债=\(\ddot a_{\overline{n}|}\) · 增长股=\(\frac{1+i}{i-g}\)</p></div>
+      <div class="cc"><h4>一阶近似</h4>
+        <p><span class="fx-de" data-tip="推导:Taylor 一阶 P≈P₀+P'Δi;凸性>0 使真值恒在切线上方,故低估" tabindex="0">推</span>修正:\(P\approx P_0[1-\Delta i\,D_{mod}]\)(恒低估)</p>
+        <p>Macaulay:\(P\approx P_0(\frac{1+i_0}{1+i})^{D_{mac}}\)(更准)</p></div>
+      <div class="cc"><h4>组合与时间</h4>
+        <p>组合久期 = 价格加权平均</p>
+        <p>随时间锯齿下降,付息瞬间跳升</p></div>
+      <div class="cc t"><h4>凸性</h4>
+        <p>\(C_{mod}=\frac{\sum t(t+1)v^{t+2}A_t}{P}\) · \(C_{mac}=\frac{\sum t^2v^tA_t}{P}\)</p>
+        <p>\(C_{mod}=\frac{C_{mac}+D_{mac}}{(1+i)^2}\)</p></div>
+      <div class="cc t"><h4>Redington</h4>
+        <p>\(P_A=P_L\) · \(P'_A=P'_L\) · \(P''_A\gt P''_L\)</p>
+        <p>= 盈余在 i₀ 相对极小;第三条件 ⇔ t² 加权比较</p></div>
+      <div class="cc"><h4>Full / Dedication</h4>
+        <p>Full:PV 等+久期等+前后各一笔(防任意幅度)</p>
+        <p>Dedication:\(A_t=L_t\),最远期倒推;需 rebalance</p></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>任给现金流算 D<sub>mac</sub>/D<sub>mod</sub>/C<sub>mac</sub>/C<sub>mod</sub>;五种标准资产的久期<b>闭式</b>随手写。</li>
+          <li>用<b>两个一阶近似</b>估新价格,并说出谁更准、误差方向(修正版恒低估)。</li>
+          <li>Redington 三条件列联立解资产面值;判断第三条件成败(<b>跨骑 vs 夹心</b>)。</li>
+          <li>full immunization 与 dedication(精确匹配,从最远期倒推)两套配平法。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <p class="dim" style="margin-top:6px">45 题 ASM 原创(教材注:近年真题高频区),四类:</p>
+        <ol class="dim routine">
+          <li>久期计算与闭式(五资产表 + 平价债 ä 陷阱)。</li>
+          <li>一阶近似估价(两版对比、误差方向)。</li>
+          <li>Redington 联立解面值(Ex 8.19 模板,考试默认第三条件可满足——解答区 p.411 点名)。</li>
+          <li>dedication 倒推表(从最远期开始)。注意 Q10 混入 spot/forward,做完 L09 回头再看。</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 12 / 全章 45)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>8.2</b></td><td>附息债 modified duration 计算(PV 加权分子÷价格再 ÷(1+i))</td><td style="white-space:nowrap"><button class="kxb" data-kx="8.2" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『任给现金流算 D_mod』最干净入门:4 年 7% 债 6% 定价,机械算分子/分母/换算三步</td></tr>
+<tr class="kxd" data-kxq="8.2" style="display:none"><td colspan="4"><div class="kx-qtx">A $100 par value bond with 7% annual coupons and maturing at par in 4 years sells at a price to yield 6%. Determine the modified duration of the bond.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 3.43</span><span class="kx-opt"><b>(B)</b> 3.46</span><span class="kx-opt"><b>(C)</b> 3.63</span><span class="kx-opt"><b>(D)</b> 3.67</span><span class="kx-opt"><b>(E)</b> 3.72</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;算 Macaulay 分子(PV 加权时间)</td><td>\( \sum t v^t A_t = (1)(7)v+(2)(7)v^2+(3)(7)v^3+(4)(107)v^4 = 375.7118 \) at 6%</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;除以价格得 D_mac</td><td>\( D_{mac}=\dfrac{375.7118}{103.4651}=3.6329 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;换算 modified</td><td>\( D_{mod}=vD_{mac}=\dfrac{3.6329}{1.06}=3.43 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8.3</b></td><td>平价债 ä 陷阱:D_mac=ä_n、D_mod=vä_n=a_n</td><td style="white-space:nowrap"><button class="kxb" data-kx="8.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 点名『平价债 ä 陷阱』——认出 sells at par 后直接调 a_n 捷径,不必逐项加权</td></tr>
+<tr class="kxd" data-kxq="8.3" style="display:none"><td colspan="4"><div class="kx-qtx">A bond with 5% annual coupons matures at par in 2 years. The bond sells at par. Determine the modified duration of the bond.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1.859</span><span class="kx-opt"><b>(B)</b> 1.881</span><span class="kx-opt"><b>(C)</b> 1.928</span><span class="kx-opt"><b>(D)</b> 1.952</span><span class="kx-opt"><b>(E)</b> 1.997</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;平价 → 收益率=票率 5%,Macaulay = ä_n</td><td>\( D_{mac}=\ddot a_{\overline{2}|,5\%}=1.9524 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;平价债 modified 捷径 = a_n</td><td>\( D_{mod}=v\ddot a_{\overline{2}|}=a_{\overline{2}|,5\%} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;求值</td><td>\( a_{\overline{2}|,5\%}=1.859 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8.8</b></td><td>永续 immediate 久期闭式 (1+i)/i 反解 i</td><td style="white-space:nowrap"><button class="kxb" data-kx="8.8" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『五种标准资产久期闭式随手写』永续代表:D=(1+i)/i,反向由久期解利率</td></tr>
+<tr class="kxd" data-kxq="8.8" style="display:none"><td colspan="4"><div class="kx-qtx">A perpetuity-immediate with level payments has a duration of 13.5 years at an effective rate of interest of i. Determine i.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 6.0%</span><span class="kx-opt"><b>(B)</b> 6.5%</span><span class="kx-opt"><b>(C)</b> 7.0%</span><span class="kx-opt"><b>(D)</b> 7.5%</span><span class="kx-opt"><b>(E)</b> 8.0%</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;永续久期闭式 = (1+i)/i</td><td>\( D_{mac}=\dfrac{(Ia)_{\overline{\infty}|}}{a_{\overline{\infty}|}}=\dfrac{1/i+1/i^2}{1/i}=\dfrac{1+i}{i} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;令等于 13.5</td><td>\( \dfrac{1+i}{i}=13.5 \Rightarrow 1+i=13.5i \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解 i</td><td>\( i=\dfrac{1}{12.5}=8\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8.10</b></td><td>增长永续久期闭式 (1+i)/(i-g)(换算成增长率 j 的年金)</td><td style="white-space:nowrap"><button class="kxb" data-kx="8.10" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 增长股闭式 (1+i)/(i-g) 唯一代表:g=5%,i=10% → 22,验证闭式=换率 j 求 462/21</td></tr>
+<tr class="kxd" data-kxq="8.10" style="display:none"><td colspan="4"><div class="kx-qtx">A perpetuity-immediate has annual payments of \( 1.05, 1.05^2, 1.05^3, \ldots \). Determine the duration of this perpetuity at an effective rate of 10%.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 20</span><span class="kx-opt"><b>(B)</b> 21</span><span class="kx-opt"><b>(C)</b> 22</span><span class="kx-opt"><b>(D)</b> 101</span><span class="kx-opt"><b>(E)</b> Infinity</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;增长永续 → 换算成率 j 的增长年金</td><td>\( 1+j=\dfrac{1.10}{1.05},\ j=\dfrac{.05}{1.05}=\dfrac{1}{21} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;分子=增长永续PV、分母=平永续PV</td><td>\( \text{分子}=\dfrac1j+\dfrac1{j^2}=462,\quad \text{分母}=\dfrac1j=21 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;相除(等于闭式 (1+i)/(i-g)=1.10/0.05)</td><td>\( D=\dfrac{462}{21}=22 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8.14</b></td><td>组合 modified 久期 = 各成分久期的价格加权平均</td><td style="white-space:nowrap"><button class="kxb" data-kx="8.14" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『组合久期=价格加权平均』最全代表:零息/平价债/永续股三资产各调闭式再加权</td></tr>
+<tr class="kxd" data-kxq="8.14" style="display:none"><td colspan="4"><div class="kx-qtx">Sarah owns a portfolio that has the following assets: (i) A 100 par value zero-coupon bond maturing at par in 7 years that sells at a price to yield 3%. (ii) A 100 par value bond with 4% annual coupons maturing at par in 9 years that sells at par. (iii) A common stock paying a constant dividend of 20 into perpetuity that sells at a price to yield 8%. Compute the modified duration of Sarah&#x27;s portfolio.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 9.62</span><span class="kx-opt"><b>(B)</b> 10.25</span><span class="kx-opt"><b>(C)</b> 12.26</span><span class="kx-opt"><b>(D)</b> 13.71</span><span class="kx-opt"><b>(E)</b> 14.75</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;各资产 modified 久期(零息=n·v、平价=a_n、永续股=1/i)</td><td>\( D_1=\dfrac{7}{1.03}=6.7961,\ D_2=a_{\overline{9}|,4\%}=7.4353,\ D_3=\dfrac{1}{.08}=12.5 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;各资产价格作权重</td><td>\( P_1=100(1.03)^{-7}=81.31,\ P_2=100,\ P_3=\dfrac{20}{.08}=250 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;价格加权平均</td><td>\( D=\dfrac{81.31(6.7961)+100(7.4353)+250(12.5)}{431.31}=10.25 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8.19</b></td><td>一阶修正近似估新价 P(i)≈P₀[1−(i−i₀)D_mod]</td><td style="white-space:nowrap"><button class="kxb" data-kx="8.19" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『一阶近似估价』修正版代表:先由 Macaulay 换 modified,再套线性近似</td></tr>
+<tr class="kxd" data-kxq="8.19" style="display:none"><td colspan="4"><div class="kx-qtx">An asset sells for 100,000 at 8% effective. The duration of the asset is 8.64. Determine the price of the asset if the interest rate increases to 8.1% using the first-order modified approximation.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 99,100</span><span class="kx-opt"><b>(B)</b> 99,200</span><span class="kx-opt"><b>(C)</b> 99,300</span><span class="kx-opt"><b>(D)</b> 100,800</span><span class="kx-opt"><b>(E)</b> 100,900</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;无修饰 duration=Macaulay,换 modified</td><td>\( D_{mod}=\dfrac{D_{mac}}{1+i_0}=\dfrac{8.64}{1.08}=8.00 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;套一阶修正近似</td><td>\( P(i)\approx P(i_0)[1-(i-i_0)D_{mod}] \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入求值</td><td>\( 100000[1-(.081-.08)(8)]=99{,}200 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8.20</b></td><td>修正版 vs Macaulay 版一阶近似对比(同题两算)</td><td style="white-space:nowrap"><button class="kxb" data-kx="8.20" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『两版对比、误差方向』唯一同题双算:X 走修正线性、Y 走 Macaulay 幂,作差看差异</td></tr>
+<tr class="kxd" data-kxq="8.20" style="display:none"><td colspan="4"><div class="kx-qtx">A liability has a present value of 300,000 at 4.5% effective. The modified duration of the liability at 4.5% is 10. Let X = the present value of the liability at 4% effective using the first-order modified approximation. Let Y = the present value of the liability at 4% effective using the first-order Macaulay approximation. Determine X − Y.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> −951</span><span class="kx-opt"><b>(B)</b> −419</span><span class="kx-opt"><b>(C)</b> 261</span><span class="kx-opt"><b>(D)</b> 315</span><span class="kx-opt"><b>(E)</b> 936</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;修正版线性近似求 X</td><td>\( X=300000[1-(.04-.045)(10)]=315{,}000 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;Macaulay 版需 D_mac</td><td>\( D_{mac}=(1+i_0)D_{mod}=1.045\times10=10.45 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;Macaulay 版幂近似求 Y 再相减</td><td>\( Y=300000\left(\dfrac{1.045}{1.04}\right)^{10.45}=315{,}419;\ X-Y=-419 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8g.5</b></td><td>凸性关系式反解 C_mac:C_mod=(C_mac+D_mac)/(1+i)²</td><td style="white-space:nowrap"><button class="kxb" data-kx="8g.5" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 凸性核心 + p.397 术语表陷阱:convexity=modified/duration=Macaulay,反解 Macaulay 凸性</td></tr>
+<tr class="kxd" data-kxq="8g.5" style="display:none"><td colspan="4"><div class="kx-qtx">An investment has a modified duration of 13.8 and a convexity of 720.51 at an annual effective rate of interest of 3%. Compute the Macaulay convexity of this asset.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 699.52</span><span class="kx-opt"><b>(B)</b> 726.19</span><span class="kx-opt"><b>(C)</b> 739.04</span><span class="kx-opt"><b>(D)</b> 750.18</span><span class="kx-opt"><b>(E)</b> 762.15</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;辨术语(convexity=modified),先由 D_mod 得 D_mac</td><td>\( D_{mac}=(1+i)D_{mod}=1.03\times13.8 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;套关系式反解 C_mac</td><td>\( C_{mod}=\dfrac{C_{mac}+D_{mac}}{(1+i)^2}\Rightarrow C_{mac}=C_{mod}(1+i)^2-D_{mac} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入求值</td><td>\( C_{mac}=720.51(1.03)^2-13.8(1.03)=750.18 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8g.13</b></td><td>Redington 前两条件联立解资产面值(Ex 8.19 模板)</td><td style="white-space:nowrap"><button class="kxb" data-kx="8g.13" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『Redington 联立解面值』标准模板:条件一 PV 配平 + 条件二一阶导配平,两式相减</td></tr>
+<tr class="kxd" data-kxq="8g.13" style="display:none"><td colspan="4"><div class="kx-qtx">Leila must pay liabilities of $1,000 in 2 years and $1,700 in 5 years. She created a portfolio of assets that pays X at time 1 and Y at time 4 in order to satisfy the first two conditions of the Redington immunization. The annual effective interest rate is 3%. Compute |X − Y|.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1,512</span><span class="kx-opt"><b>(B)</b> 1,694</span><span class="kx-opt"><b>(C)</b> 1,809</span><span class="kx-opt"><b>(D)</b> 2,193</span><span class="kx-opt"><b>(E)</b> 2,411</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;条件一 PV 配平</td><td>\( vX+v^4Y=1000v^2+1700v^5=2409.03 \) at 3%</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;条件二一阶导配平(约去 −v)</td><td>\( vX+4v^4Y=2000v^2+8500v^5=9217.37 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;两式相减解 Y、回代 X</td><td>\( 3v^4Y=6808.34\Rightarrow Y=2554.28,\ X=143.77,\ |X-Y|=2410.51 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8g.14</b></td><td>Full immunization:PV 等 + 久期等,资产久期作价格加权</td><td style="white-space:nowrap"><button class="kxb" data-kx="8g.14" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『full immunization 配平法』代表:验 PV 相等后,资产 modified 久期加权 = 负债久期解 X</td></tr>
+<tr class="kxd" data-kxq="8g.14" style="display:none"><td colspan="4"><div class="kx-qtx">Mona has an obligation to pay $14,641 in 4 years. To provide for this liability, Mona invests $3,750 in a bond with a modified duration X and $6,250 in another bond with a modified duration 4.81. Compute X if Mona wishes to achieve full immunization at an annual effective interest rate of 10%.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1.68</span><span class="kx-opt"><b>(B)</b> 1.85</span><span class="kx-opt"><b>(C)</b> 2.03</span><span class="kx-opt"><b>(D)</b> 2.39</span><span class="kx-opt"><b>(E)</b> 2.65</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;条件一验证 PV 相等</td><td>\( 3750+6250=10000=14641(1.10)^{-4} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;资产久期(价格加权)= 负债久期 4(5.291=4.81×1.10)</td><td>\( \dfrac{3750(1.10X)+6250(5.291)}{10000}=4 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;解 X</td><td>\( 0.4125X+3.3069=4\Rightarrow X=1.68 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8g.18</b></td><td>Redington 三条件判断选组合(跨骑 → 第三条件 C_mac 资产>负债)</td><td style="white-space:nowrap"><button class="kxb" data-kx="8g.18" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『判断第三条件成败(跨骑 vs 夹心)』唯一概念题:逐条件(PV/久期/凸性)淘汰,凸性大者胜</td></tr>
+<tr class="kxd" data-kxq="8g.18" style="display:none"><td colspan="4"><div class="kx-qtx">Sami must pay liabilities that have a present value of 3,500, duration of 2.3 and Macaulay convexity of 5.62. Which of the following portfolios of zero-coupon bonds should Sami create to Redington immunize his liabilities at an annual effective interest rate of 5%?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> One-year bond with price 1,400 and two-year bond with price 2,100</span><span class="kx-opt"><b>(B)</b> One-year bond with price 1,650 and three-year bond with price 1,950</span><span class="kx-opt"><b>(C)</b> Two-year bond with price 2,450 and three-year bond with price 1,050</span><span class="kx-opt"><b>(D)</b> Two-year bond with price 2,975 and four-year bond with price 525</span><span class="kx-opt"><b>(E)</b> Two-year bond with price 3,500 only</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;条件一 PV=3500 排除价合不符者(B)</td><td>\( P_A=\sum \text{price}=3500 \Rightarrow \text{B 淘汰} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;条件二久期=2.3 排除 A、E(久期&lt;2 或=2)</td><td>\( D_{mac}(A)=\dfrac{\sum t\cdot\text{price}}{3500}=2.3 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;条件三 C_mac(资产)&gt;5.62:C 得 5.5&lt; 淘汰,D 得 5.8&gt; ✓</td><td>\( C_{mac}=\dfrac{\sum t^2\cdot\text{price}}{3500};\ \text{D}: \dfrac{4(2975)+16(525)}{3500}=5.8 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>8g.19</b></td><td>Dedication 精确匹配倒推表(从最远期倒推、票息回填前期)</td><td style="white-space:nowrap"><button class="kxb" data-kx="8g.19" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00『dedication 倒推表(从最远期开始)』代表:先定 3 年附息债,逐期扣票息倒推,按各收益率贴现</td></tr>
+<tr class="kxd" data-kxq="8g.19" style="display:none"><td colspan="4"><div class="kx-qtx">A company must make a payment of 200 in one year, a payment of 420 in two years and a payment of 630 in three years. The only investments available are one-year zero-coupon bonds with an annual effective yield of 3.5%, two-year zero-coupon bonds with an annual effective yield of 4.5%, and three-year 8% annual coupon bond sold at par. Determine how much the company should invest today in order to exactly match the assets and liabilities.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> 1,073</span><span class="kx-opt"><b>(B)</b> 1,105</span><span class="kx-opt"><b>(C)</b> 1,137</span><span class="kx-opt"><b>(D)</b> 1,168</span><span class="kx-opt"><b>(E)</b> 2,011</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;从最远期倒推(先定 3 年债面值 Z)</td><td>\( 1.08Z=630\Rightarrow Z=583.33 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;逐期回填票息扣减</td><td>\( Y+.08Z=420\Rightarrow Y=373.33;\ X+.08Z=200\Rightarrow X=153.33 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;按各自收益率贴现求今投(平价债价=面值)</td><td>\( PV=\dfrac{153.33}{1.035}+\dfrac{373.33}{1.045^2}+583.33=1073.35 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 31(同题型二刷备用)· 跳过 2(离题/重复);全量评级存 _Meta/tools/data/exam-fm-key-exercises.json</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-dur">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">§8a–8f · 课本 p.375–394</span><h2 class="sec-title">久期:PV 的重心与斜率</h2></div></div>
+    <p class="sec-sub">引子:6%→6.1%,10 年零息债跌 0.94%、20 年跌 1.87%——敏感度按<b>百分比</b>算(不是美元),且 ∝ 期限。单笔现金流的久期就是它的剩余年数。</p>
+
+    <div class="card accent">
+      <h3>Macaulay 久期 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.377–381</div>
+      <p class="lede">把每笔现金流的 PV 当砝码摆上时间轴,<b>天平支点 = D<sub>mac</sub></b>;数学上等价于 PV 对利息力 δ 的敏感度。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Macaulay Duration</span>
+        $$D_{mac}=\frac{\sum t\,v^t A_t}{\sum v^t A_t}=-\frac{dP/d\delta}{P}$$</div>
+      <div class="formula"><span class="name">五种标准资产(Ex 8.5,i=5%)</span>
+        $$\text{零息债}=n\quad \text{永续 immediate}=\frac{1+i}{i}\quad \text{平价附息债}=\ddot a_{\overline{n}|}\quad \text{增长股}=\frac{1+i}{i-g}\quad \text{按揭}=\frac{(Ia)_{\overline{n}|}}{a_{\overline{n}|}}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>券息越高,久期越短</b> — 早期现金流权重大,重心前移(Ex 8.6:5% 券 8.11 年,10% 券 7.27 年,零息 10 年)。</span></div>
+      <p class="dim">组合久期 = 成分久期的<b>价格加权平均</b>(Ex 8.12)。时间推移:久期<b>锯齿下降</b>——渐降、每逢付息日跳升一齿(Ex 8.13:8.11→7.11→7.46)。SOA 规定:无修饰词的 "duration" = Macaulay。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>Modified 久期与两个一阶近似 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.381–384</div>
+      <p class="lede">对 i 求导得 modified:\(D_{mod}=vD_{mac}\)("<b>v</b> for <b>v</b>ariation")。近似新价格有两条路,Macaulay 版更准。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>两个一阶近似</span>
+        $$\text{修正版: } P(i)\approx P(i_0)\bigl[1-(i-i_0)D_{mod}(i_0)\bigr]\qquad \text{Macaulay 版: } P(i)\approx P(i_0)\Bigl(\frac{1+i_0}{1+i}\Bigr)^{D_{mac}(i_0)}$$</div>
+      <p class="dim">Ex 8.10/8.11 对照:15 年 8% 平价债 → 7.92%,精确 1,006.88;修正近似 1,006.85(<b>永远低估</b>——切线在凸曲线下方);Macaulay 近似 1,006.87(误差约 1/3,方向天然自洽)。平价债专属捷径:\(D_{mod}=v\ddot a_{\overline{n}|}=a_{\overline{n}|}\)——一撇之差常考。</p>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 8.8</span><span class="src" style="margin:0">课本 p.383 · 两久期互推 i</span></div>
+        <p class="q">同一时点 D_mac=10、D_mod=9.39。求 i。</p>
+        <p>\(9.39=\dfrac{10}{1+i}\)。</p>
+        <span class="ans">i = 6.50%</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 两久期换算关系("v for variation")</td><td>\(D_{mod}=v\,D_{mac}=\dfrac{D_{mac}}{1+i}\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+          <tr><td>② 代入解 i</td><td>\(9.39=\tfrac{10}{1+i}\ \Rightarrow\ 1+i=\tfrac{10}{9.39}\ \Rightarrow\ i=6.50\%\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        </table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="core-conv">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">§8g · 课本 p.395–397</span><h2 class="sec-title">凸性:曲线的弯度</h2></div></div>
+    <p class="sec-sub">切线估价永远偏低,差的那一截就是弯度——二阶导量它。考纲只要求会算(不用二阶近似公式)。</p>
+
+    <div class="card accent">
+      <h3>两种凸性与关系式 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.395–397</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Convexity</span>
+        $$C_{mod}=\frac{P''(i)}{P(i)}=\frac{\sum t(t+1)v^{t+2}A_t}{P(i)}\qquad C_{mac}=\frac{\sum t^2v^tA_t}{P(i)}\qquad C_{mod}=\frac{C_{mac}+D_{mac}}{(1+i)^2}$$</div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>p.397 术语表(必背):</b>考卷说 "duration" = <b>Macaulay</b>,说 "convexity" = <b>modified</b>——两个默认方向相反,最易混。C_mod 分子是 t(t+1)v^{t+2},t²vᵗ 属于 C_mac,别串。</span></div>
+      <p class="dim">Ex 8.14→8.17 一条线:资产 2 年 1 万 + 10 年 2.5 万(6%),C_mod=61.86、C_mac=62.62、D_mac=6.89,验证 (62.62+6.89)/1.06²=61.86 ✓。</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-imm">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">§8h–8k · 课本 p.397–406</span><h2 class="sec-title">免疫:给资产负债配平</h2></div></div>
+    <p class="sec-sub">负债比资产晚 → 中途卖资产怕加息;资产比负债早 → 再投资怕降息。除非现金流完全匹配,利率上下都可能伤你——免疫就是防这个。</p>
+
+    <div class="card accent">
+      <h3>Redington 免疫(防小幅) <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.397–401</div>
+      <p class="lede">三充分条件,在 i=i₀ 处成立、只保小幅变动:</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Redington 三条件</span>
+        $$P_A=P_L\qquad P'_A=P'_L\ (D^A=D^L)\qquad P''_A\gt P''_L\ (C^A\gt C^L)$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>盈余在 i₀ 处取相对极小</b> — 等价写法 P=P_A−P_L:P=0、P′=0、P″&gt;0;利率小幅上下波,盈余都上升。第三条件 ⇔ \(\sum t^2v^tA_t \gt \sum t^2v^tL_t\)(Ex 8.21)。</span></div>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 8.19</span><span class="src" style="margin:0">课本 p.399–400 · 经典解法模板</span></div>
+        <p class="q">负债:10 年期末年金每年 $10;资产:2 年与 9 年零息债(面值 X、Y),i=10%。求 X、Y。</p>
+        <p>条件一 \(v^2X+v^9Y=10a_{\overline{10}|}\);条件二 \(2v^3X+9v^{10}Y=10v(Ia)_{\overline{10}|}\)(\(\frac{d}{di}v^n=-nv^{n+1}\))。联立解出。</p>
+        <span class="ans">X = 45.40 · Y = 56.41</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 条件一:PV 配平(资产 PV = 负债 PV)</td><td>\(v^2X+v^9Y=10\,a_{\overline{10}|}\)</td><td class="xr"><span class="here">本章 §03</span> · <a href="soa-exam-fm-l03-annuities.html">L03 年金 ↗</a></td></tr>
+          <tr><td>② 条件二:一阶导配平(久期等),两边逐项求导后联立解出面值</td><td>\(\tfrac{d}{di}v^n=-nv^{n+1}\ \Rightarrow\ 2v^3X+9v^{10}Y=10v\,(Ia)_{\overline{10}|}\) ⇒ \(X=45.40,\ Y=56.41\)</td><td class="xr"><span class="here">本章 §03</span> · <a href="soa-exam-fm-l04-complex-annuities.html">L04 复杂年金 ↗</a></td></tr>
+          <tr><td>③ 条件三自查:资产(2、9 年)跨骑负债(1–10 年)两侧</td><td>\(\textstyle\sum t^2v^tA_t\gt\sum t^2v^tL_t\) 自动满足</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+        </table></div>
+      </div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>跨骑才有大凸性:</b>资产现金流(2、9 年)分布在负债(1–10 年)两侧 ⇒ 第三条件自动过(考试也默认可满足);资产<b>夹在</b>两笔负债中间(Ex 8.20)⇒ P″_A &lt; P″_L,免疫失败,任何偏离都亏。</span></div>
+    </div>
+
+    <div class="card accent">
+      <h3>Full Immunization 与 Dedication <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.402–405</div>
+      <p class="lede">Full:PV 等 + 久期等 + <b>负债现金流前后各一笔资产</b> ⇒ 防<b>任意幅度</b>变化(多笔负债逐笔配三件套)。Dedication:干脆逐期精确匹配 \(A_t=L_t\),利率爱怎么动怎么动。</p>
+      <p class="dim">Ex 8.22(full):负债 2 年 $1,000,用 1 年与 4 年零息配平 → X=620.16、Y=385.21;实测 i→0 与 i→100% 两端都盈余。Ex 8.24(dedication):<b>从最远期负债倒推</b>逐只附息债面值,票息回填前期。免疫非一劳永逸:时间流逝+利率变动改变久期(8f 锯齿),需 rebalance(p.403)。</p>
+      <details class="more"><summary>展开:dedication 为什么"说易行难"(p.403)</summary>
+        <p class="dim">现金流入不总可预测(债券被 call、按揭提前还);流出常是估计(死亡/伤残/退保);市场未必有恰好期限的资产;严格匹配牺牲收益率。别名:cash flow matching / exact matching / absolute matching。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 300 160" role="img" aria-label="价格收益率凸曲线与切线">
+          <line x1="30" y1="135" x2="280" y2="135" stroke="#16243d" stroke-width="1.5"/>
+          <line x1="30" y1="135" x2="30" y2="15" stroke="#16243d" stroke-width="1.5"/>
+          <text x="284" y="139" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#46566f">i</text>
+          <text x="16" y="14" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#46566f">P</text>
+          <path d="M40 28 Q120 95 265 122" fill="none" stroke="#b0487a" stroke-width="2.5"/>
+          <line x1="60" y1="30" x2="240" y2="130" stroke="#c6492f" stroke-width="1.8" stroke-dasharray="5 4"/>
+          <circle cx="132" cy="90" r="4" fill="#722f4f"/>
+          <text x="140" y="84" font-size="10.5" font-family="ui-monospace,Menlo,monospace" fill="#722f4f" font-weight="bold">i₀</text>
+          <text x="196" y="40" font-size="10.5" font-family="ui-monospace,Menlo,monospace" fill="#b0487a" font-weight="bold">凸曲线(真值)</text>
+          <text x="196" y="132" font-size="10.5" font-family="ui-monospace,Menlo,monospace" fill="#c6492f">切线(修正近似)</text>
+        </svg>
+        <div class="cap"><b>切线永远在凸曲线下方</b> · 修正近似两个方向都低估,差值=凸性</div>
+      </div>
+      <div class="fig-cell">
+        <svg viewBox="0 0 300 160" role="img" aria-label="Redington 盈余曲线">
+          <line x1="30" y1="130" x2="280" y2="130" stroke="#16243d" stroke-width="1.5"/>
+          <text x="284" y="134" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#46566f">i</text>
+          <text x="10" y="20" font-size="10" font-family="ui-monospace,Menlo,monospace" fill="#46566f">P_A−P_L</text>
+          <path d="M50 45 Q155 145 260 45" fill="none" stroke="#b0487a" stroke-width="2.5"/>
+          <circle cx="155" cy="95" r="4" fill="#722f4f"/>
+          <text x="155" y="115" text-anchor="middle" font-size="10.5" font-family="ui-monospace,Menlo,monospace" fill="#722f4f" font-weight="bold">i₀ 处 P=0, P′=0</text>
+          <text x="155" y="35" text-anchor="middle" font-size="10.5" font-family="ui-monospace,Menlo,monospace" fill="#b0487a" font-weight="bold">P″&gt;0 ⇒ 两边都盈余</text>
+        </svg>
+        <div class="cap"><b>Redington = 盈余在 i₀ 取相对极小</b> · 小幅波动怎么动都不亏</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+    <div class="card">
+      <h3>💡 直觉例子</h3>
+      <p><b>久期是天平支点,凸性是翘板弯度。</b>每笔现金流的 PV 是砝码,D_mac 是支点位置;券息越高、砝码越靠前,支点前移。凸性是曲线"上翘"的程度——切线(一阶)估价永远偏低,弯得越厉害差得越多。</p>
+      <p class="dim"><b>免疫像搭跷跷板:</b>PV 等 = 两边一样重;久期等 = 支点对齐;资产凸性更大 = 资产那边翘得更弯——利率小幅怎么晃,资产端都压得住。资产现金流要"跨骑"负债两侧才弯得起来,夹在中间就输。</p>
+    </div>
+    <div class="card">
+      <h3>📚 扩展阅读(精选 2 个)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Bond_duration">Bond Duration — Wikipedia</a></div><div class="z">Macaulay 1938 年原始定义到现代风险管理的演化;有效久期(effective duration)是 FM 之后的世界。</div><div class="u">en.wikipedia.org/wiki/Bond_duration</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Immunization_(finance)">Immunization (finance) — Wikipedia</a></div><div class="z">Redington 1952 年论文的保险公司背景——他本来就是给寿险公司资产负债管理发明的。</div><div class="u">en.wikipedia.org/wiki/Immunization_(finance)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
+<footer>
+  <div class="wrap">
+    <p><b>Exam FM 导学 · Chapter 8</b> · 第8章 Duration, Convexity, and Immunization 久期、凸性与免疫</p>
+    <p>公式与例题整理自《ASM Exam FM Study Manual, 17th ed.》Chapter 8(p.375–414,页码已标注,细节以课本为准)。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('中文') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '👁'; btn.title = '遮住/显示中文，自测用';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '🙈' : '👁';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
+</body>
+</html>

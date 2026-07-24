@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<!-- 源页: 全书词汇总表(每科唯一词汇载体)。A 术语(字母序)/ B 通用学术词 / C 读题短语, 全书打通去重。
+     自测: 表头 👁 遮中文; 勾「已掌握」即隐藏(不持久化, 刷新重置)。直接维护本页; 新章词汇加对应段。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · 词汇总表</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0e8a63; --accent-deep:#095a40; --accent-soft:#e7f3ef; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(9,90,64,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<style>
+  .vx-hero{background:linear-gradient(180deg,#16243d,#1d3050);color:#eef2f8;padding:30px 0 24px}
+  .vx-hero h1{font-family:var(--serif);font-size:clamp(24px,4vw,34px);margin:0 0 8px}
+  .vx-hero h1 em{font-style:normal;color:var(--hi)}
+  .vx-hero p{font-size:14px;color:#cdd6e6;margin:0;max-width:80ch}
+  .vx-toc{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:7px;
+    background:rgba(245,246,249,.96);backdrop-filter:blur(6px);padding:10px 0;border-bottom:1px solid var(--line)}
+  .vx-toc a{font-size:12.5px;text-decoration:none;color:#fff;border-radius:999px;padding:4px 11px;font-family:var(--mono)}
+  .vx-toc a:hover{filter:brightness(1.15)}
+  .vx-ch{padding:6px 0 12px}
+  .vx-hot{color:#b45309;font-size:12px}
+  .vx-h{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:20px;margin:18px 0 12px}
+  .vx-h .vxn{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;border-radius:6px;padding:3px 9px}
+  td.mst{text-align:center}
+  .mst input,.mst-ph input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+  .mst-ph{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mute);margin-top:8px;cursor:pointer;user-select:none}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>词汇总表</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+<div class="vx-hero"><div class="wrap">
+  <h1>全书 <em>词汇总表 Vocabulary</em></h1>
+  <p>全书唯一词汇载体:<b>A 术语 97 词</b>(字母序)· <b>读题必备词汇 92 条</b>(教材各章习题全书重盘:核心题眼 + 高频词,按跨章频次排序,★=全书级)。自测:表头 <b>👁</b> 遮中文,点格揭示;背会就勾<b>已掌握</b>——词条即隐,刷新页面全部重置。</p>
+</div></div>
+<div class="wrap"><nav class="vx-toc"><a href="#terms" style="background:var(--accent)">A 术语 97</a><a href="#phrases" style="background:#b45309">读题必备词汇 92</a></nav></div>
+<section class="vx-ch" id="terms"><div class="wrap">
+  <h2 class="vx-h"><span class="vxn" style="background:var(--accent)">A</span>术语 Must-know(全书 · 字母序)</h2>
+  <div class="card accent">
+  <table class="map vocab">
+    <thead><tr><th style="width:26%">English</th><th style="width:7%">词性</th><th style="width:22%">中文</th><th>记忆点 / 词根</th><th style="width:9%">已掌握</th></tr></thead>
+    <tbody>
+<tr><td class="en">accumulated value</td><td><span class="pos n">n.</span></td><td>累积值 s / s̈</td><td class="root">同一串付款在末端的照片</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">accumulated value (AV)</td><td><span class="pos n">n.</span></td><td>积累值 / 终值</td><td class="root">ac- + cumul(堆):越堆越高;与 PV 对偶</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">accumulation function</td><td><span class="pos n">n.</span></td><td>积累函数 a(t)</td><td class="root">ac-+cumul(堆):$1 越滚越大的轨迹</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">accumulation of discount</td><td><span class="pos n">n.</span></td><td>折价累积</td><td class="root">write-up 的正式名;规避负数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">amortization</td><td><span class="pos n">n.</span></td><td>摊还</td><td class="root">mort(死):把贷款逐期"杀死"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">amortization schedule</td><td><span class="pos n">n.</span></td><td>摊还表</td><td class="root">利息/本金/余额三列机器</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">amount function</td><td><span class="pos n">n.</span></td><td>金额函数 A(t)</td><td class="root">起投 k 元版的 a(t)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">annual rate of payment</td><td><span class="pos n">n.</span></td><td>年付款率</td><td class="root">4i/4k 的钥匙:年薪季付类比</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">annuity</td><td><span class="pos n">n.</span></td><td>年金</td><td class="root">拉丁 annus(年);"月付年金"其实是矛盾修辞</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">annuity-due</td><td><span class="pos n">n.</span></td><td>期初年金 ä</td><td class="root">due=到期应付(现在就付);分母 d</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">annuity-immediate</td><td><span class="pos n">n.</span></td><td>期末年金 a</td><td class="root">首付却不 immediate,名不副实;分母 i</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">arithmetic progression</td><td><span class="pos n">n.</span></td><td>等差数列</td><td class="root">P&amp;Q 一族的数学底座</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">balloon payment</td><td><span class="pos n">n.</span></td><td>气球式末付款</td><td class="root">最后一期"吹大"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">basis point</td><td><span class="pos n">n.</span></td><td>基点</td><td class="root">1bp = 0.01 个百分点</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">block payments</td><td><span class="pos n">n.</span></td><td>分块付款</td><td class="root">分段水平;速记法从最远块起步</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">book value</td><td><span class="pos n">n.</span></td><td>账面价值 B_t</td><td class="root">= 贷款的 outstanding balance</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">call date / call price</td><td><span class="pos n">n.</span></td><td>赎回日 / 赎回价</td><td class="root">PEW:溢价怕早、折价怕晚</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">callable bond</td><td><span class="pos n">n.</span></td><td>可赎回债券</td><td class="root">call=召回;发行人的提前还款权</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">capitalize (interest)</td><td><span class="pos v">v.</span></td><td>(利息)资本化</td><td class="root">欠息滚入本金慢慢还</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">cash inflow / outflow</td><td><span class="pos n">n.</span></td><td>现金流入 A_t / 流出 L_t</td><td class="root">与 Ch8 Assets/Liabilities 同符号</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">COLA</td><td><span class="pos n">n.</span></td><td>生活成本调整</td><td class="root">cost-of-living adjustment;等比年金现实版</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">comparison date</td><td><span class="pos n">n.</span></td><td>比较日</td><td class="root">compare + -ison;数钱的那张桌子</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">compounded / convertible m-thly</td><td><span class="pos v">v.</span></td><td>每年复利 m 次</td><td class="root">两词同义,读题都要认识</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">compounded continuously</td><td><span class="pos v">v.</span></td><td>连续复利</td><td class="root">m→∞ 的极限,= δ</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Consumer Price Index (CPI)</td><td><span class="pos n">n.</span></td><td>消费者价格指数</td><td class="root">market basket 加权价;COLA 依据</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">continuous annuity</td><td><span class="pos n">n.</span></td><td>连续年金 ā</td><td class="root">m→∞,分母 δ</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">convexity</td><td><span class="pos n">n.</span></td><td>凸性</td><td class="root">convex=凸;考试默认 modified</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">cost of capital</td><td><span class="pos n">n.</span></td><td>资本成本</td><td class="root">= opportunity cost:同风险替代收益率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">coupon</td><td><span class="pos n">n.</span></td><td>息票</td><td class="root">历史上真是纸券,到期剪下兑现</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">current value</td><td><span class="pos n">n.</span></td><td>现时值</td><td class="root">指定日前付款的 AV + 之后付款的 PV(解答区 p.62)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">dedication / cash flow matching</td><td><span class="pos n">n.</span></td><td>精确匹配</td><td class="root">A_t=L_t 逐期对账;别名一堆</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">deferred</td><td><span class="pos adj">adj.</span></td><td>递延(t 年后起)</td><td class="root">de-+fer(带):往后带;t=起投时点</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">deferred annuity</td><td><span class="pos n">n.</span></td><td>递延年金</td><td class="root">de-+fer(带):往后带 m 期</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">discount function</td><td><span class="pos n">n.</span></td><td>贴现函数 1/a(t)</td><td class="root">积累函数的倒数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">drop payment</td><td><span class="pos n">n.</span></td><td>尾款</td><td class="root">多切一刀薄的;=(1+i)×balloon 追加额</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">effective rate of discount</td><td><span class="pos n">n.</span></td><td>实际贴现率 d</td><td class="root">dis-+count:先扣掉再数;以年末为基</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">effective rate of interest</td><td><span class="pos n">n.</span></td><td>实际利率 i</td><td class="root">effective=实打实的;以年初为基</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">equal principal repayments</td><td><span class="pos n">n.</span></td><td>等额本金</td><td class="root">≠等额付款;付款等差递减</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">equation of value</td><td><span class="pos n">n.</span></td><td>价值方程</td><td class="root">value 的 equation——两边都是"折到同一天的钱"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">equivalent rates</td><td><span class="pos adj">adj.</span></td><td>等价利率</td><td class="root">equi-(等)+val(值):同期同果</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">fictitious payments</td><td><span class="pos n">n.</span></td><td>虚拟付款</td><td class="root">fiction 同根:摆上去再减掉的道具</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">fission / fusion</td><td><span class="pos n">n.</span></td><td>裂变 / 聚变</td><td class="root">核物理借词:拆笔 / 并笔</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">force of interest</td><td><span class="pos n">n.</span></td><td>利息力 δ</td><td class="root">force=瞬时之"力";仪表盘时速</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">forward rate</td><td><span class="pos n">n.</span></td><td>远期利率 f</td><td class="root">forward=向前;将来生效的段速</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">full immunization</td><td><span class="pos n">n.</span></td><td>完全免疫</td><td class="root">防任意幅度;前后各一笔</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">geometric progression</td><td><span class="pos n">n.</span></td><td>几何级数</td><td class="root">年金的数学本体</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">immunization</td><td><span class="pos n">n.</span></td><td>免疫</td><td class="root">immune=免疫的:对利率变动打疫苗</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">implied forward rate</td><td><span class="pos adj">adj.</span></td><td>隐含远期利率</td><td class="root">imply=暗含;spot 曲线里"藏着"的 f</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">increasing / decreasing annuity</td><td><span class="pos n">n.</span></td><td>增额 / 减额年金</td><td class="root">(Ia) / (Da);I 大写在括号里</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">inflation / deflation</td><td><span class="pos n">n.</span></td><td>通胀 / 通缩</td><td class="root">inflate=吹胀(价格)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">interest period</td><td><span class="pos n">n.</span></td><td>计息期</td><td class="root">计息节拍;刻度跟付款走,利率跟刻度走</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">internal rate of return (IRR)</td><td><span class="pos n">n.</span></td><td>内部收益率</td><td class="root">internal=内生:投资自己的年化</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">lock in</td><td><span class="pos v">v.</span></td><td>锁定</td><td class="root">借短投长,今天锁死将来利率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Macaulay duration</td><td><span class="pos n">n.</span></td><td>麦考利久期</td><td class="root">1938 年 Macaulay;考试无修饰词默认它</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">method of equated time</td><td><span class="pos n">n.</span></td><td>等时法</td><td class="root">equate(使相等)的过去分词;金额加权平均时间</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">modified coupon rate</td><td><span class="pos n">n.</span></td><td>修正息票率 g</td><td class="root">g=Fr/C,"per unit of C"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">modified duration</td><td><span class="pos n">n.</span></td><td>修正久期</td><td class="root">"v for variation":=vD_mac;别称 volatility</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">m-thly annuity</td><td><span class="pos n">n.</span></td><td>每年 m 次年金</td><td class="root">上标 (m) = 钱怎么切碎</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">negative amortization</td><td><span class="pos n">n.</span></td><td>负摊还</td><td class="root">付款不够利息 → 余额回血</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">net present value (NPV)</td><td><span class="pos n">n.</span></td><td>净现值</td><td class="root">net=净:流入 PV 减流出 PV</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">nominal rate</td><td><span class="pos adj">adj.</span></td><td>名义利率 i⁽ᵐ⁾</td><td class="root">nomin(名字):in name only,挂名的</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">off-payments</td><td><span class="pos n">n.</span></td><td>错拍付款</td><td class="root">付款拍子 ≠ 计息拍子</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">outstanding loan balance</td><td><span class="pos n">n.</span></td><td>未偿余额 B_t</td><td class="root">outstanding=还挂着的;付款后瞬间口径</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">palindromic annuity</td><td><span class="pos n">n.</span></td><td>回文年金</td><td class="root">palindrome=回文:正读反读相同</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">par / face value</td><td><span class="pos n">n.</span></td><td>面值 F</td><td class="root">唯一作用:×r 定 coupon</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">payment period</td><td><span class="pos n">n.</span></td><td>付款期</td><td class="root">与 interest period 对举,FM 高频对比</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">perpetuity</td><td><span class="pos n">n.</span></td><td>永续年金</td><td class="root">perpetual=永久;PV=1/i 有限!</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">premium / discount</td><td><span class="pos n">n.</span></td><td>溢价 / 折价</td><td class="root">P−C 正为溢、负取反为折</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">present value (PV)</td><td><span class="pos n">n.</span></td><td>现值</td><td class="root">present=当下;未来钱的今日价</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">price sensitivity</td><td><span class="pos n">n.</span></td><td>价格敏感度</td><td class="root">百分比变化,不是美元</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">principal repaid</td><td><span class="pos n">n.</span></td><td>已偿本金 P_t</td><td class="root">付款减利息的剩余</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">principle of equivalence</td><td><span class="pos n">n.</span></td><td>等价原则</td><td class="root">equi-(等)+ val(值):等值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">prospective method</td><td><span class="pos n">n.</span></td><td>前瞻法</td><td class="root">pro-(向前)+spect(看):只看未来付款</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">purchasing power</td><td><span class="pos n">n.</span></td><td>购买力</td><td class="root">能买多少东西的能力</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">real rate of interest</td><td><span class="pos n">n.</span></td><td>实际利率 i′</td><td class="root">real=真实购买力口径</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">rebalancing</td><td><span class="pos v">v.</span></td><td>再平衡</td><td class="root">免疫非一劳永逸,久期会漂</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">redeemable at par</td><td><span class="pos adj">adj.</span></td><td>按面赎回</td><td class="root">C=F 的考试默认态</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">redemption value</td><td><span class="pos n">n.</span></td><td>赎回值 C</td><td class="root">redeem=赎回;默认 C=F</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Redington immunization</td><td><span class="pos n">n.</span></td><td>雷丁顿免疫</td><td class="root">1952 英国精算师;防小幅</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">refinance</td><td><span class="pos v">v.</span></td><td>再融资</td><td class="root">旧账翻结重新开局</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">reinvestment rate</td><td><span class="pos n">n.</span></td><td>再投资利率</td><td class="root">re-=再:息票到手后的市价利率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">retrospective method</td><td><span class="pos n">n.</span></td><td>追溯法</td><td class="root">retro-(向后):滚息减已付</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">saw-tooth curve</td><td><span class="pos n">n.</span></td><td>锯齿曲线</td><td class="root">久期随时间的形状</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">spot rate</td><td><span class="pos n">n.</span></td><td>即期利率 r_t</td><td class="root">spot=当场;现在生效、管全程</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">stripped out</td><td><span class="pos v">v.</span></td><td>(利息)被剥离</td><td class="root">strip=剥:本金原地,利息出走</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">surplus</td><td><span class="pos n">n.</span></td><td>盈余 P_A−P_L</td><td class="root">Redington = 盈余取相对极小</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">term structure of interest rates</td><td><span class="pos n">n.</span></td><td>利率期限结构</td><td class="root">term=期限;yield curve 的学名</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">time diagram</td><td><span class="pos n">n.</span></td><td>时间图</td><td class="root">dia-(横过)+ gram(画):横轴上作画</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">time value of money</td><td><span class="pos n">n.</span></td><td>货币时间价值</td><td class="root">今天的钱 &gt; 明天的同额钱</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">upward-sloping / normal</td><td><span class="pos adj">adj.</span></td><td>向上倾斜(正常曲线)</td><td class="root">期限越长利率越高的常态</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">valuation date</td><td><span class="pos n">n.</span></td><td>估值日</td><td class="root">immediate/due 的真正判据</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">weighted average</td><td><span class="pos n">n.</span></td><td>加权平均</td><td class="root">weight = 权重(这里是金额)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">write down / write up</td><td><span class="pos v">v.</span></td><td>写减 / 写增</td><td class="root">书值向 C 靠拢的两个方向</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">yield curve</td><td><span class="pos n">n.</span></td><td>收益率曲线</td><td class="root">yield=产出;期限-利率价目表</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">yield to maturity</td><td><span class="pos n">n.</span></td><td>到期收益率 i</td><td class="root">买价决定,区别于固定的 r</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">yield to maturity (YTM)</td><td><span class="pos n">n.</span></td><td>到期收益率</td><td class="root">再现价格的单一利率 = IRR</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">zero-coupon bond</td><td><span class="pos n">n.</span></td><td>零息债券</td><td class="root">无息票单笔到期;spot 的定义载体</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div></section>
+<section class="vx-ch" id="phrases"><div class="wrap">
+  <h2 class="vx-h"><span class="vxn" style="background:#b45309">读题</span>读题必备词汇(全书打通 · 按跨章频次排序)</h2>
+  <div class="card accent"><div class="src">源自全书各章习题重盘:核心题眼 + 高频词汇;★ = 出现于 5 章以上的全书级题眼</div>
+  <table class="map vocab">
+    <thead><tr><th style="width:30%">English</th><th style="width:22%">中文</th><th>解读 / 备注</th><th style="width:9%">已掌握</th></tr></thead>
+    <tbody>
+<tr><td class="en">annual effective interest rate <span class="vx-hot">★</span></td><td>年有效(实际)利率</td><td class="root">默认利率口径,与 nominal 对照</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Calculate … <span class="vx-hot">★</span></td><td>计算/求出</td><td class="root">全书最高频指令动词,题干末句锁定所求量(概率/期望/方差/参数)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">compounded / convertible (monthly …) <span class="vx-hot">★</span></td><td>按……复利/可换算</td><td class="root">名义利率报警词,先折算每期有效利率,读错全错</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Determine … <span class="vx-hot">★</span></td><td>求出/确定</td><td class="root">第二指令动词,常要求表达式、完整分布或判断选项而非单一数值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at the end of … <span class="vx-hot">★</span></td><td>在……期末</td><td class="root">FM 时点标记:期末现金流,对应 annuity-immediate</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">You are given <span class="vx-hot">★</span></td><td>已知(以下条件)</td><td class="root">条件块开场标记,后接 (i)(ii)(iii) 编号条件,读题先抓这些数据</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">accumulated value</td><td>累积值(AV)</td><td class="root">FM 核心结果量,与现值对偶</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">present value</td><td>现值(PV)</td><td class="root">FM 核心结果量,等值方程基石</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">deposit</td><td>存入(款项)</td><td class="root">FM 存取场景高频动/名词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">accumulate to</td><td>累积至/滚存到</td><td class="root">增值场景动词,accumulated amount equals …</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">annual / semiannual coupons</td><td>年度票息/半年票息</td><td class="root">semiannual 需按半年期换算再转年</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">deferred</td><td>递延的</td><td class="root">延期年金标记,提示折现次数</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">fund</td><td>基金/账户</td><td class="root">场景载体</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">amortization method / amortized</td><td>摊还法 / 被摊还</td><td class="root">指定还款方式的关键词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">amortization of premium / accumulation of discount</td><td>溢价摊销额/折价累积额</td><td class="root">即 write-down/write-up,账面值表题眼</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">annuity-immediate / annuity-due</td><td>期末年金/期初年金</td><td class="root">全章核心对象词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">arrange</td><td>range(排序)→ 排列题动词</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at a premium / at a discount</td><td>溢价/折价</td><td class="root">由 g 与 i 比较得出,牵动 book value 与赎回日选择</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at the beginning of …</td><td>在……期初</td><td class="root">FM 时点标记:期初年金 annuity-due,极易看漏</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at the end/beginning of each period</td><td>每期末/期初</td><td class="root">支付时点标记,区分 immediate vs due</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">at time t=0</td><td>在时刻t=0</td><td class="root">变利息力题定位投入时刻的关键(错读即入陷阱)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">balloon payment / drop payment</td><td>增大型末付 / 递减型末付</td><td class="root">专有术语,直接决定解法方向</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">callable / called</td><td>可赎回的/被提前赎回</td><td class="root">赎回题眼,牵出 PEW「溢价取最早、折价取最迟」判断</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">component</td><td>容斥的"三块区域"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">consider</td><td>"Let's consider…"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">credits</td><td>(银行)计入利息</td><td class="root">「the bank credits interest at」标出计息方式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">currently selling for / sells for</td><td>当前售价为</td><td class="root">债券价格条件标记,给价反求利率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">denote</td><td>de-+note(记)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">exactly</td><td>恰好(=)</td><td class="root">锁定单点取值,勿累加成累积概率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Express in terms of</td><td>用...(符号)表示</td><td class="root">要符号答案</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">final payment / smaller final payment</td><td>末期付款 / 较小的末期付款</td><td class="root">引出 drop/balloon 计算</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Find …</td><td>求</td><td class="root">指令动词,与 Calculate/Determine 等价</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">first payment ... years from now</td><td>首付时点(几年后)</td><td class="root">时间表达,定位起始与递延</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">first payment is due one year after the loan</td><td>首付款在放款一年后到期</td><td class="root">时间起点标记,影响 immediate/due 判断</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">force of interest</td><td>利息力(δ_t)</td><td class="root">主场景标记,后接δ_t=…公式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">forward rate, deferred ... years</td><td>……年期远期利率,递延……年</td><td class="root">全章第一题眼,几乎每道大题都出现</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">full immunization / fully immunized</td><td>完全免疫</td><td class="root">对应「一前一后两笔资产现金流」条件,区别于 Redington</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">illustrate</td><td>lustr(光)→ 照亮说明</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">immediately after / in lieu of / thereafter</td><td>紧接其后 / 用以替代 / 此后</td><td class="root">时间与置换条件标记,常见于年金互换题</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">immediately after receiving the coupon</td><td>收到息票后立即</td><td class="root">买卖/转手时点标记,影响账面值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">immediately after the …th payment</td><td>在第…次付款后立即</td><td class="root">再融资/求余额题的时点锚,务必精准定位</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">increasing annually by / at the rate of</td><td>每年递增</td><td class="root">几何级数付款与通胀挂钩年金的信号</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">increasing/decreasing by ... % each year</td><td>每年递增/递减...%</td><td class="root">几何/算术递增递减年金题眼,COLA、CPI 场景</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">indicate</td><td>"A survey indicates…"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">inflation rate</td><td>通胀率</td><td class="root">核心场景变量,常与 real rate 组成 i'=(i−r)/(1+r)</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">installment</td><td>(每期)分期付款额</td><td class="root">"equal annual installments" 高频</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">interest portion / principal portion</td><td>付款中的利息部分 / 本金部分</td><td class="root">问的是某期占比</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">interval</td><td>概率取值于 0~1 区间</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">invest</td><td>投资(投入)</td><td class="root">与deposit并列的投入动词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">is equivalent to</td><td>等价于,等值于</td><td class="root">等值方程与equated time题关键句,"a single payment…is equivalent to…"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">level / equal annual payments</td><td>等额年付款(分期偿还)</td><td class="root">贷款偿还类题眼</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">level payments</td><td>等额(水平)付款</td><td class="root">判定题型基线;与变额付款相对</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">loan</td><td>贷款</td><td class="root">借还场景,"a loan of 1000"、"to be repaid by"、"repaying a loan"</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">manipulate</td><td>mani(手)→ 摆弄</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">matures at par</td><td>按面值到期</td><td class="root">债券描述几乎每题必现,暗示赎回值=面值</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">minimum yield / not less than</td><td>最低收益/不低于</td><td class="root">赎回题「保证最低收益」措辞</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">occur</td><td>oc-+cur(跑)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">outstanding balance / outstanding principal</td><td>未偿还余额 / 未偿本金</td><td class="root">最常见求解目标;prospective/retrospective 两法算它</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">par value / face value</td><td>面值/票面价值</td><td class="root">界定债券规模,出现频率最高</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">par value / redeemable at par</td><td>面值/按面值赎回</td><td class="root">债券条件高频措辞,决定现金流</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">payable continuously</td><td>连续支付</td><td class="root">连续年金场景措辞,配 force of interest δ</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">payment</td><td>付款,支付额</td><td class="root">核心场景名词,single/final/second payment、two payments of 2,500</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">per (day / loss / annum …)</td><td>每/按……计</td><td class="root">费率与年化表达,FM 中 per annum 常接 compounded</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">perpetuity</td><td>永续年金</td><td class="root">高频场景;-immediate/-due 需辨认首付时点</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">perpetuity(-immediate/-due)</td><td>永续年金(期末/期初)</td><td class="root">读到即 PV=1/i 或 1/d</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">portray</td><td>"Venn diagrams portray sets"</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">price to yield / purchased to yield</td><td>以……收益率定价买入</td><td class="root">给出收益率而非价格的表述,需反推价格</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">proportion</td><td>pro-+portion(部分)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">purchase / provide</td><td>购买/(年金)提供</td><td class="root">"用一笔钱购买年金"场景动词</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">purchased / bought / priced to yield</td><td>按……收益率买入/定价</td><td class="root">把价格与收益率挂钩的关键连接语</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">random</td><td>at random=随机地</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">real rate of interest</td><td>实际利率</td><td class="root">主要求解目标,注意与 market rate 区分</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">redeemable at (par) / redemption value</td><td>(按面值)可赎回/赎回值</td><td class="root">赎回场景核心</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">Redington immunization</td><td>Redington 免疫</td><td class="root">免疫题核心场景词,触发 PV/一阶/二阶三条件</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">refinance / renegotiate</td><td>再融资 / 重新协商贷款</td><td class="root">场景核心动词,常伴随利率或期限变更</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">reinvest / reinvested</td><td>再投资</td><td class="root">再投资利率整节核心动词,「reinvests the interest at ...」</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">reinvest(ed)</td><td>再投资</td><td class="root">息票再投资场景,总积累值口径不同于债券收益率</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">repaid by / repaid with</td><td>以…偿还 / 分期偿还</td><td class="root">贷款题标准开场句式,几乎每题都有</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">repay</td><td>偿还(贷款)</td><td class="root">借贷场景,标出还款现金流</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">select</td><td>se-+lect(挑,同 elect)</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">sells at par</td><td>平价出售/发行</td><td class="root">关键信号:票息率=收益率,可直接套用简化公式</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">semiannual / annual coupons</td><td>半年期/年期息票</td><td class="root">规定票息频率,决定 n 与利率折算,题干必给</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">simplify</td><td>simple + -ify</td><td class="root"><input type="checkbox" aria-label="已掌握"></td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">spot rate</td><td>即期利率</td><td class="root">核心已知/目标,题干常以表格形式给出</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">takes out a loan / borrows X</td><td>办理一笔贷款 / 借入 X</td><td class="root">开场设定,X 通常为待求未知量</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">term structure of interest rates</td><td>利率期限结构</td><td class="root">场景总纲措辞,常与 yield curve 互指</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">which of the following (must be true)</td><td>下列哪一项(必然成立)</td><td class="root">选择/判断题信号,常配 I/II/III 罗马数字选项,答案多为式子或判断</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">withdraw / withdrawal</td><td>取出/提款</td><td class="root">与 deposit 成对</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">yield rate / internal rate of return (IRR)</td><td>收益率/内部收益率</td><td class="root">求解目标,注意多解陷阱</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">yield-to-maturity / yield rate</td><td>到期收益率/收益率</td><td class="root">求解目标之一,须用计算器解 IRR</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">zero coupon bond</td><td>零息债券</td><td class="root">免疫与精确匹配题的核心构造工具,duration=期限</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+<tr><td class="en">zero-coupon bond</td><td>零息债券</td><td class="root">定价反推利率的主力场景,常配"prices of"给表</td><td class="mst"><input type="checkbox" aria-label="已掌握"></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div></section>
+<footer><div class="wrap" style="padding:26px 22px;color:var(--mute);font-size:13px;text-align:center">
+  <p><b>Exam FM · 词汇总表</b> · 每科唯一词汇载体,直接维护本页;新章词汇加对应段。</p>
+</div></footer>
+<script>
+(function(){
+  // zh-eye: 表头中文列加 👁, 点击遮住整列自测; 单格点击揭示
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('\u4E2D\u6587') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '\uD83D\uDC41'; btn.title = '\u906E\u4F4F/\u663E\u793A\u4E2D\u6587\uFF0C\u81EA\u6D4B\u7528';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '\uD83D\uDE48' : '\uD83D\uDC41';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid var(--line);color:inherit;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(0,0,0,.08)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+<script>
+(function(){
+  // 是否已掌握: 勾选即从列表隐藏; 不持久化, 刷新重置
+  document.addEventListener('change', function(e){
+    var cb = e.target;
+    if(cb.tagName !== 'INPUT' || cb.type !== 'checkbox') return;
+    if(!cb.closest('.mst') && !cb.closest('.mst-ph')) return;
+    if(!cb.checked) return;
+    var row = cb.closest('tr') || cb.closest('.ph');
+    if(row) row.style.display = 'none';
+  });
+})();
+</script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+</body>
+</html>

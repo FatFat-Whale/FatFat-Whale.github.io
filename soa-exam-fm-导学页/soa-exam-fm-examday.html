@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- 源页: FM 考务与冲刺策略(格式/权重/大纲对照/pacing/checklist), 手维护; 壳「冲刺」组挂链。事实依据 SOA 2026-06 Exam FM Syllabus PDF 与 SOA 计算器政策页。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · 🎯 考务与冲刺策略</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#a63a3a; --accent-deep:#7c2626; --accent-soft:#f7e8e8; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0; --ok:#1d7a4f; --ok-soft:#e4f1e9;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #4a1d1d);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:62ch;margin:0 0 22px}
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600;background:var(--accent-soft);color:var(--accent-deep)}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card p{margin:8px 0}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--ok);background:var(--ok-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  .pill-ok{display:inline-block;background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok);
+    border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+  .pill-off{display:inline-block;background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn);
+    border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+  ul.ck{list-style:none;margin:8px 0;padding:0}
+  ul.ck li{margin:9px 0;padding-left:34px;position:relative;font-size:15.5px}
+  ul.ck li::before{content:"☐";position:absolute;left:6px;top:0;color:var(--accent);font-size:17px}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid #c9d2e0;border-bottom-width:2px;border-radius:6px;
+    padding:1px 7px;font-size:12.5px;white-space:nowrap}
+  mjx-container{max-width:100%}
+  footer{background:#16243d;color:#c4cde0;padding:26px 0;margin-top:30px;font-size:13.5px}
+  footer a{color:var(--hi);text-decoration:none}
+  footer b{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>🎯 考务与冲刺策略</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Exam Strategy · 依据 SOA 2026-06 官方大纲</p>
+    <h1>30 题 · 150 分钟:<em>五域全在你的九章里</em></h1>
+    <p class="lead">FM 大纲五个域,本课程 L01–L09 全覆盖、无超纲章——冲刺策略是按权重分配,而不是砍章节。本页:格式、五域权重折算题数、大纲边界备注(哪些明确不考)、pacing 与考日清单。事实取自 SOA 官方 syllabus,考前请再瞄官网 Updates。</p>
+  </div>
+</div>
+
+<nav class="modnav" aria-label="本页模块">
+  <a href="#format">考试格式</a>
+  <a href="#weights">权重与题数</a>
+  <a href="#mapping">大纲边界</a>
+  <a href="#pacing">150 分钟怎么花</a>
+  <a href="#checklist">考前清单</a>
+</nav>
+
+<section id="format">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag">Format</span><h2 class="sec-title">考试格式(官方原文要点)</h2></div></div>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>项目</th><th>规则</th><th>对你的含义</th></tr>
+        <tr><td>题量 / 时长</td><td>30 道五选一 MCQ · 2.5 小时 · Prometric CBT</td><td>平均 5 分钟/题,比 P 更紧,详见 §04</td></tr>
+        <tr><td>Pilot 题</td><td>卷中随机混入少量<b>不计分</b>试测题</td><td>怪题按流程猜完就走</td></tr>
+        <tr><td>空题计错</td><td>官方原文:所有未作答题按错误计分</td><td><b>交卷前 30/30 全有答案</b></td></tr>
+        <tr><td>答案分布</td><td>无均匀分布要求</td><td>连续同字母不必慌</td></tr>
+        <tr><td>出分</td><td>非正式 pass/fail 考后 <b>1 小时内</b>邮件</td><td>当天知结果</td></tr>
+        <tr><td>计算器</td><td>官方原话:<b>强烈推荐 BA II Plus(含 Professional)</b>——「可能有题必须用它解利率」</td><td>解 i 的年金/贷款题靠 TVM 键;TI-30XS 只能当辅机</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="weights">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag">Weights</span><h2 class="sec-title">五域权重 → 折算成题数</h2></div></div>
+    <p class="sec-sub">2026-06 大纲权重(官方):按 30 题折算。</p>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>大纲域</th><th>权重</th><th>≈ 题数</th><th>对应章</th></tr>
+        <tr><td><b>年金</b>(非或有现金流)</td><td><b>20–30%</b></td><td><b>6–9 题</b></td><td>L03 · L04(等差/等比/递延/永续)</td></tr>
+        <tr><td><b>组合与资产负债管理</b></td><td><b>20–30%</b></td><td><b>6–9 题</b></td><td>L08 久期凸性免疫 · L09 即期远期</td></tr>
+        <tr><td>贷款</td><td>15–25%</td><td>5–7 题</td><td>L06(摊还/余额/再融资)</td></tr>
+        <tr><td>债券</td><td>15–25%</td><td>5–7 题</td><td>L07(定价/摊销/callable)</td></tr>
+        <tr><td>货币时间价值</td><td>5–15%</td><td>2–4 题</td><td>L01 · L02(利率互化/变力度/价值方程)</td></tr>
+      </table>
+      <div class="mnemonic"><span class="ic">🧠</span><span class="t"><b>年金 + ALM 合占一半</b>——年金符号家族(<a href="soa-exam-fm-e01-annuities-l03-l04.html">FM E01 串讲</a>)和久期免疫(<a href="soa-exam-fm-e02-bonds-l07-l08.html">FM E02 串讲</a>)是两大主战场;TVM 题少但都是送分,别丢。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="mapping">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag">Syllabus Notes</span><h2 class="sec-title">大纲边界:明确不考的 & 必读附注</h2></div></div>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>条目</th><th>状态</th><th>说明</th></tr>
+        <tr><td>L01–L09 全部章</td><td><span class="pill-ok">在纲</span></td><td>五域完整覆盖,无超纲章——和 P 不同,FM 不用砍内容</td></tr>
+        <tr><td>两付息日之间的债券估值</td><td><span class="pill-off">明确不考</span></td><td>大纲原文括注 "valuation of bonds between coupon payment dates will not be covered"——脏价/净价不用背</td></tr>
+        <tr><td>利率互换 · 利率决定因素</td><td><span class="pill-off">已出纲</span></td><td>旧大纲内容;官方 2018 样题库里这类题已标删或应跳过(样题索引页已标)</td></tr>
+        <tr><td>Study Note <b>FM-24-17</b>(久期凸性近似 §1–4)</td><td><span class="pill-ok">必读</span></td><td>大纲唯一指定必读注记:修正久期一阶 / Macaulay 一阶 / 凸性二阶近似——L08 已全覆盖,考前把 <a href="soa-exam-fm-e02-bonds-l07-l08.html">FM E02</a> Q4 走一遍即等效复习</td></tr>
+        <tr><td>变力度 δ(t)</td><td><span class="pill-ok">在纲</span></td><td>大纲 1b 点名 "variable force of interest"——\(a(t)=e^{\int\delta}\) 这类题别漏</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="pacing">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag">Pacing</span><h2 class="sec-title">150 分钟怎么花:两轮法</h2></div></div>
+    <div class="card accent">
+      <table class="map">
+        <tr><th>阶段</th><th>预算</th><th>动作</th></tr>
+        <tr><td><b>第一轮</b>(0–95 分钟)</td><td>≤3.5 分钟/题</td><td>顺序过 30 题:TVM/年金符号题当场收割;3.5 分钟无思路 → 蒙暂定答案 + Flag,走人</td></tr>
+        <tr><td><b>第二轮</b>(95–135 分钟)</td><td>≈40 分钟</td><td>只回 Flag 题;免疫/再融资这类多步题放这轮,每题上限 7 分钟</td></tr>
+        <tr><td><b>收尾</b>(最后 15 分钟)</td><td>—</td><td>无空题、Flag 清零;TVM 键的 BGN/END 状态复查一次</td></tr>
+      </table>
+      <div class="note tip"><span class="ic">💡</span><span class="t"><b>FM 特有省时器:</b>解 i 的题直接上 BA II Plus TVM(N/I·Y/PV/PMT/FV),别手解多项式;算完一题就把 TVM 清一次(<span class="kbd">2nd</span> <span class="kbd">CLR TVM</span>),BGN 模式用完立刻切回——这两条是 FM 考场事故榜前两名。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag">Checklist</span><h2 class="sec-title">考前一天 & 当天清单</h2></div></div>
+    <div class="card accent">
+      <h3>考前一天(8/12)</h3>
+      <ul class="ck">
+        <li>确认 Prometric 预约邮件:考场地址、报到时间</li>
+        <li>证件:与报名姓名完全一致的有效带照片证件</li>
+        <li>计算器:BA II Plus 主力 + 备用机/新电池(允许清单内可带多台)</li>
+        <li>过一遍 FM E01/E02 串讲的 BA II Plus 按键行,TVM 五键肌肉记忆</li>
+        <li>晚上只翻 <a href="soa-exam-fm-formulas.html">公式总表</a> 星级卡 + FM-24-17 三个近似式</li>
+      </ul>
+      <h3>考试当天(8/13)</h3>
+      <ul class="ck">
+        <li>进场前:计算器<b>清内存并准备当场演示</b>(BA II Plus:<span class="kbd">2nd</span> <span class="kbd">RESET</span> <span class="kbd">ENTER</span>)——官方要求向监考展示</li>
+        <li>开考先设小数位(<span class="kbd">2nd</span> <span class="kbd">FORMAT</span> 9)再开第 1 题</li>
+        <li>按 §04 两轮法;每题算完看一眼 BGN 指示灯</li>
+        <li>考完 1 小时内查邮箱</li>
+      </ul>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>计算器红线:</b>使用不在册型号 = 成绩作废。允许清单(SOA 官方):BA-35 · BA II Plus(含 Professional)· TI-30Xa · TI-30XII(S/B)· TI-30XS/XB MultiView。</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Exam FM · 考务与冲刺策略</b> · 手维护源页;事实依据 SOA「Financial Mathematics Exam—April 2026」Syllabus PDF 与 SOA 计算器政策页(8 月卷考前请核官网 Updates)。配套:<a href="soa-exam-fm-samples.html">📝 官方样题索引</a> · <a href="soa-exam-fm-formulas.html">Σ 公式总表</a></p>
+  </div>
+</footer>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<!--
+  SOA Exam FM 导学页 · L06 Loans
+  源: ASM Exam FM Study Manual 17th ed, Chapter 6 (p.271-330)
+  管线见 _Meta/process/soa-fm-导学页-sop.md
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · L06 导学 · 贷款</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#0891b2; --accent-deep:#055e74; --accent-soft:#e6f4f7; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(5,94,116,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>L06 · 贷款</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">2026-07-08 · 周三 · 导学已备(7/24 排学)</p>
+    <h1>第6章 · <em>Loans 贷款</em></h1>
+    <p class="lead">amortize 的词根是 mort(死亡)——逐期付款把贷款"杀死"。每期付款先付利息、剩余还本;本金偿还额按 (1+i) 等比放大。摊还表这台机器学会了,Ch7 债券直接换皮沿用。教材开篇 Concept Alert:此章是必须运用自如的基本功。对照课本 Chapter 6 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch6 <b>习题最多章(110 题)</b></span>
+      <span class="pill">课本 <b>p.271–330</b>(理论 ≈ 20 页)</span>
+      <span class="pill">五小节:摊还 / 变付 / 等额本金 / 尾款 / 再融资</span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 4 句话</p>
+      <ol>
+        <li>递推三件套:\(I_t=iB_{t-1}\)、\(P_t=R_t-I_t\)、\(B_t=B_{t-1}-P_t\);<b>本金偿还额等比,公比 (1+i)</b>。</li>
+        <li>余额两视角:<b>前瞻</b> = 剩余付款 PV(\(Ra_{\overline{n-t}|}\));<b>追溯</b> = 原贷款滚息 − 已付积累(\(L(1+i)^t-Rs_{\overline{t}|}\))。</li>
+        <li>期数非整数收尾:<b>balloon(第 ⌊N⌋ 期多付)或 drop(第 ⌈N⌉ 期少付)</b>,两者差一年利息 \(X_2=(1+i)X_1\)。</li>
+        <li>再融资通法:<b>旧条款算时点余额,令其等于新条款付款的 PV</b>。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-fm-l05-additional-applications.html">L05 利率的其他应用</a>
+    <span class="arr">→</span>
+    <span class="here">L06 本章</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <a href="soa-exam-fm-l07-bonds.html">L07 债券</a>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#syllabus">🎯 考纲</a>
+  <a href="#cheat">核心</a>
+  <a href="#core-6a">6a 摊还</a>
+  <a href="#core-6bc">6bc 变付与等额本金</a>
+  <a href="#core-6d">6d 尾款</a>
+  <a href="#core-6e">6e 再融资</a>
+  <a href="#calc">AMORT 工作表</a>
+  <a href="#insight">直觉拓展</a>
+</nav>
+
+<section id="syllabus">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">◎</span><div><span class="sec-tag tag-accent">Syllabus</span><h2 class="sec-title">考纲对标 · 贷款 ③</h2></div></div>
+    <p class="sec-sub">SOA 2026 官方 syllabus 本章命中的 learning outcomes 逐条列出(★ = 高频重点)。五域权重与题数分配见 <a href="soa-exam-fm-examday.html">考务页 ↗</a>。</p>
+    <div class="card accent" style="padding:0;overflow:hidden">
+      <table class="map">
+        <tr><th style="width:32%">考纲域 · 权重(≈题数)</th><th>本章 learning outcomes(★=重点)</th></tr>
+        <tr><td><b>贷款 · 15–25% (≈5–7 题)</b></td><td><b>3a</b> 定义: 本金/利息、term、<b>未偿余额 outstanding balance</b>、final payment (drop / balloon)、amortization<br><b>3b</b> 4-of-5 (期数/利率/付款额/付款周期/本金) 求余项<br>★ <b>3b</b> 任意时点<b>未偿余额</b> (前瞻 prospective / 回顾 retrospective)<br>★ <b>3b</b> 单期<b>本金/利息拆分</b>; 含 refinancing 再融资情形</td></tr>
+      </table>
+    </div>
+    <div class="note tip"><span class="ic">🎯</span><span class="t"><b>本章重点:</b> 摊还表是核心: 余额=前瞻(剩余付款现值)=回顾(本金滚息减已还终值); 本息拆分 + drop/balloon 尾款 + 再融资 高频。</span></div>
+  </div>
+</section>
+
+<section id="cheat" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc t"><h4>递推三件套</h4>
+        <p>\(I_t=iB_{t-1}\) · \(P_t=R_t-I_t\) · \(B_t=B_{t-1}-P_t\)</p>
+        <p><span class="fx-de" data-tip="推导:P_t=Rv^{n-t+1}:t 每加 1 少一个 v,即乘 (1+i)" tabindex="0">推</span>本金等比:\(P_{t+s}=P_t(1+i)^s\)</p></div>
+      <div class="cc t"><h4>任意一行直取</h4>
+        <p><span class="fx-de" data-tip="推导:由前瞻余额 B_{t-1}=Ra:I_t=iB_{t-1} 化简,P_t=R-I_t" tabindex="0">推</span>\(I_t=R(1-v^{n-t+1})\) · \(P_t=Rv^{n-t+1}\)</p>
+        <p>\(B_t=Ra_{\overline{n-t}|}\)</p></div>
+      <div class="cc"><h4>余额双视角</h4>
+        <p><span class="fx-de" data-tip="推导:余额=剩余付款的现值(价值方程站在 t 时刻看未来)" tabindex="0">推</span>前瞻 \(B_t=Ra_{\overline{n-t}|}\)</p>
+        <p><span class="fx-de" data-tip="推导:余额=贷款滚存到 t 减去已还付款滚存 Rs_t(看过去)" tabindex="0">推</span>追溯 \(B_t=L(1+i)^t-Rs_{\overline{t}|}\)</p></div>
+      <div class="cc"><h4>变付款 / 等额本金</h4>
+        <p>\(P_t=(1+i)P_{t-1}+(R_t-R_{t-1})\)</p>
+        <p>等额本金:\(R_t=X+i[L-(t-1)X]\),付款等差递减</p></div>
+      <div class="cc t"><h4>Balloon / Drop</h4>
+        <p>\(L=Ra_{\overline{\lfloor N\rfloor}|}+X_1v^{\lfloor N\rfloor}=Ra_{\overline{\lfloor N\rfloor}|}+X_2v^{\lceil N\rceil}\)</p>
+        <p>\(X_2=(1+i)X_1\);FV 符号定补/退</p></div>
+      <div class="cc"><h4>再融资</h4>
+        <p>\(B_t^{旧}=R'a_{\overline{m}|j}^{新}\)(追加 X 先扣)</p>
+        <p>AMORT:P1/P2 → BAL/PRN/INT</p></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>不造整表直接取摊还表任意一行:\(I_t\)、\(P_t\)、\(B_t\) 三公式 + <b>本金等比</b>推贷款额。</li>
+          <li>前瞻/追溯双法求余额,按题给信息选边;付款乱七八糟时前瞻只看未来。</li>
+          <li>负摊还、等额本金、balloon/drop、再融资四类变体全能列价值方程。</li>
+          <li>AMORT 工作表:P1/P2 区间合计本金/利息 + BAL 一键取。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <p class="dim" style="margin-top:6px">110 道习题全旧考题(6a 独占 52 题),六类:</p>
+        <ol class="dim routine">
+          <li>第 t 期利息/本金直取(公式或 AMORT)。</li>
+          <li>本金等比推贷款额/利率(Ex 6.1–6.3 型)。</li>
+          <li>余额前瞻/追溯选边。</li>
+          <li>balloon/drop 互推(差一年利息)。</li>
+          <li>再融资/重谈(通法两步)。</li>
+          <li>\((Ia)/(Da)\) 型变付款。</li>
+        </ol>
+        <p class="dim">选择题技巧:i=0 极端值排除法(解答区 p.289 点名)。</p>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 11 / 全章 110)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>6a.16</b></td><td>第t期利息直取 + 总利息=付款和−贷款额</td><td style="white-space:nowrap"><button class="kxb" data-kx="6a.16" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">递推三件套代表题:总利息=L 反解 i,再取首年利息(11/00 #12)</td></tr>
+<tr class="kxd" data-kxq="6a.16" style="display:none"><td colspan="4"><div class="kx-qtx">Kevin takes out a 10-year loan of \( L \), which he repays by the amortization method at an annual effective interest rate of \( i \). Kevin makes payments of 1000 at the end of each year. The total amount of interest repaid during the life of the loan is also equal to \( L \). Calculate the amount of interest repaid during the first year of the loan.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 725 \)</span><span class="kx-opt"><b>(B)</b> \( 750 \)</span><span class="kx-opt"><b>(C)</b> \( 755 \)</span><span class="kx-opt"><b>(D)</b> \( 760 \)</span><span class="kx-opt"><b>(E)</b> \( 765 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;总利息=付款和−贷款额,并令其=L</td><td>\( 10(1000) - L = L \Rightarrow L = 5000,\ L = 1000a_{\overline{10}|} \Rightarrow a_{\overline{10}|}=5 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;由 a 值反解利率</td><td>\( a_{\overline{10}|}=5 \Rightarrow i \approx 15.1\% \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;首年利息</td><td>\( I_1 = 1000(1-v^{10}) = 754.95 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6a.52</b></td><td>追溯法由某期本金反解等额付款</td><td style="white-space:nowrap"><button class="kxb" data-kx="6a.52" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">递推三件套 + 追溯余额的干净反解题(CAS 11/82 #10)</td></tr>
+<tr class="kxd" data-kxq="6a.52" style="display:none"><td colspan="4"><div class="kx-qtx">A \$40,000 loan is to be repaid in level installments due at the end of each year. The effective annual interest rate is 5%. The principal contained in the third installment is \$460. To the nearest \$10, what is the amount of each installment?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \$2,390 \)</span><span class="kx-opt"><b>(B)</b> \( \$2,400 \)</span><span class="kx-opt"><b>(C)</b> \( \$2,410 \)</span><span class="kx-opt"><b>(D)</b> \( \$2,420 \)</span><span class="kx-opt"><b>(E)</b> \( \$2,430 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;追溯法写第2期末余额</td><td>\( B_2 = 40000(1.05)^2 - R\,s_{\overline{2}|} = 44100 - 2.05R \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;第3期本金 = R − iB_2</td><td>\( P_3 = R - 0.05(44100 - 2.05R) = 1.1025R - 2205 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;令 P_3=460 解 R</td><td>\( 1.1025R - 2205 = 460 \Rightarrow R = 2417 \approx 2420 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6a.35</b></td><td>本金等比:由三期利息反解付款额</td><td style="white-space:nowrap"><button class="kxb" data-kx="6a.35" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">本金几何递增的招牌题,X²抵消技巧(SOA 5/89 #11)</td></tr>
+<tr class="kxd" data-kxq="6a.35" style="display:none"><td colspan="4"><div class="kx-qtx">A loan is to be amortized by \( n \) level annual payments of \( X \), where \( n &gt; 5 \). You are given: (i) The amount of interest in the first payment is 604.00. (ii) The amount of interest in the third payment is 593.75. (iii) The amount of interest in the fifth payment is 582.45. Calculate \( X \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 704 \)</span><span class="kx-opt"><b>(B)</b> \( 739 \)</span><span class="kx-opt"><b>(C)</b> \( 1{,}163 \)</span><span class="kx-opt"><b>(D)</b> \( 1{,}198 \)</span><span class="kx-opt"><b>(E)</b> \( 1{,}233 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;各期本金=X−利息,成等比</td><td>\( P_1=X-604,\ P_3=X-593.75,\ P_5=X-582.45 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;等比性质 P_1/P_3 = P_3/P_5</td><td>\( \frac{X-604}{X-593.75} = \frac{X-593.75}{X-582.45} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;交叉相乘,X²项抵消解出 X</td><td>\( X = 704 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6a.3</b></td><td>本金等比 + 追溯余额=3X 反解付款</td><td style="white-space:nowrap"><button class="kxb" data-kx="6a.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">追溯余额与本金等比结合的经典 balloon 引子题(CAS 5/83 #8)</td></tr>
+<tr class="kxd" data-kxq="6a.3" style="display:none"><td colspan="4"><div class="kx-qtx">A \$6,000 loan is being repaid with regular payments of \( X \) at the end of each year for as long as necessary plus a smaller payment one year after the final regular payment. Immediately after the ninth payment, the outstanding principal is three times the size of the regular payment (that is, \( 3X \)). If the annual interest rate \( i \) is 10%, what is the value of \( X \)?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> Less than \$850</span><span class="kx-opt"><b>(B)</b> At least \$850, but less than \$875</span><span class="kx-opt"><b>(C)</b> At least \$875, but less than \$900</span><span class="kx-opt"><b>(D)</b> At least \$900, but less than \$925</span><span class="kx-opt"><b>(E)</b> At least \$925</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;追溯法写第9期末余额=3X</td><td>\( B_9 = 6000(1.1)^9 - X\,s_{\overline{9}|} = 3X \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;移项解 X</td><td>\( X = \frac{6000(1.1)^9}{3 + s_{\overline{9}|}} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入数值</td><td>\( = \frac{14147.69}{16.579477} = 853.33 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6a.12</b></td><td>前瞻法由剩余余额反推贷款额</td><td style="white-space:nowrap"><button class="kxb" data-kx="6a.12" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">余额双视角(前瞻)最干净的入门题(CAS 5/83 #2)</td></tr>
+<tr class="kxd" data-kxq="6a.12" style="display:none"><td colspan="4"><div class="kx-qtx">A loan is to be repaid in level installments payable at the end of each year for seven years. The effective annual interest rate on the loan is 5%. After the 4th payment the principal remaining is \$5,000. Which of the following is closest to the amount of the loan?</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( \$10,625 \)</span><span class="kx-opt"><b>(B)</b> \( \$10,675 \)</span><span class="kx-opt"><b>(C)</b> \( \$10,725 \)</span><span class="kx-opt"><b>(D)</b> \( \$10,775 \)</span><span class="kx-opt"><b>(E)</b> \( \$10,825 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;前瞻法:第4期后余额=剩余3期现值</td><td>\( R\,a_{\overline{3}|} = 5000 \Rightarrow R = \frac{5000}{a_{\overline{3}|}} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;贷款额=全部7期现值</td><td>\( L = R\,a_{\overline{7}|} = 5000\,\frac{a_{\overline{7}|}}{a_{\overline{3}|}} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入 i=5%</td><td>\( L = 10624 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6a.19</b></td><td>本金等比(两年期):由某期利息推另一期本金</td><td style="white-space:nowrap"><button class="kxb" data-kx="6a.19" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">非年度周期的本金等比,先折算周期利率(CAS 11/99 #8)</td></tr>
+<tr class="kxd" data-kxq="6a.19" style="display:none"><td colspan="4"><div class="kx-qtx">Larry is repaying a loan with payments of \$2,500 at the end of every two years. If the amount of interest in the fourth installment is 2,458, find the amount of principal in the seventh installment. Assume an annual effective interest rate of 13%.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> Less than \$60</span><span class="kx-opt"><b>(B)</b> At least \$60, but less than \$70</span><span class="kx-opt"><b>(C)</b> At least \$70, but less than \$80</span><span class="kx-opt"><b>(D)</b> At least \$80, but less than \$90</span><span class="kx-opt"><b>(E)</b> At least \$90</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;求第4期本金</td><td>\( P_4 = 2500 - 2458 = 42 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;两年期利率 j 及本金等比公比</td><td>\( j = 1.13^2 - 1 = 0.2769,\quad P_7 = P_4(1+j)^{7-4} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入求第7期本金</td><td>\( P_7 = 42(1.2769)^3 = 87.44 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6d.1</b></td><td>Drop 尾款利息(整付次数 + 追溯余额)</td><td style="white-space:nowrap"><button class="kxb" data-kx="6d.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">balloon/drop 类最干净的尾款利息题(CAS 5/98 #8)</td></tr>
+<tr class="kxd" data-kxq="6d.1" style="display:none"><td colspan="4"><div class="kx-qtx">A loan of \$1,000 is repaid by annual payments of \$350 plus a smaller, final payment made one year after the final regular payment. The first payment is made one year after the loan. The effective annual interest rate is 10%. Determine the amount of interest in the final payment.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> Less than \$15.50</span><span class="kx-opt"><b>(B)</b> At least \$15.50, but less than \$16.00</span><span class="kx-opt"><b>(C)</b> At least \$16.00, but less than \$16.50</span><span class="kx-opt"><b>(D)</b> At least \$16.50, but less than \$17.00</span><span class="kx-opt"><b>(E)</b> \$17.00 or more</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;求整付次数</td><td>\( 1000 = 350\,a_{\overline{n}|} \Rightarrow n = 3.53 \) (3 次整付,第 4 次为尾款)</td><td class="xr">代数/计算</td></tr><tr><td>②&nbsp;追溯法求第3期末余额</td><td>\( B_3 = 1000(1.1)^3 - 350\,s_{\overline{3}|} = 172.50 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;尾款利息 = iB_3</td><td>\( I_4 = 0.10(172.50) = 17.25 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6c.1</b></td><td>等额本金 vs 等额付款:令总付款相等解 i</td><td style="white-space:nowrap"><button class="kxb" data-kx="6c.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">等额本金题型代表,利息=公比未变的等差和(11/01 #6)</td></tr>
+<tr class="kxd" data-kxq="6c.1" style="display:none"><td colspan="4"><div class="kx-qtx">A 10-year loan of 2000 is to be repaid with payments at the end of each year. It can be repaid under the following two options: (i) Equal annual payments at an annual effective rate of 8.07%. (ii) Installments of 200 each year plus interest on the unpaid balance at an annual effective rate of \( i \). The sum of the payments under option (i) equals the sum of the payments under option (ii). Determine \( i \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 8.75\% \)</span><span class="kx-opt"><b>(B)</b> \( 9.00\% \)</span><span class="kx-opt"><b>(C)</b> \( 9.25\% \)</span><span class="kx-opt"><b>(D)</b> \( 9.50\% \)</span><span class="kx-opt"><b>(E)</b> \( 9.75\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;选项(i)总付款</td><td>\( \frac{2000}{a_{\overline{10}|.0807}} = 299,\quad \text{总额}=10(299)=2990 \)</td><td class="xr">代数/计算</td></tr><tr><td>②&nbsp;选项(ii)总付款 = 本金 + 递减利息和</td><td>\( 2000 + i(2000+1800+\cdots+200) = 2000 + 11000i \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;令两者相等解 i</td><td>\( 2990 = 2000 + 11000i \Rightarrow i = 0.09 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6b.3</b></td><td>递减付款 (Da) + 由某期本金反解贷款额</td><td style="white-space:nowrap"><button class="kxb" data-kx="6b.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">(Da) 型变付款代表,本金=余额差化简为 a_n(SAMPLE/00 #36)</td></tr>
+<tr class="kxd" data-kxq="6b.3" style="display:none"><td colspan="4"><div class="kx-qtx">Don takes out a 10-year loan of \( L \), which he repays with annual payments at the end of each year using the amortization method. Interest on the loan is charged at an annual effective rate of \( i \). Don repays the loan with a decreasing series of payments. He repays 1000 in year one, 900 in year two, 800 in year three, ..., and 100 in year ten. The amount of principal repaid in year three is equal to 600. Calculate \( L \).</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 4070 \)</span><span class="kx-opt"><b>(B)</b> \( 4120 \)</span><span class="kx-opt"><b>(C)</b> \( 4170 \)</span><span class="kx-opt"><b>(D)</b> \( 4220 \)</span><span class="kx-opt"><b>(E)</b> \( 4270 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;第3年本金 = 余额差</td><td>\( P_3 = B_2 - B_3 = 100\big[(Da)_{\overline{8}|} - (Da)_{\overline{7}|}\big] = 600 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;化简差为 a_8 反解 i</td><td>\( (Da)_{\overline{8}|} - (Da)_{\overline{7}|} = a_{\overline{8}|} = 6 \Rightarrow i \approx 6.876\% \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;贷款额=递减年金现值</td><td>\( L = 100(Da)_{\overline{10}|} = 100\,\frac{10 - a_{\overline{10}|}}{i} = 4270 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6b.13</b></td><td>递增付款 (Ia):前瞻余额取某期利息</td><td style="white-space:nowrap"><button class="kxb" data-kx="6b.13" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">等差递增付款代表题,前瞻余额混合 (Ia)(SOA 11/88 #11)</td></tr>
+<tr class="kxd" data-kxq="6b.13" style="display:none"><td colspan="4"><div class="kx-qtx">Warren has a loan with an effective interest rate of 5% per annum. He makes payments at the end of each year for 10 years. The first payment is 200, and each subsequent payment increases by 10 per year. Calculate the interest portion in the fifth payment.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 58 \)</span><span class="kx-opt"><b>(B)</b> \( 60 \)</span><span class="kx-opt"><b>(C)</b> \( 62 \)</span><span class="kx-opt"><b>(D)</b> \( 65 \)</span><span class="kx-opt"><b>(E)</b> \( 67 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;前瞻法写第4期末余额(剩余付款 240,250,…,290)</td><td>\( B_4 = 230\,a_{\overline{6}|} + 10(Ia)_{\overline{6}|} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入 i=5% 求值</td><td>\( B_4 = 1337.84 \)</td><td class="xr">代数/计算</td></tr><tr><td>③&nbsp;第5期利息 = iB_4</td><td>\( I_5 = 0.05(1337.84) = 67 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>6e.3</b></td><td>再融资/重谈:原余额=新付款现值,算节省</td><td style="white-space:nowrap"><button class="kxb" data-kx="6e.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">再融资通法两步代表题,附总付款差算节省(SAMPLE/99 #7)</td></tr>
+<tr class="kxd" data-kxq="6e.3" style="display:none"><td colspan="4"><div class="kx-qtx">Paul lends 8000 to Peter. Peter agrees to pay it back in 10 annual installments at 7% with the first payment due in one year. After making 4 payments, Peter renegotiates to pay off the debt with 4 additional annual payments. The new payments are calculated so that Paul will get a 6.5% annual yield over the entire 8-year period. Determine how much money Peter saved by renegotiating.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> Less than 550</span><span class="kx-opt"><b>(B)</b> At least 550, but less than 600</span><span class="kx-opt"><b>(C)</b> At least 600, but less than 650</span><span class="kx-opt"><b>(D)</b> At least 650, but less than 700</span><span class="kx-opt"><b>(E)</b> At least 700</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;原年付款</td><td>\( R = \frac{8000}{a_{\overline{10}|.07}} = 1139.02 \)</td><td class="xr">代数/计算</td></tr><tr><td>②&nbsp;新付款满足 6.5% 收益方程</td><td>\( 1139.02\,a_{\overline{4}|.065} + X\,a_{\overline{4}|.065}\,v^4 = 8000 \Rightarrow X = 1538.87 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;节省 = 原总付 − 新总付</td><td>\( 10(1139.02) - 4(1139.02+1538.87) = 11390.20 - 10711.57 = 678.63 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 86(同题型二刷备用)· 跳过 13(离题/重复);全量评级存 _Meta/tools/data/exam-fm-key-exercises.json</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-6a">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">§6a · 课本 p.271–293</span><h2 class="sec-title">摊还:利息优先,剩余还本</h2></div></div>
+    <p class="sec-sub">为什么要拆利息/本金?按揭利息可抵税;贷方(精算师)账上只有利息部分是真赚的。</p>
+
+    <div class="card accent">
+      <h3>递推三件套与摊还表 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.271–274</div>
+      <p class="lede">每期付款 = 利息(按期初余额)+ 本金(剩余部分);余额随本金递减。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>递推三件套</span>
+        $$I_t=i\,B_{t-1}\qquad P_t=R_t-I_t\qquad B_t=B_{t-1}-P_t$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>本金等比,公比 1+i</b> — \(P_{t+s}=P_t(1+i)^s\);贷款额 = 全部本金之和。步数别多一:P₁ 到 P₁₀ 走 9 步(×1.05⁹)。</span></div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>任意一行直取(等额付款 R = L/a)</span>
+        $$I_t=R\,(1-v^{\,n-t+1})\qquad P_t=R\,v^{\,n-t+1}\qquad B_t=R\,a_{\overline{n-t}|}$$</div>
+      <p class="dim">总利息 = 总付款 − 原贷款额。摊还表与贷款额成比例——单位表算好,乘 L/a 缩放。</p>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 6.3</span><span class="src" style="margin:0">课本 p.275 · 等比双向推</span></div>
+        <p class="q">15 年贷款、7%,第 5 期本金 $187。求贷款额。</p>
+        <p>从 P₅ 向前折现 4 步、向后累积 10 步:\(L=187(a_{\overline{4}|}+s_{\overline{11}|})=187(3.3872+15.7836)\)。</p>
+        <span class="ans">= $3,585</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 认题型:知单期本金反推贷款额 → 贷款额 = 全部本金之和</td><td>\(L=\sum_{t=1}^{15}P_t\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>② 本金等比,公比 \(1+i\),以 \(P_5\) 为锚表出各期</td><td>\(P_t=P_5(1.07)^{t-5}\)</td><td class="xr"><span class="here">本章</span></td></tr>
+          <tr><td>③ 前 4 期向前折现、自身与后 10 期向后累积,打包成年金符号</td><td>\(\sum_{t=1}^{15}(1.07)^{t-5}=a_{\overline{4}|}+s_{\overline{11}|}\)</td><td class="xr"><a href="soa-exam-fm-l03-annuities.html">L03 年金 ↗</a></td></tr>
+          <tr><td>④ 代数值出结果</td><td>\(L=187(3.3872+15.7836)=3{,}585\)</td><td class="xr"><span class="here">计算器</span></td></tr>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="card accent">
+      <h3>余额双视角:前瞻 vs 追溯 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.271 / p.276</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Prospective / Retrospective</span>
+        $$B_t^{p}=R\,a_{\overline{n-t}|}\qquad B_t^{r}=L(1+i)^t-R\,s_{\overline{t}|}$$</div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>追溯法漏滚息(Ex 6.4 点名):</b>\(1000-125s_{\overline{8}|}\) 是错的——原贷款必须先滚 \((1.08)^8\) 再减。付款不足以知期限时只能追溯;付款串再乱、只要未来规整就前瞻(Ex 6.5:60 年怪付款串,第 50 期后余额 = \(1200a_{\overline{10}|}\),前面全不用看)。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="core-6bc">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">§6b–6c · 课本 p.294–310</span><h2 class="sec-title">变动付款与等额本金</h2></div></div>
+    <p class="sec-sub">摊还表是台傻瓜机器:任何现值 = 贷款额的付款流,它都按"利息优先"运转,最后一格自动归零。</p>
+
+    <div class="card accent">
+      <h3>负摊还与付款增量式 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.294–295</div>
+      <p class="lede">付款 &lt; 当期利息 ⇒ 本金列为负、<b>余额上升</b>(negative amortization),欠付利息被"资本化"滚入本金。</p>
+      <div class="formula"><span class="name">相邻期本金关系(付款不水平时)</span>
+        $$P_t=(1+i)P_{t-1}+(R_t-R_{t-1})$$</div>
+      <p class="dim">Ex 6.9:第 t 期付 2,000、本金 1,000;下期付 3,000 ⇒ \(P_{t+1}=1{,}000(1.1)+1{,}000=2{,}100\)——多付的钱<b>全部</b>进本金。付款水平时退化为等比。</p>
+    </div>
+
+    <div class="card accent">
+      <h3>等额本金 ≠ 等额付款 <span class="freq">考频 ★★</span></h3>
+      <div class="src">课本 p.304–305</div>
+      <p class="lede">每期还固定本金 X + 按余额的利息 ⇒ 余额线性下降、<b>总付款逐期递减</b>(等差)。</p>
+      <div class="formula"><span class="name">第 t 期付款与定价</span>
+        $$R_t=X+i[L-(t-1)X]\qquad \text{定价(收益率 j)}=Xa_{\overline{n}|j}+iX(Da)_{\overline{n}|j}$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>每年还一块砖 + 为剩下的砖交租</b> — 砖变少租金变少;与等额付款(月供恒定、前期几乎全是利息)对照。总利息用等差和:\(i\,X(n+(n-1)+\cdots+1)\) 型。</span></div>
+      <p class="dim">Ex 6.12 对比:$100,000、10 年、5%——等额付款总利息 29,504.60,等额本金 27,500(余额降得快利息少),差 $2,004.60。</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-6d">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">§6d · 课本 p.311–320</span><h2 class="sec-title">尾款:balloon 与 drop</h2></div></div>
+    <p class="sec-sub">CPT N 常出非整数(如 14.2067)——最后一片香肠切不齐:要么最后一刀切厚点,要么多切一刀薄的。</p>
+
+    <div class="card accent">
+      <h3>Balloon / Drop <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.311–313</div>
+      <p class="lede">balloon:第 ⌊N⌋ 期付款<b>加大</b>;drop:第 ⌈N⌉ 期付一笔<b>小于</b>正常付款的尾款。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>价值方程与两者关系</span>
+        $$L=R\,a_{\overline{\lfloor N\rfloor}|}+X_1v^{\lfloor N\rfloor}\ (\text{balloon 追加})\qquad L=R\,a_{\overline{\lfloor N\rfloor}|}+X_2v^{\lceil N\rceil}\ (\text{drop})\qquad X_2=(1+i)X_1$$</div>
+      <div class="note tip"><span class="ic">🖩</span><span class="t"><b>FV 符号读法(p.311,本节计算器核心):</b>解出 N=14.2067 后,<span class="kbd">14 N CPT FV</span> → <b>−200.68</b>(负 = 还要额外流出,balloon 总付 1,200.68);<span class="kbd">15 N CPT FV</span> → <b>+789.28</b>(正 = 超付退回,drop = 1,000−789.28 = 210.72)。</span></div>
+      <details class="more"><summary>展开:Example 6.13–6.15(取款版同理)</summary>
+        <p class="dim">Colin 年存 1 共 10 次(5%),之后年取 1:FV=12.5779 转 PV,CPT N=20.3 ⇒ <b>20 次足额</b>;第 21 年 drop 提取 = 1−.677714 = .322286;若第 20 年一次取完(balloon)= 1+.322286/1.05 = 1.306939(p.312)。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="core-6e">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-accent">§6e · 课本 p.321–330</span><h2 class="sec-title">再融资:旧账翻结,重新开局</h2></div></div>
+    <p class="sec-sub">动机四条:缩期省息、降月供、多贷合一、提前还款。所有花样都是两问的组合:此刻欠多少(旧规则)+ 怎么摊(新规则)。</p>
+
+    <div class="card accent">
+      <h3>再融资通法 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.321–322</div>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>General Approach</span>
+        $$B_t^{\text{旧条款}}=\text{PV}^{\text{新条款}}(\text{修订付款})\qquad\text{含追加一次性还款 }X:\ B_t-X=R'\,a_{\overline{m}|j}$$</div>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 6.17</span><span class="src" style="margin:0">课本 p.321 · 降息重算月供</span></div>
+        <p class="q">10 年贷款、4.8% 月复利、月付 1,000;付 40 期后降为 3.6% 月复利,期限不变。新月付?</p>
+        <p>\(B_{40}=1{,}000a_{\overline{80}|.004}=68{,}346.83\);<span class="kbd">80 N .4 I/Y 1000 PMT CPT PV</span>,不清寄存器直接 <span class="kbd">.3 I/Y CPT PMT</span>。</p>
+        <span class="ans">= $962.23</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 利率统一到付款频率:名义月复利 → 月利率</td><td>\(j_{\text{旧}}=\tfrac{4.8\%}{12}=0.4\%,\ \ j_{\text{新}}=\tfrac{3.6\%}{12}=0.3\%\)</td><td class="xr"><a href="soa-exam-fm-l01-interest-and-discount-rates.html">L01 利率 ↗</a></td></tr>
+          <tr><td>② 旧条款算余额(前瞻:剩余 80 期付款 PV)</td><td>\(B_{40}=1{,}000\,a_{\overline{80}|.004}=68{,}346.83\)</td><td class="xr"><span class="here">本章 §01</span> · <a href="soa-exam-fm-l03-annuities.html">L03 年金 ↗</a></td></tr>
+          <tr><td>③ 再融资通法:旧余额 = 新条款付款 PV,解新月供</td><td>\(B_{40}=R'\,a_{\overline{80}|.003}\ \Rightarrow\ R'=962.23\)</td><td class="xr"><span class="here">本章 §04</span></td></tr>
+          <tr><td>④ TVM 不清寄存器,只改利率直接再解</td><td><span class="kbd">80 N .4 I/Y 1000 PMT CPT PV</span> → <span class="kbd">.3 I/Y CPT PMT</span></td><td class="xr"><span class="here">计算器</span></td></tr>
+        </table></div>
+      </div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>余额必须用旧条款算</b>,新条款只出现在"设 PV 相等"那一步;利率表述混杂(convertible monthly vs effective)先统一到付款频率的期利率。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><div><span class="sec-tag tag-pre">BA II Plus · Calculator Notes #8</span><h2 class="sec-title">AMORT 工作表 + 三套摊还表打法</h2></div></div>
+    <p class="sec-sub">Example 6.6 一题四法(前瞻改 N / 追溯 CPT FV / 公式直取 / AMORT),考场按熟练度任选。</p>
+    <div class="grid2">
+      <div class="card accent">
+        <h3>⌨️ AMORT 工作表(p.277–279)</h3>
+        <ul class="clean">
+          <li>TVM 先录满(N/I/Y/PV/PMT),再 <span class="kbd">2nd AMORT</span>(PV 键第二功能)</li>
+          <li>"P1=" 输起始期 <span class="kbd">ENTER</span>,↓ "P2=" 输结束期 <span class="kbd">ENTER</span>(单期 P1=P2)</li>
+          <li>↓ 依次读 <b>BAL</b>(P2 期付款后余额)/ <b>PRN</b> / <b>INT</b>(P1–P2 区间<b>合计</b>本金/利息,负号=流出)</li>
+          <li>退出 <span class="kbd">2nd QUIT</span>;例:P1=49, P2=108 → 第 5–9 年总利息 12,522.47、总本金 54,089.83(p.279)</li>
+        </ul>
+      </div>
+      <div class="card accent">
+        <h3>⌨️ TVM 寄存器双法(p.276–278)</h3>
+        <ul class="clean">
+          <li><b>前瞻余额</b>:改 N 为剩余期数 → <span class="kbd">CPT PV</span>(Ex 6.6:22 N → B₈=173,157.98)</li>
+          <li><b>追溯余额</b>:改 N 为已付期数 → <span class="kbd">CPT FV</span>(符号相反)</li>
+          <li>区间总本金 = 两时点余额差;总利息 = 期数×付款 − 总本金</li>
+          <li>逐行递推:<span class="kbd">× 1.05 − 1000 =</span> 重复按,每次显示下一年末余额,末行归 0 自检</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+    <div class="card">
+      <h3>💡 直觉例子</h3>
+      <p><b>每期月供 = 房租 + 赎楼款。</b>先付"房租"(利息 iB),剩下才是真赎回;余额越还越小、房租越交越少,同样的月供里赎楼份额像雪球一样按 (1+i) 等比放大——这就是"前期还的几乎全是利息"的数学版。</p>
+      <p class="dim"><b>负摊还 = 信用卡最低还款还不够利息:</b>差额记账、雪球反向变大。amortize 词根 mort(死亡)——正常摊还是把贷款慢慢"杀死",负摊还是它在回血。</p>
+    </div>
+    <div class="card">
+      <h3>📚 扩展阅读(精选 2 个)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Amortization_schedule">Amortization Schedule — Wikipedia</a></div><div class="z">真实房贷摊还表长这样;负摊还在 2008 年次贷危机里的角色(option ARM)。</div><div class="u">en.wikipedia.org/wiki/Amortization_schedule</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Refinancing">Refinancing — Wikipedia</a></div><div class="z">cash-out refinance 等市场变体——教材 p.322 情景的现实版。</div><div class="u">en.wikipedia.org/wiki/Refinancing</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
+<footer>
+  <div class="wrap">
+    <p><b>Exam FM 导学 · Chapter 6</b> · 第6章 Loans 贷款</p>
+    <p>公式与例题整理自《ASM Exam FM Study Manual, 17th ed.》Chapter 6(p.271–330,页码已标注,细节以课本为准)。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('中文') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '👁'; btn.title = '遮住/显示中文，自测用';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '🙈' : '👁';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
+</body>
+</html>

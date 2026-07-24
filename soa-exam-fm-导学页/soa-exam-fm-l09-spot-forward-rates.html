@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<!--
+  SOA Exam FM 导学页 · L09 Spot Rates and Forward Rates
+  源: ASM Exam FM Study Manual 17th ed, Chapter 9 (p.415-428)
+  管线见 _Meta/process/soa-fm-导学页-sop.md
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam FM · L09 导学 · 即期利率与远期利率</title>
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --ink:#16243d; --ink-soft:#46566f; --mute:#7a8699;
+    --paper:#f5f6f9; --card:#ffffff; --line:#e2e6ee;
+    --accent:#4f46e5; --accent-deep:#332e95; --accent-soft:#edecfc; --hi:#ffd23f;
+    --warn:#c6492f; --warn-soft:#fae6e0;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(22,36,61,.96);
+    backdrop-filter:blur(6px);color:#fff;border-bottom:2px solid var(--hi)}
+  .bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+  .bar .logo{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.3px}
+  .bar .logo b{color:var(--hi)}
+  .bar .spacer{flex:1}
+  .countdown{font-family:var(--mono);font-size:12.5px;color:#cdd6e6;display:flex;gap:10px;align-items:center}
+  .countdown .big{color:var(--hi);font-size:17px;font-weight:700}
+  @media(max-width:720px){.countdown .lbl{display:none}}
+
+  .hero{background:
+      radial-gradient(1100px 380px at 82% -8%, rgba(255,210,63,.18), transparent 60%),
+      linear-gradient(180deg,#16243d, #1d3050);
+    color:#eef2f8;padding:50px 0 40px;border-bottom:1px solid #24344f}
+  .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:2.5px;font-size:12px;
+    color:var(--hi);margin:0 0 14px}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.06;margin:0 0 16px}
+  .hero h1 em{font-style:normal;color:var(--hi)}
+  .hero p.lead{font-size:17px;color:#cdd6e6;max-width:60ch;margin:0 0 22px}
+  .pills{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:999px;padding:7px 15px;font-size:13.5px;color:#e7ecf4;display:flex;gap:8px;align-items:center}
+  .pill b{color:#fff}
+  .pill .dot{width:8px;height:8px;border-radius:50%}
+  .takeaway{background:rgba(10,20,40,.55);border:1px solid rgba(255,210,63,.45);border-radius:14px;
+    padding:16px 20px;margin:24px 0 0}
+  .takeaway .th{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--hi);margin:0 0 8px}
+  .takeaway ol{margin:0;padding-left:24px}
+  .takeaway li{margin:7px 0;font-size:15.5px;color:#eef2f8;line-height:1.55}
+  .takeaway li b{color:var(--hi)}
+
+  .chainbar{background:#fff;border-bottom:1px solid var(--line)}
+  .chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:940px;margin:0 auto;
+    padding:11px 22px;font-size:13px}
+  .chain .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase}
+  .chain a,.chain .here{padding:4px 12px;border-radius:999px;text-decoration:none;white-space:nowrap;font-size:13px}
+  .chain a{background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .chain a:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .chain .here{background:var(--accent);color:#fff;font-weight:600}
+  .chain .arr{color:var(--mute);font-family:var(--mono)}
+
+  .modnav{position:sticky;top:58px;z-index:40;display:flex;flex-wrap:wrap;gap:8px;
+    padding:9px 22px;max-width:940px;margin:0 auto;background:rgba(245,246,249,.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .modnav a{font-size:13px;text-decoration:none;color:var(--accent-deep);background:var(--accent-soft);
+    padding:4px 13px;border-radius:999px;white-space:nowrap;transition:background .12s,color .12s}
+  .modnav a:hover{background:var(--accent);color:#fff}
+  section{padding:44px 0;scroll-margin-top:112px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:1px;padding-top:6px}
+  .sec-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:5px;font-weight:600}
+  .tag-accent{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-pre{background:#e8edf6;color:#3a4a63}
+  .tag-ext{background:#fff3d6;color:#8a5c00}
+  h2.sec-title{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);margin:6px 0 4px;font-weight:700}
+  .sec-sub{color:var(--ink-soft);margin:0 0 26px;max-width:66ch}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;
+    box-shadow:0 1px 0 rgba(22,36,61,.03),0 10px 24px -18px rgba(22,36,61,.25)}
+  .card.accent{border-left:4px solid var(--accent)}
+  .card h3{margin:0 0 4px;font-size:18px;font-family:var(--serif)}
+  .card .src{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:12px}
+  .card p{margin:8px 0}
+  .card .lede{font-size:16.5px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.55}
+  .dim{color:var(--ink-soft);font-size:14.5px}
+  details.more{margin:10px 0 2px}
+  details.more summary{cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--accent-deep);
+    padding:4px 0;list-style-position:inside}
+  details.more[open] summary{margin-bottom:6px}
+  details.more .dim{margin:4px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  .formula{background:linear-gradient(180deg,var(--accent-soft),#fff);color:var(--accent-deep);border-radius:11px;
+    padding:14px 18px;margin:14px 0;overflow:visible;border:1px solid var(--accent)}
+  .formula .name{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.75;display:block;margin-bottom:4px}
+  .formula.star{border:2px solid var(--accent);background:linear-gradient(180deg,#fffbea,var(--accent-soft) 120%);
+    box-shadow:0 8px 22px -12px rgba(51,46,149,.5);font-size:1.05em}
+  .formula.star .name{opacity:1;display:flex;align-items:center;gap:8px}
+  .must{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;background:var(--hi);
+    color:#3a2e00;padding:2px 8px;border-radius:5px;white-space:nowrap}
+  .freq{font-family:var(--mono);font-size:11px;font-weight:700;color:#a06a00;background:#fff3d6;
+    border:1px solid var(--hi);padding:2px 8px;border-radius:5px;white-space:nowrap;margin-left:8px}
+  .mnemonic{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(90deg,#fff3d6,#fffdf5);
+    border:1px solid var(--hi);border-radius:12px;padding:13px 16px;margin:14px 0}
+  .mnemonic .ic{font-size:18px;line-height:1.5}
+  .mnemonic .t{font-size:15.5px;color:var(--ink)}
+  .mnemonic .t b{background:linear-gradient(transparent 62%, var(--hi) 62%)}
+
+  .fig-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;margin:18px 0}
+  @media(max-width:680px){.fig-row{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr}}
+  .fig-cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 10px 14px;text-align:center}
+  .fig-cell svg{width:100%;height:auto;display:block}
+  .fig-cell .cap{font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+  .fig-cell .cap b{color:var(--ink)}
+
+  .ex{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .ex .ex-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ex .badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:5px;
+    background:var(--accent-deep);color:#fff}
+  .ex .q{color:var(--ink);font-weight:600}
+  .ex .ans{display:inline-block;margin-top:6px;background:var(--hi);color:#3a2e00;font-weight:700;
+    padding:2px 10px;border-radius:6px;font-family:var(--mono)}
+
+  .note{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--mute);
+    border-radius:10px;padding:13px 16px;margin:12px 0}
+  .note.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .note.tip{border-left-color:var(--accent);background:var(--accent-soft)}
+  .note .ic{font-size:18px;line-height:1.5}
+  .note .t{font-size:14.5px;color:var(--ink-soft)}
+  .note .t b{color:var(--ink)}
+
+  table.map{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  table.map th{background:#16243d;color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:13px}
+  table.map td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  table.map tr:nth-child(even) td{background:#fafbfd}
+  table.vs th{background:var(--accent-deep)}
+  table.vs td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:15px;width:14px;height:14px;border:2px solid var(--accent);border-radius:4px}
+  .selftest li{padding-left:34px}
+  .selftest li .ref{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);background:var(--accent-soft);padding:1px 7px;border-radius:5px;margin-right:8px}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:680px){.cheat{grid-template-columns:1fr}}
+  .cheat .cc{background:#0f1b30;color:#eaf0fb;border-radius:12px;padding:16px 18px}
+  .cheat .cc h4{margin:0 0 8px;font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--hi)}
+  .cheat .cc.t{background:linear-gradient(180deg,var(--accent-deep),#0a1430)}
+  .cheat .cc.t h4{color:var(--accent-soft)}
+  .cheat .cc p{margin:7px 0;font-size:14.5px}
+
+  .xread{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.xread{grid-template-columns:1fr}}
+  .xr{background:#fff;border:1px solid var(--line);border-left:4px solid var(--hi);border-radius:10px;padding:12px 15px}
+  .xr .e{font-weight:700;color:var(--ink);font-size:14.5px}
+  .xr .e a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--mute)}
+  .xr .e a:hover{color:var(--accent-deep);border-bottom-color:var(--accent)}
+  .xr .z{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
+  .xr .u{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:5px;word-break:break-all}
+
+  table.vocab td{font-size:14.5px}
+  table.vocab .en{font-weight:700;color:var(--ink);font-size:15px}
+  .ipa{font-family:var(--mono);font-size:12.5px;color:var(--mute);white-space:nowrap}
+  .pos{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px}
+  .pos.n{color:#46566f;background:#eef1f6}
+  .pos.v{color:var(--accent-deep);background:var(--accent-soft)}
+  .pos.adj{color:var(--accent-deep);background:var(--accent-soft)}
+  .root{color:var(--mute);font-size:13px}
+  .phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+  @media(max-width:680px){.phrase-grid{grid-template-columns:1fr}}
+  .ph{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;border-left:4px solid var(--accent)}
+  .ph .e{font-weight:700;color:var(--ink)}
+  .ph .z{color:var(--ink-soft);font-size:14px;margin-top:2px}
+  footer{padding:34px 0 60px;color:var(--mute);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+  footer b{color:var(--ink-soft)}
+  .kbd{font-family:var(--mono);background:#eef1f6;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  mjx-container{max-width:100%}
+  mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:4px 1px 10px;margin:.4em 0 !important}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .steps{margin:10px 0 0;font-size:13px;background:#f7f8fb;border:1px solid #e3e7ef;border-radius:8px;padding:8px 10px 6px}
+  .steps .sh{font-weight:700;font-size:12.5px;color:#5a6579;margin-bottom:2px}
+  .steps table{width:100%;border-collapse:collapse}
+  .steps th{font-size:12px;color:#8a93a5;text-align:left;padding:2px 8px;font-weight:600}
+  .steps td{padding:4px 8px;border-top:1px solid #e8ebf2;text-align:left;vertical-align:top;line-height:1.55}
+  .steps td:first-child{white-space:nowrap;color:#5a6579}
+  .steps td.xr{white-space:nowrap}
+  .steps td.xr a{color:var(--accent,#8a5a2b);text-decoration:none;border-bottom:1px dashed currentColor;font-weight:600}
+  .steps td.xr .here{color:#9aa3b2}
+  .fx-de{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--hi);color:#3a2e00;padding:1px 5px;border-radius:4px;margin-right:5px;vertical-align:1px;position:relative;cursor:help;outline:none}
+  .fx-de::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 7px);z-index:40;width:max-content;max-width:300px;background:#16243d;color:#f2f5fa;border:1px solid var(--hi);border-radius:8px;padding:7px 11px;font-family:var(--sans);font-size:12.5px;font-weight:400;line-height:1.55;white-space:normal;opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;box-shadow:0 8px 22px -10px rgba(10,20,40,.55)}
+  .fx-de:hover::after,.fx-de:focus::after{opacity:1;visibility:visible}
+  ol.routine{margin:8px 0 0;padding-left:24px}
+  ol.routine li{margin:7px 0}
+  .kxb{border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--accent-deep);font-size:11px;width:22px;height:22px;margin-right:6px;vertical-align:middle;transition:transform .12s}
+  .kxb.open{transform:rotate(90deg);background:var(--accent);color:#fff;border-color:var(--accent)}
+  tr.kxd>td{background:#fffdf4;border-top:1px dashed var(--accent)}
+  .kx-qtx{font-size:13.5px;line-height:1.6}
+  .kx-opts{margin-top:4px}
+  .kx-opt{display:inline-block;margin:1px 14px 1px 0;font-size:12.5px;color:var(--ink-soft)}
+  .kx-opt b{color:var(--accent-deep);font-family:var(--mono)}
+  .ansb3{border:1px solid var(--line);background:#eef1f6;border-radius:7px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--mute);padding:2px 12px}
+  .ansb3.rev{background:var(--hi);border-color:var(--hi);color:#3a2e00}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="logo">Exam&nbsp;FM · <b>L09 · 即期利率与远期利率</b></span>
+    <span class="spacer"></span>
+    <span class="countdown" data-exam="2026-08-13" style="display:none"><span class="lbl">距考试</span><span class="big" data-days>—</span>天 · 8/13</span>
+  </div>
+</header>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">2026-07-08 · 周三 · 导学已备(7/26 排学)</p>
+    <h1>第9章 · <em>Spot Rates and Forward Rates 即期利率与远期利率</em></h1>
+    <p class="lead">前 8 章一直假设"一个利率管全期限"——本章推翻它:利率随期限变化,这张"价目表"叫收益率曲线。spot 管整段,forward 管路段,两者靠"两条路终点相同"互推。全书最短一章(理论 8 页),却是 FAM/衍生品的接口。对照课本 Chapter 9 精读。</p>
+    <div class="pills">
+      <span class="pill"><span class="dot" style="background:var(--hi)"></span>Ch9 <b>全书最短章 · 收官</b></span>
+      <span class="pill">课本 <b>p.415–428</b>(理论 p.415–422)</span>
+      <span class="pill">习题 <b>16 题 ASM 原创</b>(真题罕见)</span>
+    </div>
+    <div class="takeaway">
+      <p class="th">★ 本章拿走 4 句话</p>
+      <ol>
+        <li><b>spot r<sub>t</sub> = 0→t 整段一口价</b>(零息债年化);yield/YTM 是"再现价格的单一利率",<b>不是 spot 的算术平均</b>。</li>
+        <li><b>forward 不用预测未来</b>——今天的 spot 曲线已隐含它,借短投长即可锁定。</li>
+        <li>核心等式:\((1+r_{t_1})^{t_1}(1+f_{[t_1,t_2]})^{t_2-t_1}=(1+r_{t_2})^{t_2}\) —— <b>两条路,一个终点</b>。</li>
+        <li>spot 是 forward 链的<b>几何平均</b>;要折现因子就直接求因子,别绕道解利率。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="chainbar">
+  <nav class="chain" aria-label="知识链条">
+    <span class="lbl">前置</span>
+    <a href="soa-exam-fm-l08-duration-convexity-immunization.html">L08 久期与免疫</a>
+    <span class="arr">→</span>
+    <span class="here">L09 本章</span>
+    <span class="arr">→</span>
+    <span class="lbl">去向</span>
+    <span class="lbl" style="padding:4px 12px">全书收官 → 模考</span>
+  </nav>
+</div>
+
+<nav class="modnav" aria-label="本章模块">
+  <a href="#syllabus">🎯 考纲</a>
+  <a href="#cheat">核心</a>
+  <a href="#core-9a">9a 即期利率</a>
+  <a href="#core-9b">9b 远期利率</a>
+  <a href="#core-9c">9c 即期推远期</a>
+  <a href="#insight">直觉拓展</a>
+</nav>
+
+<section id="syllabus">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">◎</span><div><span class="sec-tag tag-accent">Syllabus</span><h2 class="sec-title">考纲对标 · 组合与资产负债管理 ⑤</h2></div></div>
+    <p class="sec-sub">SOA 2026 官方 syllabus 本章命中的 learning outcomes 逐条列出(★ = 高频重点)。五域权重与题数分配见 <a href="soa-exam-fm-examday.html">考务页 ↗</a>。</p>
+    <div class="card accent" style="padding:0;overflow:hidden">
+      <table class="map">
+        <tr><th style="width:32%">考纲域 · 权重(≈题数)</th><th>本章 learning outcomes(★=重点)</th></tr>
+        <tr><td><b>组合与资产负债管理 · 20–30% (≈6–9 题)</b></td><td><b>5a</b> 定义: spot rate 即期利率、forward rate 远期利率、yield curve 收益率曲线、rate of return<br>★ <b>5b</b> 用即期/远期利率构建的收益率曲线<b>给一组现金流定价</b>; 即期 ↔ 远期互推</td></tr>
+      </table>
+    </div>
+    <div class="note tip"><span class="ic">🎯</span><span class="t"><b>本章重点:</b> 即期↔远期互推 (\((1+s_n)^n=(1+s_{n-1})^{n-1}(1+f)\)) + 沿收益率曲线逐期折现定价; 与 L08 同属组合 ALM 域, 两章合占 20–30%。</span></div>
+  </div>
+</section>
+
+<section id="cheat" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">00</span><div><span class="sec-tag tag-accent">核心</span><h2 class="sec-title">核心知识点及考题策略</h2></div></div>
+    <p class="sec-sub">先扫一遍公式卡热身(带「推」标的悬停看推导);学完回来对照「考点 + 套路」自检,这一节全拿下才算过关。</p>
+    <div class="cheat">
+      <div class="cc t"><h4>Spot</h4>
+        <p>\(AV=(1+r_t)^t\) · \(P=\sum CF_t(1+r_t)^{-t}\)</p>
+        <p>零息债:\(r_t=P_t^{-1/t}-1\)</p></div>
+      <div class="cc"><h4>Forward 记号</h4>
+        <p>\(f_{[t_1,t_2]}\):t₁→t₂ 年实际利率</p>
+        <p>m-yr fwd deferred t yrs = \(f_{[t,t+m]}\) · \(f_{[0,1]}=r_1\)</p></div>
+      <div class="cc t"><h4>核心等式</h4>
+        <p><span class="fx-de" data-tip="推导:无套利:直投 t₂ 年与先 t₁ 年再远期续,两路径终值必相等" tabindex="0">推</span>\((1+r_{t_1})^{t_1}(1+f_{[t_1,t_2]})^{t_2-t_1}=(1+r_{t_2})^{t_2}\)</p>
+        <p>幂次自查:两边总时长相等</p></div>
+      <div class="cc"><h4>几何平均视角</h4>
+        <p>\(1+r_t=[\prod(1+f_{[j,j+1]})]^{1/t}\)</p>
+        <p>\(P=F\prod(1+f_{[j,j+1]})^{-1}\)</p></div>
+      <div class="cc"><h4>Yield(YTM)</h4>
+        <p>使 \(\sum CF_t(1+i)^{-t}=P\) 的单一 i</p>
+        <p>TVM:N·PV·PMT·FV,CPT I/Y</p></div>
+      <div class="cc t"><h4>锁定构造</h4>
+        <p><span class="fx-de" data-tip="推导:借 t₁ 年零息 + 投 t₂ 年零息:净现金流只剩 [t₁,t₂] 段,其利率即 f" tabindex="0">推</span>借 t₁ 年 + 投 t₂ 年零息 ⇒ 锁定 \(f_{[t_1,t_2]}\)</p>
+        <p>前提:借贷同利率(无套利)</p></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card accent">
+        <h3>🎯 本章核心考点</h3>
+        <ul class="clean" style="margin-top:6px">
+          <li>给收益率曲线(spot 表),逐笔现金流按各自期限折现定价,并区分价格对应的 YTM。</li>
+          <li>读懂 "m-year forward rate, deferred t years" 并翻成 \(f_{[t,\,t+m]}\);非整数区间也按年化处理。</li>
+          <li>spot ↔ forward 任意互推:两条路累积值相等,一步列式;bootstrap 从票息债 YTM 剥出 spot。</li>
+          <li>说清"为什么 forward 可锁定"(借一年 + 投两年的套利构造)。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧭 题型套路(SOA 真题)</h3>
+        <p class="dim">本章 16 题全 ASM 原创(SOA 真题此考点罕见,p.423 卷首注明),四类:</p>
+        <ol class="dim routine">
+          <li>零息债价格 ↔ spot 互推(Q1/7/13)。</li>
+          <li>spot 表 + forward 挖空互推(Q2/5/6/11/16)。</li>
+          <li>YTM 与 spot 混用定价再反解 yield(Q3/4/10/12,TVM CPT I/Y)。</li>
+          <li>非整数/半年期限(Q4/6/11/12/15,年化指数用区间长度)。</li>
+        </ol>
+        <p class="dim">做题第一步永远是画"两条路"。</p>
+      </div>
+    </div>
+    <div class="card accent" style="margin-top:16px">
+      <h3>📌 重点习题(必做 11 / 全章 16)<span style="font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--mute)">每题型最佳代表;样题号跳 📝 冲刺索引;「本册 ▸」就地展开题目与步骤</span></h3>
+      <table class="map" style="margin-top:10px">
+        <thead><tr><th style="width:9%">题号</th><th style="width:32%">考点</th><th style="width:11%">来源</th><th>为什么必做</th></tr></thead>
+        <tbody><tr><td><b>9.1</b></td><td>零息债价 → 1年远期(deferred 1yr)入门</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.1" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路①最干净的入门:零息价折成累积因子再取比值,f=a(2)/a(1)</td></tr>
+<tr class="kxd" data-kxq="9.1" style="display:none"><td colspan="4"><div class="kx-qtx">The following are the prices of $1,000 par value zero-coupon bonds with one and two year maturities: One year maturity: $950. Two year maturity: $850. Calculate the one-year forward rate, deferred one year.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 6.2\% \)</span><span class="kx-opt"><b>(B)</b> \( 8.3\% \)</span><span class="kx-opt"><b>(C)</b> \( 10.5\% \)</span><span class="kx-opt"><b>(D)</b> \( 11.8\% \)</span><span class="kx-opt"><b>(E)</b> \( 31.5\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;零息价转累积因子</td><td>\( a(1)=\frac{1000}{950},\quad a(2)=\frac{1000}{850} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;两路终值相等,远期取比值</td><td>\( 1+f_{[1,2]}=\frac{a(2)}{a(1)}=\frac{950}{850}=1.1176 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( f_{[1,2]}=11.8\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.2</b></td><td>价+远期反推缺失零息价 X</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.2" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路②反方向:已知即期与远期,回填被挖空的中间零息价</td></tr>
+<tr class="kxd" data-kxq="9.2" style="display:none"><td colspan="4"><div class="kx-qtx">The following are the current prices of $1,000 zero-coupon bonds: term to maturity 1 has price $943.40; term to maturity 2 has price X; term to maturity 3 has price 805.08. If the one-year forward rate, deferred one year, is 8%, determine X.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 865.35 \)</span><span class="kx-opt"><b>(B)</b> \( 873.52 \)</span><span class="kx-opt"><b>(C)</b> \( 874.24 \)</span><span class="kx-opt"><b>(D)</b> \( 876.82 \)</span><span class="kx-opt"><b>(E)</b> \( 881.68 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;由1年价剥出1年即期</td><td>\( 1+r_1=\frac{1000}{943.40}=1.06 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;两年折现=即期叠远期</td><td>\( X=\frac{1000}{(1+r_1)(1+f_{[1,2]})}=\frac{1000}{(1.06)(1.08)} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( X=873.52 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.3</b></td><td>即期定价票息债 → 反解 YTM(CPT I/Y)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.3" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路③范式:逐笔按即期折现得价,再单一 yield 反解,TVM CPT I/Y</td></tr>
+<tr class="kxd" data-kxq="9.3" style="display:none"><td colspan="4"><div class="kx-qtx">The yield rate on a one year zero-coupon bond is currently 7% and the yield rate on a two year zero coupon bond is currently 8%. A company plans to issue a two year bond with 9% annual coupons, maturing at $100 par value. Determine the yield-to-maturity of the two year coupon bond.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 7.00\% \)</span><span class="kx-opt"><b>(B)</b> \( 7.52\% \)</span><span class="kx-opt"><b>(C)</b> \( 7.83\% \)</span><span class="kx-opt"><b>(D)</b> \( 7.96\% \)</span><span class="kx-opt"><b>(E)</b> \( 8.00\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;各笔按各自即期折现得价</td><td>\( P=\frac{9}{1.07}+\frac{109}{1.08^{2}}=101.86 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;建单一 YTM 方程</td><td>\( 101.86=9\,a_{\overline{2}|}+100v^{2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;TVM 反解</td><td>\( N=2,\ PV=-101.86,\ PMT=9,\ FV=100,\ CPT\ I/Y \Rightarrow i=7.96\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.4</b></td><td>半年期:票息债+零息债 → 6月远期(deferred 6mo)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.4" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路③④合体:先剥半年即期再列两路,幂次用半年区间长 0.5</td></tr>
+<tr class="kxd" data-kxq="9.4" style="display:none"><td colspan="4"><div class="kx-qtx">A one-year $100 bond with 10% semiannual coupons sells for $102.875. A one-year $100 zero-coupon bond sells for $93.35. Determine the six-month forward rate, deferred six months.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 8.3\% \)</span><span class="kx-opt"><b>(B)</b> \( 8.76\% \)</span><span class="kx-opt"><b>(C)</b> \( 9.21\% \)</span><span class="kx-opt"><b>(D)</b> \( 10.21\% \)</span><span class="kx-opt"><b>(E)</b> \( 11.07\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;由零息债剥出1年即期</td><td>\( 1+r_1=\frac{100}{93.35}=1.071237 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;用票息债剥出半年即期</td><td>\( 102.875=\frac{5}{(1+r_{0.5})^{0.5}}+\frac{105}{1.071237}\Rightarrow (1+r_{0.5})^{0.5}=1.029341 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;两路相等解半年远期</td><td>\( (1.029341)(1+f_{[0.5,1]})^{0.5}=1.071237 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;收口</td><td>\( f_{[0.5,1]}=8.31\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.6</b></td><td>多日期零息债 → 6月远期(deferred 1½yr),含干扰项</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.6" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路④最刁:按到期日换算期限,A 债是干扰,只用 B/C 建两路</td></tr>
+<tr class="kxd" data-kxq="9.6" style="display:none"><td colspan="4"><div class="kx-qtx">You are given the following information about three zero-coupon bonds. Bond A: price on January 1, 2020 is $96, maturity value $100 on July 1, 2020. Bond B: price on January 1, 2020 is $88, maturity value $100 on July 1, 2021. Bond C: price on January 1, 2020 is $125, maturity value $150 on January 1, 2022. Determine the six-month forward rate, deferred 1½ years.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 5.68\% \)</span><span class="kx-opt"><b>(B)</b> \( 9.30\% \)</span><span class="kx-opt"><b>(C)</b> \( 11.51\% \)</span><span class="kx-opt"><b>(D)</b> \( 14.11\% \)</span><span class="kx-opt"><b>(E)</b> \( 19.01\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;由 B、C 价建 1.5yr 与 2yr 累积值</td><td>\( 88(1+r_{1.5})^{1.5}=100,\quad 125(1+r_2)^{2}=150 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;两路相等:1.5yr即期续半年远期=2yr即期</td><td>\( (1+r_{1.5})^{1.5}(1+f_{[1.5,2.0]})^{0.5}=(1+r_2)^{2} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;代入消即期</td><td>\( \frac{100}{88}(1+f_{[1.5,2.0]})^{0.5}=\frac{150}{125} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>④&nbsp;收口</td><td>\( f_{[1.5,2.0]}=11.51\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.7</b></td><td>零息价 → 2年远期(m=2, deferred 2yr)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.7" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路①的 m>1 变体:比值等于 (1+f)^2,幂次=区间长 2,需开平方</td></tr>
+<tr class="kxd" data-kxq="9.7" style="display:none"><td colspan="4"><div class="kx-qtx">The following are the prices of $100 zero-coupon bonds redeemable at par: term to maturity 1 has price $95.23; term 2 has price 89.84; term 3 has price 84.56; term 4 has price 79.21. Determine the two-year forward rate, deferred two years.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 5.38\% \)</span><span class="kx-opt"><b>(B)</b> \( 5.85\% \)</span><span class="kx-opt"><b>(C)</b> \( 6.00\% \)</span><span class="kx-opt"><b>(D)</b> \( 6.50\% \)</span><span class="kx-opt"><b>(E)</b> \( 6.75\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="D" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;零息价转累积因子</td><td>\( a(2)=\frac{100}{89.84},\quad a(4)=\frac{100}{79.21} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;远期幂次=区间长2,取比值</td><td>\( (1+f_{[2,4]})^{2}=\frac{a(4)}{a(2)}=\frac{89.84}{79.21}=1.134200 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;开平方收口</td><td>\( f_{[2,4]}=1.134200^{0.5}-1=6.50\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.8</b></td><td>Bootstrap:平价票息债 → 2年即期</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.8" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">§00 明列考点:从票息债剥出 spot(bootstrap),隔出未知即期项反解</td></tr>
+<tr class="kxd" data-kxq="9.8" style="display:none"><td colspan="4"><div class="kx-qtx">The one-year spot rate is 5.5%. A two-year $100 bond maturing at par, with 7% annual coupons, is currently selling for its par value. Determine the two-year spot rate.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 6.25\% \)</span><span class="kx-opt"><b>(B)</b> \( 7.00\% \)</span><span class="kx-opt"><b>(C)</b> \( 7.05\% \)</span><span class="kx-opt"><b>(D)</b> \( 7.12\% \)</span><span class="kx-opt"><b>(E)</b> \( 7.24\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="C" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;平价=各笔按即期折现</td><td>\( 100=\frac{7}{1.055}+\frac{107}{(1+r_2)^{2}} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;隔出未知即期项</td><td>\( \frac{107}{(1+r_2)^{2}}=100-\frac{7}{1.055} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;反解2年即期</td><td>\( r_2=7.05\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.11</b></td><td>分数期即期表 → 3月远期(deferred 6mo)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.11" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路②④:纯分数期两路相等,远期幂次 0.25,还原用 1/0.25 次方</td></tr>
+<tr class="kxd" data-kxq="9.11" style="display:none"><td colspan="4"><div class="kx-qtx">Given the following spot rates: \( r_{.25}=2.2\% \), \( r_{.5}=2.4\% \), \( r_{.75}=2.6\% \) and \( r_1=2.9\% \). Determine the 3-month forward rate deferred for six months.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 2.15\% \)</span><span class="kx-opt"><b>(B)</b> \( 2.35\% \)</span><span class="kx-opt"><b>(C)</b> \( 2.50\% \)</span><span class="kx-opt"><b>(D)</b> \( 2.85\% \)</span><span class="kx-opt"><b>(E)</b> \( 3.00\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="E" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;两路相等:0.5yr即期续3mo远期=0.75yr即期</td><td>\( (1+r_{0.5})^{0.5}(1+f_{[0.5,0.75]})^{0.25}=(1+r_{0.75})^{0.75} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;解远期,幂次0.25对应区间长</td><td>\( f_{[0.5,0.75]}=\left(\frac{1.026^{0.75}}{1.024^{0.5}}\right)^{1/0.25}-1 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( f_{[0.5,0.75]}=3.00\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.12</b></td><td>半年即期表 → 半年票息债定价</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.12" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路③④:半年票息逐笔按对应期限即期折现,幂次=各自期限</td></tr>
+<tr class="kxd" data-kxq="9.12" style="display:none"><td colspan="4"><div class="kx-qtx">You are given the following spot rates: term 0.5 years is 2.1%; term 1 year is 2.3%; term 1.5 years is 2.6%; term 2 years is 2.8%. Determine the price of a 2-year 100 par value bond redeemable at par and with semiannual coupons paid at an annual rate of 4%.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 102.38 \)</span><span class="kx-opt"><b>(B)</b> \( 103.61 \)</span><span class="kx-opt"><b>(C)</b> \( 104.25 \)</span><span class="kx-opt"><b>(D)</b> \( 105.09 \)</span><span class="kx-opt"><b>(E)</b> \( 106.21 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="A" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;半年票息2,各笔按对应期限即期折现</td><td>\( P=\frac{2}{(1+r_{0.5})^{0.5}}+\frac{2}{1+r_1}+\frac{2}{(1+r_{1.5})^{1.5}}+\frac{102}{(1+r_2)^{2}} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;代入即期</td><td>\( =\frac{2}{1.021^{0.5}}+\frac{2}{1.023}+\frac{2}{1.026^{1.5}}+\frac{102}{1.028^{2}} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( P=102.38 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.13</b></td><td>零息价 → 年金累积值 s_4</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.13" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路①的年金变体:零息价即折现因子,求和得现值再累积到期末</td></tr>
+<tr class="kxd" data-kxq="9.13" style="display:none"><td colspan="4"><div class="kx-qtx">Given the prices of zero-coupon bonds with a maturity value of 1: term to maturity 1 has price .952; term 2 has price .898; term 3 has price .845; term 4 has price .792. Determine \( s_{\overline{4}|} \), the accumulated value of a 4-year annuity immediate with payments of 1.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 4.17 \)</span><span class="kx-opt"><b>(B)</b> \( 4.40 \)</span><span class="kx-opt"><b>(C)</b> \( 4.51 \)</span><span class="kx-opt"><b>(D)</b> \( 4.72 \)</span><span class="kx-opt"><b>(E)</b> \( 4.80 \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;年金现值=各期零息价之和</td><td>\( a_{\overline{4}|}=0.952+0.898+0.845+0.792=3.487 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;累积到4年末,(1+r_4)^4=1/0.792</td><td>\( s_{\overline{4}|}=\frac{3.487}{0.792} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;收口</td><td>\( s_{\overline{4}|}=4.403 \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr>
+<tr><td><b>9.16</b></td><td>逐年远期 → 票息债 YTM(CPT I/Y)</td><td style="white-space:nowrap"><button class="kxb" data-kx="9.16" type="button" title="展开题目与步骤">▸</button>本册</td><td class="dim" style="font-size:13px">套路②③合体:1年远期串成折现因子定价,再反解 yield,TVM CPT I/Y</td></tr>
+<tr class="kxd" data-kxq="9.16" style="display:none"><td colspan="4"><div class="kx-qtx">You are given the following 1-year forward rates, deferred for t years: t=0 gives 3%; t=1 gives 5%; t=2 gives 6%; t=3 gives 8%. Determine the yield rate of a 3-year 1000 par value bond with annual coupons at 4% and maturity value of 1150.</div><div class="kx-opts"><span class="kx-opt"><b>(A)</b> \( 4.2\% \)</span><span class="kx-opt"><b>(B)</b> \( 4.6\% \)</span><span class="kx-opt"><b>(C)</b> \( 4.9\% \)</span><span class="kx-opt"><b>(D)</b> \( 5.2\% \)</span><span class="kx-opt"><b>(E)</b> \( 5.4\% \)</span></div><p style="margin:8px 0 4px"><button class="ansb3" data-ans="B" type="button">答案 ?</button></p><div class="steps" style="display:none"><div class="sh">🧩 步骤 ↔ 公式对照</div><table><tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr><tr><td>①&nbsp;逐年远期串成折现因子定价</td><td>\( P=\frac{40}{1.03}+\frac{40}{1.03(1.05)}+\frac{1190}{1.03(1.05)(1.06)}=1113.86 \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>②&nbsp;建 YTM 方程(末笔含1150本金)</td><td>\( 1113.86=40\,a_{\overline{3}|}+1150v^{3} \)</td><td class="xr"><span class="here">本章</span></td></tr><tr><td>③&nbsp;TVM 反解</td><td>\( N=3,\ PV=-1113.86,\ PMT=40,\ FV=1150,\ CPT\ I/Y \Rightarrow i=4.62\% \)</td><td class="xr">代数/计算</td></tr></table></div></td></tr></tbody>
+      </table>
+      <p class="dim" style="margin:8px 0 0">其余:选做 4(同题型二刷备用)· 跳过 1(离题/重复);全量评级存 _Meta/tools/data/exam-fm-key-exercises.json</p>
+    </div>
+  </div>
+</section>
+
+<section id="core-9a">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><div><span class="sec-tag tag-accent">§9a · 课本 p.415–418</span><h2 class="sec-title">即期利率:收益率曲线的读法</h2></div></div>
+    <p class="sec-sub">银行定期存单价目表:存 1 年 5.00%、存 5 年 6.05%——不同期限不同利率的集合就是收益率曲线(利率期限结构)。</p>
+
+    <div class="card accent">
+      <h3>即期利率 Spot Rate r<sub>t</sub> <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.415–417</div>
+      <p class="lede">r<sub>t</sub> = 期限 t 的单笔投资从头到尾的年实际利率,等价于 <b>t 年期零息债的定价利率</b>。整段一口价:r₂ 管 0→2 全程,不是"第 2 年当年"的利率。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Spot 定价</span>
+        $$AV=(1+r_t)^t\qquad P=\sum_t\frac{CF_t}{(1+r_t)^t}\qquad r_t=P_t^{-1/t}-1\ (\text{零息债价格互推})$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>spot 管全程,一段一价</b> — 每笔现金流用自己期限的 spot 折;非整数期限 t 直接上指数(\((1.011)^{-0.50}\))。</span></div>
+      <div class="note tip"><span class="ic">💡</span><span class="t"><b>yield ≠ spot 平均:</b>按 spot 定完价后,使 PV(全部现金流)=价格 的<b>单一利率</b>才是 yield(YTM/IRR)——Ex 9.2 中 5.4313%,介于各 spot 之间但不是算术平均。计算器 TVM 直接 CPT I/Y。</span></div>
+      <details class="more"><summary>展开:Example 9.6 — bootstrap 自举法(经典)</summary>
+        <p class="dim">5% 年息票、面值 1,000,YTM:1 年 6.00% / 2 年 6.50% / 3 年 7.00%,求 r₁,r₂,r₃(p.417–418)。逐只债剥洋葱:① 1 年债单笔支付 ⇒ r₁=6.00%;② 2 年债先按 YTM 定价 972.69,再按 spot 展开 \(972.69=50(1.06)^{-1}+1050(1+r_2)^{-2}\Rightarrow r_2=6.5128\%\);③ 3 年债同法 ⇒ r₃=7.0352%。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="core-9b">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><div><span class="sec-tag tag-accent">§9b · 课本 p.418–419</span><h2 class="sec-title">远期利率:预订将来的利率</h2></div></div>
+    <p class="sec-sub">"3-year forward rate, deferred 2 years, is 6%" = 2 年后起投、时点 2→5 每年 6%。今天就把将来的存款利率敲定。</p>
+
+    <div class="card accent">
+      <h3>记号翻译 f<sub>[t₁,t₂]</sub> <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.418–419</div>
+      <p class="lede">"m-year forward rate, deferred t years" = \(f_{[t,\,t+m]}\):<b>deferred 的 t 是起投时点,m 是生效年数</b>。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Forward 记号</span>
+        $$f_{[t_1,t_2]}=\text{时点 } t_1\to t_2 \text{ 生效的年实际利率}\qquad m\text{-yr fwd deferred }t\text{ yrs}=f_{[t,\,t+m]}$$</div>
+      <div class="note warn"><span class="ic">⚠️</span><span class="t"><b>术语无统一标准(p.418):</b>教科书间至少五套说法,考题一定会当场定义——照题目定义翻,别背死记号。区间不足一年 f 仍按年化报:\(f_{[4.25,4.50]}=5\%\Rightarrow\) 累积 \(1.05^{0.25}\),指数用区间长度。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="core-9c">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><div><span class="sec-tag tag-accent">§9c · 课本 p.419–422</span><h2 class="sec-title">即期推远期:两条路,一个终点</h2></div></div>
+    <p class="sec-sub">惊人的事实:forward 不用预测未来——今天的 spot 曲线已经隐含它,而且能用"借短投长"真金白银锁定。</p>
+
+    <div class="card accent">
+      <h3>核心等式 <span class="freq">考频 ★★★</span></h3>
+      <div class="src">课本 p.419–420</div>
+      <p class="lede">从 0 走到 t₂ 的两条路终点必须一样:一路 spot 直达 vs 先 spot 到 t₁ 再 forward 接力。</p>
+      <div class="formula star"><span class="name"><span class="must">★ 必背</span>Spot ↔ Forward</span>
+        $$(1+r_{t_1})^{t_1}\,(1+f_{[t_1,t_2]})^{t_2-t_1}=(1+r_{t_2})^{t_2}\qquad f_{[t_1,t_2]}=\Bigl[\frac{(1+r_{t_2})^{t_2}}{(1+r_{t_1})^{t_1}}\Bigr]^{\frac{1}{t_2-t_1}}-1$$</div>
+      <div class="mnemonic"><span class="ic">🗝️</span><span class="t"><b>两条路,一个终点</b> — 教材原话:会用"累积值相等"现推,比背公式不容易错。幂次自查:两边总时长一致(2+3=5)。</span></div>
+      <p class="dim">锁定构造(p.419):今天借 $1 一年期(5%),立刻投 2 年零息(5.5%)——时点 0 净流 0、时点 1 还 1.05、时点 2 收 1.055²,等价于把"时点 1 起投一年 6.0024%"今天锁死。这就是 implied forward(隐含远期)的含义;1g 的 a(t₂)/a(t₁) 视角同理。</p>
+      <div class="formula"><span class="name">Forward 链 ↔ Spot(几何平均)</span>
+        $$P=F\prod_{j=0}^{t-1}(1+f_{[j,j+1]})^{-1}\qquad 1+r_t=\Bigl[\prod_{j=0}^{t-1}(1+f_{[j,j+1]})\Bigr]^{1/t}\qquad f_{[0,1]}=r_1$$</div>
+      <div class="ex">
+        <div class="ex-h"><span class="badge">例 9.8</span><span class="src" style="margin:0">课本 p.421 · 混合信息定价</span></div>
+        <p class="q">已知 r₃=3%、f₍₃,₅₎=5%、f₍₂,₅₎=4%,求 $1,000 两年零息债价格。</p>
+        <p>5 年 AV 两条路:\((1.03)^3(1.05)^2=(1+r_2)^2(1.04)^3\)。<b>别解出 r₂</b>——要的就是因子:\((1+r_2)^{-2}=\frac{1.04^3}{1.03^3\cdot 1.05^2}=.933705\)。</p>
+        <span class="ans">P = $933.71</span>
+        <div class="steps"><div class="sh">🧩 步骤 ↔ 公式对照</div>
+        <table>
+          <tr><th>步骤</th><th>用的公式 / 定理</th><th>出处</th></tr>
+          <tr><td>① 选共同终点(5 年),两条路累积值相等列方程</td><td>\((1+r_{t_1})^{t_1}(1+f_{[t_1,t_2]})^{t_2-t_1}=(1+r_{t_2})^{t_2}\ \Rightarrow\ (1.03)^3(1.05)^2=(1+r_2)^2(1.04)^3\)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+          <tr><td>② 不解 r₂,整体挪出折现因子</td><td>\((1+r_2)^{-2}=\dfrac{1.04^3}{1.03^3\cdot1.05^2}=.933705\)</td><td class="xr"><span class="here">本章 §03</span></td></tr>
+          <tr><td>③ 零息债定价:面值乘折现因子</td><td>\(P=1{,}000\,(1+r_2)^{-2}=933.71\)</td><td class="xr"><span class="here">本章 §01</span></td></tr>
+        </table></div>
+      </div>
+      <details class="more"><summary>展开:Example 9.7(spot 表挖空,用 forward 桥接)</summary>
+        <p class="dim">spot:r₁=4.00%、r₂=4.30%、r₃=X、r₄=4.80%;f₍₃,₄₎=5.34%。4 年 AV 两种写法:\((1+X)^3(1.0534)=1.048^4\Rightarrow X=4.6206\%\)(p.420–421)。</p>
+      </details>
+    </div>
+
+    <div class="fig-row">
+      <div class="fig-cell">
+        <svg viewBox="0 0 460 150" role="img" aria-label="spot 与 forward 的两条路">
+          <line x1="40" y1="92" x2="420" y2="92" stroke="#16243d" stroke-width="2"/>
+          <g stroke="#16243d" stroke-width="1.5">
+            <line x1="60" y1="86" x2="60" y2="98"/><line x1="240" y1="86" x2="240" y2="98"/><line x1="400" y1="86" x2="400" y2="98"/>
+          </g>
+          <g font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#46566f">
+            <text x="60" y="112" text-anchor="middle">0</text>
+            <text x="240" y="112" text-anchor="middle">t₁</text>
+            <text x="400" y="112" text-anchor="middle">t₂</text>
+          </g>
+          <path d="M60 86 Q230 18 400 86" fill="none" stroke="#4f46e5" stroke-width="2.5"/>
+          <text x="230" y="30" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,monospace" fill="#4f46e5" font-weight="bold">(1+r_t₂)^t₂ 一路直达</text>
+          <path d="M60 98 Q150 132 240 98" fill="none" stroke="#7a8699" stroke-width="2"/>
+          <path d="M240 98 Q320 132 400 98" fill="none" stroke="#c6492f" stroke-width="2"/>
+          <text x="150" y="142" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="#7a8699">(1+r_t₁)^t₁ spot</text>
+          <text x="322" y="142" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="#c6492f">(1+f)^(t₂−t₁) forward</text>
+        </svg>
+        <div class="cap"><b>两条路终点相同,否则有免费午餐(套利)</b> · 上=spot 直达,下=spot 接力 forward</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><div><span class="sec-tag tag-ext">直觉 · 拓展</span><h2 class="sec-title">换个角度看懂它</h2></div></div>
+    <div class="card">
+      <h3>💡 直觉例子</h3>
+      <p><b>spot 是"平均年化",forward 是"当年段速"。</b>开车 0→5 小时平均 60 km/h(spot),不代表第 3→5 小时也是 60——那两小时的段速就是 forward。1+r_t 恰是逐段 (1+f) 的几何平均,平均速与段速的关系一模一样。</p>
+      <p class="dim"><b>bootstrap = 剥洋葱:</b>1 年债只有一笔支付,直接给出 r₁;2 年债里第一年那笔用 r₁ 剥掉,剩下的就暴露 r₂;层层往外剥。</p>
+    </div>
+    <div class="card">
+      <h3>📚 扩展阅读(精选 2 个)</h3>
+      <div class="xread">
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Yield_curve">Yield Curve — Wikipedia</a></div><div class="z">正常/倒挂/平坦三种形态与经济周期的关系——FM 只考换算,但形态直觉在 FAM 和面试都用得上。</div><div class="u">en.wikipedia.org/wiki/Yield_curve</div></div>
+        <div class="xr"><div class="e"><a href="https://en.wikipedia.org/wiki/Forward_rate">Forward Rate — Wikipedia</a></div><div class="z">远期利率的无套利推导与市场记号(与教材"术语无统一标准"的警告互相印证)。</div><div class="u">en.wikipedia.org/wiki/Forward_rate</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".kxb");
+    if(b){var q=b.getAttribute("data-kx"),r=document.querySelector('tr.kxd[data-kxq="'+q+'"]');
+      if(r){var open=r.style.display==="none";r.style.display=open?"":"none";b.classList.toggle("open",open);
+        if(open&&!r.__ts&&window.MathJax&&MathJax.typesetPromise){r.__ts=1;MathJax.typesetPromise([r]).catch(function(){});}}
+      return;}
+    var a=e.target.closest&&e.target.closest(".ansb3");
+    if(a){var on=a.classList.toggle("rev");a.textContent=on?("答案 "+a.getAttribute("data-ans")):"答案 ?";
+      var td=a.closest("td"),st=td&&td.querySelector(".steps");if(st)st.style.display=on?"":"none";}
+  });
+})();
+</script>
+<footer>
+  <div class="wrap">
+    <p><b>Exam FM 导学 · Chapter 9</b> · 第9章 Spot Rates and Forward Rates 即期利率与远期利率</p>
+    <p>公式与例题整理自《ASM Exam FM Study Manual, 17th ed.》Chapter 9(p.415–428,页码已标注,细节以课本为准)。<br>「直觉与拓展」节为 AI 补充助解内容,外链为精选参考。仅供个人备考使用 · 完整原题与解答请见课本。</p>
+  </div>
+</footer>
+<script>
+(function(){
+  function scan(){
+    Array.prototype.forEach.call(document.querySelectorAll('table.vocab'), function(tb){
+      var ths = tb.querySelectorAll('thead th'), idx = -1;
+      Array.prototype.forEach.call(ths, function(th, i){ if(th.textContent.indexOf('中文') > -1) idx = i; });
+      if(idx < 0 || ths[idx].querySelector('.zh-eye')) return;
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'zh-eye';
+      btn.textContent = '👁'; btn.title = '遮住/显示中文，自测用';
+      ths[idx].appendChild(btn);
+      btn.addEventListener('click', function(){
+        var hide = !(tb.getAttribute('data-zh') === 'hidden');
+        Array.prototype.slice.call(tb.querySelectorAll('tbody tr')).forEach(function(tr){
+          var td = tr.children[idx]; if(!td) return;
+          td.classList[hide ? 'add' : 'remove']('zh-mask');
+        });
+        tb.setAttribute('data-zh', hide ? 'hidden' : 'shown');
+        btn.textContent = hide ? '🙈' : '👁';
+      });
+    });
+  }
+  if(window.__zhEye) return;
+  window.__zhEye = 1;
+  var css = '.zh-eye{margin-left:8px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;border-radius:5px;cursor:pointer;font-size:12px;padding:0 6px;line-height:1.7}.zh-eye:hover{background:rgba(255,255,255,.15)}td.zh-mask{color:transparent !important;cursor:pointer}td.zh-mask *{color:transparent !important}';
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  document.addEventListener('click', function(e){
+    var td = e.target.closest && e.target.closest('td.zh-mask');
+    if(td) td.classList.remove('zh-mask');
+  });
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', scan); } else { scan(); }
+})();
+</script>
+<script>(function(){var c=document.querySelector('.countdown[data-exam]');if(!c)return;var d=Math.ceil((new Date(c.getAttribute('data-exam')+'T00:00:00')-new Date())/864e5);if(d<0){c.parentNode.removeChild(c);return;}var b=c.querySelector('[data-days]');if(b)b.textContent=d;c.style.display='flex';})();</script>
+<!--KX_MASTERY_BEGIN-->
+<style>
+  td.kxm{text-align:center;vertical-align:middle}
+  td.kxm input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-deep,#5b53c4)}
+  tr.kx-done td{opacity:.5}
+  tr.kx-done td.kxm{opacity:1}
+  .kxm-count{font-family:var(--mono,monospace);font-size:11.5px;font-weight:400;color:#fff;
+    background:var(--accent-deep,#5b53c4);border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:middle}
+</style>
+<script>
+(function(){
+  var hs = Array.prototype.filter.call(document.querySelectorAll('h3'), function(h){
+    return h.textContent.indexOf('重点习题') > -1;
+  });
+  var page = decodeURIComponent(location.pathname.split('/').pop() || 'page');
+  var pm = page.match(/soa-exam-(p|fm)-l(\d\d)-/);
+  var KEY = pm ? 'kx-mastered2:' + pm[1] : 'kx-mastered2:local';
+  var LNN = pm ? 'L' + pm[2] : 'L00';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  /* 旧 per-页 store 一次性迁移 → 统一 store 的 LNN:题号 键 */
+  try {
+    var oldKey = 'kx-mastered:' + page;
+    var old = JSON.parse(localStorage.getItem(oldKey) || '{}') || {}, mig = false;
+    for (var oq in old) if (old[oq] && !saved[LNN + ':' + oq]){ saved[LNN + ':' + oq] = 1; mig = true; }
+    if (mig) localStorage.setItem(KEY, JSON.stringify(saved));
+    localStorage.removeItem(oldKey);
+  } catch (e) {}
+  var repaints = [];
+  window.addEventListener('storage', function(ev){
+    if (ev.key !== KEY) return;
+    try { saved = JSON.parse(ev.newValue || '{}') || {}; } catch (e) { saved = {}; }
+    repaints.forEach(function(fn){ fn(); });
+  });
+  hs.forEach(function(h){
+    var tbl = h.nextElementSibling;
+    while (tbl && tbl.tagName !== 'TABLE') tbl = tbl.nextElementSibling;
+    if (!tbl || !tbl.tHead || !tbl.tHead.rows[0] || !tbl.tBodies[0]) return;
+    if (tbl.getAttribute('data-kxm')) return;
+    tbl.setAttribute('data-kxm', '1');
+    var th = document.createElement('th');
+    th.textContent = '已掌握';
+    th.style.width = '7%';
+    tbl.tHead.rows[0].appendChild(th);
+    var badge = document.createElement('span');
+    badge.className = 'kxm-count';
+    h.appendChild(badge);
+    function recount(){
+      var total = 0, done = 0;
+      Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+        if (tr.classList.contains('kxd')) return;
+        total++;
+        if (tr.classList.contains('kx-done')) done++;
+      });
+      badge.textContent = done + '/' + total + ' 已掌握';
+    }
+    Array.prototype.forEach.call(tbl.tBodies[0].rows, function(tr){
+      if (tr.classList.contains('kxd')){
+        var d = tr.cells[0];
+        if (d && d.colSpan) d.colSpan += 1;   // 展开行跨列补齐
+        return;
+      }
+      var qn = tr.cells[0] ? tr.cells[0].textContent.trim() : '';
+      if (!qn) return;
+      var mk = LNN + ':' + qn;
+      var td = document.createElement('td');
+      td.className = 'kxm';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.title = '标记已掌握(存本机, 刷新不丢; 与样题索引页同题勾选互通)';
+      cb.checked = !!saved[mk];
+      tr.classList.toggle('kx-done', cb.checked);
+      cb.addEventListener('change', function(){
+        if (cb.checked) saved[mk] = 1; else delete saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        recount();
+      });
+      td.appendChild(cb);
+      tr.appendChild(td);
+      repaints.push(function(){
+        cb.checked = !!saved[mk];
+        tr.classList.toggle('kx-done', cb.checked);
+      });
+    });
+    repaints.push(recount);
+    recount();
+  });
+})();
+</script>
+<!--KX_MASTERY_END-->
+</body>
+</html>
